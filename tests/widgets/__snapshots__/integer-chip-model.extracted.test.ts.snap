@@ -1,7 +1,7 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`integerChipModel widget tests integer-chip-model - [x7aa00adbc102c655] Describe integer chips with zero pairs (1) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x7aa00adbc102c655] Complete the description using integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -16,17 +16,53 @@ exports[`integerChipModel widget tests integer-chip-model - [x7aa00adbc102c655] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x7aa00adbc102c655] Describe integer chips with zero pairs (2) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+exports[`integerChipModel widget tests integer-chip-model - [x67c799a0f8d166e0] Select two addition expressions for an integer-chip model 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="150" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x2fba643be6fd9a4f] Complete the integer-chip description (1) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x2fba643be6fd9a4f] Describe zero pairs with integer chips 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="266" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="324" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="324" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="150" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="208" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="266" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="266" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+</svg>"
+`;
+
+exports[`integerChipModel widget tests integer-chip-model - [xea722bf49a523afb] Count zero pairs with integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="150" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="208" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="266" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="266" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="150" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+</svg>"
+`;
+
+exports[`integerChipModel widget tests integer-chip-model - [x272e8236dace3feb] Identify two addition expressions from integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -42,24 +78,21 @@ exports[`integerChipModel widget tests integer-chip-model - [x2fba643be6fd9a4f] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x2fba643be6fd9a4f] Complete the integer-chip description (2) 1`] = `
-"<svg width="100" height="164" viewBox="0 0 100 164" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
+exports[`integerChipModel widget tests integer-chip-model - [x9d8db87b91e88b8c] Identify representations of 4 with integer chips (2) 1`] = `
+"<svg width="400" height="320" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="150" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="208" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="266" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="266" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="324" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="324" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x67c799a0f8d166e0] Select two addition expressions for integer chips (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x67c799a0f8d166e0] Select two addition expressions for integer chips (2) 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x9d8db87b91e88b8c] Identify representations of 4 with integer chips (3) 1`] = `
+"<svg width="400" height="320" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -67,192 +100,91 @@ exports[`integerChipModel widget tests integer-chip-model - [x67c799a0f8d166e0] 
   <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="150" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="208" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="266" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="266" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="324" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="324" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [xea722bf49a523afb] Describe integer chips: zero pairs and leftover units (1) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x9d8db87b91e88b8c] Identify representations of 4 with integer chips (4) 1`] = `
+"<svg width="400" height="320" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="150" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="208" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="266" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="266" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="150" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [xea722bf49a523afb] Describe integer chips: zero pairs and leftover units (2) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+exports[`integerChipModel widget tests integer-chip-model - [x9d8db87b91e88b8c] Identify representations of 4 with integer chips (5) 1`] = `
+"<svg width="400" height="320" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="150" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x272e8236dace3feb] Select two addition expressions for an integer-chip model (1) 1`] = `
-"<svg width="100" height="164" viewBox="0 0 100 164" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x272e8236dace3feb] Select two addition expressions for an integer-chip model (2) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [xce6b6daba4bd70f2] Identify images representing −5 with integer chips (2) 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="266" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="324" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="324" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+</svg>"
+`;
+
+exports[`integerChipModel widget tests integer-chip-model - [xce6b6daba4bd70f2] Identify images representing −5 with integer chips (3) 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="266" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="324" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="324" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="150" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="208" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="266" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="266" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x9d8db87b91e88b8c] Identify images that represent 4 using integer chips (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x9d8db87b91e88b8c] Identify images that represent 4 using integer chips (2) 1`] = `
-"<svg width="250" height="184" viewBox="0 0 250 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [xce6b6daba4bd70f2] Identify images representing −5 with integer chips (4) 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+</svg>"
+`;
+
+exports[`integerChipModel widget tests integer-chip-model - [xce6b6daba4bd70f2] Identify images representing −5 with integer chips (5) 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="266" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="150" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="150" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="208" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="266" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="266" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x9d8db87b91e88b8c] Identify images that represent 4 using integer chips (3) 1`] = `
-"<svg width="250" height="300" viewBox="0 0 250 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="150" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="34" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="150" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="34" cy="266" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="266" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="266" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="266" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x9d8db87b91e88b8c] Identify images that represent 4 using integer chips (4) 1`] = `
-"<svg width="250" height="242" viewBox="0 0 250 242" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="150" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="34" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x9d8db87b91e88b8c] Identify images that represent 4 using integer chips (5) 1`] = `
-"<svg width="250" height="126" viewBox="0 0 250 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="150" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xce6b6daba4bd70f2] Select two images that represent −5 (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xce6b6daba4bd70f2] Select two images that represent −5 (2) 1`] = `
-"<svg width="250" height="184" viewBox="0 0 250 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xce6b6daba4bd70f2] Select two images that represent −5 (3) 1`] = `
-"<svg width="250" height="242" viewBox="0 0 250 242" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="150" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="150" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="150" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xce6b6daba4bd70f2] Select two images that represent −5 (4) 1`] = `
-"<svg width="250" height="126" viewBox="0 0 250 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xce6b6daba4bd70f2] Select two images that represent −5 (5) 1`] = `
-"<svg width="250" height="242" viewBox="0 0 250 242" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="150" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="34" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x12bc21f992922f93] Select two addition expressions represented by integer chips (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x12bc21f992922f93] Select two addition expressions represented by integer chips (2) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x12bc21f992922f93] Select two addition expressions for integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
@@ -263,101 +195,83 @@ exports[`integerChipModel widget tests integer-chip-model - [x12bc21f992922f93] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x44e48c43a1428bbb] Select images that represent −4 with integer chips (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x44e48c43a1428bbb] Select images that represent −4 with integer chips (2) 1`] = `
-"<svg width="250" height="184" viewBox="0 0 250 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x44e48c43a1428bbb] Identify images that represent −4 with integer chips (2) 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x44e48c43a1428bbb] Select images that represent −4 with integer chips (3) 1`] = `
-"<svg width="250" height="242" viewBox="0 0 250 242" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="150" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="150" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x44e48c43a1428bbb] Select images that represent −4 with integer chips (4) 1`] = `
-"<svg width="250" height="126" viewBox="0 0 250 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="266" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="324" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="324" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x44e48c43a1428bbb] Select images that represent −4 with integer chips (5) 1`] = `
-"<svg width="250" height="184" viewBox="0 0 250 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x44e48c43a1428bbb] Identify images that represent −4 with integer chips (3) 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="266" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="324" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="324" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xbc4c331f3105dde6] Identify images that represent 3 using integer chips (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xbc4c331f3105dde6] Identify images that represent 3 using integer chips (2) 1`] = `
-"<svg width="250" height="300" viewBox="0 0 250 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="150" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="34" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="150" cy="208" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="208" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="34" cy="266" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="266" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="266" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="266" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [xbc4c331f3105dde6] Identify images that represent 3 using integer chips (3) 1`] = `
-"<svg width="250" height="184" viewBox="0 0 250 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x44e48c43a1428bbb] Identify images that represent −4 with integer chips (4) 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+</svg>"
+`;
+
+exports[`integerChipModel widget tests integer-chip-model - [x44e48c43a1428bbb] Identify images that represent −4 with integer chips (5) 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+</svg>"
+`;
+
+exports[`integerChipModel widget tests integer-chip-model - [xbc4c331f3105dde6] Identify images representing 3 with integer chips (2) 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="266" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="150" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="208" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="266" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="266" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="324" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="324" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+</svg>"
+`;
+
+exports[`integerChipModel widget tests integer-chip-model - [xbc4c331f3105dde6] Identify images representing 3 with integer chips (3) 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="150" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="208" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [xbc4c331f3105dde6] Identify images that represent 3 using integer chips (4) 1`] = `
-"<svg width="250" height="126" viewBox="0 0 250 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [xbc4c331f3105dde6] Identify images representing 3 with integer chips (4) 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -367,25 +281,16 @@ exports[`integerChipModel widget tests integer-chip-model - [xbc4c331f3105dde6] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [xbc4c331f3105dde6] Identify images that represent 3 using integer chips (5) 1`] = `
-"<svg width="250" height="126" viewBox="0 0 250 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [xbc4c331f3105dde6] Identify images representing 3 with integer chips (5) 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [xcbde5d0699438e02] Identify two addition expressions from integer chips (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xcbde5d0699438e02] Identify two addition expressions from integer chips (2) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [xcbde5d0699438e02] Select two addition expressions for integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -403,8 +308,8 @@ exports[`integerChipModel widget tests integer-chip-model - [xcbde5d0699438e02] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x9d9353ee8e346f8b] Complete the integer chips description (1) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x9d9353ee8e346f8b] Describe integer chips using zero pairs 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -416,17 +321,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x9d9353ee8e346f8b] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x9d9353ee8e346f8b] Complete the integer chips description (2) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xf91620f7ace72974] Evaluate an integer sum 1`] = `
-"<svg width="320" height="242" viewBox="0 0 320 242" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [xf91620f7ace72974] Evaluate the sum represented by integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -448,22 +344,20 @@ exports[`integerChipModel widget tests integer-chip-model - [xf91620f7ace72974] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x952dcc496f32ccdf] Evaluate 1 + (-6) with integer chips 1`] = `
-"<svg width="320" height="280" viewBox="0 0 320 280" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="208" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="266" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="246" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="246" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+exports[`integerChipModel widget tests integer-chip-model - [x952dcc496f32ccdf] Evaluate a sum with integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="266" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x2ec6031371c09a6e] Evaluate an integer sum represented with chips 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x2ec6031371c09a6e] Evaluate -3 + 2 with integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -472,8 +366,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x2ec6031371c09a6e] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [xb6987d1fab33b21b] Evaluate an integer sum from a diagram 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [xb6987d1fab33b21b] Evaluate 6 + (-1) 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
@@ -484,8 +378,8 @@ exports[`integerChipModel widget tests integer-chip-model - [xb6987d1fab33b21b] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x1939bf4c594807e8] Add negative integers using integer chips 1`] = `
-"<svg width="320" height="91" viewBox="0 0 320 91" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x1939bf4c594807e8] Evaluate a sum of negative integers 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -493,8 +387,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x1939bf4c594807e8] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x27a7762e59b334a8] Evaluate 4 + (−8) using integer chips 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x27a7762e59b334a8] Evaluate 4 + (-8) from a diagram 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -510,8 +404,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x27a7762e59b334a8] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x56dad6852d181fa2] Evaluate −4 + (−4) from a chip diagram 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x56dad6852d181fa2] Evaluate -4 + (-4) using integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -523,8 +417,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x56dad6852d181fa2] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x142a83f550d56d4c] Evaluate -2 + 8 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x142a83f550d56d4c] Evaluate an integer sum with chips 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
@@ -532,14 +426,14 @@ exports[`integerChipModel widget tests integer-chip-model - [x142a83f550d56d4c] 
   <circle cx="150" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="208" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="266" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="266" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="324" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="324" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="150" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x30311f95b8b53265] Evaluate an integer sum with chips 1`] = `
-"<svg width="320" height="242" viewBox="0 0 320 242" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x30311f95b8b53265] Evaluate 9 + (−7) 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -559,8 +453,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x30311f95b8b53265] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x43f9363d44352033] Evaluate an integer sum using chips 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x43f9363d44352033] Evaluate an integer sum with chips 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -574,8 +468,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x43f9363d44352033] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x5cba17b6307f7e8d] Evaluate -5 + (-1) 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x5cba17b6307f7e8d] Evaluate a sum with integer chips 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -585,8 +479,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x5cba17b6307f7e8d] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x3b7a918fae63396f] Evaluate -3 + (-6) 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x3b7a918fae63396f] Evaluate a sum of negative integers 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -599,8 +493,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x3b7a918fae63396f] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x7bcc02d46043d744] Evaluate an integer sum with zero pairs 1`] = `
-"<svg width="320" height="242" viewBox="0 0 320 242" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x7bcc02d46043d744] Evaluate 6 + (-6) 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -616,8 +510,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x7bcc02d46043d744] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x86c4b524f4fef37f] Evaluate an integer sum using chips 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x86c4b524f4fef37f] Evaluate an integer sum with chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -627,27 +521,25 @@ exports[`integerChipModel widget tests integer-chip-model - [x86c4b524f4fef37f] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x76ace7cfef85dd65] Evaluate -7 + 5 1`] = `
-"<svg width="320" height="280" viewBox="0 0 320 280" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="208" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="266" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="188" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="246" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="246" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="92" cy="246" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="246" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="150" cy="246" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="246" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="208" cy="246" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="246" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="266" cy="246" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="266" y="246" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+exports[`integerChipModel widget tests integer-chip-model - [x76ace7cfef85dd65] Evaluate an integer sum using chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="266" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="150" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="208" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="266" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="266" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x36d84eb4467a3d9a] Evaluate −3 + 4 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x36d84eb4467a3d9a] Evaluate an integer sum using chips 1`] = `
+"<svg width="400" height="320" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -658,17 +550,19 @@ exports[`integerChipModel widget tests integer-chip-model - [x36d84eb4467a3d9a] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x64d89f0e4439fb60] Complete a subtraction equation using integer chips (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+exports[`integerChipModel widget tests integer-chip-model - [x90fc3f1e0d4d7df5] Complete Sadio's subtraction equation 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="266" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="5.199999999999999" y1="120.8" x2="62.8" y2="63.2" stroke="#212121" stroke-width="1" />
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x64d89f0e4439fb60] Complete a subtraction equation using integer chips (2) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x64d89f0e4439fb60] Complete a subtraction equation using integer chips 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="5.199999999999999" y1="62.8" x2="62.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
@@ -679,37 +573,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x64d89f0e4439fb60] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x90fc3f1e0d4d7df5] Complete a subtraction equation using integer chips (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x90fc3f1e0d4d7df5] Complete a subtraction equation using integer chips (2) 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="266" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="5.199999999999999" y1="120.8" x2="62.8" y2="63.2" stroke="#212121" stroke-width="1" />
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x3d4691f41a65dd92] Complete Elif's subtraction equation (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x3d4691f41a65dd92] Complete Elif's subtraction equation (2) 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x3d4691f41a65dd92] Complete a subtraction equation with integer chips 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="5.199999999999999" y1="120.8" x2="62.8" y2="63.2" stroke="#212121" stroke-width="1" />
   <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="63.2" y1="120.8" x2="120.8" y2="63.2" stroke="#212121" stroke-width="1" />
@@ -719,8 +584,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x3d4691f41a65dd92] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x1e243c8fd876e549] Complete a subtraction equation from integer chips (1) 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x1e243c8fd876e549] Complete a subtraction equation using integer chips 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="5.199999999999999" y1="62.8" x2="62.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="63.2" y1="62.8" x2="120.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="121.2" y1="62.8" x2="178.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
@@ -729,15 +594,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x1e243c8fd876e549] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x1e243c8fd876e549] Complete a subtraction equation from integer chips (2) 1`] = `
-"<svg width="100" height="164" viewBox="0 0 100 164" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x430e12f4669434a9] Complete a subtraction equation using integer chips (1) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x430e12f4669434a9] Complete a subtraction equation from integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -749,17 +607,23 @@ exports[`integerChipModel widget tests integer-chip-model - [x430e12f4669434a9] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x430e12f4669434a9] Complete a subtraction equation using integer chips (2) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+exports[`integerChipModel widget tests integer-chip-model - [xc35b5bc8f3c70b52] Complete a subtraction equation using integer chips 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="266" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
+  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="5.199999999999999" y1="178.8" x2="62.8" y2="121.2" stroke="#212121" stroke-width="1" />
+  <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="63.2" y1="178.8" x2="120.8" y2="121.2" stroke="#212121" stroke-width="1" />
+  <circle cx="150" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="121.2" y1="178.8" x2="178.8" y2="121.2" stroke="#212121" stroke-width="1" />
+  <circle cx="208" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="179.2" y1="178.8" x2="236.8" y2="121.2" stroke="#212121" stroke-width="1" />
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x70e0a638cd207a9a] Complete a subtraction equation from integer chips (1) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x70e0a638cd207a9a] Complete a subtraction equation with integer chips 1`] = `
+"<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="5.199999999999999" y1="62.8" x2="62.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="63.2" y1="62.8" x2="120.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="121.2" y1="62.8" x2="178.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
@@ -770,21 +634,12 @@ exports[`integerChipModel widget tests integer-chip-model - [x70e0a638cd207a9a] 
   <circle cx="150" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="208" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
   <circle cx="266" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="266" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
+  <circle cx="324" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="324" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x70e0a638cd207a9a] Complete a subtraction equation from integer chips (2) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x79c70ee1b89ca5b7] Complete a subtraction equation using integer chips (1) 1`] = `
-"<svg width="320" height="242" viewBox="0 0 320 242" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x79c70ee1b89ca5b7] Complete a subtraction equation from integer chips 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -801,15 +656,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x79c70ee1b89ca5b7] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x79c70ee1b89ca5b7] Complete a subtraction equation using integer chips (2) 1`] = `
-"<svg width="100" height="164" viewBox="0 0 100 164" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x73ef0a898e35d01b] Complete a subtraction equation from integer chips (1) 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x73ef0a898e35d01b] Complete a subtraction equation from integer chips 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="34" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="5.199999999999999" y1="120.8" x2="62.8" y2="63.2" stroke="#212121" stroke-width="1" />
   <circle cx="92" cy="92" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="63.2" y1="120.8" x2="120.8" y2="63.2" stroke="#212121" stroke-width="1" />
@@ -818,22 +666,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x73ef0a898e35d01b] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x73ef0a898e35d01b] Complete a subtraction equation from integer chips (2) 1`] = `
-"<svg width="100" height="164" viewBox="0 0 100 164" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xc7e216e925e15870] Complete a subtraction equation with integer chips (1) 1`] = `
-"<svg width="100" height="164" viewBox="0 0 100 164" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xc7e216e925e15870] Complete a subtraction equation with integer chips (2) 1`] = `
-"<svg width="320" height="242" viewBox="0 0 320 242" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [xc7e216e925e15870] Complete a subtraction equation with integer chips 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -850,17 +684,8 @@ exports[`integerChipModel widget tests integer-chip-model - [xc7e216e925e15870] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [xc7cbbb65f42f202f] Complete a subtraction equation using integer chips (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xc7cbbb65f42f202f] Complete a subtraction equation using integer chips (2) 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [xc7cbbb65f42f202f] Complete Mark's subtraction equation 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -872,8 +697,8 @@ exports[`integerChipModel widget tests integer-chip-model - [xc7cbbb65f42f202f] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x25a33d41a493d308] Complete a subtraction equation with integer chips (1) 1`] = `
-"<svg width="320" height="80" viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x25a33d41a493d308] Complete a subtraction equation using integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="5.199999999999999" y1="62.8" x2="62.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="63.2" y1="62.8" x2="120.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -882,26 +707,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x25a33d41a493d308] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x25a33d41a493d308] Complete a subtraction equation with integer chips (2) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x0a960fe3aa62c90b] Complete Tegan's subtraction equation (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x0a960fe3aa62c90b] Complete Tegan's subtraction equation (2) 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x0a960fe3aa62c90b] Complete Tegan's subtraction equation 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="5.199999999999999" y1="62.8" x2="62.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="63.2" y1="62.8" x2="120.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -912,17 +719,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x0a960fe3aa62c90b] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [xb148748f6fa7aa4a] Complete a subtraction equation with integer chips (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xb148748f6fa7aa4a] Complete a subtraction equation with integer chips (2) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [xb148748f6fa7aa4a] Complete Talia's subtraction equation with integer chips 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
@@ -936,17 +734,8 @@ exports[`integerChipModel widget tests integer-chip-model - [xb148748f6fa7aa4a] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x1c3306d25afbe895] Complete Keala's subtraction equation from integer chips (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x1c3306d25afbe895] Complete Keala's subtraction equation from integer chips (2) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x1c3306d25afbe895] Complete Keala's subtraction equation 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="5.199999999999999" y1="62.8" x2="62.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="63.2" y1="62.8" x2="120.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="121.2" y1="62.8" x2="178.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
@@ -961,8 +750,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x1c3306d25afbe895] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x0dd0a6268dda5727] Complete a subtraction equation with integer chips (1) 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x0dd0a6268dda5727] Complete a subtraction equation using integer chips 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="5.199999999999999" y1="62.8" x2="62.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="63.2" y1="62.8" x2="120.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="121.2" y1="62.8" x2="178.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
@@ -974,15 +763,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x0dd0a6268dda5727] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x0dd0a6268dda5727] Complete a subtraction equation with integer chips (2) 1`] = `
-"<svg width="100" height="164" viewBox="0 0 100 164" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x5843c3c943826513] Complete Raj's subtraction equation (1) 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x5843c3c943826513] Complete a subtraction equation using integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="5.199999999999999" y1="62.8" x2="62.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="63.2" y1="62.8" x2="120.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="121.2" y1="62.8" x2="178.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
@@ -992,39 +774,8 @@ exports[`integerChipModel widget tests integer-chip-model - [x5843c3c943826513] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x5843c3c943826513] Complete Raj's subtraction equation (2) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xc35b5bc8f3c70b52] Complete a subtraction equation from integer chips (1) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="208" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="208" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="266" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="266" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="92" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="92" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="5.199999999999999" y1="178.8" x2="62.8" y2="121.2" stroke="#212121" stroke-width="1" />
-  <circle cx="92" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="92" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="63.2" y1="178.8" x2="120.8" y2="121.2" stroke="#212121" stroke-width="1" />
-  <circle cx="150" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="150" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="121.2" y1="178.8" x2="178.8" y2="121.2" stroke="#212121" stroke-width="1" />
-  <circle cx="208" cy="150" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="208" y="150" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><line x1="179.2" y1="178.8" x2="236.8" y2="121.2" stroke="#212121" stroke-width="1" />
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [xc35b5bc8f3c70b52] Complete a subtraction equation from integer chips (2) 1`] = `
-"<svg width="100" height="164" viewBox="0 0 100 164" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x67ed821473e88c42] Complete a subtraction equation with integer chips (1) 1`] = `
-"<svg width="320" height="184" viewBox="0 0 320 184" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x67ed821473e88c42] Complete a subtraction equation from integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="5.199999999999999" y1="62.8" x2="62.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="63.2" y1="62.8" x2="120.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="121.2" y1="62.8" x2="178.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
@@ -1039,41 +790,16 @@ exports[`integerChipModel widget tests integer-chip-model - [x67ed821473e88c42] 
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x67ed821473e88c42] Complete a subtraction equation with integer chips (2) 1`] = `
-"<svg width="100" height="164" viewBox="0 0 100 164" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x41f7fa28a8955027] Complete a subtraction equation using integer chips (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x41f7fa28a8955027] Complete a subtraction equation using integer chips (2) 1`] = `
-"<svg width="320" height="80" viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x41f7fa28a8955027] Complete a subtraction equation with integer chips 1`] = `
+"<svg width="320" height="300" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="5.199999999999999" y1="62.8" x2="62.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
 </svg>"
 `;
 
-exports[`integerChipModel widget tests integer-chip-model - [x8e714f7af63bbbcc] Complete a subtraction equation from integer chips (1) 1`] = `
-"<svg width="100" height="222" viewBox="0 0 100 222" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
-  <rect x="10" y="10" width="110" height="86" rx="6" ry="6" fill="#FFFFFF" stroke="#212121" stroke-width="2" /><circle cx="30" cy="30" r="14" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="30" y="30" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text><text x="56" y="30" font-size="16px" fill="#212121" dominant-baseline="central">= 1</text>
-  <circle cx="30" cy="70" r="14" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="30" y="70" font-size="18px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><text x="56" y="70" font-size="16px" fill="#212121" dominant-baseline="central">= −1</text>
-  <circle cx="34" cy="130" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="130" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text>
-  <circle cx="34" cy="188" r="24" fill="#FEF9E7" stroke="#212121" stroke-width="2" /><text x="34" y="188" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">+</text>
-</svg>"
-`;
-
-exports[`integerChipModel widget tests integer-chip-model - [x8e714f7af63bbbcc] Complete a subtraction equation from integer chips (2) 1`] = `
-"<svg width="320" height="126" viewBox="0 0 320 126" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+exports[`integerChipModel widget tests integer-chip-model - [x8e714f7af63bbbcc] Complete a subtraction equation with integer chips 1`] = `
+"<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
   <circle cx="34" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="34" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="5.199999999999999" y1="62.8" x2="62.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="92" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="92" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="63.2" y1="62.8" x2="120.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />
   <circle cx="150" cy="34" r="24" fill="#FADBD8" stroke="#212121" stroke-width="2" /><text x="150" y="34" font-size="32px" font-weight="600" fill="#212121" text-anchor="middle" dominant-baseline="central">−</text><line x1="121.2" y1="62.8" x2="178.8" y2="5.199999999999999" stroke="#212121" stroke-width="1" />

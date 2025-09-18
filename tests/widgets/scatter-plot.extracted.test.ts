@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.958Z
+// Generated on: 2025-09-18T05:17:02.153Z
 // Widget Type: scatterPlot
 // Source: Real questions from database
 //
@@ -26,9 +26,9 @@ import * as logger from "@superbuilders/slog"
 
 describe("scatterPlot widget tests", () => {
 	// Extracted from question: x8dce15bff0c73bab
-	// Question: Identify the line of best fit from a scatterplot
+	// Question: Select the line that fits the scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [x8dce15bff0c73bab] Identify the line of best fit from a scatterplot", async () => {
+	test("scatter-plot - [x8dce15bff0c73bab] Select the line that fits the scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -37,11 +37,11 @@ describe("scatterPlot widget tests", () => {
 		    {
 		      "a": {
 		        "x": 0,
-		        "y": 9.77
+		        "y": 9
 		      },
 		      "b": {
-		        "x": 10,
-		        "y": 2.27
+		        "x": 8,
+		        "y": 3
 		      },
 		      "type": "twoPoints",
 		      "label": "A",
@@ -54,11 +54,11 @@ describe("scatterPlot widget tests", () => {
 		    {
 		      "a": {
 		        "x": 0,
-		        "y": 7.05
+		        "y": 6
 		      },
 		      "b": {
-		        "x": 10,
-		        "y": -0.45
+		        "x": 8,
+		        "y": 0
 		      },
 		      "type": "twoPoints",
 		      "label": "B",
@@ -71,11 +71,11 @@ describe("scatterPlot widget tests", () => {
 		    {
 		      "a": {
 		        "x": 0,
-		        "y": 5.55
+		        "y": 5
 		      },
 		      "b": {
 		        "x": 10,
-		        "y": 4.55
+		        "y": 4
 		      },
 		      "type": "twoPoints",
 		      "label": "C",
@@ -91,77 +91,391 @@ describe("scatterPlot widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "x",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "y",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 1.82,
-		      "y": 8.18,
+		      "x": 2,
+		      "y": 8,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.73,
-		      "y": 7.27,
+		      "x": 3,
+		      "y": 7,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.18,
-		      "y": 6.82,
+		      "x": 3.5,
+		      "y": 6.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.64,
-		      "y": 6.82,
+		      "x": 4,
+		      "y": 6.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.09,
-		      "y": 5.91,
+		      "x": 4.5,
+		      "y": 5.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.45,
-		      "y": 6.36,
+		      "x": 6,
+		      "y": 6,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.55,
-		      "y": 5.91,
+		      "x": 5,
+		      "y": 5.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.36,
-		      "y": 4.73,
+		      "x": 7,
+		      "y": 4.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.36,
-		      "y": 5.18,
+		      "x": 7,
+		      "y": 4.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 8.18,
-		      "y": 3.36,
+		      "x": 9,
+		      "y": 2.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.27,
-		      "y": 4,
+		      "x": 8,
+		      "y": 3.4,
 		      "label": ""
 		    },
 		    {
-		      "x": 9.09,
-		      "y": 3.36,
+		      "x": 10,
+		      "y": 2.7,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x222b12b9596b616e
+	// Question: Select the line that best fits the scatterplot
+	// Widget key: image_1
+	test("scatter-plot - [x222b12b9596b616e] Select the line that best fits the scatterplot", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [
+		    {
+		      "a": {
+		        "x": 0,
+		        "y": 4
+		      },
+		      "b": {
+		        "x": 8,
+		        "y": 10
+		      },
+		      "type": "twoPoints",
+		      "label": "A",
+		      "style": {
+		        "dash": false,
+		        "color": "#a24d61",
+		        "strokeWidth": 3
+		      }
+		    },
+		    {
+		      "a": {
+		        "x": 0,
+		        "y": 2
+		      },
+		      "b": {
+		        "x": 8,
+		        "y": 8
+		      },
+		      "type": "twoPoints",
+		      "label": "B",
+		      "style": {
+		        "dash": false,
+		        "color": "#e1a158",
+		        "strokeWidth": 3
+		      }
+		    },
+		    {
+		      "a": {
+		        "x": 0,
+		        "y": 4
+		      },
+		      "b": {
+		        "x": 10,
+		        "y": 5
+		      },
+		      "type": "twoPoints",
+		      "label": "C",
+		      "style": {
+		        "dash": false,
+		        "color": "#77b05d",
+		        "strokeWidth": 3
+		      }
+		    }
+		  ],
+		  "title": "",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 3,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 3,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 3.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 5,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 5.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 6,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 6.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 6.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 9,
+		      "y": 8.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 7.7,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7512008e3e55be3d
+	// Question: Select the line that best fits the data
+	// Widget key: image_1
+	test("scatter-plot - [x7512008e3e55be3d] Select the line that best fits the data", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [
+		    {
+		      "a": {
+		        "x": 0,
+		        "y": 5
+		      },
+		      "b": {
+		        "x": 4,
+		        "y": 2
+		      },
+		      "type": "twoPoints",
+		      "label": "A",
+		      "style": {
+		        "dash": false,
+		        "color": "#a24d61",
+		        "strokeWidth": 3
+		      }
+		    },
+		    {
+		      "a": {
+		        "x": 0,
+		        "y": 2
+		      },
+		      "b": {
+		        "x": 8,
+		        "y": 10
+		      },
+		      "type": "twoPoints",
+		      "label": "B",
+		      "style": {
+		        "dash": false,
+		        "color": "#e1a158",
+		        "strokeWidth": 3
+		      }
+		    },
+		    {
+		      "a": {
+		        "x": 0,
+		        "y": 5
+		      },
+		      "b": {
+		        "x": 10,
+		        "y": 6
+		      },
+		      "type": "twoPoints",
+		      "label": "C",
+		      "style": {
+		        "dash": false,
+		        "color": "#77b05d",
+		        "strokeWidth": 3
+		      }
+		    }
+		  ],
+		  "title": "",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 6,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 6.3,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.5,
+		      "y": 6.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 6,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.5,
+		      "y": 6.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 6.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 6.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.5,
+		      "y": 6.3,
+		      "label": ""
+		    },
+		    {
+		      "x": 9,
+		      "y": 6.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 6.7,
 		      "label": ""
 		    }
 		  ]
@@ -243,136 +557,136 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "",
+		  "title": "Scatter plot with lines A, B, and C",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 2,
+		      "x": 1,
 		      "y": 9,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
+		      "x": 2,
 		      "y": 8,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.5,
+		      "x": 2.5,
 		      "y": 7.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 4,
+		      "x": 3,
 		      "y": 6.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 5.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 6.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 6.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 8.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 7.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
-		      "y": 7.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 3.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.5,
-		      "y": 3.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 4.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 5,
+		      "y": 6,
 		      "label": ""
 		    },
 		    {
 		      "x": 5,
-		      "y": 6.5,
+		      "y": 6,
 		      "label": ""
 		    },
 		    {
-		      "x": 7,
-		      "y": 5.2,
+		      "x": 4,
+		      "y": 5.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 7,
-		      "y": 4.7,
+		      "x": 6,
+		      "y": 6.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 9,
-		      "y": 3,
+		      "x": 6,
+		      "y": 6.7,
 		      "label": ""
 		    },
 		    {
 		      "x": 8,
+		      "y": 8.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 7.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 9,
+		      "y": 7.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 1,
+		      "y": 2,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 3.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.5,
+		      "y": 3.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 4.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 6.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 5.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 4.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 3,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
 		      "y": 4.4,
 		      "label": ""
 		    },
 		    {
-		      "x": 10,
+		      "x": 9,
 		      "y": 1.7,
 		      "label": ""
 		    }
@@ -394,476 +708,10 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9ca7c743947f256e
-	// Question: Which line fits the data graphed below?
-	// Widget key: image_1
-	test("scatter-plot - [x9ca7c743947f256e] Which line fits the data graphed below?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [
-		    {
-		      "a": {
-		        "x": 0,
-		        "y": 9
-		      },
-		      "b": {
-		        "x": 8,
-		        "y": 3
-		      },
-		      "type": "twoPoints",
-		      "label": "A",
-		      "style": {
-		        "dash": false,
-		        "color": "#a24d61",
-		        "strokeWidth": 3
-		      }
-		    },
-		    {
-		      "a": {
-		        "x": 0,
-		        "y": 2
-		      },
-		      "b": {
-		        "x": 8,
-		        "y": 8
-		      },
-		      "type": "twoPoints",
-		      "label": "B",
-		      "style": {
-		        "dash": false,
-		        "color": "#e1a158",
-		        "strokeWidth": 3
-		      }
-		    },
-		    {
-		      "a": {
-		        "x": 0,
-		        "y": 6
-		      },
-		      "b": {
-		        "x": 10,
-		        "y": 6
-		      },
-		      "type": "twoPoints",
-		      "label": "C",
-		      "style": {
-		        "dash": false,
-		        "color": "#77b05d",
-		        "strokeWidth": 3
-		      }
-		    }
-		  ],
-		  "title": "",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 9,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 8,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.5,
-		      "y": 7.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 6.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 5.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 6.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 6.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 7,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 8.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
-		      "y": 7.7,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x222b12b9596b616e
-	// Question: Choose the line of best fit
-	// Widget key: image_1
-	test("scatter-plot - [x222b12b9596b616e] Choose the line of best fit", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [
-		    {
-		      "a": {
-		        "x": 0,
-		        "y": 4
-		      },
-		      "b": {
-		        "x": 8,
-		        "y": 10
-		      },
-		      "type": "twoPoints",
-		      "label": "A",
-		      "style": {
-		        "dash": false,
-		        "color": "#a24d61",
-		        "strokeWidth": 2
-		      }
-		    },
-		    {
-		      "a": {
-		        "x": 0,
-		        "y": 2
-		      },
-		      "b": {
-		        "x": 8,
-		        "y": 8
-		      },
-		      "type": "twoPoints",
-		      "label": "B",
-		      "style": {
-		        "dash": false,
-		        "color": "#e1a158",
-		        "strokeWidth": 2
-		      }
-		    },
-		    {
-		      "a": {
-		        "x": 0,
-		        "y": 4
-		      },
-		      "b": {
-		        "x": 10,
-		        "y": 5
-		      },
-		      "type": "twoPoints",
-		      "label": "C",
-		      "style": {
-		        "dash": false,
-		        "color": "#77b05d",
-		        "strokeWidth": 2
-		      }
-		    }
-		  ],
-		  "title": "Scatter plot with lines A, B, and C",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "x",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "y",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 3,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 3.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 5,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 5.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 6.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 6.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 7,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 8.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
-		      "y": 7.7,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7512008e3e55be3d
-	// Question: Select the best-fit line for the scatterplot
-	// Widget key: image_1
-	test("scatter-plot - [x7512008e3e55be3d] Select the best-fit line for the scatterplot", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [
-		    {
-		      "a": {
-		        "x": 0,
-		        "y": 5
-		      },
-		      "b": {
-		        "x": 4,
-		        "y": 2
-		      },
-		      "type": "twoPoints",
-		      "label": "A",
-		      "style": {
-		        "dash": false,
-		        "color": "#a24d61",
-		        "strokeWidth": 3
-		      }
-		    },
-		    {
-		      "a": {
-		        "x": 0,
-		        "y": 2
-		      },
-		      "b": {
-		        "x": 8,
-		        "y": 10
-		      },
-		      "type": "twoPoints",
-		      "label": "B",
-		      "style": {
-		        "dash": false,
-		        "color": "#e1a158",
-		        "strokeWidth": 3
-		      }
-		    },
-		    {
-		      "a": {
-		        "x": 0,
-		        "y": 5
-		      },
-		      "b": {
-		        "x": 10,
-		        "y": 6
-		      },
-		      "type": "twoPoints",
-		      "label": "C",
-		      "style": {
-		        "dash": false,
-		        "color": "#77b05d",
-		        "strokeWidth": 3
-		      }
-		    }
-		  ],
-		  "title": "",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "x",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "y",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 5,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 5.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.5,
-		      "y": 5.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.5,
-		      "y": 5.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 5.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 5.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.5,
-		      "y": 5.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 5.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
-		      "y": 5.7,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x14d0c369f6f2f694
-	// Question: Which line fits the data?
+	// Question: Select the line that fits the scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [x14d0c369f6f2f694] Which line fits the data?", async () => {
+	test("scatter-plot - [x14d0c369f6f2f694] Select the line that fits the scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -882,7 +730,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "A",
 		      "style": {
 		        "dash": false,
-		        "color": "#a24d61",
+		        "color": "#A24D61",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -899,7 +747,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "B",
 		      "style": {
 		        "dash": false,
-		        "color": "#e1a158",
+		        "color": "#E1A158",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -916,7 +764,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "C",
 		      "style": {
 		        "dash": false,
-		        "color": "#77b05d",
+		        "color": "#77B05D",
 		        "strokeWidth": 3
 		      }
 		    }
@@ -940,62 +788,62 @@ describe("scatterPlot widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 1,
+		      "x": 2,
 		      "y": 8,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
+		      "x": 3,
 		      "y": 8.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.5,
+		      "x": 3.5,
 		      "y": 7.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
+		      "x": 4,
 		      "y": 7.9,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.5,
+		      "x": 4.5,
 		      "y": 7.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 4,
+		      "x": 5,
 		      "y": 7.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 5,
+		      "x": 6,
 		      "y": 7.4,
 		      "label": ""
 		    },
 		    {
-		      "x": 6,
-		      "y": 7.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.5,
-		      "y": 7.2,
-		      "label": ""
-		    },
-		    {
 		      "x": 7,
-		      "y": 7.1,
+		      "y": 7.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.5,
+		      "y": 7.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 8,
-		      "y": 7,
+		      "y": 7.1,
 		      "label": ""
 		    },
 		    {
 		      "x": 9,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
 		      "y": 6.9,
 		      "label": ""
 		    }
@@ -1018,9 +866,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x6186a5e0a9e7cfba
-	// Question: Which line fits the graphed data?
+	// Question: Which line fits the data graphed below?
 	// Widget key: image_1
-	test("scatter-plot - [x6186a5e0a9e7cfba] Which line fits the graphed data?", async () => {
+	test("scatter-plot - [x6186a5e0a9e7cfba] Which line fits the data graphed below?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1039,7 +887,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "A",
 		      "style": {
 		        "dash": false,
-		        "color": "#a24d61",
+		        "color": "#e1a158",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -1056,7 +904,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "B",
 		      "style": {
 		        "dash": false,
-		        "color": "#e1a158",
+		        "color": "#a24d61",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -1098,27 +946,57 @@ describe("scatterPlot widget tests", () => {
 		  "points": [
 		    {
 		      "x": 2,
-		      "y": 9,
+		      "y": 10,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 8,
+		      "y": 9,
 		      "label": ""
 		    },
 		    {
 		      "x": 3.5,
-		      "y": 7.5,
+		      "y": 8.5,
 		      "label": ""
 		    },
 		    {
 		      "x": 4,
-		      "y": 6.5,
+		      "y": 7.5,
 		      "label": ""
 		    },
 		    {
 		      "x": 1,
-		      "y": 1.2,
+		      "y": 2.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.5,
+		      "y": 4.9,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 3,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 4.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.5,
+		      "y": 4.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.5,
+		      "y": 3.3,
 		      "label": ""
 		    },
 		    {
@@ -1127,38 +1005,8 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 4.5,
-		      "y": 3.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 3.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.5,
-		      "y": 3.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.5,
-		      "y": 2.31,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 5,
-		      "label": ""
-		    },
-		    {
 		      "x": 5,
-		      "y": 6.5,
+		      "y": 7.5,
 		      "label": ""
 		    }
 		  ]
@@ -1180,9 +1028,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x57c5d35e1304fc74
-	// Question: Which line fits the data?
+	// Question: Select the line that fits the scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [x57c5d35e1304fc74] Which line fits the data?", async () => {
+	test("scatter-plot - [x57c5d35e1304fc74] Select the line that fits the scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1201,7 +1049,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "A",
 		      "style": {
 		        "dash": false,
-		        "color": "#a24d61",
+		        "color": "#e1a158",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -1218,7 +1066,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "B",
 		      "style": {
 		        "dash": false,
-		        "color": "#e1a158",
+		        "color": "#a24d61",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -1392,9 +1240,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x228fdf6f012f6a71
-	// Question: Choose the line that best fits the data
+	// Question: Select the line that fits the data
 	// Widget key: image_1
-	test("scatter-plot - [x228fdf6f012f6a71] Choose the line that best fits the data", async () => {
+	test("scatter-plot - [x228fdf6f012f6a71] Select the line that fits the data", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1457,14 +1305,14 @@ describe("scatterPlot widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "x",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "y",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
@@ -1472,67 +1320,67 @@ describe("scatterPlot widget tests", () => {
 		  "points": [
 		    {
 		      "x": 1,
-		      "y": 1.5,
+		      "y": 1.9,
 		      "label": ""
 		    },
 		    {
 		      "x": 2,
-		      "y": 3,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.5,
-		      "y": 3.7,
+		      "y": 2.5,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 3.5,
+		      "y": 4,
 		      "label": ""
 		    },
 		    {
 		      "x": 3.5,
-		      "y": 4.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 5.5,
+		      "y": 4.7,
 		      "label": ""
 		    },
 		    {
 		      "x": 4,
-		      "y": 4.9,
+		      "y": 4.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.5,
+		      "y": 5.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 5.9,
 		      "label": ""
 		    },
 		    {
 		      "x": 6,
-		      "y": 6.2,
+		      "y": 6.5,
 		      "label": ""
 		    },
 		    {
 		      "x": 7,
-		      "y": 7.1,
+		      "y": 7.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 8,
-		      "y": 8.5,
+		      "y": 8.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 0,
-		      "y": 0.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.5,
-		      "y": 7.7,
+		      "x": 8.5,
+		      "y": 8.7,
 		      "label": ""
 		    },
 		    {
 		      "x": 9,
-		      "y": 9,
+		      "y": 9.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 10,
 		      "label": ""
 		    }
 		  ]
@@ -1554,9 +1402,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa8a8517d614228cf
-	// Question: Identify the line that fits the scatterplot
+	// Question: Which line fits the data?
 	// Widget key: image_1
-	test("scatter-plot - [xa8a8517d614228cf] Identify the line that fits the scatterplot", async () => {
+	test("scatter-plot - [xa8a8517d614228cf] Which line fits the data?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1619,14 +1467,14 @@ describe("scatterPlot widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 10,
-		    "min": -1,
-		    "label": "",
+		    "min": 0,
+		    "label": "y",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
@@ -1634,62 +1482,62 @@ describe("scatterPlot widget tests", () => {
 		  "points": [
 		    {
 		      "x": 6,
-		      "y": 4,
+		      "y": 5,
 		      "label": ""
 		    },
 		    {
 		      "x": 8.5,
-		      "y": 1.5,
+		      "y": 2.5,
 		      "label": ""
 		    },
 		    {
 		      "x": 7,
-		      "y": 4.7,
+		      "y": 5.7,
 		      "label": ""
 		    },
 		    {
 		      "x": 9,
-		      "y": 6.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 6.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
 		      "y": 7.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 6,
-		      "y": 3,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 2.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 2.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 0.5,
-		      "label": ""
-		    },
-		    {
 		      "x": 8,
-		      "y": 1.8,
+		      "y": 7.4,
 		      "label": ""
 		    },
 		    {
 		      "x": 10,
-		      "y": -0.7,
+		      "y": 8.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 4,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 3.8,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 3.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 9,
+		      "y": 1.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 2.8,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 0.3,
 		      "label": ""
 		    }
 		  ]
@@ -1711,9 +1559,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xb0becd911e53da10
-	// Question: Identify the best-fit line from a scatterplot
+	// Question: Select the best-fit line from a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [xb0becd911e53da10] Identify the best-fit line from a scatterplot", async () => {
+	test("scatter-plot - [xb0becd911e53da10] Select the best-fit line from a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1732,7 +1580,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "A",
 		      "style": {
 		        "dash": false,
-		        "color": "#a24d61",
+		        "color": "#e1a158",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -1749,7 +1597,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "B",
 		      "style": {
 		        "dash": false,
-		        "color": "#e1a158",
+		        "color": "#a24d61",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -1776,76 +1624,76 @@ describe("scatterPlot widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 0,
+		      "x": 1,
 		      "y": 0.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 1,
+		      "x": 2,
 		      "y": 1.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
+		      "x": 3,
 		      "y": 3,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.5,
+		      "x": 3.5,
 		      "y": 3.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
+		      "x": 4,
 		      "y": 4.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.5,
+		      "x": 4.5,
 		      "y": 5,
 		      "label": ""
 		    },
 		    {
-		      "x": 4,
+		      "x": 5,
 		      "y": 5.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 5,
+		      "x": 6,
 		      "y": 7,
 		      "label": ""
 		    },
 		    {
-		      "x": 6,
+		      "x": 7,
 		      "y": 7.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 7,
+		      "x": 8,
 		      "y": 8.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.5,
+		      "x": 8.5,
 		      "y": 9.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 8,
+		      "x": 9,
 		      "y": 9.5,
 		      "label": ""
 		    }
@@ -1868,9 +1716,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x5200d782db56929b
-	// Question: Which line fits the data?
+	// Question: Choose the line that fits the scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [x5200d782db56929b] Which line fits the data?", async () => {
+	test("scatter-plot - [x5200d782db56929b] Choose the line that fits the scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1947,6 +1795,11 @@ describe("scatterPlot widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
+		      "x": 0,
+		      "y": 0.5,
+		      "label": ""
+		    },
+		    {
 		      "x": 1,
 		      "y": 1.5,
 		      "label": ""
@@ -1972,13 +1825,13 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 5,
-		      "y": 7,
+		      "x": 4,
+		      "y": 6.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 4,
-		      "y": 6.5,
+		      "x": 5,
+		      "y": 7,
 		      "label": ""
 		    },
 		    {
@@ -1992,18 +1845,13 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 8,
-		      "y": 9.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 0,
-		      "y": 0.5,
-		      "label": ""
-		    },
-		    {
 		      "x": 7.5,
 		      "y": 9.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 9.5,
 		      "label": ""
 		    }
 		  ]
@@ -2025,9 +1873,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xd7733c03ece0da3d
-	// Question: Choose the line that fits the data
+	// Question: Select the line that fits the data
 	// Widget key: image_1
-	test("scatter-plot - [xd7733c03ece0da3d] Choose the line that fits the data", async () => {
+	test("scatter-plot - [xd7733c03ece0da3d] Select the line that fits the data", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2085,81 +1933,81 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "",
+		  "title": "Scatterplot with lines A, B, and C",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "x",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "y",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 1,
+		      "x": 0,
 		      "y": 7.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
+		      "x": 1,
 		      "y": 8,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
+		      "x": 2,
 		      "y": 7,
 		      "label": ""
 		    },
 		    {
+		      "x": 2.5,
+		      "y": 6.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 6.5,
+		      "label": ""
+		    },
+		    {
 		      "x": 3.5,
-		      "y": 6.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 6.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.5,
 		      "y": 5.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 5,
+		      "x": 4,
 		      "y": 6,
 		      "label": ""
 		    },
 		    {
-		      "x": 6,
+		      "x": 5,
 		      "y": 5.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 7,
+		      "x": 6,
 		      "y": 5.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 8,
+		      "x": 7,
 		      "y": 5.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 9,
+		      "x": 8,
 		      "y": 4.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 10,
+		      "x": 9,
 		      "y": 3.7,
 		      "label": ""
 		    }
@@ -2182,9 +2030,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xe4f4dc1016dd8ef2
-	// Question: Identify the best-fitting line on a scatterplot
+	// Question: Select the line that best fits the data
 	// Widget key: image_1
-	test("scatter-plot - [xe4f4dc1016dd8ef2] Identify the best-fitting line on a scatterplot", async () => {
+	test("scatter-plot - [xe4f4dc1016dd8ef2] Select the line that best fits the data", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2242,10 +2090,10 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "",
+		  "title": "Scatter plot with lines A, B, and C",
 		  "width": 425,
 		  "xAxis": {
-		    "max": 11,
+		    "max": 10,
 		    "min": 0,
 		    "label": "",
 		    "gridLines": true,
@@ -2261,53 +2109,58 @@ describe("scatterPlot widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 2,
+		      "x": 1,
 		      "y": 8,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
+		      "x": 2,
 		      "y": 7,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.5,
+		      "x": 2.5,
 		      "y": 6.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 6.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.5,
+		      "y": 5.9,
 		      "label": ""
 		    },
 		    {
 		      "x": 4,
-		      "y": 6.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.5,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 5,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
 		      "y": 5.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 7,
+		      "x": 5,
+		      "y": 5,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
 		      "y": 4.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 7,
+		      "x": 6,
 		      "y": 4.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 8,
+		      "x": 7,
 		      "y": 3.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 2.7,
 		      "label": ""
 		    },
 		    {
@@ -2316,12 +2169,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 10,
-		      "y": 2.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 10.5,
+		      "x": 9.5,
 		      "y": 2,
 		      "label": ""
 		    }
@@ -2344,9 +2192,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x86ce0f1219078d57
-	// Question: Which line fits the data graphed below?
+	// Question: Choose the line that fits the graphed data
 	// Widget key: image_1
-	test("scatter-plot - [x86ce0f1219078d57] Which line fits the data graphed below?", async () => {
+	test("scatter-plot - [x86ce0f1219078d57] Choose the line that fits the graphed data", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2365,7 +2213,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "A",
 		      "style": {
 		        "dash": false,
-		        "color": "#E1A158",
+		        "color": "#e1a158",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -2382,7 +2230,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "B",
 		      "style": {
 		        "dash": false,
-		        "color": "#A24D61",
+		        "color": "#a24d61",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -2399,141 +2247,141 @@ describe("scatterPlot widget tests", () => {
 		      "label": "C",
 		      "style": {
 		        "dash": false,
-		        "color": "#77B05D",
+		        "color": "#77b05d",
 		        "strokeWidth": 3
 		      }
 		    }
 		  ],
-		  "title": "",
+		  "title": "Scatter plot with lines A, B, and C",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 2,
+		      "x": 1,
 		      "y": 7,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
+		      "x": 2,
 		      "y": 6,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.5,
+		      "x": 2.5,
 		      "y": 5.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 4,
+		      "x": 3,
 		      "y": 4.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 3.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 4.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 4.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 6.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 5.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
-		      "y": 5.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
-		      "y": 0,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 1.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.5,
-		      "y": 1.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 2.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 3,
+		      "y": 4,
 		      "label": ""
 		    },
 		    {
 		      "x": 5,
-		      "y": 4.5,
+		      "y": 4,
 		      "label": ""
 		    },
 		    {
-		      "x": 7,
-		      "y": 3.2,
+		      "x": 4,
+		      "y": 3.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 7,
-		      "y": 2.7,
+		      "x": 6,
+		      "y": 4.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 9,
-		      "y": 1,
+		      "x": 6,
+		      "y": 4.7,
 		      "label": ""
 		    },
 		    {
 		      "x": 8,
+		      "y": 6.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 5.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 9,
+		      "y": 5.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 1,
+		      "y": 0,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 1.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.5,
+		      "y": 1.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 2.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 3,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 4.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 3.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 2.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 1,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
 		      "y": 2.4,
 		      "label": ""
 		    },
 		    {
-		      "x": 10,
+		      "x": 9,
 		      "y": 0.7,
 		      "label": ""
 		    }
@@ -2556,9 +2404,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xbeb3b2bec2f63461
-	// Question: Select the line that fits the scatterplot
+	// Question: Select the line that fits the data
 	// Widget key: image_1
-	test("scatter-plot - [xbeb3b2bec2f63461] Select the line that fits the scatterplot", async () => {
+	test("scatter-plot - [xbeb3b2bec2f63461] Select the line that fits the data", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2616,19 +2464,19 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "Scatterplot with lines A, B, and C",
+		  "title": "",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "x",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "y",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
@@ -2768,9 +2616,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7cf297ed141d8624
-	// Question: Identify the best-fit line on a scatterplot
+	// Question: Which line fits the data shown?
 	// Widget key: image_1
-	test("scatter-plot - [x7cf297ed141d8624] Identify the best-fit line on a scatterplot", async () => {
+	test("scatter-plot - [x7cf297ed141d8624] Which line fits the data shown?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2833,82 +2681,82 @@ describe("scatterPlot widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "x",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "y",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 1.8,
+		      "x": 1.81818,
+		      "y": 2.54545,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
-		      "y": 3.5,
+		      "x": 2.72727,
+		      "y": 4.09091,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.5,
-		      "y": 3.9,
+		      "x": 3.18182,
+		      "y": 4.45455,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
-		      "y": 5.5,
+		      "x": 3.63636,
+		      "y": 5.90909,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.5,
-		      "y": 6,
+		      "x": 4.09091,
+		      "y": 6.36364,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.45455,
+		      "y": 9.09091,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.54545,
+		      "y": 7.18182,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.36364,
+		      "y": 9.81818,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.90909,
+		      "y": 9.54545,
 		      "label": ""
 		    },
 		    {
 		      "x": 5,
-		      "y": 9,
+		      "y": 8.18182,
 		      "label": ""
 		    },
 		    {
-		      "x": 4,
-		      "y": 6.9,
+		      "x": 0.90909,
+		      "y": 1.36364,
 		      "label": ""
 		    },
 		    {
-		      "x": 6,
-		      "y": 9.8,
+		      "x": 2.27273,
+		      "y": 3.63636,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.5,
-		      "y": 9.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.5,
-		      "y": 8,
-		      "label": ""
-		    },
-		    {
-		      "x": 0,
-		      "y": 0.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.5,
-		      "y": 3,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.5,
-		      "y": 1.5,
+		      "x": 1.36364,
+		      "y": 2.27273,
 		      "label": ""
 		    }
 		  ]
@@ -2930,9 +2778,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x6b22f4de13727b08
-	// Question: Which line fits the data graphed below?
+	// Question: Select the line that fits the graphed data
 	// Widget key: image_1
-	test("scatter-plot - [x6b22f4de13727b08] Which line fits the data graphed below?", async () => {
+	test("scatter-plot - [x6b22f4de13727b08] Select the line that fits the graphed data", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2990,107 +2838,57 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "",
+		  "title": "Scatterplot with lines A, B, and C",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 1,
+		      "x": 2,
 		      "y": 7,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
+		      "x": 3,
 		      "y": 6,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.5,
+		      "x": 3.5,
 		      "y": 5.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
+		      "x": 4,
 		      "y": 4.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
+		      "x": 4,
+		      "y": 4,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
 		      "y": 4,
 		      "label": ""
 		    },
 		    {
 		      "x": 5,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
 		      "y": 3.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 1,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 0,
-		      "label": ""
-		    },
-		    {
-		      "x": 1,
-		      "y": 3,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
-		      "y": 2.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.5,
-		      "y": 2.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 1.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 1.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 1.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 2.7,
 		      "label": ""
 		    },
 		    {
@@ -3099,12 +2897,62 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
+		      "x": 10,
+		      "y": 0,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 3,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 2.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.5,
+		      "y": 2.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 2,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 1.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 1.7,
+		      "label": ""
+		    },
+		    {
 		      "x": 7,
-		      "y": 2.4,
+		      "y": 1.3,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 2.7,
 		      "label": ""
 		    },
 		    {
 		      "x": 9,
+		      "y": 1,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 2.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
 		      "y": 0.7,
 		      "label": ""
 		    }
@@ -3127,9 +2975,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa85628cc4e141747
-	// Question: Identify the line that fits the data
+	// Question: Select the line that best fits the data
 	// Widget key: image_1
-	test("scatter-plot - [xa85628cc4e141747] Identify the line that fits the data", async () => {
+	test("scatter-plot - [xa85628cc4e141747] Select the line that best fits the data", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3148,7 +2996,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "A",
 		      "style": {
 		        "dash": false,
-		        "color": "#E1A158",
+		        "color": "#e1a158",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -3165,7 +3013,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "B",
 		      "style": {
 		        "dash": false,
-		        "color": "#A24D61",
+		        "color": "#a24d61",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -3182,7 +3030,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "C",
 		      "style": {
 		        "dash": false,
-		        "color": "#77B05D",
+		        "color": "#77b05d",
 		        "strokeWidth": 3
 		      }
 		    }
@@ -3339,9 +3187,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x8d4e731d2d451cb1
-	// Question: Select the line that best fits the data
+	// Question: Select the line that fits the data
 	// Widget key: image_1
-	test("scatter-plot - [x8d4e731d2d451cb1] Select the line that best fits the data", async () => {
+	test("scatter-plot - [x8d4e731d2d451cb1] Select the line that fits the data", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3360,7 +3208,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "A",
 		      "style": {
 		        "dash": false,
-		        "color": "#e1a158",
+		        "color": "#a24d61",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -3377,7 +3225,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "B",
 		      "style": {
 		        "dash": false,
-		        "color": "#a24d61",
+		        "color": "#e1a158",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -3404,22 +3252,32 @@ describe("scatterPlot widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "x",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "y",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 2,
+		      "x": 1,
 		      "y": 1,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 1.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.5,
+		      "y": 1.5,
 		      "label": ""
 		    },
 		    {
@@ -3429,51 +3287,41 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 3.5,
-		      "y": 1.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 1.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.5,
-		      "y": 0.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
 		      "y": 0.9,
 		      "label": ""
 		    },
 		    {
 		      "x": 5,
+		      "y": 0.9,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
 		      "y": 1,
 		      "label": ""
 		    },
 		    {
-		      "x": 7,
+		      "x": 6,
 		      "y": 1.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.7,
+		      "x": 6.7,
 		      "y": 0.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 9,
+		      "x": 8,
 		      "y": 0.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 8,
+		      "x": 7,
 		      "y": 1.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 10,
+		      "x": 9,
 		      "y": 1,
 		      "label": ""
 		    }
@@ -3496,9 +3344,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x0f25c2a2befde7fe
-	// Question: Which line fits the data graphed below?
+	// Question: Select the line that fits the data
 	// Widget key: image_1
-	test("scatter-plot - [x0f25c2a2befde7fe] Which line fits the data graphed below?", async () => {
+	test("scatter-plot - [x0f25c2a2befde7fe] Select the line that fits the data", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3517,7 +3365,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "A",
 		      "style": {
 		        "dash": false,
-		        "color": "#e1a158",
+		        "color": "#a24d61",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -3534,7 +3382,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "B",
 		      "style": {
 		        "dash": false,
-		        "color": "#a24d61",
+		        "color": "#e1a158",
 		        "strokeWidth": 3
 		      }
 		    },
@@ -3556,19 +3404,19 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "Scatter plot with lines A, B, and C",
+		  "title": "",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "x",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "y",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
@@ -3576,62 +3424,62 @@ describe("scatterPlot widget tests", () => {
 		  "points": [
 		    {
 		      "x": 2,
-		      "y": 3,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 4.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.5,
-		      "y": 4.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.5,
 		      "y": 2,
 		      "label": ""
 		    },
 		    {
+		      "x": 3,
+		      "y": 3.3,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.5,
+		      "y": 3.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.5,
+		      "y": 1,
+		      "label": ""
+		    },
+		    {
 		      "x": 4,
-		      "y": 5,
+		      "y": 4,
 		      "label": ""
 		    },
 		    {
 		      "x": 6,
-		      "y": 6,
+		      "y": 5,
 		      "label": ""
 		    },
 		    {
 		      "x": 5,
-		      "y": 5.5,
+		      "y": 4.5,
 		      "label": ""
 		    },
 		    {
 		      "x": 7,
-		      "y": 5.2,
+		      "y": 4.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 7,
-		      "y": 4.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
 		      "y": 3.7,
 		      "label": ""
 		    },
 		    {
+		      "x": 9,
+		      "y": 2.7,
+		      "label": ""
+		    },
+		    {
 		      "x": 8,
-		      "y": 4.4,
+		      "y": 3.4,
 		      "label": ""
 		    },
 		    {
 		      "x": 10,
-		      "y": 2.7,
+		      "y": 1.7,
 		      "label": ""
 		    }
 		  ]
@@ -3653,9 +3501,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xcb366691a27a0fe0
-	// Question: Select the line that fits the scatterplot
+	// Question: Which line fits the data?
 	// Widget key: image_1
-	test("scatter-plot - [xcb366691a27a0fe0] Select the line that fits the scatterplot", async () => {
+	test("scatter-plot - [xcb366691a27a0fe0] Which line fits the data?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3718,47 +3566,32 @@ describe("scatterPlot widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 3,
-		      "label": ""
-		    },
-		    {
 		      "x": 2,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
+		      "y": 4,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 4.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.4,
-		      "y": 1,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
 		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 3,
 		      "label": ""
 		    },
 		    {
@@ -3767,78 +3600,158 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 5,
-		      "y": 7.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 7.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 0.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 1.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 2.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 1,
+		      "x": 4.4,
 		      "y": 2,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
-		      "y": 3.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.5,
-		      "y": 3.5,
+		      "x": 6,
+		      "y": 8,
 		      "label": ""
 		    },
 		    {
 		      "x": 5,
-		      "y": 1,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 3.5,
+		      "y": 6.5,
 		      "label": ""
 		    },
 		    {
 		      "x": 6,
-		      "y": 7.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 2.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 3,
+		      "y": 8.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 7,
-		      "y": 8.4,
+		      "y": 8.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 1,
-		      "y": 5,
+		      "x": 9,
+		      "y": 1.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 2.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 3.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 3,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 4.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.5,
+		      "y": 4.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 5.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 2,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 4.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 8.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 3.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 9,
+		      "y": 4,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 9.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 6,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf1525a9c62d5925c
+	// Question: Complete a linear equation from a graph of coral growth
+	// Widget key: image_1
+	test("scatter-plot - [xf1525a9c62d5925c] Complete a linear equation from a graph of coral growth", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Age vs. Height of Coral",
+		  "width": 300,
+		  "xAxis": {
+		    "max": 7,
+		    "min": 0,
+		    "label": "a=age in years",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 50,
+		    "min": 0,
+		    "label": "h=height in centimeters",
+		    "gridLines": true,
+		    "tickInterval": 5
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 15,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 30,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 45,
 		      "label": ""
 		    }
 		  ]
@@ -3881,26 +3794,26 @@ describe("scatterPlot widget tests", () => {
 		      "label": "",
 		      "style": {
 		        "dash": false,
-		        "color": "#29abca",
+		        "color": "#29ABCA",
 		        "strokeWidth": 2
 		      }
 		    }
 		  ],
-		  "title": "Study time and test score",
+		  "title": "Study time (hours) vs. score",
 		  "width": 366,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "Study time in hours",
+		    "label": "Study time (hours)",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
-		    "max": 100,
-		    "min": 0,
+		    "max": 90,
+		    "min": 40,
 		    "label": "Score",
 		    "gridLines": true,
-		    "tickInterval": 10
+		    "tickInterval": 5
 		  },
 		  "height": 369,
 		  "points": [
@@ -4059,14 +3972,14 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "",
-		  "width": 363.303,
+		  "title": "Price vs. kilometers driven",
+		  "width": 363,
 		  "xAxis": {
 		    "max": 100,
 		    "min": 0,
 		    "label": "Kilometers driven in thousands",
 		    "gridLines": true,
-		    "tickInterval": 10
+		    "tickInterval": 5
 		  },
 		  "yAxis": {
 		    "max": 40,
@@ -4075,7 +3988,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 357.143,
+		  "height": 357,
 		  "points": [
 		    {
 		      "x": 0,
@@ -4151,9 +4064,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa85df4f8df90e119
-	// Question: Select a linear model and predict complaints
+	// Question: Choose a linear model and estimate complaints
 	// Widget key: image_1
-	test("scatter-plot - [xa85df4f8df90e119] Select a linear model and predict complaints", async () => {
+	test("scatter-plot - [xa85df4f8df90e119] Choose a linear model and estimate complaints", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4187,7 +4100,7 @@ describe("scatterPlot widget tests", () => {
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
-		    "max": 50,
+		    "max": 60,
 		    "min": 0,
 		    "label": "Number of complaints",
 		    "gridLines": true,
@@ -4249,9 +4162,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x5aa1ae3e68bfd8f8
-	// Question: Select a linear model from a scatter plot and make a prediction
+	// Question: Select a linear model from a scatterplot and make a prediction (elephants)
 	// Widget key: image_1
-	test("scatter-plot - [x5aa1ae3e68bfd8f8] Select a linear model from a scatter plot and make a prediction", async () => {
+	test("scatter-plot - [x5aa1ae3e68bfd8f8] Select a linear model from a scatterplot and make a prediction (elephants)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4311,9 +4224,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xd4bfc0b83a8bb66b
-	// Question: Select a linear model and estimate Arthur's weight loss
+	// Question: Select a linear model and estimate weight loss
 	// Widget key: image_1
-	test("scatter-plot - [xd4bfc0b83a8bb66b] Select a linear model and estimate Arthur's weight loss", async () => {
+	test("scatter-plot - [xd4bfc0b83a8bb66b] Select a linear model and estimate weight loss", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4332,7 +4245,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": "",
 		      "style": {
 		        "dash": false,
-		        "color": "#29ABCA",
+		        "color": "#29abca",
 		        "strokeWidth": 2
 		      }
 		    }
@@ -4356,18 +4269,8 @@ describe("scatterPlot widget tests", () => {
 		  "height": 370,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 0.8,
-		      "label": ""
-		    },
-		    {
 		      "x": 2,
-		      "y": 1.6,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 1.9,
+		      "y": 1.7,
 		      "label": ""
 		    },
 		    {
@@ -4376,13 +4279,18 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 5,
-		      "y": 2.7,
+		      "x": 6,
+		      "y": 3.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 6,
-		      "y": 3.1,
+		      "x": 8,
+		      "y": 3.9,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 4.8,
 		      "label": ""
 		    }
 		  ]
@@ -4404,9 +4312,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x90585176c8c88ccc
-	// Question: Select a linear model and make a prediction (mood vs. hours online)
+	// Question: Select a linear model and estimate a mood rating
 	// Widget key: image_1
-	test("scatter-plot - [x90585176c8c88ccc] Select a linear model and make a prediction (mood vs. hours online)", async () => {
+	test("scatter-plot - [x90585176c8c88ccc] Select a linear model and estimate a mood rating", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4530,15 +4438,15 @@ describe("scatterPlot widget tests", () => {
 		        "y": 6
 		      },
 		      "type": "twoPoints",
-		      "label": "",
+		      "label": "Model",
 		      "style": {
 		        "dash": false,
-		        "color": "#29abca",
+		        "color": "#29ABCA",
 		        "strokeWidth": 2
 		      }
 		    }
 		  ],
-		  "title": "",
+		  "title": "Average March temperature vs. first bloom date in April",
 		  "width": 382,
 		  "xAxis": {
 		    "max": 11,
@@ -4549,41 +4457,41 @@ describe("scatterPlot widget tests", () => {
 		  },
 		  "yAxis": {
 		    "max": 30,
-		    "min": 0,
+		    "min": 6,
 		    "label": "Date in April of first bloom",
 		    "gridLines": true,
-		    "tickInterval": 1
+		    "tickInterval": 2
 		  },
 		  "height": 368,
 		  "points": [
 		    {
 		      "x": 0.25,
-		      "y": 29,
-		      "label": ""
-		    },
-		    {
-		      "x": 10.4,
-		      "y": 8,
-		      "label": ""
-		    },
-		    {
-		      "x": 1,
-		      "y": 24,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.1,
-		      "y": 21,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 23,
+		      "y": 28.064516129032256,
 		      "label": ""
 		    },
 		    {
 		      "x": 0.42,
-		      "y": 26,
+		      "y": 25.161290322580644,
+		      "label": ""
+		    },
+		    {
+		      "x": 1,
+		      "y": 23.225806451612904,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 22.258064516129032,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.1,
+		      "y": 20.322580645161292,
+		      "label": ""
+		    },
+		    {
+		      "x": 10.4,
+		      "y": 7.741935483870968,
 		      "label": ""
 		    }
 		  ]
@@ -4605,9 +4513,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x6b3ec5fadf515181
-	// Question: Select a linear model and estimate a rating from a scatter plot
+	// Question: Select a linear model from a scatter plot and make a prediction
 	// Widget key: image_1
-	test("scatter-plot - [x6b3ec5fadf515181] Select a linear model and estimate a rating from a scatter plot", async () => {
+	test("scatter-plot - [x6b3ec5fadf515181] Select a linear model from a scatter plot and make a prediction", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4631,7 +4539,7 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "Rating vs. Cost per package",
+		  "title": "",
 		  "width": 360,
 		  "xAxis": {
 		    "max": 3,
@@ -4641,132 +4549,72 @@ describe("scatterPlot widget tests", () => {
 		    "tickInterval": 0.5
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 6.5,
 		    "min": 0,
 		    "label": "Rating",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 368,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 0.91,
-		      "y": 2.22,
+		      "x": 0.8,
+		      "y": 0.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.09,
-		      "y": 6.3,
+		      "x": 1,
+		      "y": 2,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.07,
-		      "y": 5.65,
+		      "x": 1.2,
+		      "y": 2.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.61,
-		      "y": 5.68,
+		      "x": 1.3,
+		      "y": 2.9,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.5,
+		      "y": 3.3,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.6,
+		      "y": 3.7,
 		      "label": ""
 		    },
 		    {
 		      "x": 1.8,
-		      "y": 4.67,
+		      "y": 4.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.22,
-		      "y": 5.68,
+		      "x": 2,
+		      "y": 4.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.13,
-		      "y": 4.88,
+		      "x": 2.2,
+		      "y": 5,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.73,
-		      "y": 3.47,
+		      "x": 2.4,
+		      "y": 5.3,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.58,
-		      "y": 4.16,
+		      "x": 2.6,
+		      "y": 5.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.84,
-		      "y": 6.19,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.73,
-		      "y": 3.17,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.04,
-		      "y": 5.33,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.32,
-		      "y": 5.27,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.91,
-		      "y": 3.43,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.96,
-		      "y": 4.43,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.33,
-		      "y": 6.16,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.33,
-		      "y": 6.56,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.82,
-		      "y": 5.66,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.25,
-		      "y": 3.04,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.82,
-		      "y": 0.59,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.52,
-		      "y": 4.16,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.72,
-		      "y": 6.15,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.44,
-		      "y": 2.32,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.64,
-		      "y": 3.5,
+		      "x": 2.8,
+		      "y": 5.9,
 		      "label": ""
 		    }
 		  ]
@@ -4814,19 +4662,19 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "Percentage of adults who smoke vs. years since 1967",
+		  "title": "Percent of adults who smoke vs. years since 1967",
 		  "width": 371,
 		  "xAxis": {
-		    "max": 40,
+		    "max": 45,
 		    "min": 0,
 		    "label": "Years since 1967",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
 		  "yAxis": {
-		    "max": 50,
+		    "max": 60,
 		    "min": 0,
-		    "label": "Percentage of adults who smoke",
+		    "label": "Percent of adults who smoke",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
@@ -4834,47 +4682,67 @@ describe("scatterPlot widget tests", () => {
 		  "points": [
 		    {
 		      "x": 0,
-		      "y": 40,
+		      "y": 42,
 		      "label": ""
 		    },
 		    {
-		      "x": 5,
-		      "y": 38,
+		      "x": 4,
+		      "y": 37,
 		      "label": ""
 		    },
 		    {
-		      "x": 10,
-		      "y": 35,
+		      "x": 9,
+		      "y": 37,
 		      "label": ""
 		    },
 		    {
-		      "x": 15,
+		      "x": 13,
+		      "y": 34,
+		      "label": ""
+		    },
+		    {
+		      "x": 18,
 		      "y": 33,
 		      "label": ""
 		    },
 		    {
 		      "x": 20,
-		      "y": 30.5,
+		      "y": 30,
 		      "label": ""
 		    },
 		    {
-		      "x": 25,
+		      "x": 22,
 		      "y": 29,
 		      "label": ""
 		    },
 		    {
-		      "x": 30,
-		      "y": 26,
+		      "x": 25,
+		      "y": 25.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 32,
+		      "y": 24.7,
 		      "label": ""
 		    },
 		    {
 		      "x": 35,
-		      "y": 22.5,
+		      "y": 23,
 		      "label": ""
 		    },
 		    {
-		      "x": 40,
-		      "y": 20.5,
+		      "x": 37,
+		      "y": 22,
+		      "label": ""
+		    },
+		    {
+		      "x": 39,
+		      "y": 20.9,
+		      "label": ""
+		    },
+		    {
+		      "x": 41,
+		      "y": 20.8,
 		      "label": ""
 		    }
 		  ]
@@ -4906,8 +4774,8 @@ describe("scatterPlot widget tests", () => {
 		  "lines": [
 		    {
 		      "a": {
-		        "x": 0,
-		        "y": 1.5
+		        "x": 0.5,
+		        "y": 2.5
 		      },
 		      "b": {
 		        "x": 4,
@@ -4925,7 +4793,7 @@ describe("scatterPlot widget tests", () => {
 		  "title": "",
 		  "width": 358.5,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 20,
 		    "min": 0,
 		    "label": "Time in hours",
 		    "gridLines": true,
@@ -4936,32 +4804,32 @@ describe("scatterPlot widget tests", () => {
 		    "min": 0,
 		    "label": "Distance in kilometers",
 		    "gridLines": true,
-		    "tickInterval": 2
+		    "tickInterval": 1
 		  },
 		  "height": 354,
 		  "points": [
 		    {
-		      "x": 2,
+		      "x": 4,
 		      "y": 5,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.75,
+		      "x": 5.5,
 		      "y": 8,
 		      "label": ""
 		    },
 		    {
-		      "x": 4,
+		      "x": 8,
 		      "y": 9.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.25,
+		      "x": 14.5,
 		      "y": 16,
 		      "label": ""
 		    },
 		    {
-		      "x": 8.5,
+		      "x": 17,
 		      "y": 18,
 		      "label": ""
 		    }
@@ -4984,9 +4852,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x10959acf405ba993
-	// Question: Select a linear model from a scatterplot and estimate a future rent
+	// Question: Select a linear model and estimate a 2020 NYC rent
 	// Widget key: image_1
-	test("scatter-plot - [x10959acf405ba993] Select a linear model from a scatterplot and estimate a future rent", async () => {
+	test("scatter-plot - [x10959acf405ba993] Select a linear model and estimate a 2020 NYC rent", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5010,18 +4878,18 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "",
+		  "title": "Average rent vs. years after 2000",
 		  "width": 375,
 		  "xAxis": {
-		    "max": 13,
+		    "max": 14,
 		    "min": 0,
 		    "label": "Years after 2000",
 		    "gridLines": true,
-		    "tickInterval": 1
+		    "tickInterval": 2
 		  },
 		  "yAxis": {
 		    "max": 1300,
-		    "min": 700,
+		    "min": 750,
 		    "label": "Average rent in dollars per month",
 		    "gridLines": true,
 		    "tickInterval": 100
@@ -5034,8 +4902,63 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
+		      "x": 1,
+		      "y": 835,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 870,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 910,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 950,
+		      "label": ""
+		    },
+		    {
 		      "x": 5,
-		      "y": 1000,
+		      "y": 995,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 1030,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 1070,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 1110,
+		      "label": ""
+		    },
+		    {
+		      "x": 9,
+		      "y": 1145,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 1180,
+		      "label": ""
+		    },
+		    {
+		      "x": 11,
+		      "y": 1210,
+		      "label": ""
+		    },
+		    {
+		      "x": 12,
+		      "y": 1235,
 		      "label": ""
 		    },
 		    {
@@ -5062,9 +4985,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x2e6fa3c5b7322df7
-	// Question: Select a linear model from a scatterplot and estimate kilometers driven
+	// Question: Select a linear model and estimate kilometers driven
 	// Widget key: image_1
-	test("scatter-plot - [x2e6fa3c5b7322df7] Select a linear model from a scatterplot and estimate kilometers driven", async () => {
+	test("scatter-plot - [x2e6fa3c5b7322df7] Select a linear model and estimate kilometers driven", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5107,83 +5030,73 @@ describe("scatterPlot widget tests", () => {
 		  "height": 352,
 		  "points": [
 		    {
-		      "x": 0.083,
-		      "y": 0.2,
+		      "x": 0.75,
+		      "y": 0.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 0.583,
-		      "y": 0.733,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.917,
+		      "x": 0.9,
 		      "y": 1,
 		      "label": ""
 		    },
 		    {
 		      "x": 1,
-		      "y": 0.853,
+		      "y": 1.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.1,
+		      "y": 1.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.3,
+		      "y": 2.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 1.5,
-		      "y": 1.667,
+		      "y": 2.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.833,
-		      "y": 2.133,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.083,
+		      "x": 1.7,
 		      "y": 3,
 		      "label": ""
 		    },
 		    {
+		      "x": 1.9,
+		      "y": 3.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.1,
+		      "y": 4,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.3,
+		      "y": 4.5,
+		      "label": ""
+		    },
+		    {
 		      "x": 2.5,
-		      "y": 2.8,
+		      "y": 5,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.917,
-		      "y": 3.2,
+		      "x": 2.7,
+		      "y": 5.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.167,
-		      "y": 2.933,
+		      "x": 2.9,
+		      "y": 6.3,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.333,
-		      "y": 4.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.417,
-		      "y": 5.733,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.5,
-		      "y": 6.667,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.667,
-		      "y": 7.667,
-		      "label": ""
-		    },
-		    {
-		      "x": 8.333,
-		      "y": 8.667,
-		      "label": ""
-		    },
-		    {
-		      "x": 9.583,
-		      "y": 9.333,
+		      "x": 3,
+		      "y": 7,
 		      "label": ""
 		    }
 		  ]
@@ -5205,9 +5118,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x6ec6d9ce368dcdae
-	// Question: Select a linear model and estimate a score
+	// Question: Select a linear model from a scatterplot and predict a score
 	// Widget key: image_1
-	test("scatter-plot - [x6ec6d9ce368dcdae] Select a linear model and estimate a score", async () => {
+	test("scatter-plot - [x6ec6d9ce368dcdae] Select a linear model from a scatterplot and predict a score", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5236,9 +5149,9 @@ describe("scatterPlot widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": 0,
-		    "label": "Study time (hours)",
+		    "label": "Study time in hours",
 		    "gridLines": true,
-		    "tickInterval": 0.5
+		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 110,
@@ -5252,82 +5165,87 @@ describe("scatterPlot widget tests", () => {
 		    {
 		      "x": 0.5,
 		      "y": 45,
-		      "label": ""
+		      "label": "(0.5, 45)"
 		    },
 		    {
 		      "x": 0.7,
-		      "y": 50,
-		      "label": ""
+		      "y": 52,
+		      "label": "(0.7, 52)"
 		    },
 		    {
 		      "x": 1,
-		      "y": 58,
-		      "label": ""
+		      "y": 60,
+		      "label": "(1, 60)"
 		    },
 		    {
 		      "x": 1.2,
-		      "y": 62,
-		      "label": ""
+		      "y": 64,
+		      "label": "(1.2, 64)"
 		    },
 		    {
 		      "x": 1.5,
-		      "y": 68,
-		      "label": ""
+		      "y": 70,
+		      "label": "(1.5, 70)"
 		    },
 		    {
 		      "x": 1.8,
-		      "y": 73,
-		      "label": ""
+		      "y": 74,
+		      "label": "(1.8, 74)"
 		    },
 		    {
 		      "x": 2,
 		      "y": 78,
-		      "label": ""
+		      "label": "(2, 78)"
 		    },
 		    {
-		      "x": 2.2,
+		      "x": 2.3,
 		      "y": 82,
-		      "label": ""
+		      "label": "(2.3, 82)"
 		    },
 		    {
 		      "x": 2.5,
-		      "y": 85,
-		      "label": ""
+		      "y": 84,
+		      "label": "(2.5, 84)"
 		    },
 		    {
 		      "x": 2.8,
-		      "y": 88,
-		      "label": ""
+		      "y": 86,
+		      "label": "(2.8, 86)"
 		    },
 		    {
 		      "x": 3,
+		      "y": 88,
+		      "label": "(3, 88)"
+		    },
+		    {
+		      "x": 3.2,
 		      "y": 90,
-		      "label": ""
+		      "label": "(3.2, 90)"
 		    },
 		    {
-		      "x": 3.3,
+		      "x": 3.5,
 		      "y": 92,
-		      "label": ""
+		      "label": "(3.5, 92)"
 		    },
 		    {
-		      "x": 3.6,
-		      "y": 94,
-		      "label": ""
+		      "x": 3.7,
+		      "y": 93,
+		      "label": "(3.7, 93)"
 		    },
 		    {
-		      "x": 3.9,
+		      "x": 4,
+		      "y": 95,
+		      "label": "(4, 95)"
+		    },
+		    {
+		      "x": 4.3,
 		      "y": 96,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.2,
-		      "y": 98,
-		      "label": ""
+		      "label": "(4.3, 96)"
 		    },
 		    {
 		      "x": 4.5,
-		      "y": 95,
-		      "label": ""
+		      "y": 97,
+		      "label": "(4.5, 97)"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -5348,9 +5266,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xfc3e627ce9848835
-	// Question: Select a linear model from a scatterplot and make a prediction
+	// Question: Select a linear model and make a prediction about mood
 	// Widget key: image_1
-	test("scatter-plot - [xfc3e627ce9848835] Select a linear model from a scatterplot and make a prediction", async () => {
+	test("scatter-plot - [xfc3e627ce9848835] Select a linear model and make a prediction about mood", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5374,7 +5292,7 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "",
+		  "title": "Mood rating vs. Hours playing sports",
 		  "width": 366,
 		  "xAxis": {
 		    "max": 10,
@@ -5399,17 +5317,17 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 1,
-		      "y": 5.33,
+		      "y": 5.333333333333333,
 		      "label": ""
 		    },
 		    {
 		      "x": 2,
-		      "y": 6.86,
+		      "y": 6.857142857142857,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 7.17,
+		      "y": 7.166666666666667,
 		      "label": ""
 		    },
 		    {
@@ -5446,9 +5364,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xdf72a5a2b64e29b8
-	// Question: Select a linear equation from a scatterplot and make a prediction
+	// Question: Select a linear model and estimate a score
 	// Widget key: image_1
-	test("scatter-plot - [xdf72a5a2b64e29b8] Select a linear equation from a scatterplot and make a prediction", async () => {
+	test("scatter-plot - [xdf72a5a2b64e29b8] Select a linear model and estimate a score", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5743,21 +5661,122 @@ describe("scatterPlot widget tests", () => {
 		  "title": "",
 		  "width": 360,
 		  "xAxis": {
-		    "max": 2.5,
+		    "max": 2.25,
 		    "min": 0,
 		    "label": "Goals scored per match",
 		    "gridLines": true,
-		    "tickInterval": 0.5
+		    "tickInterval": 0.25
 		  },
 		  "yAxis": {
 		    "max": 30,
-		    "min": -5,
+		    "min": 0,
 		    "label": "Number of wins",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
 		  "height": 355,
-		  "points": []
+		  "points": [
+		    {
+		      "x": 1.92,
+		      "y": 26,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.189,
+		      "y": 24,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.868,
+		      "y": 22,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.632,
+		      "y": 20,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.526,
+		      "y": 19,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.368,
+		      "y": 18,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.421,
+		      "y": 18,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.211,
+		      "y": 16,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.263,
+		      "y": 15,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.237,
+		      "y": 13,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.263,
+		      "y": 12,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.158,
+		      "y": 12,
+		      "label": ""
+		    },
+		    {
+		      "x": 1,
+		      "y": 11,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.211,
+		      "y": 11,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.053,
+		      "y": 10,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.816,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.816,
+		      "y": 10,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.868,
+		      "y": 8,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.737,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.105,
+		      "y": 8,
+		      "label": ""
+		    }
+		  ]
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5775,211 +5794,156 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa543a1b5f3652216
-	// Question: Estimate average change from a scatter plot
+	// Extracted from question: xac6c5f46a44499d6
+	// Question: Estimate average score change from a scatter plot
 	// Widget key: image_1
-	test("scatter-plot - [xa543a1b5f3652216] Estimate average change from a scatter plot", async () => {
+	test("scatter-plot - [xac6c5f46a44499d6] Estimate average score change from a scatter plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "",
-		  "width": 370,
+		  "width": 366,
 		  "xAxis": {
-		    "max": 12,
+		    "max": 10,
 		    "min": 0,
-		    "label": "Hours spent on video games",
+		    "label": "Study time in hours",
 		    "gridLines": true,
-		    "tickInterval": 2
+		    "tickInterval": 1
 		  },
 		  "yAxis": {
-		    "max": 24,
+		    "max": 10,
 		    "min": 0,
-		    "label": "Hours spent on homework",
+		    "label": "Score",
 		    "gridLines": true,
-		    "tickInterval": 4
+		    "tickInterval": 1
 		  },
-		  "height": 360,
+		  "height": 369,
 		  "points": [
 		    {
-		      "x": 5.6,
-		      "y": 19.104,
+		      "x": 6.285,
+		      "y": 8.713,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.92,
-		      "y": 15.072,
+		      "x": 3.622,
+		      "y": 6.209,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.44,
-		      "y": 9.792,
+		      "x": 4.57,
+		      "y": 7.805,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.96,
-		      "y": 14.4,
+		      "x": 4.292,
+		      "y": 6.663,
 		      "label": ""
 		    },
 		    {
-		      "x": 8.16,
-		      "y": 8.832,
+		      "x": 6.373,
+		      "y": 9.212,
 		      "label": ""
 		    },
 		    {
-		      "x": 11.36,
-		      "y": 3.072,
+		      "x": 4.673,
+		      "y": 7.232,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.68,
-		      "y": 10.08,
+		      "x": 6.779,
+		      "y": 9.259,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.4,
-		      "y": 15.36,
+		      "x": 5.463,
+		      "y": 6.529,
 		      "label": ""
 		    },
 		    {
-		      "x": 9.76,
-		      "y": 10.464,
+		      "x": 5.129,
+		      "y": 8.047,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.84,
-		      "y": 15.552,
+		      "x": 5.344,
+		      "y": 8.194,
 		      "label": ""
 		    },
 		    {
-		      "x": 0.4,
-		      "y": 22.56,
+		      "x": 8.538,
+		      "y": 9.554,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.32,
-		      "y": 18.24,
+		      "x": 3.981,
+		      "y": 6.469,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.68,
-		      "y": 10.464,
+		      "x": 5.432,
+		      "y": 7.904,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.8,
-		      "y": 16.704,
+		      "x": 7.956,
+		      "y": 8.809,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.72,
-		      "y": 9.504,
+		      "x": 8.838,
+		      "y": 9.449,
 		      "label": ""
 		    },
 		    {
-		      "x": 8.64,
-		      "y": 6.912,
+		      "x": 6.857,
+		      "y": 9.178,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.56,
-		      "y": 9.6,
+		      "x": 7.069,
+		      "y": 9.659,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.24,
-		      "y": 14.112,
+		      "x": 5.121,
+		      "y": 8.177,
 		      "label": ""
 		    },
 		    {
-		      "x": 6,
-		      "y": 11.52,
+		      "x": 5.207,
+		      "y": 6.135,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.48,
-		      "y": 14.4,
+		      "x": 6.912,
+		      "y": 9.33,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.12,
-		      "y": 15.936,
+		      "x": 6.553,
+		      "y": 8.484,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.08,
-		      "y": 16.512,
+		      "x": 7.394,
+		      "y": 9.267,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.16,
-		      "y": 12.192,
+		      "x": 6.151,
+		      "y": 8.867,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.4,
-		      "y": 12.96,
+		      "x": 7.123,
+		      "y": 9.49,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.6,
-		      "y": 17.952,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.52,
-		      "y": 16.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.36,
-		      "y": 13.056,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.72,
-		      "y": 19.968,
-		      "label": ""
-		    },
-		    {
-		      "x": 8.32,
-		      "y": 8.16,
-		      "label": ""
-		    },
-		    {
-		      "x": 8.56,
-		      "y": 3.264,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.8,
-		      "y": 9.408,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.96,
-		      "y": 12.576,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.84,
-		      "y": 14.784,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 15.168,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.96,
-		      "y": 12.096,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.4,
-		      "y": 9.216,
+		      "x": 1.246,
+		      "y": 4.31,
 		      "label": ""
 		    }
 		  ]
@@ -6001,9 +5965,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x40a43bac5e2ccf89
-	// Question: Estimate rate of change from a scatter plot
+	// Question: Estimate average change in ratings per one-dollar increase
 	// Widget key: image_1
-	test("scatter-plot - [x40a43bac5e2ccf89] Estimate rate of change from a scatter plot", async () => {
+	test("scatter-plot - [x40a43bac5e2ccf89] Estimate average change in ratings per one-dollar increase", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6166,15 +6130,15 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x07408520b10b71bc
-	// Question: Estimate the average yearly change in rent from a scatter plot
+	// Question: Estimate average yearly change in rent from a scatter plot
 	// Widget key: image_1
-	test("scatter-plot - [x07408520b10b71bc] Estimate the average yearly change in rent from a scatter plot", async () => {
+	test("scatter-plot - [x07408520b10b71bc] Estimate average yearly change in rent from a scatter plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Average rent (dollars per month) vs. years after 2000",
+		  "title": "",
 		  "width": 375,
 		  "xAxis": {
 		    "max": 13,
@@ -6185,10 +6149,10 @@ describe("scatterPlot widget tests", () => {
 		  },
 		  "yAxis": {
 		    "max": 1300,
-		    "min": 800,
+		    "min": 700,
 		    "label": "Average rent in dollars per month",
 		    "gridLines": true,
-		    "tickInterval": 50
+		    "tickInterval": 100
 		  },
 		  "height": 358,
 		  "points": [
@@ -6199,62 +6163,62 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 1,
-		      "y": 827,
+		      "y": 820,
 		      "label": ""
 		    },
 		    {
 		      "x": 2,
-		      "y": 866,
+		      "y": 835,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 901,
+		      "y": 860,
 		      "label": ""
 		    },
 		    {
 		      "x": 4,
-		      "y": 939,
+		      "y": 890,
 		      "label": ""
 		    },
 		    {
 		      "x": 5,
-		      "y": 962,
+		      "y": 915,
 		      "label": ""
 		    },
 		    {
 		      "x": 6,
-		      "y": 1000,
+		      "y": 940,
 		      "label": ""
 		    },
 		    {
 		      "x": 7,
-		      "y": 1069,
+		      "y": 980,
 		      "label": ""
 		    },
 		    {
 		      "x": 8,
-		      "y": 1189,
+		      "y": 1010,
 		      "label": ""
 		    },
 		    {
 		      "x": 9,
-		      "y": 1184,
+		      "y": 1005,
 		      "label": ""
 		    },
 		    {
 		      "x": 10,
-		      "y": 1228,
+		      "y": 1060,
 		      "label": ""
 		    },
 		    {
 		      "x": 11,
-		      "y": 1268,
+		      "y": 1120,
 		      "label": ""
 		    },
 		    {
 		      "x": 12,
-		      "y": 1288,
+		      "y": 1185,
 		      "label": ""
 		    },
 		    {
@@ -6280,180 +6244,10 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xac6c5f46a44499d6
-	// Question: Estimate average score change from a scatter plot
-	// Widget key: image_1
-	test("scatter-plot - [xac6c5f46a44499d6] Estimate average score change from a scatter plot", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 366,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Study time in hours",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Score",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 369,
-		  "points": [
-		    {
-		      "x": 6.28,
-		      "y": 8.71,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.62,
-		      "y": 6.21,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.57,
-		      "y": 7.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.29,
-		      "y": 6.66,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.37,
-		      "y": 9.21,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.67,
-		      "y": 7.23,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.78,
-		      "y": 9.26,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.46,
-		      "y": 6.53,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.13,
-		      "y": 8.05,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.34,
-		      "y": 8.19,
-		      "label": ""
-		    },
-		    {
-		      "x": 8.54,
-		      "y": 9.55,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.98,
-		      "y": 6.47,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.43,
-		      "y": 7.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.96,
-		      "y": 8.81,
-		      "label": ""
-		    },
-		    {
-		      "x": 8.84,
-		      "y": 9.45,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.86,
-		      "y": 9.18,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.07,
-		      "y": 9.66,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.12,
-		      "y": 8.18,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.21,
-		      "y": 6.14,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.91,
-		      "y": 9.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.55,
-		      "y": 8.48,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.39,
-		      "y": 9.27,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.15,
-		      "y": 8.87,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.12,
-		      "y": 9.49,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.25,
-		      "y": 4.31,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x3d66b7332da45c73
-	// Question: Estimate change in rent from an income increase
+	// Question: Estimate the change in rent from income
 	// Widget key: image_1
-	test("scatter-plot - [x3d66b7332da45c73] Estimate change in rent from an income increase", async () => {
+	test("scatter-plot - [x3d66b7332da45c73] Estimate the change in rent from income", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6462,84 +6256,84 @@ describe("scatterPlot widget tests", () => {
 		  "title": "Average income vs. average rent",
 		  "width": 405,
 		  "xAxis": {
-		    "max": 60000,
-		    "min": 35000,
+		    "max": 65000,
+		    "min": 30000,
 		    "label": "Average income (dollars)",
 		    "gridLines": true,
 		    "tickInterval": 5000
 		  },
 		  "yAxis": {
-		    "max": 1600,
-		    "min": 800,
-		    "label": "Average rent (dollars)",
+		    "max": 1800,
+		    "min": 600,
+		    "label": "Average rent for a one-bedroom apartment (dollars)",
 		    "gridLines": true,
 		    "tickInterval": 200
 		  },
 		  "height": 375,
 		  "points": [
 		    {
-		      "x": 57296,
-		      "y": 1324,
+		      "x": 61214.47,
+		      "y": 1349.14,
 		      "label": ""
 		    },
 		    {
-		      "x": 50011,
-		      "y": 961,
+		      "x": 51014.79,
+		      "y": 913.71,
 		      "label": ""
 		    },
 		    {
-		      "x": 50003,
-		      "y": 1071,
+		      "x": 51004.61,
+		      "y": 1044.86,
 		      "label": ""
 		    },
 		    {
-		      "x": 42219,
-		      "y": 932,
+		      "x": 40110.97,
+		      "y": 878.57,
 		      "label": ""
 		    },
 		    {
-		      "x": 41821,
-		      "y": 893,
+		      "x": 39549.45,
+		      "y": 831.43,
 		      "label": ""
 		    },
 		    {
-		      "x": 54628,
-		      "y": 1259,
+		      "x": 57478.51,
+		      "y": 1270.29,
 		      "label": ""
 		    },
 		    {
-		      "x": 49957,
-		      "y": 905,
+		      "x": 50940.1,
+		      "y": 846,
 		      "label": ""
 		    },
 		    {
-		      "x": 58866,
-		      "y": 1421,
+		      "x": 63412.93,
+		      "y": 1465.71,
 		      "label": ""
 		    },
 		    {
-		      "x": 58866,
-		      "y": 1554,
+		      "x": 63412.93,
+		      "y": 1624.29,
 		      "label": ""
 		    },
 		    {
-		      "x": 43420,
-		      "y": 1073,
+		      "x": 41788.05,
+		      "y": 1047.43,
 		      "label": ""
 		    },
 		    {
-		      "x": 43605,
-		      "y": 896,
+		      "x": 42046.29,
+		      "y": 834.86,
 		      "label": ""
 		    },
 		    {
-		      "x": 40440,
-		      "y": 858,
+		      "x": 37615.55,
+		      "y": 789.43,
 		      "label": ""
 		    },
 		    {
-		      "x": 51552,
-		      "y": 1303,
+		      "x": 53172.46,
+		      "y": 1323.43,
 		      "label": ""
 		    }
 		  ]
@@ -6561,9 +6355,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x1a10cd913852af1d
-	// Question: Estimate the average change in exercise per month
+	// Question: Estimate average change from a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [x1a10cd913852af1d] Estimate the average change in exercise per month", async () => {
+	test("scatter-plot - [x1a10cd913852af1d] Estimate average change from a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6572,7 +6366,7 @@ describe("scatterPlot widget tests", () => {
 		  "title": "",
 		  "width": 352.5,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 12,
 		    "min": 0,
 		    "label": "Length of ownership in months",
 		    "gridLines": true,
@@ -6588,28 +6382,253 @@ describe("scatterPlot widget tests", () => {
 		  "height": 363,
 		  "points": [
 		    {
-		      "x": 0.8333333333,
+		      "x": 1,
 		      "y": 9,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.5,
+		      "x": 3,
 		      "y": 7,
 		      "label": ""
 		    },
 		    {
-		      "x": 5,
+		      "x": 6,
 		      "y": 6,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.6666666667,
+		      "x": 8,
 		      "y": 4,
 		      "label": ""
 		    },
 		    {
-		      "x": 9.1666666667,
+		      "x": 11,
 		      "y": 2,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa543a1b5f3652216
+	// Question: Estimate the average change from a scatter plot
+	// Widget key: image_1
+	test("scatter-plot - [xa543a1b5f3652216] Estimate the average change from a scatter plot", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "",
+		  "width": 370,
+		  "xAxis": {
+		    "max": 12,
+		    "min": 0,
+		    "label": "Hours spent on video games",
+		    "gridLines": true,
+		    "tickInterval": 2
+		  },
+		  "yAxis": {
+		    "max": 24,
+		    "min": 0,
+		    "label": "Hours spent on homework",
+		    "gridLines": true,
+		    "tickInterval": 3
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 5.6,
+		      "y": 19.1,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.92,
+		      "y": 15.07,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.44,
+		      "y": 9.79,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.96,
+		      "y": 14.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.16,
+		      "y": 8.83,
+		      "label": ""
+		    },
+		    {
+		      "x": 11.36,
+		      "y": 3.07,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.68,
+		      "y": 10.08,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.4,
+		      "y": 15.36,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.76,
+		      "y": 10.46,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.84,
+		      "y": 15.55,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.4,
+		      "y": 22.56,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.32,
+		      "y": 18.24,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.68,
+		      "y": 10.46,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.8,
+		      "y": 16.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.72,
+		      "y": 9.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.64,
+		      "y": 6.91,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.56,
+		      "y": 9.6,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.24,
+		      "y": 14.11,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 11.52,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.48,
+		      "y": 14.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.12,
+		      "y": 15.94,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.08,
+		      "y": 16.51,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.16,
+		      "y": 12.19,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.4,
+		      "y": 12.96,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.6,
+		      "y": 17.95,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.52,
+		      "y": 16.8,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.36,
+		      "y": 13.06,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.72,
+		      "y": 19.97,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.32,
+		      "y": 8.16,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.56,
+		      "y": 3.26,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.8,
+		      "y": 9.41,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.96,
+		      "y": 12.58,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.84,
+		      "y": 14.78,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 15.17,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.96,
+		      "y": 12.1,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.4,
+		      "y": 9.22,
 		      "label": ""
 		    }
 		  ]
@@ -6642,15 +6661,15 @@ describe("scatterPlot widget tests", () => {
 		  "title": "",
 		  "width": 360,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 45,
 		    "min": 0,
 		    "label": "Years since 1945",
 		    "gridLines": true,
-		    "tickInterval": 1
+		    "tickInterval": 5
 		  },
 		  "yAxis": {
 		    "max": 45,
-		    "min": 20,
+		    "min": 15,
 		    "label": "Percent of adults who smoke",
 		    "gridLines": true,
 		    "tickInterval": 5
@@ -6659,67 +6678,67 @@ describe("scatterPlot widget tests", () => {
 		  "points": [
 		    {
 		      "x": 0,
-		      "y": 42,
+		      "y": 40,
 		      "label": ""
 		    },
 		    {
-		      "x": 0.89,
-		      "y": 37,
+		      "x": 4,
+		      "y": 38,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
-		      "y": 37,
+		      "x": 9,
+		      "y": 35.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.89,
-		      "y": 34,
+		      "x": 13,
+		      "y": 33.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.78,
-		      "y": 33,
+		      "x": 17,
+		      "y": 31.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.44,
+		      "x": 20,
 		      "y": 30,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.89,
+		      "x": 22,
 		      "y": 29,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.56,
-		      "y": 25.5,
+		      "x": 25,
+		      "y": 27.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.11,
-		      "y": 24.7,
+		      "x": 32,
+		      "y": 24,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.78,
-		      "y": 23,
+		      "x": 35,
+		      "y": 22.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 8.22,
-		      "y": 22,
+		      "x": 37,
+		      "y": 21.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 8.67,
-		      "y": 20.9,
+		      "x": 39,
+		      "y": 20.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 9.11,
-		      "y": 20.8,
+		      "x": 41,
+		      "y": 19.5,
 		      "label": ""
 		    }
 		  ]
@@ -6741,9 +6760,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x998b20533b0eeb0d
-	// Question: Estimate the average change from a scatterplot of exam scores
+	// Question: Estimate the average change from a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [x998b20533b0eeb0d] Estimate the average change from a scatterplot of exam scores", async () => {
+	test("scatter-plot - [x998b20533b0eeb0d] Estimate the average change from a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6991,27 +7010,27 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x440385d8eb048fbf
-	// Question: Estimate average shoulder height change from a scatter plot
+	// Question: Estimate rate of change from a scatter plot
 	// Widget key: image_1
-	test("scatter-plot - [x440385d8eb048fbf] Estimate average shoulder height change from a scatter plot", async () => {
+	test("scatter-plot - [x440385d8eb048fbf] Estimate rate of change from a scatter plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
+		  "title": "Foot Length vs. Shoulder Height",
 		  "width": 342,
 		  "xAxis": {
 		    "max": 60,
-		    "min": 15,
-		    "label": "Foot lengths in centimeters",
+		    "min": 0,
+		    "label": "Foot length (cm)",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
 		  "yAxis": {
-		    "max": 300,
-		    "min": 80,
-		    "label": "Shoulder height in centimeters",
+		    "max": 360,
+		    "min": 0,
+		    "label": "Shoulder height (cm)",
 		    "gridLines": true,
 		    "tickInterval": 20
 		  },
@@ -7023,153 +7042,78 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 19,
+		      "x": 20,
 		      "y": 110,
 		      "label": ""
 		    },
 		    {
-		      "x": 20,
-		      "y": 118,
-		      "label": ""
-		    },
-		    {
-		      "x": 21,
+		      "x": 22,
 		      "y": 125,
 		      "label": ""
 		    },
 		    {
-		      "x": 22,
-		      "y": 130,
-		      "label": ""
-		    },
-		    {
-		      "x": 23,
-		      "y": 138,
-		      "label": ""
-		    },
-		    {
-		      "x": 24,
-		      "y": 142,
-		      "label": ""
-		    },
-		    {
 		      "x": 25,
-		      "y": 150,
-		      "label": ""
-		    },
-		    {
-		      "x": 26,
-		      "y": 158,
-		      "label": ""
-		    },
-		    {
-		      "x": 27,
-		      "y": 162,
+		      "y": 145,
 		      "label": ""
 		    },
 		    {
 		      "x": 28,
-		      "y": 170,
-		      "label": ""
-		    },
-		    {
-		      "x": 29,
-		      "y": 176,
+		      "y": 165,
 		      "label": ""
 		    },
 		    {
 		      "x": 30,
-		      "y": 182,
-		      "label": ""
-		    },
-		    {
-		      "x": 31,
-		      "y": 188,
-		      "label": ""
-		    },
-		    {
-		      "x": 32,
-		      "y": 196,
+		      "y": 175,
 		      "label": ""
 		    },
 		    {
 		      "x": 33,
-		      "y": 202,
-		      "label": ""
-		    },
-		    {
-		      "x": 34,
-		      "y": 210,
-		      "label": ""
-		    },
-		    {
-		      "x": 35,
-		      "y": 216,
+		      "y": 190,
 		      "label": ""
 		    },
 		    {
 		      "x": 36,
-		      "y": 222,
-		      "label": ""
-		    },
-		    {
-		      "x": 37,
-		      "y": 228,
+		      "y": 205,
 		      "label": ""
 		    },
 		    {
 		      "x": 38,
-		      "y": 234,
-		      "label": ""
-		    },
-		    {
-		      "x": 39,
-		      "y": 240,
+		      "y": 220,
 		      "label": ""
 		    },
 		    {
 		      "x": 40,
-		      "y": 246,
-		      "label": ""
-		    },
-		    {
-		      "x": 41,
-		      "y": 254,
-		      "label": ""
-		    },
-		    {
-		      "x": 42,
-		      "y": 260,
+		      "y": 230,
 		      "label": ""
 		    },
 		    {
 		      "x": 43,
-		      "y": 266,
-		      "label": ""
-		    },
-		    {
-		      "x": 44,
-		      "y": 272,
+		      "y": 245,
 		      "label": ""
 		    },
 		    {
 		      "x": 45,
-		      "y": 278,
-		      "label": ""
-		    },
-		    {
-		      "x": 46,
-		      "y": 284,
+		      "y": 255,
 		      "label": ""
 		    },
 		    {
 		      "x": 47,
-		      "y": 286,
+		      "y": 270,
 		      "label": ""
 		    },
 		    {
-		      "x": 48,
-		      "y": 290,
+		      "x": 50,
+		      "y": 285,
+		      "label": ""
+		    },
+		    {
+		      "x": 52,
+		      "y": 295,
+		      "label": ""
+		    },
+		    {
+		      "x": 55,
+		      "y": 305,
 		      "label": ""
 		    }
 		  ]
@@ -7191,9 +7135,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x774a2cf80a312780
-	// Question: Estimate the average change in mood rating from a scatterplot
+	// Question: Estimate the rate of change from a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [x774a2cf80a312780] Estimate the average change in mood rating from a scatterplot", async () => {
+	test("scatter-plot - [x774a2cf80a312780] Estimate the rate of change from a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7224,17 +7168,17 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 1,
-		      "y": 5.3333333333,
+		      "y": 5.33,
 		      "label": ""
 		    },
 		    {
 		      "x": 2,
-		      "y": 6.8571428571,
+		      "y": 6.86,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 7.1666666667,
+		      "y": 7.17,
 		      "label": ""
 		    },
 		    {
@@ -7271,434 +7215,269 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x76ad418eb51e3ab4
-	// Question: Estimate the average change in income per year of education
+	// Question: Estimate the average income change per year of education
 	// Widget key: image_1
-	test("scatter-plot - [x76ad418eb51e3ab4] Estimate the average change in income per year of education", async () => {
+	test("scatter-plot - [x76ad418eb51e3ab4] Estimate the average income change per year of education", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
+		  "title": "Years of education vs. annual income",
 		  "width": 396,
 		  "xAxis": {
 		    "max": 18,
 		    "min": 8,
 		    "label": "Years of education",
 		    "gridLines": true,
-		    "tickInterval": 1
+		    "tickInterval": 2
 		  },
 		  "yAxis": {
 		    "max": 70000,
 		    "min": 0,
-		    "label": "Annual Income in dollars",
+		    "label": "Annual income (dollars)",
 		    "gridLines": true,
 		    "tickInterval": 10000
 		  },
 		  "height": 364,
 		  "points": [
 		    {
-		      "x": 12.91,
-		      "y": 33524,
+		      "x": 12.9096,
+		      "y": 33523.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.7,
+		      "x": 13.7029,
 		      "y": 55741,
 		      "label": ""
 		    },
 		    {
-		      "x": 11.79,
+		      "x": 11.7885,
 		      "y": 40283,
 		      "label": ""
 		    },
 		    {
-		      "x": 15.88,
-		      "y": 48690,
+		      "x": 15.8775,
+		      "y": 48690.9,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.2,
-		      "y": 28180,
+		      "x": 14.1961,
+		      "y": 28180.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.12,
-		      "y": 52980,
+		      "x": 14.1227,
+		      "y": 52979.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.08,
-		      "y": 21583,
+		      "x": 14.0763,
+		      "y": 21583.3,
 		      "label": ""
 		    },
 		    {
-		      "x": 12.78,
-		      "y": 27408,
+		      "x": 12.7846,
+		      "y": 27408.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.25,
-		      "y": 37272,
+		      "x": 14.2531,
+		      "y": 37272.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.43,
+		      "x": 14.4326,
 		      "y": 38083,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.57,
-		      "y": 9119,
+		      "x": 13.5747,
+		      "y": 9119.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.2,
-		      "y": 28866,
-		      "label": ""
-		    },
-		    {
-		      "x": 13.29,
+		      "x": 13.2886,
 		      "y": 21006,
 		      "label": ""
 		    },
 		    {
-		      "x": 11.73,
+		      "x": 11.7256,
 		      "y": 11189,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.91,
-		      "y": 19170,
+		      "x": 13.9146,
+		      "y": 19169.3,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.54,
-		      "y": 41400,
+		      "x": 14.5411,
+		      "y": 41400.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.54,
-		      "y": 34329,
+		      "x": 13.5482,
+		      "y": 34330.4,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.66,
-		      "y": 39165,
+		      "x": 14.6645,
+		      "y": 39165.9,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.97,
-		      "y": 52346,
+		      "x": 13.1862,
+		      "y": 24766.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.19,
-		      "y": 24767,
+		      "x": 13.5864,
+		      "y": 40049.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.59,
-		      "y": 40049,
-		      "label": ""
-		    },
-		    {
-		      "x": 12.78,
-		      "y": 22237,
-		      "label": ""
-		    },
-		    {
-		      "x": 15.24,
+		      "x": 15.2422,
 		      "y": 39954,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.2,
-		      "y": 53803,
+		      "x": 14.1964,
+		      "y": 28866.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.61,
-		      "y": 16794,
+		      "x": 11.7352,
+		      "y": 23806.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.99,
-		      "y": 62804,
-		      "label": ""
-		    },
-		    {
-		      "x": 13.26,
-		      "y": 35137,
-		      "label": ""
-		    },
-		    {
-		      "x": 15.17,
-		      "y": 40387,
-		      "label": ""
-		    },
-		    {
-		      "x": 13.73,
-		      "y": 22758,
-		      "label": ""
-		    },
-		    {
-		      "x": 13.89,
-		      "y": 49527,
-		      "label": ""
-		    },
-		    {
-		      "x": 12.91,
-		      "y": 32022,
-		      "label": ""
-		    },
-		    {
-		      "x": 14.89,
-		      "y": 42859,
-		      "label": ""
-		    },
-		    {
-		      "x": 11.99,
-		      "y": 7800,
-		      "label": ""
-		    },
-		    {
-		      "x": 14.06,
-		      "y": 43351,
-		      "label": ""
-		    },
-		    {
-		      "x": 12.61,
-		      "y": 13441,
-		      "label": ""
-		    },
-		    {
-		      "x": 11.17,
-		      "y": 3846,
-		      "label": ""
-		    },
-		    {
-		      "x": 13.17,
-		      "y": 18659,
-		      "label": ""
-		    },
-		    {
-		      "x": 14.86,
-		      "y": 46336,
-		      "label": ""
-		    },
-		    {
-		      "x": 15.22,
-		      "y": 52425,
-		      "label": ""
-		    },
-		    {
-		      "x": 12.45,
-		      "y": 53680,
-		      "label": ""
-		    },
-		    {
-		      "x": 14.02,
-		      "y": 48570,
-		      "label": ""
-		    },
-		    {
-		      "x": 14.39,
-		      "y": 33435,
-		      "label": ""
-		    },
-		    {
-		      "x": 9.97,
-		      "y": 0,
-		      "label": ""
-		    },
-		    {
-		      "x": 12.5,
-		      "y": 24919,
-		      "label": ""
-		    },
-		    {
-		      "x": 14.34,
-		      "y": 33940,
-		      "label": ""
-		    },
-		    {
-		      "x": 11.74,
-		      "y": 23806,
-		      "label": ""
-		    },
-		    {
-		      "x": 15.08,
+		      "x": 15.0841,
 		      "y": 34980,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.07,
-		      "y": 48863,
+		      "x": 13.073,
+		      "y": 48663,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.46,
+		      "x": 13.4636,
 		      "y": 48897,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.29,
-		      "y": 9435,
+		      "x": 14.3618,
+		      "y": 45439,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.36,
-		      "y": 45438,
-		      "label": ""
-		    },
-		    {
-		      "x": 11.82,
+		      "x": 11.817,
 		      "y": 11687,
 		      "label": ""
 		    },
 		    {
-		      "x": 15.28,
-		      "y": 58538,
-		      "label": ""
-		    },
-		    {
-		      "x": 13.88,
+		      "x": 13.8767,
 		      "y": 33001,
 		      "label": ""
 		    },
 		    {
-		      "x": 15.25,
-		      "y": 47125,
+		      "x": 15.246,
+		      "y": 47124,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.7,
-		      "y": 39447,
+		      "x": 13.7012,
+		      "y": 39446,
 		      "label": ""
 		    },
 		    {
-		      "x": 12.03,
-		      "y": 0,
-		      "label": ""
-		    },
-		    {
-		      "x": 12.9,
+		      "x": 12.9015,
 		      "y": 18264,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.5,
+		      "x": 13.501,
 		      "y": 19193,
 		      "label": ""
 		    },
 		    {
-		      "x": 12.97,
+		      "x": 12.966,
 		      "y": 19545,
 		      "label": ""
 		    },
 		    {
-		      "x": 11.58,
+		      "x": 11.5809,
 		      "y": 10258,
 		      "label": ""
 		    },
 		    {
-		      "x": 11.34,
+		      "x": 11.3383,
 		      "y": 0,
 		      "label": ""
 		    },
 		    {
-		      "x": 12.03,
-		      "y": 16272,
+		      "x": 12.032,
+		      "y": 16271,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.81,
+		      "x": 13.8147,
 		      "y": 42538,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.36,
+		      "x": 13.359,
 		      "y": 41244,
 		      "label": ""
 		    },
 		    {
-		      "x": 15.01,
+		      "x": 15.0085,
 		      "y": 64386,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.21,
-		      "y": 22810,
-		      "label": ""
-		    },
-		    {
-		      "x": 14.37,
-		      "y": 38344,
-		      "label": ""
-		    },
-		    {
-		      "x": 15.04,
+		      "x": 15.0415,
 		      "y": 53817,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.87,
+		      "x": 14.8715,
 		      "y": 8861,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.34,
+		      "x": 13.3353,
 		      "y": 23489,
 		      "label": ""
 		    },
 		    {
-		      "x": 11.66,
-		      "y": 24370,
+		      "x": 12.7283,
+		      "y": 20089,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.01,
-		      "y": 48332,
+		      "x": 13.0258,
+		      "y": 10716,
 		      "label": ""
 		    },
 		    {
-		      "x": 12.73,
-		      "y": 20088,
-		      "label": ""
-		    },
-		    {
-		      "x": 12.86,
-		      "y": 18598,
-		      "label": ""
-		    },
-		    {
-		      "x": 13.03,
-		      "y": 10715,
-		      "label": ""
-		    },
-		    {
-		      "x": 13.37,
-		      "y": 25149,
-		      "label": ""
-		    },
-		    {
-		      "x": 14.74,
+		      "x": 14.7414,
 		      "y": 49147,
 		      "label": ""
 		    },
 		    {
-		      "x": 15.45,
+		      "x": 15.4525,
 		      "y": 62572,
 		      "label": ""
 		    },
 		    {
-		      "x": 11.92,
-		      "y": 28759,
+		      "x": 11.9222,
+		      "y": 28758.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.48,
+		      "x": 13.4793,
 		      "y": 18973,
 		      "label": ""
 		    },
@@ -7708,8 +7487,8 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 11.55,
-		      "y": 30259,
+		      "x": 11.5456,
+		      "y": 30260,
 		      "label": ""
 		    },
 		    {
@@ -7718,143 +7497,153 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 13.37,
-		      "y": 4450,
+		      "x": 13.3655,
+		      "y": 4449,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.51,
+		      "x": 13.5127,
 		      "y": 43553,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.9,
+		      "x": 13.8988,
 		      "y": 23724,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.88,
+		      "x": 13.8789,
 		      "y": 22365,
 		      "label": ""
 		    },
 		    {
-		      "x": 12.86,
+		      "x": 12.8553,
 		      "y": 20884,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.85,
-		      "y": 45394,
+		      "x": 13.8463,
+		      "y": 45371,
 		      "label": ""
 		    },
 		    {
-		      "x": 11.71,
+		      "x": 11.7083,
 		      "y": 27195,
 		      "label": ""
 		    },
 		    {
-		      "x": 12.23,
+		      "x": 12.2262,
 		      "y": 7868,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.01,
+		      "x": 14.0094,
 		      "y": 34873,
 		      "label": ""
 		    },
 		    {
-		      "x": 16.04,
-		      "y": 42325,
+		      "x": 16.0386,
+		      "y": 42326,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.85,
+		      "x": 13.8511,
 		      "y": 27285,
 		      "label": ""
 		    },
 		    {
-		      "x": 11.59,
-		      "y": 0,
-		      "label": ""
-		    },
-		    {
-		      "x": 14,
+		      "x": 14.0027,
 		      "y": 26709,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.11,
+		      "x": 13.1091,
 		      "y": 33720,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.01,
+		      "x": 13.0112,
 		      "y": 22888,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.75,
-		      "y": 15645,
+		      "x": 13.7493,
+		      "y": 15644,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.48,
+		      "x": 13.4771,
 		      "y": 22285,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.05,
+		      "x": 14.0513,
 		      "y": 33267,
 		      "label": ""
 		    },
 		    {
-		      "x": 15.9,
-		      "y": 45130,
+		      "x": 15.8959,
+		      "y": 45131,
 		      "label": ""
 		    },
 		    {
-		      "x": 12.84,
+		      "x": 12.8435,
 		      "y": 41096,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.47,
+		      "x": 13.4663,
 		      "y": 21240,
 		      "label": ""
 		    },
 		    {
-		      "x": 12.84,
+		      "x": 12.8372,
 		      "y": 28060,
 		      "label": ""
 		    },
 		    {
-		      "x": 12.34,
+		      "x": 12.3374,
 		      "y": 9654,
 		      "label": ""
 		    },
 		    {
-		      "x": 12.05,
+		      "x": 12.0539,
 		      "y": 14408,
 		      "label": ""
 		    },
 		    {
-		      "x": 12.74,
+		      "x": 12.7444,
 		      "y": 33204,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.72,
+		      "x": 13.7184,
 		      "y": 37761,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.51,
+		      "x": 14.5113,
 		      "y": 35994,
 		      "label": ""
 		    },
 		    {
-		      "x": 11.65,
+		      "x": 11.6451,
 		      "y": 708,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.9678,
+		      "y": 0,
+		      "label": ""
+		    },
+		    {
+		      "x": 12.4542,
+		      "y": 53680,
+		      "label": ""
+		    },
+		    {
+		      "x": 13.8938,
+		      "y": 49527,
 		      "label": ""
 		    }
 		  ]
@@ -7876,26 +7665,26 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xb9b3554ebfb0b794
-	// Question: Estimate average score change from a scatter plot
+	// Question: Estimate average score change from a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [xb9b3554ebfb0b794] Estimate average score change from a scatter plot", async () => {
+	test("scatter-plot - [xb9b3554ebfb0b794] Estimate average score change from a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
+		  "title": "Study time vs. Score",
 		  "width": 366,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "Study time (hours)",
+		    "label": "Study time in hours",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 100,
-		    "min": 40,
+		    "min": 0,
 		    "label": "Score",
 		    "gridLines": true,
 		    "tickInterval": 10
@@ -8031,9 +7820,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x876029ca72dd09e9
-	// Question: Estimate average change in mood rating from a scatterplot
+	// Question: Estimate the average rate of change from a scatter plot
 	// Widget key: image_1
-	test("scatter-plot - [x876029ca72dd09e9] Estimate average change in mood rating from a scatterplot", async () => {
+	test("scatter-plot - [x876029ca72dd09e9] Estimate the average rate of change from a scatter plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8121,9 +7910,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x8a5d7f4654f9f8ca
-	// Question: Estimate the rate of change from a scatterplot
+	// Question: Estimate average temperature change per degree of latitude
 	// Widget key: image_1
-	test("scatter-plot - [x8a5d7f4654f9f8ca] Estimate the rate of change from a scatterplot", async () => {
+	test("scatter-plot - [x8a5d7f4654f9f8ca] Estimate average temperature change per degree of latitude", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8132,129 +7921,299 @@ describe("scatterPlot widget tests", () => {
 		  "title": "",
 		  "width": 354,
 		  "xAxis": {
-		    "max": 50,
-		    "min": 30,
-		    "label": "Latitude (degrees)",
+		    "max": 10,
+		    "min": 0,
+		    "label": "Latitude in degrees",
 		    "gridLines": true,
-		    "tickInterval": 5
+		    "tickInterval": 1
 		  },
 		  "yAxis": {
-		    "max": 80,
+		    "max": 10,
 		    "min": 0,
-		    "label": "Temperature (°F)",
+		    "label": "Temperature in degrees Fahrenheit",
 		    "gridLines": true,
-		    "tickInterval": 10
+		    "tickInterval": 1
 		  },
 		  "height": 356,
 		  "points": [
 		    {
-		      "x": 35,
-		      "y": 50.3,
+		      "x": 6.24,
+		      "y": 6.29,
 		      "label": ""
 		    },
 		    {
-		      "x": 36.3,
-		      "y": 43.4,
+		      "x": 6.58,
+		      "y": 5.43,
 		      "label": ""
 		    },
 		    {
-		      "x": 36.9,
-		      "y": 40,
+		      "x": 6.72,
+		      "y": 5,
 		      "label": ""
 		    },
 		    {
-		      "x": 38.3,
-		      "y": 35.4,
+		      "x": 7.08,
+		      "y": 4.43,
 		      "label": ""
 		    },
 		    {
-		      "x": 37.4,
-		      "y": 53.7,
+		      "x": 6.86,
+		      "y": 6.71,
 		      "label": ""
 		    },
 		    {
-		      "x": 40.7,
-		      "y": 48,
+		      "x": 7.68,
+		      "y": 6,
 		      "label": ""
 		    },
 		    {
-		      "x": 42.6,
-		      "y": 17.1,
+		      "x": 8.14,
+		      "y": 2.14,
 		      "label": ""
 		    },
 		    {
-		      "x": 43.4,
-		      "y": 25.1,
+		      "x": 8.34,
+		      "y": 3.14,
 		      "label": ""
 		    },
 		    {
-		      "x": 42.4,
-		      "y": 29.7,
+		      "x": 8.1,
+		      "y": 3.71,
 		      "label": ""
 		    },
 		    {
-		      "x": 41.8,
-		      "y": 34.3,
+		      "x": 7.94,
+		      "y": 4.29,
 		      "label": ""
 		    },
 		    {
-		      "x": 34.8,
-		      "y": 51.4,
+		      "x": 6.2,
+		      "y": 6.43,
 		      "label": ""
 		    },
 		    {
-		      "x": 30,
-		      "y": 74.3,
+		      "x": 5,
+		      "y": 9.29,
 		      "label": ""
 		    },
 		    {
-		      "x": 31,
-		      "y": 66.3,
+		      "x": 5.26,
+		      "y": 8.29,
 		      "label": ""
 		    },
 		    {
-		      "x": 45,
-		      "y": 25.1,
+		      "x": 6.78,
+		      "y": 5.29,
 		      "label": ""
 		    },
 		    {
-		      "x": 43.8,
-		      "y": 21.7,
+		      "x": 8.74,
+		      "y": 3.14,
 		      "label": ""
 		    },
 		    {
-		      "x": 45.4,
-		      "y": 13.7,
+		      "x": 8.46,
+		      "y": 2.71,
 		      "label": ""
 		    },
 		    {
-		      "x": 47.7,
-		      "y": 9.1,
+		      "x": 7.96,
+		      "y": 3,
 		      "label": ""
 		    },
 		    {
-		      "x": 46.7,
-		      "y": 2.3,
+		      "x": 8.36,
+		      "y": 1.57,
 		      "label": ""
 		    },
 		    {
-		      "x": 40.5,
-		      "y": 25.1,
+		      "x": 7.62,
+		      "y": 3.14,
 		      "label": ""
 		    },
 		    {
-		      "x": 41.2,
-		      "y": 30.9,
+		      "x": 7.8,
+		      "y": 3.86,
 		      "label": ""
 		    },
 		    {
-		      "x": 38.1,
-		      "y": 27.4,
+		      "x": 6.16,
+		      "y": 6.43,
 		      "label": ""
 		    },
 		    {
-		      "x": 38.7,
-		      "y": 38.9,
+		      "x": 8.84,
+		      "y": 1.71,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.94,
+		      "y": 3.57,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.54,
+		      "y": 3.29,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.62,
+		      "y": 3,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.18,
+		      "y": 0.29,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.86,
+		      "y": 3.43,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.42,
+		      "y": 1.14,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.38,
+		      "y": 1.87,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.7,
+		      "y": 1.57,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.96,
+		      "y": 3.86,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.02,
+		      "y": 3.43,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.52,
+		      "y": 2,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.16,
+		      "y": 3.86,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.18,
+		      "y": 4.86,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.28,
+		      "y": 4.43,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.42,
+		      "y": 0,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.84,
+		      "y": 3.71,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.46,
+		      "y": 3,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.18,
+		      "y": 4,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.12,
+		      "y": 4.71,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.18,
+		      "y": 3.43,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.18,
+		      "y": 3.43,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.66,
+		      "y": 5.43,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.34,
+		      "y": 4.43,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.12,
+		      "y": 3.43,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.88,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.02,
+		      "y": 6.29,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.22,
+		      "y": 2.57,
+		      "label": ""
+		    },
+		    {
+		      "x": 9,
+		      "y": 1,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.4,
+		      "y": 4.57,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.62,
+		      "y": 4.71,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.62,
+		      "y": 2.71,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.68,
+		      "y": 1.29,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.66,
+		      "y": 1.87,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.24,
+		      "y": 2,
 		      "label": ""
 		    }
 		  ]
@@ -8276,9 +8235,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x206f5f3d8b3bac38
-	// Question: Estimate average change in accidents with age from a scatterplot
+	// Question: Estimate rate of change from a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [x206f5f3d8b3bac38] Estimate average change in accidents with age from a scatterplot", async () => {
+	test("scatter-plot - [x206f5f3d8b3bac38] Estimate rate of change from a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8287,15 +8246,15 @@ describe("scatterPlot widget tests", () => {
 		  "title": "",
 		  "width": 375,
 		  "xAxis": {
-		    "max": 25,
-		    "min": 15,
-		    "label": "Age (years)",
+		    "max": 24,
+		    "min": 16,
+		    "label": "Age in years",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 25,
-		    "min": 8,
+		    "min": 10,
 		    "label": "Accidents per 100 drivers",
 		    "gridLines": true,
 		    "tickInterval": 1
@@ -8319,22 +8278,22 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 19,
-		      "y": 14,
+		      "y": 15,
 		      "label": ""
 		    },
 		    {
 		      "x": 20,
-		      "y": 14,
+		      "y": 15,
 		      "label": ""
 		    },
 		    {
 		      "x": 21,
-		      "y": 13,
+		      "y": 14,
 		      "label": ""
 		    },
 		    {
 		      "x": 22,
-		      "y": 13,
+		      "y": 14,
 		      "label": ""
 		    },
 		    {
@@ -8344,157 +8303,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 24,
-		      "y": 10,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa35dca308b38b42b
-	// Question: Describe the relationship shown in a scatterplot
-	// Widget key: image_1
-	test("scatter-plot - [xa35dca308b38b42b] Describe the relationship shown in a scatterplot", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Scatterplot",
-		  "width": 350,
-		  "xAxis": {
-		    "max": 14,
-		    "min": 0,
-		    "label": "x",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "y",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "height": 343,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 4.6,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.5,
-		      "y": 3.6,
-		      "label": ""
-		    },
-		    {
-		      "x": 1,
-		      "y": 1.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.5,
-		      "y": 0.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
-		      "y": -1,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.5,
-		      "y": -1.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": -2.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.5,
-		      "y": -3.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": -3.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.5,
-		      "y": -3.95,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": -4.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.5,
-		      "y": -3.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": -3.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.5,
-		      "y": -3.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": -2.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.5,
-		      "y": -1.6,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": -0.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 8.5,
-		      "y": 0.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 1.6,
-		      "label": ""
-		    },
-		    {
-		      "x": 9.5,
-		      "y": 3.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
-		      "y": 4.8,
+		      "y": 11,
 		      "label": ""
 		    }
 		  ]
@@ -8516,15 +8325,15 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xaa5f60eae1142a92
-	// Question: Describe the association in a heart rate vs. life expectancy graph
+	// Question: Describe the association between heart rate and life expectancy
 	// Widget key: image_1
-	test("scatter-plot - [xaa5f60eae1142a92] Describe the association in a heart rate vs. life expectancy graph", async () => {
+	test("scatter-plot - [xaa5f60eae1142a92] Describe the association between heart rate and life expectancy", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Heart rate vs. life expectancy",
+		  "title": "",
 		  "width": 404,
 		  "xAxis": {
 		    "max": 600,
@@ -8554,112 +8363,97 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 80,
-		      "y": 22,
+		      "y": 24,
 		      "label": ""
 		    },
 		    {
 		      "x": 100,
-		      "y": 18,
+		      "y": 19,
 		      "label": ""
 		    },
 		    {
 		      "x": 120,
-		      "y": 15,
+		      "y": 16,
 		      "label": ""
 		    },
 		    {
-		      "x": 140,
+		      "x": 150,
 		      "y": 13,
 		      "label": ""
 		    },
 		    {
-		      "x": 160,
+		      "x": 180,
 		      "y": 11,
 		      "label": ""
 		    },
 		    {
-		      "x": 180,
-		      "y": 10,
+		      "x": 210,
+		      "y": 9.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 200,
-		      "y": 9,
-		      "label": ""
-		    },
-		    {
-		      "x": 225,
+		      "x": 240,
 		      "y": 8.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 250,
-		      "y": 7.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 275,
-		      "y": 7,
+		      "x": 270,
+		      "y": 7.6,
 		      "label": ""
 		    },
 		    {
 		      "x": 300,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 330,
 		      "y": 6.4,
 		      "label": ""
 		    },
 		    {
-		      "x": 325,
+		      "x": 360,
 		      "y": 5.9,
 		      "label": ""
 		    },
 		    {
-		      "x": 350,
+		      "x": 390,
 		      "y": 5.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 380,
-		      "y": 5,
+		      "x": 420,
+		      "y": 5.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 410,
-		      "y": 4.7,
+		      "x": 450,
+		      "y": 4.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 440,
-		      "y": 4.4,
+		      "x": 480,
+		      "y": 4.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 470,
-		      "y": 4.2,
+		      "x": 510,
+		      "y": 4.3,
 		      "label": ""
 		    },
 		    {
-		      "x": 500,
+		      "x": 540,
 		      "y": 4.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 530,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 560,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 580,
+		      "x": 570,
 		      "y": 4,
 		      "label": ""
 		    },
 		    {
 		      "x": 600,
-		      "y": 4,
+		      "y": 3.9,
 		      "label": ""
 		    }
 		  ]
@@ -8680,151 +8474,371 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x91f381935d69a5e2
-	// Question: Describe the relationship between population density and rent
+	// Extracted from question: xa35dca308b38b42b
+	// Question: Describe the relationship in a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [x91f381935d69a5e2] Describe the relationship between population density and rent", async () => {
+	test("scatter-plot - [xa35dca308b38b42b] Describe the relationship in a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Population density vs. average 1-bedroom rent",
-		  "width": 400,
+		  "title": "Scatterplot",
+		  "width": 350,
 		  "xAxis": {
-		    "max": 45000,
+		    "max": 14,
 		    "min": 0,
-		    "label": "Population density, in people per square kilometer",
+		    "label": "",
 		    "gridLines": true,
-		    "tickInterval": 5000
+		    "tickInterval": 2
 		  },
 		  "yAxis": {
-		    "max": 2000,
-		    "min": 0,
-		    "label": "Average 1-bedroom rent, in dollars per month",
+		    "max": 6,
+		    "min": -6,
+		    "label": "",
 		    "gridLines": true,
-		    "tickInterval": 100
+		    "tickInterval": 2
 		  },
-		  "height": 385,
+		  "height": 343,
 		  "points": [
 		    {
-		      "x": 2000,
-		      "y": 825,
+		      "x": 0,
+		      "y": 4.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 4000,
-		      "y": 909,
+		      "x": 0.5,
+		      "y": 2.885,
 		      "label": ""
 		    },
 		    {
-		      "x": 5000,
-		      "y": 950,
+		      "x": 1,
+		      "y": 1.44,
 		      "label": ""
 		    },
 		    {
-		      "x": 6000,
-		      "y": 918,
+		      "x": 1.5,
+		      "y": 0.165,
 		      "label": ""
 		    },
 		    {
-		      "x": 8000,
-		      "y": 1007,
+		      "x": 2,
+		      "y": -0.94,
 		      "label": ""
 		    },
 		    {
-		      "x": 10000,
-		      "y": 1001,
+		      "x": 2.5,
+		      "y": -1.875,
 		      "label": ""
 		    },
 		    {
-		      "x": 12000,
-		      "y": 1105,
+		      "x": 3,
+		      "y": -2.64,
 		      "label": ""
 		    },
 		    {
-		      "x": 14000,
-		      "y": 1119,
+		      "x": 3.5,
+		      "y": -3.235,
 		      "label": ""
 		    },
 		    {
-		      "x": 15500,
-		      "y": 1220,
+		      "x": 4,
+		      "y": -3.66,
 		      "label": ""
 		    },
 		    {
-		      "x": 16000,
-		      "y": 1258,
+		      "x": 4.5,
+		      "y": -3.915,
 		      "label": ""
 		    },
 		    {
-		      "x": 18000,
-		      "y": 1237,
+		      "x": 5,
+		      "y": -4,
 		      "label": ""
 		    },
 		    {
-		      "x": 20000,
-		      "y": 1351,
+		      "x": 5.5,
+		      "y": -3.915,
 		      "label": ""
 		    },
 		    {
-		      "x": 22000,
-		      "y": 1300,
+		      "x": 6,
+		      "y": -3.66,
 		      "label": ""
 		    },
 		    {
-		      "x": 24000,
-		      "y": 1449,
+		      "x": 6.5,
+		      "y": -3.235,
 		      "label": ""
 		    },
 		    {
-		      "x": 26000,
-		      "y": 1438,
+		      "x": 7,
+		      "y": -2.64,
 		      "label": ""
 		    },
 		    {
-		      "x": 28000,
-		      "y": 1577,
+		      "x": 7.5,
+		      "y": -1.875,
 		      "label": ""
 		    },
 		    {
-		      "x": 30000,
-		      "y": 1521,
+		      "x": 8,
+		      "y": -0.94,
 		      "label": ""
 		    },
 		    {
-		      "x": 32000,
-		      "y": 1670,
+		      "x": 8.5,
+		      "y": 0.165,
 		      "label": ""
 		    },
 		    {
-		      "x": 34000,
-		      "y": 1644,
+		      "x": 9,
+		      "y": 1.44,
 		      "label": ""
 		    },
 		    {
-		      "x": 35000,
-		      "y": 1747,
+		      "x": 9.5,
+		      "y": 2.885,
 		      "label": ""
 		    },
 		    {
-		      "x": 36000,
-		      "y": 1783,
+		      "x": 10,
+		      "y": 4.5,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x70846cbcfc8ff6ac
+	// Question: Describe the association between exam period and average score
+	// Widget key: image_1
+	test("scatter-plot - [x70846cbcfc8ff6ac] Describe the association between exam period and average score", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Average score vs. Period",
+		  "width": 375,
+		  "xAxis": {
+		    "max": 9,
+		    "min": 0,
+		    "label": "Period",
+		    "gridLines": true,
+		    "tickInterval": 0.5
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": 0,
+		    "label": "Average score",
+		    "gridLines": true,
+		    "tickInterval": 5
+		  },
+		  "height": 355,
+		  "points": [
+		    {
+		      "x": 1.2,
+		      "y": 72,
 		      "label": ""
 		    },
 		    {
-		      "x": 38000,
-		      "y": 1762,
+		      "x": 1.5,
+		      "y": 43,
 		      "label": ""
 		    },
 		    {
-		      "x": 40000,
-		      "y": 1831,
+		      "x": 1.8,
+		      "y": 60,
 		      "label": ""
 		    },
 		    {
-		      "x": 42000,
-		      "y": 1895,
+		      "x": 1.9,
+		      "y": 52,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.1,
+		      "y": 68,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.4,
+		      "y": 41,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.7,
+		      "y": 58,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.9,
+		      "y": 74,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 65,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.2,
+		      "y": 47,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.5,
+		      "y": 76,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.8,
+		      "y": 55,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 70,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.3,
+		      "y": 62,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.5,
+		      "y": 39,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.7,
+		      "y": 78,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.9,
+		      "y": 57,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.1,
+		      "y": 66,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.3,
+		      "y": 45,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.6,
+		      "y": 73,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.9,
+		      "y": 54,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.2,
+		      "y": 71,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.4,
+		      "y": 49,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.6,
+		      "y": 63,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.8,
+		      "y": 58,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 42,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.2,
+		      "y": 75,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.4,
+		      "y": 53,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.6,
+		      "y": 67,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.8,
+		      "y": 56,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.9,
+		      "y": 61,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.1,
+		      "y": 69,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.6,
+		      "y": 50,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.6,
+		      "y": 44,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.8,
+		      "y": 72,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.8,
+		      "y": 47,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.1,
+		      "y": 60,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.3,
+		      "y": 64,
 		      "label": ""
 		    }
 		  ]
@@ -8846,80 +8860,80 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xeeb34b8b5e76f8a3
-	// Question: Best description of a scatterplot relationship
+	// Question: Describe the relationship in a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [xeeb34b8b5e76f8a3] Best description of a scatterplot relationship", async () => {
+	test("scatter-plot - [xeeb34b8b5e76f8a3] Describe the relationship in a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Population density vs. CO2 emissions per person (36 Japanese cities)",
-		  "width": 375,
+		  "title": "Population Density vs. CO2 Emissions per Person",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 3500,
 		    "min": 0,
-		    "label": "People, per square kilometer",
+		    "label": "People per square kilometer",
 		    "gridLines": true,
 		    "tickInterval": 500
 		  },
 		  "yAxis": {
 		    "max": 25,
 		    "min": 0,
-		    "label": "CO2 emissions per person, in metric tons",
+		    "label": "CO2 emissions per person (metric tons)",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 375,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 400,
-		      "y": 6.5,
+		      "y": 4,
 		      "label": ""
 		    },
 		    {
-		      "x": 550,
-		      "y": 5.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 600,
-		      "y": 7.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 700,
-		      "y": 6.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 800,
-		      "y": 8.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 900,
-		      "y": 7.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 1000,
-		      "y": 9,
-		      "label": ""
-		    },
-		    {
-		      "x": 750,
+		      "x": 500,
 		      "y": 5.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 650,
-		      "y": 7.9,
+		      "x": 600,
+		      "y": 6.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 850,
-		      "y": 6.3,
+		      "x": 700,
+		      "y": 4.8,
+		      "label": ""
+		    },
+		    {
+		      "x": 800,
+		      "y": 7.1,
+		      "label": ""
+		    },
+		    {
+		      "x": 900,
+		      "y": 6,
+		      "label": ""
+		    },
+		    {
+		      "x": 950,
+		      "y": 8.3,
+		      "label": ""
+		    },
+		    {
+		      "x": 750,
+		      "y": 3.9,
+		      "label": ""
+		    },
+		    {
+		      "x": 650,
+		      "y": 7.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 550,
+		      "y": 5,
 		      "label": ""
 		    },
 		    {
@@ -8928,68 +8942,233 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 1400,
-		      "y": 9.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 1600,
-		      "y": 11.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 1800,
-		      "y": 10,
-		      "label": ""
-		    },
-		    {
-		      "x": 2000,
-		      "y": 12.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 2500,
-		      "y": 15,
-		      "label": ""
-		    },
-		    {
-		      "x": 3000,
-		      "y": 18.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 3200,
-		      "y": 20.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 3400,
-		      "y": 17.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 1500,
-		      "y": 21,
-		      "label": ""
-		    },
-		    {
-		      "x": 2200,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 2800,
+		      "x": 1300,
 		      "y": 7,
 		      "label": ""
 		    },
 		    {
-		      "x": 500,
-		      "y": 14,
+		      "x": 1400,
+		      "y": 15,
+		      "label": ""
+		    },
+		    {
+		      "x": 1600,
+		      "y": 9.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 1800,
+		      "y": 12.8,
+		      "label": ""
+		    },
+		    {
+		      "x": 2000,
+		      "y": 5.6,
+		      "label": ""
+		    },
+		    {
+		      "x": 2100,
+		      "y": 18,
+		      "label": ""
+		    },
+		    {
+		      "x": 2300,
+		      "y": 11.1,
+		      "label": ""
+		    },
+		    {
+		      "x": 2500,
+		      "y": 19.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 2700,
+		      "y": 8.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 2900,
+		      "y": 21.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 3100,
-		      "y": 6,
+		      "y": 14.3,
+		      "label": ""
+		    },
+		    {
+		      "x": 3300,
+		      "y": 4.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 3400,
+		      "y": 17,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x91f381935d69a5e2
+	// Question: Describe the relationship in a scatter plot (population density vs. rent)
+	// Widget key: image_1
+	test("scatter-plot - [x91f381935d69a5e2] Describe the relationship in a scatter plot (population density vs. rent)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Population density vs. Average 1-bedroom rent",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 45000,
+		    "min": 0,
+		    "label": "Population density, in people per square kilometer",
+		    "gridLines": true,
+		    "tickInterval": 5000
+		  },
+		  "yAxis": {
+		    "max": 2000,
+		    "min": 0,
+		    "label": "Average 1-bedroom rent, in dollars per month",
+		    "gridLines": true,
+		    "tickInterval": 100
+		  },
+		  "height": 385,
+		  "points": [
+		    {
+		      "x": 2000,
+		      "y": 830,
+		      "label": ""
+		    },
+		    {
+		      "x": 4500,
+		      "y": 880,
+		      "label": ""
+		    },
+		    {
+		      "x": 4000,
+		      "y": 860,
+		      "label": ""
+		    },
+		    {
+		      "x": 6000,
+		      "y": 900,
+		      "label": ""
+		    },
+		    {
+		      "x": 8000,
+		      "y": 950,
+		      "label": ""
+		    },
+		    {
+		      "x": 10000,
+		      "y": 980,
+		      "label": ""
+		    },
+		    {
+		      "x": 12000,
+		      "y": 1040,
+		      "label": ""
+		    },
+		    {
+		      "x": 14000,
+		      "y": 1080,
+		      "label": ""
+		    },
+		    {
+		      "x": 15500,
+		      "y": 1145,
+		      "label": ""
+		    },
+		    {
+		      "x": 16000,
+		      "y": 1125,
+		      "label": ""
+		    },
+		    {
+		      "x": 18000,
+		      "y": 1175,
+		      "label": ""
+		    },
+		    {
+		      "x": 20000,
+		      "y": 1220,
+		      "label": ""
+		    },
+		    {
+		      "x": 22000,
+		      "y": 1260,
+		      "label": ""
+		    },
+		    {
+		      "x": 24000,
+		      "y": 1310,
+		      "label": ""
+		    },
+		    {
+		      "x": 26000,
+		      "y": 1360,
+		      "label": ""
+		    },
+		    {
+		      "x": 28000,
+		      "y": 1415,
+		      "label": ""
+		    },
+		    {
+		      "x": 30000,
+		      "y": 1460,
+		      "label": ""
+		    },
+		    {
+		      "x": 32000,
+		      "y": 1520,
+		      "label": ""
+		    },
+		    {
+		      "x": 34000,
+		      "y": 1580,
+		      "label": ""
+		    },
+		    {
+		      "x": 34500,
+		      "y": 1600,
+		      "label": ""
+		    },
+		    {
+		      "x": 36000,
+		      "y": 1640,
+		      "label": ""
+		    },
+		    {
+		      "x": 38000,
+		      "y": 1710,
+		      "label": ""
+		    },
+		    {
+		      "x": 40000,
+		      "y": 1780,
+		      "label": ""
+		    },
+		    {
+		      "x": 42000,
+		      "y": 1870,
 		      "label": ""
 		    }
 		  ]
@@ -9011,15 +9190,15 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf822cf6bba3e15ed
-	// Question: Identify the relationship in a scatterplot
+	// Question: Describe the association in the scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [xf822cf6bba3e15ed] Identify the relationship in a scatterplot", async () => {
+	test("scatter-plot - [xf822cf6bba3e15ed] Describe the association in the scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Scatterplot",
+		  "title": "",
 		  "width": 432,
 		  "xAxis": {
 		    "max": 24,
@@ -9044,46 +9223,51 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 2,
-		      "y": 81,
+		      "y": 85,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 66,
+		      "y": 70,
 		      "label": ""
 		    },
 		    {
 		      "x": 4,
-		      "y": 53,
+		      "y": 55,
 		      "label": ""
 		    },
 		    {
 		      "x": 5,
-		      "y": 42,
+		      "y": 40,
 		      "label": ""
 		    },
 		    {
 		      "x": 6,
-		      "y": 32,
+		      "y": 28,
 		      "label": ""
 		    },
 		    {
 		      "x": 7,
-		      "y": 24,
+		      "y": 20,
 		      "label": ""
 		    },
 		    {
 		      "x": 8,
-		      "y": 18,
+		      "y": 13,
 		      "label": ""
 		    },
 		    {
 		      "x": 9,
-		      "y": 12,
+		      "y": 10,
 		      "label": ""
 		    },
 		    {
 		      "x": 10,
+		      "y": 9,
+		      "label": ""
+		    },
+		    {
+		      "x": 10.5,
 		      "y": 9,
 		      "label": ""
 		    },
@@ -9093,123 +9277,63 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
+		      "x": 11.5,
+		      "y": 9,
+		      "label": ""
+		    },
+		    {
 		      "x": 12,
-		      "y": 10,
+		      "y": 9,
 		      "label": ""
 		    },
 		    {
 		      "x": 13,
-		      "y": 13,
-		      "label": ""
-		    },
-		    {
-		      "x": 14,
-		      "y": 17,
-		      "label": ""
-		    },
-		    {
-		      "x": 15,
-		      "y": 23,
-		      "label": ""
-		    },
-		    {
-		      "x": 16,
-		      "y": 31,
-		      "label": ""
-		    },
-		    {
-		      "x": 17,
-		      "y": 41,
-		      "label": ""
-		    },
-		    {
-		      "x": 18,
-		      "y": 54,
-		      "label": ""
-		    },
-		    {
-		      "x": 19,
-		      "y": 68,
-		      "label": ""
-		    },
-		    {
-		      "x": 20,
-		      "y": 82,
-		      "label": ""
-		    },
-		    {
-		      "x": 21,
-		      "y": 100,
-		      "label": ""
-		    },
-		    {
-		      "x": 22,
-		      "y": 118,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.5,
-		      "y": 88,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.5,
-		      "y": 60,
-		      "label": ""
-		    },
-		    {
-		      "x": 17.5,
-		      "y": 45,
-		      "label": ""
-		    },
-		    {
-		      "x": 19.5,
-		      "y": 75,
-		      "label": ""
-		    },
-		    {
-		      "x": 9.5,
-		      "y": 11,
-		      "label": ""
-		    },
-		    {
-		      "x": 10.2,
-		      "y": 10,
-		      "label": ""
-		    },
-		    {
-		      "x": 10.5,
-		      "y": 9,
-		      "label": ""
-		    },
-		    {
-		      "x": 10.8,
-		      "y": 9,
-		      "label": ""
-		    },
-		    {
-		      "x": 11.2,
-		      "y": 9,
-		      "label": ""
-		    },
-		    {
-		      "x": 11.5,
-		      "y": 11,
-		      "label": ""
-		    },
-		    {
-		      "x": 12,
-		      "y": 10,
-		      "label": ""
-		    },
-		    {
-		      "x": 12.5,
 		      "y": 12,
 		      "label": ""
 		    },
 		    {
-		      "x": 9,
-		      "y": 14,
+		      "x": 14,
+		      "y": 18,
+		      "label": ""
+		    },
+		    {
+		      "x": 15,
+		      "y": 25,
+		      "label": ""
+		    },
+		    {
+		      "x": 16,
+		      "y": 35,
+		      "label": ""
+		    },
+		    {
+		      "x": 17,
+		      "y": 50,
+		      "label": ""
+		    },
+		    {
+		      "x": 18,
+		      "y": 70,
+		      "label": ""
+		    },
+		    {
+		      "x": 19,
+		      "y": 90,
+		      "label": ""
+		    },
+		    {
+		      "x": 20,
+		      "y": 110,
+		      "label": ""
+		    },
+		    {
+		      "x": 21,
+		      "y": 130,
+		      "label": ""
+		    },
+		    {
+		      "x": 22,
+		      "y": 140,
 		      "label": ""
 		    }
 		  ]
@@ -9231,16 +9355,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x924370d99148ce86
-	// Question: Describe the relationship in a scatter plot
+	// Question: Describe the relationship between life expectancy and income
 	// Widget key: image_1
-	test("scatter-plot - [x924370d99148ce86] Describe the relationship in a scatter plot", async () => {
+	test("scatter-plot - [x924370d99148ce86] Describe the relationship between life expectancy and income", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Life expectancy vs. income",
-		  "width": 600,
+		  "width": 382,
 		  "xAxis": {
 		    "max": 60,
 		    "min": 0,
@@ -9255,126 +9379,131 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 400,
+		  "height": 382,
 		  "points": [
 		    {
 		      "x": 4,
-		      "y": 69,
+		      "y": 69.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 6,
-		      "y": 69.5,
+		      "y": 69.9,
 		      "label": ""
 		    },
 		    {
 		      "x": 8,
-		      "y": 70,
+		      "y": 70.6,
 		      "label": ""
 		    },
 		    {
 		      "x": 10,
-		      "y": 70.5,
+		      "y": 71.1,
 		      "label": ""
 		    },
 		    {
 		      "x": 12,
-		      "y": 71,
+		      "y": 71.7,
 		      "label": ""
 		    },
 		    {
 		      "x": 14,
-		      "y": 71.5,
+		      "y": 72.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 16,
-		      "y": 72,
-		      "label": ""
-		    },
-		    {
-		      "x": 18,
 		      "y": 72.8,
 		      "label": ""
 		    },
 		    {
+		      "x": 18,
+		      "y": 73.1,
+		      "label": ""
+		    },
+		    {
+		      "x": 20,
+		      "y": 73.6,
+		      "label": ""
+		    },
+		    {
 		      "x": 22,
-		      "y": 73.8,
+		      "y": 74.1,
 		      "label": ""
 		    },
 		    {
 		      "x": 24,
-		      "y": 74.2,
+		      "y": 74.7,
 		      "label": ""
 		    },
 		    {
 		      "x": 26,
-		      "y": 74.9,
+		      "y": 75,
 		      "label": ""
 		    },
 		    {
 		      "x": 28,
-		      "y": 75.3,
+		      "y": 75.6,
 		      "label": ""
 		    },
 		    {
 		      "x": 30,
-		      "y": 75.9,
+		      "y": 76,
 		      "label": ""
 		    },
 		    {
 		      "x": 32,
-		      "y": 76.4,
+		      "y": 76.9,
 		      "label": ""
 		    },
 		    {
 		      "x": 34,
-		      "y": 76.8,
+		      "y": 77.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 36,
-		      "y": 77.4,
+		      "y": 77.6,
 		      "label": ""
 		    },
 		    {
 		      "x": 38,
-		      "y": 77.9,
+		      "y": 78.4,
 		      "label": ""
 		    },
 		    {
 		      "x": 40,
-		      "y": 78.3,
+		      "y": 78.7,
 		      "label": ""
 		    },
 		    {
 		      "x": 42,
-		      "y": 79,
+		      "y": 79.1,
 		      "label": ""
 		    },
 		    {
 		      "x": 44,
-		      "y": 79.4,
+		      "y": 79.5,
 		      "label": ""
 		    },
 		    {
 		      "x": 46,
-		      "y": 80,
+		      "y": 80.1,
 		      "label": ""
 		    },
 		    {
 		      "x": 48,
-		      "y": 80.6,
+		      "y": 80.3,
 		      "label": ""
 		    },
 		    {
 		      "x": 50,
-		      "y": 81,
+		      "y": 81.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 52,
-		      "y": 82,
+		      "y": 81.8,
 		      "label": ""
 		    }
 		  ]
@@ -9395,231 +9524,146 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x70846cbcfc8ff6ac
-	// Question: Describe the association between exam time and average score
+	// Extracted from question: x5f0e56cacf751af6
+	// Question: Describe the association in a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [x70846cbcfc8ff6ac] Describe the association between exam time and average score", async () => {
+	test("scatter-plot - [x5f0e56cacf751af6] Describe the association in a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Average score vs. period",
-		  "width": 600,
+		  "title": "",
+		  "width": 400,
 		  "xAxis": {
-		    "max": 9,
+		    "max": 100,
 		    "min": 0,
-		    "label": "Period",
+		    "label": "",
 		    "gridLines": true,
-		    "tickInterval": 0.5
+		    "tickInterval": 10
 		  },
 		  "yAxis": {
 		    "max": 100,
 		    "min": 0,
-		    "label": "Average score",
+		    "label": "",
 		    "gridLines": true,
-		    "tickInterval": 5
+		    "tickInterval": 20
 		  },
-		  "height": 400,
+		  "height": 380,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 67,
+		      "x": 48,
+		      "y": 50,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.2,
-		      "y": 58,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.4,
-		      "y": 62,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.6,
-		      "y": 47,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.8,
-		      "y": 73,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
-		      "y": 61,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.2,
-		      "y": 55,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.4,
-		      "y": 70,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.6,
-		      "y": 43,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.8,
-		      "y": 59,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 74,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.2,
-		      "y": 60,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.4,
+		      "x": 50,
 		      "y": 52,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.6,
-		      "y": 71,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.8,
-		      "y": 57,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 65,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.2,
-		      "y": 48,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.4,
-		      "y": 62,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.6,
-		      "y": 59,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.8,
-		      "y": 75,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
+		      "x": 52,
 		      "y": 54,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.2,
-		      "y": 63,
+		      "x": 55,
+		      "y": 57,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.4,
-		      "y": 46,
+		      "x": 57,
+		      "y": 60,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.6,
-		      "y": 68,
+		      "x": 60,
+		      "y": 62,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.8,
-		      "y": 58,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
+		      "x": 62,
 		      "y": 64,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.2,
-		      "y": 45,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.4,
-		      "y": 73,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.6,
-		      "y": 51,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.8,
-		      "y": 69,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 56,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.2,
+		      "x": 64,
 		      "y": 66,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.4,
-		      "y": 49,
+		      "x": 66,
+		      "y": 69,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.6,
-		      "y": 72,
+		      "x": 68,
+		      "y": 71,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.8,
-		      "y": 55,
+		      "x": 70,
+		      "y": 73,
 		      "label": ""
 		    },
 		    {
-		      "x": 8,
-		      "y": 61,
+		      "x": 72,
+		      "y": 75,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.7,
-		      "y": 78,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.9,
+		      "x": 74,
 		      "y": 77,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.1,
-		      "y": 39,
+		      "x": 77,
+		      "y": 80,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.6,
-		      "y": 42,
+		      "x": 79,
+		      "y": 82,
+		      "label": ""
+		    },
+		    {
+		      "x": 81,
+		      "y": 84,
+		      "label": ""
+		    },
+		    {
+		      "x": 83,
+		      "y": 86,
+		      "label": ""
+		    },
+		    {
+		      "x": 85,
+		      "y": 88,
+		      "label": ""
+		    },
+		    {
+		      "x": 87,
+		      "y": 91,
+		      "label": ""
+		    },
+		    {
+		      "x": 90,
+		      "y": 93,
+		      "label": ""
+		    },
+		    {
+		      "x": 92,
+		      "y": 95,
+		      "label": ""
+		    },
+		    {
+		      "x": 94,
+		      "y": 97,
+		      "label": ""
+		    },
+		    {
+		      "x": 95,
+		      "y": 99,
 		      "label": ""
 		    }
 		  ]
@@ -9649,8 +9693,8 @@ describe("scatterPlot widget tests", () => {
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
-		  "width": 600,
+		  "title": "Score vs. Study time",
+		  "width": 375,
 		  "xAxis": {
 		    "max": 5,
 		    "min": 0,
@@ -9665,157 +9709,127 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
-		  "height": 400,
+		  "height": 375,
 		  "points": [
 		    {
 		      "x": 0.7,
 		      "y": 50,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.8,
-		      "y": 52,
-		      "label": ""
+		      "label": " "
 		    },
 		    {
 		      "x": 0.9,
 		      "y": 53,
-		      "label": ""
+		      "label": " "
 		    },
 		    {
 		      "x": 1,
-		      "y": 55,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.1,
-		      "y": 56,
-		      "label": ""
+		      "y": 54,
+		      "label": " "
 		    },
 		    {
 		      "x": 1.2,
-		      "y": 58,
-		      "label": ""
+		      "y": 56,
+		      "label": " "
 		    },
 		    {
 		      "x": 1.3,
-		      "y": 59,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.4,
-		      "y": 61,
-		      "label": ""
+		      "y": 57,
+		      "label": " "
 		    },
 		    {
 		      "x": 1.5,
-		      "y": 62,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.6,
-		      "y": 64,
-		      "label": ""
+		      "y": 60,
+		      "label": " "
 		    },
 		    {
 		      "x": 1.7,
-		      "y": 65,
-		      "label": ""
+		      "y": 63,
+		      "label": " "
 		    },
 		    {
 		      "x": 1.8,
-		      "y": 67,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.9,
-		      "y": 68,
-		      "label": ""
+		      "y": 64,
+		      "label": " "
 		    },
 		    {
 		      "x": 2,
-		      "y": 70,
-		      "label": ""
+		      "y": 66,
+		      "label": " "
 		    },
 		    {
 		      "x": 2.1,
-		      "y": 71,
-		      "label": ""
+		      "y": 67,
+		      "label": " "
 		    },
 		    {
 		      "x": 2.2,
-		      "y": 73,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.3,
-		      "y": 74,
-		      "label": ""
+		      "y": 69,
+		      "label": " "
 		    },
 		    {
 		      "x": 2.4,
-		      "y": 76,
-		      "label": ""
+		      "y": 71,
+		      "label": " "
 		    },
 		    {
 		      "x": 2.5,
-		      "y": 77,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.6,
-		      "y": 79,
-		      "label": ""
+		      "y": 72,
+		      "label": " "
 		    },
 		    {
 		      "x": 2.7,
-		      "y": 80,
-		      "label": ""
+		      "y": 75,
+		      "label": " "
 		    },
 		    {
 		      "x": 2.8,
-		      "y": 82,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.9,
-		      "y": 83,
-		      "label": ""
+		      "y": 76,
+		      "label": " "
 		    },
 		    {
 		      "x": 3,
-		      "y": 85,
-		      "label": ""
+		      "y": 78,
+		      "label": " "
 		    },
 		    {
 		      "x": 3.1,
-		      "y": 86,
-		      "label": ""
+		      "y": 79,
+		      "label": " "
 		    },
 		    {
 		      "x": 3.2,
-		      "y": 87,
-		      "label": ""
+		      "y": 80,
+		      "label": " "
 		    },
 		    {
 		      "x": 3.3,
-		      "y": 88,
-		      "label": ""
+		      "y": 82,
+		      "label": " "
 		    },
 		    {
 		      "x": 3.5,
-		      "y": 89,
-		      "label": ""
+		      "y": 84,
+		      "label": " "
+		    },
+		    {
+		      "x": 3.6,
+		      "y": 85,
+		      "label": " "
+		    },
+		    {
+		      "x": 3.7,
+		      "y": 87,
+		      "label": " "
 		    },
 		    {
 		      "x": 3.8,
-		      "y": 90,
-		      "label": ""
+		      "y": 88,
+		      "label": " "
 		    },
 		    {
 		      "x": 4,
 		      "y": 90,
-		      "label": ""
+		      "label": " "
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -9836,16 +9850,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9bf36895e2d45a5f
-	// Question: Describe the relationship shown in the scatterplot
+	// Question: Identify the association from a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [x9bf36895e2d45a5f] Describe the relationship shown in the scatterplot", async () => {
+	test("scatter-plot - [x9bf36895e2d45a5f] Identify the association from a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Group size vs. time, in minutes",
-		  "width": 600,
+		  "title": "Time (minutes) vs. group size",
+		  "width": 394,
 		  "xAxis": {
 		    "max": 8,
 		    "min": 0,
@@ -9856,119 +9870,129 @@ describe("scatterPlot widget tests", () => {
 		  "yAxis": {
 		    "max": 20,
 		    "min": 0,
-		    "label": "Time, in minutes",
+		    "label": "Time (minutes)",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 400,
+		  "height": 372,
 		  "points": [
 		    {
 		      "x": 1,
-		      "y": 19.8,
+		      "y": 20,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.2,
-		      "y": 18.7,
+		      "x": 1.3,
+		      "y": 17.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.4,
-		      "y": 17.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.7,
+		      "x": 1.6,
 		      "y": 16,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
+		      "x": 1.9,
 		      "y": 14.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.3,
+		      "x": 2.2,
 		      "y": 12.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.6,
-		      "y": 11.6,
+		      "x": 2.5,
+		      "y": 11.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.9,
-		      "y": 10.8,
+		      "x": 2.8,
+		      "y": 10.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.2,
-		      "y": 10,
+		      "x": 3.1,
+		      "y": 9.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.6,
-		      "y": 9.4,
+		      "x": 3.4,
+		      "y": 9.1,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.7,
+		      "y": 8.6,
 		      "label": ""
 		    },
 		    {
 		      "x": 4,
-		      "y": 8.9,
+		      "y": 8.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.4,
-		      "y": 8.4,
+		      "x": 4.3,
+		      "y": 7.9,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.8,
-		      "y": 8,
+		      "x": 4.6,
+		      "y": 7.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.2,
-		      "y": 7.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.6,
+		      "x": 4.9,
 		      "y": 7.4,
 		      "label": ""
 		    },
 		    {
-		      "x": 6,
-		      "y": 7.1,
+		      "x": 5.2,
+		      "y": 7.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.3,
+		      "x": 5.5,
 		      "y": 7,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.6,
+		      "x": 5.8,
 		      "y": 6.9,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.9,
+		      "x": 6.1,
 		      "y": 6.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.2,
+		      "x": 6.4,
 		      "y": 6.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.5,
+		      "x": 6.7,
 		      "y": 6.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.8,
+		      "x": 7,
+		      "y": 6.6,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.3,
+		      "y": 6.6,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.6,
+		      "y": 6.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.9,
 		      "y": 6.5,
 		      "label": ""
 		    }
@@ -9991,16 +10015,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x409632bc9a944175
-	// Question: Describe the relationship between life expectancy and infant mortality
+	// Question: Describe the relationship in a scatter plot
 	// Widget key: image_1
-	test("scatter-plot - [x409632bc9a944175] Describe the relationship between life expectancy and infant mortality", async () => {
+	test("scatter-plot - [x409632bc9a944175] Describe the relationship in a scatter plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
-		  "width": 382,
+		  "title": "Life expectancy vs. infant mortality",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 100,
 		    "min": 0,
@@ -10015,7 +10039,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 382,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 1,
@@ -10024,22 +10048,27 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 3,
-		      "y": 82,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
 		      "y": 81,
 		      "label": ""
 		    },
 		    {
-		      "x": 5,
+		      "x": 4,
 		      "y": 80,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 81,
 		      "label": ""
 		    },
 		    {
 		      "x": 6,
 		      "y": 79,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 78,
 		      "label": ""
 		    },
 		    {
@@ -10049,7 +10078,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 9,
-		      "y": 78,
+		      "y": 79,
 		      "label": ""
 		    },
 		    {
@@ -10059,51 +10088,46 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 12,
-		      "y": 76,
-		      "label": ""
-		    },
-		    {
-		      "x": 14,
 		      "y": 75,
 		      "label": ""
 		    },
 		    {
+		      "x": 14,
+		      "y": 74,
+		      "label": ""
+		    },
+		    {
 		      "x": 15,
-		      "y": 74,
-		      "label": ""
-		    },
-		    {
-		      "x": 16,
-		      "y": 74,
-		      "label": ""
-		    },
-		    {
-		      "x": 18,
 		      "y": 73,
 		      "label": ""
 		    },
 		    {
-		      "x": 19,
+		      "x": 16,
+		      "y": 73,
+		      "label": ""
+		    },
+		    {
+		      "x": 18,
 		      "y": 72,
+		      "label": ""
+		    },
+		    {
+		      "x": 19,
+		      "y": 71,
 		      "label": ""
 		    },
 		    {
 		      "x": 20,
-		      "y": 72,
-		      "label": ""
-		    },
-		    {
-		      "x": 22,
 		      "y": 70,
 		      "label": ""
 		    },
 		    {
-		      "x": 24,
+		      "x": 22,
 		      "y": 69,
 		      "label": ""
 		    },
 		    {
-		      "x": 26,
+		      "x": 25,
 		      "y": 68,
 		      "label": ""
 		    },
@@ -10129,7 +10153,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 38,
-		      "y": 62,
+		      "y": 63,
 		      "label": ""
 		    },
 		    {
@@ -10138,8 +10162,18 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
+		      "x": 42,
+		      "y": 60,
+		      "label": ""
+		    },
+		    {
 		      "x": 45,
 		      "y": 58,
+		      "label": ""
+		    },
+		    {
+		      "x": 48,
+		      "y": 57,
 		      "label": ""
 		    },
 		    {
@@ -10153,28 +10187,38 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 60,
-		      "y": 52,
+		      "x": 58,
+		      "y": 53,
 		      "label": ""
 		    },
 		    {
-		      "x": 65,
+		      "x": 60,
+		      "y": 51,
+		      "label": ""
+		    },
+		    {
+		      "x": 62,
 		      "y": 50,
 		      "label": ""
 		    },
 		    {
-		      "x": 70,
+		      "x": 65,
+		      "y": 49,
+		      "label": ""
+		    },
+		    {
+		      "x": 68,
 		      "y": 47,
 		      "label": ""
 		    },
 		    {
-		      "x": 72,
+		      "x": 70,
 		      "y": 46,
 		      "label": ""
 		    },
 		    {
-		      "x": 74,
-		      "y": 43,
+		      "x": 72,
+		      "y": 44,
 		      "label": ""
 		    },
 		    {
@@ -10200,182 +10244,17 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x5f0e56cacf751af6
-	// Question: Describe the relationship in a scatterplot
-	// Widget key: image_1
-	test("scatter-plot - [x5f0e56cacf751af6] Describe the relationship in a scatterplot", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 100,
-		    "min": 0,
-		    "label": "",
-		    "gridLines": true,
-		    "tickInterval": 10
-		  },
-		  "yAxis": {
-		    "max": 100,
-		    "min": 0,
-		    "label": "",
-		    "gridLines": true,
-		    "tickInterval": 20
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 48,
-		      "y": 50,
-		      "label": ""
-		    },
-		    {
-		      "x": 50,
-		      "y": 52,
-		      "label": ""
-		    },
-		    {
-		      "x": 52,
-		      "y": 54,
-		      "label": ""
-		    },
-		    {
-		      "x": 54,
-		      "y": 56,
-		      "label": ""
-		    },
-		    {
-		      "x": 56,
-		      "y": 58,
-		      "label": ""
-		    },
-		    {
-		      "x": 58,
-		      "y": 60,
-		      "label": ""
-		    },
-		    {
-		      "x": 60,
-		      "y": 62,
-		      "label": ""
-		    },
-		    {
-		      "x": 62,
-		      "y": 64,
-		      "label": ""
-		    },
-		    {
-		      "x": 64,
-		      "y": 66,
-		      "label": ""
-		    },
-		    {
-		      "x": 66,
-		      "y": 68,
-		      "label": ""
-		    },
-		    {
-		      "x": 68,
-		      "y": 70,
-		      "label": ""
-		    },
-		    {
-		      "x": 70,
-		      "y": 72,
-		      "label": ""
-		    },
-		    {
-		      "x": 72,
-		      "y": 74,
-		      "label": ""
-		    },
-		    {
-		      "x": 74,
-		      "y": 76,
-		      "label": ""
-		    },
-		    {
-		      "x": 76,
-		      "y": 78,
-		      "label": ""
-		    },
-		    {
-		      "x": 78,
-		      "y": 80,
-		      "label": ""
-		    },
-		    {
-		      "x": 80,
-		      "y": 82,
-		      "label": ""
-		    },
-		    {
-		      "x": 82,
-		      "y": 84,
-		      "label": ""
-		    },
-		    {
-		      "x": 84,
-		      "y": 86,
-		      "label": ""
-		    },
-		    {
-		      "x": 86,
-		      "y": 88,
-		      "label": ""
-		    },
-		    {
-		      "x": 88,
-		      "y": 90,
-		      "label": ""
-		    },
-		    {
-		      "x": 90,
-		      "y": 92,
-		      "label": ""
-		    },
-		    {
-		      "x": 92,
-		      "y": 94,
-		      "label": ""
-		    },
-		    {
-		      "x": 95,
-		      "y": 99,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xacfd328ef0d5fc1c
-	// Question: Describe the association in a temperature scatter plot
+	// Question: Describe the relationship in a scatter plot
 	// Widget key: image_1
-	test("scatter-plot - [xacfd328ef0d5fc1c] Describe the association in a temperature scatter plot", async () => {
+	test("scatter-plot - [xacfd328ef0d5fc1c] Describe the relationship in a scatter plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Change in average world temperature over time",
-		  "width": 600,
+		  "title": "Average global temperature change over time",
+		  "width": 375,
 		  "xAxis": {
 		    "max": 45,
 		    "min": 0,
@@ -10386,155 +10265,120 @@ describe("scatterPlot widget tests", () => {
 		  "yAxis": {
 		    "max": 2,
 		    "min": 0,
-		    "label": "Degrees above 13, in degrees Celsius",
+		    "label": "Degrees above 13 (°C)",
 		    "gridLines": true,
 		    "tickInterval": 0.1
 		  },
-		  "height": 400,
+		  "height": 375,
 		  "points": [
 		    {
 		      "x": 0,
-		      "y": 1.12,
+		      "y": 1.11,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.5,
-		      "y": 1.128,
+		      "x": 2,
+		      "y": 1.13,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
-		      "y": 1.161,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.5,
-		      "y": 1.159,
+		      "x": 4,
+		      "y": 1.16,
 		      "label": ""
 		    },
 		    {
 		      "x": 6,
-		      "y": 1.199,
+		      "y": 1.18,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.5,
-		      "y": 1.203,
+		      "x": 8,
+		      "y": 1.19,
 		      "label": ""
 		    },
 		    {
-		      "x": 9,
-		      "y": 1.239,
-		      "label": ""
-		    },
-		    {
-		      "x": 10.5,
-		      "y": 1.235,
+		      "x": 10,
+		      "y": 1.22,
 		      "label": ""
 		    },
 		    {
 		      "x": 12,
-		      "y": 1.269,
+		      "y": 1.25,
 		      "label": ""
 		    },
 		    {
-		      "x": 13.5,
-		      "y": 1.273,
+		      "x": 14,
+		      "y": 1.27,
 		      "label": ""
 		    },
 		    {
-		      "x": 15,
-		      "y": 1.314,
-		      "label": ""
-		    },
-		    {
-		      "x": 16.5,
-		      "y": 1.304,
+		      "x": 16,
+		      "y": 1.3,
 		      "label": ""
 		    },
 		    {
 		      "x": 18,
-		      "y": 1.344,
+		      "y": 1.31,
 		      "label": ""
 		    },
 		    {
-		      "x": 19.5,
-		      "y": 1.345,
+		      "x": 20,
+		      "y": 1.34,
 		      "label": ""
 		    },
 		    {
-		      "x": 21,
-		      "y": 1.376,
-		      "label": ""
-		    },
-		    {
-		      "x": 22.5,
-		      "y": 1.376,
+		      "x": 22,
+		      "y": 1.36,
 		      "label": ""
 		    },
 		    {
 		      "x": 24,
-		      "y": 1.415,
+		      "y": 1.39,
 		      "label": ""
 		    },
 		    {
-		      "x": 25.5,
-		      "y": 1.419,
+		      "x": 26,
+		      "y": 1.41,
 		      "label": ""
 		    },
 		    {
-		      "x": 27,
-		      "y": 1.452,
-		      "label": ""
-		    },
-		    {
-		      "x": 28.5,
-		      "y": 1.444,
+		      "x": 28,
+		      "y": 1.43,
 		      "label": ""
 		    },
 		    {
 		      "x": 30,
-		      "y": 1.483,
+		      "y": 1.46,
 		      "label": ""
 		    },
 		    {
-		      "x": 31.5,
-		      "y": 1.487,
+		      "x": 32,
+		      "y": 1.47,
 		      "label": ""
 		    },
 		    {
-		      "x": 33,
-		      "y": 1.522,
-		      "label": ""
-		    },
-		    {
-		      "x": 34.5,
-		      "y": 1.525,
+		      "x": 34,
+		      "y": 1.5,
 		      "label": ""
 		    },
 		    {
 		      "x": 36,
-		      "y": 1.552,
+		      "y": 1.52,
 		      "label": ""
 		    },
 		    {
-		      "x": 37.5,
-		      "y": 1.556,
+		      "x": 38,
+		      "y": 1.54,
 		      "label": ""
 		    },
 		    {
-		      "x": 39,
-		      "y": 1.569,
-		      "label": ""
-		    },
-		    {
-		      "x": 40.5,
-		      "y": 1.582,
+		      "x": 40,
+		      "y": 1.56,
 		      "label": ""
 		    },
 		    {
 		      "x": 42,
-		      "y": 1.59,
+		      "y": 1.58,
 		      "label": ""
 		    }
 		  ]
@@ -10556,16 +10400,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xfa766b3bb942d8d1
-	// Question: Describe the relationship in a scatterplot
+	// Question: Identify the association in a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [xfa766b3bb942d8d1] Describe the relationship in a scatterplot", async () => {
+	test("scatter-plot - [xfa766b3bb942d8d1] Identify the association in a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Scatterplot",
-		  "width": 399,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 100,
 		    "min": 0,
@@ -10580,136 +10424,126 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
-		  "height": 381,
+		  "height": 380,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 53,
+		      "x": 4,
+		      "y": 52,
 		      "label": ""
 		    },
 		    {
-		      "x": 5,
-		      "y": 52.5,
+		      "x": 8,
+		      "y": 49,
 		      "label": ""
 		    },
 		    {
-		      "x": 9,
-		      "y": 46.62,
+		      "x": 12,
+		      "y": 47,
 		      "label": ""
 		    },
 		    {
-		      "x": 13,
-		      "y": 49.24,
+		      "x": 16,
+		      "y": 44,
 		      "label": ""
 		    },
 		    {
-		      "x": 17,
-		      "y": 41.56,
+		      "x": 20,
+		      "y": 43,
 		      "label": ""
 		    },
 		    {
-		      "x": 21,
-		      "y": 43.58,
+		      "x": 24,
+		      "y": 41,
 		      "label": ""
 		    },
 		    {
-		      "x": 25,
-		      "y": 36.8,
+		      "x": 28,
+		      "y": 39,
 		      "label": ""
 		    },
 		    {
-		      "x": 29,
-		      "y": 40.72,
+		      "x": 32,
+		      "y": 36,
 		      "label": ""
 		    },
 		    {
-		      "x": 33,
-		      "y": 33.54,
+		      "x": 36,
+		      "y": 35,
 		      "label": ""
 		    },
 		    {
-		      "x": 37,
-		      "y": 35.66,
+		      "x": 40,
+		      "y": 33,
 		      "label": ""
 		    },
 		    {
-		      "x": 41,
-		      "y": 30.28,
+		      "x": 44,
+		      "y": 30,
 		      "label": ""
 		    },
 		    {
-		      "x": 45,
-		      "y": 32.1,
+		      "x": 48,
+		      "y": 27,
 		      "label": ""
 		    },
 		    {
-		      "x": 49,
-		      "y": 24.42,
+		      "x": 52,
+		      "y": 26,
 		      "label": ""
 		    },
 		    {
-		      "x": 53,
-		      "y": 27.14,
+		      "x": 56,
+		      "y": 24,
 		      "label": ""
 		    },
 		    {
-		      "x": 57,
-		      "y": 21.16,
+		      "x": 60,
+		      "y": 22,
 		      "label": ""
 		    },
 		    {
-		      "x": 61,
-		      "y": 24.18,
+		      "x": 64,
+		      "y": 20,
 		      "label": ""
 		    },
 		    {
-		      "x": 65,
-		      "y": 17.4,
+		      "x": 68,
+		      "y": 17,
 		      "label": ""
 		    },
 		    {
-		      "x": 69,
-		      "y": 18.32,
+		      "x": 72,
+		      "y": 16,
 		      "label": ""
 		    },
 		    {
-		      "x": 73,
-		      "y": 12.34,
+		      "x": 76,
+		      "y": 13,
 		      "label": ""
 		    },
 		    {
-		      "x": 77,
-		      "y": 15.56,
+		      "x": 80,
+		      "y": 10,
 		      "label": ""
 		    },
 		    {
-		      "x": 81,
-		      "y": 9.38,
+		      "x": 84,
+		      "y": 9,
 		      "label": ""
 		    },
 		    {
-		      "x": 85,
-		      "y": 11,
+		      "x": 88,
+		      "y": 7,
 		      "label": ""
 		    },
 		    {
-		      "x": 89,
-		      "y": 4.32,
+		      "x": 92,
+		      "y": 5,
 		      "label": ""
 		    },
 		    {
-		      "x": 93,
-		      "y": 6.24,
-		      "label": ""
-		    },
-		    {
-		      "x": 97,
-		      "y": 1.16,
-		      "label": ""
-		    },
-		    {
-		      "x": 99,
-		      "y": 1,
+		      "x": 96,
+		      "y": 3,
 		      "label": ""
 		    }
 		  ]
@@ -10731,9 +10565,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa5a746dfd781b873
-	// Question: Describe the association in a scatter plot
+	// Question: Describe the association in a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [xa5a746dfd781b873] Describe the association in a scatter plot", async () => {
+	test("scatter-plot - [xa5a746dfd781b873] Describe the association in a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10763,153 +10597,113 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 1.2,
+		      "x": 1.3,
 		      "y": 4.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.4,
-		      "y": 4.5,
-		      "label": ""
-		    },
-		    {
 		      "x": 1.7,
-		      "y": 4.1,
+		      "y": 4,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
-		      "y": 3.8,
+		      "x": 2.1,
+		      "y": 4,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.3,
-		      "y": 3.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.6,
-		      "y": 3.1,
+		      "x": 2.5,
+		      "y": 3.5,
 		      "label": ""
 		    },
 		    {
 		      "x": 2.9,
-		      "y": 2.7,
+		      "y": 2.9,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.2,
-		      "y": 2.3,
+		      "x": 3.3,
+		      "y": 2.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.5,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.8,
-		      "y": 1.7,
+		      "x": 3.7,
+		      "y": 1.9,
 		      "label": ""
 		    },
 		    {
 		      "x": 4.1,
-		      "y": 1.4,
+		      "y": 1.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.4,
+		      "x": 4.5,
+		      "y": 1.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.9,
 		      "y": 1.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.7,
-		      "y": 0.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 0.5,
-		      "label": ""
-		    },
-		    {
 		      "x": 5.3,
-		      "y": 0.2,
+		      "y": 0.4,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.6,
-		      "y": -0.1,
+		      "x": 5.7,
+		      "y": 0.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.9,
-		      "y": -0.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.2,
-		      "y": -0.6,
+		      "x": 6.1,
+		      "y": -0.5,
 		      "label": ""
 		    },
 		    {
 		      "x": 6.5,
-		      "y": -0.9,
+		      "y": -0.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 6.8,
-		      "y": -1.2,
+		      "x": 6.9,
+		      "y": -1.3,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.1,
-		      "y": -1.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.4,
-		      "y": -1.7,
+		      "x": 7.3,
+		      "y": -1.5,
 		      "label": ""
 		    },
 		    {
 		      "x": 7.7,
-		      "y": -2,
+		      "y": -2.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 8,
-		      "y": -2.3,
+		      "x": 8.1,
+		      "y": -2.4,
 		      "label": ""
 		    },
 		    {
-		      "x": 8.3,
-		      "y": -2.6,
-		      "label": ""
-		    },
-		    {
-		      "x": 8.6,
-		      "y": -2.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 8.9,
+		      "x": 8.5,
 		      "y": -3.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 9.3,
-		      "y": -3.4,
+		      "x": 8.9,
+		      "y": -3.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 9.6,
+		      "x": 9.3,
 		      "y": -3.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 9.8,
-		      "y": -4.1,
+		      "x": 9.7,
+		      "y": -4,
 		      "label": ""
 		    },
 		    {
@@ -10936,9 +10730,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x617fb85c914c9ea1
-	// Question: Describe the relationship in a scatterplot
+	// Question: Best description of association in a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [x617fb85c914c9ea1] Describe the relationship in a scatterplot", async () => {
+	test("scatter-plot - [x617fb85c914c9ea1] Best description of association in a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10950,121 +10744,121 @@ describe("scatterPlot widget tests", () => {
 		    "max": 3,
 		    "min": 0,
 		    "label": "",
-		    "gridLines": false,
+		    "gridLines": true,
 		    "tickInterval": 0.1
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
 		    "label": "",
-		    "gridLines": false,
+		    "gridLines": true,
 		    "tickInterval": 0.5
 		  },
 		  "height": 395,
 		  "points": [
 		    {
 		      "x": 1.15,
-		      "y": 0.8,
+		      "y": 0.9,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.2,
-		      "y": 1.1,
+		      "x": 1.221,
+		      "y": 1.2714,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.25,
-		      "y": 1.3,
+		      "x": 1.293,
+		      "y": 1.1429,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.35,
-		      "y": 1.7,
+		      "x": 1.364,
+		      "y": 2.2143,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.4,
-		      "y": 2.1,
+		      "x": 1.436,
+		      "y": 2.1857,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.5,
-		      "y": 2.4,
+		      "x": 1.507,
+		      "y": 2.9071,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.55,
-		      "y": 2.8,
+		      "x": 1.579,
+		      "y": 2.6786,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.6,
-		      "y": 2.9,
+		      "x": 1.65,
+		      "y": 3.55,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.7,
-		      "y": 3.6,
+		      "x": 1.721,
+		      "y": 3.7214,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.75,
-		      "y": 3.9,
+		      "x": 1.793,
+		      "y": 4.5429,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.85,
-		      "y": 4.1,
+		      "x": 1.864,
+		      "y": 4.2143,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.9,
-		      "y": 4.6,
+		      "x": 1.936,
+		      "y": 5.0857,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
-		      "y": 4.9,
+		      "x": 2.007,
+		      "y": 5.0571,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.05,
-		      "y": 5.4,
+		      "x": 2.079,
+		      "y": 5.9786,
 		      "label": ""
 		    },
 		    {
 		      "x": 2.15,
-		      "y": 5.9,
+		      "y": 5.85,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.2,
-		      "y": 6.1,
+		      "x": 2.221,
+		      "y": 6.4214,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.3,
-		      "y": 6.4,
+		      "x": 2.293,
+		      "y": 6.4929,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.35,
-		      "y": 6.7,
+		      "x": 2.364,
+		      "y": 7.4143,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.45,
-		      "y": 7.1,
+		      "x": 2.436,
+		      "y": 7.3857,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.5,
-		      "y": 7.6,
+		      "x": 2.507,
+		      "y": 8.0071,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.6,
-		      "y": 8.2,
+		      "x": 2.579,
+		      "y": 8.0286,
 		      "label": ""
 		    },
 		    {
@@ -11091,9 +10885,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xc2bccd0ec24aa85b
-	// Question: Describe the association in a scatterplot
-	// Widget key: image_1
-	test("scatter-plot - [xc2bccd0ec24aa85b] Describe the association in a scatterplot", async () => {
+	// Question: Describe the relationship in a scatterplot
+	// Widget key: scatterplot_image
+	test("scatter-plot - [xc2bccd0ec24aa85b] Describe the relationship in a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11104,137 +10898,137 @@ describe("scatterPlot widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "x-axis",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 30,
 		    "min": 0,
-		    "label": "y-axis",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
 		  "height": 386,
 		  "points": [
 		    {
-		      "x": 3.1,
-		      "y": 12.5,
+		      "x": 3.2,
+		      "y": 13.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.3,
-		      "y": 18.1,
+		      "x": 3.5,
+		      "y": 20.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.7,
-		      "y": 25,
+		      "x": 3.8,
+		      "y": 24.1,
 		      "label": ""
 		    },
 		    {
 		      "x": 4,
-		      "y": 14.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.2,
-		      "y": 22.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.6,
-		      "y": 27.6,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 13.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.2,
-		      "y": 20.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.4,
-		      "y": 24.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.6,
-		      "y": 18.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.8,
-		      "y": 28,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 16.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.2,
-		      "y": 21.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.4,
-		      "y": 26.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.6,
-		      "y": 13.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.8,
-		      "y": 23.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
 		      "y": 15.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.2,
-		      "y": 27.1,
+		      "x": 4.2,
+		      "y": 27.3,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.6,
-		      "y": 19.4,
+		      "x": 4.4,
+		      "y": 18.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.1,
-		      "y": 27.9,
+		      "x": 4.6,
+		      "y": 22.6,
 		      "label": ""
 		    },
 		    {
 		      "x": 4.9,
-		      "y": 12.8,
+		      "y": 26.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.1,
+		      "y": 14.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.3,
+		      "y": 19.9,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.5,
+		      "y": 23.3,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.7,
+		      "y": 28,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.9,
+		      "y": 16.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 6.1,
-		      "y": 24.3,
+		      "y": 21.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.3,
+		      "y": 24.8,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.5,
+		      "y": 12.7,
 		      "label": ""
 		    },
 		    {
 		      "x": 6.7,
-		      "y": 17.2,
+		      "y": 17.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.9,
+		      "y": 25.6,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.3,
+		      "y": 27.8,
 		      "label": ""
 		    },
 		    {
 		      "x": 3.9,
-		      "y": 22.9,
+		      "y": 12.9,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.7,
+		      "y": 20.3,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.8,
+		      "y": 18.7,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 26.1,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.8,
+		      "y": 14.1,
 		      "label": ""
 		    }
 		  ]
@@ -11256,9 +11050,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf5f36a018eef5eb5
-	// Question: Describe the association in a scatterplot
-	// Widget key: scatterplot_image
-	test("scatter-plot - [xf5f36a018eef5eb5] Describe the association in a scatterplot", async () => {
+	// Question: Describe the relationship in a scatterplot
+	// Widget key: image_1
+	test("scatter-plot - [xf5f36a018eef5eb5] Describe the relationship in a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11288,7 +11082,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 5.9,
+		      "x": 5.8,
 		      "y": 60,
 		      "label": ""
 		    },
@@ -11298,18 +11092,18 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 6.4,
-		      "y": 83,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.7,
+		      "x": 6.3,
 		      "y": 55,
 		      "label": ""
 		    },
 		    {
+		      "x": 6.7,
+		      "y": 83,
+		      "label": ""
+		    },
+		    {
 		      "x": 6.9,
-		      "y": 68,
+		      "y": 65,
 		      "label": ""
 		    },
 		    {
@@ -11319,87 +11113,87 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 7.4,
-		      "y": 59,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.6,
-		      "y": 73,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.9,
-		      "y": 65,
-		      "label": ""
-		    },
-		    {
-		      "x": 8.1,
-		      "y": 82,
-		      "label": ""
-		    },
-		    {
-		      "x": 8.3,
 		      "y": 58,
 		      "label": ""
 		    },
 		    {
-		      "x": 8.5,
-		      "y": 75,
+		      "x": 7.8,
+		      "y": 74,
 		      "label": ""
 		    },
 		    {
-		      "x": 8.8,
+		      "x": 8,
+		      "y": 69,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.2,
 		      "y": 62,
 		      "label": ""
 		    },
 		    {
-		      "x": 9,
-		      "y": 84,
+		      "x": 8.5,
+		      "y": 85,
 		      "label": ""
 		    },
 		    {
-		      "x": 9.2,
+		      "x": 8.9,
 		      "y": 57,
 		      "label": ""
 		    },
 		    {
-		      "x": 9.5,
-		      "y": 71,
+		      "x": 9.1,
+		      "y": 81,
 		      "label": ""
 		    },
 		    {
-		      "x": 9.7,
+		      "x": 9.3,
 		      "y": 64,
 		      "label": ""
 		    },
 		    {
-		      "x": 10,
-		      "y": 79,
+		      "x": 9.6,
+		      "y": 70,
 		      "label": ""
 		    },
 		    {
-		      "x": 10.2,
-		      "y": 67,
-		      "label": ""
-		    },
-		    {
-		      "x": 10.4,
+		      "x": 9.8,
 		      "y": 53,
 		      "label": ""
 		    },
 		    {
-		      "x": 10.7,
+		      "x": 10,
 		      "y": 76,
 		      "label": ""
 		    },
 		    {
+		      "x": 10.2,
+		      "y": 59,
+		      "label": ""
+		    },
+		    {
+		      "x": 10.5,
+		      "y": 82,
+		      "label": ""
+		    },
+		    {
+		      "x": 10.7,
+		      "y": 68,
+		      "label": ""
+		    },
+		    {
 		      "x": 10.9,
-		      "y": 61,
+		      "y": 54,
 		      "label": ""
 		    },
 		    {
 		      "x": 11,
-		      "y": 70,
+		      "y": 73,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.9,
+		      "y": 61,
 		      "label": ""
 		    }
 		  ]
@@ -11421,16 +11215,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xd5614615c9e472b0
-	// Question: Describe the association in a scatter plot of income vs. rent
+	// Question: Describe the relationship in a scatterplot (income vs. rent)
 	// Widget key: image_1
-	test("scatter-plot - [xd5614615c9e472b0] Describe the association in a scatter plot of income vs. rent", async () => {
+	test("scatter-plot - [xd5614615c9e472b0] Describe the relationship in a scatterplot (income vs. rent)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Average income vs. average rent",
-		  "width": 600,
+		  "width": 405,
 		  "xAxis": {
 		    "max": 50000,
 		    "min": 30000,
@@ -11445,11 +11239,11 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 100
 		  },
-		  "height": 420,
+		  "height": 375,
 		  "points": [
 		    {
 		      "x": 36500,
-		      "y": 830,
+		      "y": 825,
 		      "label": ""
 		    },
 		    {
@@ -11459,22 +11253,17 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 38500,
-		      "y": 930,
+		      "y": 940,
 		      "label": ""
 		    },
 		    {
 		      "x": 39500,
-		      "y": 990,
+		      "y": 1000,
 		      "label": ""
 		    },
 		    {
 		      "x": 40500,
 		      "y": 1050,
-		      "label": ""
-		    },
-		    {
-		      "x": 41000,
-		      "y": 1080,
 		      "label": ""
 		    },
 		    {
@@ -11484,52 +11273,57 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 42500,
-		      "y": 1175,
+		      "y": 1160,
 		      "label": ""
 		    },
 		    {
 		      "x": 43500,
-		      "y": 1225,
-		      "label": ""
-		    },
-		    {
-		      "x": 44000,
-		      "y": 1280,
+		      "y": 1220,
 		      "label": ""
 		    },
 		    {
 		      "x": 44500,
-		      "y": 1300,
+		      "y": 1280,
 		      "label": ""
 		    },
 		    {
 		      "x": 45500,
-		      "y": 1375,
+		      "y": 1340,
 		      "label": ""
 		    },
 		    {
 		      "x": 46500,
-		      "y": 1450,
-		      "label": ""
-		    },
-		    {
-		      "x": 47000,
-		      "y": 1520,
+		      "y": 1400,
 		      "label": ""
 		    },
 		    {
 		      "x": 47500,
-		      "y": 1500,
+		      "y": 1460,
 		      "label": ""
 		    },
 		    {
 		      "x": 48500,
-		      "y": 1580,
+		      "y": 1520,
 		      "label": ""
 		    },
 		    {
 		      "x": 49500,
-		      "y": 1650,
+		      "y": 1580,
+		      "label": ""
+		    },
+		    {
+		      "x": 50000,
+		      "y": 1625,
+		      "label": ""
+		    },
+		    {
+		      "x": 42000,
+		      "y": 1120,
+		      "label": ""
+		    },
+		    {
+		      "x": 44000,
+		      "y": 1250,
 		      "label": ""
 		    }
 		  ]
@@ -11551,20 +11345,20 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x001aefae11d5ab67
-	// Question: Describe the relationship between age and accident rates
+	// Question: Describe the association between age and accident rate
 	// Widget key: image_1
-	test("scatter-plot - [x001aefae11d5ab67] Describe the relationship between age and accident rates", async () => {
+	test("scatter-plot - [x001aefae11d5ab67] Describe the association between age and accident rate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Age vs. accidents per 100 drivers (2009)",
-		  "width": 375,
+		  "title": "Age vs. Accidents per 100 drivers (2009)",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 25,
 		    "min": 16,
-		    "label": "Age (years)",
+		    "label": "Age, in years",
 		    "gridLines": true,
 		    "tickInterval": 0.5
 		  },
@@ -11575,7 +11369,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 369,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 16,
@@ -11584,17 +11378,17 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 17,
-		      "y": 22.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 18,
 		      "y": 21.5,
 		      "label": ""
 		    },
 		    {
+		      "x": 18,
+		      "y": 20,
+		      "label": ""
+		    },
+		    {
 		      "x": 19,
-		      "y": 19.5,
+		      "y": 18.5,
 		      "label": ""
 		    },
 		    {
@@ -11604,7 +11398,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 21,
-		      "y": 15.5,
+		      "y": 15,
 		      "label": ""
 		    },
 		    {
@@ -11619,7 +11413,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 24,
-		      "y": 11,
+		      "y": 11.5,
 		      "label": ""
 		    }
 		  ]
@@ -11641,16 +11435,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7627113958fafe76
-	// Question: Best description of the sugar–score relationship
+	// Question: Describe the association in a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [x7627113958fafe76] Best description of the sugar–score relationship", async () => {
+	test("scatter-plot - [x7627113958fafe76] Describe the association in a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Scores versus grams of sugar",
-		  "width": 600,
+		  "title": "Score vs. Grams of sugar",
+		  "width": 420,
 		  "xAxis": {
 		    "max": 40,
 		    "min": 0,
@@ -11665,91 +11459,51 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 400,
+		  "height": 380,
 		  "points": [
 		    {
 		      "x": 1,
-		      "y": 4.75,
+		      "y": 7,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
-		      "y": 14,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.5,
-		      "y": 26.9375,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.5,
-		      "y": 34.9375,
+		      "x": 3,
+		      "y": 25,
 		      "label": ""
 		    },
 		    {
 		      "x": 5,
-		      "y": 38.75,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 46,
+		      "y": 40,
 		      "label": ""
 		    },
 		    {
 		      "x": 7,
-		      "y": 52.75,
+		      "y": 54,
 		      "label": ""
 		    },
 		    {
-		      "x": 8,
-		      "y": 59,
-		      "label": ""
-		    },
-		    {
-		      "x": 9.5,
-		      "y": 67.4375,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
-		      "y": 70,
+		      "x": 9,
+		      "y": 66,
 		      "label": ""
 		    },
 		    {
 		      "x": 11,
-		      "y": 74.75,
-		      "label": ""
-		    },
-		    {
-		      "x": 12,
-		      "y": 79,
+		      "y": 75,
 		      "label": ""
 		    },
 		    {
 		      "x": 13,
-		      "y": 82.75,
+		      "y": 83,
 		      "label": ""
 		    },
 		    {
-		      "x": 14.5,
-		      "y": 87.4375,
+		      "x": 15,
+		      "y": 89,
 		      "label": ""
 		    },
 		    {
-		      "x": 15.5,
-		      "y": 89.9375,
-		      "label": ""
-		    },
-		    {
-		      "x": 16.5,
-		      "y": 91.9375,
-		      "label": ""
-		    },
-		    {
-		      "x": 17.5,
-		      "y": 93.4375,
+		      "x": 17,
+		      "y": 93,
 		      "label": ""
 		    },
 		    {
@@ -11758,33 +11512,8 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 18.5,
-		      "y": 94.4375,
-		      "label": ""
-		    },
-		    {
 		      "x": 19,
-		      "y": 94.75,
-		      "label": ""
-		    },
-		    {
-		      "x": 19.2,
-		      "y": 94.84,
-		      "label": ""
-		    },
-		    {
-		      "x": 19.5,
-		      "y": 94.9375,
-		      "label": ""
-		    },
-		    {
-		      "x": 19.7,
-		      "y": 94.9775,
-		      "label": ""
-		    },
-		    {
-		      "x": 19.9,
-		      "y": 94.9975,
+		      "y": 95,
 		      "label": ""
 		    },
 		    {
@@ -11793,38 +11522,8 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 20.1,
-		      "y": 94.9975,
-		      "label": ""
-		    },
-		    {
-		      "x": 20.2,
-		      "y": 94.99,
-		      "label": ""
-		    },
-		    {
-		      "x": 20.3,
-		      "y": 94.9775,
-		      "label": ""
-		    },
-		    {
-		      "x": 20.5,
-		      "y": 94.9375,
-		      "label": ""
-		    },
-		    {
-		      "x": 20.8,
-		      "y": 94.84,
-		      "label": ""
-		    },
-		    {
 		      "x": 21,
-		      "y": 94.75,
-		      "label": ""
-		    },
-		    {
-		      "x": 21.5,
-		      "y": 94.4375,
+		      "y": 95,
 		      "label": ""
 		    },
 		    {
@@ -11833,88 +11532,43 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 22.5,
-		      "y": 93.4375,
-		      "label": ""
-		    },
-		    {
 		      "x": 23,
-		      "y": 92.75,
-		      "label": ""
-		    },
-		    {
-		      "x": 24,
-		      "y": 91,
-		      "label": ""
-		    },
-		    {
-		      "x": 24.5,
-		      "y": 89.9375,
+		      "y": 93,
 		      "label": ""
 		    },
 		    {
 		      "x": 25,
-		      "y": 88.75,
-		      "label": ""
-		    },
-		    {
-		      "x": 26,
-		      "y": 86,
+		      "y": 89,
 		      "label": ""
 		    },
 		    {
 		      "x": 27,
-		      "y": 82.75,
-		      "label": ""
-		    },
-		    {
-		      "x": 28,
-		      "y": 79,
+		      "y": 83,
 		      "label": ""
 		    },
 		    {
 		      "x": 29,
-		      "y": 74.75,
+		      "y": 75,
 		      "label": ""
 		    },
 		    {
-		      "x": 30,
-		      "y": 70,
-		      "label": ""
-		    },
-		    {
-		      "x": 31.5,
-		      "y": 61.9375,
-		      "label": ""
-		    },
-		    {
-		      "x": 32,
-		      "y": 59,
+		      "x": 31,
+		      "y": 66,
 		      "label": ""
 		    },
 		    {
 		      "x": 33,
-		      "y": 52.75,
-		      "label": ""
-		    },
-		    {
-		      "x": 34,
-		      "y": 46,
+		      "y": 54,
 		      "label": ""
 		    },
 		    {
 		      "x": 35,
-		      "y": 38.75,
-		      "label": ""
-		    },
-		    {
-		      "x": 36,
-		      "y": 31,
+		      "y": 40,
 		      "label": ""
 		    },
 		    {
 		      "x": 37,
-		      "y": 22.75,
+		      "y": 25,
 		      "label": ""
 		    }
 		  ]
@@ -11936,27 +11590,27 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xaf0da8882bb46c2e
-	// Question: Describe the association in a scatter plot
+	// Question: Describe the relationship in a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [xaf0da8882bb46c2e] Describe the association in a scatter plot", async () => {
+	test("scatter-plot - [xaf0da8882bb46c2e] Describe the relationship in a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Scatter plot",
+		  "title": "Scatterplot",
 		  "width": 396,
 		  "xAxis": {
 		    "max": 4.5,
 		    "min": 0,
-		    "label": "x-axis",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 0.5
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "y-axis",
+		    "label": "",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
@@ -11969,7 +11623,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 1,
-		      "y": 6.35,
+		      "y": 6.3,
 		      "label": ""
 		    },
 		    {
@@ -11979,7 +11633,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 2,
-		      "y": 5.25,
+		      "y": 5.1,
 		      "label": ""
 		    },
 		    {
@@ -11989,7 +11643,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 3,
-		      "y": 4.15,
+		      "y": 4,
 		      "label": ""
 		    },
 		    {
@@ -11999,7 +11653,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 4,
-		      "y": 3.05,
+		      "y": 3.1,
 		      "label": ""
 		    },
 		    {
@@ -12025,151 +11679,189 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa627d9c0f49a9f52
-	// Question: Association between heart rate and life expectancy
-	// Widget key: image_1
-	test("scatter-plot - [xa627d9c0f49a9f52] Association between heart rate and life expectancy", async () => {
+	// Extracted from question: xca2ec09641388000
+	// Question: Plot ordered pairs and check proportionality for wing prices
+	// Widget key: graph_choice_a
+	test("scatter-plot - [xca2ec09641388000] Plot ordered pairs and check proportionality for wing prices (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
-		  "width": 600,
+		  "title": "Chicken wings vs. Price",
+		  "width": 360,
 		  "xAxis": {
-		    "max": 600,
+		    "max": 24,
 		    "min": 0,
-		    "label": "Heart rate, in beats per minute",
+		    "label": "Chicken wings",
 		    "gridLines": true,
-		    "tickInterval": 50
+		    "tickInterval": 2
 		  },
 		  "yAxis": {
-		    "max": 40,
+		    "max": 12,
 		    "min": 0,
-		    "label": "Life expectancy, in years",
+		    "label": "Price",
 		    "gridLines": true,
-		    "tickInterval": 5
+		    "tickInterval": 1
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 40,
-		      "y": 40,
-		      "label": ""
-		    },
-		    {
-		      "x": 60,
-		      "y": 34,
-		      "label": ""
-		    },
-		    {
-		      "x": 80,
-		      "y": 30,
-		      "label": ""
-		    },
-		    {
-		      "x": 100,
-		      "y": 27,
-		      "label": ""
-		    },
-		    {
-		      "x": 120,
-		      "y": 24,
-		      "label": ""
-		    },
-		    {
-		      "x": 140,
-		      "y": 22,
-		      "label": ""
-		    },
-		    {
-		      "x": 160,
-		      "y": 20,
-		      "label": ""
-		    },
-		    {
-		      "x": 180,
-		      "y": 18.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 200,
-		      "y": 17,
-		      "label": ""
-		    },
-		    {
-		      "x": 225,
-		      "y": 15.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 250,
-		      "y": 14,
-		      "label": ""
-		    },
-		    {
-		      "x": 275,
-		      "y": 13,
-		      "label": ""
-		    },
-		    {
-		      "x": 300,
-		      "y": 12,
-		      "label": ""
-		    },
-		    {
-		      "x": 330,
-		      "y": 11,
-		      "label": ""
-		    },
-		    {
-		      "x": 360,
-		      "y": 10,
-		      "label": ""
-		    },
-		    {
-		      "x": 390,
-		      "y": 9.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 420,
-		      "y": 8.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 450,
-		      "y": 7.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 480,
-		      "y": 7.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 510,
-		      "y": 6.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 540,
-		      "y": 6.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 560,
-		      "y": 5.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 580,
+		      "x": 8,
 		      "y": 5,
 		      "label": ""
 		    },
 		    {
-		      "x": 600,
-		      "y": 4.4,
+		      "x": 16,
+		      "y": 8,
+		      "label": ""
+		    },
+		    {
+		      "x": 24,
+		      "y": 10,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xca2ec09641388000
+	// Question: Plot ordered pairs and check proportionality for wing prices
+	// Widget key: graph_choice_b
+	test("scatter-plot - [xca2ec09641388000] Plot ordered pairs and check proportionality for wing prices (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [
+		    {
+		      "a": {
+		        "x": 0,
+		        "y": 0
+		      },
+		      "b": {
+		        "x": 16,
+		        "y": 8
+		      },
+		      "type": "twoPoints",
+		      "label": "",
+		      "style": {
+		        "dash": false,
+		        "color": "#df0030",
+		        "strokeWidth": 2
+		      }
+		    }
+		  ],
+		  "title": "Chicken wings vs. Price",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 24,
+		    "min": 0,
+		    "label": "Chicken wings",
+		    "gridLines": true,
+		    "tickInterval": 2
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": 0,
+		    "label": "Price",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 5,
+		      "label": ""
+		    },
+		    {
+		      "x": 16,
+		      "y": 8,
+		      "label": ""
+		    },
+		    {
+		      "x": 24,
+		      "y": 10,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xca2ec09641388000
+	// Question: Plot ordered pairs and check proportionality for wing prices
+	// Widget key: graph_choice_c
+	test("scatter-plot - [xca2ec09641388000] Plot ordered pairs and check proportionality for wing prices (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Chicken wings vs. Price",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 24,
+		    "min": 0,
+		    "label": "Chicken wings",
+		    "gridLines": true,
+		    "tickInterval": 2
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": 0,
+		    "label": "Price",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 8,
+		      "y": 8,
+		      "label": ""
+		    },
+		    {
+		      "x": 16,
+		      "y": 5,
+		      "label": ""
+		    },
+		    {
+		      "x": 24,
+		      "y": 10,
 		      "label": ""
 		    }
 		  ]
@@ -12199,8 +11891,8 @@ describe("scatterPlot widget tests", () => {
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Average global temperature change over time",
-		  "width": 600,
+		  "title": "Change in the world's average temperature over time",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 45,
 		    "min": 0,
@@ -12219,12 +11911,12 @@ describe("scatterPlot widget tests", () => {
 		  "points": [
 		    {
 		      "x": 0,
-		      "y": 1.1,
+		      "y": 1.105,
 		      "label": ""
 		    },
 		    {
 		      "x": 2,
-		      "y": 1.133,
+		      "y": 1.132,
 		      "label": ""
 		    },
 		    {
@@ -12234,32 +11926,32 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 6,
-		      "y": 1.177,
+		      "y": 1.183,
 		      "label": ""
 		    },
 		    {
 		      "x": 8,
-		      "y": 1.191,
+		      "y": 1.195,
 		      "label": ""
 		    },
 		    {
 		      "x": 10,
-		      "y": 1.231,
+		      "y": 1.211,
 		      "label": ""
 		    },
 		    {
 		      "x": 12,
-		      "y": 1.236,
+		      "y": 1.249,
 		      "label": ""
 		    },
 		    {
 		      "x": 14,
-		      "y": 1.27,
+		      "y": 1.263,
 		      "label": ""
 		    },
 		    {
 		      "x": 16,
-		      "y": 1.29,
+		      "y": 1.301,
 		      "label": ""
 		    },
 		    {
@@ -12269,57 +11961,57 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 20,
-		      "y": 1.347,
+		      "y": 1.345,
 		      "label": ""
 		    },
 		    {
 		      "x": 22,
-		      "y": 1.359,
+		      "y": 1.353,
 		      "label": ""
 		    },
 		    {
 		      "x": 24,
-		      "y": 1.39,
+		      "y": 1.391,
 		      "label": ""
 		    },
 		    {
 		      "x": 26,
-		      "y": 1.402,
+		      "y": 1.41,
 		      "label": ""
 		    },
 		    {
 		      "x": 28,
-		      "y": 1.44,
+		      "y": 1.426,
 		      "label": ""
 		    },
 		    {
 		      "x": 30,
-		      "y": 1.455,
+		      "y": 1.466,
 		      "label": ""
 		    },
 		    {
 		      "x": 32,
-		      "y": 1.491,
+		      "y": 1.477,
 		      "label": ""
 		    },
 		    {
 		      "x": 34,
-		      "y": 1.496,
+		      "y": 1.515,
 		      "label": ""
 		    },
 		    {
 		      "x": 36,
-		      "y": 1.534,
+		      "y": 1.523,
 		      "label": ""
 		    },
 		    {
 		      "x": 38,
-		      "y": 1.548,
+		      "y": 1.556,
 		      "label": ""
 		    },
 		    {
 		      "x": 40,
-		      "y": 1.582,
+		      "y": 1.571,
 		      "label": ""
 		    },
 		    {
@@ -12345,28 +12037,183 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa077fce7cce61553
-	// Question: Describe the association between fuel use and speed
+	// Extracted from question: xa627d9c0f49a9f52
+	// Question: Association between heart rate and life expectancy
 	// Widget key: image_1
-	test("scatter-plot - [xa077fce7cce61553] Describe the association between fuel use and speed", async () => {
+	test("scatter-plot - [xa627d9c0f49a9f52] Association between heart rate and life expectancy", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Fuel used vs. Speed",
-		  "width": 600,
+		  "title": "Heart rate vs. life expectancy",
+		  "width": 420,
+		  "xAxis": {
+		    "max": 600,
+		    "min": 0,
+		    "label": "Heart rate (in beats per minute)",
+		    "gridLines": true,
+		    "tickInterval": 50
+		  },
+		  "yAxis": {
+		    "max": 40,
+		    "min": 0,
+		    "label": "Life expectancy (in years)",
+		    "gridLines": true,
+		    "tickInterval": 5
+		  },
+		  "height": 380,
+		  "points": [
+		    {
+		      "x": 40,
+		      "y": 40,
+		      "label": ""
+		    },
+		    {
+		      "x": 50,
+		      "y": 36,
+		      "label": ""
+		    },
+		    {
+		      "x": 60,
+		      "y": 34,
+		      "label": ""
+		    },
+		    {
+		      "x": 70,
+		      "y": 31,
+		      "label": ""
+		    },
+		    {
+		      "x": 80,
+		      "y": 29,
+		      "label": ""
+		    },
+		    {
+		      "x": 90,
+		      "y": 27,
+		      "label": ""
+		    },
+		    {
+		      "x": 100,
+		      "y": 25,
+		      "label": ""
+		    },
+		    {
+		      "x": 120,
+		      "y": 22,
+		      "label": ""
+		    },
+		    {
+		      "x": 140,
+		      "y": 20,
+		      "label": ""
+		    },
+		    {
+		      "x": 160,
+		      "y": 18,
+		      "label": ""
+		    },
+		    {
+		      "x": 180,
+		      "y": 17,
+		      "label": ""
+		    },
+		    {
+		      "x": 200,
+		      "y": 15,
+		      "label": ""
+		    },
+		    {
+		      "x": 220,
+		      "y": 14,
+		      "label": ""
+		    },
+		    {
+		      "x": 240,
+		      "y": 13,
+		      "label": ""
+		    },
+		    {
+		      "x": 280,
+		      "y": 11,
+		      "label": ""
+		    },
+		    {
+		      "x": 320,
+		      "y": 10,
+		      "label": ""
+		    },
+		    {
+		      "x": 360,
+		      "y": 9,
+		      "label": ""
+		    },
+		    {
+		      "x": 400,
+		      "y": 8,
+		      "label": ""
+		    },
+		    {
+		      "x": 450,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 500,
+		      "y": 6,
+		      "label": ""
+		    },
+		    {
+		      "x": 550,
+		      "y": 5,
+		      "label": ""
+		    },
+		    {
+		      "x": 600,
+		      "y": 4,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa077fce7cce61553
+	// Question: Association between speed and fuel use from a graph
+	// Widget key: image_1
+	test("scatter-plot - [xa077fce7cce61553] Association between speed and fuel use from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Fuel Used vs. Speed",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 140,
 		    "min": 0,
-		    "label": "Speed, in kilometers per hour",
+		    "label": "Speed (km/h)",
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
 		  "yAxis": {
 		    "max": 14,
 		    "min": 0,
-		    "label": "Fuel used, in liters per 100 kilometers",
+		    "label": "Fuel used (liters per 100 kilometers)",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
@@ -12378,8 +12225,13 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
+		      "x": 25,
+		      "y": 12,
+		      "label": ""
+		    },
+		    {
 		      "x": 30,
-		      "y": 10.5,
+		      "y": 11,
 		      "label": ""
 		    },
 		    {
@@ -12389,7 +12241,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 50,
-		      "y": 7,
+		      "y": 6.8,
 		      "label": ""
 		    },
 		    {
@@ -12399,7 +12251,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 70,
-		      "y": 6.3,
+		      "y": 6.4,
 		      "label": ""
 		    },
 		    {
@@ -12419,17 +12271,12 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 110,
-		      "y": 9.5,
+		      "y": 9.4,
 		      "label": ""
 		    },
 		    {
 		      "x": 120,
 		      "y": 10,
-		      "label": ""
-		    },
-		    {
-		      "x": 130,
-		      "y": 10.6,
 		      "label": ""
 		    }
 		  ]
@@ -12451,165 +12298,140 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x5345bec466edf9fa
-	// Question: Describe the association between fathers' and sons' heights
+	// Question: Association between fathers' and sons' heights
 	// Widget key: image_1
-	test("scatter-plot - [x5345bec466edf9fa] Describe the association between fathers' and sons' heights", async () => {
+	test("scatter-plot - [x5345bec466edf9fa] Association between fathers' and sons' heights", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Heights of fathers and sons (in centimeters)",
-		  "width": 260,
+		  "title": "Heights of fathers and sons (cm)",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 188,
 		    "min": 148,
-		    "label": "Father's height, in centimeters",
+		    "label": "Father's height (cm)",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
 		  "yAxis": {
 		    "max": 188,
 		    "min": 148,
-		    "label": "Son's height, in centimeters",
+		    "label": "Son's height (cm)",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 255,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 150,
-		      "y": 166.8,
+		      "y": 164.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 151,
-		      "y": 166.1,
+		      "x": 150,
+		      "y": 166,
 		      "label": ""
 		    },
 		    {
-		      "x": 152,
-		      "y": 167.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 153,
-		      "y": 167.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 154,
+		      "x": 150,
 		      "y": 167.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 155,
-		      "y": 168.6,
+		      "y": 166.3,
 		      "label": ""
 		    },
 		    {
-		      "x": 156,
-		      "y": 168,
+		      "x": 155,
+		      "y": 168.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 157,
-		      "y": 169.6,
+		      "x": 155,
+		      "y": 170.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 158,
-		      "y": 169.5,
+		      "x": 160,
+		      "y": 168.4,
 		      "label": ""
 		    },
 		    {
-		      "x": 159,
+		      "x": 160,
 		      "y": 170.3,
 		      "label": ""
 		    },
 		    {
 		      "x": 160,
-		      "y": 170,
+		      "y": 172.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 162,
-		      "y": 171.9,
+		      "x": 165,
+		      "y": 170.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 163,
-		      "y": 171.1,
+		      "x": 165,
+		      "y": 172.4,
 		      "label": ""
 		    },
 		    {
-		      "x": 164,
-		      "y": 172.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 166,
-		      "y": 172.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 168,
-		      "y": 174.2,
+		      "x": 165,
+		      "y": 174.3,
 		      "label": ""
 		    },
 		    {
 		      "x": 170,
-		      "y": 175.1,
+		      "y": 172.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 171,
-		      "y": 175,
+		      "x": 170,
+		      "y": 174.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 172,
-		      "y": 176,
+		      "x": 170,
+		      "y": 176.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 174,
-		      "y": 176.5,
+		      "x": 175,
+		      "y": 174.9,
 		      "label": ""
 		    },
 		    {
-		      "x": 176,
-		      "y": 177.4,
+		      "x": 175,
+		      "y": 176.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 177,
-		      "y": 177.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 178,
-		      "y": 178.1,
+		      "x": 175,
+		      "y": 178.6,
 		      "label": ""
 		    },
 		    {
 		      "x": 180,
-		      "y": 179.2,
+		      "y": 177,
 		      "label": ""
 		    },
 		    {
-		      "x": 181,
+		      "x": 180,
 		      "y": 178.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 182,
-		      "y": 180.5,
+		      "x": 180,
+		      "y": 180.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 184,
-		      "y": 180.4,
+		      "x": 185,
+		      "y": 179.1,
 		      "label": ""
 		    },
 		    {
@@ -12618,23 +12440,23 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 186,
-		      "y": 182,
+		      "x": 185,
+		      "y": 182.4,
 		      "label": ""
 		    },
 		    {
 		      "x": 188,
-		      "y": 182.2,
+		      "y": 181.3,
 		      "label": ""
 		    },
 		    {
-		      "x": 189,
-		      "y": 182.8,
+		      "x": 188,
+		      "y": 182.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 190,
-		      "y": 182.9,
+		      "x": 188,
+		      "y": 183,
 		      "label": ""
 		    }
 		  ]
@@ -12656,16 +12478,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xc3f42b5ee67fbf31
-	// Question: Association between group size and time to solve a puzzle
+	// Question: Describe the association between group size and time
 	// Widget key: image_1
-	test("scatter-plot - [xc3f42b5ee67fbf31] Association between group size and time to solve a puzzle", async () => {
+	test("scatter-plot - [xc3f42b5ee67fbf31] Describe the association between group size and time", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Time to solve vs. group size",
-		  "width": 600,
+		  "title": "Time, in minutes, vs. Group size",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 8,
 		    "min": 0,
@@ -12684,12 +12506,12 @@ describe("scatterPlot widget tests", () => {
 		  "points": [
 		    {
 		      "x": 1,
-		      "y": 19.6,
+		      "y": 19.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 1,
-		      "y": 19.8,
+		      "y": 19.6,
 		      "label": ""
 		    },
 		    {
@@ -12699,7 +12521,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 2,
-		      "y": 12,
+		      "y": 11.8,
 		      "label": ""
 		    },
 		    {
@@ -12709,27 +12531,27 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 2,
-		      "y": 12.6,
+		      "y": 12.9,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 9.4,
+		      "y": 9.3,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 9.7,
+		      "y": 9.8,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 10,
+		      "y": 10.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 4,
-		      "y": 8.1,
+		      "y": 7.9,
 		      "label": ""
 		    },
 		    {
@@ -12739,12 +12561,12 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 4,
-		      "y": 8.7,
+		      "y": 8.9,
 		      "label": ""
 		    },
 		    {
 		      "x": 5,
-		      "y": 7.4,
+		      "y": 7.2,
 		      "label": ""
 		    },
 		    {
@@ -12754,12 +12576,12 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 5,
-		      "y": 8,
+		      "y": 8.1,
 		      "label": ""
 		    },
 		    {
 		      "x": 6,
-		      "y": 6.8,
+		      "y": 6.7,
 		      "label": ""
 		    },
 		    {
@@ -12769,12 +12591,12 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 6,
-		      "y": 7.4,
+		      "y": 7.6,
 		      "label": ""
 		    },
 		    {
 		      "x": 7,
-		      "y": 6.5,
+		      "y": 6.4,
 		      "label": ""
 		    },
 		    {
@@ -12784,12 +12606,12 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 7,
-		      "y": 7,
+		      "y": 7.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 8,
-		      "y": 6.3,
+		      "y": 6.1,
 		      "label": ""
 		    },
 		    {
@@ -12799,7 +12621,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 8,
-		      "y": 6.8,
+		      "y": 6.9,
 		      "label": ""
 		    }
 		  ]
@@ -12821,16 +12643,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa121b22559dd772a
-	// Question: Describe the association between time and hurricane count
+	// Question: Describe the association between time and number of hurricanes
 	// Widget key: image_1
-	test("scatter-plot - [xa121b22559dd772a] Describe the association between time and hurricane count", async () => {
+	test("scatter-plot - [xa121b22559dd772a] Describe the association between time and number of hurricanes", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Number of hurricanes over time",
-		  "width": 275,
+		  "title": "Number of hurricanes vs. Years since 1970",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 40,
 		    "min": 0,
@@ -12845,7 +12667,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 275,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0,
@@ -12853,98 +12675,118 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
-		      "y": 5,
+		      "x": 1.5,
+		      "y": 5.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 4,
-		      "y": 5.8,
+		      "x": 3,
+		      "y": 5.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.5,
+		      "y": 5.6,
 		      "label": ""
 		    },
 		    {
 		      "x": 6,
+		      "y": 6,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.5,
 		      "y": 6.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 8,
+		      "x": 9,
 		      "y": 6.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 10,
+		      "x": 10.5,
 		      "y": 6.8,
 		      "label": ""
 		    },
 		    {
 		      "x": 12,
-		      "y": 7.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 14,
 		      "y": 7,
 		      "label": ""
 		    },
 		    {
-		      "x": 16,
-		      "y": 7.8,
+		      "x": 13.5,
+		      "y": 7.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 15,
+		      "y": 7.6,
+		      "label": ""
+		    },
+		    {
+		      "x": 16.5,
+		      "y": 8,
 		      "label": ""
 		    },
 		    {
 		      "x": 18,
-		      "y": 8.1,
+		      "y": 8.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 20,
+		      "x": 19.5,
 		      "y": 8.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 22,
-		      "y": 8.9,
+		      "x": 21,
+		      "y": 9,
+		      "label": ""
+		    },
+		    {
+		      "x": 22.5,
+		      "y": 9.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 24,
-		      "y": 9.3,
+		      "y": 9.6,
 		      "label": ""
 		    },
 		    {
 		      "x": 26,
-		      "y": 9.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 28,
-		      "y": 10.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 30,
 		      "y": 10,
 		      "label": ""
 		    },
 		    {
-		      "x": 32,
-		      "y": 10.7,
+		      "x": 28,
+		      "y": 10.4,
 		      "label": ""
 		    },
 		    {
-		      "x": 34,
+		      "x": 30,
+		      "y": 10.8,
+		      "label": ""
+		    },
+		    {
+		      "x": 32,
 		      "y": 11,
 		      "label": ""
 		    },
 		    {
-		      "x": 36,
+		      "x": 34,
 		      "y": 11.2,
 		      "label": ""
 		    },
 		    {
+		      "x": 36,
+		      "y": 11.6,
+		      "label": ""
+		    },
+		    {
 		      "x": 38,
-		      "y": 11.7,
+		      "y": 11.8,
 		      "label": ""
 		    },
 		    {
@@ -12971,16 +12813,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x06b805b83537aa27
-	// Question: Describe the association in a sugar–score scatterplot
+	// Question: Describe the association between sugar content and cake scores
 	// Widget key: image_1
-	test("scatter-plot - [x06b805b83537aa27] Describe the association in a sugar–score scatterplot", async () => {
+	test("scatter-plot - [x06b805b83537aa27] Describe the association between sugar content and cake scores", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Scores vs. Sugar Content",
-		  "width": 600,
+		  "title": "Score versus grams of sugar per 100 grams of cake",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 40,
 		    "min": 0,
@@ -13003,102 +12845,52 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
-		      "y": 15,
-		      "label": ""
-		    },
-		    {
 		      "x": 3,
-		      "y": 20,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 28,
+		      "y": 18,
 		      "label": ""
 		    },
 		    {
 		      "x": 5,
-		      "y": 35,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 43,
+		      "y": 31,
 		      "label": ""
 		    },
 		    {
 		      "x": 7,
-		      "y": 50,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 58,
+		      "y": 43,
 		      "label": ""
 		    },
 		    {
 		      "x": 9,
-		      "y": 65,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
-		      "y": 72,
+		      "y": 56,
 		      "label": ""
 		    },
 		    {
 		      "x": 11,
-		      "y": 80,
+		      "y": 69,
 		      "label": ""
 		    },
 		    {
 		      "x": 12,
-		      "y": 86,
-		      "label": ""
-		    },
-		    {
-		      "x": 13,
-		      "y": 90,
+		      "y": 76,
 		      "label": ""
 		    },
 		    {
 		      "x": 14,
-		      "y": 93,
-		      "label": ""
-		    },
-		    {
-		      "x": 15,
-		      "y": 95,
+		      "y": 87,
 		      "label": ""
 		    },
 		    {
 		      "x": 16,
-		      "y": 96,
-		      "label": ""
-		    },
-		    {
-		      "x": 17,
-		      "y": 96,
+		      "y": 93,
 		      "label": ""
 		    },
 		    {
 		      "x": 18,
-		      "y": 97,
-		      "label": ""
-		    },
-		    {
-		      "x": 19,
-		      "y": 97,
+		      "y": 96,
 		      "label": ""
 		    },
 		    {
 		      "x": 20,
-		      "y": 97,
-		      "label": ""
-		    },
-		    {
-		      "x": 21,
 		      "y": 97,
 		      "label": ""
 		    },
@@ -13108,18 +12900,8 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 23,
-		      "y": 96,
-		      "label": ""
-		    },
-		    {
 		      "x": 24,
-		      "y": 95,
-		      "label": ""
-		    },
-		    {
-		      "x": 25,
-		      "y": 93,
+		      "y": 94,
 		      "label": ""
 		    },
 		    {
@@ -13128,63 +12910,123 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 27,
-		      "y": 85,
-		      "label": ""
-		    },
-		    {
 		      "x": 28,
-		      "y": 80,
-		      "label": ""
-		    },
-		    {
-		      "x": 29,
-		      "y": 74,
+		      "y": 82,
 		      "label": ""
 		    },
 		    {
 		      "x": 30,
-		      "y": 68,
-		      "label": ""
-		    },
-		    {
-		      "x": 31,
-		      "y": 60,
+		      "y": 74,
 		      "label": ""
 		    },
 		    {
 		      "x": 32,
-		      "y": 52,
-		      "label": ""
-		    },
-		    {
-		      "x": 33,
-		      "y": 45,
+		      "y": 64,
 		      "label": ""
 		    },
 		    {
 		      "x": 34,
-		      "y": 38,
-		      "label": ""
-		    },
-		    {
-		      "x": 35,
-		      "y": 30,
+		      "y": 52,
 		      "label": ""
 		    },
 		    {
 		      "x": 36,
-		      "y": 26,
-		      "label": ""
-		    },
-		    {
-		      "x": 37,
-		      "y": 22,
+		      "y": 36,
 		      "label": ""
 		    },
 		    {
 		      "x": 38,
 		      "y": 19,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 29,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 41,
+		      "label": ""
+		    },
+		    {
+		      "x": 9,
+		      "y": 58,
+		      "label": ""
+		    },
+		    {
+		      "x": 11,
+		      "y": 71,
+		      "label": ""
+		    },
+		    {
+		      "x": 12,
+		      "y": 78,
+		      "label": ""
+		    },
+		    {
+		      "x": 14,
+		      "y": 89,
+		      "label": ""
+		    },
+		    {
+		      "x": 16,
+		      "y": 95,
+		      "label": ""
+		    },
+		    {
+		      "x": 18,
+		      "y": 94,
+		      "label": ""
+		    },
+		    {
+		      "x": 20,
+		      "y": 96,
+		      "label": ""
+		    },
+		    {
+		      "x": 22,
+		      "y": 95,
+		      "label": ""
+		    },
+		    {
+		      "x": 24,
+		      "y": 92,
+		      "label": ""
+		    },
+		    {
+		      "x": 26,
+		      "y": 88,
+		      "label": ""
+		    },
+		    {
+		      "x": 28,
+		      "y": 84,
+		      "label": ""
+		    },
+		    {
+		      "x": 30,
+		      "y": 76,
+		      "label": ""
+		    },
+		    {
+		      "x": 32,
+		      "y": 62,
+		      "label": ""
+		    },
+		    {
+		      "x": 34,
+		      "y": 54,
+		      "label": ""
+		    },
+		    {
+		      "x": 36,
+		      "y": 38,
+		      "label": ""
+		    },
+		    {
+		      "x": 38,
+		      "y": 21,
 		      "label": ""
 		    }
 		  ]
@@ -13206,16 +13048,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xbd1b4b33edc38392
-	// Question: Association between life expectancy and income
+	// Question: Describe the association between life expectancy and income
 	// Widget key: image_1
-	test("scatter-plot - [xbd1b4b33edc38392] Association between life expectancy and income", async () => {
+	test("scatter-plot - [xbd1b4b33edc38392] Describe the association between life expectancy and income", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Life expectancy vs. income",
-		  "width": 500,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 60,
 		    "min": 0,
@@ -13230,126 +13072,126 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 2
 		  },
-		  "height": 380,
+		  "height": 420,
 		  "points": [
 		    {
-		      "x": 2,
+		      "x": 4,
+		      "y": 68.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.2,
 		      "y": 70.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 4,
-		      "y": 68.7,
-		      "label": ""
-		    },
-		    {
 		      "x": 6,
-		      "y": 75.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 71.6,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
-		      "y": 77,
-		      "label": ""
-		    },
-		    {
-		      "x": 12,
-		      "y": 72.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 13,
 		      "y": 73,
 		      "label": ""
 		    },
 		    {
-		      "x": 15,
-		      "y": 72.9,
+		      "x": 6.8,
+		      "y": 69.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 18,
+		      "x": 7.5,
+		      "y": 77.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.3,
+		      "y": 71.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.1,
+		      "y": 75,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
 		      "y": 74,
 		      "label": ""
 		    },
 		    {
-		      "x": 20,
+		      "x": 12,
 		      "y": 74.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 23,
-		      "y": 75.4,
+		      "x": 13.5,
+		      "y": 76.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 26,
-		      "y": 75.6,
+		      "x": 15,
+		      "y": 75.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 28,
-		      "y": 76.2,
+		      "x": 17.5,
+		      "y": 77,
 		      "label": ""
 		    },
 		    {
-		      "x": 30,
+		      "x": 19,
 		      "y": 76,
 		      "label": ""
 		    },
 		    {
-		      "x": 33,
-		      "y": 77.1,
+		      "x": 21,
+		      "y": 77,
 		      "label": ""
 		    },
 		    {
-		      "x": 35,
-		      "y": 77.7,
+		      "x": 24,
+		      "y": 78,
 		      "label": ""
 		    },
 		    {
-		      "x": 36,
-		      "y": 78.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 38,
-		      "y": 78.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 40,
+		      "x": 27.5,
 		      "y": 79,
 		      "label": ""
 		    },
 		    {
-		      "x": 43,
-		      "y": 79.7,
+		      "x": 29,
+		      "y": 78.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 45,
-		      "y": 80.2,
+		      "x": 32,
+		      "y": 79,
 		      "label": ""
 		    },
 		    {
-		      "x": 47,
-		      "y": 80.8,
+		      "x": 35.5,
+		      "y": 80,
 		      "label": ""
 		    },
 		    {
-		      "x": 49,
-		      "y": 81.2,
+		      "x": 38,
+		      "y": 80.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 51,
-		      "y": 81.7,
+		      "x": 42,
+		      "y": 81,
+		      "label": ""
+		    },
+		    {
+		      "x": 45.5,
+		      "y": 81.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 48,
+		      "y": 81.8,
+		      "label": ""
+		    },
+		    {
+		      "x": 51.5,
+		      "y": 82,
 		      "label": ""
 		    }
 		  ]
@@ -13371,16 +13213,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x19b656d61370905e
-	// Question: Association between exam period and average score
+	// Question: Describe the association between period and exam scores
 	// Widget key: image_1
-	test("scatter-plot - [x19b656d61370905e] Association between exam period and average score", async () => {
+	test("scatter-plot - [x19b656d61370905e] Describe the association between period and exam scores", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Average score versus period",
-		  "width": 700,
+		  "title": "Average score vs. Period",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 9,
 		    "min": 0,
@@ -13395,61 +13237,56 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
-		  "height": 450,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 1,
-		      "y": 58,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.2,
 		      "y": 62,
 		      "label": ""
 		    },
 		    {
+		      "x": 1.3,
+		      "y": 57,
+		      "label": ""
+		    },
+		    {
 		      "x": 1.5,
-		      "y": 55,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.6,
-		      "y": 44,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.8,
 		      "y": 64,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
-		      "y": 61,
+		      "x": 1.7,
+		      "y": 68,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.3,
+		      "x": 2,
+		      "y": 59,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.2,
 		      "y": 59,
 		      "label": ""
 		    },
 		    {
 		      "x": 2.4,
-		      "y": 78,
+		      "y": 72,
 		      "label": ""
 		    },
 		    {
 		      "x": 2.6,
-		      "y": 57,
+		      "y": 67,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.8,
+		      "y": 54,
 		      "label": ""
 		    },
 		    {
 		      "x": 2.9,
-		      "y": 63,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 46,
+		      "y": 45,
 		      "label": ""
 		    },
 		    {
@@ -13458,118 +13295,118 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 3.4,
+		      "x": 3.3,
+		      "y": 49,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.5,
 		      "y": 65,
 		      "label": ""
 		    },
 		    {
 		      "x": 3.7,
-		      "y": 56,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.8,
 		      "y": 76,
 		      "label": ""
 		    },
 		    {
-		      "x": 4,
+		      "x": 3.9,
 		      "y": 58,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 75,
 		      "label": ""
 		    },
 		    {
 		      "x": 4.2,
-		      "y": 62,
+		      "y": 70,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.5,
-		      "y": 59,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.6,
-		      "y": 74,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.8,
-		      "y": 61,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 57,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.2,
-		      "y": 39,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.3,
-		      "y": 60,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.6,
-		      "y": 64,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.9,
-		      "y": 55,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.1,
-		      "y": 66,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.4,
-		      "y": 58,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.7,
-		      "y": 62,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.8,
-		      "y": 73,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 59,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.2,
-		      "y": 63,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.5,
-		      "y": 57,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.6,
+		      "x": 4.4,
 		      "y": 41,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.8,
+		      "x": 4.6,
+		      "y": 55,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.8,
+		      "y": 57,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 63,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.3,
 		      "y": 61,
 		      "label": ""
 		    },
 		    {
-		      "x": 8,
-		      "y": 60,
+		      "x": 5.5,
+		      "y": 62,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.7,
+		      "y": 66,
+		      "label": ""
+		    },
+		    {
+		      "x": 5.8,
+		      "y": 72,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 53,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.2,
+		      "y": 48,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.4,
+		      "y": 74,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.8,
+		      "y": 56,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.9,
+		      "y": 73,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.1,
+		      "y": 69,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.5,
+		      "y": 52,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.6,
+		      "y": 58,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.9,
+		      "y": 71,
 		      "label": ""
 		    }
 		  ]
@@ -13591,16 +13428,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x67d7dcc610982472
-	// Question: Describe the association between buses per hour and complaints
-	// Widget key: scatterplot_image
-	test("scatter-plot - [x67d7dcc610982472] Describe the association between buses per hour and complaints", async () => {
+	// Question: Describe the association between buses and complaints
+	// Widget key: image_1
+	test("scatter-plot - [x67d7dcc610982472] Describe the association between buses and complaints", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Complaints vs. Buses per Hour",
-		  "width": 600,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 8,
 		    "min": 0,
@@ -13615,7 +13452,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 400,
+		  "height": 380,
 		  "points": [
 		    {
 		      "x": 2,
@@ -13628,22 +13465,22 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 4,
+		      "x": 3.8,
 		      "y": 38,
 		      "label": ""
 		    },
 		    {
-		      "x": 5,
-		      "y": 30,
+		      "x": 4.5,
+		      "y": 32,
 		      "label": ""
 		    },
 		    {
-		      "x": 6,
+		      "x": 5.5,
 		      "y": 24,
 		      "label": ""
 		    },
 		    {
-		      "x": 7,
+		      "x": 6.5,
 		      "y": 18,
 		      "label": ""
 		    },
@@ -13679,8 +13516,8 @@ describe("scatterPlot widget tests", () => {
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Population density and average 1-bedroom rent",
-		  "width": 600,
+		  "title": "Population density vs. average 1-bedroom rent",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 40000,
 		    "min": 0,
@@ -13704,116 +13541,96 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 4000,
-		      "y": 870,
+		      "y": 860,
 		      "label": ""
 		    },
 		    {
 		      "x": 6000,
-		      "y": 930,
+		      "y": 900,
 		      "label": ""
 		    },
 		    {
 		      "x": 8000,
-		      "y": 980,
-		      "label": ""
-		    },
-		    {
-		      "x": 9000,
-		      "y": 1005,
+		      "y": 940,
 		      "label": ""
 		    },
 		    {
 		      "x": 10000,
-		      "y": 1040,
+		      "y": 980,
 		      "label": ""
 		    },
 		    {
 		      "x": 12000,
-		      "y": 1100,
+		      "y": 1015,
 		      "label": ""
 		    },
 		    {
 		      "x": 14000,
-		      "y": 1160,
-		      "label": ""
-		    },
-		    {
-		      "x": 15000,
-		      "y": 1190,
+		      "y": 1095,
 		      "label": ""
 		    },
 		    {
 		      "x": 16000,
-		      "y": 1210,
+		      "y": 1110,
 		      "label": ""
 		    },
 		    {
 		      "x": 18000,
-		      "y": 1275,
+		      "y": 1200,
 		      "label": ""
 		    },
 		    {
 		      "x": 20000,
-		      "y": 1320,
+		      "y": 1225,
 		      "label": ""
 		    },
 		    {
 		      "x": 22000,
-		      "y": 1380,
+		      "y": 1310,
 		      "label": ""
 		    },
 		    {
 		      "x": 24000,
-		      "y": 1425,
+		      "y": 1340,
 		      "label": ""
 		    },
 		    {
 		      "x": 26000,
-		      "y": 1480,
-		      "label": ""
-		    },
-		    {
-		      "x": 27000,
-		      "y": 1505,
+		      "y": 1440,
 		      "label": ""
 		    },
 		    {
 		      "x": 28000,
-		      "y": 1530,
+		      "y": 1475,
 		      "label": ""
 		    },
 		    {
 		      "x": 30000,
-		      "y": 1590,
+		      "y": 1560,
 		      "label": ""
 		    },
 		    {
 		      "x": 32000,
-		      "y": 1640,
+		      "y": 1610,
 		      "label": ""
 		    },
 		    {
 		      "x": 34000,
-		      "y": 1700,
+		      "y": 1715,
 		      "label": ""
 		    },
 		    {
 		      "x": 36000,
-		      "y": 1745,
+		      "y": 1760,
 		      "label": ""
 		    },
 		    {
 		      "x": 38000,
-		      "y": 1800,
+		      "y": 1850,
 		      "label": ""
 		    },
 		    {
-		      "x": 40000,
-		      "y": 1860,
-		      "label": ""
-		    },
-		    {
-		      "x": 42000,
+		      "x": 39500,
 		      "y": 1900,
 		      "label": ""
 		    }
@@ -13844,12 +13661,12 @@ describe("scatterPlot widget tests", () => {
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Age vs. Accidents per 100 Drivers (2009)",
-		  "width": 600,
+		  "title": "Age vs. accidents per 100 drivers",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 25,
 		    "min": 16,
-		    "label": "Age (years)",
+		    "label": "Age, in years",
 		    "gridLines": true,
 		    "tickInterval": 0.5
 		  },
@@ -13868,43 +13685,43 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 16.5,
+		      "x": 17,
 		      "y": 22,
 		      "label": ""
 		    },
 		    {
-		      "x": 17.5,
+		      "x": 18,
 		      "y": 21,
 		      "label": ""
 		    },
 		    {
-		      "x": 18.5,
+		      "x": 19,
 		      "y": 19.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 19,
-		      "y": 18.8,
+		      "x": 20,
+		      "y": 18,
 		      "label": ""
 		    },
 		    {
-		      "x": 20.5,
-		      "y": 17,
+		      "x": 21,
+		      "y": 16.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 21.5,
-		      "y": 15.5,
+		      "x": 22,
+		      "y": 15,
 		      "label": ""
 		    },
 		    {
 		      "x": 23,
-		      "y": 13.5,
+		      "y": 13,
 		      "label": ""
 		    },
 		    {
 		      "x": 24,
-		      "y": 11.5,
+		      "y": 11,
 		      "label": ""
 		    }
 		  ]
@@ -13926,16 +13743,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xbf421d7ee36fdb33
-	// Question: Association between life expectancy and infant mortality rate
+	// Question: Describe the association between life expectancy and infant mortality
 	// Widget key: image_1
-	test("scatter-plot - [xbf421d7ee36fdb33] Association between life expectancy and infant mortality rate", async () => {
+	test("scatter-plot - [xbf421d7ee36fdb33] Describe the association between life expectancy and infant mortality", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Life expectancy vs. infant mortality rate",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 100,
 		    "min": 0,
@@ -13950,10 +13767,15 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 420,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 1,
+		      "y": 56,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
 		      "y": 56,
 		      "label": ""
 		    },
@@ -13969,87 +13791,87 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 5,
-		      "y": 53,
+		      "y": 54,
 		      "label": ""
 		    },
 		    {
 		      "x": 6,
-		      "y": 52,
+		      "y": 53,
 		      "label": ""
 		    },
 		    {
 		      "x": 7,
-		      "y": 51,
+		      "y": 52,
 		      "label": ""
 		    },
 		    {
 		      "x": 8,
-		      "y": 51,
+		      "y": 52,
 		      "label": ""
 		    },
 		    {
 		      "x": 9,
-		      "y": 50,
+		      "y": 51,
 		      "label": ""
 		    },
 		    {
 		      "x": 10,
-		      "y": 49,
+		      "y": 50,
 		      "label": ""
 		    },
 		    {
 		      "x": 11,
-		      "y": 48,
+		      "y": 50,
 		      "label": ""
 		    },
 		    {
 		      "x": 12,
-		      "y": 48,
+		      "y": 49,
 		      "label": ""
 		    },
 		    {
 		      "x": 13,
-		      "y": 47,
+		      "y": 48,
 		      "label": ""
 		    },
 		    {
 		      "x": 14,
-		      "y": 46,
+		      "y": 48,
 		      "label": ""
 		    },
 		    {
 		      "x": 15,
-		      "y": 45,
+		      "y": 47,
 		      "label": ""
 		    },
 		    {
 		      "x": 16,
-		      "y": 45,
+		      "y": 46,
 		      "label": ""
 		    },
 		    {
-		      "x": 18,
-		      "y": 44,
+		      "x": 17,
+		      "y": 46,
 		      "label": ""
 		    },
 		    {
 		      "x": 19,
-		      "y": 43,
+		      "y": 45,
 		      "label": ""
 		    },
 		    {
 		      "x": 22,
-		      "y": 42,
+		      "y": 43,
 		      "label": ""
 		    },
 		    {
 		      "x": 25,
-		      "y": 40,
+		      "y": 41,
 		      "label": ""
 		    },
 		    {
 		      "x": 28,
-		      "y": 39,
+		      "y": 40,
 		      "label": ""
 		    },
 		    {
@@ -14058,48 +13880,43 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 35,
+		      "x": 33,
 		      "y": 36,
 		      "label": ""
 		    },
 		    {
-		      "x": 40,
-		      "y": 34,
+		      "x": 35,
+		      "y": 35,
 		      "label": ""
 		    },
 		    {
-		      "x": 45,
+		      "x": 38,
+		      "y": 33,
+		      "label": ""
+		    },
+		    {
+		      "x": 40,
 		      "y": 32,
 		      "label": ""
 		    },
 		    {
-		      "x": 50,
+		      "x": 45,
 		      "y": 30,
 		      "label": ""
 		    },
 		    {
-		      "x": 55,
+		      "x": 50,
 		      "y": 27,
 		      "label": ""
 		    },
 		    {
 		      "x": 60,
-		      "y": 25,
-		      "label": ""
-		    },
-		    {
-		      "x": 65,
 		      "y": 22,
 		      "label": ""
 		    },
 		    {
-		      "x": 70,
-		      "y": 19,
-		      "label": ""
-		    },
-		    {
 		      "x": 75,
-		      "y": 16,
+		      "y": 14,
 		      "label": ""
 		    }
 		  ]
@@ -14129,52 +13946,52 @@ describe("scatterPlot widget tests", () => {
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Temperature and Gas Use",
-		  "width": 600,
+		  "title": "Gas used vs. Temperature",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 14,
 		    "min": 0,
-		    "label": "Temperature, in degrees Celsius",
+		    "label": "Temperature (degrees Celsius)",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 25,
 		    "min": 0,
-		    "label": "Gas used, in cubic meters",
+		    "label": "Gas used (cubic meters)",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 420,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 0,
+		      "x": 0.5,
 		      "y": 22,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.6,
-		      "y": 18.8,
+		      "x": 2.5,
+		      "y": 19.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 5.2,
-		      "y": 15.6,
+		      "x": 4,
+		      "y": 16.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.8,
-		      "y": 12.3,
+		      "x": 6.2,
+		      "y": 13,
 		      "label": ""
 		    },
 		    {
-		      "x": 10.4,
-		      "y": 9.1,
+		      "x": 9.1,
+		      "y": 9,
 		      "label": ""
 		    },
 		    {
 		      "x": 12.9,
-		      "y": 6,
+		      "y": 6.5,
 		      "label": ""
 		    }
 		  ]
@@ -14196,20 +14013,20 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xb5d4098c4b3e6901
-	// Question: Describe the association between study time and test scores
+	// Question: Describe the association from a scatterplot
 	// Widget key: image_1
-	test("scatter-plot - [xb5d4098c4b3e6901] Describe the association between study time and test scores", async () => {
+	test("scatter-plot - [xb5d4098c4b3e6901] Describe the association from a scatterplot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Test scores vs. study time",
-		  "width": 600,
+		  "title": "Study time vs. test grades",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 5,
 		    "min": 0,
-		    "label": "Study time (hours)",
+		    "label": "Study time, in hours",
 		    "gridLines": true,
 		    "tickInterval": 0.5
 		  },
@@ -14229,12 +14046,12 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 0.8,
-		      "y": 51,
+		      "y": 52,
 		      "label": ""
 		    },
 		    {
 		      "x": 0.9,
-		      "y": 52,
+		      "y": 53,
 		      "label": ""
 		    },
 		    {
@@ -14249,7 +14066,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 1.2,
-		      "y": 56,
+		      "y": 57,
 		      "label": ""
 		    },
 		    {
@@ -14259,132 +14076,132 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 1.4,
-		      "y": 59,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.5,
 		      "y": 60,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.6,
+		      "x": 1.5,
 		      "y": 61,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.7,
+		      "x": 1.6,
 		      "y": 63,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.8,
+		      "x": 1.7,
 		      "y": 64,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.9,
-		      "y": 65,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
+		      "x": 1.8,
 		      "y": 66,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.1,
+		      "x": 1.9,
 		      "y": 67,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.2,
+		      "x": 2,
 		      "y": 68,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.3,
+		      "x": 2.1,
 		      "y": 70,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.4,
+		      "x": 2.2,
 		      "y": 71,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.5,
+		      "x": 2.3,
 		      "y": 72,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.6,
-		      "y": 73,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.7,
+		      "x": 2.4,
 		      "y": 74,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.8,
+		      "x": 2.5,
 		      "y": 75,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.9,
-		      "y": 77,
+		      "x": 2.6,
+		      "y": 76,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
+		      "x": 2.7,
 		      "y": 78,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.1,
+		      "x": 2.8,
 		      "y": 79,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.2,
+		      "x": 2.9,
 		      "y": 80,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.3,
+		      "x": 3,
 		      "y": 81,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.4,
+		      "x": 3.1,
+		      "y": 82,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.2,
 		      "y": 83,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.5,
-		      "y": 84,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.6,
+		      "x": 3.3,
 		      "y": 85,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.7,
+		      "x": 3.4,
 		      "y": 86,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.8,
+		      "x": 3.5,
 		      "y": 87,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.9,
+		      "x": 3.6,
 		      "y": 88,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.7,
+		      "y": 88,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.8,
+		      "y": 89,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.9,
+		      "y": 90,
 		      "label": ""
 		    },
 		    {
@@ -14411,27 +14228,27 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x83923ea38a1173c9
-	// Question: Describe the association between age and internet use
+	// Question: Describe the association between age and Internet use
 	// Widget key: image_1
-	test("scatter-plot - [x83923ea38a1173c9] Describe the association between age and internet use", async () => {
+	test("scatter-plot - [x83923ea38a1173c9] Describe the association between age and Internet use", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Age vs. internet use",
-		  "width": 600,
+		  "title": "Age vs. Internet use",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 60,
 		    "min": 0,
-		    "label": "Age (in years)",
+		    "label": "Age (years)",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": 0,
-		    "label": "Average daily internet usage (in hours)",
+		    "label": "Average daily Internet use (hours)",
 		    "gridLines": true,
 		    "tickInterval": 0.5
 		  },
@@ -14443,22 +14260,22 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 8,
-		      "y": 0.5,
+		      "x": 10,
+		      "y": 1,
 		      "label": ""
 		    },
 		    {
-		      "x": 12,
-		      "y": 1.5,
+		      "x": 14,
+		      "y": 2,
 		      "label": ""
 		    },
 		    {
-		      "x": 16,
-		      "y": 2.5,
+		      "x": 18,
+		      "y": 3,
 		      "label": ""
 		    },
 		    {
-		      "x": 19,
+		      "x": 20,
 		      "y": 3.5,
 		      "label": ""
 		    },
@@ -14474,7 +14291,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 40,
-		      "y": 1.5,
+		      "y": 2,
 		      "label": ""
 		    },
 		    {
@@ -14501,16 +14318,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x182221dc80b7ec9a
-	// Question: Association between test grades and shoe sizes
+	// Question: Describe the association between shoe size and test grades
 	// Widget key: image_1
-	test("scatter-plot - [x182221dc80b7ec9a] Association between test grades and shoe sizes", async () => {
+	test("scatter-plot - [x182221dc80b7ec9a] Describe the association between shoe size and test grades", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Test grades vs. shoe sizes",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 11,
 		    "min": 4,
@@ -14528,123 +14345,123 @@ describe("scatterPlot widget tests", () => {
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": 5.5,
-		      "y": 82,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.5,
-		      "y": 60,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 70,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 85,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.5,
-		      "y": 76,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.5,
-		      "y": 58,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 66,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
+		      "x": 5.6,
 		      "y": 83,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.5,
-		      "y": 72,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.5,
-		      "y": 55,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 79,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 63,
-		      "label": ""
-		    },
-		    {
-		      "x": 8.5,
-		      "y": 68,
-		      "label": ""
-		    },
-		    {
-		      "x": 8.5,
-		      "y": 86,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 74,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 57,
-		      "label": ""
-		    },
-		    {
-		      "x": 9.5,
+		      "x": 5.8,
 		      "y": 62,
 		      "label": ""
 		    },
 		    {
-		      "x": 9.5,
-		      "y": 80,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
+		      "x": 6.1,
 		      "y": 71,
 		      "label": ""
 		    },
 		    {
-		      "x": 10,
-		      "y": 54,
+		      "x": 6.5,
+		      "y": 77,
 		      "label": ""
 		    },
 		    {
-		      "x": 10.5,
-		      "y": 65,
+		      "x": 6.9,
+		      "y": 55,
 		      "label": ""
 		    },
 		    {
-		      "x": 10.5,
+		      "x": 7.2,
+		      "y": 68,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.5,
 		      "y": 82,
 		      "label": ""
 		    },
 		    {
-		      "x": 11,
-		      "y": 59,
+		      "x": 7.8,
+		      "y": 60,
 		      "label": ""
 		    },
 		    {
-		      "x": 11,
-		      "y": 77,
+		      "x": 8,
+		      "y": 73,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.3,
+		      "y": 85,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.7,
+		      "y": 58,
+		      "label": ""
+		    },
+		    {
+		      "x": 9,
+		      "y": 79,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.3,
+		      "y": 63,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.6,
+		      "y": 72,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.8,
+		      "y": 87,
+		      "label": ""
+		    },
+		    {
+		      "x": 10.1,
+		      "y": 54,
+		      "label": ""
+		    },
+		    {
+		      "x": 10.3,
+		      "y": 66,
+		      "label": ""
+		    },
+		    {
+		      "x": 10.5,
+		      "y": 75,
+		      "label": ""
+		    },
+		    {
+		      "x": 10.7,
+		      "y": 57,
+		      "label": ""
+		    },
+		    {
+		      "x": 10.9,
+		      "y": 80,
+		      "label": ""
+		    },
+		    {
+		      "x": 6.3,
+		      "y": 69,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.1,
+		      "y": 52,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.9,
+		      "y": 84,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.4,
+		      "y": 61,
 		      "label": ""
 		    }
 		  ]
@@ -14675,7 +14492,7 @@ describe("scatterPlot widget tests", () => {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Average income vs. average 1-bedroom rent",
-		  "width": 279,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 60,
 		    "min": 30,
@@ -14690,7 +14507,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 100
 		  },
-		  "height": 275,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 36.5,
@@ -14699,52 +14516,52 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 38,
-		      "y": 900,
+		      "y": 880,
 		      "label": ""
 		    },
 		    {
-		      "x": 40,
-		      "y": 950,
+		      "x": 39.2,
+		      "y": 910,
 		      "label": ""
 		    },
 		    {
-		      "x": 42,
-		      "y": 1000,
+		      "x": 41,
+		      "y": 980,
+		      "label": ""
+		    },
+		    {
+		      "x": 42.3,
+		      "y": 1040,
 		      "label": ""
 		    },
 		    {
 		      "x": 44,
-		      "y": 1100,
+		      "y": 1120,
 		      "label": ""
 		    },
 		    {
-		      "x": 45,
-		      "y": 1150,
+		      "x": 45.5,
+		      "y": 1180,
 		      "label": ""
 		    },
 		    {
 		      "x": 47,
-		      "y": 1200,
+		      "y": 1250,
 		      "label": ""
 		    },
 		    {
-		      "x": 48.5,
-		      "y": 1300,
+		      "x": 49,
+		      "y": 1370,
 		      "label": ""
 		    },
 		    {
-		      "x": 50,
-		      "y": 1400,
+		      "x": 51,
+		      "y": 1450,
 		      "label": ""
 		    },
 		    {
-		      "x": 52,
-		      "y": 1500,
-		      "label": ""
-		    },
-		    {
-		      "x": 54,
-		      "y": 1600,
+		      "x": 53,
+		      "y": 1550,
 		      "label": ""
 		    },
 		    {
@@ -14776,16 +14593,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x42bd179c8f73e1e8
-	// Question: Select the best scatter plot for age vs. internet use
-	// Widget key: image_graph_a
-	test("scatter-plot - [x42bd179c8f73e1e8] Select the best scatter plot for age vs. internet use (2)", async () => {
+	// Question: Select the scatter plot that best displays the data
+	// Widget key: graph_a
+	test("scatter-plot - [x42bd179c8f73e1e8] Select the scatter plot that best displays the data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph A",
-		  "width": 600,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 60,
 		    "min": 0,
@@ -14800,7 +14617,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 400,
+		  "height": 380,
 		  "points": [
 		    {
 		      "x": 3,
@@ -14851,16 +14668,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x42bd179c8f73e1e8
-	// Question: Select the best scatter plot for age vs. internet use
-	// Widget key: image_graph_b
-	test("scatter-plot - [x42bd179c8f73e1e8] Select the best scatter plot for age vs. internet use (3)", async () => {
+	// Question: Select the scatter plot that best displays the data
+	// Widget key: graph_b
+	test("scatter-plot - [x42bd179c8f73e1e8] Select the scatter plot that best displays the data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph B",
-		  "width": 600,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 150,
 		    "min": 0,
@@ -14875,7 +14692,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 380,
 		  "points": [
 		    {
 		      "x": 3,
@@ -14926,16 +14743,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x42bd179c8f73e1e8
-	// Question: Select the best scatter plot for age vs. internet use
-	// Widget key: image_graph_c
-	test("scatter-plot - [x42bd179c8f73e1e8] Select the best scatter plot for age vs. internet use (4)", async () => {
+	// Question: Select the scatter plot that best displays the data
+	// Widget key: graph_c
+	test("scatter-plot - [x42bd179c8f73e1e8] Select the scatter plot that best displays the data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph C",
-		  "width": 600,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 4,
 		    "min": 0,
@@ -14950,7 +14767,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 400,
+		  "height": 380,
 		  "points": [
 		    {
 		      "x": 0,
@@ -15001,16 +14818,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x42bd179c8f73e1e8
-	// Question: Select the best scatter plot for age vs. internet use
-	// Widget key: image_graph_d
-	test("scatter-plot - [x42bd179c8f73e1e8] Select the best scatter plot for age vs. internet use (5)", async () => {
+	// Question: Select the scatter plot that best displays the data
+	// Widget key: graph_d
+	test("scatter-plot - [x42bd179c8f73e1e8] Select the scatter plot that best displays the data (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph D",
-		  "width": 600,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 14,
 		    "min": 0,
@@ -15025,7 +14842,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 50
 		  },
-		  "height": 400,
+		  "height": 380,
 		  "points": [
 		    {
 		      "x": 0,
@@ -15076,16 +14893,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7ae24a219fb0d201
-	// Question: Select the best scatter plot for the data
+	// Question: Choose the best scatter plot: gas left versus distance
 	// Widget key: choice_a_graph
-	test("scatter-plot - [x7ae24a219fb0d201] Select the best scatter plot for the data (1)", async () => {
+	test("scatter-plot - [x7ae24a219fb0d201] Choose the best scatter plot: gas left versus distance (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph A",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 150,
 		    "min": 0,
@@ -15100,7 +14917,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 500
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 50,
@@ -15151,16 +14968,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7ae24a219fb0d201
-	// Question: Select the best scatter plot for the data
+	// Question: Choose the best scatter plot: gas left versus distance
 	// Widget key: choice_b_graph
-	test("scatter-plot - [x7ae24a219fb0d201] Select the best scatter plot for the data (2)", async () => {
+	test("scatter-plot - [x7ae24a219fb0d201] Choose the best scatter plot: gas left versus distance (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph B",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 1500,
 		    "min": 0,
@@ -15175,7 +14992,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 30
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 0,
@@ -15226,16 +15043,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7ae24a219fb0d201
-	// Question: Select the best scatter plot for the data
+	// Question: Choose the best scatter plot: gas left versus distance
 	// Widget key: choice_c_graph
-	test("scatter-plot - [x7ae24a219fb0d201] Select the best scatter plot for the data (3)", async () => {
+	test("scatter-plot - [x7ae24a219fb0d201] Choose the best scatter plot: gas left versus distance (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph C",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 50,
 		    "min": 0,
@@ -15250,7 +15067,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 100
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 50,
@@ -15301,16 +15118,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7ae24a219fb0d201
-	// Question: Select the best scatter plot for the data
+	// Question: Choose the best scatter plot: gas left versus distance
 	// Widget key: choice_d_graph
-	test("scatter-plot - [x7ae24a219fb0d201] Select the best scatter plot for the data (4)", async () => {
+	test("scatter-plot - [x7ae24a219fb0d201] Choose the best scatter plot: gas left versus distance (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph D",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 500,
 		    "min": 0,
@@ -15325,7 +15142,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 0,
@@ -15376,16 +15193,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x0fd3f561de830e7f
-	// Question: Select the best scatter plot
+	// Question: Select the best scatter plot for latitude and temperature
 	// Widget key: graph_a_image
-	test("scatter-plot - [x0fd3f561de830e7f] Select the best scatter plot (2)", async () => {
+	test("scatter-plot - [x0fd3f561de830e7f] Select the best scatter plot for latitude and temperature (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph A",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 50,
 		    "min": 0,
@@ -15446,16 +15263,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x0fd3f561de830e7f
-	// Question: Select the best scatter plot
+	// Question: Select the best scatter plot for latitude and temperature
 	// Widget key: graph_b_image
-	test("scatter-plot - [x0fd3f561de830e7f] Select the best scatter plot (3)", async () => {
+	test("scatter-plot - [x0fd3f561de830e7f] Select the best scatter plot for latitude and temperature (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph B",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 25,
 		    "min": 0,
@@ -15516,16 +15333,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x0fd3f561de830e7f
-	// Question: Select the best scatter plot
+	// Question: Select the best scatter plot for latitude and temperature
 	// Widget key: graph_c_image
-	test("scatter-plot - [x0fd3f561de830e7f] Select the best scatter plot (4)", async () => {
+	test("scatter-plot - [x0fd3f561de830e7f] Select the best scatter plot for latitude and temperature (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph C",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 180,
 		    "min": 0,
@@ -15586,16 +15403,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x0fd3f561de830e7f
-	// Question: Select the best scatter plot
+	// Question: Select the best scatter plot for latitude and temperature
 	// Widget key: graph_d_image
-	test("scatter-plot - [x0fd3f561de830e7f] Select the best scatter plot (5)", async () => {
+	test("scatter-plot - [x0fd3f561de830e7f] Select the best scatter plot for latitude and temperature (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph D",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 60,
 		    "min": 0,
@@ -15656,16 +15473,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7a969693b00be700
-	// Question: Choose the best scatter plot for Lynn's data
-	// Widget key: graph_a
-	test("scatter-plot - [x7a969693b00be700] Choose the best scatter plot for Lynn's data (1)", async () => {
+	// Question: Choose the best scatter plot for speed vs. fuel use
+	// Widget key: graph_choice_a
+	test("scatter-plot - [x7a969693b00be700] Choose the best scatter plot for speed vs. fuel use (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Graph A",
-		  "width": 500,
+		  "title": "Fuel used vs. Speed",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 150,
 		    "min": 0,
@@ -15680,7 +15497,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 2
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 20,
@@ -15731,16 +15548,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7a969693b00be700
-	// Question: Choose the best scatter plot for Lynn's data
-	// Widget key: graph_b
-	test("scatter-plot - [x7a969693b00be700] Choose the best scatter plot for Lynn's data (2)", async () => {
+	// Question: Choose the best scatter plot for speed vs. fuel use
+	// Widget key: graph_choice_b
+	test("scatter-plot - [x7a969693b00be700] Choose the best scatter plot for speed vs. fuel use (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Graph B",
-		  "width": 500,
+		  "title": "Speed vs. Fuel used",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 14,
 		    "min": 0,
@@ -15755,7 +15572,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 50
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 13,
@@ -15806,16 +15623,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7a969693b00be700
-	// Question: Choose the best scatter plot for Lynn's data
-	// Widget key: graph_c
-	test("scatter-plot - [x7a969693b00be700] Choose the best scatter plot for Lynn's data (3)", async () => {
+	// Question: Choose the best scatter plot for speed vs. fuel use
+	// Widget key: graph_choice_c
+	test("scatter-plot - [x7a969693b00be700] Choose the best scatter plot for speed vs. fuel use (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Graph C",
-		  "width": 500,
+		  "title": "Fuel used vs. Speed",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 300,
 		    "min": 0,
@@ -15830,7 +15647,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 20,
@@ -15881,16 +15698,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7a969693b00be700
-	// Question: Choose the best scatter plot for Lynn's data
-	// Widget key: graph_d
-	test("scatter-plot - [x7a969693b00be700] Choose the best scatter plot for Lynn's data (4)", async () => {
+	// Question: Choose the best scatter plot for speed vs. fuel use
+	// Widget key: graph_choice_d
+	test("scatter-plot - [x7a969693b00be700] Choose the best scatter plot for speed vs. fuel use (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Graph D",
-		  "width": 500,
+		  "title": "Speed vs. Fuel used",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 100,
 		    "min": 0,
@@ -15905,7 +15722,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 100
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 13,
@@ -15956,27 +15773,27 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x23f79b755ec46e36
-	// Question: Select the best scatter plot for heart rate and life expectancy
-	// Widget key: graph_a
-	test("scatter-plot - [x23f79b755ec46e36] Select the best scatter plot for heart rate and life expectancy (1)", async () => {
+	// Question: Choose the best scatter plot for life expectancy vs. heart rate
+	// Widget key: graph_a_image
+	test("scatter-plot - [x23f79b755ec46e36] Choose the best scatter plot for life expectancy vs. heart rate (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph A",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 80,
 		    "min": 0,
-		    "label": "Life expectancy, in years",
+		    "label": "Life expectancy (years)",
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
 		  "yAxis": {
 		    "max": 100,
 		    "min": 0,
-		    "label": "Heart rate, in beats per minute",
+		    "label": "Heart rate (beats per minute)",
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
@@ -16031,27 +15848,27 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x23f79b755ec46e36
-	// Question: Select the best scatter plot for heart rate and life expectancy
-	// Widget key: graph_b
-	test("scatter-plot - [x23f79b755ec46e36] Select the best scatter plot for heart rate and life expectancy (2)", async () => {
+	// Question: Choose the best scatter plot for life expectancy vs. heart rate
+	// Widget key: graph_b_image
+	test("scatter-plot - [x23f79b755ec46e36] Choose the best scatter plot for life expectancy vs. heart rate (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph B",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 100,
 		    "min": 0,
-		    "label": "Heart rate, in beats per minute",
+		    "label": "Heart rate (beats per minute)",
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
 		  "yAxis": {
 		    "max": 80,
 		    "min": 0,
-		    "label": "Life expectancy, in years",
+		    "label": "Life expectancy (years)",
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
@@ -16106,27 +15923,27 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x23f79b755ec46e36
-	// Question: Select the best scatter plot for heart rate and life expectancy
-	// Widget key: graph_c
-	test("scatter-plot - [x23f79b755ec46e36] Select the best scatter plot for heart rate and life expectancy (3)", async () => {
+	// Question: Choose the best scatter plot for life expectancy vs. heart rate
+	// Widget key: graph_c_image
+	test("scatter-plot - [x23f79b755ec46e36] Choose the best scatter plot for life expectancy vs. heart rate (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph C",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 240,
 		    "min": 0,
-		    "label": "Life expectancy, in years",
+		    "label": "Life expectancy (years)",
 		    "gridLines": true,
 		    "tickInterval": 60
 		  },
 		  "yAxis": {
 		    "max": 300,
 		    "min": 0,
-		    "label": "Heart rate, in beats per minute",
+		    "label": "Heart rate (beats per minute)",
 		    "gridLines": true,
 		    "tickInterval": 60
 		  },
@@ -16181,27 +15998,27 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x23f79b755ec46e36
-	// Question: Select the best scatter plot for heart rate and life expectancy
-	// Widget key: graph_d
-	test("scatter-plot - [x23f79b755ec46e36] Select the best scatter plot for heart rate and life expectancy (4)", async () => {
+	// Question: Choose the best scatter plot for life expectancy vs. heart rate
+	// Widget key: graph_d_image
+	test("scatter-plot - [x23f79b755ec46e36] Choose the best scatter plot for life expectancy vs. heart rate (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph D",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 300,
 		    "min": 0,
-		    "label": "Heart rate, in beats per minute",
+		    "label": "Heart rate (beats per minute)",
 		    "gridLines": true,
 		    "tickInterval": 60
 		  },
 		  "yAxis": {
 		    "max": 240,
 		    "min": 0,
-		    "label": "Life expectancy, in years",
+		    "label": "Life expectancy (years)",
 		    "gridLines": true,
 		    "tickInterval": 60
 		  },
@@ -16256,16 +16073,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa063ad9824a0d96f
-	// Question: Select the best scatter plot for exercise and weight loss
-	// Widget key: graph_a_image
-	test("scatter-plot - [xa063ad9824a0d96f] Select the best scatter plot for exercise and weight loss (2)", async () => {
+	// Question: Choose the best scatter plot
+	// Widget key: choice_a_graph
+	test("scatter-plot - [xa063ad9824a0d96f] Choose the best scatter plot (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph A",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 20,
 		    "min": 0,
@@ -16280,7 +16097,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 1,
@@ -16326,16 +16143,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa063ad9824a0d96f
-	// Question: Select the best scatter plot for exercise and weight loss
-	// Widget key: graph_b_image
-	test("scatter-plot - [xa063ad9824a0d96f] Select the best scatter plot for exercise and weight loss (3)", async () => {
+	// Question: Choose the best scatter plot
+	// Widget key: choice_b_graph
+	test("scatter-plot - [xa063ad9824a0d96f] Choose the best scatter plot (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph B",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 6,
 		    "min": 0,
@@ -16350,7 +16167,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 0.5
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 1,
@@ -16396,16 +16213,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa063ad9824a0d96f
-	// Question: Select the best scatter plot for exercise and weight loss
-	// Widget key: graph_c_image
-	test("scatter-plot - [xa063ad9824a0d96f] Select the best scatter plot for exercise and weight loss (4)", async () => {
+	// Question: Choose the best scatter plot
+	// Widget key: choice_c_graph
+	test("scatter-plot - [xa063ad9824a0d96f] Choose the best scatter plot (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph C",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 9,
 		    "min": 0,
@@ -16420,7 +16237,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0.86,
@@ -16466,16 +16283,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa063ad9824a0d96f
-	// Question: Select the best scatter plot for exercise and weight loss
-	// Widget key: graph_d_image
-	test("scatter-plot - [xa063ad9824a0d96f] Select the best scatter plot for exercise and weight loss (5)", async () => {
+	// Question: Choose the best scatter plot
+	// Widget key: choice_d_graph
+	test("scatter-plot - [xa063ad9824a0d96f] Choose the best scatter plot (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph D",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 3,
 		    "min": 0,
@@ -16490,7 +16307,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0.86,
@@ -16536,16 +16353,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x98e25917d3dc45b7
-	// Question: Choose the best scatter plot for buses and complaints
-	// Widget key: graph_a
-	test("scatter-plot - [x98e25917d3dc45b7] Choose the best scatter plot for buses and complaints (1)", async () => {
+	// Question: Choose the best scatter plot
+	// Widget key: graph_a_image
+	test("scatter-plot - [x98e25917d3dc45b7] Choose the best scatter plot (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph A",
-		  "width": 500,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 180,
 		    "min": 0,
@@ -16560,7 +16377,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 3
 		  },
-		  "height": 350,
+		  "height": 420,
 		  "points": [
 		    {
 		      "x": 52,
@@ -16616,16 +16433,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x98e25917d3dc45b7
-	// Question: Choose the best scatter plot for buses and complaints
-	// Widget key: graph_b
-	test("scatter-plot - [x98e25917d3dc45b7] Choose the best scatter plot for buses and complaints (2)", async () => {
+	// Question: Choose the best scatter plot
+	// Widget key: graph_b_image
+	test("scatter-plot - [x98e25917d3dc45b7] Choose the best scatter plot (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph B",
-		  "width": 500,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 24,
 		    "min": 0,
@@ -16640,7 +16457,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 15
 		  },
-		  "height": 350,
+		  "height": 420,
 		  "points": [
 		    {
 		      "x": 2,
@@ -16696,16 +16513,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x98e25917d3dc45b7
-	// Question: Choose the best scatter plot for buses and complaints
-	// Widget key: graph_c
-	test("scatter-plot - [x98e25917d3dc45b7] Choose the best scatter plot for buses and complaints (3)", async () => {
+	// Question: Choose the best scatter plot
+	// Widget key: graph_c_image
+	test("scatter-plot - [x98e25917d3dc45b7] Choose the best scatter plot (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph C",
-		  "width": 500,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 60,
 		    "min": 0,
@@ -16720,7 +16537,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 420,
 		  "points": [
 		    {
 		      "x": 52,
@@ -16776,16 +16593,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x98e25917d3dc45b7
-	// Question: Choose the best scatter plot for buses and complaints
-	// Widget key: graph_d
-	test("scatter-plot - [x98e25917d3dc45b7] Choose the best scatter plot for buses and complaints (4)", async () => {
+	// Question: Choose the best scatter plot
+	// Widget key: graph_d_image
+	test("scatter-plot - [x98e25917d3dc45b7] Choose the best scatter plot (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph D",
-		  "width": 500,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 8,
 		    "min": 0,
@@ -16800,7 +16617,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 350,
+		  "height": 420,
 		  "points": [
 		    {
 		      "x": 2,
@@ -16856,20 +16673,20 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xb0fd3e2a4a2c11cc
-	// Question: Select the best scatter plot: sunlight vs. tomato growth
-	// Widget key: graph_a_image
-	test("scatter-plot - [xb0fd3e2a4a2c11cc] Select the best scatter plot: sunlight vs. tomato growth (1)", async () => {
+	// Question: Choose the best scatter plot for tomato growth data
+	// Widget key: choice_a_graph
+	test("scatter-plot - [xb0fd3e2a4a2c11cc] Choose the best scatter plot for tomato growth data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph A",
-		  "width": 520,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 12,
 		    "min": 0,
-		    "label": "Change in circumference (centimeters)",
+		    "label": "Change in circumference (cm)",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
@@ -16880,7 +16697,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 360,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 1,
@@ -16926,16 +16743,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xb0fd3e2a4a2c11cc
-	// Question: Select the best scatter plot: sunlight vs. tomato growth
-	// Widget key: graph_b_image
-	test("scatter-plot - [xb0fd3e2a4a2c11cc] Select the best scatter plot: sunlight vs. tomato growth (2)", async () => {
+	// Question: Choose the best scatter plot for tomato growth data
+	// Widget key: choice_b_graph
+	test("scatter-plot - [xb0fd3e2a4a2c11cc] Choose the best scatter plot for tomato growth data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph B",
-		  "width": 520,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -16946,11 +16763,11 @@ describe("scatterPlot widget tests", () => {
 		  "yAxis": {
 		    "max": 12,
 		    "min": 0,
-		    "label": "Change in circumference (centimeters)",
+		    "label": "Change in circumference (cm)",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 360,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0,
@@ -16996,20 +16813,20 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xb0fd3e2a4a2c11cc
-	// Question: Select the best scatter plot: sunlight vs. tomato growth
-	// Widget key: graph_c_image
-	test("scatter-plot - [xb0fd3e2a4a2c11cc] Select the best scatter plot: sunlight vs. tomato growth (3)", async () => {
+	// Question: Choose the best scatter plot for tomato growth data
+	// Widget key: choice_c_graph
+	test("scatter-plot - [xb0fd3e2a4a2c11cc] Choose the best scatter plot for tomato growth data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph C",
-		  "width": 520,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 35,
 		    "min": 0,
-		    "label": "Change in circumference (centimeters)",
+		    "label": "Change in circumference (cm)",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
@@ -17020,7 +16837,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 15
 		  },
-		  "height": 360,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 1,
@@ -17066,16 +16883,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xb0fd3e2a4a2c11cc
-	// Question: Select the best scatter plot: sunlight vs. tomato growth
-	// Widget key: graph_d_image
-	test("scatter-plot - [xb0fd3e2a4a2c11cc] Select the best scatter plot: sunlight vs. tomato growth (4)", async () => {
+	// Question: Choose the best scatter plot for tomato growth data
+	// Widget key: choice_d_graph
+	test("scatter-plot - [xb0fd3e2a4a2c11cc] Choose the best scatter plot for tomato growth data (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph D",
-		  "width": 520,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 30,
 		    "min": 0,
@@ -17086,11 +16903,11 @@ describe("scatterPlot widget tests", () => {
 		  "yAxis": {
 		    "max": 35,
 		    "min": 0,
-		    "label": "Change in circumference (centimeters)",
+		    "label": "Change in circumference (cm)",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 360,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0,
@@ -17136,16 +16953,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xce78f3404441b035
-	// Question: Choose the best scatter plot
-	// Widget key: image_graph_a
-	test("scatter-plot - [xce78f3404441b035] Choose the best scatter plot (1)", async () => {
+	// Question: Choose the best scatter plot for distance and time
+	// Widget key: graph_a_image
+	test("scatter-plot - [xce78f3404441b035] Choose the best scatter plot for distance and time (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph A",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -17160,7 +16977,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 2
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 2,
@@ -17206,16 +17023,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xce78f3404441b035
-	// Question: Choose the best scatter plot
-	// Widget key: image_graph_b
-	test("scatter-plot - [xce78f3404441b035] Choose the best scatter plot (2)", async () => {
+	// Question: Choose the best scatter plot for distance and time
+	// Widget key: graph_b_image
+	test("scatter-plot - [xce78f3404441b035] Choose the best scatter plot for distance and time (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph B",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 30,
 		    "min": 0,
@@ -17230,7 +17047,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 2,
@@ -17276,16 +17093,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xce78f3404441b035
-	// Question: Choose the best scatter plot
-	// Widget key: image_graph_c
-	test("scatter-plot - [xce78f3404441b035] Choose the best scatter plot (3)", async () => {
+	// Question: Choose the best scatter plot for distance and time
+	// Widget key: graph_c_image
+	test("scatter-plot - [xce78f3404441b035] Choose the best scatter plot for distance and time (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph C",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 20,
 		    "min": 0,
@@ -17300,7 +17117,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 5,
@@ -17346,16 +17163,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xce78f3404441b035
-	// Question: Choose the best scatter plot
-	// Widget key: image_graph_d
-	test("scatter-plot - [xce78f3404441b035] Choose the best scatter plot (4)", async () => {
+	// Question: Choose the best scatter plot for distance and time
+	// Widget key: graph_d_image
+	test("scatter-plot - [xce78f3404441b035] Choose the best scatter plot for distance and time (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph D",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 60,
 		    "min": 0,
@@ -17370,7 +17187,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 5,
@@ -17416,16 +17233,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7ddd0f82288e9ba2
-	// Question: Choose the best scatter plot for scale and axes
+	// Question: Choose the best scatter plot
 	// Widget key: graph_a_image
-	test("scatter-plot - [x7ddd0f82288e9ba2] Choose the best scatter plot for scale and axes (1)", async () => {
+	test("scatter-plot - [x7ddd0f82288e9ba2] Choose the best scatter plot (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph A",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 270,
 		    "min": 0,
@@ -17440,7 +17257,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 3
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 30,
@@ -17486,16 +17303,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7ddd0f82288e9ba2
-	// Question: Choose the best scatter plot for scale and axes
+	// Question: Choose the best scatter plot
 	// Widget key: graph_b_image
-	test("scatter-plot - [x7ddd0f82288e9ba2] Choose the best scatter plot for scale and axes (2)", async () => {
+	test("scatter-plot - [x7ddd0f82288e9ba2] Choose the best scatter plot (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph B",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 24,
 		    "min": 0,
@@ -17510,7 +17327,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 45
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 6,
@@ -17556,16 +17373,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7ddd0f82288e9ba2
-	// Question: Choose the best scatter plot for scale and axes
+	// Question: Choose the best scatter plot
 	// Widget key: graph_c_image
-	test("scatter-plot - [x7ddd0f82288e9ba2] Choose the best scatter plot for scale and axes (3)", async () => {
+	test("scatter-plot - [x7ddd0f82288e9ba2] Choose the best scatter plot (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph C",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 90,
 		    "min": 0,
@@ -17580,7 +17397,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 30,
@@ -17626,16 +17443,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7ddd0f82288e9ba2
-	// Question: Choose the best scatter plot for scale and axes
+	// Question: Choose the best scatter plot
 	// Widget key: graph_d_image
-	test("scatter-plot - [x7ddd0f82288e9ba2] Choose the best scatter plot for scale and axes (4)", async () => {
+	test("scatter-plot - [x7ddd0f82288e9ba2] Choose the best scatter plot (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph D",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 7,
 		    "min": 0,
@@ -17650,7 +17467,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 15
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 6,
@@ -17696,16 +17513,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x5b33212c451b4157
-	// Question: Choose the best scatter plot for mass and fuel use
+	// Question: Select the best scatter plot for fuel use vs. mass
 	// Widget key: graph_a_image
-	test("scatter-plot - [x5b33212c451b4157] Choose the best scatter plot for mass and fuel use (1)", async () => {
+	test("scatter-plot - [x5b33212c451b4157] Select the best scatter plot for fuel use vs. mass (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph A",
-		  "width": 520,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 15,
 		    "min": 0,
@@ -17720,7 +17537,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 0.5
 		  },
-		  "height": 360,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 3.6,
@@ -17766,16 +17583,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x5b33212c451b4157
-	// Question: Choose the best scatter plot for mass and fuel use
+	// Question: Select the best scatter plot for fuel use vs. mass
 	// Widget key: graph_b_image
-	test("scatter-plot - [x5b33212c451b4157] Choose the best scatter plot for mass and fuel use (2)", async () => {
+	test("scatter-plot - [x5b33212c451b4157] Select the best scatter plot for fuel use vs. mass (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph B",
-		  "width": 520,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 2.5,
 		    "min": 0,
@@ -17790,7 +17607,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 3
 		  },
-		  "height": 360,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0.45,
@@ -17836,16 +17653,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x5b33212c451b4157
-	// Question: Choose the best scatter plot for mass and fuel use
+	// Question: Select the best scatter plot for fuel use vs. mass
 	// Widget key: graph_c_image
-	test("scatter-plot - [x5b33212c451b4157] Choose the best scatter plot for mass and fuel use (3)", async () => {
+	test("scatter-plot - [x5b33212c451b4157] Select the best scatter plot for fuel use vs. mass (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph C",
-		  "width": 520,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 36,
 		    "min": 0,
@@ -17860,7 +17677,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1.5
 		  },
-		  "height": 360,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 3.6,
@@ -17906,16 +17723,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x5b33212c451b4157
-	// Question: Choose the best scatter plot for mass and fuel use
+	// Question: Select the best scatter plot for fuel use vs. mass
 	// Widget key: graph_d_image
-	test("scatter-plot - [x5b33212c451b4157] Choose the best scatter plot for mass and fuel use (4)", async () => {
+	test("scatter-plot - [x5b33212c451b4157] Select the best scatter plot for fuel use vs. mass (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph D",
-		  "width": 520,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 7.5,
 		    "min": 0,
@@ -17930,7 +17747,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 9
 		  },
-		  "height": 360,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0.45,
@@ -17976,16 +17793,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf9749d81664ed896
-	// Question: Select the best scatter plot based on axes and scale
-	// Widget key: graph_a_image
-	test("scatter-plot - [xf9749d81664ed896] Select the best scatter plot based on axes and scale (2)", async () => {
+	// Question: Choose the best scatter plot for cones sold vs. temperature
+	// Widget key: graph_a
+	test("scatter-plot - [xf9749d81664ed896] Choose the best scatter plot for cones sold vs. temperature (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Graph A",
-		  "width": 600,
+		  "title": "",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 500,
 		    "min": 0,
@@ -18056,16 +17873,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf9749d81664ed896
-	// Question: Select the best scatter plot based on axes and scale
-	// Widget key: graph_b_image
-	test("scatter-plot - [xf9749d81664ed896] Select the best scatter plot based on axes and scale (3)", async () => {
+	// Question: Choose the best scatter plot for cones sold vs. temperature
+	// Widget key: graph_b
+	test("scatter-plot - [xf9749d81664ed896] Choose the best scatter plot for cones sold vs. temperature (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Graph B",
-		  "width": 600,
+		  "title": "",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 1500,
 		    "min": 0,
@@ -18136,16 +17953,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf9749d81664ed896
-	// Question: Select the best scatter plot based on axes and scale
-	// Widget key: graph_c_image
-	test("scatter-plot - [xf9749d81664ed896] Select the best scatter plot based on axes and scale (4)", async () => {
+	// Question: Choose the best scatter plot for cones sold vs. temperature
+	// Widget key: graph_c
+	test("scatter-plot - [xf9749d81664ed896] Choose the best scatter plot for cones sold vs. temperature (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Graph C",
-		  "width": 600,
+		  "title": "",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 30,
 		    "min": 0,
@@ -18216,16 +18033,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf9749d81664ed896
-	// Question: Select the best scatter plot based on axes and scale
-	// Widget key: graph_d_image
-	test("scatter-plot - [xf9749d81664ed896] Select the best scatter plot based on axes and scale (5)", async () => {
+	// Question: Choose the best scatter plot for cones sold vs. temperature
+	// Widget key: graph_d
+	test("scatter-plot - [xf9749d81664ed896] Choose the best scatter plot for cones sold vs. temperature (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Graph D",
-		  "width": 600,
+		  "title": "",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 90,
 		    "min": 0,
@@ -18297,7 +18114,7 @@ describe("scatterPlot widget tests", () => {
 
 	// Extracted from question: xeeed46a0a9b767c8
 	// Question: Choose the best scatter plot for dosage vs. pain level
-	// Widget key: graph_a_image
+	// Widget key: graph_a
 	test("scatter-plot - [xeeed46a0a9b767c8] Choose the best scatter plot for dosage vs. pain level (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -18305,7 +18122,7 @@ describe("scatterPlot widget tests", () => {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph A",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 350,
 		    "min": 0,
@@ -18320,7 +18137,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0,
@@ -18377,7 +18194,7 @@ describe("scatterPlot widget tests", () => {
 
 	// Extracted from question: xeeed46a0a9b767c8
 	// Question: Choose the best scatter plot for dosage vs. pain level
-	// Widget key: graph_b_image
+	// Widget key: graph_b
 	test("scatter-plot - [xeeed46a0a9b767c8] Choose the best scatter plot for dosage vs. pain level (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -18385,7 +18202,7 @@ describe("scatterPlot widget tests", () => {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph B",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 1050,
 		    "min": 0,
@@ -18400,7 +18217,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 3
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0,
@@ -18457,7 +18274,7 @@ describe("scatterPlot widget tests", () => {
 
 	// Extracted from question: xeeed46a0a9b767c8
 	// Question: Choose the best scatter plot for dosage vs. pain level
-	// Widget key: graph_c_image
+	// Widget key: graph_c
 	test("scatter-plot - [xeeed46a0a9b767c8] Choose the best scatter plot for dosage vs. pain level (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -18465,7 +18282,7 @@ describe("scatterPlot widget tests", () => {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph C",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -18480,7 +18297,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 50
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 6,
@@ -18537,7 +18354,7 @@ describe("scatterPlot widget tests", () => {
 
 	// Extracted from question: xeeed46a0a9b767c8
 	// Question: Choose the best scatter plot for dosage vs. pain level
-	// Widget key: graph_d_image
+	// Widget key: graph_d
 	test("scatter-plot - [xeeed46a0a9b767c8] Choose the best scatter plot for dosage vs. pain level (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -18545,7 +18362,7 @@ describe("scatterPlot widget tests", () => {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph D",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 30,
 		    "min": 0,
@@ -18560,7 +18377,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 150
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 6,
@@ -18616,16 +18433,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x37965ce1aeceb721
-	// Question: Choose the best scatter plot for gas use versus temperature
-	// Widget key: graph_choice_a
-	test("scatter-plot - [x37965ce1aeceb721] Choose the best scatter plot for gas use versus temperature (1)", async () => {
+	// Question: Choose the best scatter plot for Cindy's heating data
+	// Widget key: graph_a_image
+	test("scatter-plot - [x37965ce1aeceb721] Choose the best scatter plot for Cindy's heating data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph A",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 60,
 		    "min": 0,
@@ -18691,16 +18508,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x37965ce1aeceb721
-	// Question: Choose the best scatter plot for gas use versus temperature
-	// Widget key: graph_choice_b
-	test("scatter-plot - [x37965ce1aeceb721] Choose the best scatter plot for gas use versus temperature (2)", async () => {
+	// Question: Choose the best scatter plot for Cindy's heating data
+	// Widget key: graph_b_image
+	test("scatter-plot - [x37965ce1aeceb721] Choose the best scatter plot for Cindy's heating data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph B",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 40,
 		    "min": 0,
@@ -18766,16 +18583,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x37965ce1aeceb721
-	// Question: Choose the best scatter plot for gas use versus temperature
-	// Widget key: graph_choice_c
-	test("scatter-plot - [x37965ce1aeceb721] Choose the best scatter plot for gas use versus temperature (3)", async () => {
+	// Question: Choose the best scatter plot for Cindy's heating data
+	// Widget key: graph_c_image
+	test("scatter-plot - [x37965ce1aeceb721] Choose the best scatter plot for Cindy's heating data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph C",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 25,
 		    "min": 0,
@@ -18841,16 +18658,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x37965ce1aeceb721
-	// Question: Choose the best scatter plot for gas use versus temperature
-	// Widget key: graph_choice_d
-	test("scatter-plot - [x37965ce1aeceb721] Choose the best scatter plot for gas use versus temperature (4)", async () => {
+	// Question: Choose the best scatter plot for Cindy's heating data
+	// Widget key: graph_d_image
+	test("scatter-plot - [x37965ce1aeceb721] Choose the best scatter plot for Cindy's heating data (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
 		  "title": "Graph D",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 14,
 		    "min": 0,
@@ -18916,20 +18733,20 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x4733ed33d2608972
-	// Question: Choose the best scatter plot
-	// Widget key: graph_a_image
-	test("scatter-plot - [x4733ed33d2608972] Choose the best scatter plot (2)", async () => {
+	// Question: Choose the best scatter plot for time vs. distance
+	// Widget key: graph_a
+	test("scatter-plot - [x4733ed33d2608972] Choose the best scatter plot for time vs. distance (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Graph A",
-		  "width": 520,
+		  "title": "Time (minutes) vs. Distance (kilometers)",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 20,
 		    "min": 0,
-		    "label": "Distance (km)",
+		    "label": "Distance (kilometers)",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
@@ -18991,16 +18808,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x4733ed33d2608972
-	// Question: Choose the best scatter plot
-	// Widget key: graph_b_image
-	test("scatter-plot - [x4733ed33d2608972] Choose the best scatter plot (3)", async () => {
+	// Question: Choose the best scatter plot for time vs. distance
+	// Widget key: graph_b
+	test("scatter-plot - [x4733ed33d2608972] Choose the best scatter plot for time vs. distance (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Graph B",
-		  "width": 520,
+		  "title": "Distance (kilometers) vs. Time (minutes)",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 150,
 		    "min": 0,
@@ -19011,7 +18828,7 @@ describe("scatterPlot widget tests", () => {
 		  "yAxis": {
 		    "max": 20,
 		    "min": 0,
-		    "label": "Distance (km)",
+		    "label": "Distance (kilometers)",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
@@ -19066,20 +18883,20 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x4733ed33d2608972
-	// Question: Choose the best scatter plot
-	// Widget key: graph_c_image
-	test("scatter-plot - [x4733ed33d2608972] Choose the best scatter plot (4)", async () => {
+	// Question: Choose the best scatter plot for time vs. distance
+	// Widget key: graph_c
+	test("scatter-plot - [x4733ed33d2608972] Choose the best scatter plot for time vs. distance (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Graph C",
-		  "width": 520,
+		  "title": "Time (minutes) vs. Distance (kilometers)",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 6,
 		    "min": 0,
-		    "label": "Distance (km)",
+		    "label": "Distance (kilometers)",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
@@ -19141,16 +18958,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x4733ed33d2608972
-	// Question: Choose the best scatter plot
-	// Widget key: graph_d_image
-	test("scatter-plot - [x4733ed33d2608972] Choose the best scatter plot (5)", async () => {
+	// Question: Choose the best scatter plot for time vs. distance
+	// Widget key: graph_d
+	test("scatter-plot - [x4733ed33d2608972] Choose the best scatter plot for time vs. distance (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Graph D",
-		  "width": 520,
+		  "title": "Distance (kilometers) vs. Time (minutes)",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 50,
 		    "min": 0,
@@ -19161,7 +18978,7 @@ describe("scatterPlot widget tests", () => {
 		  "yAxis": {
 		    "max": 6,
 		    "min": 0,
-		    "label": "Distance (km)",
+		    "label": "Distance (kilometers)",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
@@ -19196,6 +19013,79 @@ describe("scatterPlot widget tests", () => {
 		      "x": 41.9,
 		      "y": 6,
 		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x928ba2b79602a17a
+	// Question: Interpret statements about a time–fencing graph
+	// Widget key: image_1
+	test("scatter-plot - [x928ba2b79602a17a] Interpret statements about a time–fencing graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [
+		    {
+		      "a": {
+		        "x": 0,
+		        "y": 0
+		      },
+		      "b": {
+		        "x": 4,
+		        "y": 60
+		      },
+		      "type": "twoPoints",
+		      "label": "",
+		      "style": {
+		        "dash": false,
+		        "color": "#6495ED",
+		        "strokeWidth": 2
+		      }
+		    }
+		  ],
+		  "title": "",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 5,
+		    "min": 0,
+		    "label": "Time (hours)",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": 0,
+		    "label": "Length of fencing (meters)",
+		    "gridLines": true,
+		    "tickInterval": 20
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 60,
+		      "label": "A"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -19216,15 +19106,15 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x1b89df565fb0601e
-	// Question: Interpret a point on a coordinate plane (temperature vs. elevation)
+	// Question: Interpret the meaning of a point on a temperature–elevation graph
 	// Widget key: image_1
-	test("scatter-plot - [x1b89df565fb0601e] Interpret a point on a coordinate plane (temperature vs. elevation)", async () => {
+	test("scatter-plot - [x1b89df565fb0601e] Interpret the meaning of a point on a temperature–elevation graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Temperature vs. Elevation",
+		  "title": "",
 		  "width": 450,
 		  "xAxis": {
 		    "max": 10,
@@ -19305,16 +19195,106 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xe28c797ca613f1ff
-	// Question: Identify the warmest temperature from a graph
-	// Widget key: image_3
-	test("scatter-plot - [xe28c797ca613f1ff] Identify the warmest temperature from a graph", async () => {
+	// Extracted from question: xc6eb9d4c89de4f9d
+	// Question: Find the day with a 23-minute commute
+	// Widget key: image_2
+	test("scatter-plot - [xc6eb9d4c89de4f9d] Find the day with a 23-minute commute", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Temperature vs. Elevation",
+		  "title": "",
+		  "width": 470,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Days",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 30,
+		    "min": 0,
+		    "label": "Commute time (minutes)",
+		    "gridLines": true,
+		    "tickInterval": 5
+		  },
+		  "height": 435,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 20,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 19,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 25,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 20,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 23,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 21,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 22,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 24,
+		      "label": ""
+		    },
+		    {
+		      "x": 9,
+		      "y": 18,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe28c797ca613f1ff
+	// Question: Find the warmest temperature from a graph
+	// Widget key: image_3
+	test("scatter-plot - [xe28c797ca613f1ff] Find the warmest temperature from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Temperature (°C) vs. Elevation (m)",
 		  "width": 444,
 		  "xAxis": {
 		    "max": 900,
@@ -19391,15 +19371,15 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xedffd200d0e076b6
-	// Question: Find the temperature at a given elevation from a graph
+	// Question: Temperature at a given elevation
 	// Widget key: image_1
-	test("scatter-plot - [xedffd200d0e076b6] Find the temperature at a given elevation from a graph", async () => {
+	test("scatter-plot - [xedffd200d0e076b6] Temperature at a given elevation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Temperature vs. Elevation",
+		  "title": "",
 		  "width": 450,
 		  "xAxis": {
 		    "max": 10,
@@ -19481,15 +19461,15 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7e4367b01caa3ed1
-	// Question: Interpret a point on a coordinate plane (temperature and weight)
+	// Question: Interpret point A on a coordinate graph
 	// Widget key: image_3
-	test("scatter-plot - [x7e4367b01caa3ed1] Interpret a point on a coordinate plane (temperature and weight)", async () => {
+	test("scatter-plot - [x7e4367b01caa3ed1] Interpret point A on a coordinate graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
+		  "title": "Temperature and change in weight",
 		  "width": 450,
 		  "xAxis": {
 		    "max": 10,
@@ -19501,7 +19481,7 @@ describe("scatterPlot widget tests", () => {
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "Weight (g)",
+		    "label": "Change in weight (g)",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
@@ -19575,10 +19555,10 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4617f49c439a4e57
-	// Question: Interpret the y-intercept of a regression line
+	// Extracted from question: xd844dd3a7a9ef032
+	// Question: Interpret the y-intercept from a regression line
 	// Widget key: image_1
-	test("scatter-plot - [x4617f49c439a4e57] Interpret the y-intercept of a regression line", async () => {
+	test("scatter-plot - [xd844dd3a7a9ef032] Interpret the y-intercept from a regression line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -19587,11 +19567,11 @@ describe("scatterPlot widget tests", () => {
 		    {
 		      "a": {
 		        "x": 0,
-		        "y": 87
+		        "y": 23
 		      },
 		      "b": {
-		        "x": 20,
-		        "y": 67
+		        "x": 15,
+		        "y": 3
 		      },
 		      "type": "twoPoints",
 		      "label": "",
@@ -19602,240 +19582,67 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "Score vs. Minutes remaining",
-		  "width": 355,
+		  "title": "Hours spent on homework vs. hours spent on video games",
+		  "width": 370,
 		  "xAxis": {
-		    "max": 18,
+		    "max": 14,
 		    "min": 0,
-		    "label": "Minutes remaining",
+		    "label": "Hours spent on video games",
 		    "gridLines": true,
-		    "tickInterval": 1
+		    "tickInterval": 2
 		  },
 		  "yAxis": {
-		    "max": 90,
+		    "max": 24,
 		    "min": 0,
-		    "label": "Score",
+		    "label": "Hours spent on homework",
 		    "gridLines": true,
-		    "tickInterval": 10
+		    "tickInterval": 2
 		  },
-		  "height": 355,
+		  "height": 360,
 		  "points": [
-		    {
-		      "x": 0.1,
-		      "y": 88,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.8,
-		      "y": 87,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.5,
-		      "y": 86,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.3,
-		      "y": 85,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 84,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.8,
-		      "y": 83,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.5,
-		      "y": 82,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.2,
-		      "y": 81.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 80,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.8,
-		      "y": 79,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.5,
-		      "y": 78.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 8.3,
-		      "y": 77,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 76.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 9.8,
-		      "y": 75,
-		      "label": ""
-		    },
-		    {
-		      "x": 10.6,
-		      "y": 74,
-		      "label": ""
-		    },
-		    {
-		      "x": 11.3,
-		      "y": 73.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 12.1,
-		      "y": 72,
-		      "label": ""
-		    },
-		    {
-		      "x": 12.8,
-		      "y": 71.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 13.6,
-		      "y": 70.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 14.3,
-		      "y": 69.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 15.1,
-		      "y": 68,
-		      "label": ""
-		    },
-		    {
-		      "x": 15.8,
-		      "y": 67.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 16.6,
-		      "y": 66,
-		      "label": ""
-		    },
-		    {
-		      "x": 17,
-		      "y": 65,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3941c722118d9000
-	// Question: Interpret the y-intercept of a regression line
-	// Widget key: image_1
-	test("scatter-plot - [x3941c722118d9000] Interpret the y-intercept of a regression line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [
-		    {
-		      "a": {
-		        "x": 0,
-		        "y": 5
-		      },
-		      "b": {
-		        "x": 3,
-		        "y": 9.5
-		      },
-		      "type": "twoPoints",
-		      "label": "Regression line",
-		      "style": {
-		        "dash": false,
-		        "color": "#1E90FF",
-		        "strokeWidth": 2
-		      }
-		    }
-		  ],
-		  "title": "Mood Rating vs. Hours Playing Sports",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 4.5,
-		    "min": 0,
-		    "label": "Hours playing sports",
-		    "gridLines": true,
-		    "tickInterval": 0.5
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Mood rating",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 4.8,
-		      "label": ""
-		    },
 		    {
 		      "x": 0.5,
-		      "y": 5.6,
-		      "label": ""
-		    },
-		    {
-		      "x": 1,
-		      "y": 6.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.5,
-		      "y": 7.2,
+		      "y": 23,
 		      "label": ""
 		    },
 		    {
 		      "x": 2,
-		      "y": 8,
+		      "y": 20.3,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.5,
-		      "y": 8.7,
+		      "x": 3.5,
+		      "y": 18.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
-		      "y": 9.4,
+		      "x": 5,
+		      "y": 15.8,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 12.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 9,
+		      "y": 9.6,
+		      "label": ""
+		    },
+		    {
+		      "x": 11,
+		      "y": 7.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 13,
+		      "y": 5,
+		      "label": ""
+		    },
+		    {
+		      "x": 14,
+		      "y": 4,
 		      "label": ""
 		    }
 		  ]
@@ -19857,9 +19664,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x0ef933cbf4b5bc9b
-	// Question: Interpret the y-intercept of a regression line
+	// Question: Interpret the y-intercept from a regression line
 	// Widget key: image_1
-	test("scatter-plot - [x0ef933cbf4b5bc9b] Interpret the y-intercept of a regression line", async () => {
+	test("scatter-plot - [x0ef933cbf4b5bc9b] Interpret the y-intercept from a regression line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -19884,7 +19691,7 @@ describe("scatterPlot widget tests", () => {
 		    }
 		  ],
 		  "title": "Percent of adults who smoke vs. Years since 1945",
-		  "width": 600,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 45,
 		    "min": 0,
@@ -19899,7 +19706,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 400,
+		  "height": 354,
 		  "points": [
 		    {
 		      "x": 0,
@@ -19908,7 +19715,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 3,
-		      "y": 40.5,
+		      "y": 41,
 		      "label": ""
 		    },
 		    {
@@ -19918,7 +19725,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 9,
-		      "y": 37.5,
+		      "y": 37,
 		      "label": ""
 		    },
 		    {
@@ -19928,7 +19735,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 15,
-		      "y": 34.5,
+		      "y": 34,
 		      "label": ""
 		    },
 		    {
@@ -19943,7 +19750,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 24,
-		      "y": 29.5,
+		      "y": 30,
 		      "label": ""
 		    },
 		    {
@@ -19952,18 +19759,206 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 31,
-		      "y": 26.5,
+		      "x": 30,
+		      "y": 26,
 		      "label": ""
 		    },
 		    {
-		      "x": 36,
-		      "y": 24,
+		      "x": 35,
+		      "y": 23,
 		      "label": ""
 		    },
 		    {
 		      "x": 41,
-		      "y": 21.5,
+		      "y": 21,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xdbd7a8a4ed20353d
+	// Question: Interpret the y-intercept of a regression line
+	// Widget key: image_1
+	test("scatter-plot - [xdbd7a8a4ed20353d] Interpret the y-intercept of a regression line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [
+		    {
+		      "a": {
+		        "x": 0,
+		        "y": 38
+		      },
+		      "b": {
+		        "x": 5.5,
+		        "y": 85
+		      },
+		      "type": "twoPoints",
+		      "label": "Fitted line",
+		      "style": {
+		        "dash": false,
+		        "color": "#1E90FF",
+		        "strokeWidth": 2
+		      }
+		    }
+		  ],
+		  "title": "Winning percentage vs. Salary",
+		  "width": 345,
+		  "xAxis": {
+		    "max": 5,
+		    "min": 0,
+		    "label": "Salary (in millions of dollars)",
+		    "gridLines": true,
+		    "tickInterval": 0.5
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": 0,
+		    "label": "Winning percentage",
+		    "gridLines": true,
+		    "tickInterval": 5
+		  },
+		  "height": 345,
+		  "points": [
+		    {
+		      "x": 0.3,
+		      "y": 22,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.5,
+		      "y": 25,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.6,
+		      "y": 28,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.8,
+		      "y": 30,
+		      "label": ""
+		    },
+		    {
+		      "x": 1,
+		      "y": 35,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.1,
+		      "y": 33,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.2,
+		      "y": 36,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.4,
+		      "y": 40,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.5,
+		      "y": 42,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.6,
+		      "y": 44,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.8,
+		      "y": 45,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 48,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.1,
+		      "y": 50,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.3,
+		      "y": 54,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.4,
+		      "y": 56,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.5,
+		      "y": 57,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.7,
+		      "y": 60,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.9,
+		      "y": 62,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 65,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.2,
+		      "y": 68,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.4,
+		      "y": 70,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.6,
+		      "y": 74,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.8,
+		      "y": 77,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 80,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.1,
+		      "y": 83,
 		      "label": ""
 		    }
 		  ]
@@ -19985,9 +19980,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x150724249aceb181
-	// Question: Interpret the slope of a fitted line (income vs. rent)
+	// Question: Interpret the slope of a regression line
 	// Widget key: image_1
-	test("scatter-plot - [x150724249aceb181] Interpret the slope of a fitted line (income vs. rent)", async () => {
+	test("scatter-plot - [x150724249aceb181] Interpret the slope of a regression line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -20011,23 +20006,23 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "Average income vs. rent",
-		  "width": 600,
+		  "title": "Rent vs. Average income",
+		  "width": 375,
 		  "xAxis": {
 		    "max": 50000,
 		    "min": 0,
-		    "label": "Average income (dollars per year)",
+		    "label": "Average income, in dollars per year",
 		    "gridLines": true,
 		    "tickInterval": 5000
 		  },
 		  "yAxis": {
 		    "max": 2000,
 		    "min": 0,
-		    "label": "Rent (dollars per month)",
+		    "label": "Rent, in dollars per month",
 		    "gridLines": true,
 		    "tickInterval": 100
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 36000,
@@ -20035,68 +20030,48 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 37000,
-		      "y": 900,
-		      "label": ""
-		    },
-		    {
 		      "x": 38000,
-		      "y": 980,
-		      "label": ""
-		    },
-		    {
-		      "x": 39000,
-		      "y": 1025,
+		      "y": 880,
 		      "label": ""
 		    },
 		    {
 		      "x": 40000,
-		      "y": 1100,
-		      "label": ""
-		    },
-		    {
-		      "x": 41000,
-		      "y": 1180,
+		      "y": 940,
 		      "label": ""
 		    },
 		    {
 		      "x": 42000,
-		      "y": 1250,
-		      "label": ""
-		    },
-		    {
-		      "x": 43000,
-		      "y": 1320,
+		      "y": 1000,
 		      "label": ""
 		    },
 		    {
 		      "x": 44000,
-		      "y": 1380,
-		      "label": ""
-		    },
-		    {
-		      "x": 45000,
-		      "y": 1450,
+		      "y": 1060,
 		      "label": ""
 		    },
 		    {
 		      "x": 46000,
-		      "y": 1520,
+		      "y": 1120,
 		      "label": ""
 		    },
 		    {
 		      "x": 47000,
-		      "y": 1600,
+		      "y": 1150,
 		      "label": ""
 		    },
 		    {
 		      "x": 48000,
-		      "y": 1680,
+		      "y": 1180,
+		      "label": ""
+		    },
+		    {
+		      "x": 49000,
+		      "y": 1210,
 		      "label": ""
 		    },
 		    {
 		      "x": 50000,
-		      "y": 1800,
+		      "y": 1240,
 		      "label": ""
 		    }
 		  ]
@@ -20136,7 +20111,7 @@ describe("scatterPlot widget tests", () => {
 		        "y": 2.5
 		      },
 		      "type": "twoPoints",
-		      "label": "Regression line",
+		      "label": "",
 		      "style": {
 		        "dash": false,
 		        "color": "#1E90FF",
@@ -20144,8 +20119,8 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "Score vs. Release year",
-		  "width": 600,
+		  "title": "Score versus Release year",
+		  "width": 350,
 		  "xAxis": {
 		    "max": 2010,
 		    "min": 1950,
@@ -20160,104 +20135,8 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 1954,
-		      "y": 8.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 1956,
-		      "y": 8.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 1960,
-		      "y": 7.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 1962,
-		      "y": 7.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 1965,
-		      "y": 7.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 1968,
-		      "y": 7.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 1972,
-		      "y": 6.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 1975,
-		      "y": 6.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 1978,
-		      "y": 6.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 1982,
-		      "y": 5.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 1985,
-		      "y": 5.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 1988,
-		      "y": 5,
-		      "label": ""
-		    },
-		    {
-		      "x": 1992,
-		      "y": 4.6,
-		      "label": ""
-		    },
-		    {
-		      "x": 1995,
-		      "y": 4.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 1998,
-		      "y": 3.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 2002,
-		      "y": 3.6,
-		      "label": ""
-		    },
-		    {
-		      "x": 2005,
-		      "y": 3.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 2008,
-		      "y": 2.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 2010,
-		      "y": 2.8,
-		      "label": ""
-		    }
-		  ]
+		  "height": 350,
+		  "points": []
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -20275,10 +20154,10 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xdbd7a8a4ed20353d
+	// Extracted from question: x4617f49c439a4e57
 	// Question: Interpret the y-intercept of a regression line
-	// Widget key: scatterplot_image
-	test("scatter-plot - [xdbd7a8a4ed20353d] Interpret the y-intercept of a regression line", async () => {
+	// Widget key: image_1
+	test("scatter-plot - [x4617f49c439a4e57] Interpret the y-intercept of a regression line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -20287,11 +20166,73 @@ describe("scatterPlot widget tests", () => {
 		    {
 		      "a": {
 		        "x": 0,
-		        "y": 38
+		        "y": 87
 		      },
 		      "b": {
-		        "x": 5.5,
-		        "y": 85
+		        "x": 20,
+		        "y": 67
+		      },
+		      "type": "twoPoints",
+		      "label": "Regression line",
+		      "style": {
+		        "dash": false,
+		        "color": "#1E90FF",
+		        "strokeWidth": 2
+		      }
+		    }
+		  ],
+		  "title": "Score vs. Minutes remaining",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 18,
+		    "min": 0,
+		    "label": "Minutes remaining",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 90,
+		    "min": 0,
+		    "label": "Score",
+		    "gridLines": true,
+		    "tickInterval": 10
+		  },
+		  "height": 400,
+		  "points": []
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3941c722118d9000
+	// Question: Interpret the y-intercept of a fitted line
+	// Widget key: image_1
+	test("scatter-plot - [x3941c722118d9000] Interpret the y-intercept of a fitted line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [
+		    {
+		      "a": {
+		        "x": 0,
+		        "y": 5
+		      },
+		      "b": {
+		        "x": 3,
+		        "y": 9.5
 		      },
 		      "type": "twoPoints",
 		      "label": "",
@@ -20302,132 +20243,57 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "Winning percentage vs. salary",
-		  "width": 600,
+		  "title": "Mood rating vs. Hours playing sports",
+		  "width": 400,
 		  "xAxis": {
-		    "max": 5,
+		    "max": 4.5,
 		    "min": 0,
-		    "label": "Salary (millions of dollars)",
+		    "label": "Hours playing sports",
 		    "gridLines": true,
 		    "tickInterval": 0.5
 		  },
 		  "yAxis": {
-		    "max": 100,
+		    "max": 10,
 		    "min": 0,
-		    "label": "Winning percentage",
+		    "label": "Mood rating",
 		    "gridLines": true,
-		    "tickInterval": 5
+		    "tickInterval": 1
 		  },
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": 0.3,
-		      "y": 22,
+		      "x": 0,
+		      "y": 4.8,
 		      "label": ""
 		    },
 		    {
 		      "x": 0.5,
-		      "y": 34,
+		      "y": 5.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 0.6,
-		      "y": 36,
+		      "x": 1,
+		      "y": 6.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 0.7,
-		      "y": 42,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.9,
-		      "y": 46,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.1,
-		      "y": 48,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.3,
-		      "y": 53,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.4,
-		      "y": 50,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.6,
-		      "y": 57,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.8,
-		      "y": 59,
+		      "x": 1.5,
+		      "y": 7.3,
 		      "label": ""
 		    },
 		    {
 		      "x": 2,
-		      "y": 62,
+		      "y": 7.9,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.2,
-		      "y": 66,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.4,
-		      "y": 67,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.6,
-		      "y": 70,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.8,
-		      "y": 72,
+		      "x": 2.5,
+		      "y": 8.8,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 74,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.2,
-		      "y": 76,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.4,
-		      "y": 78,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.6,
-		      "y": 80,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.8,
-		      "y": 81,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 82,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.1,
-		      "y": 83,
+		      "y": 9.5,
 		      "label": ""
 		    }
 		  ]
@@ -20449,9 +20315,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xcc8bf264f198f640
-	// Question: Interpret the y-intercept of a linear regression model
+	// Question: Interpret the y-intercept of a rent model
 	// Widget key: image_1
-	test("scatter-plot - [xcc8bf264f198f640] Interpret the y-intercept of a linear regression model", async () => {
+	test("scatter-plot - [xcc8bf264f198f640] Interpret the y-intercept of a rent model", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -20467,7 +20333,7 @@ describe("scatterPlot widget tests", () => {
 		        "y": 1300
 		      },
 		      "type": "twoPoints",
-		      "label": "",
+		      "label": "Fitted line",
 		      "style": {
 		        "dash": false,
 		        "color": "#1E90FF",
@@ -20487,299 +20353,80 @@ describe("scatterPlot widget tests", () => {
 		  "yAxis": {
 		    "max": 1200,
 		    "min": 0,
-		    "label": "Average rent, in dollars per month",
+		    "label": "Average rent (dollars per month)",
 		    "gridLines": true,
 		    "tickInterval": 100
 		  },
 		  "height": 358,
-		  "points": []
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd844dd3a7a9ef032
-	// Question: Interpret the y-intercept of a fitted line
-	// Widget key: image_1
-	test("scatter-plot - [xd844dd3a7a9ef032] Interpret the y-intercept of a fitted line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [
-		    {
-		      "a": {
-		        "x": 0,
-		        "y": 23
-		      },
-		      "b": {
-		        "x": 15,
-		        "y": 3
-		      },
-		      "type": "twoPoints",
-		      "label": "Regression line",
-		      "style": {
-		        "dash": false,
-		        "color": "#1E90FF",
-		        "strokeWidth": 2
-		      }
-		    }
-		  ],
-		  "title": "Hours spent on video games vs. hours spent on homework",
-		  "width": 370,
-		  "xAxis": {
-		    "max": 14,
-		    "min": 0,
-		    "label": "Hours spent on video games",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "yAxis": {
-		    "max": 24,
-		    "min": 0,
-		    "label": "Hours spent on homework",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "height": 360,
-		  "points": []
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x939554a9b63361af
-	// Question: Interpret the slope of a regression line
-	// Widget key: image_1
-	test("scatter-plot - [x939554a9b63361af] Interpret the slope of a regression line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [
-		    {
-		      "a": {
-		        "x": 0,
-		        "y": 38
-		      },
-		      "b": {
-		        "x": 5.5,
-		        "y": 85
-		      },
-		      "type": "twoPoints",
-		      "label": "Regression line",
-		      "style": {
-		        "dash": false,
-		        "color": "#11accd",
-		        "strokeWidth": 2
-		      }
-		    }
-		  ],
-		  "title": "Winning percentage vs. Salary (millions of dollars)",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 5,
-		    "min": 0,
-		    "label": "Salary (millions of dollars)",
-		    "gridLines": true,
-		    "tickInterval": 0.5
-		  },
-		  "yAxis": {
-		    "max": 100,
-		    "min": 0,
-		    "label": "Winning percentage",
-		    "gridLines": true,
-		    "tickInterval": 5
-		  },
-		  "height": 400,
 		  "points": [
 		    {
-		      "x": 0.3,
-		      "y": 22,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.5,
-		      "y": 32.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.6,
-		      "y": 36,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.7,
-		      "y": 38.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.8,
-		      "y": 41,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.9,
-		      "y": 43.1,
+		      "x": 0,
+		      "y": 800,
 		      "label": ""
 		    },
 		    {
 		      "x": 1,
-		      "y": 46.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.2,
-		      "y": 48.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.3,
-		      "y": 50,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.4,
-		      "y": 53.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.6,
-		      "y": 53,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.8,
-		      "y": 58.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.9,
-		      "y": 49,
+		      "y": 835,
 		      "label": ""
 		    },
 		    {
 		      "x": 2,
-		      "y": 51.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.1,
-		      "y": 55.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.2,
-		      "y": 59.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.3,
-		      "y": 58,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.4,
-		      "y": 56.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.5,
-		      "y": 59.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.6,
-		      "y": 60.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.8,
-		      "y": 59.1,
+		      "y": 860,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 64.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.1,
-		      "y": 63.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.2,
-		      "y": 66.9,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.3,
-		      "y": 69.8,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.4,
-		      "y": 65.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.5,
-		      "y": 73.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.6,
-		      "y": 65.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.7,
-		      "y": 74.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.8,
-		      "y": 66,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.9,
-		      "y": 73.8,
+		      "y": 900,
 		      "label": ""
 		    },
 		    {
 		      "x": 4,
-		      "y": 77.7,
+		      "y": 930,
 		      "label": ""
 		    },
 		    {
-		      "x": 4.1,
-		      "y": 82.5,
+		      "x": 5,
+		      "y": 965,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 1000,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 1035,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 1070,
+		      "label": ""
+		    },
+		    {
+		      "x": 9,
+		      "y": 1100,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 1130,
+		      "label": ""
+		    },
+		    {
+		      "x": 11,
+		      "y": 1165,
+		      "label": ""
+		    },
+		    {
+		      "x": 12,
+		      "y": 1195,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.5,
+		      "y": 850,
 		      "label": ""
 		    }
 		  ]
@@ -20819,7 +20466,7 @@ describe("scatterPlot widget tests", () => {
 		        "y": 100
 		      },
 		      "type": "twoPoints",
-		      "label": "",
+		      "label": "Regression line",
 		      "style": {
 		        "dash": false,
 		        "color": "#1E90FF",
@@ -20827,8 +20474,8 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "Study time vs. score",
-		  "width": 600,
+		  "title": "Study Time vs. Score",
+		  "width": 366,
 		  "xAxis": {
 		    "max": 4.5,
 		    "min": 0,
@@ -20843,7 +20490,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
-		  "height": 400,
+		  "height": 369,
 		  "points": [
 		    {
 		      "x": 1.8,
@@ -20851,43 +20498,28 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 1.9,
-		      "y": 66,
-		      "label": ""
-		    },
-		    {
 		      "x": 2,
-		      "y": 68,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.1,
-		      "y": 69,
+		      "y": 65,
 		      "label": ""
 		    },
 		    {
 		      "x": 2.2,
-		      "y": 71,
+		      "y": 69,
 		      "label": ""
 		    },
 		    {
 		      "x": 2.4,
-		      "y": 73,
+		      "y": 72,
 		      "label": ""
 		    },
 		    {
 		      "x": 2.5,
-		      "y": 75,
+		      "y": 74,
 		      "label": ""
 		    },
 		    {
 		      "x": 2.6,
-		      "y": 77,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.7,
-		      "y": 78,
+		      "y": 76,
 		      "label": ""
 		    },
 		    {
@@ -20897,22 +20529,17 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 2.9,
-		      "y": 80,
+		      "y": 81,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 82,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.1,
 		      "y": 83,
 		      "label": ""
 		    },
 		    {
 		      "x": 3.2,
-		      "y": 85,
+		      "y": 84,
 		      "label": ""
 		    },
 		    {
@@ -20923,11 +20550,6 @@ describe("scatterPlot widget tests", () => {
 		    {
 		      "x": 3.4,
 		      "y": 87,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.5,
-		      "y": 88,
 		      "label": ""
 		    },
 		    {
@@ -20973,9 +20595,192 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x939554a9b63361af
+	// Question: Interpret the slope of a regression line
+	// Widget key: image_1
+	test("scatter-plot - [x939554a9b63361af] Interpret the slope of a regression line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [
+		    {
+		      "a": {
+		        "x": 0,
+		        "y": 38
+		      },
+		      "b": {
+		        "x": 5,
+		        "y": 80.1
+		      },
+		      "type": "twoPoints",
+		      "label": "",
+		      "style": {
+		        "dash": false,
+		        "color": "#1E90FF",
+		        "strokeWidth": 2
+		      }
+		    }
+		  ],
+		  "title": "Winning Percentage vs. Salary",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 5,
+		    "min": 0,
+		    "label": "Salary (millions of dollars)",
+		    "gridLines": true,
+		    "tickInterval": 0.5
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": 0,
+		    "label": "Winning percentage",
+		    "gridLines": true,
+		    "tickInterval": 5
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 0.3,
+		      "y": 22,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.5,
+		      "y": 30,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.7,
+		      "y": 34,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.8,
+		      "y": 24,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.9,
+		      "y": 36,
+		      "label": ""
+		    },
+		    {
+		      "x": 1,
+		      "y": 28,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.1,
+		      "y": 45,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.3,
+		      "y": 50,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.5,
+		      "y": 52,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.7,
+		      "y": 60,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.8,
+		      "y": 42,
+		      "label": ""
+		    },
+		    {
+		      "x": 1.9,
+		      "y": 62,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.1,
+		      "y": 58,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.2,
+		      "y": 50,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.3,
+		      "y": 66,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.5,
+		      "y": 70,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.7,
+		      "y": 68,
+		      "label": ""
+		    },
+		    {
+		      "x": 2.9,
+		      "y": 74,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.1,
+		      "y": 76,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.3,
+		      "y": 78,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.5,
+		      "y": 80,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.7,
+		      "y": 82,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.9,
+		      "y": 81,
+		      "label": ""
+		    },
+		    {
+		      "x": 4.1,
+		      "y": 83,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: xe1d97e6285b663e0
 	// Question: Interpret the slope of a regression line
-	// Widget key: scatterplot_image
+	// Widget key: image_1
 	test("scatter-plot - [xe1d97e6285b663e0] Interpret the slope of a regression line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -21000,8 +20805,8 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "Ear circumference vs. age",
-		  "width": 600,
+		  "title": "Ear circumference vs. Age",
+		  "width": 355,
 		  "xAxis": {
 		    "max": 90,
 		    "min": 0,
@@ -21016,71 +20821,66 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
-		  "height": 450,
+		  "height": 345,
 		  "points": [
 		    {
 		      "x": 21,
-		      "y": 100,
+		      "y": 72,
 		      "label": ""
 		    },
 		    {
 		      "x": 25,
-		      "y": 102,
+		      "y": 78,
 		      "label": ""
 		    },
 		    {
 		      "x": 28,
-		      "y": 104,
+		      "y": 80,
 		      "label": ""
 		    },
 		    {
-		      "x": 32,
-		      "y": 105,
+		      "x": 30,
+		      "y": 84,
+		      "label": ""
+		    },
+		    {
+		      "x": 33,
+		      "y": 86,
 		      "label": ""
 		    },
 		    {
 		      "x": 35,
-		      "y": 107,
+		      "y": 89,
 		      "label": ""
 		    },
 		    {
-		      "x": 38,
-		      "y": 109,
-		      "label": ""
-		    },
-		    {
-		      "x": 42,
-		      "y": 111,
+		      "x": 40,
+		      "y": 95,
 		      "label": ""
 		    },
 		    {
 		      "x": 45,
-		      "y": 112,
-		      "label": ""
-		    },
-		    {
-		      "x": 48,
-		      "y": 113,
+		      "y": 100,
 		      "label": ""
 		    },
 		    {
 		      "x": 50,
-		      "y": 114,
+		      "y": 106,
 		      "label": ""
 		    },
 		    {
-		      "x": 53,
+		      "x": 55,
+		      "y": 112,
+		      "label": ""
+		    },
+		    {
+		      "x": 58,
 		      "y": 116,
 		      "label": ""
 		    },
 		    {
-		      "x": 56,
-		      "y": 117,
-		      "label": ""
-		    },
-		    {
-		      "x": 59,
-		      "y": 119,
+		      "x": 60,
+		      "y": 118,
 		      "label": ""
 		    },
 		    {
@@ -21090,47 +20890,42 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 65,
-		      "y": 121,
+		      "y": 122,
 		      "label": ""
 		    },
 		    {
-		      "x": 68,
-		      "y": 123,
+		      "x": 70,
+		      "y": 127,
 		      "label": ""
 		    },
 		    {
 		      "x": 72,
-		      "y": 125,
-		      "label": ""
-		    },
-		    {
-		      "x": 75,
-		      "y": 126,
-		      "label": ""
-		    },
-		    {
-		      "x": 78,
-		      "y": 128,
-		      "label": ""
-		    },
-		    {
-		      "x": 81,
 		      "y": 129,
 		      "label": ""
 		    },
 		    {
-		      "x": 84,
-		      "y": 131,
-		      "label": ""
-		    },
-		    {
-		      "x": 87,
+		      "x": 75,
 		      "y": 132,
 		      "label": ""
 		    },
 		    {
+		      "x": 78,
+		      "y": 135,
+		      "label": ""
+		    },
+		    {
+		      "x": 80,
+		      "y": 138,
+		      "label": ""
+		    },
+		    {
+		      "x": 85,
+		      "y": 144,
+		      "label": ""
+		    },
+		    {
 		      "x": 90,
-		      "y": 134,
+		      "y": 150,
 		      "label": ""
 		    }
 		  ]
@@ -21152,9 +20947,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x2992e054ca94f25b
-	// Question: Interpret the slope of a regression line (elephants)
+	// Question: Interpret the slope of a regression line
 	// Widget key: image_1
-	test("scatter-plot - [x2992e054ca94f25b] Interpret the slope of a regression line (elephants)", async () => {
+	test("scatter-plot - [x2992e054ca94f25b] Interpret the slope of a regression line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -21170,7 +20965,7 @@ describe("scatterPlot widget tests", () => {
 		        "y": 320
 		      },
 		      "type": "twoPoints",
-		      "label": "",
+		      "label": "Fitted regression line",
 		      "style": {
 		        "dash": false,
 		        "color": "#1E90FF",
@@ -21178,23 +20973,23 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "Scatterplot and regression line",
-		  "width": 600,
+		  "title": "Shoulder height versus foot length",
+		  "width": 350,
 		  "xAxis": {
 		    "max": 55,
 		    "min": 0,
-		    "label": "Foot length, in centimeters",
+		    "label": "Foot length (centimeters)",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
 		  "yAxis": {
 		    "max": 340,
 		    "min": 0,
-		    "label": "Shoulder height, in centimeters",
+		    "label": "Shoulder height (centimeters)",
 		    "gridLines": true,
 		    "tickInterval": 20
 		  },
-		  "height": 400,
+		  "height": 350,
 		  "points": []
 		} as unknown as WidgetInput
 
@@ -21240,12 +21035,12 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "Study time and test score",
+		  "title": "Study time versus score",
 		  "width": 366,
 		  "xAxis": {
 		    "max": 4.5,
 		    "min": 0,
-		    "label": "Study time, in hours",
+		    "label": "Study time (hours)",
 		    "gridLines": true,
 		    "tickInterval": 0.5
 		  },
@@ -21257,108 +21052,7 @@ describe("scatterPlot widget tests", () => {
 		    "tickInterval": 10
 		  },
 		  "height": 369,
-		  "points": [
-		    {
-		      "x": 1.8,
-		      "y": 62,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.9,
-		      "y": 63,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
-		      "y": 65,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.1,
-		      "y": 66,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.2,
-		      "y": 68,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.3,
-		      "y": 69,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.4,
-		      "y": 71,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.5,
-		      "y": 73,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.6,
-		      "y": 74,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.7,
-		      "y": 76,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.8,
-		      "y": 77,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.9,
-		      "y": 79,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 80,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.2,
-		      "y": 83,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.4,
-		      "y": 86,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.6,
-		      "y": 88,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.8,
-		      "y": 90,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 92,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.2,
-		      "y": 94,
-		      "label": ""
-		    },
-		    {
-		      "x": 4.4,
-		      "y": 95,
-		      "label": ""
-		    }
-		  ]
+		  "points": []
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -21403,13 +21097,13 @@ describe("scatterPlot widget tests", () => {
 		      }
 		    }
 		  ],
-		  "title": "Average rating vs. cost",
-		  "width": 500,
+		  "title": "Average rating vs. Cost",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 2.5,
 		    "min": 0,
 		    "label": "Cost (dollars)",
-		    "gridLines": true,
+		    "gridLines": false,
 		    "tickInterval": 0.1
 		  },
 		  "yAxis": {
@@ -21419,116 +21113,86 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 1,
-		      "y": 1.2,
+		      "y": 0.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.07,
-		      "y": 1.3,
+		      "x": 1.1,
+		      "y": 0.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.14,
-		      "y": 1.5,
+		      "x": 1.2,
+		      "y": 1.4,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.21,
-		      "y": 1.6,
+		      "x": 1.3,
+		      "y": 1.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.28,
-		      "y": 1.8,
+		      "x": 1.4,
+		      "y": 2.3,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.35,
-		      "y": 2.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.42,
-		      "y": 2.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.49,
-		      "y": 2.7,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.56,
+		      "x": 1.5,
 		      "y": 3,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.63,
-		      "y": 3.3,
+		      "x": 1.6,
+		      "y": 3.2,
 		      "label": ""
 		    },
 		    {
 		      "x": 1.7,
-		      "y": 3.7,
+		      "y": 3.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.77,
-		      "y": 4.1,
+		      "x": 1.8,
+		      "y": 4.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.84,
-		      "y": 4.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.91,
+		      "x": 1.9,
 		      "y": 4.8,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.98,
-		      "y": 5.2,
+		      "x": 2,
+		      "y": 5.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.05,
-		      "y": 5.5,
+		      "x": 2.1,
+		      "y": 5.7,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.12,
-		      "y": 5.9,
+		      "x": 2.2,
+		      "y": 6.1,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.19,
-		      "y": 6.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 2.26,
+		      "x": 2.3,
 		      "y": 6.6,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.33,
-		      "y": 6.9,
-		      "label": ""
-		    },
-		    {
 		      "x": 2.4,
-		      "y": 7.3,
+		      "y": 7.2,
 		      "label": ""
 		    },
 		    {
-		      "x": 2.47,
-		      "y": 7.7,
+		      "x": 2.5,
+		      "y": 7.8,
 		      "label": ""
 		    }
 		  ]
@@ -21549,105 +21213,61 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc75e2acd1bf6e272
-	// Question: Plot class exam data in a scatter plot
-	// Widget key: scatter_axes
-	test("scatter-plot - [xc75e2acd1bf6e272] Plot class exam data in a scatter plot (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 8,
-		    "min": 0,
-		    "label": "Period",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 100,
-		    "min": 0,
-		    "label": "Avg score",
-		    "gridLines": true,
-		    "tickInterval": 10
-		  },
-		  "height": 400,
-		  "points": []
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc75e2acd1bf6e272
-	// Question: Plot class exam data in a scatter plot
+	// Extracted from question: x927757a473a28e1b
+	// Question: Create a scatter plot from a study-time table
 	// Widget key: scatter_choice_a
-	test("scatter-plot - [xc75e2acd1bf6e272] Plot class exam data in a scatter plot (2)", async () => {
+	test("scatter-plot - [x927757a473a28e1b] Create a scatter plot from a study-time table (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
-		  "width": 600,
+		  "title": "Study time vs. Score",
+		  "width": 400,
 		  "xAxis": {
-		    "max": 8,
+		    "max": 3.5,
 		    "min": 0,
-		    "label": "Period",
+		    "label": "Hours",
 		    "gridLines": true,
-		    "tickInterval": 1
+		    "tickInterval": 0.5
 		  },
 		  "yAxis": {
-		    "max": 100,
+		    "max": 20,
 		    "min": 0,
-		    "label": "Avg score",
+		    "label": "Score",
 		    "gridLines": true,
-		    "tickInterval": 10
+		    "tickInterval": 2
 		  },
 		  "height": 400,
 		  "points": [
 		    {
+		      "x": 0.75,
+		      "y": 15,
+		      "label": ""
+		    },
+		    {
 		      "x": 1,
-		      "y": 95,
+		      "y": 13,
+		      "label": ""
+		    },
+		    {
+		      "x": 0,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.25,
+		      "y": 19,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.25,
+		      "y": 12,
 		      "label": ""
 		    },
 		    {
 		      "x": 2,
-		      "y": 70,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 90,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 65,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 70,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 85,
+		      "y": 16,
 		      "label": ""
 		    }
 		  ]
@@ -21668,61 +21288,61 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc75e2acd1bf6e272
-	// Question: Plot class exam data in a scatter plot
+	// Extracted from question: x927757a473a28e1b
+	// Question: Create a scatter plot from a study-time table
 	// Widget key: scatter_choice_b
-	test("scatter-plot - [xc75e2acd1bf6e272] Plot class exam data in a scatter plot (3)", async () => {
+	test("scatter-plot - [x927757a473a28e1b] Create a scatter plot from a study-time table (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
-		  "width": 600,
+		  "title": "Study time vs. Score",
+		  "width": 400,
 		  "xAxis": {
-		    "max": 8,
+		    "max": 3.5,
 		    "min": 0,
-		    "label": "Period",
+		    "label": "Hours",
 		    "gridLines": true,
-		    "tickInterval": 1
+		    "tickInterval": 0.5
 		  },
 		  "yAxis": {
-		    "max": 100,
+		    "max": 20,
 		    "min": 0,
-		    "label": "Avg score",
+		    "label": "Score",
 		    "gridLines": true,
-		    "tickInterval": 10
+		    "tickInterval": 2
 		  },
 		  "height": 400,
 		  "points": [
 		    {
+		      "x": 0,
+		      "y": 12,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.25,
+		      "y": 13,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.75,
+		      "y": 15,
+		      "label": ""
+		    },
+		    {
 		      "x": 1,
-		      "y": 85,
+		      "y": 16,
 		      "label": ""
 		    },
 		    {
 		      "x": 2,
-		      "y": 70,
+		      "y": 19,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
-		      "y": 65,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 90,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 70,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 95,
+		      "x": 3.25,
+		      "y": 7,
 		      "label": ""
 		    }
 		  ]
@@ -21743,201 +21363,496 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc75e2acd1bf6e272
-	// Question: Plot class exam data in a scatter plot
+	// Extracted from question: x927757a473a28e1b
+	// Question: Create a scatter plot from a study-time table
 	// Widget key: scatter_choice_c
-	test("scatter-plot - [xc75e2acd1bf6e272] Plot class exam data in a scatter plot (4)", async () => {
+	test("scatter-plot - [x927757a473a28e1b] Create a scatter plot from a study-time table (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
-		  "width": 600,
+		  "title": "Study time vs. Score",
+		  "width": 400,
 		  "xAxis": {
-		    "max": 8,
+		    "max": 3.5,
 		    "min": 0,
-		    "label": "Period",
+		    "label": "Hours",
 		    "gridLines": true,
-		    "tickInterval": 1
+		    "tickInterval": 0.5
 		  },
 		  "yAxis": {
-		    "max": 100,
+		    "max": 20,
 		    "min": 0,
-		    "label": "Avg score",
+		    "label": "Score",
 		    "gridLines": true,
-		    "tickInterval": 10
+		    "tickInterval": 2
 		  },
 		  "height": 400,
 		  "points": [
 		    {
+		      "x": 0.5,
+		      "y": 15,
+		      "label": ""
+		    },
+		    {
 		      "x": 1,
-		      "y": 5,
+		      "y": 13,
+		      "label": ""
+		    },
+		    {
+		      "x": 0,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 3.5,
+		      "y": 19,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.5,
+		      "y": 12,
 		      "label": ""
 		    },
 		    {
 		      "x": 2,
-		      "y": 30,
+		      "y": 16,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcb53b4aab316c629
+	// Question: Select the correct scatter plot for meditation and sleep data
+	// Widget key: scatter_choice_a
+	test("scatter-plot - [xcb53b4aab316c629] Select the correct scatter plot for meditation and sleep data (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Meditation vs. Sleep",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 24,
+		    "min": 0,
+		    "label": "Meditation (minutes)",
+		    "gridLines": true,
+		    "tickInterval": 2
+		  },
+		  "yAxis": {
+		    "max": 11,
+		    "min": 0,
+		    "label": "Sleep (hours)",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 4,
+		      "y": 4.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
+		      "x": 8,
+		      "y": 8.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 9.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 6,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 18,
+		      "y": 10,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcb53b4aab316c629
+	// Question: Select the correct scatter plot for meditation and sleep data
+	// Widget key: scatter_choice_b
+	test("scatter-plot - [xcb53b4aab316c629] Select the correct scatter plot for meditation and sleep data (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Meditation vs. Sleep",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 24,
+		    "min": 0,
+		    "label": "Meditation (minutes)",
+		    "gridLines": true,
+		    "tickInterval": 2
+		  },
+		  "yAxis": {
+		    "max": 11,
+		    "min": 0,
+		    "label": "Sleep (hours)",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 4,
+		      "y": 4.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 9.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 8.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 6,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 18,
+		      "y": 10,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcb53b4aab316c629
+	// Question: Select the correct scatter plot for meditation and sleep data
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [xcb53b4aab316c629] Select the correct scatter plot for meditation and sleep data (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Meditation vs. Sleep",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 11,
+		    "min": 0,
+		    "label": "Sleep (hours)",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 24,
+		    "min": 0,
+		    "label": "Meditation (minutes)",
+		    "gridLines": true,
+		    "tickInterval": 2
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 4.5,
+		      "y": 4,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.5,
+		      "y": 8,
+		      "label": ""
+		    },
+		    {
+		      "x": 8.5,
 		      "y": 10,
 		      "label": ""
 		    },
 		    {
-		      "x": 4,
-		      "y": 35,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 30,
-		      "label": ""
-		    },
-		    {
 		      "x": 6,
-		      "y": 15,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb6ac5d9ca12a5d02
-	// Question: Select the scatter plot for wages versus years worked
-	// Widget key: scatter_choice_a
-	test("scatter-plot - [xb6ac5d9ca12a5d02] Select the scatter plot for wages versus years worked (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 5,
-		    "min": 0,
-		    "label": "Years",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": 0,
-		    "label": "Wage",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 5.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 1,
-		      "y": 6.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
-		      "y": 7,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 7.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 7.5,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb6ac5d9ca12a5d02
-	// Question: Select the scatter plot for wages versus years worked
-	// Widget key: scatter_choice_b
-	test("scatter-plot - [xb6ac5d9ca12a5d02] Select the scatter plot for wages versus years worked (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 8,
-		    "min": 0,
-		    "label": "Wage",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "min": 0,
-		    "label": "Years",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 5.5,
-		      "y": 0,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.5,
-		      "y": 1,
+		      "y": 4,
 		      "label": ""
 		    },
 		    {
 		      "x": 7,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.5,
-		      "y": 3,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.5,
 		      "y": 4,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 18,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe43910881b719d5b
+	// Question: Select the scatter plot for mean child heights
+	// Widget key: scatter_choice_a
+	test("scatter-plot - [xe43910881b719d5b] Select the scatter plot for mean child heights (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Age vs. Height",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 13,
+		    "min": 0,
+		    "label": "Age (years)",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 1.6,
+		    "min": 1,
+		    "label": "Height (meters)",
+		    "gridLines": true,
+		    "tickInterval": 0.1
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 1.1,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 1.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 1.3,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 1.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 12,
+		      "y": 1.5,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe43910881b719d5b
+	// Question: Select the scatter plot for mean child heights
+	// Widget key: scatter_choice_b
+	test("scatter-plot - [xe43910881b719d5b] Select the scatter plot for mean child heights (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Age vs. Height",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 13,
+		    "min": 0,
+		    "label": "Age (years)",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 1.6,
+		    "min": 1,
+		    "label": "Height (meters)",
+		    "gridLines": true,
+		    "tickInterval": 0.1
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 1.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 1.3,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 1.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 1.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 12,
+		      "y": 1.6,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe43910881b719d5b
+	// Question: Select the scatter plot for mean child heights
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [xe43910881b719d5b] Select the scatter plot for mean child heights (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Age vs. Height",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 13,
+		    "min": 0,
+		    "label": "Age (years)",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 1.6,
+		    "min": 1,
+		    "label": "Height (meters)",
+		    "gridLines": true,
+		    "tickInterval": 0.1
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 1.1,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 1.2,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 1.3,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 1.4,
+		      "label": ""
+		    },
+		    {
+		      "x": 12,
+		      "y": 1.5,
 		      "label": ""
 		    }
 		  ]
@@ -21959,16 +21874,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xb6ac5d9ca12a5d02
-	// Question: Select the scatter plot for wages versus years worked
-	// Widget key: scatter_choice_c
-	test("scatter-plot - [xb6ac5d9ca12a5d02] Select the scatter plot for wages versus years worked (4)", async () => {
+	// Question: Select a scatterplot for wage vs. years worked
+	// Widget key: scatter_choice_a
+	test("scatter-plot - [xb6ac5d9ca12a5d02] Select a scatterplot for wage vs. years worked (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
-		  "width": 600,
+		  "title": "Wage vs. Years",
+		  "width": 425,
 		  "xAxis": {
 		    "max": 5,
 		    "min": 0,
@@ -21980,109 +21895,609 @@ describe("scatterPlot widget tests", () => {
 		    "max": 8,
 		    "min": 0,
 		    "label": "Wage",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 7.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 1,
-		      "y": 7.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
-		      "y": 7,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 6.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 5.5,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xca2cd29b1e2d1fcb
-	// Question: Plot data in a scatter plot
-	// Widget key: scatter_choice_a
-	test("scatter-plot - [xca2cd29b1e2d1fcb] Plot data in a scatter plot (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Sick days vs. T-shirts",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "Sick days",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "T-shirts",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 6,
-		      "y": 6,
+		      "x": 0,
+		      "y": 5.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 7.5,
-		      "y": 7,
+		      "x": 1,
+		      "y": 6.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 0.5,
+		      "x": 2,
 		      "y": 7,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 7,
+		      "y": 7.5,
 		      "label": ""
 		    },
 		    {
 		      "x": 4,
+		      "y": 7.5,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb6ac5d9ca12a5d02
+	// Question: Select a scatterplot for wage vs. years worked
+	// Widget key: scatter_choice_b
+	test("scatter-plot - [xb6ac5d9ca12a5d02] Select a scatterplot for wage vs. years worked (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Wage vs. Years",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 5,
+		    "min": 0,
+		    "label": "Years",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": 0,
+		    "label": "Wage",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 0,
 		      "y": 5,
 		      "label": ""
 		    },
 		    {
-		      "x": 9.5,
+		      "x": 1,
 		      "y": 6,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 7.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 7.5,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb6ac5d9ca12a5d02
+	// Question: Select a scatterplot for wage vs. years worked
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [xb6ac5d9ca12a5d02] Select a scatterplot for wage vs. years worked (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Wage vs. Years",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 5,
+		    "min": 0,
+		    "label": "Years",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": 0,
+		    "label": "Wage",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 5.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 6.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 1,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 7.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 7.5,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9ac1c2abe1fcb39f
+	// Question: Select the scatter plot for coffee amount vs. drive duration
+	// Widget key: scatter_choice_a
+	test("scatter-plot - [x9ac1c2abe1fcb39f] Select the scatter plot for coffee amount vs. drive duration (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Coffee vs. Duration",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 300,
+		    "min": 0,
+		    "label": "Coffee",
+		    "gridLines": true,
+		    "tickInterval": 50
+		  },
+		  "yAxis": {
+		    "max": 22,
+		    "min": 0,
+		    "label": "Duration",
+		    "gridLines": true,
+		    "tickInterval": 2
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 100,
+		      "y": 18,
+		      "label": ""
+		    },
+		    {
+		      "x": 200,
+		      "y": 14,
+		      "label": ""
+		    },
+		    {
+		      "x": 150,
+		      "y": 15,
+		      "label": ""
+		    },
+		    {
+		      "x": 125,
+		      "y": 20,
+		      "label": ""
+		    },
+		    {
+		      "x": 225,
+		      "y": 12,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9ac1c2abe1fcb39f
+	// Question: Select the scatter plot for coffee amount vs. drive duration
+	// Widget key: scatter_choice_b
+	test("scatter-plot - [x9ac1c2abe1fcb39f] Select the scatter plot for coffee amount vs. drive duration (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Coffee vs. Duration",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 300,
+		    "min": 0,
+		    "label": "Coffee",
+		    "gridLines": true,
+		    "tickInterval": 50
+		  },
+		  "yAxis": {
+		    "max": 22,
+		    "min": 0,
+		    "label": "Duration",
+		    "gridLines": true,
+		    "tickInterval": 2
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 100,
+		      "y": 12,
+		      "label": ""
+		    },
+		    {
+		      "x": 125,
+		      "y": 14,
+		      "label": ""
+		    },
+		    {
+		      "x": 150,
+		      "y": 15,
+		      "label": ""
+		    },
+		    {
+		      "x": 200,
+		      "y": 18,
+		      "label": ""
+		    },
+		    {
+		      "x": 225,
+		      "y": 20,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9ac1c2abe1fcb39f
+	// Question: Select the scatter plot for coffee amount vs. drive duration
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [x9ac1c2abe1fcb39f] Select the scatter plot for coffee amount vs. drive duration (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Coffee vs. Duration",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 300,
+		    "min": 0,
+		    "label": "Coffee",
+		    "gridLines": true,
+		    "tickInterval": 50
+		  },
+		  "yAxis": {
+		    "max": 22,
+		    "min": 0,
+		    "label": "Duration",
+		    "gridLines": true,
+		    "tickInterval": 2
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 100,
+		      "y": 12,
+		      "label": ""
+		    },
+		    {
+		      "x": 200,
+		      "y": 20,
+		      "label": ""
+		    },
+		    {
+		      "x": 150,
+		      "y": 15,
+		      "label": ""
+		    },
+		    {
+		      "x": 125,
+		      "y": 14,
+		      "label": ""
+		    },
+		    {
+		      "x": 225,
+		      "y": 18,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7aa9bd685c62b404
+	// Question: Create a scatter plot from a data table
+	// Widget key: scatter_choice_a
+	test("scatter-plot - [x7aa9bd685c62b404] Create a scatter plot from a data table (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 40,
+		    "min": 0,
+		    "label": "Height",
+		    "gridLines": true,
+		    "tickInterval": 5
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Petal length",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 32.5,
+		      "y": 5,
+		      "label": ""
+		    },
+		    {
+		      "x": 20,
+		      "y": 4,
+		      "label": ""
+		    },
+		    {
+		      "x": 15,
+		      "y": 2,
+		      "label": ""
+		    },
+		    {
+		      "x": 35,
+		      "y": 8,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 1.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 37.5,
+		      "y": 8.5,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7aa9bd685c62b404
+	// Question: Create a scatter plot from a data table
+	// Widget key: scatter_choice_b
+	test("scatter-plot - [x7aa9bd685c62b404] Create a scatter plot from a data table (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 40,
+		    "min": 0,
+		    "label": "Petal length",
+		    "gridLines": true,
+		    "tickInterval": 5
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Height",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 32.5,
+		      "y": 5,
+		      "label": ""
+		    },
+		    {
+		      "x": 20,
+		      "y": 4,
+		      "label": ""
+		    },
+		    {
+		      "x": 15,
+		      "y": 2,
+		      "label": ""
+		    },
+		    {
+		      "x": 35,
+		      "y": 8,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 1.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 37.5,
+		      "y": 8.5,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7aa9bd685c62b404
+	// Question: Create a scatter plot from a data table
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [x7aa9bd685c62b404] Create a scatter plot from a data table (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 40,
+		    "min": 0,
+		    "label": "Height",
+		    "gridLines": true,
+		    "tickInterval": 5
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Petal length",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 32.5,
+		      "y": 5,
+		      "label": ""
+		    },
+		    {
+		      "x": 20,
+		      "y": 4,
+		      "label": ""
+		    },
+		    {
+		      "x": 15,
+		      "y": 2,
+		      "label": ""
+		    },
+		    {
+		      "x": 35,
+		      "y": 8,
+		      "label": ""
+		    },
+		    {
+		      "x": 10,
+		      "y": 1.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 37.5,
+		      "y": 7.5,
 		      "label": ""
 		    }
 		  ]
@@ -22104,9 +22519,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xca2cd29b1e2d1fcb
-	// Question: Plot data in a scatter plot
-	// Widget key: scatter_choice_b
-	test("scatter-plot - [xca2cd29b1e2d1fcb] Plot data in a scatter plot (2)", async () => {
+	// Question: Create a scatter plot from data
+	// Widget key: scatter_choice_a
+	test("scatter-plot - [xca2cd29b1e2d1fcb] Create a scatter plot from data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -22116,14 +22531,14 @@ describe("scatterPlot widget tests", () => {
 		  "width": 425,
 		  "xAxis": {
 		    "max": 11,
-		    "min": 0,
+		    "min": -1,
 		    "label": "Sick days",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 11,
-		    "min": 0,
+		    "min": -1,
 		    "label": "T-shirts",
 		    "gridLines": true,
 		    "tickInterval": 1
@@ -22179,9 +22594,9 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xca2cd29b1e2d1fcb
-	// Question: Plot data in a scatter plot
-	// Widget key: scatter_choice_c
-	test("scatter-plot - [xca2cd29b1e2d1fcb] Plot data in a scatter plot (3)", async () => {
+	// Question: Create a scatter plot from data
+	// Widget key: scatter_choice_b
+	test("scatter-plot - [xca2cd29b1e2d1fcb] Create a scatter plot from data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -22191,14 +22606,89 @@ describe("scatterPlot widget tests", () => {
 		  "width": 425,
 		  "xAxis": {
 		    "max": 11,
-		    "min": 0,
+		    "min": -1,
 		    "label": "Sick days",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 11,
-		    "min": 0,
+		    "min": -1,
+		    "label": "T-shirts",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 6,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.5,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 0.5,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 5,
+		      "label": ""
+		    },
+		    {
+		      "x": 9.5,
+		      "y": 6,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xca2cd29b1e2d1fcb
+	// Question: Create a scatter plot from data
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [xca2cd29b1e2d1fcb] Create a scatter plot from data (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Sick days vs. T-shirts",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 11,
+		    "min": -1,
+		    "label": "Sick days",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 11,
+		    "min": -1,
 		    "label": "T-shirts",
 		    "gridLines": true,
 		    "tickInterval": 1
@@ -22227,7 +22717,7 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 4,
-		      "y": 5,
+		      "y": 6,
 		      "label": ""
 		    },
 		    {
@@ -22253,61 +22743,61 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xcb53b4aab316c629
-	// Question: Choose the scatter plot for meditation and sleep data
+	// Extracted from question: x6c25e383c39d99bd
+	// Question: Gold vs. Silver Medals: Select the Correct Scatter Plot
 	// Widget key: scatter_choice_a
-	test("scatter-plot - [xcb53b4aab316c629] Choose the scatter plot for meditation and sleep data (1)", async () => {
+	test("scatter-plot - [x6c25e383c39d99bd] Gold vs. Silver Medals: Select the Correct Scatter Plot (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Meditation (minutes) vs. Sleep (hours)",
-		  "width": 600,
+		  "title": "Gold vs. Silver Medals",
+		  "width": 400,
 		  "xAxis": {
-		    "max": 24,
+		    "max": 10,
 		    "min": 0,
-		    "label": "Meditation (minutes)",
+		    "label": "Gold",
 		    "gridLines": true,
-		    "tickInterval": 2
+		    "tickInterval": 1
 		  },
 		  "yAxis": {
-		    "max": 11,
+		    "max": 14,
 		    "min": 0,
-		    "label": "Sleep (hours)",
+		    "label": "Silver",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": 4,
-		      "y": 4.5,
+		      "x": 9,
+		      "y": 13,
 		      "label": ""
 		    },
 		    {
 		      "x": 8,
-		      "y": 9.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
-		      "y": 8.5,
+		      "y": 4,
 		      "label": ""
 		    },
 		    {
 		      "x": 4,
-		      "y": 6,
+		      "y": 4,
 		      "label": ""
 		    },
 		    {
 		      "x": 4,
-		      "y": 7,
+		      "y": 2,
 		      "label": ""
 		    },
 		    {
-		      "x": 18,
-		      "y": 10,
+		      "x": 3,
+		      "y": 2,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 4,
 		      "label": ""
 		    }
 		  ]
@@ -22328,361 +22818,136 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xcb53b4aab316c629
-	// Question: Choose the scatter plot for meditation and sleep data
+	// Extracted from question: x6c25e383c39d99bd
+	// Question: Gold vs. Silver Medals: Select the Correct Scatter Plot
 	// Widget key: scatter_choice_b
-	test("scatter-plot - [xcb53b4aab316c629] Choose the scatter plot for meditation and sleep data (2)", async () => {
+	test("scatter-plot - [x6c25e383c39d99bd] Gold vs. Silver Medals: Select the Correct Scatter Plot (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Meditation (minutes) vs. Sleep (hours)",
-		  "width": 600,
+		  "title": "Gold vs. Silver Medals",
+		  "width": 400,
 		  "xAxis": {
-		    "max": 24,
+		    "max": 10,
 		    "min": 0,
-		    "label": "Meditation (minutes)",
+		    "label": "Gold",
 		    "gridLines": true,
-		    "tickInterval": 2
+		    "tickInterval": 1
 		  },
 		  "yAxis": {
-		    "max": 11,
+		    "max": 14,
 		    "min": 0,
-		    "label": "Sleep (hours)",
+		    "label": "Silver",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": 4.5,
+		      "x": 9,
+		      "y": 13,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
 		      "y": 4,
 		      "label": ""
 		    },
 		    {
-		      "x": 9.5,
+		      "x": 4,
+		      "y": 4,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 1,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 1,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 4,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6c25e383c39d99bd
+	// Question: Gold vs. Silver Medals: Select the Correct Scatter Plot
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [x6c25e383c39d99bd] Gold vs. Silver Medals: Select the Correct Scatter Plot (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Gold vs. Silver Medals",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 14,
+		    "min": 0,
+		    "label": "Gold",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Silver",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 13,
+		      "y": 9,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
 		      "y": 8,
 		      "label": ""
 		    },
 		    {
-		      "x": 8.5,
-		      "y": 10,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
+		      "x": 4,
 		      "y": 4,
 		      "label": ""
 		    },
 		    {
-		      "x": 7,
+		      "x": 1,
 		      "y": 4,
 		      "label": ""
 		    },
 		    {
-		      "x": 10,
-		      "y": 18,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcb53b4aab316c629
-	// Question: Choose the scatter plot for meditation and sleep data
-	// Widget key: scatter_choice_c
-	test("scatter-plot - [xcb53b4aab316c629] Choose the scatter plot for meditation and sleep data (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Meditation (minutes) vs. Sleep (hours)",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 24,
-		    "min": 0,
-		    "label": "Meditation (minutes)",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "yAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "Sleep (hours)",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 4,
-		      "y": 4.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 9.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 12,
-		      "y": 8.5,
+		      "x": 1,
+		      "y": 3,
 		      "label": ""
 		    },
 		    {
 		      "x": 4,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 7,
-		      "label": ""
-		    },
-		    {
-		      "x": 18,
-		      "y": 10,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x927757a473a28e1b
-	// Question: Select the correct scatter plot from a data table
-	// Widget key: scatter_choice_a
-	test("scatter-plot - [x927757a473a28e1b] Select the correct scatter plot from a data table (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Study Time vs. Score",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 3.5,
-		    "min": 0,
-		    "label": "Hours",
-		    "gridLines": true,
-		    "tickInterval": 0.5
-		  },
-		  "yAxis": {
-		    "max": 20,
-		    "min": 0,
-		    "label": "Score",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0.25,
-		      "y": 12,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.75,
-		      "y": 15,
-		      "label": ""
-		    },
-		    {
-		      "x": 1,
-		      "y": 13,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
-		      "y": 16,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.25,
-		      "y": 19,
-		      "label": ""
-		    },
-		    {
-		      "x": 0,
-		      "y": 7,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x927757a473a28e1b
-	// Question: Select the correct scatter plot from a data table
-	// Widget key: scatter_choice_b
-	test("scatter-plot - [x927757a473a28e1b] Select the correct scatter plot from a data table (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Study Time vs. Score",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 3.5,
-		    "min": 0,
-		    "label": "Hours",
-		    "gridLines": true,
-		    "tickInterval": 0.5
-		  },
-		  "yAxis": {
-		    "max": 20,
-		    "min": 0,
-		    "label": "Score",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0.25,
-		      "y": 15,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.75,
-		      "y": 12,
-		      "label": ""
-		    },
-		    {
-		      "x": 1,
-		      "y": 16,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
-		      "y": 19,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.25,
-		      "y": 7,
-		      "label": ""
-		    },
-		    {
-		      "x": 0,
-		      "y": 13,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x927757a473a28e1b
-	// Question: Select the correct scatter plot from a data table
-	// Widget key: scatter_choice_c
-	test("scatter-plot - [x927757a473a28e1b] Select the correct scatter plot from a data table (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Study Time vs. Score",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 3.5,
-		    "min": 0,
-		    "label": "Hours",
-		    "gridLines": true,
-		    "tickInterval": 0.5
-		  },
-		  "yAxis": {
-		    "max": 20,
-		    "min": 0,
-		    "label": "Score",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0.25,
-		      "y": 12,
-		      "label": ""
-		    },
-		    {
-		      "x": 0.75,
-		      "y": 15,
-		      "label": ""
-		    },
-		    {
-		      "x": 1,
-		      "y": 13,
-		      "label": ""
-		    },
-		    {
-		      "x": 2,
-		      "y": 16,
-		      "label": ""
-		    },
-		    {
-		      "x": 3.25,
-		      "y": 18,
-		      "label": ""
-		    },
-		    {
-		      "x": 0,
-		      "y": 7,
+		      "y": 2,
 		      "label": ""
 		    }
 		  ]
@@ -22704,15 +22969,59 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x2ae70e90ba0d04f6
-	// Question: Select the scatter plot for speed and fuel use
-	// Widget key: scatter_choice_a
-	test("scatter-plot - [x2ae70e90ba0d04f6] Select the scatter plot for speed and fuel use (2)", async () => {
+	// Question: Plot fuel usage versus speed
+	// Widget key: scatter_plane
+	test("scatter-plot - [x2ae70e90ba0d04f6] Plot fuel usage versus speed (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Option A",
+		  "title": "Scatter plot",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 120,
+		    "min": 0,
+		    "label": "Speed",
+		    "gridLines": true,
+		    "tickInterval": 10
+		  },
+		  "yAxis": {
+		    "max": 22,
+		    "min": 0,
+		    "label": "Fuel used",
+		    "gridLines": true,
+		    "tickInterval": 2
+		  },
+		  "height": 425,
+		  "points": []
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2ae70e90ba0d04f6
+	// Question: Plot fuel usage versus speed
+	// Widget key: scatter_choice_a
+	test("scatter-plot - [x2ae70e90ba0d04f6] Plot fuel usage versus speed (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Scatter plot",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 120,
@@ -22731,1142 +23040,409 @@ describe("scatterPlot widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 21,
+		      "x": 10,
+		      "y": 21,
+		      "label": ""
+		    },
+		    {
+		      "x": 30,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 50,
 		      "y": 10,
 		      "label": ""
 		    },
 		    {
-		      "x": 10,
-		      "y": 30,
+		      "x": 70,
+		      "y": 6,
 		      "label": ""
 		    },
 		    {
-		      "x": 7,
-		      "y": 50,
+		      "x": 90,
+		      "y": 8,
+		      "label": ""
+		    },
+		    {
+		      "x": 110,
+		      "y": 9,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2ae70e90ba0d04f6
+	// Question: Plot fuel usage versus speed
+	// Widget key: scatter_choice_b
+	test("scatter-plot - [x2ae70e90ba0d04f6] Plot fuel usage versus speed (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Scatter plot",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 120,
+		    "min": 0,
+		    "label": "Speed",
+		    "gridLines": true,
+		    "tickInterval": 10
+		  },
+		  "yAxis": {
+		    "max": 22,
+		    "min": 0,
+		    "label": "Fuel used",
+		    "gridLines": true,
+		    "tickInterval": 2
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 10,
+		      "y": 21,
+		      "label": ""
+		    },
+		    {
+		      "x": 30,
+		      "y": 10,
+		      "label": ""
+		    },
+		    {
+		      "x": 50,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 70,
+		      "y": 6,
+		      "label": ""
+		    },
+		    {
+		      "x": 90,
+		      "y": 8,
+		      "label": ""
+		    },
+		    {
+		      "x": 110,
+		      "y": 9,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2ae70e90ba0d04f6
+	// Question: Plot fuel usage versus speed
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [x2ae70e90ba0d04f6] Plot fuel usage versus speed (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Scatter plot",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 120,
+		    "min": 0,
+		    "label": "Speed",
+		    "gridLines": true,
+		    "tickInterval": 10
+		  },
+		  "yAxis": {
+		    "max": 22,
+		    "min": 0,
+		    "label": "Fuel used",
+		    "gridLines": true,
+		    "tickInterval": 2
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 10,
+		      "y": 21,
+		      "label": ""
+		    },
+		    {
+		      "x": 30,
+		      "y": 10,
+		      "label": ""
+		    },
+		    {
+		      "x": 50,
+		      "y": 8,
+		      "label": ""
+		    },
+		    {
+		      "x": 70,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 90,
+		      "y": 6,
+		      "label": ""
+		    },
+		    {
+		      "x": 110,
+		      "y": 5,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc75e2acd1bf6e272
+	// Question: Select the correct scatter plot from a data table
+	// Widget key: scatter_choice_a
+	test("scatter-plot - [xc75e2acd1bf6e272] Select the correct scatter plot from a data table (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Period vs. Avg score",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": 0,
+		    "label": "Period",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": 0,
+		    "label": "Avg score",
+		    "gridLines": true,
+		    "tickInterval": 10
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 85,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 70,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 90,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 65,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 70,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 95,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc75e2acd1bf6e272
+	// Question: Select the correct scatter plot from a data table
+	// Widget key: scatter_choice_b
+	test("scatter-plot - [xc75e2acd1bf6e272] Select the correct scatter plot from a data table (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Period vs. Avg score",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": 0,
+		    "label": "Period",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": 0,
+		    "label": "Avg score",
+		    "gridLines": true,
+		    "tickInterval": 10
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 95,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 70,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 90,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 65,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 70,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 85,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc75e2acd1bf6e272
+	// Question: Select the correct scatter plot from a data table
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [xc75e2acd1bf6e272] Select the correct scatter plot from a data table (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Period vs. Avg score",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": 0,
+		    "label": "Period",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": 0,
+		    "label": "Avg score",
+		    "gridLines": true,
+		    "tickInterval": 10
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 95,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 70,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 85,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 65,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 90,
 		      "label": ""
 		    },
 		    {
 		      "x": 6,
 		      "y": 70,
 		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 90,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 110,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2ae70e90ba0d04f6
-	// Question: Select the scatter plot for speed and fuel use
-	// Widget key: scatter_choice_b
-	test("scatter-plot - [x2ae70e90ba0d04f6] Select the scatter plot for speed and fuel use (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Option B",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 120,
-		    "min": 0,
-		    "label": "Speed",
-		    "gridLines": true,
-		    "tickInterval": 10
-		  },
-		  "yAxis": {
-		    "max": 22,
-		    "min": 0,
-		    "label": "Fuel used",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 10,
-		      "y": 21,
-		      "label": ""
-		    },
-		    {
-		      "x": 30,
-		      "y": 10,
-		      "label": ""
-		    },
-		    {
-		      "x": 50,
-		      "y": 7,
-		      "label": ""
-		    },
-		    {
-		      "x": 70,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 90,
-		      "y": 8,
-		      "label": ""
-		    },
-		    {
-		      "x": 110,
-		      "y": 9,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2ae70e90ba0d04f6
-	// Question: Select the scatter plot for speed and fuel use
-	// Widget key: scatter_choice_c
-	test("scatter-plot - [x2ae70e90ba0d04f6] Select the scatter plot for speed and fuel use (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Option C",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 120,
-		    "min": 0,
-		    "label": "Speed",
-		    "gridLines": true,
-		    "tickInterval": 10
-		  },
-		  "yAxis": {
-		    "max": 22,
-		    "min": 0,
-		    "label": "Fuel used",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 10,
-		      "y": 21,
-		      "label": ""
-		    },
-		    {
-		      "x": 30,
-		      "y": 12,
-		      "label": ""
-		    },
-		    {
-		      "x": 50,
-		      "y": 9,
-		      "label": ""
-		    },
-		    {
-		      "x": 70,
-		      "y": 7,
-		      "label": ""
-		    },
-		    {
-		      "x": 90,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 110,
-		      "y": 5,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2ae70e90ba0d04f6
-	// Question: Select the scatter plot for speed and fuel use
-	// Widget key: scatter_plane_empty
-	test("scatter-plot - [x2ae70e90ba0d04f6] Select the scatter plot for speed and fuel use (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Speed vs. Fuel used",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 120,
-		    "min": 0,
-		    "label": "Speed",
-		    "gridLines": true,
-		    "tickInterval": 10
-		  },
-		  "yAxis": {
-		    "max": 22,
-		    "min": 0,
-		    "label": "Fuel used",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "height": 425,
-		  "points": []
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7aa9bd685c62b404
-	// Question: Select the scatter plot for flower measurements
-	// Widget key: scatter_choice_a
-	test("scatter-plot - [x7aa9bd685c62b404] Select the scatter plot for flower measurements (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Height vs. Petal length",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 42,
-		    "min": -4,
-		    "label": "Height",
-		    "gridLines": true,
-		    "tickInterval": 5
-		  },
-		  "yAxis": {
-		    "max": 11,
-		    "min": -1,
-		    "label": "Petal length",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 10,
-		      "y": 1.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 15,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 20,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 32.5,
-		      "y": 5,
-		      "label": ""
-		    },
-		    {
-		      "x": 35,
-		      "y": 8,
-		      "label": ""
-		    },
-		    {
-		      "x": 37.5,
-		      "y": 8.5,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7aa9bd685c62b404
-	// Question: Select the scatter plot for flower measurements
-	// Widget key: scatter_choice_b
-	test("scatter-plot - [x7aa9bd685c62b404] Select the scatter plot for flower measurements (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Height vs. Petal length",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 42,
-		    "min": -4,
-		    "label": "Height",
-		    "gridLines": true,
-		    "tickInterval": 5
-		  },
-		  "yAxis": {
-		    "max": 11,
-		    "min": -1,
-		    "label": "Petal length",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 10,
-		      "y": 5,
-		      "label": ""
-		    },
-		    {
-		      "x": 15,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 20,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 32.5,
-		      "y": 8,
-		      "label": ""
-		    },
-		    {
-		      "x": 35,
-		      "y": 1.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 37.5,
-		      "y": 8.5,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7aa9bd685c62b404
-	// Question: Select the scatter plot for flower measurements
-	// Widget key: scatter_choice_c
-	test("scatter-plot - [x7aa9bd685c62b404] Select the scatter plot for flower measurements (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Height vs. Petal length",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 42,
-		    "min": -4,
-		    "label": "Height",
-		    "gridLines": true,
-		    "tickInterval": 5
-		  },
-		  "yAxis": {
-		    "max": 11,
-		    "min": -1,
-		    "label": "Petal length",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 10,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 15,
-		      "y": 2.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 20,
-		      "y": 4.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 32.5,
-		      "y": 5.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 35,
-		      "y": 8.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 37.5,
-		      "y": 9,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9ac1c2abe1fcb39f
-	// Question: Select the correct scatter plot from a data table
-	// Widget key: scatter_choice_a
-	test("scatter-plot - [x9ac1c2abe1fcb39f] Select the correct scatter plot from a data table (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Scatter Plot",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 300,
-		    "min": 0,
-		    "label": "Coffee (mL)",
-		    "gridLines": true,
-		    "tickInterval": 50
-		  },
-		  "yAxis": {
-		    "max": 22,
-		    "min": 0,
-		    "label": "Duration (min)",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 100,
-		      "y": 18,
-		      "label": ""
-		    },
-		    {
-		      "x": 200,
-		      "y": 14,
-		      "label": ""
-		    },
-		    {
-		      "x": 150,
-		      "y": 15,
-		      "label": ""
-		    },
-		    {
-		      "x": 125,
-		      "y": 20,
-		      "label": ""
-		    },
-		    {
-		      "x": 225,
-		      "y": 12,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9ac1c2abe1fcb39f
-	// Question: Select the correct scatter plot from a data table
-	// Widget key: scatter_choice_b
-	test("scatter-plot - [x9ac1c2abe1fcb39f] Select the correct scatter plot from a data table (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Scatter Plot",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 22,
-		    "min": 0,
-		    "label": "Duration (min)",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "yAxis": {
-		    "max": 300,
-		    "min": 0,
-		    "label": "Coffee (mL)",
-		    "gridLines": true,
-		    "tickInterval": 50
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 18,
-		      "y": 100,
-		      "label": ""
-		    },
-		    {
-		      "x": 14,
-		      "y": 200,
-		      "label": ""
-		    },
-		    {
-		      "x": 15,
-		      "y": 150,
-		      "label": ""
-		    },
-		    {
-		      "x": 20,
-		      "y": 125,
-		      "label": ""
-		    },
-		    {
-		      "x": 12,
-		      "y": 225,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9ac1c2abe1fcb39f
-	// Question: Select the correct scatter plot from a data table
-	// Widget key: scatter_choice_c
-	test("scatter-plot - [x9ac1c2abe1fcb39f] Select the correct scatter plot from a data table (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Scatter Plot",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 300,
-		    "min": 0,
-		    "label": "Coffee (mL)",
-		    "gridLines": true,
-		    "tickInterval": 50
-		  },
-		  "yAxis": {
-		    "max": 22,
-		    "min": 0,
-		    "label": "Duration (min)",
-		    "gridLines": true,
-		    "tickInterval": 2
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 100,
-		      "y": 18,
-		      "label": ""
-		    },
-		    {
-		      "x": 200,
-		      "y": 14,
-		      "label": ""
-		    },
-		    {
-		      "x": 150,
-		      "y": 15,
-		      "label": ""
-		    },
-		    {
-		      "x": 125,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 225,
-		      "y": 12,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6c25e383c39d99bd
-	// Question: Plot Olympic medals in a scatter plot
-	// Widget key: scatter_choice_a
-	test("scatter-plot - [x6c25e383c39d99bd] Plot Olympic medals in a scatter plot (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Gold",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 14,
-		    "min": 0,
-		    "label": "Silver",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 450,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 1,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 1,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 13,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6c25e383c39d99bd
-	// Question: Plot Olympic medals in a scatter plot
-	// Widget key: scatter_choice_b
-	test("scatter-plot - [x6c25e383c39d99bd] Plot Olympic medals in a scatter plot (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Silver",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 14,
-		    "min": 0,
-		    "label": "Gold",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 450,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 1,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 1,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 13,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6c25e383c39d99bd
-	// Question: Plot Olympic medals in a scatter plot
-	// Widget key: scatter_choice_c
-	test("scatter-plot - [x6c25e383c39d99bd] Plot Olympic medals in a scatter plot (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Gold",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 14,
-		    "min": 0,
-		    "label": "Silver",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 450,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 1,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 1,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 13,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6c25e383c39d99bd
-	// Question: Plot Olympic medals in a scatter plot
-	// Widget key: scatter_plane_empty
-	test("scatter-plot - [x6c25e383c39d99bd] Plot Olympic medals in a scatter plot (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Gold vs. Silver medals",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Gold",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 14,
-		    "min": 0,
-		    "label": "Silver",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 450,
-		  "points": []
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe43910881b719d5b
-	// Question: Select the scatter plot for mean height by age
-	// Widget key: scatter_choice_a
-	test("scatter-plot - [xe43910881b719d5b] Select the scatter plot for mean height by age (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Mean heights by age",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 13,
-		    "min": 0,
-		    "label": "Age (years)",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 2,
-		    "min": 0,
-		    "label": "Height (meters)",
-		    "gridLines": true,
-		    "tickInterval": 0.5
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": 1.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 1.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 1.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
-		      "y": 1.4,
-		      "label": ""
-		    },
-		    {
-		      "x": 12,
-		      "y": 1.5,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe43910881b719d5b
-	// Question: Select the scatter plot for mean height by age
-	// Widget key: scatter_choice_b
-	test("scatter-plot - [xe43910881b719d5b] Select the scatter plot for mean height by age (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Mean heights by age",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 2,
-		    "min": 0,
-		    "label": "Height (meters)",
-		    "gridLines": true,
-		    "tickInterval": 0.5
-		  },
-		  "yAxis": {
-		    "max": 13,
-		    "min": 0,
-		    "label": "Age (years)",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 1.1,
-		      "y": 5,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.2,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.3,
-		      "y": 8,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.4,
-		      "y": 10,
-		      "label": ""
-		    },
-		    {
-		      "x": 1.5,
-		      "y": 12,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe43910881b719d5b
-	// Question: Select the scatter plot for mean height by age
-	// Widget key: scatter_choice_c
-	test("scatter-plot - [xe43910881b719d5b] Select the scatter plot for mean height by age (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Mean heights by age",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 13,
-		    "min": 0,
-		    "label": "Age (years)",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 2,
-		    "min": 0,
-		    "label": "Height (meters)",
-		    "gridLines": true,
-		    "tickInterval": 0.5
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": 1,
-		      "label": ""
-		    },
-		    {
-		      "x": 6,
-		      "y": 1.1,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 1.2,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
-		      "y": 1.3,
-		      "label": ""
-		    },
-		    {
-		      "x": 12,
-		      "y": 1.4,
-		      "label": ""
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -23887,16 +23463,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x5e9339fec2d2e3e1
-	// Question: Plot a scatter plot from a table
+	// Question: Create a scatter plot from a data table
 	// Widget key: scatter_choice_a
-	test("scatter-plot - [x5e9339fec2d2e3e1] Plot a scatter plot from a table (1)", async () => {
+	test("scatter-plot - [x5e9339fec2d2e3e1] Create a scatter plot from a data table (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Study time (hours) vs. Score",
-		  "width": 600,
+		  "title": "Study Time vs. Score",
+		  "width": 425,
 		  "xAxis": {
 		    "max": 4,
 		    "min": 0,
@@ -23911,7 +23487,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 425,
 		  "points": [
 		    {
 		      "x": 1.75,
@@ -23962,60 +23538,60 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x5e9339fec2d2e3e1
-	// Question: Plot a scatter plot from a table
+	// Question: Create a scatter plot from a data table
 	// Widget key: scatter_choice_b
-	test("scatter-plot - [x5e9339fec2d2e3e1] Plot a scatter plot from a table (2)", async () => {
+	test("scatter-plot - [x5e9339fec2d2e3e1] Create a scatter plot from a data table (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Study time (hours) vs. Score",
-		  "width": 600,
+		  "title": "Study Time vs. Score",
+		  "width": 425,
 		  "xAxis": {
-		    "max": 4,
-		    "min": 0,
-		    "label": "Hours",
-		    "gridLines": true,
-		    "tickInterval": 0.5
-		  },
-		  "yAxis": {
 		    "max": 20,
 		    "min": 0,
 		    "label": "Score",
 		    "gridLines": true,
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "yAxis": {
+		    "max": 4,
+		    "min": 0,
+		    "label": "Hours",
+		    "gridLines": true,
+		    "tickInterval": 0.5
+		  },
+		  "height": 425,
 		  "points": [
 		    {
-		      "x": 1.75,
-		      "y": 7,
+		      "x": 17,
+		      "y": 1.75,
 		      "label": ""
 		    },
 		    {
-		      "x": 1.5,
-		      "y": 19,
+		      "x": 15,
+		      "y": 1.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 0.5,
-		      "y": 15,
+		      "x": 7,
+		      "y": 0.5,
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
-		      "y": 20,
+		      "x": 19,
+		      "y": 3,
 		      "label": ""
 		    },
 		    {
-		      "x": 3.25,
-		      "y": 16,
+		      "x": 20,
+		      "y": 3.25,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
-		      "y": 17,
+		      "x": 16,
+		      "y": 2,
 		      "label": ""
 		    }
 		  ]
@@ -24037,16 +23613,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x5e9339fec2d2e3e1
-	// Question: Plot a scatter plot from a table
+	// Question: Create a scatter plot from a data table
 	// Widget key: scatter_choice_c
-	test("scatter-plot - [x5e9339fec2d2e3e1] Plot a scatter plot from a table (3)", async () => {
+	test("scatter-plot - [x5e9339fec2d2e3e1] Create a scatter plot from a data table (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Study time (hours) vs. Score",
-		  "width": 600,
+		  "title": "Study Time vs. Score",
+		  "width": 425,
 		  "xAxis": {
 		    "max": 4,
 		    "min": 0,
@@ -24061,16 +23637,16 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 425,
 		  "points": [
 		    {
-		      "x": 1.5,
+		      "x": 1.75,
 		      "y": 17,
 		      "label": ""
 		    },
 		    {
 		      "x": 1.5,
-		      "y": 15,
+		      "y": 17,
 		      "label": ""
 		    },
 		    {
@@ -24084,7 +23660,7 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 3,
+		      "x": 3.25,
 		      "y": 20,
 		      "label": ""
 		    },
@@ -24112,16 +23688,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x8a90f6b9504385d1
-	// Question: Create a scatterplot from a data table
-	// Widget key: scatterplot_choice_a
-	test("scatter-plot - [x8a90f6b9504385d1] Create a scatterplot from a data table (2)", async () => {
+	// Question: Plot exam data in a scatter plot
+	// Widget key: scatter_choice_a
+	test("scatter-plot - [x8a90f6b9504385d1] Plot exam data in a scatter plot (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
-		  "width": 600,
+		  "title": "Period vs. average score",
+		  "width": 425,
 		  "xAxis": {
 		    "max": 8,
 		    "min": 0,
@@ -24136,7 +23712,82 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
-		  "height": 400,
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 50,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 45,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 50,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 70,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 80,
+		      "label": ""
+		    },
+		    {
+		      "x": 7,
+		      "y": 85,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8a90f6b9504385d1
+	// Question: Plot exam data in a scatter plot
+	// Widget key: scatter_choice_b
+	test("scatter-plot - [x8a90f6b9504385d1] Plot exam data in a scatter plot (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Period vs. average score",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": 0,
+		    "label": "Period",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": 0,
+		    "label": "Avg score",
+		    "gridLines": true,
+		    "tickInterval": 10
+		  },
+		  "height": 425,
 		  "points": [
 		    {
 		      "x": 1,
@@ -24187,91 +23838,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x8a90f6b9504385d1
-	// Question: Create a scatterplot from a data table
-	// Widget key: scatterplot_choice_b
-	test("scatter-plot - [x8a90f6b9504385d1] Create a scatterplot from a data table (3)", async () => {
+	// Question: Plot exam data in a scatter plot
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [x8a90f6b9504385d1] Plot exam data in a scatter plot (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 100,
-		    "min": 0,
-		    "label": "Avg score",
-		    "gridLines": true,
-		    "tickInterval": 10
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": 0,
-		    "label": "Period",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 60,
-		      "y": 1,
-		      "label": ""
-		    },
-		    {
-		      "x": 90,
-		      "y": 6,
-		      "label": ""
-		    },
-		    {
-		      "x": 55,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 80,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 95,
-		      "y": 7,
-		      "label": ""
-		    },
-		    {
-		      "x": 60,
-		      "y": 3,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8a90f6b9504385d1
-	// Question: Create a scatterplot from a data table
-	// Widget key: scatterplot_choice_c
-	test("scatter-plot - [x8a90f6b9504385d1] Create a scatterplot from a data table (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 600,
+		  "title": "Period vs. average score",
+		  "width": 425,
 		  "xAxis": {
 		    "max": 8,
 		    "min": 0,
@@ -24286,7 +23862,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 10
 		  },
-		  "height": 400,
+		  "height": 425,
 		  "points": [
 		    {
 		      "x": 1,
@@ -24295,12 +23871,12 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 2,
-		      "y": 65,
+		      "y": 55,
 		      "label": ""
 		    },
 		    {
 		      "x": 3,
-		      "y": 50,
+		      "y": 60,
 		      "label": ""
 		    },
 		    {
@@ -24310,12 +23886,12 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 6,
-		      "y": 90,
+		      "y": 95,
 		      "label": ""
 		    },
 		    {
 		      "x": 7,
-		      "y": 95,
+		      "y": 90,
 		      "label": ""
 		    }
 		  ]
@@ -24337,15 +23913,15 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x55d464b3a4cce929
-	// Question: Plot soccer goals by foot on a scatter plot
+	// Question: Plot soccer goals by foot (scatter plot)
 	// Widget key: scatter_choice_a
-	test("scatter-plot - [x55d464b3a4cce929] Plot soccer goals by foot on a scatter plot (3)", async () => {
+	test("scatter-plot - [x55d464b3a4cce929] Plot soccer goals by foot (scatter plot) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
+		  "title": "Right vs. Left Foot Goals",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 32,
@@ -24407,15 +23983,15 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x55d464b3a4cce929
-	// Question: Plot soccer goals by foot on a scatter plot
+	// Question: Plot soccer goals by foot (scatter plot)
 	// Widget key: scatter_choice_b
-	test("scatter-plot - [x55d464b3a4cce929] Plot soccer goals by foot on a scatter plot (4)", async () => {
+	test("scatter-plot - [x55d464b3a4cce929] Plot soccer goals by foot (scatter plot) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
+		  "title": "Right vs. Left Foot Goals",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 32,
@@ -24477,15 +24053,15 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x55d464b3a4cce929
-	// Question: Plot soccer goals by foot on a scatter plot
+	// Question: Plot soccer goals by foot (scatter plot)
 	// Widget key: scatter_choice_c
-	test("scatter-plot - [x55d464b3a4cce929] Plot soccer goals by foot on a scatter plot (5)", async () => {
+	test("scatter-plot - [x55d464b3a4cce929] Plot soccer goals by foot (scatter plot) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
+		  "title": "Right vs. Left Foot Goals",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 32,
@@ -24505,178 +24081,28 @@ describe("scatterPlot widget tests", () => {
 		  "points": [
 		    {
 		      "x": 29,
-		      "y": 29,
+		      "y": 16,
 		      "label": ""
 		    },
 		    {
 		      "x": 12,
-		      "y": 12,
+		      "y": 7,
 		      "label": ""
 		    },
 		    {
 		      "x": 24,
-		      "y": 24,
+		      "y": 26,
 		      "label": ""
 		    },
 		    {
 		      "x": 18,
-		      "y": 18,
+		      "y": 1,
 		      "label": ""
 		    },
 		    {
 		      "x": 1,
-		      "y": 1,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc9c4343b77950752
-	// Question: Select the scatter plot for the flower data
-	// Widget key: scatter_choice_a
-	test("scatter-plot - [xc9c4343b77950752] Select the scatter plot for the flower data (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 40,
-		    "min": 0,
-		    "label": "Height",
-		    "gridLines": true,
-		    "tickInterval": 5
-		  },
-		  "yAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "Petal length",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 32.5,
-		      "y": 6.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 15,
-		      "y": 4.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.5,
-		      "y": 7,
-		      "label": ""
-		    },
-		    {
-		      "x": 27.5,
-		      "y": 9,
-		      "label": ""
-		    },
-		    {
-		      "x": 15,
-		      "y": 5.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 32.5,
-		      "y": 3,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc9c4343b77950752
-	// Question: Select the scatter plot for the flower data
-	// Widget key: scatter_choice_b
-	test("scatter-plot - [xc9c4343b77950752] Select the scatter plot for the flower data (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 40,
-		    "min": 0,
-		    "label": "Height",
-		    "gridLines": true,
-		    "tickInterval": 5
-		  },
-		  "yAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "Petal length",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 32.5,
 		      "y": 6,
 		      "label": ""
-		    },
-		    {
-		      "x": 15,
-		      "y": 4.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 7.5,
-		      "y": 7,
-		      "label": ""
-		    },
-		    {
-		      "x": 27.5,
-		      "y": 9,
-		      "label": ""
-		    },
-		    {
-		      "x": 15,
-		      "y": 5.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 32.5,
-		      "y": 2.5,
-		      "label": ""
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -24697,15 +24123,15 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: xc9c4343b77950752
-	// Question: Select the scatter plot for the flower data
-	// Widget key: scatter_choice_c
-	test("scatter-plot - [xc9c4343b77950752] Select the scatter plot for the flower data (4)", async () => {
+	// Question: Create a scatter plot from flower measurements
+	// Widget key: scatter_choice_a
+	test("scatter-plot - [xc9c4343b77950752] Create a scatter plot from flower measurements (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
+		  "title": "Height vs. Petal length",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 40,
@@ -24751,6 +24177,156 @@ describe("scatterPlot widget tests", () => {
 		    {
 		      "x": 32.5,
 		      "y": 6.5,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc9c4343b77950752
+	// Question: Create a scatter plot from flower measurements
+	// Widget key: scatter_choice_b
+	test("scatter-plot - [xc9c4343b77950752] Create a scatter plot from flower measurements (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Height vs. Petal length",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 40,
+		    "min": 0,
+		    "label": "Height",
+		    "gridLines": true,
+		    "tickInterval": 5
+		  },
+		  "yAxis": {
+		    "max": 11,
+		    "min": 0,
+		    "label": "Petal length",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 15,
+		      "y": 4.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 15,
+		      "y": 5.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.5,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 32.5,
+		      "y": 6.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 27.5,
+		      "y": 9,
+		      "label": ""
+		    },
+		    {
+		      "x": 32.5,
+		      "y": 3,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc9c4343b77950752
+	// Question: Create a scatter plot from flower measurements
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [xc9c4343b77950752] Create a scatter plot from flower measurements (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Height vs. Petal length",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 40,
+		    "min": 0,
+		    "label": "Height",
+		    "gridLines": true,
+		    "tickInterval": 5
+		  },
+		  "yAxis": {
+		    "max": 11,
+		    "min": 0,
+		    "label": "Petal length",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 15,
+		      "y": 6.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 15,
+		      "y": 3,
+		      "label": ""
+		    },
+		    {
+		      "x": 7.5,
+		      "y": 9,
+		      "label": ""
+		    },
+		    {
+		      "x": 27.5,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 32.5,
+		      "y": 4.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 32.5,
+		      "y": 5.5,
 		      "label": ""
 		    }
 		  ]
@@ -24772,16 +24348,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x3617431ada4cc15e
-	// Question: Select the scatter plot for Olympic medals
+	// Question: Create a scatter plot from medal counts
 	// Widget key: scatter_choice_a
-	test("scatter-plot - [x3617431ada4cc15e] Select the scatter plot for Olympic medals (2)", async () => {
+	test("scatter-plot - [x3617431ada4cc15e] Create a scatter plot from medal counts (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Gold vs. Silver",
-		  "width": 500,
+		  "title": "Gold vs. Silver Medals",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 20,
 		    "min": 0,
@@ -24796,7 +24372,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 2
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 16,
@@ -24842,16 +24418,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x3617431ada4cc15e
-	// Question: Select the scatter plot for Olympic medals
+	// Question: Create a scatter plot from medal counts
 	// Widget key: scatter_choice_b
-	test("scatter-plot - [x3617431ada4cc15e] Select the scatter plot for Olympic medals (3)", async () => {
+	test("scatter-plot - [x3617431ada4cc15e] Create a scatter plot from medal counts (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Gold vs. Silver",
-		  "width": 500,
+		  "title": "Gold vs. Silver Medals",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 20,
 		    "min": 0,
@@ -24866,7 +24442,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 2
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 9,
@@ -24912,16 +24488,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x3617431ada4cc15e
-	// Question: Select the scatter plot for Olympic medals
+	// Question: Create a scatter plot from medal counts
 	// Widget key: scatter_choice_c
-	test("scatter-plot - [x3617431ada4cc15e] Select the scatter plot for Olympic medals (4)", async () => {
+	test("scatter-plot - [x3617431ada4cc15e] Create a scatter plot from medal counts (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Gold vs. Silver",
-		  "width": 500,
+		  "title": "Gold vs. Silver Medals",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 20,
 		    "min": 0,
@@ -24936,7 +24512,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 2
 		  },
-		  "height": 350,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 16,
@@ -24955,11 +24531,11 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 2,
-		      "y": 1,
+		      "y": 6,
 		      "label": ""
 		    },
 		    {
-		      "x": 6,
+		      "x": 1,
 		      "y": 1,
 		      "label": ""
 		    }
@@ -24982,101 +24558,31 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9c7dd01ce33ecc1b
-	// Question: Select a scatter plot for soccer goals (feet vs. head)
+	// Question: Select the scatter plot for goals scored with feet and head
 	// Widget key: scatter_choice_a
-	test("scatter-plot - [x9c7dd01ce33ecc1b] Select a scatter plot for soccer goals (feet vs. head) (2)", async () => {
+	test("scatter-plot - [x9c7dd01ce33ecc1b] Select the scatter plot for goals scored with feet and head (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
-		  "width": 600,
+		  "title": "Goals from feet vs. head",
+		  "width": 425,
 		  "xAxis": {
-		    "max": 40,
+		    "max": 13,
 		    "min": 0,
 		    "label": "Feet",
-		    "gridLines": true,
-		    "tickInterval": 5
-		  },
-		  "yAxis": {
-		    "max": 13,
-		    "min": 0,
-		    "label": "Head",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 450,
-		  "points": [
-		    {
-		      "x": 35,
-		      "y": 12,
-		      "label": ""
-		    },
-		    {
-		      "x": 20,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 25,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 25,
-		      "y": 1,
-		      "label": ""
-		    },
-		    {
-		      "x": 15,
-		      "y": 4,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9c7dd01ce33ecc1b
-	// Question: Select a scatter plot for soccer goals (feet vs. head)
-	// Widget key: scatter_choice_b
-	test("scatter-plot - [x9c7dd01ce33ecc1b] Select a scatter plot for soccer goals (feet vs. head) (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 600,
-		  "xAxis": {
-		    "max": 13,
-		    "min": 0,
-		    "label": "Head",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 40,
 		    "min": 0,
-		    "label": "Feet",
+		    "label": "Head",
 		    "gridLines": true,
 		    "tickInterval": 5
 		  },
-		  "height": 450,
+		  "height": 425,
 		  "points": [
 		    {
 		      "x": 12,
@@ -25122,16 +24628,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9c7dd01ce33ecc1b
-	// Question: Select a scatter plot for soccer goals (feet vs. head)
-	// Widget key: scatter_choice_c
-	test("scatter-plot - [x9c7dd01ce33ecc1b] Select a scatter plot for soccer goals (feet vs. head) (4)", async () => {
+	// Question: Select the scatter plot for goals scored with feet and head
+	// Widget key: scatter_choice_b
+	test("scatter-plot - [x9c7dd01ce33ecc1b] Select the scatter plot for goals scored with feet and head (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
-		  "width": 600,
+		  "title": "Goals from feet vs. head",
+		  "width": 425,
 		  "xAxis": {
 		    "max": 40,
 		    "min": 0,
@@ -25146,7 +24652,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
-		  "height": 450,
+		  "height": 425,
 		  "points": [
 		    {
 		      "x": 35,
@@ -25170,147 +24676,77 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 15,
+		      "y": 4,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9c7dd01ce33ecc1b
+	// Question: Select the scatter plot for goals scored with feet and head
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [x9c7dd01ce33ecc1b] Select the scatter plot for goals scored with feet and head (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Goals from feet vs. head",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 40,
+		    "min": 0,
+		    "label": "Feet",
+		    "gridLines": true,
+		    "tickInterval": 5
+		  },
+		  "yAxis": {
+		    "max": 13,
+		    "min": 0,
+		    "label": "Head",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 35,
+		      "y": 12,
+		      "label": ""
+		    },
+		    {
+		      "x": 20,
 		      "y": 2,
 		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x03d1c43076dba054
-	// Question: Plot sleep vs. age as a scatter plot
-	// Widget key: scatter_choice_a
-	test("scatter-plot - [x03d1c43076dba054] Plot sleep vs. age as a scatter plot (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "Age",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 15,
-		    "min": 0,
-		    "label": "Sleep",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 425,
-		  "points": [
+		    },
 		    {
-		      "x": 1,
-		      "y": 13,
+		      "x": 25,
+		      "y": 2,
 		      "label": ""
 		    },
 		    {
-		      "x": 2,
-		      "y": 11,
-		      "label": ""
-		    },
-		    {
-		      "x": 3,
-		      "y": 10,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 9,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 8,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x03d1c43076dba054
-	// Question: Plot sleep vs. age as a scatter plot
-	// Widget key: scatter_choice_b
-	test("scatter-plot - [x03d1c43076dba054] Plot sleep vs. age as a scatter plot (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 15,
-		    "min": 0,
-		    "label": "Sleep",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "yAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "Age",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 13,
+		      "x": 25,
 		      "y": 1,
 		      "label": ""
 		    },
 		    {
-		      "x": 11,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 10,
-		      "y": 3,
-		      "label": ""
-		    },
-		    {
-		      "x": 9,
-		      "y": 5,
-		      "label": ""
-		    },
-		    {
-		      "x": 8,
-		      "y": 8,
+		      "x": 14,
+		      "y": 4,
 		      "label": ""
 		    }
 		  ]
@@ -25332,15 +24768,15 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x03d1c43076dba054
-	// Question: Plot sleep vs. age as a scatter plot
-	// Widget key: scatter_choice_c
-	test("scatter-plot - [x03d1c43076dba054] Plot sleep vs. age as a scatter plot (4)", async () => {
+	// Question: Create a scatter plot from a data table
+	// Widget key: scatter_choice_a
+	test("scatter-plot - [x03d1c43076dba054] Create a scatter plot from a data table (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "",
+		  "title": "Sleep (hours) vs. Age (years)",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 11,
@@ -25370,7 +24806,77 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 3,
+		      "y": 10,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
 		      "y": 9,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 8,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x03d1c43076dba054
+	// Question: Create a scatter plot from a data table
+	// Widget key: scatter_choice_b
+	test("scatter-plot - [x03d1c43076dba054] Create a scatter plot from a data table (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Sleep (hours) vs. Age (years)",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 11,
+		    "min": 0,
+		    "label": "Age",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 15,
+		    "min": 0,
+		    "label": "Sleep",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 14,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 12,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 11,
 		      "label": ""
 		    },
 		    {
@@ -25380,7 +24886,77 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 8,
+		      "y": 9,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x03d1c43076dba054
+	// Question: Create a scatter plot from a data table
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [x03d1c43076dba054] Create a scatter plot from a data table (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Sleep (hours) vs. Age (years)",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 11,
+		    "min": 0,
+		    "label": "Age",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 15,
+		    "min": 0,
+		    "label": "Sleep",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
 		      "y": 8,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 9,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 10,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 11,
+		      "label": ""
+		    },
+		    {
+		      "x": 8,
+		      "y": 13,
 		      "label": ""
 		    }
 		  ]
@@ -25402,27 +24978,27 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x51ea6642b30120d3
-	// Question: Select the scatter plot for infant weights by age
+	// Question: Select the correct scatter plot for infant weights by age
 	// Widget key: scatter_choice_a
-	test("scatter-plot - [x51ea6642b30120d3] Select the scatter plot for infant weights by age (2)", async () => {
+	test("scatter-plot - [x51ea6642b30120d3] Select the correct scatter plot for infant weights by age (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Age vs. Weight",
+		  "title": "Age (months) vs. Weight (kg)",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 7,
 		    "min": 0,
-		    "label": "Age",
+		    "label": "Age (months)",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": 0,
-		    "label": "Weight",
+		    "label": "Weight (kg)",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
@@ -25477,102 +25053,27 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x51ea6642b30120d3
-	// Question: Select the scatter plot for infant weights by age
+	// Question: Select the correct scatter plot for infant weights by age
 	// Widget key: scatter_choice_b
-	test("scatter-plot - [x51ea6642b30120d3] Select the scatter plot for infant weights by age (3)", async () => {
+	test("scatter-plot - [x51ea6642b30120d3] Select the correct scatter plot for infant weights by age (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Weight vs. Age",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": 4,
-		    "label": "Weight",
-		    "gridLines": true,
-		    "tickInterval": 0.5
-		  },
-		  "yAxis": {
-		    "max": 7,
-		    "min": 0,
-		    "label": "Age",
-		    "gridLines": true,
-		    "tickInterval": 1
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 4.25,
-		      "y": 1,
-		      "label": ""
-		    },
-		    {
-		      "x": 5,
-		      "y": 2,
-		      "label": ""
-		    },
-		    {
-		      "x": 5.75,
-		      "y": 3,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.25,
-		      "y": 4,
-		      "label": ""
-		    },
-		    {
-		      "x": 6.75,
-		      "y": 5,
-		      "label": ""
-		    },
-		    {
-		      "x": 7,
-		      "y": 6,
-		      "label": ""
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for scatterPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x51ea6642b30120d3
-	// Question: Select the scatter plot for infant weights by age
-	// Widget key: scatter_choice_c
-	test("scatter-plot - [x51ea6642b30120d3] Select the scatter plot for infant weights by age (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "scatterPlot",
-		  "lines": [],
-		  "title": "Age vs. Weight",
+		  "title": "Age (months) vs. Weight (kg)",
 		  "width": 425,
 		  "xAxis": {
 		    "max": 7,
 		    "min": 0,
-		    "label": "Age",
+		    "label": "Age (months)",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": 0,
-		    "label": "Weight",
+		    "label": "Weight (kg)",
 		    "gridLines": true,
 		    "tickInterval": 1
 		  },
@@ -25580,7 +25081,7 @@ describe("scatterPlot widget tests", () => {
 		  "points": [
 		    {
 		      "x": 1,
-		      "y": 4.5,
+		      "y": 4.25,
 		      "label": ""
 		    },
 		    {
@@ -25590,17 +25091,17 @@ describe("scatterPlot widget tests", () => {
 		    },
 		    {
 		      "x": 3,
-		      "y": 5.5,
-		      "label": ""
-		    },
-		    {
-		      "x": 4,
 		      "y": 6,
 		      "label": ""
 		    },
 		    {
-		      "x": 5,
+		      "x": 4,
 		      "y": 6.5,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 6.75,
 		      "label": ""
 		    },
 		    {
@@ -25626,17 +25127,92 @@ describe("scatterPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x6e9f175da707bb4c
-	// Question: Plot hurricane predictions vs. actual counts
-	// Widget key: scatter_choice_a
-	test("scatter-plot - [x6e9f175da707bb4c] Plot hurricane predictions vs. actual counts (2)", async () => {
+	// Extracted from question: x51ea6642b30120d3
+	// Question: Select the correct scatter plot for infant weights by age
+	// Widget key: scatter_choice_c
+	test("scatter-plot - [x51ea6642b30120d3] Select the correct scatter plot for infant weights by age (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Predicted (x) vs. Actual (y)",
-		  "width": 600,
+		  "title": "Age (months) vs. Weight (kg)",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 7,
+		    "min": 0,
+		    "label": "Age (months)",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": 0,
+		    "label": "Weight (kg)",
+		    "gridLines": true,
+		    "tickInterval": 1
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 7,
+		      "label": ""
+		    },
+		    {
+		      "x": 2,
+		      "y": 6.75,
+		      "label": ""
+		    },
+		    {
+		      "x": 3,
+		      "y": 6.25,
+		      "label": ""
+		    },
+		    {
+		      "x": 4,
+		      "y": 5.75,
+		      "label": ""
+		    },
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "label": ""
+		    },
+		    {
+		      "x": 6,
+		      "y": 4.25,
+		      "label": ""
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scatterPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6e9f175da707bb4c
+	// Question: Select the scatter plot for predicted vs. actual hurricanes
+	// Widget key: scatter_choice_a
+	test("scatter-plot - [x6e9f175da707bb4c] Select the scatter plot for predicted vs. actual hurricanes (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scatterPlot",
+		  "lines": [],
+		  "title": "Predicted vs. Actual Hurricanes (2000–2005)",
+		  "width": 425,
 		  "xAxis": {
 		    "max": 30,
 		    "min": 0,
@@ -25651,7 +25227,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 425,
 		  "points": [
 		    {
 		      "x": 11,
@@ -25702,16 +25278,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x6e9f175da707bb4c
-	// Question: Plot hurricane predictions vs. actual counts
+	// Question: Select the scatter plot for predicted vs. actual hurricanes
 	// Widget key: scatter_choice_b
-	test("scatter-plot - [x6e9f175da707bb4c] Plot hurricane predictions vs. actual counts (3)", async () => {
+	test("scatter-plot - [x6e9f175da707bb4c] Select the scatter plot for predicted vs. actual hurricanes (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Predicted (x) vs. Actual (y)",
-		  "width": 600,
+		  "title": "Predicted vs. Actual Hurricanes (2000–2005)",
+		  "width": 425,
 		  "xAxis": {
 		    "max": 30,
 		    "min": 0,
@@ -25726,7 +25302,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 425,
 		  "points": [
 		    {
 		      "x": 14,
@@ -25777,16 +25353,16 @@ describe("scatterPlot widget tests", () => {
 	})
 
 	// Extracted from question: x6e9f175da707bb4c
-	// Question: Plot hurricane predictions vs. actual counts
+	// Question: Select the scatter plot for predicted vs. actual hurricanes
 	// Widget key: scatter_choice_c
-	test("scatter-plot - [x6e9f175da707bb4c] Plot hurricane predictions vs. actual counts (4)", async () => {
+	test("scatter-plot - [x6e9f175da707bb4c] Select the scatter plot for predicted vs. actual hurricanes (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scatterPlot",
 		  "lines": [],
-		  "title": "Predicted (x) vs. Actual (y)",
-		  "width": 600,
+		  "title": "Predicted vs. Actual Hurricanes (2000–2005)",
+		  "width": 425,
 		  "xAxis": {
 		    "max": 30,
 		    "min": 0,
@@ -25801,7 +25377,7 @@ describe("scatterPlot widget tests", () => {
 		    "gridLines": true,
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 425,
 		  "points": [
 		    {
 		      "x": 11,
@@ -25829,8 +25405,8 @@ describe("scatterPlot widget tests", () => {
 		      "label": ""
 		    },
 		    {
-		      "x": 27,
-		      "y": 17,
+		      "x": 17,
+		      "y": 25,
 		      "label": ""
 		    }
 		  ]

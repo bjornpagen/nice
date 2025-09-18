@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.972Z
+// Generated on: 2025-09-18T05:17:02.170Z
 // Widget Type: integerChipModel
 // Source: Real questions from database
 //
@@ -26,9 +26,9 @@ import * as logger from "@superbuilders/slog"
 
 describe("integerChipModel widget tests", () => {
 	// Extracted from question: x7aa00adbc102c655
-	// Question: Describe integer chips with zero pairs
+	// Question: Complete the description using integer chips
 	// Widget key: image_1
-	test("integer-chip-model - [x7aa00adbc102c655] Describe integer chips with zero pairs (1)", async () => {
+	test("integer-chip-model - [x7aa00adbc102c655] Complete the description using integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -80,153 +80,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7aa00adbc102c655
-	// Question: Describe integer chips with zero pairs
-	// Widget key: image_2
-	test("integer-chip-model - [x7aa00adbc102c655] Describe integer chips with zero pairs (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2fba643be6fd9a4f
-	// Question: Complete the integer-chip description
-	// Widget key: image_1
-	test("integer-chip-model - [x2fba643be6fd9a4f] Complete the integer-chip description (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2fba643be6fd9a4f
-	// Question: Complete the integer-chip description
-	// Widget key: image_2
-	test("integer-chip-model - [x2fba643be6fd9a4f] Complete the integer-chip description (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -245,47 +99,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x67c799a0f8d166e0
-	// Question: Select two addition expressions for integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [x67c799a0f8d166e0] Select two addition expressions for integer chips (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x67c799a0f8d166e0
-	// Question: Select two addition expressions for integer chips
+	// Question: Select two addition expressions for an integer-chip model
 	// Widget key: image_2
-	test("integer-chip-model - [x67c799a0f8d166e0] Select two addition expressions for integer chips (2)", async () => {
+	test("integer-chip-model - [x67c799a0f8d166e0] Select two addition expressions for an integer-chip model", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -321,8 +137,84 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
+		  "height": 320
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for integerChipModel", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2fba643be6fd9a4f
+	// Question: Describe zero pairs with integer chips
+	// Widget key: image_1
+	test("integer-chip-model - [x2fba643be6fd9a4f] Describe zero pairs with integer chips", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "integerChipModel",
+		  "chips": [
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    }
+		  ],
+		  "width": 400,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -341,9 +233,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: xea722bf49a523afb
-	// Question: Describe integer chips: zero pairs and leftover units
+	// Question: Count zero pairs with integer chips
 	// Widget key: image_1
-	test("integer-chip-model - [xea722bf49a523afb] Describe integer chips: zero pairs and leftover units (1)", async () => {
+	test("integer-chip-model - [xea722bf49a523afb] Count zero pairs with integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -395,46 +287,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xea722bf49a523afb
-	// Question: Describe integer chips: zero pairs and leftover units
-	// Widget key: image_2
-	test("integer-chip-model - [xea722bf49a523afb] Describe integer chips: zero pairs and leftover units (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -453,38 +306,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x272e8236dace3feb
-	// Question: Select two addition expressions for an integer-chip model
-	// Widget key: image_1
-	test("integer-chip-model - [x272e8236dace3feb] Select two addition expressions for an integer-chip model (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x272e8236dace3feb
-	// Question: Select two addition expressions for an integer-chip model
+	// Question: Identify two addition expressions from integer chips
 	// Widget key: image_2
-	test("integer-chip-model - [x272e8236dace3feb] Select two addition expressions for an integer-chip model (2)", async () => {
+	test("integer-chip-model - [x272e8236dace3feb] Identify two addition expressions from integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -540,8 +364,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -560,26 +383,49 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x9d8db87b91e88b8c
-	// Question: Identify images that represent 4 using integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [x9d8db87b91e88b8c] Identify images that represent 4 using integer chips (1)", async () => {
+	// Question: Identify representations of 4 with integer chips
+	// Widget key: choice_a_integer_chips
+	test("integer-chip-model - [x9d8db87b91e88b8c] Identify representations of 4 with integer chips (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "integerChipModel",
 		  "chips": [
 		    {
-		      "sign": "plus",
+		      "sign": "minus",
 		      "crossedOut": false
 		    },
 		    {
 		      "sign": "minus",
 		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
 		    }
 		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -598,9 +444,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x9d8db87b91e88b8c
-	// Question: Identify images that represent 4 using integer chips
-	// Widget key: choice_a_visual
-	test("integer-chip-model - [x9d8db87b91e88b8c] Identify images that represent 4 using integer chips (2)", async () => {
+	// Question: Identify representations of 4 with integer chips
+	// Widget key: choice_b_integer_chips
+	test("integer-chip-model - [x9d8db87b91e88b8c] Identify representations of 4 with integer chips (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -612,6 +458,22 @@ describe("integerChipModel widget tests", () => {
 		    },
 		    {
 		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
 		      "crossedOut": false
 		    },
 		    {
@@ -639,9 +501,8 @@ describe("integerChipModel widget tests", () => {
 		      "crossedOut": false
 		    }
 		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -660,9 +521,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x9d8db87b91e88b8c
-	// Question: Identify images that represent 4 using integer chips
-	// Widget key: choice_b_visual
-	test("integer-chip-model - [x9d8db87b91e88b8c] Identify images that represent 4 using integer chips (3)", async () => {
+	// Question: Identify representations of 4 with integer chips
+	// Widget key: choice_c_integer_chips
+	test("integer-chip-model - [x9d8db87b91e88b8c] Identify representations of 4 with integer chips (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -699,27 +560,10 @@ describe("integerChipModel widget tests", () => {
 		    {
 		      "sign": "plus",
 		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
 		    }
 		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -738,71 +582,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x9d8db87b91e88b8c
-	// Question: Identify images that represent 4 using integer chips
-	// Widget key: choice_c_visual
-	test("integer-chip-model - [x9d8db87b91e88b8c] Identify images that represent 4 using integer chips (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9d8db87b91e88b8c
-	// Question: Identify images that represent 4 using integer chips
-	// Widget key: choice_d_visual
-	test("integer-chip-model - [x9d8db87b91e88b8c] Identify images that represent 4 using integer chips (5)", async () => {
+	// Question: Identify representations of 4 with integer chips
+	// Widget key: choice_d_integer_chips
+	test("integer-chip-model - [x9d8db87b91e88b8c] Identify representations of 4 with integer chips (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -825,9 +607,8 @@ describe("integerChipModel widget tests", () => {
 		      "crossedOut": false
 		    }
 		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -846,433 +627,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: xce6b6daba4bd70f2
-	// Question: Select two images that represent −5
-	// Widget key: image_1
-	test("integer-chip-model - [xce6b6daba4bd70f2] Select two images that represent −5 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xce6b6daba4bd70f2
-	// Question: Select two images that represent −5
-	// Widget key: choice_a_image
-	test("integer-chip-model - [xce6b6daba4bd70f2] Select two images that represent −5 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xce6b6daba4bd70f2
-	// Question: Select two images that represent −5
-	// Widget key: choice_b_image
-	test("integer-chip-model - [xce6b6daba4bd70f2] Select two images that represent −5 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xce6b6daba4bd70f2
-	// Question: Select two images that represent −5
-	// Widget key: choice_c_image
-	test("integer-chip-model - [xce6b6daba4bd70f2] Select two images that represent −5 (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xce6b6daba4bd70f2
-	// Question: Select two images that represent −5
-	// Widget key: choice_d_image
-	test("integer-chip-model - [xce6b6daba4bd70f2] Select two images that represent −5 (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x12bc21f992922f93
-	// Question: Select two addition expressions represented by integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [x12bc21f992922f93] Select two addition expressions represented by integer chips (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x12bc21f992922f93
-	// Question: Select two addition expressions represented by integer chips
-	// Widget key: image_2
-	test("integer-chip-model - [x12bc21f992922f93] Select two addition expressions represented by integer chips (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x44e48c43a1428bbb
-	// Question: Select images that represent −4 with integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [x44e48c43a1428bbb] Select images that represent −4 with integer chips (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x44e48c43a1428bbb
-	// Question: Select images that represent −4 with integer chips
+	// Question: Identify images representing −5 with integer chips
 	// Widget key: choice_a_chips
-	test("integer-chip-model - [x44e48c43a1428bbb] Select images that represent −4 with integer chips (2)", async () => {
+	test("integer-chip-model - [xce6b6daba4bd70f2] Identify images representing −5 with integer chips (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1305,15 +662,10 @@ describe("integerChipModel widget tests", () => {
 		    {
 		      "sign": "plus",
 		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
 		    }
 		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
+		  "width": 400,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1331,15 +683,19 @@ describe("integerChipModel widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x44e48c43a1428bbb
-	// Question: Select images that represent −4 with integer chips
+	// Extracted from question: xce6b6daba4bd70f2
+	// Question: Identify images representing −5 with integer chips
 	// Widget key: choice_b_chips
-	test("integer-chip-model - [x44e48c43a1428bbb] Select images that represent −4 with integer chips (3)", async () => {
+	test("integer-chip-model - [xce6b6daba4bd70f2] Identify images representing −5 with integer chips (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "integerChipModel",
 		  "chips": [
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
 		    {
 		      "sign": "minus",
 		      "crossedOut": false
@@ -1381,9 +737,8 @@ describe("integerChipModel widget tests", () => {
 		      "crossedOut": false
 		    }
 		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
+		  "width": 400,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1401,15 +756,19 @@ describe("integerChipModel widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x44e48c43a1428bbb
-	// Question: Select images that represent −4 with integer chips
+	// Extracted from question: xce6b6daba4bd70f2
+	// Question: Identify images representing −5 with integer chips
 	// Widget key: choice_c_chips
-	test("integer-chip-model - [x44e48c43a1428bbb] Select images that represent −4 with integer chips (4)", async () => {
+	test("integer-chip-model - [xce6b6daba4bd70f2] Identify images representing −5 with integer chips (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "integerChipModel",
 		  "chips": [
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
 		    {
 		      "sign": "minus",
 		      "crossedOut": false
@@ -1427,9 +786,134 @@ describe("integerChipModel widget tests", () => {
 		      "crossedOut": false
 		    }
 		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
+		  "width": 400,
+		  "height": 300
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for integerChipModel", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xce6b6daba4bd70f2
+	// Question: Identify images representing −5 with integer chips
+	// Widget key: choice_d_chips
+	test("integer-chip-model - [xce6b6daba4bd70f2] Identify images representing −5 with integer chips (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "integerChipModel",
+		  "chips": [
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    }
+		  ],
+		  "width": 400,
+		  "height": 300
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for integerChipModel", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x12bc21f992922f93
+	// Question: Select two addition expressions for integer chips
+	// Widget key: image_2
+	test("integer-chip-model - [x12bc21f992922f93] Select two addition expressions for integer chips", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "integerChipModel",
+		  "chips": [
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    }
+		  ],
+		  "width": 320,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1448,9 +932,184 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x44e48c43a1428bbb
-	// Question: Select images that represent −4 with integer chips
+	// Question: Identify images that represent −4 with integer chips
+	// Widget key: choice_a_chips
+	test("integer-chip-model - [x44e48c43a1428bbb] Identify images that represent −4 with integer chips (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "integerChipModel",
+		  "chips": [
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    }
+		  ],
+		  "width": 400,
+		  "height": 300
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for integerChipModel", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x44e48c43a1428bbb
+	// Question: Identify images that represent −4 with integer chips
+	// Widget key: choice_b_chips
+	test("integer-chip-model - [x44e48c43a1428bbb] Identify images that represent −4 with integer chips (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "integerChipModel",
+		  "chips": [
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    }
+		  ],
+		  "width": 400,
+		  "height": 300
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for integerChipModel", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x44e48c43a1428bbb
+	// Question: Identify images that represent −4 with integer chips
+	// Widget key: choice_c_chips
+	test("integer-chip-model - [x44e48c43a1428bbb] Identify images that represent −4 with integer chips (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "integerChipModel",
+		  "chips": [
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    }
+		  ],
+		  "width": 400,
+		  "height": 300
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for integerChipModel", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x44e48c43a1428bbb
+	// Question: Identify images that represent −4 with integer chips
 	// Widget key: choice_d_chips
-	test("integer-chip-model - [x44e48c43a1428bbb] Select images that represent −4 with integer chips (5)", async () => {
+	test("integer-chip-model - [x44e48c43a1428bbb] Identify images that represent −4 with integer chips (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1477,9 +1136,8 @@ describe("integerChipModel widget tests", () => {
 		      "crossedOut": false
 		    }
 		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
+		  "width": 400,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1498,26 +1156,69 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: xbc4c331f3105dde6
-	// Question: Identify images that represent 3 using integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [xbc4c331f3105dde6] Identify images that represent 3 using integer chips (1)", async () => {
+	// Question: Identify images representing 3 with integer chips
+	// Widget key: choice_a_chips
+	test("integer-chip-model - [xbc4c331f3105dde6] Identify images representing 3 with integer chips (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "integerChipModel",
 		  "chips": [
 		    {
-		      "sign": "plus",
+		      "sign": "minus",
 		      "crossedOut": false
 		    },
 		    {
 		      "sign": "minus",
 		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": false
 		    }
 		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "width": 400,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1536,9 +1237,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: xbc4c331f3105dde6
-	// Question: Identify images that represent 3 using integer chips
-	// Widget key: choice_a_image
-	test("integer-chip-model - [xbc4c331f3105dde6] Identify images that represent 3 using integer chips (2)", async () => {
+	// Question: Identify images representing 3 with integer chips
+	// Widget key: choice_b_chips
+	test("integer-chip-model - [xbc4c331f3105dde6] Identify images representing 3 with integer chips (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1546,38 +1247,6 @@ describe("integerChipModel widget tests", () => {
 		  "chips": [
 		    {
 		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
 		      "crossedOut": false
 		    },
 		    {
@@ -1597,9 +1266,8 @@ describe("integerChipModel widget tests", () => {
 		      "crossedOut": false
 		    }
 		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
+		  "width": 400,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1618,14 +1286,22 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: xbc4c331f3105dde6
-	// Question: Identify images that represent 3 using integer chips
-	// Widget key: choice_b_image
-	test("integer-chip-model - [xbc4c331f3105dde6] Identify images that represent 3 using integer chips (3)", async () => {
+	// Question: Identify images representing 3 with integer chips
+	// Widget key: choice_c_chips
+	test("integer-chip-model - [xbc4c331f3105dde6] Identify images representing 3 with integer chips (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "integerChipModel",
 		  "chips": [
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
 		    {
 		      "sign": "minus",
 		      "crossedOut": false
@@ -1641,15 +1317,10 @@ describe("integerChipModel widget tests", () => {
 		    {
 		      "sign": "plus",
 		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
 		    }
 		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
+		  "width": 400,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1668,63 +1339,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: xbc4c331f3105dde6
-	// Question: Identify images that represent 3 using integer chips
-	// Widget key: choice_c_image
-	test("integer-chip-model - [xbc4c331f3105dde6] Identify images that represent 3 using integer chips (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbc4c331f3105dde6
-	// Question: Identify images that represent 3 using integer chips
-	// Widget key: choice_d_image
-	test("integer-chip-model - [xbc4c331f3105dde6] Identify images that represent 3 using integer chips (5)", async () => {
+	// Question: Identify images representing 3 with integer chips
+	// Widget key: choice_d_chips
+	test("integer-chip-model - [xbc4c331f3105dde6] Identify images representing 3 with integer chips (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1743,9 +1360,8 @@ describe("integerChipModel widget tests", () => {
 		      "crossedOut": false
 		    }
 		  ],
-		  "width": 250,
-		  "height": 63,
-		  "showLegend": false
+		  "width": 400,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1764,47 +1380,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: xcbde5d0699438e02
-	// Question: Identify two addition expressions from integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [xcbde5d0699438e02] Identify two addition expressions from integer chips (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcbde5d0699438e02
-	// Question: Identify two addition expressions from integer chips
+	// Question: Select two addition expressions for integer chips
 	// Widget key: image_2
-	test("integer-chip-model - [xcbde5d0699438e02] Identify two addition expressions from integer chips (2)", async () => {
+	test("integer-chip-model - [xcbde5d0699438e02] Select two addition expressions for integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1868,8 +1446,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 64,
-		  "showLegend": false
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1888,9 +1465,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x9d9353ee8e346f8b
-	// Question: Complete the integer chips description
+	// Question: Describe integer chips using zero pairs
 	// Widget key: image_1
-	test("integer-chip-model - [x9d9353ee8e346f8b] Complete the integer chips description (1)", async () => {
+	test("integer-chip-model - [x9d9353ee8e346f8b] Describe integer chips using zero pairs", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1930,46 +1507,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9d9353ee8e346f8b
-	// Question: Complete the integer chips description
-	// Widget key: image_2
-	test("integer-chip-model - [x9d9353ee8e346f8b] Complete the integer chips description (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1988,9 +1526,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: xf91620f7ace72974
-	// Question: Evaluate an integer sum
+	// Question: Evaluate the sum represented by integer chips
 	// Widget key: image_2
-	test("integer-chip-model - [xf91620f7ace72974] Evaluate an integer sum", async () => {
+	test("integer-chip-model - [xf91620f7ace72974] Evaluate the sum represented by integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2070,8 +1608,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 71,
-		  "showLegend": false
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2090,9 +1627,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x952dcc496f32ccdf
-	// Question: Evaluate 1 + (-6) with integer chips
+	// Question: Evaluate a sum with integer chips
 	// Widget key: image_2
-	test("integer-chip-model - [x952dcc496f32ccdf] Evaluate 1 + (-6) with integer chips", async () => {
+	test("integer-chip-model - [x952dcc496f32ccdf] Evaluate a sum with integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2128,8 +1665,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": true
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2148,9 +1684,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x2ec6031371c09a6e
-	// Question: Evaluate an integer sum represented with chips
+	// Question: Evaluate -3 + 2 with integer chips
 	// Widget key: image_2
-	test("integer-chip-model - [x2ec6031371c09a6e] Evaluate an integer sum represented with chips", async () => {
+	test("integer-chip-model - [x2ec6031371c09a6e] Evaluate -3 + 2 with integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2178,8 +1714,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2198,9 +1733,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: xb6987d1fab33b21b
-	// Question: Evaluate an integer sum from a diagram
+	// Question: Evaluate 6 + (-1)
 	// Widget key: image_2
-	test("integer-chip-model - [xb6987d1fab33b21b] Evaluate an integer sum from a diagram", async () => {
+	test("integer-chip-model - [xb6987d1fab33b21b] Evaluate 6 + (-1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2236,8 +1771,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2256,9 +1790,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x1939bf4c594807e8
-	// Question: Add negative integers using integer chips
+	// Question: Evaluate a sum of negative integers
 	// Widget key: image_2
-	test("integer-chip-model - [x1939bf4c594807e8] Add negative integers using integer chips", async () => {
+	test("integer-chip-model - [x1939bf4c594807e8] Evaluate a sum of negative integers", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2282,8 +1816,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2302,9 +1835,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x27a7762e59b334a8
-	// Question: Evaluate 4 + (−8) using integer chips
+	// Question: Evaluate 4 + (-8) from a diagram
 	// Widget key: image_2
-	test("integer-chip-model - [x27a7762e59b334a8] Evaluate 4 + (−8) using integer chips", async () => {
+	test("integer-chip-model - [x27a7762e59b334a8] Evaluate 4 + (-8) from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2360,8 +1893,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2380,9 +1912,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x56dad6852d181fa2
-	// Question: Evaluate −4 + (−4) from a chip diagram
+	// Question: Evaluate -4 + (-4) using integer chips
 	// Widget key: image_2
-	test("integer-chip-model - [x56dad6852d181fa2] Evaluate −4 + (−4) from a chip diagram", async () => {
+	test("integer-chip-model - [x56dad6852d181fa2] Evaluate -4 + (-4) using integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2422,8 +1954,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2442,9 +1973,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x142a83f550d56d4c
-	// Question: Evaluate -2 + 8
+	// Question: Evaluate an integer sum with chips
 	// Widget key: image_2
-	test("integer-chip-model - [x142a83f550d56d4c] Evaluate -2 + 8", async () => {
+	test("integer-chip-model - [x142a83f550d56d4c] Evaluate an integer sum with chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2491,9 +2022,8 @@ describe("integerChipModel widget tests", () => {
 		      "crossedOut": false
 		    }
 		  ],
-		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
+		  "width": 400,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2512,9 +2042,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x30311f95b8b53265
-	// Question: Evaluate an integer sum with chips
+	// Question: Evaluate 9 + (−7)
 	// Widget key: image_2
-	test("integer-chip-model - [x30311f95b8b53265] Evaluate an integer sum with chips", async () => {
+	test("integer-chip-model - [x30311f95b8b53265] Evaluate 9 + (−7)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2586,8 +2116,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 71,
-		  "showLegend": false
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2606,9 +2135,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x43f9363d44352033
-	// Question: Evaluate an integer sum using chips
+	// Question: Evaluate an integer sum with chips
 	// Widget key: image_2
-	test("integer-chip-model - [x43f9363d44352033] Evaluate an integer sum using chips", async () => {
+	test("integer-chip-model - [x43f9363d44352033] Evaluate an integer sum with chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2655,9 +2184,8 @@ describe("integerChipModel widget tests", () => {
 		      "crossedOut": false
 		    }
 		  ],
-		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
+		  "width": 400,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2676,9 +2204,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x5cba17b6307f7e8d
-	// Question: Evaluate -5 + (-1)
+	// Question: Evaluate a sum with integer chips
 	// Widget key: image_2
-	test("integer-chip-model - [x5cba17b6307f7e8d] Evaluate -5 + (-1)", async () => {
+	test("integer-chip-model - [x5cba17b6307f7e8d] Evaluate a sum with integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2710,8 +2238,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2730,9 +2257,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x3b7a918fae63396f
-	// Question: Evaluate -3 + (-6)
+	// Question: Evaluate a sum of negative integers
 	// Widget key: image_2
-	test("integer-chip-model - [x3b7a918fae63396f] Evaluate -3 + (-6)", async () => {
+	test("integer-chip-model - [x3b7a918fae63396f] Evaluate a sum of negative integers", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2776,8 +2303,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2796,9 +2322,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x7bcc02d46043d744
-	// Question: Evaluate an integer sum with zero pairs
+	// Question: Evaluate 6 + (-6)
 	// Widget key: image_2
-	test("integer-chip-model - [x7bcc02d46043d744] Evaluate an integer sum with zero pairs", async () => {
+	test("integer-chip-model - [x7bcc02d46043d744] Evaluate 6 + (-6)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2854,8 +2380,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2874,9 +2399,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x86c4b524f4fef37f
-	// Question: Evaluate an integer sum using chips
+	// Question: Evaluate an integer sum with chips
 	// Widget key: image_2
-	test("integer-chip-model - [x86c4b524f4fef37f] Evaluate an integer sum using chips", async () => {
+	test("integer-chip-model - [x86c4b524f4fef37f] Evaluate an integer sum with chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2908,8 +2433,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2928,9 +2452,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x76ace7cfef85dd65
-	// Question: Evaluate -7 + 5
+	// Question: Evaluate an integer sum using chips
 	// Widget key: image_2
-	test("integer-chip-model - [x76ace7cfef85dd65] Evaluate -7 + 5", async () => {
+	test("integer-chip-model - [x76ace7cfef85dd65] Evaluate an integer sum using chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2986,8 +2510,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": true
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3006,9 +2529,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x36d84eb4467a3d9a
-	// Question: Evaluate −3 + 4
+	// Question: Evaluate an integer sum using chips
 	// Widget key: image_2
-	test("integer-chip-model - [x36d84eb4467a3d9a] Evaluate −3 + 4", async () => {
+	test("integer-chip-model - [x36d84eb4467a3d9a] Evaluate an integer sum using chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3043,9 +2566,61 @@ describe("integerChipModel widget tests", () => {
 		      "crossedOut": false
 		    }
 		  ],
+		  "width": 400,
+		  "height": 320
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for integerChipModel", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x90fc3f1e0d4d7df5
+	// Question: Complete Sadio's subtraction equation
+	// Widget key: image_2
+	test("integer-chip-model - [x90fc3f1e0d4d7df5] Complete Sadio's subtraction equation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "integerChipModel",
+		  "chips": [
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": true
+		    }
+		  ],
 		  "width": 320,
-		  "height": 91,
-		  "showLegend": false
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3065,46 +2640,8 @@ describe("integerChipModel widget tests", () => {
 
 	// Extracted from question: x64d89f0e4439fb60
 	// Question: Complete a subtraction equation using integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [x64d89f0e4439fb60] Complete a subtraction equation using integer chips (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x64d89f0e4439fb60
-	// Question: Complete a subtraction equation using integer chips
 	// Widget key: image_2
-	test("integer-chip-model - [x64d89f0e4439fb60] Complete a subtraction equation using integer chips (2)", async () => {
+	test("integer-chip-model - [x64d89f0e4439fb60] Complete a subtraction equation using integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3140,100 +2677,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x90fc3f1e0d4d7df5
-	// Question: Complete a subtraction equation using integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [x90fc3f1e0d4d7df5] Complete a subtraction equation using integer chips (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x90fc3f1e0d4d7df5
-	// Question: Complete a subtraction equation using integer chips
-	// Widget key: image_2
-	test("integer-chip-model - [x90fc3f1e0d4d7df5] Complete a subtraction equation using integer chips (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": true
-		    }
-		  ],
-		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3252,47 +2696,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x3d4691f41a65dd92
-	// Question: Complete Elif's subtraction equation
-	// Widget key: image_1
-	test("integer-chip-model - [x3d4691f41a65dd92] Complete Elif's subtraction equation (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3d4691f41a65dd92
-	// Question: Complete Elif's subtraction equation
+	// Question: Complete a subtraction equation with integer chips
 	// Widget key: image_2
-	test("integer-chip-model - [x3d4691f41a65dd92] Complete Elif's subtraction equation (2)", async () => {
+	test("integer-chip-model - [x3d4691f41a65dd92] Complete a subtraction equation with integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3324,8 +2730,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3344,9 +2749,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x1e243c8fd876e549
-	// Question: Complete a subtraction equation from integer chips
+	// Question: Complete a subtraction equation using integer chips
 	// Widget key: image_1
-	test("integer-chip-model - [x1e243c8fd876e549] Complete a subtraction equation from integer chips (1)", async () => {
+	test("integer-chip-model - [x1e243c8fd876e549] Complete a subtraction equation using integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3374,37 +2779,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1e243c8fd876e549
-	// Question: Complete a subtraction equation from integer chips
-	// Widget key: image_2
-	test("integer-chip-model - [x1e243c8fd876e549] Complete a subtraction equation from integer chips (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3423,9 +2798,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x430e12f4669434a9
-	// Question: Complete a subtraction equation using integer chips
+	// Question: Complete a subtraction equation from integer chips
 	// Widget key: image_1
-	test("integer-chip-model - [x430e12f4669434a9] Complete a subtraction equation using integer chips (1)", async () => {
+	test("integer-chip-model - [x430e12f4669434a9] Complete a subtraction equation from integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3465,8 +2840,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3484,27 +2858,58 @@ describe("integerChipModel widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x430e12f4669434a9
+	// Extracted from question: xc35b5bc8f3c70b52
 	// Question: Complete a subtraction equation using integer chips
-	// Widget key: image_2
-	test("integer-chip-model - [x430e12f4669434a9] Complete a subtraction equation using integer chips (2)", async () => {
+	// Widget key: image_1
+	test("integer-chip-model - [xc35b5bc8f3c70b52] Complete a subtraction equation using integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "integerChipModel",
 		  "chips": [
 		    {
-		      "sign": "plus",
+		      "sign": "minus",
 		      "crossedOut": false
 		    },
 		    {
 		      "sign": "minus",
 		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "minus",
+		      "crossedOut": false
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": true
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": true
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": true
+		    },
+		    {
+		      "sign": "plus",
+		      "crossedOut": true
 		    }
 		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "width": 320,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3523,9 +2928,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x70e0a638cd207a9a
-	// Question: Complete a subtraction equation from integer chips
+	// Question: Complete a subtraction equation with integer chips
 	// Widget key: image_1
-	test("integer-chip-model - [x70e0a638cd207a9a] Complete a subtraction equation from integer chips (1)", async () => {
+	test("integer-chip-model - [x70e0a638cd207a9a] Complete a subtraction equation with integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3576,47 +2981,8 @@ describe("integerChipModel widget tests", () => {
 		      "crossedOut": true
 		    }
 		  ],
-		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x70e0a638cd207a9a
-	// Question: Complete a subtraction equation from integer chips
-	// Widget key: image_2
-	test("integer-chip-model - [x70e0a638cd207a9a] Complete a subtraction equation from integer chips (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "width": 400,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3635,9 +3001,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x79c70ee1b89ca5b7
-	// Question: Complete a subtraction equation using integer chips
+	// Question: Complete a subtraction equation from integer chips
 	// Widget key: image_1
-	test("integer-chip-model - [x79c70ee1b89ca5b7] Complete a subtraction equation using integer chips (1)", async () => {
+	test("integer-chip-model - [x79c70ee1b89ca5b7] Complete a subtraction equation from integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3697,37 +3063,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x79c70ee1b89ca5b7
-	// Question: Complete a subtraction equation using integer chips
-	// Widget key: image_2
-	test("integer-chip-model - [x79c70ee1b89ca5b7] Complete a subtraction equation using integer chips (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3748,7 +3084,7 @@ describe("integerChipModel widget tests", () => {
 	// Extracted from question: x73ef0a898e35d01b
 	// Question: Complete a subtraction equation from integer chips
 	// Widget key: image_1
-	test("integer-chip-model - [x73ef0a898e35d01b] Complete a subtraction equation from integer chips (1)", async () => {
+	test("integer-chip-model - [x73ef0a898e35d01b] Complete a subtraction equation from integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3776,66 +3112,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x73ef0a898e35d01b
-	// Question: Complete a subtraction equation from integer chips
-	// Widget key: image_2
-	test("integer-chip-model - [x73ef0a898e35d01b] Complete a subtraction equation from integer chips (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc7e216e925e15870
-	// Question: Complete a subtraction equation with integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [xc7e216e925e15870] Complete a subtraction equation with integer chips (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3856,7 +3133,7 @@ describe("integerChipModel widget tests", () => {
 	// Extracted from question: xc7e216e925e15870
 	// Question: Complete a subtraction equation with integer chips
 	// Widget key: image_2
-	test("integer-chip-model - [xc7e216e925e15870] Complete a subtraction equation with integer chips (2)", async () => {
+	test("integer-chip-model - [xc7e216e925e15870] Complete a subtraction equation with integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3916,8 +3193,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3936,47 +3212,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: xc7cbbb65f42f202f
-	// Question: Complete a subtraction equation using integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [xc7cbbb65f42f202f] Complete a subtraction equation using integer chips (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc7cbbb65f42f202f
-	// Question: Complete a subtraction equation using integer chips
+	// Question: Complete Mark's subtraction equation
 	// Widget key: image_2
-	test("integer-chip-model - [xc7cbbb65f42f202f] Complete a subtraction equation using integer chips (2)", async () => {
+	test("integer-chip-model - [xc7cbbb65f42f202f] Complete Mark's subtraction equation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4016,8 +3254,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4036,9 +3273,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x25a33d41a493d308
-	// Question: Complete a subtraction equation with integer chips
+	// Question: Complete a subtraction equation using integer chips
 	// Widget key: image_1
-	test("integer-chip-model - [x25a33d41a493d308] Complete a subtraction equation with integer chips (1)", async () => {
+	test("integer-chip-model - [x25a33d41a493d308] Complete a subtraction equation using integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4066,84 +3303,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x25a33d41a493d308
-	// Question: Complete a subtraction equation with integer chips
-	// Widget key: image_2
-	test("integer-chip-model - [x25a33d41a493d308] Complete a subtraction equation with integer chips (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0a960fe3aa62c90b
-	// Question: Complete Tegan's subtraction equation
-	// Widget key: image_1
-	test("integer-chip-model - [x0a960fe3aa62c90b] Complete Tegan's subtraction equation (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4164,7 +3324,7 @@ describe("integerChipModel widget tests", () => {
 	// Extracted from question: x0a960fe3aa62c90b
 	// Question: Complete Tegan's subtraction equation
 	// Widget key: image_2
-	test("integer-chip-model - [x0a960fe3aa62c90b] Complete Tegan's subtraction equation (2)", async () => {
+	test("integer-chip-model - [x0a960fe3aa62c90b] Complete Tegan's subtraction equation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4200,8 +3360,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4220,47 +3379,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: xb148748f6fa7aa4a
-	// Question: Complete a subtraction equation with integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [xb148748f6fa7aa4a] Complete a subtraction equation with integer chips (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb148748f6fa7aa4a
-	// Question: Complete a subtraction equation with integer chips
+	// Question: Complete Talia's subtraction equation with integer chips
 	// Widget key: image_2
-	test("integer-chip-model - [xb148748f6fa7aa4a] Complete a subtraction equation with integer chips (2)", async () => {
+	test("integer-chip-model - [xb148748f6fa7aa4a] Complete Talia's subtraction equation with integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4308,8 +3429,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4328,47 +3448,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x1c3306d25afbe895
-	// Question: Complete Keala's subtraction equation from integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [x1c3306d25afbe895] Complete Keala's subtraction equation from integer chips (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1c3306d25afbe895
-	// Question: Complete Keala's subtraction equation from integer chips
+	// Question: Complete Keala's subtraction equation
 	// Widget key: image_2
-	test("integer-chip-model - [x1c3306d25afbe895] Complete Keala's subtraction equation from integer chips (2)", async () => {
+	test("integer-chip-model - [x1c3306d25afbe895] Complete Keala's subtraction equation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4420,8 +3502,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4440,9 +3521,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x0dd0a6268dda5727
-	// Question: Complete a subtraction equation with integer chips
+	// Question: Complete a subtraction equation using integer chips
 	// Widget key: image_1
-	test("integer-chip-model - [x0dd0a6268dda5727] Complete a subtraction equation with integer chips (1)", async () => {
+	test("integer-chip-model - [x0dd0a6268dda5727] Complete a subtraction equation using integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4482,37 +3563,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0dd0a6268dda5727
-	// Question: Complete a subtraction equation with integer chips
-	// Widget key: image_2
-	test("integer-chip-model - [x0dd0a6268dda5727] Complete a subtraction equation with integer chips (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4531,9 +3582,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x5843c3c943826513
-	// Question: Complete Raj's subtraction equation
+	// Question: Complete a subtraction equation using integer chips
 	// Widget key: image_1
-	test("integer-chip-model - [x5843c3c943826513] Complete Raj's subtraction equation (1)", async () => {
+	test("integer-chip-model - [x5843c3c943826513] Complete a subtraction equation using integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4565,145 +3616,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5843c3c943826513
-	// Question: Complete Raj's subtraction equation
-	// Widget key: image_2
-	test("integer-chip-model - [x5843c3c943826513] Complete Raj's subtraction equation (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc35b5bc8f3c70b52
-	// Question: Complete a subtraction equation from integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [xc35b5bc8f3c70b52] Complete a subtraction equation from integer chips (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": true
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": true
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": true
-		    },
-		    {
-		      "sign": "plus",
-		      "crossedOut": true
-		    }
-		  ],
-		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc35b5bc8f3c70b52
-	// Question: Complete a subtraction equation from integer chips
-	// Widget key: image_2
-	test("integer-chip-model - [xc35b5bc8f3c70b52] Complete a subtraction equation from integer chips (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4722,9 +3635,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x67ed821473e88c42
-	// Question: Complete a subtraction equation with integer chips
+	// Question: Complete a subtraction equation from integer chips
 	// Widget key: image_1
-	test("integer-chip-model - [x67ed821473e88c42] Complete a subtraction equation with integer chips (1)", async () => {
+	test("integer-chip-model - [x67ed821473e88c42] Complete a subtraction equation from integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4776,37 +3689,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x67ed821473e88c42
-	// Question: Complete a subtraction equation with integer chips
-	// Widget key: image_2
-	test("integer-chip-model - [x67ed821473e88c42] Complete a subtraction equation with integer chips (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4825,47 +3708,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x41f7fa28a8955027
-	// Question: Complete a subtraction equation using integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [x41f7fa28a8955027] Complete a subtraction equation using integer chips (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x41f7fa28a8955027
-	// Question: Complete a subtraction equation using integer chips
+	// Question: Complete a subtraction equation with integer chips
 	// Widget key: image_2
-	test("integer-chip-model - [x41f7fa28a8955027] Complete a subtraction equation using integer chips (2)", async () => {
+	test("integer-chip-model - [x41f7fa28a8955027] Complete a subtraction equation with integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4885,8 +3730,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4905,47 +3749,9 @@ describe("integerChipModel widget tests", () => {
 	})
 
 	// Extracted from question: x8e714f7af63bbbcc
-	// Question: Complete a subtraction equation from integer chips
-	// Widget key: image_1
-	test("integer-chip-model - [x8e714f7af63bbbcc] Complete a subtraction equation from integer chips (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "integerChipModel",
-		  "chips": [
-		    {
-		      "sign": "plus",
-		      "crossedOut": false
-		    },
-		    {
-		      "sign": "minus",
-		      "crossedOut": false
-		    }
-		  ],
-		  "width": 100,
-		  "height": 91,
-		  "showLegend": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for integerChipModel", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8e714f7af63bbbcc
-	// Question: Complete a subtraction equation from integer chips
+	// Question: Complete a subtraction equation with integer chips
 	// Widget key: image_2
-	test("integer-chip-model - [x8e714f7af63bbbcc] Complete a subtraction equation from integer chips (2)", async () => {
+	test("integer-chip-model - [x8e714f7af63bbbcc] Complete a subtraction equation with integer chips", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4989,8 +3795,7 @@ describe("integerChipModel widget tests", () => {
 		    }
 		  ],
 		  "width": 320,
-		  "height": 80,
-		  "showLegend": false
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)

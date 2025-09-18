@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.957Z
+// Generated on: 2025-09-18T05:17:02.151Z
 // Widget Type: parallelogramTrapezoidDiagram
 // Source: Real questions from database
 //
@@ -25,83 +25,35 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("parallelogramTrapezoidDiagram widget tests", () => {
-	// Extracted from question: xc2e74df5d4250015
-	// Question: Find the area of the parallelogram
+	// Extracted from question: x71e4363caf9528c2
+	// Question: Find the area of a parallelogram from base and height
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [xc2e74df5d4250015] Find the area of the parallelogram", async () => {
+	test("parallelogram-trapezoid-diagram - [x71e4363caf9528c2] Find the area of a parallelogram from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
-		    "base": 10,
+		    "base": 9,
 		    "type": "parallelogram",
-		    "height": 12,
+		    "height": 362,
 		    "labels": {
 		      "base": {
 		        "type": "number",
-		        "value": 10
+		        "value": 9
 		      },
 		      "height": {
-		        "type": "number",
-		        "value": 12
-		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 15
-		      }
-		    },
-		    "sideLength": 15
-		  },
-		  "width": 320,
-		  "height": 267
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x20a0783691f7ba20
-	// Question: Find the area of a parallelogram from an image
-	// Widget key: image_2
-	test("parallelogram-trapezoid-diagram - [x20a0783691f7ba20] Find the area of a parallelogram from an image", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "parallelogramTrapezoidDiagram",
-		  "shape": {
-		    "base": 7,
-		    "type": "parallelogram",
-		    "height": 5,
-		    "labels": {
-		      "base": {
-		        "type": "number",
-		        "value": 7
-		      },
-		      "height": {
-		        "type": "number",
-		        "value": 5
-		      },
-		      "sideLength": {
 		        "type": "number",
 		        "value": 6
+		      },
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 6
+		    "slantAngle": 60
 		  },
-		  "width": 320,
-		  "height": 160
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -120,9 +72,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3571abda1e6bb813
-	// Question: Find the area of a parallelogram from its base and height
+	// Question: Find the area of a parallelogram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x3571abda1e6bb813] Find the area of a parallelogram from its base and height", async () => {
+	test("parallelogram-trapezoid-diagram - [x3571abda1e6bb813] Find the area of a parallelogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -130,7 +82,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 10,
 		    "type": "parallelogram",
-		    "height": 8,
+		    "height": 396,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -140,15 +92,60 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 8
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 11
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 11
+		    "slantAngle": 55
 		  },
-		  "width": 320,
-		  "height": 155
+		  "width": 400,
+		  "height": 300
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x20a0783691f7ba20
+	// Question: Area of a parallelogram from base and height
+	// Widget key: image_2
+	test("parallelogram-trapezoid-diagram - [x20a0783691f7ba20] Area of a parallelogram from base and height", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "parallelogramTrapezoidDiagram",
+		  "shape": {
+		    "base": 7,
+		    "type": "parallelogram",
+		    "height": 500,
+		    "labels": {
+		      "base": {
+		        "type": "number",
+		        "value": 7
+		      },
+		      "height": {
+		        "type": "number",
+		        "value": 5
+		      },
+		      "slantAngle": {
+		        "type": "none"
+		      }
+		    },
+		    "slantAngle": 56.44
+		  },
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -167,9 +164,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x257fda8574070d8a
-	// Question: Find the area of a parallelogram from base and height
+	// Question: Area of a parallelogram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x257fda8574070d8a] Find the area of a parallelogram from base and height", async () => {
+	test("parallelogram-trapezoid-diagram - [x257fda8574070d8a] Area of a parallelogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -177,7 +174,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 5,
 		    "type": "parallelogram",
-		    "height": 4,
+		    "height": 470,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -187,15 +184,60 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 4
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 5.2
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 5.2
+		    "slantAngle": 50
 		  },
 		  "width": 320,
-		  "height": 168
+		  "height": 320
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc2e74df5d4250015
+	// Question: Find the area of a parallelogram
+	// Widget key: image_1
+	test("parallelogram-trapezoid-diagram - [xc2e74df5d4250015] Find the area of a parallelogram", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "parallelogramTrapezoidDiagram",
+		  "shape": {
+		    "base": 10,
+		    "type": "parallelogram",
+		    "height": 312,
+		    "labels": {
+		      "base": {
+		        "type": "number",
+		        "value": 10
+		      },
+		      "height": {
+		        "type": "number",
+		        "value": 12
+		      },
+		      "slantAngle": {
+		        "type": "none"
+		      }
+		    },
+		    "slantAngle": 60
+		  },
+		  "width": 320,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -214,9 +256,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x69d88e1a614e025e
-	// Question: Find the area of a parallelogram
+	// Question: Find the area of a parallelogram from a diagram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x69d88e1a614e025e] Find the area of a parallelogram", async () => {
+	test("parallelogram-trapezoid-diagram - [x69d88e1a614e025e] Find the area of a parallelogram from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -224,7 +266,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 5,
 		    "type": "parallelogram",
-		    "height": 6,
+		    "height": 492,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -234,15 +276,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 6
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 7
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 7
+		    "slantAngle": 60
 		  },
 		  "width": 320,
-		  "height": 249
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -261,9 +302,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x590ce613509ed6c3
-	// Question: Find the area of a parallelogram
+	// Question: Find the area of a parallelogram from base and height
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x590ce613509ed6c3] Find the area of a parallelogram", async () => {
+	test("parallelogram-trapezoid-diagram - [x590ce613509ed6c3] Find the area of a parallelogram from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -271,7 +312,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 14,
 		    "type": "parallelogram",
-		    "height": 10,
+		    "height": 386,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -281,62 +322,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 10
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 12
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 12
+		    "slantAngle": 60
 		  },
-		  "width": 320,
-		  "height": 152
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x71e4363caf9528c2
-	// Question: Find the area of a parallelogram from base and height
-	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x71e4363caf9528c2] Find the area of a parallelogram from base and height", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "parallelogramTrapezoidDiagram",
-		  "shape": {
-		    "base": 9,
-		    "type": "parallelogram",
-		    "height": 6,
-		    "labels": {
-		      "base": {
-		        "type": "number",
-		        "value": 9
-		      },
-		      "height": {
-		        "type": "number",
-		        "value": 6
-		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 8
-		      }
-		    },
-		    "sideLength": 8
-		  },
-		  "width": 320,
-		  "height": 147
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -355,9 +348,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9041b27f69695926
-	// Question: Find the area of a parallelogram
+	// Question: Find the area of a parallelogram from an image
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x9041b27f69695926] Find the area of a parallelogram", async () => {
+	test("parallelogram-trapezoid-diagram - [x9041b27f69695926] Find the area of a parallelogram from an image", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -365,7 +358,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 9,
 		    "type": "parallelogram",
-		    "height": 15,
+		    "height": 500,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -375,15 +368,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 15
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 17
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 17
+		    "slantAngle": 60
 		  },
 		  "width": 320,
-		  "height": 219
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -402,9 +394,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x16db122b0324e977
-	// Question: Find the area of a parallelogram
+	// Question: Find the area of a parallelogram from base and height
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x16db122b0324e977] Find the area of a parallelogram", async () => {
+	test("parallelogram-trapezoid-diagram - [x16db122b0324e977] Find the area of a parallelogram from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -412,7 +404,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 6,
 		    "type": "parallelogram",
-		    "height": 14,
+		    "height": 415,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -422,15 +414,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 14
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 14.5
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 14.5
+		    "slantAngle": 60
 		  },
-		  "width": 320,
-		  "height": 163
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -449,9 +440,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x51ade4484260de9d
-	// Question: Find the area of a parallelogram
+	// Question: Find the area of a parallelogram from base and height
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x51ade4484260de9d] Find the area of a parallelogram", async () => {
+	test("parallelogram-trapezoid-diagram - [x51ade4484260de9d] Find the area of a parallelogram from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -459,7 +450,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 5,
 		    "type": "parallelogram",
-		    "height": 7,
+		    "height": 350,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -469,15 +460,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 7
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 8
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 8
+		    "slantAngle": 30
 		  },
-		  "width": 320,
-		  "height": 243
+		  "width": 400,
+		  "height": 350
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -496,9 +486,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9cbf1eef9311c4a6
-	// Question: Area of a parallelogram
+	// Question: Find the area of a parallelogram from base and height
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x9cbf1eef9311c4a6] Area of a parallelogram", async () => {
+	test("parallelogram-trapezoid-diagram - [x9cbf1eef9311c4a6] Find the area of a parallelogram from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -506,7 +496,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 4,
 		    "type": "parallelogram",
-		    "height": 7,
+		    "height": 500,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -516,15 +506,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 7
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 8
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 8
+		    "slantAngle": 55
 		  },
-		  "width": 320,
-		  "height": 216
+		  "width": 360,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -543,9 +532,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5f36891f8218b0c4
-	// Question: Area of a parallelogram from a diagram
+	// Question: Find the area of a parallelogram from a diagram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x5f36891f8218b0c4] Area of a parallelogram from a diagram", async () => {
+	test("parallelogram-trapezoid-diagram - [x5f36891f8218b0c4] Find the area of a parallelogram from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -553,7 +542,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 6,
 		    "type": "parallelogram",
-		    "height": 12,
+		    "height": 312,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -563,15 +552,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 12
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 13
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 13
+		    "slantAngle": 35
 		  },
-		  "width": 320,
-		  "height": 192
+		  "width": 360,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -590,9 +578,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7949ecec728276de
-	// Question: Area of a parallelogram from base and height
+	// Question: Find the area of a parallelogram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x7949ecec728276de] Area of a parallelogram from base and height", async () => {
+	test("parallelogram-trapezoid-diagram - [x7949ecec728276de] Find the area of a parallelogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -600,7 +588,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 8,
 		    "type": "parallelogram",
-		    "height": 5,
+		    "height": 500,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -610,15 +598,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 5
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 5.1
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 5.1
+		    "slantAngle": 75
 		  },
-		  "width": 320,
-		  "height": 162
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -637,9 +624,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xcd65ca6fb6705d30
-	// Question: Area of a parallelogram
+	// Question: Find the area of the parallelogram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [xcd65ca6fb6705d30] Area of a parallelogram", async () => {
+	test("parallelogram-trapezoid-diagram - [xcd65ca6fb6705d30] Find the area of the parallelogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -647,7 +634,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 3,
 		    "type": "parallelogram",
-		    "height": 2,
+		    "height": 500,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -657,15 +644,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 2
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 2.2
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 2.2
+		    "slantAngle": 60
 		  },
 		  "width": 320,
-		  "height": 179
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -694,7 +680,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 11,
 		    "type": "parallelogram",
-		    "height": 8,
+		    "height": 487,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -704,15 +690,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 8
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 9
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 9
+		    "slantAngle": 60
 		  },
 		  "width": 320,
-		  "height": 160
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -731,9 +716,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd40573ca1eea1f87
-	// Question: Area of a parallelogram from base and height
+	// Question: Area of a parallelogram
 	// Widget key: image_2
-	test("parallelogram-trapezoid-diagram - [xd40573ca1eea1f87] Area of a parallelogram from base and height", async () => {
+	test("parallelogram-trapezoid-diagram - [xd40573ca1eea1f87] Area of a parallelogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -741,7 +726,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 6,
 		    "type": "parallelogram",
-		    "height": 4,
+		    "height": 408,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -751,15 +736,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 4
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 5
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 5
+		    "slantAngle": 55
 		  },
 		  "width": 320,
-		  "height": 157
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -778,9 +762,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1d85e5d9223378b2
-	// Question: Find the area of a parallelogram from a diagram
+	// Question: Find the area of a parallelogram from base and height
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x1d85e5d9223378b2] Find the area of a parallelogram from a diagram", async () => {
+	test("parallelogram-trapezoid-diagram - [x1d85e5d9223378b2] Find the area of a parallelogram from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -788,7 +772,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 7,
 		    "type": "parallelogram",
-		    "height": 5,
+		    "height": 500,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -798,15 +782,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 5
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 6
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 6
+		    "slantAngle": 60
 		  },
 		  "width": 320,
-		  "height": 160
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -825,9 +808,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb11c70428702f194
-	// Question: Find the area of a parallelogram from a diagram
+	// Question: Find the area of a parallelogram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [xb11c70428702f194] Find the area of a parallelogram from a diagram", async () => {
+	test("parallelogram-trapezoid-diagram - [xb11c70428702f194] Find the area of a parallelogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -835,7 +818,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 6,
 		    "type": "parallelogram",
-		    "height": 10,
+		    "height": 324,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -845,15 +828,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 10
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 11
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 11
+		    "slantAngle": 65.38
 		  },
-		  "width": 320,
-		  "height": 209
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -872,9 +854,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc2485f4e69097f41
-	// Question: Find the area of a parallelogram
+	// Question: Find the area of a parallelogram from base and height
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [xc2485f4e69097f41] Find the area of a parallelogram", async () => {
+	test("parallelogram-trapezoid-diagram - [xc2485f4e69097f41] Find the area of a parallelogram from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -882,7 +864,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 3,
 		    "type": "parallelogram",
-		    "height": 5,
+		    "height": 500,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -892,15 +874,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 5
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 5.3
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 5.3
+		    "slantAngle": 60
 		  },
 		  "width": 320,
-		  "height": 197
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -919,9 +900,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x813a4cf50406084b
-	// Question: Find the area of a parallelogram from base and height
+	// Question: Find the area of a parallelogram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x813a4cf50406084b] Find the area of a parallelogram from base and height", async () => {
+	test("parallelogram-trapezoid-diagram - [x813a4cf50406084b] Find the area of a parallelogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -929,7 +910,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 3,
 		    "type": "parallelogram",
-		    "height": 6,
+		    "height": 360,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -939,61 +920,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 6
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 6.2
-		      }
-		    },
-		    "sideLength": 6.2
-		  },
-		  "width": 320,
-		  "height": 168
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7481af2f64b4ffbb
-	// Question: Scale factor from Figure A to Figure B
-	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x7481af2f64b4ffbb] Scale factor from Figure A to Figure B", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "parallelogramTrapezoidDiagram",
-		  "shape": {
-		    "base": 9,
-		    "type": "parallelogram",
-		    "height": 3,
-		    "labels": {
-		      "base": {
-		        "type": "string",
-		        "value": "F"
-		      },
-		      "height": {
+		      "slantAngle": {
 		        "type": "none"
-		      },
-		      "sideLength": {
-		        "type": "string",
-		        "value": "F"
 		      }
 		    },
-		    "sideLength": 3.6
+		    "slantAngle": 60
 		  },
-		  "width": 325,
-		  "height": 325
+		  "width": 400,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1012,9 +946,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0823b6c5a77762ce
-	// Question: Which coordinate is greater in a parallelogram?
+	// Question: Compare coordinates in a parallelogram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x0823b6c5a77762ce] Which coordinate is greater in a parallelogram?", async () => {
+	test("parallelogram-trapezoid-diagram - [x0823b6c5a77762ce] Compare coordinates in a parallelogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1022,7 +956,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 7,
 		    "type": "parallelogram",
-		    "height": 4,
+		    "height": 400,
 		    "labels": {
 		      "base": {
 		        "type": "none"
@@ -1030,14 +964,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		      "height": {
 		        "type": "none"
 		      },
-		      "sideLength": {
+		      "slantAngle": {
 		        "type": "none"
 		      }
 		    },
-		    "sideLength": 5
+		    "slantAngle": 53.13
 		  },
 		  "width": 300,
-		  "height": 173
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1056,17 +990,17 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1b66164ecd8c37ea
-	// Question: Which coordinate is greater in a parallelogram
+	// Question: Compare coordinates in a parallelogram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x1b66164ecd8c37ea] Which coordinate is greater in a parallelogram", async () => {
+	test("parallelogram-trapezoid-diagram - [x1b66164ecd8c37ea] Compare coordinates in a parallelogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
-		    "base": 18,
+		    "base": 180,
 		    "type": "parallelogram",
-		    "height": 24,
+		    "height": 400,
 		    "labels": {
 		      "base": {
 		        "type": "none"
@@ -1074,109 +1008,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		      "height": {
 		        "type": "none"
 		      },
-		      "sideLength": {
+		      "slantAngle": {
 		        "type": "none"
 		      }
 		    },
-		    "sideLength": 25
+		    "slantAngle": 76
 		  },
 		  "width": 300,
 		  "height": 300
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xee54a69013edeae6
-	// Question: Compare coordinates p and q
-	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [xee54a69013edeae6] Compare coordinates p and q", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "parallelogramTrapezoidDiagram",
-		  "shape": {
-		    "base": 10,
-		    "type": "parallelogram",
-		    "height": 7,
-		    "labels": {
-		      "base": {
-		        "type": "none"
-		      },
-		      "height": {
-		        "type": "none"
-		      },
-		      "sideLength": {
-		        "type": "none"
-		      }
-		    },
-		    "sideLength": 8
-		  },
-		  "width": 206,
-		  "height": 300
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x141c0caeea18da08
-	// Question: Identify the cross-section of a sliced square pyramid
-	// Widget key: choice_a_shape
-	test("parallelogram-trapezoid-diagram - [x141c0caeea18da08] Identify the cross-section of a sliced square pyramid", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "parallelogramTrapezoidDiagram",
-		  "shape": {
-		    "type": "trapezoid",
-		    "height": 6,
-		    "labels": {
-		      "height": {
-		        "type": "none"
-		      },
-		      "topBase": {
-		        "type": "none"
-		      },
-		      "leftSide": {
-		        "type": "none"
-		      },
-		      "rightSide": {
-		        "type": "none"
-		      },
-		      "bottomBase": {
-		        "type": "none"
-		      }
-		    },
-		    "topBase": 6,
-		    "bottomBase": 12,
-		    "leftSideLength": 7
-		  },
-		  "width": 120,
-		  "height": 100
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1203,107 +1042,19 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
-		    "base": 10,
-		    "type": "parallelogram",
-		    "height": 5,
-		    "labels": {
-		      "base": {
-		        "type": "number",
-		        "value": 10
-		      },
-		      "height": {
-		        "type": "none"
-		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 5
-		      }
-		    },
-		    "sideLength": 5
-		  },
-		  "width": 200,
-		  "height": 131
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbf302ff9da9553c8
-	// Question: Find the scale factor from areas of similar rectangles
-	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [xbf302ff9da9553c8] Find the scale factor from areas of similar rectangles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "parallelogramTrapezoidDiagram",
-		  "shape": {
-		    "base": 8,
-		    "type": "parallelogram",
-		    "height": 4,
-		    "labels": {
-		      "base": {
-		        "type": "none"
-		      },
-		      "height": {
-		        "type": "none"
-		      },
-		      "sideLength": {
-		        "type": "none"
-		      }
-		    },
-		    "sideLength": 4
-		  },
-		  "width": 325,
-		  "height": 325
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x56dd5eaf0b1d9948
-	// Question: Scaled copy of a trapezoid — possible longer base length
-	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x56dd5eaf0b1d9948] Scaled copy of a trapezoid — possible longer base length", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "parallelogramTrapezoidDiagram",
-		  "shape": {
-		    "type": "trapezoid",
-		    "height": 4,
+		    "type": "trapezoidRight",
+		    "height": 500,
 		    "labels": {
 		      "height": {
 		        "type": "none"
 		      },
 		      "topBase": {
-		        "type": "none"
+		        "type": "number",
+		        "value": 10
 		      },
 		      "leftSide": {
-		        "type": "none"
+		        "type": "number",
+		        "value": 5
 		      },
 		      "rightSide": {
 		        "type": "none"
@@ -1312,12 +1063,11 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "none"
 		      }
 		    },
-		    "topBase": 6,
-		    "bottomBase": 3,
-		    "leftSideLength": 5.5
+		    "topBase": 10,
+		    "bottomBase": 10
 		  },
-		  "width": 265,
-		  "height": 265
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1345,7 +1095,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 3,
+		    "height": 300,
 		    "labels": {
 		      "height": {
 		        "type": "none"
@@ -1368,8 +1118,8 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		    "topBase": 4,
 		    "bottomBase": 8
 		  },
-		  "width": 300,
-		  "height": 183
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1397,14 +1147,13 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 6,
+		    "height": 320,
 		    "labels": {
 		      "height": {
 		        "type": "none"
 		      },
 		      "topBase": {
-		        "type": "number",
-		        "value": 4
+		        "type": "none"
 		      },
 		      "leftSide": {
 		        "type": "none"
@@ -1414,14 +1163,15 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "value": 25
 		      },
 		      "bottomBase": {
-		        "type": "none"
+		        "type": "number",
+		        "value": 4
 		      }
 		    },
-		    "topBase": 4,
-		    "bottomBase": 11
+		    "topBase": 11,
+		    "bottomBase": 4
 		  },
-		  "width": 232,
-		  "height": 280
+		  "width": 360,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1440,16 +1190,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8042ccf6036cb614
-	// Question: Area of a quadrilateral
+	// Question: Find the area of a quadrilateral by decomposition
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x8042ccf6036cb614] Area of a quadrilateral", async () => {
+	test("parallelogram-trapezoid-diagram - [x8042ccf6036cb614] Find the area of a quadrilateral by decomposition", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 12,
+		    "height": 360,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -1460,11 +1210,11 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "value": 2
 		      },
 		      "leftSide": {
-		        "type": "none"
-		      },
-		      "rightSide": {
 		        "type": "number",
 		        "value": 15
+		      },
+		      "rightSide": {
+		        "type": "none"
 		      },
 		      "bottomBase": {
 		        "type": "none"
@@ -1473,8 +1223,8 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		    "topBase": 2,
 		    "bottomBase": 11
 		  },
-		  "width": 243,
-		  "height": 280
+		  "width": 360,
+		  "height": 360
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1493,9 +1243,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x15dec89422453948
-	// Question: Area of a parallelogram from a diagram
+	// Question: Area of a parallelogram from base and height
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x15dec89422453948] Area of a parallelogram from a diagram", async () => {
+	test("parallelogram-trapezoid-diagram - [x15dec89422453948] Area of a parallelogram from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1503,24 +1253,24 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 4,
 		    "type": "parallelogram",
-		    "height": 4,
+		    "height": 400,
 		    "labels": {
 		      "base": {
 		        "type": "number",
 		        "value": 4
 		      },
 		      "height": {
-		        "type": "none"
+		        "type": "string",
+		        "value": "x"
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 5
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 5
+		    "slantAngle": 53.1
 		  },
 		  "width": 300,
-		  "height": 244
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1539,9 +1289,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa7b2588623676d65
-	// Question: Area of a parallelogram from a diagram
+	// Question: Area of a parallelogram from a right triangle
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [xa7b2588623676d65] Area of a parallelogram from a diagram", async () => {
+	test("parallelogram-trapezoid-diagram - [xa7b2588623676d65] Area of a parallelogram from a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1549,7 +1299,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 9,
 		    "type": "parallelogram",
-		    "height": 15,
+		    "height": 315,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -1558,12 +1308,11 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		      "height": {
 		        "type": "none"
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 17
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 17
+		    "slantAngle": 62
 		  },
 		  "width": 300,
 		  "height": 300
@@ -1584,42 +1333,35 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xddaf3b999ca1bedb
-	// Question: Perimeter of a trapezoid on a coordinate grid
+	// Extracted from question: x503507276e7d93e9
+	// Question: Find the missing base of a parallelogram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [xddaf3b999ca1bedb] Perimeter of a trapezoid on a coordinate grid", async () => {
+	test("parallelogram-trapezoid-diagram - [x503507276e7d93e9] Find the missing base of a parallelogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
-		    "type": "trapezoidRight",
-		    "height": 4,
+		    "base": 12,
+		    "type": "parallelogram",
+		    "height": 500,
 		    "labels": {
+		      "base": {
+		        "type": "string",
+		        "value": "b"
+		      },
 		      "height": {
 		        "type": "number",
-		        "value": 4
+		        "value": 15
 		      },
-		      "topBase": {
-		        "type": "number",
-		        "value": 4
-		      },
-		      "leftSide": {
+		      "slantAngle": {
 		        "type": "none"
-		      },
-		      "rightSide": {
-		        "type": "none"
-		      },
-		      "bottomBase": {
-		        "type": "number",
-		        "value": 7
 		      }
 		    },
-		    "topBase": 4,
-		    "bottomBase": 7
+		    "slantAngle": 60
 		  },
 		  "width": 400,
-		  "height": 300
+		  "height": 340
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1648,7 +1390,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 9,
 		    "type": "parallelogram",
-		    "height": 5,
+		    "height": 320,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -1658,61 +1400,13 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "string",
 		        "value": "h"
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 8
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 8
+		    "slantAngle": 49
 		  },
-		  "width": 320,
-		  "height": 157
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x503507276e7d93e9
-	// Question: Find the base of a parallelogram from its area
-	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x503507276e7d93e9] Find the base of a parallelogram from its area", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "parallelogramTrapezoidDiagram",
-		  "shape": {
-		    "base": 12,
-		    "type": "parallelogram",
-		    "height": 15,
-		    "labels": {
-		      "base": {
-		        "type": "string",
-		        "value": "b"
-		      },
-		      "height": {
-		        "type": "number",
-		        "value": 15
-		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 17
-		      }
-		    },
-		    "sideLength": 17
-		  },
-		  "width": 275,
+		  "width": 400,
 		  "height": 320
 		} as unknown as WidgetInput
 
@@ -1742,7 +1436,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 6,
 		    "type": "parallelogram",
-		    "height": 5,
+		    "height": 500,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -1752,15 +1446,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "string",
 		        "value": "h"
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 5
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 5
+		    "slantAngle": 53
 		  },
-		  "width": 320,
-		  "height": 175
+		  "width": 360,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1789,7 +1482,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 10,
 		    "type": "parallelogram",
-		    "height": 7,
+		    "height": 500,
 		    "labels": {
 		      "base": {
 		        "type": "string",
@@ -1799,14 +1492,13 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 7
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 8
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 8
+		    "slantAngle": 35
 		  },
-		  "width": 286,
+		  "width": 320,
 		  "height": 320
 		} as unknown as WidgetInput
 
@@ -1826,9 +1518,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4bda16dce29ef2c9
-	// Question: Find the missing base of a parallelogram
+	// Question: Find the base of a parallelogram from its area
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x4bda16dce29ef2c9] Find the missing base of a parallelogram", async () => {
+	test("parallelogram-trapezoid-diagram - [x4bda16dce29ef2c9] Find the base of a parallelogram from its area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1836,7 +1528,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 10,
 		    "type": "parallelogram",
-		    "height": 5,
+		    "height": 500,
 		    "labels": {
 		      "base": {
 		        "type": "string",
@@ -1846,14 +1538,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 5
 		      },
-		      "sideLength": {
+		      "slantAngle": {
 		        "type": "none"
 		      }
 		    },
-		    "sideLength": 7
+		    "slantAngle": 30
 		  },
-		  "width": 320,
-		  "height": 175
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1882,7 +1574,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 6,
 		    "type": "parallelogram",
-		    "height": 5,
+		    "height": 387,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -1892,14 +1584,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "string",
 		        "value": "h"
 		      },
-		      "sideLength": {
+		      "slantAngle": {
 		        "type": "none"
 		      }
 		    },
-		    "sideLength": 7
+		    "slantAngle": 60
 		  },
-		  "width": 320,
-		  "height": 228
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1928,7 +1620,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 5,
 		    "type": "parallelogram",
-		    "height": 4,
+		    "height": 320,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -1938,11 +1630,11 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "string",
 		        "value": "h"
 		      },
-		      "sideLength": {
+		      "slantAngle": {
 		        "type": "none"
 		      }
 		    },
-		    "sideLength": 6
+		    "slantAngle": 60
 		  },
 		  "width": 305,
 		  "height": 320
@@ -1964,9 +1656,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4050a895c4c9d804
-	// Question: Find the height of a parallelogram from its area
+	// Question: Find the missing height of a parallelogram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x4050a895c4c9d804] Find the height of a parallelogram from its area", async () => {
+	test("parallelogram-trapezoid-diagram - [x4050a895c4c9d804] Find the missing height of a parallelogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1974,7 +1666,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 7,
 		    "type": "parallelogram",
-		    "height": 4,
+		    "height": 320,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -1984,15 +1676,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "string",
 		        "value": "h"
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 5
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 5
+		    "slantAngle": 55
 		  },
-		  "width": 320,
-		  "height": 123.077
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2021,7 +1712,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 3,
 		    "type": "parallelogram",
-		    "height": 4,
+		    "height": 311,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -2031,11 +1722,11 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "string",
 		        "value": "h"
 		      },
-		      "sideLength": {
+		      "slantAngle": {
 		        "type": "none"
 		      }
 		    },
-		    "sideLength": 6
+		    "slantAngle": 60
 		  },
 		  "width": 320,
 		  "height": 311
@@ -2065,9 +1756,9 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
-		    "base": 16,
+		    "base": 18,
 		    "type": "parallelogram",
-		    "height": 12,
+		    "height": 360,
 		    "labels": {
 		      "base": {
 		        "type": "string",
@@ -2077,15 +1768,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 12
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 13
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 13
+		    "slantAngle": 60
 		  },
-		  "width": 256,
-		  "height": 320
+		  "width": 400,
+		  "height": 360
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2114,7 +1804,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 7,
 		    "type": "parallelogram",
-		    "height": 3,
+		    "height": 300,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -2124,15 +1814,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "string",
 		        "value": "h"
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 5
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 5
+		    "slantAngle": 30
 		  },
-		  "width": 320,
-		  "height": 123
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2161,7 +1850,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 12,
 		    "type": "parallelogram",
-		    "height": 10,
+		    "height": 300,
 		    "labels": {
 		      "base": {
 		        "type": "string",
@@ -2171,14 +1860,13 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 10
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 11
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 11
+		    "slantAngle": 60
 		  },
-		  "width": 295,
+		  "width": 360,
 		  "height": 320
 		} as unknown as WidgetInput
 
@@ -2208,7 +1896,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 6,
 		    "type": "parallelogram",
-		    "height": 5,
+		    "height": 355,
 		    "labels": {
 		      "base": {
 		        "type": "number",
@@ -2218,15 +1906,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "string",
 		        "value": "h"
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 13
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 13
+		    "slantAngle": 60
 		  },
 		  "width": 320,
-		  "height": 287
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2255,24 +1942,24 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "shape": {
 		    "base": 10,
 		    "type": "parallelogram",
-		    "height": 4,
+		    "height": 425,
 		    "labels": {
 		      "base": {
 		        "type": "string",
 		        "value": "b"
 		      },
 		      "height": {
-		        "type": "number",
-		        "value": 4
+		        "type": "string",
+		        "value": "4"
 		      },
-		      "sideLength": {
+		      "slantAngle": {
 		        "type": "none"
 		      }
 		    },
-		    "sideLength": 7
+		    "slantAngle": 35
 		  },
-		  "width": 320,
-		  "height": 224
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2291,17 +1978,17 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6cfe179082397d11
-	// Question: Find the missing base of a parallelogram
+	// Question: Find the base of a parallelogram from its area
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x6cfe179082397d11] Find the missing base of a parallelogram", async () => {
+	test("parallelogram-trapezoid-diagram - [x6cfe179082397d11] Find the base of a parallelogram from its area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
-		    "base": 18,
+		    "base": 16,
 		    "type": "parallelogram",
-		    "height": 10,
+		    "height": 500,
 		    "labels": {
 		      "base": {
 		        "type": "string",
@@ -2311,15 +1998,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "number",
 		        "value": 10
 		      },
-		      "sideLength": {
-		        "type": "number",
-		        "value": 12
+		      "slantAngle": {
+		        "type": "none"
 		      }
 		    },
-		    "sideLength": 12
+		    "slantAngle": 60
 		  },
-		  "width": 320,
-		  "height": 195
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2338,16 +2024,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa83198c28abd6b4c
-	// Question: Find the areas of each part and the whole figure
+	// Question: Areas of parts and the whole of a composite figure
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [xa83198c28abd6b4c] Find the areas of each part and the whole figure", async () => {
+	test("parallelogram-trapezoid-diagram - [xa83198c28abd6b4c] Areas of parts and the whole of a composite figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 10,
+		    "height": 310,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -2371,8 +2057,8 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		    "topBase": 3,
 		    "bottomBase": 7
 		  },
-		  "width": 320,
-		  "height": 212
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2391,23 +2077,24 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8b3b9e125fed0fc3
-	// Question: Find areas of two triangles and the whole figure
+	// Question: Find areas of parts and the whole figure made of two triangles
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x8b3b9e125fed0fc3] Find areas of two triangles and the whole figure", async () => {
+	test("parallelogram-trapezoid-diagram - [x8b3b9e125fed0fc3] Find areas of parts and the whole figure made of two triangles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 5,
+		    "height": 500,
 		    "labels": {
 		      "height": {
 		        "type": "number",
 		        "value": 5
 		      },
 		      "topBase": {
-		        "type": "none"
+		        "type": "number",
+		        "value": 4
 		      },
 		      "leftSide": {
 		        "type": "none"
@@ -2416,13 +2103,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		        "type": "none"
 		      },
 		      "bottomBase": {
-		        "type": "none"
+		        "type": "number",
+		        "value": 7
 		      }
 		    },
-		    "topBase": 8,
-		    "bottomBase": 11
+		    "topBase": 4,
+		    "bottomBase": 7
 		  },
-		  "width": 280,
+		  "width": 320,
 		  "height": 320
 		} as unknown as WidgetInput
 
@@ -2442,16 +2130,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x09d2a53d26353521
-	// Question: Areas of a triangle, a rectangle, and the whole figure
+	// Question: Areas of a triangle and a rectangle in a composite figure
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x09d2a53d26353521] Areas of a triangle, a rectangle, and the whole figure", async () => {
+	test("parallelogram-trapezoid-diagram - [x09d2a53d26353521] Areas of a triangle and a rectangle in a composite figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 6,
+		    "height": 300,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -2476,7 +2164,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		    "bottomBase": 9
 		  },
 		  "width": 320,
-		  "height": 254
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2495,16 +2183,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x802457c982f4c2ab
-	// Question: Find areas of parts and the whole figure
+	// Question: Area of a composite figure (triangle and rectangle)
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x802457c982f4c2ab] Find areas of parts and the whole figure", async () => {
+	test("parallelogram-trapezoid-diagram - [x802457c982f4c2ab] Area of a composite figure (triangle and rectangle)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 5,
+		    "height": 500,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -2528,8 +2216,8 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		    "topBase": 9,
 		    "bottomBase": 13
 		  },
-		  "width": 400,
-		  "height": 300
+		  "width": 360,
+		  "height": 360
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2548,16 +2236,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xdc54be7fad1e2e6e
-	// Question: Find areas of two triangles and the whole figure
+	// Question: Find the areas of two triangles and the whole figure
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [xdc54be7fad1e2e6e] Find areas of two triangles and the whole figure", async () => {
+	test("parallelogram-trapezoid-diagram - [xdc54be7fad1e2e6e] Find the areas of two triangles and the whole figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
-		    "type": "trapezoid",
-		    "height": 3,
+		    "type": "trapezoidRight",
+		    "height": 380,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -2579,11 +2267,10 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		      }
 		    },
 		    "topBase": 7,
-		    "bottomBase": 9,
-		    "leftSideLength": 5
+		    "bottomBase": 9
 		  },
-		  "width": 320,
-		  "height": 134
+		  "width": 360,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2602,16 +2289,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6e36f052a481795a
-	// Question: Find the areas of parts and the whole figure
+	// Question: Areas of two triangles and the whole figure
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x6e36f052a481795a] Find the areas of parts and the whole figure", async () => {
+	test("parallelogram-trapezoid-diagram - [x6e36f052a481795a] Areas of two triangles and the whole figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 3,
+		    "height": 300,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -2619,7 +2306,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		      },
 		      "topBase": {
 		        "type": "number",
-		        "value": 5
+		        "value": 10
 		      },
 		      "leftSide": {
 		        "type": "none"
@@ -2629,14 +2316,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		      },
 		      "bottomBase": {
 		        "type": "number",
-		        "value": 10
+		        "value": 5
 		      }
 		    },
-		    "topBase": 5,
-		    "bottomBase": 10
+		    "topBase": 10,
+		    "bottomBase": 5
 		  },
-		  "width": 320,
-		  "height": 147
+		  "width": 360,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2655,16 +2342,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x428fe7b15d2639f1
-	// Question: Find the area of a quadrilateral with one pair of parallel sides
+	// Question: Area of a quadrilateral with one pair of parallel sides
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x428fe7b15d2639f1] Find the area of a quadrilateral with one pair of parallel sides", async () => {
+	test("parallelogram-trapezoid-diagram - [x428fe7b15d2639f1] Area of a quadrilateral with one pair of parallel sides", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 7,
+		    "height": 320,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -2689,61 +2376,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		    "bottomBase": 6
 		  },
 		  "width": 320,
-		  "height": 253
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x92a89b98d077ec14
-	// Question: Find the area of a shape with one pair of parallel sides
-	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x92a89b98d077ec14] Find the area of a shape with one pair of parallel sides", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "parallelogramTrapezoidDiagram",
-		  "shape": {
-		    "type": "trapezoid",
-		    "height": 5,
-		    "labels": {
-		      "height": {
-		        "type": "number",
-		        "value": 5
-		      },
-		      "topBase": {
-		        "type": "number",
-		        "value": 6
-		      },
-		      "leftSide": {
-		        "type": "none"
-		      },
-		      "rightSide": {
-		        "type": "none"
-		      },
-		      "bottomBase": {
-		        "type": "number",
-		        "value": 8
-		      }
-		    },
-		    "topBase": 6,
-		    "bottomBase": 8,
-		    "leftSideLength": 5.385
-		  },
-		  "width": 320,
-		  "height": 220
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2762,16 +2395,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4c306a907c3d7c75
-	// Question: Find the area of a shape with parallel sides
+	// Question: Find the area of a trapezoid from a diagram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x4c306a907c3d7c75] Find the area of a shape with parallel sides", async () => {
+	test("parallelogram-trapezoid-diagram - [x4c306a907c3d7c75] Find the area of a trapezoid from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 6,
+		    "height": 360,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -2796,7 +2429,60 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		    "bottomBase": 5
 		  },
 		  "width": 320,
-		  "height": 218
+		  "height": 320
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x92a89b98d077ec14
+	// Question: Area of a trapezoid
+	// Widget key: image_1
+	test("parallelogram-trapezoid-diagram - [x92a89b98d077ec14] Area of a trapezoid", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "parallelogramTrapezoidDiagram",
+		  "shape": {
+		    "type": "trapezoidRight",
+		    "height": 500,
+		    "labels": {
+		      "height": {
+		        "type": "number",
+		        "value": 5
+		      },
+		      "topBase": {
+		        "type": "number",
+		        "value": 6
+		      },
+		      "leftSide": {
+		        "type": "none"
+		      },
+		      "rightSide": {
+		        "type": "none"
+		      },
+		      "bottomBase": {
+		        "type": "number",
+		        "value": 8
+		      }
+		    },
+		    "topBase": 6,
+		    "bottomBase": 8
+		  },
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2815,16 +2501,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf69bdd9ef555260e
-	// Question: Find the area of a trapezoid from bases and height
+	// Question: Area of a shape with one pair of parallel sides
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [xf69bdd9ef555260e] Find the area of a trapezoid from bases and height", async () => {
+	test("parallelogram-trapezoid-diagram - [xf69bdd9ef555260e] Area of a shape with one pair of parallel sides", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 4,
+		    "height": 418,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -2848,8 +2534,8 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		    "topBase": 9,
 		    "bottomBase": 5
 		  },
-		  "width": 320,
-		  "height": 209
+		  "width": 400,
+		  "height": 400
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2868,16 +2554,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7cc9897a56991fe0
-	// Question: Area of a quadrilateral with one pair of parallel sides
+	// Question: Find the area of a shape with parallel sides
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x7cc9897a56991fe0] Area of a quadrilateral with one pair of parallel sides", async () => {
+	test("parallelogram-trapezoid-diagram - [x7cc9897a56991fe0] Find the area of a shape with parallel sides", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 3,
+		    "height": 300,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -2885,7 +2571,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		      },
 		      "topBase": {
 		        "type": "number",
-		        "value": 5
+		        "value": 9
 		      },
 		      "leftSide": {
 		        "type": "none"
@@ -2895,13 +2581,13 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		      },
 		      "bottomBase": {
 		        "type": "number",
-		        "value": 9
+		        "value": 5
 		      }
 		    },
-		    "topBase": 5,
-		    "bottomBase": 9
+		    "topBase": 9,
+		    "bottomBase": 5
 		  },
-		  "width": 181,
+		  "width": 360,
 		  "height": 320
 		} as unknown as WidgetInput
 
@@ -2920,125 +2606,17 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x97977dc7621a891b
-	// Question: Find the area of a shape with parallel sides
-	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x97977dc7621a891b] Find the area of a shape with parallel sides", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "parallelogramTrapezoidDiagram",
-		  "shape": {
-		    "type": "trapezoid",
-		    "height": 2,
-		    "labels": {
-		      "height": {
-		        "type": "number",
-		        "value": 2
-		      },
-		      "topBase": {
-		        "type": "number",
-		        "value": 10
-		      },
-		      "leftSide": {
-		        "type": "none"
-		      },
-		      "rightSide": {
-		        "type": "none"
-		      },
-		      "bottomBase": {
-		        "type": "number",
-		        "value": 2
-		      }
-		    },
-		    "topBase": 10,
-		    "bottomBase": 2,
-		    "leftSideLength": 5
-		  },
-		  "width": 320,
-		  "height": 131
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9d1f04679921014e
-	// Question: Find the area of the shape with parallel sides
-	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x9d1f04679921014e] Find the area of the shape with parallel sides", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "parallelogramTrapezoidDiagram",
-		  "shape": {
-		    "type": "trapezoid",
-		    "height": 7,
-		    "labels": {
-		      "height": {
-		        "type": "number",
-		        "value": 7
-		      },
-		      "topBase": {
-		        "type": "number",
-		        "value": 3
-		      },
-		      "leftSide": {
-		        "type": "none"
-		      },
-		      "rightSide": {
-		        "type": "none"
-		      },
-		      "bottomBase": {
-		        "type": "number",
-		        "value": 11
-		      }
-		    },
-		    "topBase": 3,
-		    "bottomBase": 11,
-		    "leftSideLength": 8.062257
-		  },
-		  "width": 320,
-		  "height": 274.286
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for parallelogramTrapezoidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xafe373ad792c7446
-	// Question: Area of a quadrilateral with one pair of parallel sides
+	// Question: Area of a shape with one pair of parallel sides
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [xafe373ad792c7446] Area of a quadrilateral with one pair of parallel sides", async () => {
+	test("parallelogram-trapezoid-diagram - [xafe373ad792c7446] Area of a shape with one pair of parallel sides", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 8,
+		    "height": 362,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -3062,7 +2640,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		    "topBase": 7,
 		    "bottomBase": 10
 		  },
-		  "width": 281,
+		  "width": 360,
 		  "height": 320
 		} as unknown as WidgetInput
 
@@ -3082,16 +2660,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x405cd06e1a64fe0a
-	// Question: Area of a shape with one pair of parallel sides
+	// Question: Find the area of a shape with one pair of parallel sides
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x405cd06e1a64fe0a] Area of a shape with one pair of parallel sides", async () => {
+	test("parallelogram-trapezoid-diagram - [x405cd06e1a64fe0a] Find the area of a shape with one pair of parallel sides", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 3,
+		    "height": 307,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -3115,8 +2693,8 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		    "topBase": 7,
 		    "bottomBase": 3
 		  },
-		  "width": 320,
-		  "height": 198
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3135,16 +2713,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x83417cfed56951cb
-	// Question: Find the area of a trapezoid from given dimensions
+	// Question: Find the area of a quadrilateral with one pair of parallel sides
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x83417cfed56951cb] Find the area of a trapezoid from given dimensions", async () => {
+	test("parallelogram-trapezoid-diagram - [x83417cfed56951cb] Find the area of a quadrilateral with one pair of parallel sides", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 4,
+		    "height": 485,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -3169,7 +2747,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		    "bottomBase": 10
 		  },
 		  "width": 400,
-		  "height": 300
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3188,16 +2766,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3db1387953dacdaa
-	// Question: Find the area of a shape with one pair of parallel sides
+	// Question: Find the area of a shape with a pair of parallel sides
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x3db1387953dacdaa] Find the area of a shape with one pair of parallel sides", async () => {
+	test("parallelogram-trapezoid-diagram - [x3db1387953dacdaa] Find the area of a shape with a pair of parallel sides", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
-		    "type": "trapezoid",
-		    "height": 4,
+		    "type": "trapezoidRight",
+		    "height": 423,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -3219,11 +2797,10 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		      }
 		    },
 		    "topBase": 6,
-		    "bottomBase": 8,
-		    "leftSideLength": 6
+		    "bottomBase": 8
 		  },
-		  "width": 242,
-		  "height": 320
+		  "width": 360,
+		  "height": 360
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3242,16 +2819,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x80c83b209703765e
-	// Question: Find the area of a trapezoid from its dimensions
+	// Question: Find the area of a trapezoid from a diagram
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x80c83b209703765e] Find the area of a trapezoid from its dimensions", async () => {
+	test("parallelogram-trapezoid-diagram - [x80c83b209703765e] Find the area of a trapezoid from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 12,
+		    "height": 312,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -3276,8 +2853,8 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		    "topBase": 2,
 		    "bottomBase": 7
 		  },
-		  "width": 194,
-		  "height": 320
+		  "width": 400,
+		  "height": 360
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3305,7 +2882,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 4,
+		    "height": 481,
 		    "labels": {
 		      "height": {
 		        "type": "number",
@@ -3313,7 +2890,7 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		      },
 		      "topBase": {
 		        "type": "number",
-		        "value": 4
+		        "value": 6
 		      },
 		      "leftSide": {
 		        "type": "none"
@@ -3323,14 +2900,14 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 		      },
 		      "bottomBase": {
 		        "type": "number",
-		        "value": 6
+		        "value": 4
 		      }
 		    },
-		    "topBase": 4,
-		    "bottomBase": 6
+		    "topBase": 6,
+		    "bottomBase": 4
 		  },
-		  "width": 231,
-		  "height": 320
+		  "width": 400,
+		  "height": 360
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3349,16 +2926,16 @@ describe("parallelogramTrapezoidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3748626441dc2c4c
-	// Question: Find the area of a shape with one pair of parallel sides
+	// Question: Area of a quadrilateral with one pair of parallel sides
 	// Widget key: image_1
-	test("parallelogram-trapezoid-diagram - [x3748626441dc2c4c] Find the area of a shape with one pair of parallel sides", async () => {
+	test("parallelogram-trapezoid-diagram - [x3748626441dc2c4c] Area of a quadrilateral with one pair of parallel sides", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "parallelogramTrapezoidDiagram",
 		  "shape": {
 		    "type": "trapezoidRight",
-		    "height": 24,
+		    "height": 424,
 		    "labels": {
 		      "height": {
 		        "type": "number",

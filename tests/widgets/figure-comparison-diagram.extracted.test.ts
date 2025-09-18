@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.965Z
+// Generated on: 2025-09-18T05:17:02.164Z
 // Widget Type: figureComparisonDiagram
 // Source: Real questions from database
 //
@@ -25,149 +25,38 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("figureComparisonDiagram widget tests", () => {
-	// Extracted from question: xf69829baa1ca4cca
-	// Question: Identify corresponding sides in scaled figures
+	// Extracted from question: xb561b39c92ce571f
+	// Question: Identify a corresponding point in scaled figures
 	// Widget key: image_1
-	test("figure-comparison-diagram - [xf69829baa1ca4cca] Identify corresponding sides in scaled figures", async () => {
+	test("figure-comparison-diagram - [xb561b39c92ce571f] Identify a corresponding point in scaled figures", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 700,
+		  "width": 480,
 		  "height": 300,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
-		          "x": 60,
-		          "y": 20
+		          "x": 90,
+		          "y": 0
 		        },
 		        {
-		          "x": 60,
-		          "y": 140
-		        },
-		        {
-		          "x": 45,
-		          "y": 140
-		        },
-		        {
-		          "x": 45,
+		          "x": 90,
 		          "y": 90
 		        },
 		        {
-		          "x": 20,
-		          "y": 20
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "AB",
-		        "BC",
-		        "CD",
-		        "DE",
-		        "EA"
-		      ],
-		      "figureLabel": {
-		        "text": "Figure 1",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 20,
-		          "y": 140
-		        },
-		        {
-		          "x": 20,
-		          "y": 20
+		          "x": 75,
+		          "y": 45
 		        },
 		        {
 		          "x": 0,
 		          "y": 0
-		        },
-		        {
-		          "x": 80,
-		          "y": 0
-		        },
-		        {
-		          "x": 80,
-		          "y": 140
 		        }
 		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "MN",
-		        "NO",
-		        "OP",
-		        "PQ",
-		        "QM"
-		      ],
-		      "figureLabel": {
-		        "text": "Figure 2",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    }
-		  ],
-		  "spacing": 120
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb561b39c92ce571f
-	// Question: Identify the corresponding point in a scaled figure
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xb561b39c92ce571f] Identify the corresponding point in a scaled figure", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 700,
-		  "height": 300,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 135,
-		          "y": 165
-		        },
-		        {
-		          "x": 135,
-		          "y": 255
-		        },
-		        {
-		          "x": 120,
-		          "y": 210
-		        },
-		        {
-		          "x": 45,
-		          "y": 165
-		        }
-		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#FFFFFF00",
 		      "sideLabels": [],
 		      "figureLabel": {
 		        "text": "Figure 1",
@@ -181,23 +70,23 @@ describe("figureComparisonDiagram widget tests", () => {
 		    {
 		      "vertices": [
 		        {
-		          "x": 60,
-		          "y": 60
+		          "x": 0,
+		          "y": 0
 		        },
 		        {
-		          "x": 240,
-		          "y": 60
+		          "x": 180,
+		          "y": 0
 		        },
 		        {
-		          "x": 240,
-		          "y": 240
+		          "x": 180,
+		          "y": 180
 		        },
 		        {
-		          "x": 210,
-		          "y": 150
+		          "x": 150,
+		          "y": 90
 		        }
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#FFFFFF00",
 		      "sideLabels": [],
 		      "figureLabel": {
 		        "text": "Figure 2",
@@ -207,105 +96,6 @@ describe("figureComparisonDiagram widget tests", () => {
 		      "strokeColor": "#1fab54",
 		      "strokeWidth": 2,
 		      "sideLabelOffset": 15
-		    }
-		  ],
-		  "spacing": 80
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe8d6ace4a964daef
-	// Question: Identify the corresponding point in a scaled copy
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xe8d6ace4a964daef] Identify the corresponding point in a scaled copy", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 300,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 95.454
-		        },
-		        {
-		          "x": 40.909,
-		          "y": 68.182
-		        },
-		        {
-		          "x": 27.272,
-		          "y": 13.636
-		        },
-		        {
-		          "x": 81.818,
-		          "y": 0
-		        },
-		        {
-		          "x": 81.818,
-		          "y": 95.454
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure 1",
-		        "offset": 10,
-		        "position": "top"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 12
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 54.545,
-		          "y": 27.273
-		        },
-		        {
-		          "x": 81.818,
-		          "y": 136.364
-		        },
-		        {
-		          "x": 0,
-		          "y": 190.91
-		        },
-		        {
-		          "x": 163.636,
-		          "y": 190.91
-		        },
-		        {
-		          "x": 163.636,
-		          "y": 0
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure 2",
-		        "offset": 10,
-		        "position": "top"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 12
 		    }
 		  ],
 		  "spacing": 80
@@ -327,15 +117,15 @@ describe("figureComparisonDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfbf8b0c20ba933f8
-	// Question: Identify the corresponding side in a scaled copy
+	// Question: Identify corresponding side in a scaled copy
 	// Widget key: image_1
-	test("figure-comparison-diagram - [xfbf8b0c20ba933f8] Identify the corresponding side in a scaled copy", async () => {
+	test("figure-comparison-diagram - [xfbf8b0c20ba933f8] Identify corresponding side in a scaled copy", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 300,
+		  "width": 420,
+		  "height": 340,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
@@ -345,241 +135,24 @@ describe("figureComparisonDiagram widget tests", () => {
 		          "y": 0
 		        },
 		        {
-		          "x": 160,
+		          "x": 170,
 		          "y": 0
 		        },
 		        {
-		          "x": 130,
-		          "y": 200
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        null,
-		        null,
-		        null
-		      ],
-		      "figureLabel": {
-		        "text": "Figure 1",
-		        "offset": 10,
-		        "position": "top"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 12
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 96,
-		          "y": 0
-		        },
-		        {
-		          "x": 78,
-		          "y": 120
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        null,
-		        null,
-		        null
-		      ],
-		      "figureLabel": {
-		        "text": "Figure 2",
-		        "offset": 10,
-		        "position": "top"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 12
-		    }
-		  ],
-		  "spacing": 80
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3d82bd355e698ed3
-	// Question: Identify the corresponding side in a scaled copy
-	// Widget key: image_1
-	test("figure-comparison-diagram - [x3d82bd355e698ed3] Identify the corresponding side in a scaled copy", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 300,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 90,
-		          "y": 60
-		        },
-		        {
-		          "x": 90,
-		          "y": 30
-		        },
-		        {
-		          "x": 270,
-		          "y": 30
-		        },
-		        {
-		          "x": 270,
-		          "y": 120
-		        },
-		        {
-		          "x": 180,
-		          "y": 180
-		        }
-		      ],
-		      "fillColor": "#FFFFFF",
-		      "sideLabels": [
-		        "AB",
-		        "BC",
-		        "CD",
-		        "DE",
-		        "EA"
-		      ],
-		      "figureLabel": {
-		        "text": "Figure 1",
-		        "offset": 12,
-		        "position": "top"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 120,
-		          "y": 195
-		        },
-		        {
-		          "x": 120,
-		          "y": 240
-		        },
-		        {
-		          "x": 75,
-		          "y": 270
-		        },
-		        {
-		          "x": 30,
-		          "y": 210
-		        },
-		        {
-		          "x": 30,
-		          "y": 195
-		        }
-		      ],
-		      "fillColor": "#FFFFFF",
-		      "sideLabels": [
-		        "HI",
-		        "IJ",
-		        "JK",
-		        "KL",
-		        "LH"
-		      ],
-		      "figureLabel": {
-		        "text": "Figure 2",
-		        "offset": 12,
-		        "position": "top"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
-		    }
-		  ],
-		  "spacing": 80
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x087622222e6ba1d7
-	// Question: Identify the corresponding side in a scaled copy
-	// Widget key: image_1
-	test("figure-comparison-diagram - [x087622222e6ba1d7] Identify the corresponding side in a scaled copy", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 700,
-		  "height": 260,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 120
-		        },
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 90,
-		          "y": 0
-		        },
-		        {
-		          "x": 90,
-		          "y": 45
-		        },
-		        {
-		          "x": 240,
-		          "y": 45
-		        },
-		        {
-		          "x": 240,
-		          "y": 120
+		          "x": 140,
+		          "y": 220
 		        }
 		      ],
 		      "fillColor": "#00000000",
 		      "sideLabels": [
 		        "AB",
 		        "BC",
-		        "CD",
-		        "DF",
-		        "FG",
-		        "GA"
+		        "CA"
 		      ],
 		      "figureLabel": {
 		        "text": "Figure 1",
 		        "offset": 10,
-		        "position": "top"
+		        "position": "bottom"
 		      },
 		      "strokeColor": "#1fab54",
 		      "strokeWidth": 2,
@@ -589,49 +162,34 @@ describe("figureComparisonDiagram widget tests", () => {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 80
-		        },
-		        {
-		          "x": 0,
 		          "y": 0
 		        },
 		        {
-		          "x": 60,
+		          "x": 85,
 		          "y": 0
 		        },
 		        {
-		          "x": 60,
-		          "y": 40
-		        },
-		        {
-		          "x": 120,
-		          "y": 40
-		        },
-		        {
-		          "x": 120,
-		          "y": 80
+		          "x": 65,
+		          "y": 135
 		        }
 		      ],
 		      "fillColor": "#00000000",
 		      "sideLabels": [
-		        "HI",
-		        "IJ",
-		        "JK",
-		        "KL",
-		        "LM",
-		        "HM"
+		        "HJ",
+		        "JI",
+		        "IH"
 		      ],
 		      "figureLabel": {
 		        "text": "Figure 2",
 		        "offset": 10,
-		        "position": "top"
+		        "position": "bottom"
 		      },
 		      "strokeColor": "#11accd",
 		      "strokeWidth": 2,
 		      "sideLabelOffset": 14
 		    }
 		  ],
-		  "spacing": 80
+		  "spacing": 90
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -650,34 +208,34 @@ describe("figureComparisonDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0780cf5c6b1f9a29
-	// Question: Identify a corresponding side in a scaled copy
+	// Question: Identify a corresponding side in a scaled figure
 	// Widget key: image_1
-	test("figure-comparison-diagram - [x0780cf5c6b1f9a29] Identify a corresponding side in a scaled copy", async () => {
+	test("figure-comparison-diagram - [x0780cf5c6b1f9a29] Identify a corresponding side in a scaled figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 220,
+		  "width": 420,
+		  "height": 320,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 120
+		          "y": 90
 		        },
 		        {
 		          "x": 0,
-		          "y": 0
+		          "y": 10
 		        },
 		        {
-		          "x": 160,
-		          "y": 0
+		          "x": 180,
+		          "y": 50
 		        },
 		        {
-		          "x": 160,
-		          "y": 120
+		          "x": 180,
+		          "y": 90
 		        }
 		      ],
 		      "fillColor": "#00000000",
@@ -690,29 +248,29 @@ describe("figureComparisonDiagram widget tests", () => {
 		      "figureLabel": {
 		        "text": "Figure 1",
 		        "offset": 12,
-		        "position": "top"
+		        "position": "bottom"
 		      },
 		      "strokeColor": "#1fab54",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": -12
+		      "sideLabelOffset": 14
 		    },
 		    {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 80
+		          "y": 60
 		        },
 		        {
 		          "x": 0,
 		          "y": 0
 		        },
 		        {
-		          "x": 80,
-		          "y": 0
+		          "x": 120,
+		          "y": 30
 		        },
 		        {
-		          "x": 80,
-		          "y": 80
+		          "x": 120,
+		          "y": 60
 		        }
 		      ],
 		      "fillColor": "#00000000",
@@ -725,11 +283,11 @@ describe("figureComparisonDiagram widget tests", () => {
 		      "figureLabel": {
 		        "text": "Figure 2",
 		        "offset": 12,
-		        "position": "top"
+		        "position": "bottom"
 		      },
 		      "strokeColor": "#11accd",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": -12
+		      "sideLabelOffset": 14
 		    }
 		  ],
 		  "spacing": 80
@@ -758,69 +316,170 @@ describe("figureComparisonDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 700,
-		  "height": 320,
+		  "width": 400,
+		  "height": 300,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": -25,
+		          "y": 25
+		        },
+		        {
+		          "x": 25,
+		          "y": -25
+		        },
+		        {
+		          "x": 0,
+		          "y": 50
+		        }
+		      ],
+		      "fillColor": "#1fab544D",
+		      "sideLabels": [
+		        "7",
+		        "14",
+		        "16"
+		      ],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 14
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": -100,
+		          "y": 100
+		        },
+		        {
+		          "x": 100,
+		          "y": -100
+		        },
+		        {
+		          "x": 0,
+		          "y": 200
+		        }
+		      ],
+		      "fillColor": "#11accd4D",
+		      "sideLabels": [
+		        "28",
+		        "56",
+		        "64"
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 14
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7481af2f64b4ffbb
+	// Question: Find the scale factor from Figure A to Figure B
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x7481af2f64b4ffbb] Find the scale factor from Figure A to Figure B", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 325,
+		  "height": 325,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 50
+		          "y": 60
 		        },
 		        {
-		          "x": 50,
+		          "x": 30,
 		          "y": 0
 		        },
 		        {
-		          "x": 25,
-		          "y": 75
+		          "x": 210,
+		          "y": 0
+		        },
+		        {
+		          "x": 180,
+		          "y": 60
 		        }
 		      ],
-		      "fillColor": "#1FAB544D",
+		      "fillColor": "#1fab544D",
 		      "sideLabels": [
-		        "14",
-		        "16",
-		        "7"
+		        "3.6",
+		        "9",
+		        "3.6",
+		        "9"
 		      ],
 		      "figureLabel": {
 		        "text": "Figure A",
 		        "offset": 12,
 		        "position": "bottom"
 		      },
-		      "strokeColor": "#1FAB54",
+		      "strokeColor": "#1fab54",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 12
+		      "sideLabelOffset": 14
 		    },
 		    {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 200
+		          "y": 30
 		        },
 		        {
-		          "x": 200,
+		          "x": 10,
 		          "y": 0
 		        },
 		        {
-		          "x": 100,
-		          "y": 300
+		          "x": 70,
+		          "y": 0
+		        },
+		        {
+		          "x": 60,
+		          "y": 30
 		        }
 		      ],
-		      "fillColor": "#11ACCD4D",
+		      "fillColor": "#11accd4D",
 		      "sideLabels": [
-		        "56",
-		        "64",
-		        "28"
+		        "1.2",
+		        "3",
+		        "1.2",
+		        "3"
 		      ],
 		      "figureLabel": {
 		        "text": "Figure B",
 		        "offset": 12,
 		        "position": "bottom"
 		      },
-		      "strokeColor": "#11ACCD",
+		      "strokeColor": "#11accd",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
+		      "sideLabelOffset": 14
 		    }
 		  ],
 		  "spacing": 80
@@ -842,14 +501,14 @@ describe("figureComparisonDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x683271ae7d90013a
-	// Question: Find the scale factor from Figure A to Figure B
+	// Question: Scale factor from Figure A to Figure B
 	// Widget key: image_1
-	test("figure-comparison-diagram - [x683271ae7d90013a] Find the scale factor from Figure A to Figure B", async () => {
+	test("figure-comparison-diagram - [x683271ae7d90013a] Scale factor from Figure A to Figure B", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 700,
+		  "width": 400,
 		  "height": 300,
 		  "layout": "horizontal",
 		  "figures": [
@@ -857,74 +516,74 @@ describe("figureComparisonDiagram widget tests", () => {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 0
+		          "y": 100
 		        },
 		        {
 		          "x": 0,
-		          "y": -100
+		          "y": 0
 		        },
 		        {
 		          "x": -50,
-		          "y": -75
+		          "y": 25
 		        },
 		        {
 		          "x": -25,
-		          "y": -75
+		          "y": 25
 		        }
 		      ],
 		      "fillColor": "#1fab544D",
 		      "sideLabels": [
-		        "22",
 		        "40",
-		        "32",
-		        "10"
+		        "22",
+		        "10",
+		        "32"
 		      ],
 		      "figureLabel": {
 		        "text": "Figure A",
 		        "offset": 12,
-		        "position": "bottom"
+		        "position": "top"
 		      },
 		      "strokeColor": "#1fab54",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
+		      "sideLabelOffset": 15
 		    },
 		    {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 0
+		          "y": 200
 		        },
 		        {
 		          "x": 0,
-		          "y": -200
+		          "y": 0
 		        },
 		        {
 		          "x": -100,
-		          "y": -150
+		          "y": 50
 		        },
 		        {
 		          "x": -50,
-		          "y": -150
+		          "y": 50
 		        }
 		      ],
 		      "fillColor": "#11accd4D",
 		      "sideLabels": [
-		        "44",
 		        "80",
-		        "64",
-		        "20"
+		        "44",
+		        "20",
+		        "64"
 		      ],
 		      "figureLabel": {
 		        "text": "Figure B",
 		        "offset": 12,
-		        "position": "bottom"
+		        "position": "top"
 		      },
 		      "strokeColor": "#11accd",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
+		      "sideLabelOffset": 15
 		    }
 		  ],
-		  "spacing": 120
+		  "spacing": 80
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -950,8 +609,8 @@ describe("figureComparisonDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 260,
+		  "width": 400,
+		  "height": 300,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
@@ -973,7 +632,7 @@ describe("figureComparisonDiagram widget tests", () => {
 		          "y": 100
 		        }
 		      ],
-		      "fillColor": "#1fab5480",
+		      "fillColor": "#1FAB544D",
 		      "sideLabels": [
 		        "4",
 		        "4.4",
@@ -983,11 +642,11 @@ describe("figureComparisonDiagram widget tests", () => {
 		      "figureLabel": {
 		        "text": "Figure A",
 		        "offset": 10,
-		        "position": "top"
+		        "position": "bottom"
 		      },
-		      "strokeColor": "#1fab54",
+		      "strokeColor": "#1FAB54",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
+		      "sideLabelOffset": 15
 		    },
 		    {
 		      "vertices": [
@@ -1008,7 +667,7 @@ describe("figureComparisonDiagram widget tests", () => {
 		          "y": 25
 		        }
 		      ],
-		      "fillColor": "#11accd80",
+		      "fillColor": "#11ACCD4D",
 		      "sideLabels": [
 		        "1",
 		        "1.1",
@@ -1018,11 +677,11 @@ describe("figureComparisonDiagram widget tests", () => {
 		      "figureLabel": {
 		        "text": "Figure B",
 		        "offset": 10,
-		        "position": "top"
+		        "position": "bottom"
 		      },
-		      "strokeColor": "#11accd",
+		      "strokeColor": "#11ACCD",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
+		      "sideLabelOffset": 15
 		    }
 		  ],
 		  "spacing": 80
@@ -1044,30 +703,30 @@ describe("figureComparisonDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0d0ee76b8815e0a1
-	// Question: Find the scale factor from Figure A to Figure B
+	// Question: Find the scale factor from a scaled copy
 	// Widget key: image_1
-	test("figure-comparison-diagram - [x0d0ee76b8815e0a1] Find the scale factor from Figure A to Figure B", async () => {
+	test("figure-comparison-diagram - [x0d0ee76b8815e0a1] Find the scale factor from a scaled copy", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 240,
+		  "width": 450,
+		  "height": 300,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 37.5,
-		          "y": 0
+		          "x": 18.75,
+		          "y": 81.25
 		        },
 		        {
 		          "x": 56.25,
-		          "y": 37.5
+		          "y": 81.25
+		        },
+		        {
+		          "x": 75,
+		          "y": 118.75
 		        }
 		      ],
 		      "fillColor": "#1fab544D",
@@ -1083,21 +742,21 @@ describe("figureComparisonDiagram widget tests", () => {
 		      },
 		      "strokeColor": "#1fab54",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
+		      "sideLabelOffset": 15
 		    },
 		    {
 		      "vertices": [
 		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 150,
-		          "y": 0
+		          "x": 75,
+		          "y": 43.75
 		        },
 		        {
 		          "x": 225,
-		          "y": 150
+		          "y": 43.75
+		        },
+		        {
+		          "x": 300,
+		          "y": 193.75
 		        }
 		      ],
 		      "fillColor": "#11accd4D",
@@ -1113,7 +772,7 @@ describe("figureComparisonDiagram widget tests", () => {
 		      },
 		      "strokeColor": "#11accd",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
+		      "sideLabelOffset": 15
 		    }
 		  ],
 		  "spacing": 80
@@ -1142,82 +801,82 @@ describe("figureComparisonDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 640,
+		  "width": 420,
 		  "height": 360,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
-		          "x": -100,
-		          "y": 0
+		          "x": -80,
+		          "y": -50
 		        },
 		        {
-		          "x": 100,
-		          "y": 0
+		          "x": 80,
+		          "y": -50
 		        },
 		        {
-		          "x": 45,
-		          "y": 150
+		          "x": 50,
+		          "y": 50
 		        },
 		        {
-		          "x": -45,
-		          "y": 150
+		          "x": -50,
+		          "y": 50
 		        }
 		      ],
-		      "fillColor": "#1FAB544D",
+		      "fillColor": "#1fab54",
 		      "sideLabels": [
-		        "33 units",
-		        "33 units",
-		        "15 units",
-		        "33 units"
+		        "33",
+		        "33",
+		        "15",
+		        "33"
 		      ],
 		      "figureLabel": {
 		        "text": "Figure A",
-		        "offset": 18,
+		        "offset": 12,
 		        "position": "bottom"
 		      },
-		      "strokeColor": "#1FAB54",
+		      "strokeColor": "#1fab54",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
+		      "sideLabelOffset": 14
 		    },
 		    {
 		      "vertices": [
 		        {
-		          "x": -50,
-		          "y": 0
+		          "x": -40,
+		          "y": -25
 		        },
 		        {
-		          "x": 50,
-		          "y": 0
+		          "x": 40,
+		          "y": -25
 		        },
 		        {
-		          "x": 22.5,
-		          "y": 75
+		          "x": 25,
+		          "y": 25
 		        },
 		        {
-		          "x": -22.5,
-		          "y": 75
+		          "x": -25,
+		          "y": 25
 		        }
 		      ],
-		      "fillColor": "#11ACCD4D",
+		      "fillColor": "#11accd",
 		      "sideLabels": [
-		        "11 units",
-		        "11 units",
-		        "5 units",
-		        "11 units"
+		        "11",
+		        "11",
+		        "5",
+		        "11"
 		      ],
 		      "figureLabel": {
 		        "text": "Figure B",
-		        "offset": 18,
+		        "offset": 12,
 		        "position": "bottom"
 		      },
-		      "strokeColor": "#11ACCD",
+		      "strokeColor": "#11accd",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
+		      "sideLabelOffset": 14
 		    }
 		  ],
-		  "spacing": 120
+		  "spacing": 80
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1235,39 +894,108 @@ describe("figureComparisonDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd3a4d32a5fee1c24
-	// Question: Select possible corresponding side length after scaling down
+	// Extracted from question: x2d4f558559981f78
+	// Question: Scaled copy of a square — possible side length
 	// Widget key: image_1
-	test("figure-comparison-diagram - [xd3a4d32a5fee1c24] Select possible corresponding side length after scaling down", async () => {
+	test("figure-comparison-diagram - [x2d4f558559981f78] Scaled copy of a square — possible side length", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 188.235,
-		  "height": 200,
+		  "width": 320,
+		  "height": 320,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
-		          "x": 35.294,
-		          "y": 94.118
+		          "x": 40,
+		          "y": 40
 		        },
 		        {
-		          "x": 152.941,
-		          "y": 35.294
+		          "x": 280,
+		          "y": 40
 		        },
 		        {
-		          "x": 94.118,
-		          "y": 94.118
+		          "x": 280,
+		          "y": 280
 		        },
 		        {
-		          "x": 152.941,
-		          "y": 152.941
+		          "x": 40,
+		          "y": 280
 		        }
 		      ],
 		      "fillColor": "#00000000",
-		      "sideLabels": [],
+		      "sideLabels": [
+		        null,
+		        null,
+		        "8 units",
+		        null
+		      ],
+		      "figureLabel": {
+		        "text": "",
+		        "offset": 0,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6834a77b59de585a
+	// Question: Side length of a scaled copy (scale factor greater than 1)
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x6834a77b59de585a] Side length of a scaled copy (scale factor greater than 1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 360,
+		  "height": 360,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": -80,
+		          "y": -80
+		        },
+		        {
+		          "x": 80,
+		          "y": -80
+		        },
+		        {
+		          "x": 80,
+		          "y": 80
+		        },
+		        {
+		          "x": -80,
+		          "y": 80
+		        }
+		      ],
+		      "fillColor": "#FFFFFF00",
+		      "sideLabels": [
+		        "20 units",
+		        ", null, null, null  "
+		      ],
 		      "figureLabel": {
 		        "text": "",
 		        "offset": 0,
@@ -1296,946 +1024,52 @@ describe("figureComparisonDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x38cc8416a37bbd6a
-	// Question: Find a missing length using a scale factor
-	// Widget key: image_1
-	test("figure-comparison-diagram - [x38cc8416a37bbd6a] Find a missing length using a scale factor", async () => {
+	// Extracted from question: xf3d267f695b76dd6
+	// Question: Create a scale drawing of a city block
+	// Widget key: scale_block_choice_a
+	test("figure-comparison-diagram - [xf3d267f695b76dd6] Create a scale drawing of a city block (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 600,
+		  "width": 360,
 		  "height": 300,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
-		          "x": 70.667,
-		          "y": 88.333
+		          "x": -32,
+		          "y": -24
 		        },
 		        {
-		          "x": 194.333,
-		          "y": 17.667
+		          "x": 32,
+		          "y": -24
 		        },
 		        {
-		          "x": 141.333,
-		          "y": 176.667
-		        },
-		        {
-		          "x": 17.667,
-		          "y": 247.333
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "x units",
-		        null,
-		        null,
-		        null
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 194.333,
-		          "y": 159
-		        },
-		        {
-		          "x": 249.296,
-		          "y": 127.593
-		        },
-		        {
-		          "x": 225.741,
-		          "y": 198.259
-		        },
-		        {
-		          "x": 170.778,
-		          "y": 229.667
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "16 units",
-		        null,
-		        null,
-		        null
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    }
-		  ],
-		  "spacing": 80
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xdd143fe536d9fd33
-	// Question: Find the value of x from a scale drawing
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xdd143fe536d9fd33] Find the value of x from a scale drawing", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 650,
-		  "height": 220,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 60
-		        },
-		        {
-		          "x": 0,
-		          "y": 20
-		        },
-		        {
-		          "x": 120,
-		          "y": 0
-		        },
-		        {
-		          "x": 120,
-		          "y": 80
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "20",
-		        null,
-		        null,
-		        "60"
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 12,
-		        "position": "top"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 72
-		        },
-		        {
-		          "x": 0,
+		          "x": 32,
 		          "y": 24
 		        },
 		        {
-		          "x": 144,
-		          "y": 0
-		        },
-		        {
-		          "x": 144,
-		          "y": 96
+		          "x": -32,
+		          "y": 24
 		        }
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#E8F4FD",
 		      "sideLabels": [
-		        "24",
-		        null,
-		        null,
-		        "x"
+		        "10 units",
+		        "10 units",
+		        "10 units",
+		        "10 units"
 		      ],
 		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 12,
-		        "position": "top"
+		        "text": "Square",
+		        "offset": 10,
+		        "position": "bottom"
 		      },
-		      "strokeColor": "#1fab54",
+		      "strokeColor": "#00008B",
 		      "strokeWidth": 2,
 		      "sideLabelOffset": 14
-		    }
-		  ],
-		  "spacing": 120
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8245ad89b13530f9
-	// Question: Find the missing side length using a scale factor
-	// Widget key: image_1
-	test("figure-comparison-diagram - [x8245ad89b13530f9] Find the missing side length using a scale factor", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 325,
-		  "height": 325,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 160,
-		          "y": 0
-		        },
-		        {
-		          "x": 160,
-		          "y": 100
-		        },
-		        {
-		          "x": 0,
-		          "y": 100
-		        }
-		      ],
-		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 12,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 128,
-		          "y": 0
-		        },
-		        {
-		          "x": 128,
-		          "y": 80
-		        },
-		        {
-		          "x": 0,
-		          "y": 80
-		        }
-		      ],
-		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 12,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    }
-		  ],
-		  "spacing": 60
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x09bf73a3b832c46f
-	// Question: Find the value of x from scale rectangles
-	// Widget key: image_1
-	test("figure-comparison-diagram - [x09bf73a3b832c46f] Find the value of x from scale rectangles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 280,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 60,
-		          "y": 0
-		        },
-		        {
-		          "x": 60,
-		          "y": 120
-		        },
-		        {
-		          "x": 0,
-		          "y": 120
-		        }
-		      ],
-		      "fillColor": "#FFFFFF",
-		      "sideLabels": [
-		        "6",
-		        "12",
-		        null,
-		        null
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 90,
-		          "y": 0
-		        },
-		        {
-		          "x": 90,
-		          "y": 180
-		        },
-		        {
-		          "x": 0,
-		          "y": 180
-		        }
-		      ],
-		      "fillColor": "#FFFFFF",
-		      "sideLabels": [
-		        "9",
-		        "x",
-		        null,
-		        null
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    }
-		  ],
-		  "spacing": 100
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe1857069a68e2884
-	// Question: Find a length using a scale factor
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xe1857069a68e2884] Find a length using a scale factor", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 500,
-		  "height": 220,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 122.308,
-		          "y": 0
-		        },
-		        {
-		          "x": 142.692,
-		          "y": 61.153
-		        },
-		        {
-		          "x": 0,
-		          "y": 81.539
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "10.5",
-		        null,
-		        null
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 12
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 81.538,
-		          "y": 0
-		        },
-		        {
-		          "x": 95.128,
-		          "y": 40.77
-		        },
-		        {
-		          "x": 0,
-		          "y": 54.359
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "x",
-		        null,
-		        null
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 12
-		    }
-		  ],
-		  "spacing": 80
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3059bf74d1525760
-	// Question: Find the value of x from scaled figures
-	// Widget key: image_1
-	test("figure-comparison-diagram - [x3059bf74d1525760] Find the value of x from scaled figures", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 300,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": -40,
-		          "y": 30
-		        },
-		        {
-		          "x": 0,
-		          "y": -45
-		        },
-		        {
-		          "x": 40,
-		          "y": 30
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "4",
-		        " ",
-		        "x"
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": -100,
-		          "y": 75
-		        },
-		        {
-		          "x": 0,
-		          "y": -112.5
-		        },
-		        {
-		          "x": 100,
-		          "y": 75
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "10",
-		        " ",
-		        "11"
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
-		    }
-		  ],
-		  "spacing": 80
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x467b30908be14fb2
-	// Question: Find the value of x from scaled parallelograms
-	// Widget key: image_1
-	test("figure-comparison-diagram - [x467b30908be14fb2] Find the value of x from scaled parallelograms", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 400,
-		  "height": 220,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 50
-		        },
-		        {
-		          "x": 40,
-		          "y": 0
-		        },
-		        {
-		          "x": 140,
-		          "y": 0
-		        },
-		        {
-		          "x": 100,
-		          "y": 50
-		        }
-		      ],
-		      "fillColor": "#FFFFFF",
-		      "sideLabels": [
-		        "10",
-		        "16",
-		        " ",
-		        " "
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 12,
-		        "position": "top"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 62.5
-		        },
-		        {
-		          "x": 50,
-		          "y": 0
-		        },
-		        {
-		          "x": 175,
-		          "y": 0
-		        },
-		        {
-		          "x": 125,
-		          "y": 62.5
-		        }
-		      ],
-		      "fillColor": "#FFFFFF",
-		      "sideLabels": [
-		        "12.5",
-		        "x",
-		        " ",
-		        " "
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 12,
-		        "position": "top"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
-		    }
-		  ],
-		  "spacing": 60
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcc39778dfe8983e4
-	// Question: Find a side length using a scale factor
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xcc39778dfe8983e4] Find a side length using a scale factor", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 700,
-		  "height": 250,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 60
-		        },
-		        {
-		          "x": 20,
-		          "y": 0
-		        },
-		        {
-		          "x": 80,
-		          "y": 0
-		        },
-		        {
-		          "x": 100,
-		          "y": 60
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        " ",
-		        "3",
-		        " ",
-		        " "
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 105
-		        },
-		        {
-		          "x": 35,
-		          "y": 0
-		        },
-		        {
-		          "x": 140,
-		          "y": 0
-		        },
-		        {
-		          "x": 175,
-		          "y": 105
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        " ",
-		        "x",
-		        " ",
-		        " "
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    }
-		  ],
-		  "spacing": 100
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x768e50281bb0e9f7
-	// Question: Find x using a scale factor
-	// Widget key: image_1
-	test("figure-comparison-diagram - [x768e50281bb0e9f7] Find x using a scale factor", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 300,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 20,
-		          "y": 140
-		        },
-		        {
-		          "x": 220,
-		          "y": 140
-		        },
-		        {
-		          "x": 190,
-		          "y": 40
-		        },
-		        {
-		          "x": 80,
-		          "y": 40
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 12,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 10,
-		          "y": 100
-		        },
-		        {
-		          "x": 130,
-		          "y": 100
-		        },
-		        {
-		          "x": 110,
-		          "y": 60
-		        },
-		        {
-		          "x": 60,
-		          "y": 60
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 12,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    }
-		  ],
-		  "spacing": 80
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7fbf8b7280fa0586
-	// Question: Use a scale factor to find a missing side length
-	// Widget key: image_1
-	test("figure-comparison-diagram - [x7fbf8b7280fa0586] Use a scale factor to find a missing side length", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 350,
-		  "height": 105,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 14.384,
-		          "y": 47.945
-		        },
-		        {
-		          "x": 43.15,
-		          "y": 9.59
-		        },
-		        {
-		          "x": 119.862,
-		          "y": 9.59
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        null,
-		        "x",
-		        null
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 12
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 112.671,
-		          "y": 95.89
-		        },
-		        {
-		          "x": 196.575,
-		          "y": 23.973
-		        },
-		        {
-		          "x": 340.411,
-		          "y": 23.973
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        null,
-		        "5",
-		        null
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 12
 		    }
 		  ],
 		  "spacing": 50
@@ -2256,466 +1090,55 @@ describe("figureComparisonDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x0374a587cd2bca59
-	// Question: Find the missing side in a scaled figure
-	// Widget key: image_1
-	test("figure-comparison-diagram - [x0374a587cd2bca59] Find the missing side in a scaled figure", async () => {
+	// Extracted from question: xf3d267f695b76dd6
+	// Question: Create a scale drawing of a city block
+	// Widget key: scale_block_choice_b
+	test("figure-comparison-diagram - [xf3d267f695b76dd6] Create a scale drawing of a city block (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 220,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 150,
-		          "y": 150
-		        },
-		        {
-		          "x": 0,
-		          "y": 116.667
-		        },
-		        {
-		          "x": 83.333,
-		          "y": 100
-		        },
-		        {
-		          "x": 100,
-		          "y": 0
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "45",
-		        null,
-		        null,
-		        "x"
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 12,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 266.667,
-		          "y": 116.667
-		        },
-		        {
-		          "x": 176.667,
-		          "y": 96.667
-		        },
-		        {
-		          "x": 226.667,
-		          "y": 86.667
-		        },
-		        {
-		          "x": 236.667,
-		          "y": 26.667
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "27",
-		        null,
-		        null,
-		        "18"
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 12,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
-		    }
-		  ],
-		  "spacing": 80
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf02b61e3a09632d8
-	// Question: Find x using a scale factor between triangles
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xf02b61e3a09632d8] Find x using a scale factor between triangles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 260,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 0,
-		          "y": -80
-		        },
-		        {
-		          "x": 160,
-		          "y": 0
-		        }
-		      ],
-		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [
-		        "2",
-		        " ",
-		        " "
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": -12
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 0,
-		          "y": -120
-		        },
-		        {
-		          "x": 240,
-		          "y": 0
-		        }
-		      ],
-		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [
-		        "x",
-		        " ",
-		        " "
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": -12
-		    }
-		  ],
-		  "spacing": 100
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3c886b13f5848fa1
-	// Question: Find x from a scaled pair of triangles
-	// Widget key: image_1
-	test("figure-comparison-diagram - [x3c886b13f5848fa1] Find x from a scaled pair of triangles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
+		  "width": 360,
 		  "height": 300,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
-		          "x": 0,
-		          "y": 120
-		        },
-		        {
-		          "x": 100,
-		          "y": 0
-		        },
-		        {
-		          "x": 100,
-		          "y": 120
-		        }
-		      ],
-		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 180
-		        },
-		        {
-		          "x": 180,
-		          "y": 0
-		        },
-		        {
-		          "x": 180,
-		          "y": 180
-		        }
-		      ],
-		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    }
-		  ],
-		  "spacing": 80
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc2acda45d0ab3e88
-	// Question: Find the missing length using a scale factor
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xc2acda45d0ab3e88] Find the missing length using a scale factor", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 700,
-		  "height": 280,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 180,
-		          "y": 60
-		        },
-		        {
-		          "x": 180,
-		          "y": 120
-		        },
-		        {
-		          "x": 0,
-		          "y": 120
-		        }
-		      ],
-		      "fillColor": "#FFFFFF",
-		      "sideLabels": [
-		        " ",
-		        " ",
-		        "x units",
-		        " "
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 12,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 45,
-		          "y": 15
-		        },
-		        {
-		          "x": 45,
-		          "y": 30
-		        },
-		        {
-		          "x": 0,
-		          "y": 30
-		        }
-		      ],
-		      "fillColor": "#FFFFFF",
-		      "sideLabels": [
-		        " ",
-		        " ",
-		        "1.5 units",
-		        " "
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 12,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    }
-		  ],
-		  "spacing": 80
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd8998a9947394b3a
-	// Question: Find a missing length using a scale factor
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xd8998a9947394b3a] Find a missing length using a scale factor", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 300,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 69.231
+		          "x": -40,
+		          "y": -40
 		        },
 		        {
 		          "x": 40,
-		          "y": 0
+		          "y": -40
 		        },
 		        {
-		          "x": 240,
-		          "y": 0
+		          "x": 40,
+		          "y": 40
 		        },
 		        {
-		          "x": 200,
-		          "y": 69.231
+		          "x": -40,
+		          "y": 40
 		        }
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#E8F4FD",
 		      "sideLabels": [
-		        null,
-		        "10",
-		        null,
-		        null
+		        "20 units",
+		        "20 units",
+		        "20 units",
+		        "20 units"
 		      ],
 		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 16,
-		        "position": "top"
+		        "text": "Square",
+		        "offset": 10,
+		        "position": "bottom"
 		      },
-		      "strokeColor": "#11accd",
+		      "strokeColor": "#00008B",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": -12
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 57.692
-		        },
-		        {
-		          "x": 30,
-		          "y": 0
-		        },
-		        {
-		          "x": 180,
-		          "y": 0
-		        },
-		        {
-		          "x": 150,
-		          "y": 57.692
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        null,
-		        "x",
-		        null,
-		        null
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 16,
-		        "position": "top"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": -12
+		      "sideLabelOffset": 14
 		    }
 		  ],
-		  "spacing": 80
+		  "spacing": 50
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2733,15 +1156,81 @@ describe("figureComparisonDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xb0c9745c104939cc
-	// Question: Find an unknown side length from scale figures
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xb0c9745c104939cc] Find an unknown side length from scale figures", async () => {
+	// Extracted from question: xf3d267f695b76dd6
+	// Question: Create a scale drawing of a city block
+	// Widget key: scale_block_choice_c
+	test("figure-comparison-diagram - [xf3d267f695b76dd6] Create a scale drawing of a city block (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 600,
+		  "width": 360,
+		  "height": 300,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": -50,
+		          "y": -50
+		        },
+		        {
+		          "x": 50,
+		          "y": -50
+		        },
+		        {
+		          "x": 50,
+		          "y": 50
+		        },
+		        {
+		          "x": -50,
+		          "y": 50
+		        }
+		      ],
+		      "fillColor": "#E8F4FD",
+		      "sideLabels": [
+		        "25 units",
+		        "25 units",
+		        "25 units",
+		        "25 units"
+		      ],
+		      "figureLabel": {
+		        "text": "Square",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#00008B",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 14
+		    }
+		  ],
+		  "spacing": 50
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x38cc8416a37bbd6a
+	// Question: Find a side length using a scale factor
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x38cc8416a37bbd6a] Find a side length using a scale factor", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 400,
 		  "height": 300,
 		  "layout": "horizontal",
 		  "figures": [
@@ -2749,27 +1238,27 @@ describe("figureComparisonDiagram widget tests", () => {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 200
+		          "y": 0
+		        },
+		        {
+		          "x": 180,
+		          "y": 0
+		        },
+		        {
+		          "x": 140,
+		          "y": 150
 		        },
 		        {
 		          "x": 0,
-		          "y": 40
-		        },
-		        {
-		          "x": 170,
-		          "y": 80
-		        },
-		        {
-		          "x": 220,
-		          "y": 200
+		          "y": 150
 		        }
 		      ],
-		      "fillColor": "#11accd1A",
+		      "fillColor": "#00000000",
 		      "sideLabels": [
-		        "4",
-		        " ",
-		        " ",
-		        "7.2"
+		        "x units",
+		        null,
+		        null,
+		        null
 		      ],
 		      "figureLabel": {
 		        "text": "Figure A",
@@ -2778,33 +1267,33 @@ describe("figureComparisonDiagram widget tests", () => {
 		      },
 		      "strokeColor": "#11accd",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
+		      "sideLabelOffset": 15
 		    },
 		    {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 150
+		          "y": 0
+		        },
+		        {
+		          "x": 80,
+		          "y": 0
+		        },
+		        {
+		          "x": 62.2222,
+		          "y": 66.6667
 		        },
 		        {
 		          "x": 0,
-		          "y": 30
-		        },
-		        {
-		          "x": 127.5,
-		          "y": 60
-		        },
-		        {
-		          "x": 165,
-		          "y": 150
+		          "y": 66.6667
 		        }
 		      ],
-		      "fillColor": "#1fab541A",
+		      "fillColor": "#00000000",
 		      "sideLabels": [
-		        "3",
-		        " ",
-		        " ",
-		        "x"
+		        "16 units",
+		        null,
+		        null,
+		        null
 		      ],
 		      "figureLabel": {
 		        "text": "Figure B",
@@ -2813,98 +1302,7 @@ describe("figureComparisonDiagram widget tests", () => {
 		      },
 		      "strokeColor": "#1fab54",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
-		    }
-		  ],
-		  "spacing": 80
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0ab7f806b38ac07a
-	// Question: Find x using scale drawings of quadrilaterals
-	// Widget key: image_1
-	test("figure-comparison-diagram - [x0ab7f806b38ac07a] Find x using scale drawings of quadrilaterals", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 220,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 49.688
-		        },
-		        {
-		          "x": 49.687,
-		          "y": 115.938
-		        },
-		        {
-		          "x": 66.25,
-		          "y": 0
-		        },
-		        {
-		          "x": 33.124,
-		          "y": 16.563
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 10,
-		        "position": "top"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 38.646
-		        },
-		        {
-		          "x": 38.646,
-		          "y": 90.173
-		        },
-		        {
-		          "x": 51.528,
-		          "y": 0
-		        },
-		        {
-		          "x": 25.764,
-		          "y": 12.882
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 10,
-		        "position": "top"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
+		      "sideLabelOffset": 15
 		    }
 		  ],
 		  "spacing": 80
@@ -2926,15 +1324,15 @@ describe("figureComparisonDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x620d99a9f250b1fd
-	// Question: Find the value of x from scale figures
+	// Question: Find a missing side from scale drawings
 	// Widget key: image_1
-	test("figure-comparison-diagram - [x620d99a9f250b1fd] Find the value of x from scale figures", async () => {
+	test("figure-comparison-diagram - [x620d99a9f250b1fd] Find a missing side from scale drawings", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 220,
+		  "width": 400,
+		  "height": 300,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
@@ -2970,7 +1368,7 @@ describe("figureComparisonDiagram widget tests", () => {
 		      },
 		      "strokeColor": "#11accd",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
+		      "sideLabelOffset": 15
 		    },
 		    {
 		      "vertices": [
@@ -3005,10 +1403,10 @@ describe("figureComparisonDiagram widget tests", () => {
 		      },
 		      "strokeColor": "#1fab54",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
+		      "sideLabelOffset": 15
 		    }
 		  ],
-		  "spacing": 100
+		  "spacing": 80
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3026,65 +1424,1505 @@ describe("figureComparisonDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x8c4468ea2edae114
-	// Question: Identify the same angle as ∠DEF
+	// Extracted from question: x8245ad89b13530f9
+	// Question: Find the value of x using a scale factor
 	// Widget key: image_1
-	test("figure-comparison-diagram - [x8c4468ea2edae114] Identify the same angle as ∠DEF", async () => {
+	test("figure-comparison-diagram - [x8245ad89b13530f9] Find the value of x using a scale factor", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 245,
-		  "height": 265,
+		  "width": 325,
+		  "height": 325,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": -80
+		          "y": 0
 		        },
 		        {
-		          "x": 69,
-		          "y": -40
+		          "x": 160,
+		          "y": 0
 		        },
 		        {
-		          "x": 69,
-		          "y": 40
+		          "x": 160,
+		          "y": 107.143
 		        },
+		        {
+		          "x": 0,
+		          "y": 107.143
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 10,
+		        "position": "top"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 128,
+		          "y": 0
+		        },
+		        {
+		          "x": 128,
+		          "y": 85.714
+		        },
+		        {
+		          "x": 0,
+		          "y": 85.714
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 10,
+		        "position": "top"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    }
+		  ],
+		  "spacing": 30
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xdd143fe536d9fd33
+	// Question: Find the missing side length in scaled figures
+	// Widget key: image_1
+	test("figure-comparison-diagram - [xdd143fe536d9fd33] Find the missing side length in scaled figures", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 325,
+		  "height": 325,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
 		        {
 		          "x": 0,
 		          "y": 80
 		        },
 		        {
-		          "x": -69,
+		          "x": 0,
 		          "y": 40
 		        },
 		        {
-		          "x": -69,
-		          "y": -40
+		          "x": 120,
+		          "y": 20
+		        },
+		        {
+		          "x": 120,
+		          "y": 100
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        "20",
+		        null,
+		        null,
+		        "60"
+		      ],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 12,
+		        "position": "top"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 16
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 96
+		        },
+		        {
+		          "x": 0,
+		          "y": 48
+		        },
+		        {
+		          "x": 144,
+		          "y": 24
+		        },
+		        {
+		          "x": 144,
+		          "y": 120
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        "24",
+		        null,
+		        null,
+		        "x"
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 12,
+		        "position": "top"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 16
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x09bf73a3b832c46f
+	// Question: Find the missing side length in scaled rectangles
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x09bf73a3b832c46f] Find the missing side length in scaled rectangles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 450,
+		  "height": 350,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 60,
+		          "y": 0
+		        },
+		        {
+		          "x": 60,
+		          "y": 120
+		        },
+		        {
+		          "x": 0,
+		          "y": 120
+		        }
+		      ],
+		      "fillColor": "#FFFFFF",
+		      "sideLabels": [
+		        "6",
+		        "12",
+		        null,
+		        null
+		      ],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 15,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 90,
+		          "y": 0
+		        },
+		        {
+		          "x": 90,
+		          "y": 180
+		        },
+		        {
+		          "x": 0,
+		          "y": 180
+		        }
+		      ],
+		      "fillColor": "#FFFFFF",
+		      "sideLabels": [
+		        "9",
+		        "x",
+		        null,
+		        null
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 15,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe1857069a68e2884
+	// Question: Find x using a scale factor
+	// Widget key: image_1
+	test("figure-comparison-diagram - [xe1857069a68e2884] Find x using a scale factor", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 420,
+		  "height": 320,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 150,
+		          "y": 0
+		        },
+		        {
+		          "x": 30,
+		          "y": 90
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        null,
+		        "10.5",
+		        null
+		      ],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 100,
+		          "y": 0
+		        },
+		        {
+		          "x": 20,
+		          "y": 60
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        null,
+		        "x",
+		        null
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3059bf74d1525760
+	// Question: Find the value of x in scaled triangles
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x3059bf74d1525760] Find the value of x in scaled triangles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 400,
+		  "height": 300,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": -30,
+		          "y": 40
+		        },
+		        {
+		          "x": 0,
+		          "y": -20
+		        },
+		        {
+		          "x": 30,
+		          "y": 40
 		        }
 		      ],
 		      "fillColor": "#FFFFFF00",
 		      "sideLabels": [
+		        "4",
+		        "x",
+		        null
+		      ],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 14
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": -50,
+		          "y": 70
+		        },
+		        {
+		          "x": 0,
+		          "y": -50
+		        },
+		        {
+		          "x": 50,
+		          "y": 70
+		        }
+		      ],
+		      "fillColor": "#FFFFFF00",
+		      "sideLabels": [
+		        "10",
+		        "11",
+		        null
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 14
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x467b30908be14fb2
+	// Question: Find a missing side length in scale drawings
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x467b30908be14fb2] Find a missing side length in scale drawings", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 480,
+		  "height": 320,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 100,
+		          "y": 0
+		        },
+		        {
+		          "x": 130,
+		          "y": 60
+		        },
+		        {
+		          "x": 30,
+		          "y": 60
+		        }
+		      ],
+		      "fillColor": "#FFFFFF00",
+		      "sideLabels": [
+		        "10",
+		        "16",
 		        null,
+		        null
+		      ],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 14
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 125,
+		          "y": 0
+		        },
+		        {
+		          "x": 162.5,
+		          "y": 75
+		        },
+		        {
+		          "x": 37.5,
+		          "y": 75
+		        }
+		      ],
+		      "fillColor": "#FFFFFF00",
+		      "sideLabels": [
+		        "12.5",
+		        "x",
 		        null,
-		        null,
+		        null
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 14
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcc39778dfe8983e4
+	// Question: Find a side length from a scale factor
+	// Widget key: image_1
+	test("figure-comparison-diagram - [xcc39778dfe8983e4] Find a side length from a scale factor", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 400,
+		  "height": 320,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 60
+		        },
+		        {
+		          "x": 20,
+		          "y": 0
+		        },
+		        {
+		          "x": 100,
+		          "y": 0
+		        },
+		        {
+		          "x": 120,
+		          "y": 60
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 105
+		        },
+		        {
+		          "x": 35,
+		          "y": 0
+		        },
+		        {
+		          "x": 175,
+		          "y": 0
+		        },
+		        {
+		          "x": 210,
+		          "y": 105
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x768e50281bb0e9f7
+	// Question: Find a side length from a scale factor
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x768e50281bb0e9f7] Find a side length from a scale factor", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 440,
+		  "height": 320,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": -120,
+		          "y": -40
+		        },
+		        {
+		          "x": 120,
+		          "y": -40
+		        },
+		        {
+		          "x": 90,
+		          "y": 40
+		        },
+		        {
+		          "x": -90,
+		          "y": 40
+		        }
+		      ],
+		      "fillColor": "#E8F4FD",
+		      "sideLabels": [
+		        "x",
 		        null,
 		        null,
 		        null
 		      ],
 		      "figureLabel": {
-		        "text": "Figure",
+		        "text": "Figure A",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": -12
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": -34.286,
+		          "y": -11.429
+		        },
+		        {
+		          "x": 34.286,
+		          "y": -11.429
+		        },
+		        {
+		          "x": 25.714,
+		          "y": 11.429
+		        },
+		        {
+		          "x": -25.714,
+		          "y": 11.429
+		        }
+		      ],
+		      "fillColor": "#E6F9EF",
+		      "sideLabels": [
+		        "12",
+		        null,
+		        null,
+		        null
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": -12
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7fbf8b7280fa0586
+	// Question: Find x using a scale factor
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x7fbf8b7280fa0586] Find x using a scale factor", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 480,
+		  "height": 320,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 60
+		        },
+		        {
+		          "x": 30,
+		          "y": 0
+		        },
+		        {
+		          "x": 120,
+		          "y": 0
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        " ",
+		        "x",
+		        " "
+		      ],
+		      "figureLabel": {
+		        "text": "Figure A",
 		        "offset": 10,
 		        "position": "bottom"
 		      },
-		      "strokeColor": "#000000",
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": -12
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 150
+		        },
+		        {
+		          "x": 75,
+		          "y": 0
+		        },
+		        {
+		          "x": 300,
+		          "y": 0
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        " ",
+		        "5",
+		        " "
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": -16
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0374a587cd2bca59
+	// Question: Find a missing side length from scale figures
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x0374a587cd2bca59] Find a missing side length from scale figures", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 480,
+		  "height": 360,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 150,
+		          "y": 150
+		        },
+		        {
+		          "x": 0,
+		          "y": 116.667
+		        },
+		        {
+		          "x": 83.333,
+		          "y": 100
+		        },
+		        {
+		          "x": 100,
+		          "y": 0
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 16
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 266.667,
+		          "y": 116.667
+		        },
+		        {
+		          "x": 176.667,
+		          "y": 96.667
+		        },
+		        {
+		          "x": 226.667,
+		          "y": 86.667
+		        },
+		        {
+		          "x": 236.667,
+		          "y": 26.667
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 16
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf02b61e3a09632d8
+	// Question: Find x from a scale factor
+	// Widget key: image_1
+	test("figure-comparison-diagram - [xf02b61e3a09632d8] Find x from a scale factor", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 480,
+		  "height": 320,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 0,
+		          "y": -60
+		        },
+		        {
+		          "x": 120,
+		          "y": 0
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        "2",
+		        " ",
+		        " "
+		      ],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 0,
+		          "y": -90
+		        },
+		        {
+		          "x": 180,
+		          "y": 0
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        "x",
+		        " ",
+		        " "
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
 		      "strokeWidth": 2,
 		      "sideLabelOffset": 15
 		    }
 		  ],
-		  "spacing": 50
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3c886b13f5848fa1
+	// Question: Find x in scaled triangles
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x3c886b13f5848fa1] Find x in scaled triangles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 325,
+		  "height": 325,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 31.579,
+		          "y": 169.156
+		        },
+		        {
+		          "x": 63.158,
+		          "y": 71.753
+		        },
+		        {
+		          "x": 63.158,
+		          "y": 169.156
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        null,
+		        "x",
+		        "2"
+		      ],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 157.895,
+		          "y": 247.078
+		        },
+		        {
+		          "x": 236.842,
+		          "y": 3.571
+		        },
+		        {
+		          "x": 236.842,
+		          "y": 247.078
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        null,
+		        "12.5",
+		        "5"
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc2acda45d0ab3e88
+	// Question: Find a length using a scale factor
+	// Widget key: image_1
+	test("figure-comparison-diagram - [xc2acda45d0ab3e88] Find a length using a scale factor", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 400,
+		  "height": 300,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 120,
+		          "y": 0
+		        },
+		        {
+		          "x": 120,
+		          "y": -80
+		        },
+		        {
+		          "x": 0,
+		          "y": -160
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        "x",
+		        null,
+		        null,
+		        null
+		      ],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": -12
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 30,
+		          "y": 0
+		        },
+		        {
+		          "x": 30,
+		          "y": 20
+		        },
+		        {
+		          "x": 0,
+		          "y": 40
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        "1.5",
+		        null,
+		        null,
+		        null
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": -12
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd8998a9947394b3a
+	// Question: Find the value of x using a scale factor
+	// Widget key: image_1
+	test("figure-comparison-diagram - [xd8998a9947394b3a] Find the value of x using a scale factor", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 325,
+		  "height": 325,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 40
+		        },
+		        {
+		          "x": 20,
+		          "y": 0
+		        },
+		        {
+		          "x": 150,
+		          "y": 0
+		        },
+		        {
+		          "x": 130,
+		          "y": 40
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 15,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 14
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 30
+		        },
+		        {
+		          "x": 15,
+		          "y": 0
+		        },
+		        {
+		          "x": 112.5,
+		          "y": 0
+		        },
+		        {
+		          "x": 97.5,
+		          "y": 30
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 15,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 14
+		    }
+		  ],
+		  "spacing": 60
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb0c9745c104939cc
+	// Question: Find x from scaled figures
+	// Widget key: image_1
+	test("figure-comparison-diagram - [xb0c9745c104939cc] Find x from scaled figures", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 400,
+		  "height": 325,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 180
+		        },
+		        {
+		          "x": 180,
+		          "y": 180
+		        },
+		        {
+		          "x": 180,
+		          "y": 110
+		        },
+		        {
+		          "x": 0,
+		          "y": 40
+		        }
+		      ],
+		      "fillColor": "#FFFFFF00",
+		      "sideLabels": [
+		        "7.2",
+		        null,
+		        null,
+		        "4"
+		      ],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 14,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 14
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 135
+		        },
+		        {
+		          "x": 135,
+		          "y": 135
+		        },
+		        {
+		          "x": 135,
+		          "y": 82.5
+		        },
+		        {
+		          "x": 0,
+		          "y": 30
+		        }
+		      ],
+		      "fillColor": "#FFFFFF00",
+		      "sideLabels": [
+		        "x",
+		        null,
+		        null,
+		        "3"
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 14,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 14
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0ab7f806b38ac07a
+	// Question: Find x in scaled quadrilaterals
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x0ab7f806b38ac07a] Find x in scaled quadrilaterals", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 420,
+		  "height": 300,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 49.687,
+		          "y": 66.25
+		        },
+		        {
+		          "x": 66.25,
+		          "y": -49.688
+		        },
+		        {
+		          "x": 33.124,
+		          "y": -33.125
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 38.646,
+		          "y": 51.527
+		        },
+		        {
+		          "x": 51.528,
+		          "y": -38.646
+		        },
+		        {
+		          "x": 25.764,
+		          "y": -25.764
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    }
+		  ],
+		  "spacing": 80
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3103,14 +2941,14 @@ describe("figureComparisonDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8d93a52239fe1506
-	// Question: Identify the single transformation applied to a quadrilateral
+	// Question: Identify the transformation applied to a quadrilateral
 	// Widget key: image_1
-	test("figure-comparison-diagram - [x8d93a52239fe1506] Identify the single transformation applied to a quadrilateral", async () => {
+	test("figure-comparison-diagram - [x8d93a52239fe1506] Identify the transformation applied to a quadrilateral", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 600,
+		  "width": 420,
 		  "height": 300,
 		  "layout": "horizontal",
 		  "figures": [
@@ -3133,7 +2971,7 @@ describe("figureComparisonDiagram widget tests", () => {
 		          "y": 34.615
 		        }
 		      ],
-		      "fillColor": "#FFFFFF00",
+		      "fillColor": "#00000000",
 		      "sideLabels": [],
 		      "figureLabel": {
 		        "text": "A",
@@ -3163,7 +3001,7 @@ describe("figureComparisonDiagram widget tests", () => {
 		          "y": 46.154
 		        }
 		      ],
-		      "fillColor": "#FFFFFF00",
+		      "fillColor": "#00000000",
 		      "sideLabels": [],
 		      "figureLabel": {
 		        "text": "B",
@@ -3194,121 +3032,34 @@ describe("figureComparisonDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x85e0717ea996b9cf
-	// Question: Identify the transformation between two triangles
+	// Question: Identify the single transformation between triangles
 	// Widget key: image_1
-	test("figure-comparison-diagram - [x85e0717ea996b9cf] Identify the transformation between two triangles", async () => {
+	test("figure-comparison-diagram - [x85e0717ea996b9cf] Identify the single transformation between triangles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 300,
-		  "height": 254,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 59.35,
-		          "y": 38.535
-		        },
-		        {
-		          "x": 130.015,
-		          "y": 239.216
-		        },
-		        {
-		          "x": 13.195,
-		          "y": 118.476
-		        }
-		      ],
-		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "A",
-		        "offset": 10,
-		        "position": "top"
-		      },
-		      "strokeColor": "#000000",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 276.923,
-		          "y": 46.154
-		        },
-		        {
-		          "x": 138.462,
-		          "y": 207.692
-		        },
-		        {
-		          "x": 184.615,
-		          "y": 46.154
-		        }
-		      ],
-		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "B",
-		        "offset": 10,
-		        "position": "top"
-		      },
-		      "strokeColor": "#000000",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    }
-		  ],
-		  "spacing": 50
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x385e16e76eab148d
-	// Question: Identify the transformation between triangles
-	// Widget key: image_1
-	test("figure-comparison-diagram - [x385e16e76eab148d] Identify the transformation between triangles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
+		  "width": 400,
 		  "height": 300,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
-		          "x": 0,
-		          "y": 0
+		          "x": -40,
+		          "y": 60
 		        },
 		        {
-		          "x": 281.25,
-		          "y": 140.625
+		          "x": 30,
+		          "y": -50
 		        },
 		        {
-		          "x": 46.874,
-		          "y": 187.5
+		          "x": 60,
+		          "y": 70
 		        }
 		      ],
-		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [
-		        " ",
-		        " ",
-		        " "
-		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
 		      "figureLabel": {
 		        "text": "A",
 		        "offset": 12,
@@ -3321,24 +3072,20 @@ describe("figureComparisonDiagram widget tests", () => {
 		    {
 		      "vertices": [
 		        {
-		          "x": 0,
-		          "y": 0
+		          "x": 40,
+		          "y": -60
 		        },
 		        {
-		          "x": 140.625,
-		          "y": 70.313
+		          "x": -30,
+		          "y": 50
 		        },
 		        {
-		          "x": 23.437,
-		          "y": 93.75
+		          "x": -60,
+		          "y": -70
 		        }
 		      ],
-		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [
-		        " ",
-		        " ",
-		        " "
-		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
 		      "figureLabel": {
 		        "text": "B",
 		        "offset": 12,
@@ -3367,6 +3114,89 @@ describe("figureComparisonDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x385e16e76eab148d
+	// Question: Identify the single transformation between two triangles
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x385e16e76eab148d] Identify the single transformation between two triangles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 400,
+		  "height": 300,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 200,
+		          "y": 80
+		        },
+		        {
+		          "x": 50,
+		          "y": 120
+		        }
+		      ],
+		      "fillColor": "#FFFFFF00",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "A",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#000000",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 100,
+		          "y": 40
+		        },
+		        {
+		          "x": 25,
+		          "y": 60
+		        }
+		      ],
+		      "fillColor": "#FFFFFF00",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "B",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#000000",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: x56dd46b547c7cdea
 	// Question: Identify the transformation between two quadrilaterals
 	// Widget key: image_1
@@ -3375,27 +3205,27 @@ describe("figureComparisonDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 300,
-		  "height": 124,
+		  "width": 400,
+		  "height": 320,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
-		          "x": 105.882,
-		          "y": 35.294
+		          "x": 52.941,
+		          "y": -17.647
+		        },
+		        {
+		          "x": -52.941,
+		          "y": -52.941
+		        },
+		        {
+		          "x": 0,
+		          "y": 52.941
 		        },
 		        {
 		          "x": 0,
 		          "y": 0
-		        },
-		        {
-		          "x": 52.94,
-		          "y": 105.882
-		        },
-		        {
-		          "x": 52.94,
-		          "y": 52.941
 		        }
 		      ],
 		      "fillColor": "#00000000",
@@ -3412,20 +3242,20 @@ describe("figureComparisonDiagram widget tests", () => {
 		    {
 		      "vertices": [
 		        {
+		          "x": -52.941,
+		          "y": -17.647
+		        },
+		        {
+		          "x": 52.941,
+		          "y": -52.941
+		        },
+		        {
 		          "x": 0,
-		          "y": 35.294
-		        },
-		        {
-		          "x": 105.882,
-		          "y": 0
-		        },
-		        {
-		          "x": 52.941,
-		          "y": 105.882
-		        },
-		        {
-		          "x": 52.941,
 		          "y": 52.941
+		        },
+		        {
+		          "x": 0,
+		          "y": 0
 		        }
 		      ],
 		      "fillColor": "#00000000",
@@ -3440,7 +3270,7 @@ describe("figureComparisonDiagram widget tests", () => {
 		      "sideLabelOffset": 15
 		    }
 		  ],
-		  "spacing": 50
+		  "spacing": 80
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3459,41 +3289,46 @@ describe("figureComparisonDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6ed925bd634081f4
-	// Question: Identify the transformation of a quadrilateral
+	// Question: Identify the single transformation of a quadrilateral
 	// Widget key: image_1
-	test("figure-comparison-diagram - [x6ed925bd634081f4] Identify the transformation of a quadrilateral", async () => {
+	test("figure-comparison-diagram - [x6ed925bd634081f4] Identify the single transformation of a quadrilateral", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 500,
-		  "height": 300,
+		  "width": 400,
+		  "height": 320,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
-		          "x": 60,
+		          "x": 0,
 		          "y": 0
 		        },
 		        {
-		          "x": 120,
+		          "x": 60,
 		          "y": 100
 		        },
 		        {
-		          "x": 140,
+		          "x": 80,
 		          "y": 160
 		        },
 		        {
-		          "x": 0,
+		          "x": -60,
 		          "y": 60
 		        }
 		      ],
 		      "fillColor": "#00000000",
-		      "sideLabels": [],
+		      "sideLabels": [
+		        null,
+		        null,
+		        null,
+		        null
+		      ],
 		      "figureLabel": {
 		        "text": "A",
-		        "offset": 10,
+		        "offset": 12,
 		        "position": "top"
 		      },
 		      "strokeColor": "#000000",
@@ -3503,27 +3338,32 @@ describe("figureComparisonDiagram widget tests", () => {
 		    {
 		      "vertices": [
 		        {
-		          "x": 60,
+		          "x": 0,
 		          "y": 0
 		        },
 		        {
-		          "x": 120,
+		          "x": 60,
 		          "y": 100
 		        },
 		        {
-		          "x": 140,
+		          "x": 80,
 		          "y": 160
 		        },
 		        {
-		          "x": 0,
+		          "x": -60,
 		          "y": 60
 		        }
 		      ],
 		      "fillColor": "#00000000",
-		      "sideLabels": [],
+		      "sideLabels": [
+		        null,
+		        null,
+		        null,
+		        null
+		      ],
 		      "figureLabel": {
 		        "text": "B",
-		        "offset": 10,
+		        "offset": 12,
 		        "position": "top"
 		      },
 		      "strokeColor": "#000000",
@@ -3550,38 +3390,34 @@ describe("figureComparisonDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1bf740377eb02ea2
-	// Question: Identify the transformation between two triangles
+	// Question: Identify the single transformation between two triangles
 	// Widget key: image_1
-	test("figure-comparison-diagram - [x1bf740377eb02ea2] Identify the transformation between two triangles", async () => {
+	test("figure-comparison-diagram - [x1bf740377eb02ea2] Identify the single transformation between two triangles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 600,
+		  "width": 300,
 		  "height": 300,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
-		          "x": 10,
-		          "y": 130
+		          "x": 206.25,
+		          "y": 243.75
 		        },
 		        {
-		          "x": 130,
-		          "y": 170
+		          "x": 18.75,
+		          "y": 168.75
 		        },
 		        {
-		          "x": 70,
-		          "y": 30
+		          "x": 206.25,
+		          "y": 281.25
 		        }
 		      ],
 		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [
-		        " ",
-		        " ",
-		        " "
-		      ],
+		      "sideLabels": [],
 		      "figureLabel": {
 		        "text": "A",
 		        "offset": 0,
@@ -3589,29 +3425,25 @@ describe("figureComparisonDiagram widget tests", () => {
 		      },
 		      "strokeColor": "#000000",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 12
+		      "sideLabelOffset": 15
 		    },
 		    {
 		      "vertices": [
 		        {
-		          "x": 130,
-		          "y": 130
+		          "x": 243.75,
+		          "y": 206.25
 		        },
 		        {
-		          "x": 10,
-		          "y": 170
+		          "x": 168.75,
+		          "y": 18.75
 		        },
 		        {
-		          "x": 70,
-		          "y": 30
+		          "x": 281.25,
+		          "y": 206.25
 		        }
 		      ],
 		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [
-		        " ",
-		        " ",
-		        " "
-		      ],
+		      "sideLabels": [],
 		      "figureLabel": {
 		        "text": "B",
 		        "offset": 0,
@@ -3619,10 +3451,10 @@ describe("figureComparisonDiagram widget tests", () => {
 		      },
 		      "strokeColor": "#000000",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 12
+		      "sideLabelOffset": 15
 		    }
 		  ],
-		  "spacing": 100
+		  "spacing": 80
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3640,31 +3472,35 @@ describe("figureComparisonDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7d01ff23e4a9c58d
-	// Question: Identify the transformation that maps triangle A to triangle B
+	// Extracted from question: x74ef2d7d50a192f4
+	// Question: Identify the transformation from quadrilateral A to B
 	// Widget key: image_1
-	test("figure-comparison-diagram - [x7d01ff23e4a9c58d] Identify the transformation that maps triangle A to triangle B", async () => {
+	test("figure-comparison-diagram - [x74ef2d7d50a192f4] Identify the transformation from quadrilateral A to B", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 300,
-		  "height": 210,
+		  "width": 400,
+		  "height": 300,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
-		          "x": 60,
+		          "x": 0,
 		          "y": 60
 		        },
 		        {
-		          "x": 120,
-		          "y": 75
+		          "x": 14,
+		          "y": 0
 		        },
 		        {
-		          "x": 30,
-		          "y": 165
+		          "x": 48,
+		          "y": 54
+		        },
+		        {
+		          "x": 42,
+		          "y": 62
 		        }
 		      ],
 		      "fillColor": "#00000000",
@@ -3676,21 +3512,25 @@ describe("figureComparisonDiagram widget tests", () => {
 		      },
 		      "strokeColor": "#000000",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
+		      "sideLabelOffset": 12
 		    },
 		    {
 		      "vertices": [
 		        {
-		          "x": 210,
-		          "y": 30
+		          "x": 18.22,
+		          "y": 67.98
 		        },
 		        {
-		          "x": 270,
-		          "y": 45
+		          "x": 0.34,
+		          "y": 9.02
 		        },
 		        {
-		          "x": 180,
-		          "y": 135
+		          "x": 56.78,
+		          "y": 38.78
+		        },
+		        {
+		          "x": 55.59,
+		          "y": 48.71
 		        }
 		      ],
 		      "fillColor": "#00000000",
@@ -3702,7 +3542,7 @@ describe("figureComparisonDiagram widget tests", () => {
 		      },
 		      "strokeColor": "#000000",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
+		      "sideLabelOffset": 12
 		    }
 		  ],
 		  "spacing": 80
@@ -3731,45 +3571,441 @@ describe("figureComparisonDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 300,
+		  "width": 325,
+		  "height": 325,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 176.471
+		          "y": 0
+		        },
+		        {
+		          "x": 0,
+		          "y": 6
+		        },
+		        {
+		          "x": 2,
+		          "y": 6
+		        },
+		        {
+		          "x": 2,
+		          "y": 2
+		        },
+		        {
+		          "x": 8,
+		          "y": 2
+		        },
+		        {
+		          "x": 8,
+		          "y": 0
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        "6",
+		        null,
+		        null,
+		        null,
+		        "2",
+		        "8"
+		      ],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 12
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 0,
+		          "y": 3
+		        },
+		        {
+		          "x": 1,
+		          "y": 3
+		        },
+		        {
+		          "x": 1,
+		          "y": 1
+		        },
+		        {
+		          "x": 4,
+		          "y": 1
+		        },
+		        {
+		          "x": 4,
+		          "y": 0
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [
+		        "3",
+		        null,
+		        null,
+		        null,
+		        "1",
+		        "4"
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 12
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc01055b565bf3c6a
+	// Question: Determine whether Figure B is a scaled copy of Figure A
+	// Widget key: image_1
+	test("figure-comparison-diagram - [xc01055b565bf3c6a] Determine whether Figure B is a scaled copy of Figure A", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 325,
+		  "height": 325,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": -50,
+		          "y": 100
+		        },
+		        {
+		          "x": -50,
+		          "y": -100
+		        },
+		        {
+		          "x": 50,
+		          "y": 0
+		        },
+		        {
+		          "x": 50,
+		          "y": 100
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": -25,
+		          "y": 50
+		        },
+		        {
+		          "x": -25,
+		          "y": -50
+		        },
+		        {
+		          "x": 25,
+		          "y": 0
+		        },
+		        {
+		          "x": 25,
+		          "y": 50
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4d2e56d87d01167e
+	// Question: Is Figure B a scaled copy of Figure A?
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x4d2e56d87d01167e] Is Figure B a scaled copy of Figure A?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 325,
+		  "height": 325,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 90
+		        },
+		        {
+		          "x": 100,
+		          "y": 0
+		        },
+		        {
+		          "x": 100,
+		          "y": 90
+		        }
+		      ],
+		      "fillColor": "#FFFFFF00",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 180
+		        },
+		        {
+		          "x": 200,
+		          "y": 0
+		        },
+		        {
+		          "x": 200,
+		          "y": 180
+		        }
+		      ],
+		      "fillColor": "#FFFFFF00",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xdf2267143c5a78d7
+	// Question: Is Figure B a scaled copy of Figure A?
+	// Widget key: image_1
+	test("figure-comparison-diagram - [xdf2267143c5a78d7] Is Figure B a scaled copy of Figure A?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 325,
+		  "height": 325,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": -26,
+		          "y": 26
+		        },
+		        {
+		          "x": -26,
+		          "y": -26
+		        },
+		        {
+		          "x": 0,
+		          "y": -39
+		        },
+		        {
+		          "x": 26,
+		          "y": -26
+		        },
+		        {
+		          "x": 26,
+		          "y": 26
+		        }
+		      ],
+		      "fillColor": "#FFFFFF00",
+		      "sideLabels": [
+		        "2.2",
+		        "2.2",
+		        "2.2",
+		        " ",
+		        "4"
+		      ],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 16
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": -78,
+		          "y": 78
+		        },
+		        {
+		          "x": -78,
+		          "y": -78
+		        },
+		        {
+		          "x": 0,
+		          "y": -117
+		        },
+		        {
+		          "x": 78,
+		          "y": -78
+		        },
+		        {
+		          "x": 78,
+		          "y": 78
+		        }
+		      ],
+		      "fillColor": "#FFFFFF00",
+		      "sideLabels": [
+		        "6.6",
+		        "6.6",
+		        "6.6",
+		        " ",
+		        "12"
+		      ],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 12,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 16
+		    }
+		  ],
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc5aa05b2bbad54fc
+	// Question: Is Figure B a scaled copy of Figure A?
+	// Widget key: image_1
+	test("figure-comparison-diagram - [xc5aa05b2bbad54fc] Is Figure B a scaled copy of Figure A?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 420,
+		  "height": 320,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 120
 		        },
 		        {
 		          "x": 0,
 		          "y": 0
 		        },
 		        {
-		          "x": 66.667,
-		          "y": 0
-		        },
-		        {
-		          "x": 66.667,
-		          "y": 132.353
-		        },
-		        {
 		          "x": 100,
-		          "y": 132.353
+		          "y": 80
 		        },
 		        {
-		          "x": 100,
-		          "y": 176.471
+		          "x": 260,
+		          "y": 120
 		        }
 		      ],
-		      "fillColor": "#FFFFFF00",
+		      "fillColor": "#E8F4FD",
 		      "sideLabels": [
-		        "6",
-		        null,
-		        null,
-		        "2",
-		        null,
-		        "8"
+		        "9",
+		        " ",
+		        "7.3",
+		        "9"
 		      ],
 		      "figureLabel": {
 		        "text": "Figure A",
@@ -3784,37 +4020,27 @@ describe("figureComparisonDiagram widget tests", () => {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 88.236
+		          "y": 60
 		        },
 		        {
 		          "x": 0,
 		          "y": 0
 		        },
 		        {
-		          "x": 33.333,
-		          "y": 0
-		        },
-		        {
-		          "x": 33.333,
-		          "y": 66.177
-		        },
-		        {
 		          "x": 50,
-		          "y": 66.177
+		          "y": 35
 		        },
 		        {
-		          "x": 50,
-		          "y": 88.236
+		          "x": 120,
+		          "y": 60
 		        }
 		      ],
-		      "fillColor": "#FFFFFF00",
+		      "fillColor": "#E8FDEB",
 		      "sideLabels": [
 		        "3",
-		        null,
-		        null,
-		        "1",
-		        null,
-		        "4"
+		        " ",
+		        "2.2",
+		        "3"
 		      ],
 		      "figureLabel": {
 		        "text": "Figure B",
@@ -3844,311 +4070,10 @@ describe("figureComparisonDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc01055b565bf3c6a
-	// Question: Determine if Figure B is a scaled copy of Figure A
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xc01055b565bf3c6a] Determine if Figure B is a scaled copy of Figure A", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 300,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 230.77
-		        },
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 85.714,
-		          "y": 173.077
-		        },
-		        {
-		          "x": 85.714,
-		          "y": 230.77
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "40 units",
-		        "10 units",
-		        "36 units",
-		        "20 units"
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 20,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 115.385
-		        },
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 42.857,
-		          "y": 86.538
-		        },
-		        {
-		          "x": 42.857,
-		          "y": 115.385
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "20 units",
-		        "5 units",
-		        "18 units",
-		        "10 units"
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 20,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
-		    }
-		  ],
-		  "spacing": 120
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xdf2267143c5a78d7
-	// Question: Is Figure B a scaled copy of Figure A?
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xdf2267143c5a78d7] Is Figure B a scaled copy of Figure A?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 300,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 65.218
-		        },
-		        {
-		          "x": 0,
-		          "y": 13.044
-		        },
-		        {
-		          "x": 26.087,
-		          "y": 0
-		        },
-		        {
-		          "x": 52.174,
-		          "y": 13.044
-		        },
-		        {
-		          "x": 52.174,
-		          "y": 65.218
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 12
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 195.652
-		        },
-		        {
-		          "x": 0,
-		          "y": 39.13
-		        },
-		        {
-		          "x": 78.261,
-		          "y": 0
-		        },
-		        {
-		          "x": 156.522,
-		          "y": 39.13
-		        },
-		        {
-		          "x": 156.522,
-		          "y": 195.652
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 12
-		    }
-		  ],
-		  "spacing": 120
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc5aa05b2bbad54fc
-	// Question: Is Figure B a scaled copy of Figure A?
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xc5aa05b2bbad54fc] Is Figure B a scaled copy of Figure A?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 300,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 0,
-		          "y": 120
-		        },
-		        {
-		          "x": 200,
-		          "y": 120
-		        },
-		        {
-		          "x": 120,
-		          "y": 30
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "9",
-		        "9",
-		        "7.3",
-		        " "
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 0,
-		          "y": 60
-		        },
-		        {
-		          "x": 100,
-		          "y": 60
-		        },
-		        {
-		          "x": 60,
-		          "y": 20
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [
-		        "3",
-		        "3",
-		        "2.2",
-		        " "
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
-		    }
-		  ],
-		  "spacing": 100
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x313607ee43f3c295
-	// Question: Identify a scaled copy from side lengths
+	// Question: Is Figure B a scaled copy of Figure A?
 	// Widget key: image_1
-	test("figure-comparison-diagram - [x313607ee43f3c295] Identify a scaled copy from side lengths", async () => {
+	test("figure-comparison-diagram - [x313607ee43f3c295] Is Figure B a scaled copy of Figure A?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4161,18 +4086,18 @@ describe("figureComparisonDiagram widget tests", () => {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 200
+		          "y": 120
 		        },
 		        {
 		          "x": 60,
-		          "y": 30
+		          "y": 0
 		        },
 		        {
 		          "x": 120,
-		          "y": 200
+		          "y": 120
 		        }
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#FFFFFF00",
 		      "sideLabels": [
 		        "10",
 		        "10",
@@ -4180,29 +4105,29 @@ describe("figureComparisonDiagram widget tests", () => {
 		      ],
 		      "figureLabel": {
 		        "text": "Figure A",
-		        "offset": 12,
+		        "offset": 10,
 		        "position": "bottom"
 		      },
 		      "strokeColor": "#11accd",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
+		      "sideLabelOffset": 15
 		    },
 		    {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 120
+		          "y": 48
 		        },
 		        {
-		          "x": 30,
-		          "y": 30
+		          "x": 24,
+		          "y": 0
 		        },
 		        {
-		          "x": 60,
-		          "y": 120
+		          "x": 48,
+		          "y": 48
 		        }
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#FFFFFF00",
 		      "sideLabels": [
 		        "2",
 		        "2",
@@ -4210,12 +4135,12 @@ describe("figureComparisonDiagram widget tests", () => {
 		      ],
 		      "figureLabel": {
 		        "text": "Figure B",
-		        "offset": 12,
+		        "offset": 10,
 		        "position": "bottom"
 		      },
 		      "strokeColor": "#1fab54",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
+		      "sideLabelOffset": 15
 		    }
 		  ],
 		  "spacing": 80
@@ -4244,23 +4169,23 @@ describe("figureComparisonDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 650,
-		  "height": 260,
+		  "width": 325,
+		  "height": 325,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
 		          "x": -40,
-		          "y": 80
+		          "y": 50
 		        },
 		        {
 		          "x": 0,
-		          "y": 15
+		          "y": 0
 		        },
 		        {
 		          "x": 40,
-		          "y": 80
+		          "y": 50
 		        }
 		      ],
 		      "fillColor": "#FFFFFF00",
@@ -4271,26 +4196,26 @@ describe("figureComparisonDiagram widget tests", () => {
 		      ],
 		      "figureLabel": {
 		        "text": "Figure A",
-		        "offset": 12,
-		        "position": "top"
+		        "offset": 10,
+		        "position": "bottom"
 		      },
 		      "strokeColor": "#11accd",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
+		      "sideLabelOffset": 14
 		    },
 		    {
 		      "vertices": [
 		        {
-		          "x": -90,
-		          "y": 150
+		          "x": -80,
+		          "y": 100
 		        },
 		        {
 		          "x": 0,
-		          "y": 30
+		          "y": -20
 		        },
 		        {
-		          "x": 90,
-		          "y": 150
+		          "x": 80,
+		          "y": 100
 		        }
 		      ],
 		      "fillColor": "#FFFFFF00",
@@ -4301,220 +4226,12 @@ describe("figureComparisonDiagram widget tests", () => {
 		      ],
 		      "figureLabel": {
 		        "text": "Figure B",
-		        "offset": 12,
-		        "position": "top"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 16
-		    }
-		  ],
-		  "spacing": 150
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xae4cf756b0e10aef
-	// Question: Is Figure B a scaled copy of Figure A?
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xae4cf756b0e10aef] Is Figure B a scaled copy of Figure A?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 600,
-		  "height": 300,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 110
-		        },
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 60,
-		          "y": 0
-		        },
-		        {
-		          "x": 60,
-		          "y": 80
-		        },
-		        {
-		          "x": 30,
-		          "y": 80
-		        },
-		        {
-		          "x": 30,
-		          "y": 110
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 10,
-		        "position": "top"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 30
-		        },
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 20,
-		          "y": 0
-		        },
-		        {
-		          "x": 20,
-		          "y": 20
-		        },
-		        {
-		          "x": 10,
-		          "y": 20
-		        },
-		        {
-		          "x": 10,
-		          "y": 30
-		        }
-		      ],
-		      "fillColor": "#00000000",
-		      "sideLabels": [],
-		      "figureLabel": {
-		        "text": "Figure B",
-		        "offset": 10,
-		        "position": "top"
-		      },
-		      "strokeColor": "#1fab54",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    }
-		  ],
-		  "spacing": 100
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for figureComparisonDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf5a0cdba5192688b
-	// Question: Is Figure B a scaled copy of Figure A?
-	// Widget key: image_1
-	test("figure-comparison-diagram - [xf5a0cdba5192688b] Is Figure B a scaled copy of Figure A?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "figureComparisonDiagram",
-		  "width": 325,
-		  "height": 325,
-		  "layout": "horizontal",
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 2,
-		          "y": 0
-		        },
-		        {
-		          "x": 2,
-		          "y": 2
-		        },
-		        {
-		          "x": 0,
-		          "y": 2
-		        }
-		      ],
-		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [
-		        "2",
-		        "2",
-		        "2",
-		        "2"
-		      ],
-		      "figureLabel": {
-		        "text": "Figure A",
-		        "offset": 10,
-		        "position": "bottom"
-		      },
-		      "strokeColor": "#11accd",
-		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
-		    },
-		    {
-		      "vertices": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 9,
-		          "y": 0
-		        },
-		        {
-		          "x": 9,
-		          "y": 7
-		        },
-		        {
-		          "x": 0,
-		          "y": 7
-		        }
-		      ],
-		      "fillColor": "#FFFFFF00",
-		      "sideLabels": [
-		        "9",
-		        "7",
-		        "9",
-		        "7"
-		      ],
-		      "figureLabel": {
-		        "text": "Figure B",
 		        "offset": 10,
 		        "position": "bottom"
 		      },
 		      "strokeColor": "#1fab54",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 15
+		      "sideLabelOffset": 14
 		    }
 		  ],
 		  "spacing": 80
@@ -4543,26 +4260,26 @@ describe("figureComparisonDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 700,
-		  "height": 300,
+		  "width": 325,
+		  "height": 325,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 0
+		          "y": 200
 		        },
 		        {
-		          "x": 150,
-		          "y": 0
+		          "x": 160,
+		          "y": 200
 		        },
 		        {
-		          "x": 45,
-		          "y": -130
+		          "x": 40,
+		          "y": 40
 		        }
 		      ],
-		      "fillColor": "#FFFFFF",
+		      "fillColor": "#00000000",
 		      "sideLabels": [
 		        "4",
 		        "11.3",
@@ -4575,24 +4292,24 @@ describe("figureComparisonDiagram widget tests", () => {
 		      },
 		      "strokeColor": "#11accd",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
+		      "sideLabelOffset": 15
 		    },
 		    {
 		      "vertices": [
 		        {
 		          "x": 0,
-		          "y": 0
+		          "y": 160
 		        },
 		        {
-		          "x": 75,
-		          "y": 0
+		          "x": 120,
+		          "y": 160
 		        },
 		        {
-		          "x": 22,
-		          "y": -65
+		          "x": 32,
+		          "y": 60
 		        }
 		      ],
-		      "fillColor": "#FFFFFF",
+		      "fillColor": "#00000000",
 		      "sideLabels": [
 		        "2",
 		        "5",
@@ -4605,10 +4322,10 @@ describe("figureComparisonDiagram widget tests", () => {
 		      },
 		      "strokeColor": "#1fab54",
 		      "strokeWidth": 2,
-		      "sideLabelOffset": 14
+		      "sideLabelOffset": 15
 		    }
 		  ],
-		  "spacing": 120
+		  "spacing": 80
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4634,30 +4351,30 @@ describe("figureComparisonDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "figureComparisonDiagram",
-		  "width": 700,
-		  "height": 300,
+		  "width": 420,
+		  "height": 320,
 		  "layout": "horizontal",
 		  "figures": [
 		    {
 		      "vertices": [
 		        {
-		          "x": 0,
-		          "y": 0
+		          "x": -30,
+		          "y": -10
 		        },
 		        {
-		          "x": 60,
-		          "y": -24
+		          "x": 30,
+		          "y": -25
 		        },
 		        {
-		          "x": 60,
-		          "y": 24
+		          "x": 30,
+		          "y": 25
 		        },
 		        {
-		          "x": 0,
-		          "y": 48
+		          "x": -30,
+		          "y": 25
 		        }
 		      ],
-		      "fillColor": "#FFFFFF00",
+		      "fillColor": "#FFFFFF",
 		      "sideLabels": [
 		        "6.4",
 		        "4",
@@ -4666,7 +4383,7 @@ describe("figureComparisonDiagram widget tests", () => {
 		      ],
 		      "figureLabel": {
 		        "text": "Figure A",
-		        "offset": 12,
+		        "offset": 16,
 		        "position": "bottom"
 		      },
 		      "strokeColor": "#11accd",
@@ -4676,23 +4393,23 @@ describe("figureComparisonDiagram widget tests", () => {
 		    {
 		      "vertices": [
 		        {
-		          "x": 0,
-		          "y": 0
+		          "x": -70,
+		          "y": -60
 		        },
 		        {
-		          "x": 140,
-		          "y": -72.581
+		          "x": 70,
+		          "y": -120
 		        },
 		        {
-		          "x": 140,
-		          "y": 72.581
+		          "x": 70,
+		          "y": 30
 		        },
 		        {
-		          "x": 0,
-		          "y": 145.161
+		          "x": -70,
+		          "y": 30
 		        }
 		      ],
-		      "fillColor": "#FFFFFF00",
+		      "fillColor": "#FFFFFF",
 		      "sideLabels": [
 		        "15.2",
 		        "12",
@@ -4701,7 +4418,7 @@ describe("figureComparisonDiagram widget tests", () => {
 		      ],
 		      "figureLabel": {
 		        "text": "Figure B",
-		        "offset": 12,
+		        "offset": 16,
 		        "position": "bottom"
 		      },
 		      "strokeColor": "#1fab54",
@@ -4709,7 +4426,98 @@ describe("figureComparisonDiagram widget tests", () => {
 		      "sideLabelOffset": 16
 		    }
 		  ],
-		  "spacing": 100
+		  "spacing": 80
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for figureComparisonDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5ba55a99168352b7
+	// Question: Is Figure B a scaled copy of Figure A?
+	// Widget key: image_1
+	test("figure-comparison-diagram - [x5ba55a99168352b7] Is Figure B a scaled copy of Figure A?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "figureComparisonDiagram",
+		  "width": 400,
+		  "height": 400,
+		  "layout": "horizontal",
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 93.75
+		        },
+		        {
+		          "x": 0,
+		          "y": 37.5
+		        },
+		        {
+		          "x": 83.333,
+		          "y": 0
+		        },
+		        {
+		          "x": 83.333,
+		          "y": 93.75
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure A",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#11accd",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    },
+		    {
+		      "vertices": [
+		        {
+		          "x": 0,
+		          "y": 187.5
+		        },
+		        {
+		          "x": 0,
+		          "y": 93.75
+		        },
+		        {
+		          "x": 83.333,
+		          "y": 0
+		        },
+		        {
+		          "x": 83.333,
+		          "y": 187.5
+		        }
+		      ],
+		      "fillColor": "#00000000",
+		      "sideLabels": [],
+		      "figureLabel": {
+		        "text": "Figure B",
+		        "offset": 10,
+		        "position": "bottom"
+		      },
+		      "strokeColor": "#1fab54",
+		      "strokeWidth": 2,
+		      "sideLabelOffset": 15
+		    }
+		  ],
+		  "spacing": 80
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)

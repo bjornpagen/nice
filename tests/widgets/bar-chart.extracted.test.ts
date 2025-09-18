@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.968Z
+// Generated on: 2025-09-18T05:17:02.168Z
 // Widget Type: barChart
 // Source: Real questions from database
 //
@@ -26,9 +26,9 @@ import * as logger from "@superbuilders/slog"
 
 describe("barChart widget tests", () => {
 	// Extracted from question: x1a2f2798426e2051
-	// Question: Total profit from April to June (bar graph)
+	// Question: Find total profit from a bar graph
 	// Widget key: image_1
-	test("bar-chart - [x1a2f2798426e2051] Total profit from April to June (bar graph)", async () => {
+	test("bar-chart - [x1a2f2798426e2051] Find total profit from a bar graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -50,7 +50,7 @@ describe("barChart widget tests", () => {
 		    }
 		  ],
 		  "type": "barChart",
-		  "title": "Monthly profits",
+		  "title": ":",
 		  "width": 480,
 		  "yAxis": {
 		    "max": 10,
@@ -58,7 +58,7 @@ describe("barChart widget tests", () => {
 		    "label": "Profit (dollars)",
 		    "tickInterval": 2
 		  },
-		  "height": 402.5,
+		  "height": 403,
 		  "barColor": "#4472C4",
 		  "xAxisLabel": "Month"
 		} as unknown as WidgetInput
@@ -79,9 +79,9 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: x410b8966d0d4ab4c
-	// Question: Find the missing probability from a bar graph
+	// Question: Find the probability that Rachelle wins
 	// Widget key: image_1
-	test("bar-chart - [x410b8966d0d4ab4c] Find the missing probability from a bar graph", async () => {
+	test("bar-chart - [x410b8966d0d4ab4c] Find the probability that Rachelle wins", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -103,15 +103,15 @@ describe("barChart widget tests", () => {
 		    }
 		  ],
 		  "type": "barChart",
-		  "title": "Probability Model",
+		  "title": "Probability by Racer",
 		  "width": 350,
 		  "yAxis": {
-		    "max": 1,
+		    "max": 0.5,
 		    "min": 0,
 		    "label": "Probability",
-		    "tickInterval": 0.1
+		    "tickInterval": 0.05
 		  },
-		  "height": 363,
+		  "height": 362.5,
 		  "barColor": "#63d9ea",
 		  "xAxisLabel": "Racers"
 		} as unknown as WidgetInput
@@ -156,7 +156,7 @@ describe("barChart widget tests", () => {
 		    }
 		  ],
 		  "type": "barChart",
-		  "title": " ",
+		  "title": "Incomplete Probability Model",
 		  "width": 350,
 		  "yAxis": {
 		    "max": 1,
@@ -165,7 +165,7 @@ describe("barChart widget tests", () => {
 		    "tickInterval": 0.1
 		  },
 		  "height": 362.5,
-		  "barColor": "#63D9EA",
+		  "barColor": "#63d9ea",
 		  "xAxisLabel": "Employee"
 		} as unknown as WidgetInput
 
@@ -219,15 +219,15 @@ describe("barChart widget tests", () => {
 		    }
 		  ],
 		  "type": "barChart",
-		  "title": " ",
-		  "width": 300,
+		  "title": "Number of lawns mowed by each volunteer",
+		  "width": 360,
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
 		    "label": "Number of lawns",
 		    "tickInterval": 1
 		  },
-		  "height": 270,
+		  "height": 320,
 		  "barColor": "#4472C4",
 		  "xAxisLabel": "Volunteer"
 		} as unknown as WidgetInput
@@ -277,7 +277,7 @@ describe("barChart widget tests", () => {
 		    }
 		  ],
 		  "type": "barChart",
-		  "title": null,
+		  "title": "Distances in Kilometers",
 		  "width": 300,
 		  "yAxis": {
 		    "max": 12,
@@ -285,7 +285,7 @@ describe("barChart widget tests", () => {
 		    "label": "Distances in Kilometers",
 		    "tickInterval": 1
 		  },
-		  "height": 270,
+		  "height": 300,
 		  "barColor": "#4472C4",
 		  "xAxisLabel": "Family Member"
 		} as unknown as WidgetInput
@@ -306,9 +306,9 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: xcaba554c142d11f3
-	// Question: Find the mean absolute deviation from a bar chart
+	// Question: Mean absolute deviation from a bar chart
 	// Widget key: image_1
-	test("bar-chart - [xcaba554c142d11f3] Find the mean absolute deviation from a bar chart", async () => {
+	test("bar-chart - [xcaba554c142d11f3] Mean absolute deviation from a bar chart", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -364,9 +364,9 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: x7e88d1f96e330c9f
-	// Question: Find the mean absolute deviation from a bar chart
+	// Question: Mean absolute deviation from a bar chart
 	// Widget key: image_1
-	test("bar-chart - [x7e88d1f96e330c9f] Find the mean absolute deviation from a bar chart", async () => {
+	test("bar-chart - [x7e88d1f96e330c9f] Mean absolute deviation from a bar chart", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -427,9 +427,9 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: xc7d40c823d2aa499
-	// Question: Find the mean absolute deviation from a bar chart
+	// Question: Mean absolute deviation from a bar chart
 	// Widget key: image_1
-	test("bar-chart - [xc7d40c823d2aa499] Find the mean absolute deviation from a bar chart", async () => {
+	test("bar-chart - [xc7d40c823d2aa499] Mean absolute deviation from a bar chart", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -464,7 +464,7 @@ describe("barChart widget tests", () => {
 		    "label": "Number of Albums",
 		    "tickInterval": 1
 		  },
-		  "height": 412.5,
+		  "height": 413,
 		  "barColor": "#9ab8ed",
 		  "xAxisLabel": "Artist"
 		} as unknown as WidgetInput
@@ -485,9 +485,9 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: x8e16c9722553d43b
-	// Question: Find the mean from a bar chart
+	// Question: Find the mean from a bar graph
 	// Widget key: image_1
-	test("bar-chart - [x8e16c9722553d43b] Find the mean from a bar chart", async () => {
+	test("bar-chart - [x8e16c9722553d43b] Find the mean from a bar graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -577,7 +577,7 @@ describe("barChart widget tests", () => {
 		    }
 		  ],
 		  "type": "barChart",
-		  "title": "Coins collected by each person in a scavenger hunt",
+		  "title": "coins collected by each person in a scavenger hunt",
 		  "width": 480,
 		  "yAxis": {
 		    "max": 10,
@@ -585,7 +585,7 @@ describe("barChart widget tests", () => {
 		    "label": "Gold coins",
 		    "tickInterval": 1
 		  },
-		  "height": 412.5,
+		  "height": 413,
 		  "barColor": "#9ab8ed",
 		  "xAxisLabel": "Scavenger"
 		} as unknown as WidgetInput
@@ -643,7 +643,7 @@ describe("barChart widget tests", () => {
 		    "label": "Number of Puppets",
 		    "tickInterval": 1
 		  },
-		  "height": 413,
+		  "height": 412.5,
 		  "barColor": "#9ab8ed",
 		  "xAxisLabel": "Puppeteer"
 		} as unknown as WidgetInput
@@ -780,15 +780,15 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: x3fa8afa0dfe2af7d
-	// Question: Find the number of bubbles Hannah blew
+	// Question: Find a missing data point given the mean (bubbles blown)
 	// Widget key: image_1
-	test("bar-chart - [x3fa8afa0dfe2af7d] Find the number of bubbles Hannah blew", async () => {
+	test("bar-chart - [x3fa8afa0dfe2af7d] Find a missing data point given the mean (bubbles blown)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "data": [
 		    {
-		      "label": "Manuela",
+		      "label": "Manueala",
 		      "state": "normal",
 		      "value": 4
 		    },
@@ -838,9 +838,9 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: x640a5ecb18ab1c99
-	// Question: Find the number of raisins in each scoop given the mean
+	// Question: Find the number of raisins in a Great4U scoop given the mean
 	// Widget key: image_1
-	test("bar-chart - [x640a5ecb18ab1c99] Find the number of raisins in each scoop given the mean", async () => {
+	test("bar-chart - [x640a5ecb18ab1c99] Find the number of raisins in a Great4U scoop given the mean", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -862,12 +862,12 @@ describe("barChart widget tests", () => {
 		    }
 		  ],
 		  "type": "barChart",
-		  "title": "Raisins in a Scoop of Each Brand of Raisin Bran Cereal",
+		  "title": "Raisins in a scoop of each brand of raisin bran cereal",
 		  "width": 480,
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "Number of Raisins",
+		    "label": "Number of raisins",
 		    "tickInterval": 1
 		  },
 		  "height": 413,
@@ -891,9 +891,9 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: xf74f80dca7477d8c
-	// Question: Find a missing data value given the mean (coins bar graph)
+	// Question: Find Julia's coins given the mean
 	// Widget key: image_1
-	test("bar-chart - [xf74f80dca7477d8c] Find a missing data value given the mean (coins bar graph)", async () => {
+	test("bar-chart - [xf74f80dca7477d8c] Find Julia's coins given the mean", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -933,7 +933,7 @@ describe("barChart widget tests", () => {
 		    "label": "Gold coins",
 		    "tickInterval": 1
 		  },
-		  "height": 413,
+		  "height": 412.5,
 		  "barColor": "#9ab8ed",
 		  "xAxisLabel": "Scavenger"
 		} as unknown as WidgetInput
@@ -991,7 +991,7 @@ describe("barChart widget tests", () => {
 		    "label": "Number of puppets",
 		    "tickInterval": 1
 		  },
-		  "height": 413,
+		  "height": 412.5,
 		  "barColor": "#9ab8ed",
 		  "xAxisLabel": "Puppeteer"
 		} as unknown as WidgetInput
@@ -1012,9 +1012,9 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: x8cfd62414e7752b3
-	// Question: Estimate members favoring Italian food from a bar graph
+	// Question: Estimate from a bar graph
 	// Widget key: image_1
-	test("bar-chart - [x8cfd62414e7752b3] Estimate members favoring Italian food from a bar graph", async () => {
+	test("bar-chart - [x8cfd62414e7752b3] Estimate from a bar graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1040,21 +1040,21 @@ describe("barChart widget tests", () => {
 		      "value": 8
 		    },
 		    {
-		      "label": "other",
+		      "label": "Other",
 		      "state": "normal",
 		      "value": 2
 		    }
 		  ],
 		  "type": "barChart",
-		  "title": "The Foodies Food Club Survey Results",
+		  "title": "Survey Results",
 		  "width": 480,
 		  "yAxis": {
-		    "max": 16,
+		    "max": 18,
 		    "min": 0,
 		    "label": "Number of members",
 		    "tickInterval": 2
 		  },
-		  "height": 413,
+		  "height": 412.5,
 		  "barColor": "#9ab8ed",
 		  "xAxisLabel": "Type of Food"
 		} as unknown as WidgetInput
@@ -1075,9 +1075,9 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: xa1e54d37a97e87c6
-	// Question: Estimate the number of athletes who prefer hockey
+	// Question: Estimate a count from a sample and bar graph
 	// Widget key: image_1
-	test("bar-chart - [xa1e54d37a97e87c6] Estimate the number of athletes who prefer hockey", async () => {
+	test("bar-chart - [xa1e54d37a97e87c6] Estimate a count from a sample and bar graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1109,13 +1109,13 @@ describe("barChart widget tests", () => {
 		    }
 		  ],
 		  "type": "barChart",
-		  "title": null,
+		  "title": "Gamin Middle School Athletes' Favorite Sports",
 		  "width": 480,
 		  "yAxis": {
 		    "max": 15,
 		    "min": 0,
 		    "label": "Number of athletes",
-		    "tickInterval": 3
+		    "tickInterval": 5
 		  },
 		  "height": 413,
 		  "barColor": "#9ab8ed",
@@ -1138,9 +1138,9 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: xc0b6e26d7801eee0
-	// Question: Estimate the number of employees who ride the bus
+	// Question: Estimate a count from a sample and bar graph
 	// Widget key: image_1
-	test("bar-chart - [xc0b6e26d7801eee0] Estimate the number of employees who ride the bus", async () => {
+	test("bar-chart - [xc0b6e26d7801eee0] Estimate a count from a sample and bar graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1167,17 +1167,17 @@ describe("barChart widget tests", () => {
 		    }
 		  ],
 		  "type": "barChart",
-		  "title": "Form of transportation survey results",
+		  "title": "Clyde Marketing Transportation Survey",
 		  "width": 480,
 		  "yAxis": {
-		    "max": 20,
+		    "max": 25,
 		    "min": 0,
-		    "label": "Number of employees",
+		    "label": "number of employees",
 		    "tickInterval": 5
 		  },
 		  "height": 413,
 		  "barColor": "#9ab8ed",
-		  "xAxisLabel": "Form of transportation"
+		  "xAxisLabel": "form of transportation"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1196,9 +1196,9 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: xa6f1d849d93a227b
-	// Question: Estimate the probability of a sunny day from a bar graph
+	// Question: Estimate experimental probability from a bar graph
 	// Widget key: image_1
-	test("bar-chart - [xa6f1d849d93a227b] Estimate the probability of a sunny day from a bar graph", async () => {
+	test("bar-chart - [xa6f1d849d93a227b] Estimate experimental probability from a bar graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1225,7 +1225,7 @@ describe("barChart widget tests", () => {
 		    }
 		  ],
 		  "type": "barChart",
-		  "title": "Weather condition vs. number of days",
+		  "title": "Weather conditions in Crayonton",
 		  "width": 480,
 		  "yAxis": {
 		    "max": 6,
@@ -1254,9 +1254,9 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: xb1b3a8f274ebd298
-	// Question: Estimate a probability from a bar graph (golf tee shots)
+	// Question: Estimate experimental probability from a bar graph
 	// Widget key: image_1
-	test("bar-chart - [xb1b3a8f274ebd298] Estimate a probability from a bar graph (golf tee shots)", async () => {
+	test("bar-chart - [xb1b3a8f274ebd298] Estimate experimental probability from a bar graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1288,7 +1288,7 @@ describe("barChart widget tests", () => {
 		    }
 		  ],
 		  "type": "barChart",
-		  "title": "Tee Shot Results This Morning",
+		  "title": "Tee Shot Results",
 		  "width": 480,
 		  "yAxis": {
 		    "max": 8,
@@ -1317,9 +1317,9 @@ describe("barChart widget tests", () => {
 	})
 
 	// Extracted from question: x139d4197624cfce4
-	// Question: Estimate the probability from a bar graph
+	// Question: Estimate probability from a bar graph
 	// Widget key: image_1
-	test("bar-chart - [x139d4197624cfce4] Estimate the probability from a bar graph", async () => {
+	test("bar-chart - [x139d4197624cfce4] Estimate probability from a bar graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1346,10 +1346,10 @@ describe("barChart widget tests", () => {
 		    }
 		  ],
 		  "type": "barChart",
-		  "title": "Vehicles rented last week",
+		  "title": "Types of vehicles rented last week",
 		  "width": 480,
 		  "yAxis": {
-		    "max": 12,
+		    "max": 10,
 		    "min": 0,
 		    "label": "Number of vehicles",
 		    "tickInterval": 1

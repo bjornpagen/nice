@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.955Z
+// Generated on: 2025-09-18T05:17:02.150Z
 // Widget Type: circleDiagram
 // Source: Real questions from database
 //
@@ -25,52 +25,6 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("circleDiagram widget tests", () => {
-	// Extracted from question: x668e4cac740758aa
-	// Question: Find the radius and diameter from a circle diagram
-	// Widget key: image_1
-	test("circle-diagram - [x668e4cac740758aa] Find the radius and diameter from a circle diagram", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "arcs": [],
-		  "type": "circleDiagram",
-		  "shape": "circle",
-		  "width": 170,
-		  "height": 170,
-		  "radius": 83.3,
-		  "sectors": [],
-		  "rotation": 0,
-		  "segments": [
-		    {
-		      "type": "radius",
-		      "angle": 120,
-		      "color": "#000000",
-		      "label": "11 cm"
-		    }
-		  ],
-		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF00",
-		  "innerRadius": null,
-		  "strokeColor": "#000000",
-		  "showCenterDot": false,
-		  "annulusFillColor": "transparent"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for circleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xa0eeb7bd2322116f
 	// Question: Find the radius and diameter from a circle diagram
 	// Widget key: image_1
@@ -81,9 +35,9 @@ describe("circleDiagram widget tests", () => {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 170,
-		  "height": 170,
-		  "radius": 83.3,
+		  "width": 360,
+		  "height": 360,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -127,15 +81,15 @@ describe("circleDiagram widget tests", () => {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 170,
-		  "height": 170,
-		  "radius": 83.3,
+		  "width": 360,
+		  "height": 360,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
 		    {
 		      "type": "diameter",
-		      "angle": 300,
+		      "angle": 60,
 		      "color": "#000000",
 		      "label": "14 cm"
 		    }
@@ -163,19 +117,65 @@ describe("circleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2e4a863556ee3a48
-	// Question: Find the radius and diameter of a circle
+	// Extracted from question: x668e4cac740758aa
+	// Question: Find the radius and diameter from a circle diagram
 	// Widget key: image_1
-	test("circle-diagram - [x2e4a863556ee3a48] Find the radius and diameter of a circle", async () => {
+	test("circle-diagram - [x668e4cac740758aa] Find the radius and diameter from a circle diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 170,
-		  "height": 170,
-		  "radius": 83,
+		  "width": 340,
+		  "height": 340,
+		  "radius": 150,
+		  "sectors": [],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "radius",
+		      "angle": 120,
+		      "color": "#000000",
+		      "label": "11 cm"
+		    }
+		  ],
+		  "areaLabel": " ",
+		  "fillColor": "#FFFFFF",
+		  "innerRadius": null,
+		  "strokeColor": "#000000",
+		  "showCenterDot": false,
+		  "annulusFillColor": "transparent"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2e4a863556ee3a48
+	// Question: Find the radius and diameter from a diagram
+	// Widget key: image_1
+	test("circle-diagram - [x2e4a863556ee3a48] Find the radius and diameter from a diagram", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 340,
+		  "height": 340,
+		  "radius": 83.3,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -219,9 +219,9 @@ describe("circleDiagram widget tests", () => {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 170,
-		  "height": 170,
-		  "radius": 83,
+		  "width": 340,
+		  "height": 340,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -233,7 +233,7 @@ describe("circleDiagram widget tests", () => {
 		    }
 		  ],
 		  "areaLabel": " ",
-		  "fillColor": "#00000000",
+		  "fillColor": "#FFFFFF",
 		  "innerRadius": null,
 		  "strokeColor": "#000000",
 		  "showCenterDot": false,
@@ -256,18 +256,18 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd7efb5192670f8fe
-	// Question: Find the radius and diameter of a circle from its diagram
+	// Question: Find the radius and diameter of a circle
 	// Widget key: image_1
-	test("circle-diagram - [xd7efb5192670f8fe] Find the radius and diameter of a circle from its diagram", async () => {
+	test("circle-diagram - [xd7efb5192670f8fe] Find the radius and diameter of a circle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 170,
-		  "height": 170,
-		  "radius": 80,
+		  "width": 340,
+		  "height": 340,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -283,7 +283,7 @@ describe("circleDiagram widget tests", () => {
 		  "innerRadius": null,
 		  "strokeColor": "#000000",
 		  "showCenterDot": false,
-		  "annulusFillColor": "transparent"
+		  "annulusFillColor": "#00000000"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -302,18 +302,18 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1ada60937bc4b46e
-	// Question: Find the radius and diameter of a circle
+	// Question: Find the radius and diameter from a circle diagram
 	// Widget key: image_1
-	test("circle-diagram - [x1ada60937bc4b46e] Find the radius and diameter of a circle", async () => {
+	test("circle-diagram - [x1ada60937bc4b46e] Find the radius and diameter from a circle diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 170,
-		  "height": 170,
-		  "radius": 80,
+		  "width": 360,
+		  "height": 360,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -325,10 +325,10 @@ describe("circleDiagram widget tests", () => {
 		    }
 		  ],
 		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF",
+		  "fillColor": "#FFFFFF00",
 		  "innerRadius": null,
 		  "strokeColor": "#000000",
-		  "showCenterDot": false,
+		  "showCenterDot": true,
 		  "annulusFillColor": "transparent"
 		} as unknown as WidgetInput
 
@@ -357,9 +357,9 @@ describe("circleDiagram widget tests", () => {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 170,
-		  "height": 170,
-		  "radius": 83.3,
+		  "width": 340,
+		  "height": 340,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -368,52 +368,6 @@ describe("circleDiagram widget tests", () => {
 		      "angle": 0,
 		      "color": "#000000",
 		      "label": "24 cm"
-		    }
-		  ],
-		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF",
-		  "innerRadius": null,
-		  "strokeColor": "#000000",
-		  "showCenterDot": false,
-		  "annulusFillColor": "transparent"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for circleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x005621cbe172c70c
-	// Question: Find the radius and diameter from a circle diagram
-	// Widget key: image_1
-	test("circle-diagram - [x005621cbe172c70c] Find the radius and diameter from a circle diagram", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "arcs": [],
-		  "type": "circleDiagram",
-		  "shape": "circle",
-		  "width": 170,
-		  "height": 170,
-		  "radius": 83.3,
-		  "sectors": [],
-		  "rotation": 0,
-		  "segments": [
-		    {
-		      "type": "diameter",
-		      "angle": 90,
-		      "color": "#000000",
-		      "label": "7 cm"
 		    }
 		  ],
 		  "areaLabel": " ",
@@ -439,25 +393,71 @@ describe("circleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa48d750ab9463b6f
-	// Question: Find the radius and diameter of a circle from a diagram
+	// Extracted from question: x005621cbe172c70c
+	// Question: Find the radius and diameter from a labeled circle
 	// Widget key: image_1
-	test("circle-diagram - [xa48d750ab9463b6f] Find the radius and diameter of a circle from a diagram", async () => {
+	test("circle-diagram - [x005621cbe172c70c] Find the radius and diameter from a labeled circle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 170,
-		  "height": 170,
-		  "radius": 80,
+		  "width": 360,
+		  "height": 360,
+		  "radius": 150,
+		  "sectors": [],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "diameter",
+		      "angle": 90,
+		      "color": "#000000",
+		      "label": "7 cm"
+		    }
+		  ],
+		  "areaLabel": " ",
+		  "fillColor": "#FFFFFF",
+		  "innerRadius": null,
+		  "strokeColor": "#000000",
+		  "showCenterDot": false,
+		  "annulusFillColor": "transparent"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa48d750ab9463b6f
+	// Question: Find the radius and diameter of a circle
+	// Widget key: image_1
+	test("circle-diagram - [xa48d750ab9463b6f] Find the radius and diameter of a circle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 360,
+		  "height": 360,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
 		    {
 		      "type": "radius",
-		      "angle": 210,
+		      "angle": 150,
 		      "color": "#000000",
 		      "label": "7.5 cm"
 		    }
@@ -485,19 +485,111 @@ describe("circleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xae55af45ef9cf0ab
-	// Question: Find the area of a circle from its diameter
+	// Extracted from question: xca2baccc2058526e
+	// Question: Area of a circle from its diameter
 	// Widget key: image_1
-	test("circle-diagram - [xae55af45ef9cf0ab] Find the area of a circle from its diameter", async () => {
+	test("circle-diagram - [xca2baccc2058526e] Area of a circle from its diameter", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 220,
-		  "height": 220,
+		  "width": 360,
+		  "height": 360,
+		  "radius": 140,
+		  "sectors": [],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "diameter",
+		      "angle": 0,
+		      "color": "#008000",
+		      "label": "d = 2"
+		    }
+		  ],
+		  "areaLabel": " ",
+		  "fillColor": "#FFFFFF00",
+		  "innerRadius": null,
+		  "strokeColor": "#000000",
+		  "showCenterDot": false,
+		  "annulusFillColor": "transparent"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5f572f10a5ca3338
+	// Question: Area of a circle
+	// Widget key: image_1
+	test("circle-diagram - [x5f572f10a5ca3338] Area of a circle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 360,
+		  "height": 360,
 		  "radius": 100,
+		  "sectors": [],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "radius",
+		      "angle": 0,
+		      "color": "#800080",
+		      "label": "r = 5"
+		    }
+		  ],
+		  "areaLabel": " ",
+		  "fillColor": "#FFFFFF00",
+		  "innerRadius": null,
+		  "strokeColor": "#000000",
+		  "showCenterDot": false,
+		  "annulusFillColor": "transparent"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xae55af45ef9cf0ab
+	// Question: Area of a circle from its diameter
+	// Widget key: image_1
+	test("circle-diagram - [xae55af45ef9cf0ab] Area of a circle from its diameter", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 360,
+		  "height": 360,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -532,17 +624,17 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xed323a04c967f420
-	// Question: Find the area of a circle from its diameter
+	// Question: Area of a circle from its diameter
 	// Widget key: image_1
-	test("circle-diagram - [xed323a04c967f420] Find the area of a circle from its diameter", async () => {
+	test("circle-diagram - [xed323a04c967f420] Area of a circle from its diameter", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 220,
-		  "height": 220,
+		  "width": 380,
+		  "height": 380,
 		  "radius": 100,
 		  "sectors": [],
 		  "rotation": 0,
@@ -551,7 +643,7 @@ describe("circleDiagram widget tests", () => {
 		      "type": "diameter",
 		      "angle": 0,
 		      "color": "#008000",
-		      "label": "d equals 8"
+		      "label": "d = 8"
 		    }
 		  ],
 		  "areaLabel": " ",
@@ -587,9 +679,9 @@ describe("circleDiagram widget tests", () => {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 220,
-		  "height": 220,
-		  "radius": 100,
+		  "width": 360,
+		  "height": 360,
+		  "radius": 140,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -623,64 +715,18 @@ describe("circleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x5f572f10a5ca3338
-	// Question: Find the area of a circle from its radius
-	// Widget key: image_1
-	test("circle-diagram - [x5f572f10a5ca3338] Find the area of a circle from its radius", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "arcs": [],
-		  "type": "circleDiagram",
-		  "shape": "circle",
-		  "width": 220,
-		  "height": 220,
-		  "radius": 100,
-		  "sectors": [],
-		  "rotation": 0,
-		  "segments": [
-		    {
-		      "type": "radius",
-		      "angle": 0,
-		      "color": "#800080",
-		      "label": "r = 5"
-		    }
-		  ],
-		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF00",
-		  "innerRadius": null,
-		  "strokeColor": "#000000",
-		  "showCenterDot": false,
-		  "annulusFillColor": "transparent"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for circleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x73c00848ad40a6b5
-	// Question: Area of a circle (radius 1)
+	// Question: Area of a circle with radius 1
 	// Widget key: image_1
-	test("circle-diagram - [x73c00848ad40a6b5] Area of a circle (radius 1)", async () => {
+	test("circle-diagram - [x73c00848ad40a6b5] Area of a circle with radius 1", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 220,
-		  "height": 220,
+		  "width": 360,
+		  "height": 360,
 		  "radius": 100,
 		  "sectors": [],
 		  "rotation": 0,
@@ -690,52 +736,6 @@ describe("circleDiagram widget tests", () => {
 		      "angle": 0,
 		      "color": "#800080",
 		      "label": "r = 1"
-		    }
-		  ],
-		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF00",
-		  "innerRadius": null,
-		  "strokeColor": "#000000",
-		  "showCenterDot": true,
-		  "annulusFillColor": "transparent"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for circleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xca2baccc2058526e
-	// Question: Area of a circle from its diameter
-	// Widget key: image_1
-	test("circle-diagram - [xca2baccc2058526e] Area of a circle from its diameter", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "arcs": [],
-		  "type": "circleDiagram",
-		  "shape": "circle",
-		  "width": 220,
-		  "height": 220,
-		  "radius": 100,
-		  "sectors": [],
-		  "rotation": 0,
-		  "segments": [
-		    {
-		      "type": "diameter",
-		      "angle": 0,
-		      "color": "#008000",
-		      "label": "d = 2"
 		    }
 		  ],
 		  "areaLabel": " ",
@@ -762,18 +762,18 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc64648bad5943f42
-	// Question: Area of a circle (radius 4)
+	// Question: Find the area of a circle from its radius
 	// Widget key: image_1
-	test("circle-diagram - [xc64648bad5943f42] Area of a circle (radius 4)", async () => {
+	test("circle-diagram - [xc64648bad5943f42] Find the area of a circle from its radius", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 220,
-		  "height": 220,
-		  "radius": 100,
+		  "width": 300,
+		  "height": 300,
+		  "radius": 140,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -785,53 +785,7 @@ describe("circleDiagram widget tests", () => {
 		    }
 		  ],
 		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF00",
-		  "innerRadius": null,
-		  "strokeColor": "#000000",
-		  "showCenterDot": false,
-		  "annulusFillColor": "#00000000"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for circleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc1724554ffcf9c9c
-	// Question: Area of a circle
-	// Widget key: image_1
-	test("circle-diagram - [xc1724554ffcf9c9c] Area of a circle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "arcs": [],
-		  "type": "circleDiagram",
-		  "shape": "circle",
-		  "width": 220,
-		  "height": 220,
-		  "radius": 100,
-		  "sectors": [],
-		  "rotation": 0,
-		  "segments": [
-		    {
-		      "type": "radius",
-		      "angle": 0,
-		      "color": "#800080",
-		      "label": "r = 7"
-		    }
-		  ],
-		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF00",
+		  "fillColor": "#FFFFFF",
 		  "innerRadius": null,
 		  "strokeColor": "#000000",
 		  "showCenterDot": false,
@@ -853,10 +807,10 @@ describe("circleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x84b0743b00f1f451
-	// Question: Area of a shaded region between two circles
+	// Extracted from question: xc1724554ffcf9c9c
+	// Question: Find the area of a circle from its radius
 	// Widget key: image_1
-	test("circle-diagram - [x84b0743b00f1f451] Area of a shaded region between two circles", async () => {
+	test("circle-diagram - [xc1724554ffcf9c9c] Find the area of a circle from its radius", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -865,29 +819,23 @@ describe("circleDiagram widget tests", () => {
 		  "shape": "circle",
 		  "width": 360,
 		  "height": 360,
-		  "radius": 165,
+		  "radius": 100,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
 		    {
 		      "type": "radius",
 		      "angle": 0,
-		      "color": "#11accd",
-		      "label": "11 cm"
-		    },
-		    {
-		      "type": "innerRadius",
-		      "angle": 90,
-		      "color": "#1fab54",
-		      "label": "9 cm"
+		      "color": "#800080",
+		      "label": "r = 7"
 		    }
 		  ],
 		  "areaLabel": " ",
-		  "fillColor": "#fdfdfd",
-		  "innerRadius": 135,
-		  "strokeColor": "#11accd",
+		  "fillColor": "#00000000",
+		  "innerRadius": null,
+		  "strokeColor": "#000000",
 		  "showCenterDot": false,
-		  "annulusFillColor": "#ccfaff"
+		  "annulusFillColor": "transparent"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -906,9 +854,9 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5a00fc55a8fbaf5e
-	// Question: Area of a shaded region between two circles
+	// Question: Area of a shaded annulus
 	// Widget key: image_1
-	test("circle-diagram - [x5a00fc55a8fbaf5e] Area of a shaded region between two circles", async () => {
+	test("circle-diagram - [x5a00fc55a8fbaf5e] Area of a shaded annulus", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -934,12 +882,64 @@ describe("circleDiagram widget tests", () => {
 		      "label": "6 cm"
 		    }
 		  ],
-		  "areaLabel": null,
+		  "areaLabel": " ",
 		  "fillColor": "#FFFFFF",
 		  "innerRadius": 90,
 		  "strokeColor": "#11accd",
 		  "showCenterDot": false,
-		  "annulusFillColor": "#ccfaff80"
+		  "annulusFillColor": "#ccfaff"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x84b0743b00f1f451
+	// Question: Area of a shaded annulus (rounded)
+	// Widget key: image_1
+	test("circle-diagram - [x84b0743b00f1f451] Area of a shaded annulus (rounded)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 360,
+		  "height": 360,
+		  "radius": 165,
+		  "sectors": [],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "radius",
+		      "angle": 0,
+		      "color": "#11accd",
+		      "label": " "
+		    },
+		    {
+		      "type": "innerRadius",
+		      "angle": 90,
+		      "color": "#1fab54",
+		      "label": " "
+		    }
+		  ],
+		  "areaLabel": " ",
+		  "fillColor": "#FFFFFF",
+		  "innerRadius": 135,
+		  "strokeColor": "#11accd",
+		  "showCenterDot": false,
+		  "annulusFillColor": "rgba(204,250,255,0.5)"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -990,7 +990,7 @@ describe("circleDiagram widget tests", () => {
 		  "fillColor": "#FFFFFF",
 		  "innerRadius": 60,
 		  "strokeColor": "#11accd",
-		  "showCenterDot": true,
+		  "showCenterDot": false,
 		  "annulusFillColor": "rgba(204,250,255,0.5)"
 		} as unknown as WidgetInput
 
@@ -1010,18 +1010,18 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x157245461ddce8b9
-	// Question: Area of a shaded annulus
+	// Question: Area of the shaded region between two circles
 	// Widget key: image_1
-	test("circle-diagram - [x157245461ddce8b9] Area of a shaded annulus", async () => {
+	test("circle-diagram - [x157245461ddce8b9] Area of the shaded region between two circles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 200,
-		  "height": 200,
-		  "radius": 80,
+		  "width": 360,
+		  "height": 360,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -1039,8 +1039,8 @@ describe("circleDiagram widget tests", () => {
 		    }
 		  ],
 		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF00",
-		  "innerRadius": 40,
+		  "fillColor": "#FFFFFF",
+		  "innerRadius": 75,
 		  "strokeColor": "#11accd",
 		  "showCenterDot": false,
 		  "annulusFillColor": "rgba(204, 250, 255, 0.5)"
@@ -1061,10 +1061,10 @@ describe("circleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7893c043131fd6d6
+	// Extracted from question: xd8c0fb6d8bfff96e
 	// Question: Area of a shaded region: circle minus rectangle
 	// Widget key: image_1
-	test("circle-diagram - [x7893c043131fd6d6] Area of a shaded region: circle minus rectangle", async () => {
+	test("circle-diagram - [xd8c0fb6d8bfff96e] Area of a shaded region: circle minus rectangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1073,7 +1073,7 @@ describe("circleDiagram widget tests", () => {
 		  "shape": "circle",
 		  "width": 360,
 		  "height": 360,
-		  "radius": 160,
+		  "radius": 120,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -1081,10 +1081,10 @@ describe("circleDiagram widget tests", () => {
 		      "type": "radius",
 		      "angle": 0,
 		      "color": "#11accd",
-		      "label": "8 cm"
+		      "label": "6 cm"
 		    }
 		  ],
-		  "areaLabel": " ",
+		  "areaLabel": null,
 		  "fillColor": "#ccfaff80",
 		  "innerRadius": null,
 		  "strokeColor": "#11accd",
@@ -1108,18 +1108,18 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x16aff43aff976000
-	// Question: Area of the shaded region (circle and rectangle)
+	// Question: Area of a shaded region (circle minus rectangle)
 	// Widget key: image_1
-	test("circle-diagram - [x16aff43aff976000] Area of the shaded region (circle and rectangle)", async () => {
+	test("circle-diagram - [x16aff43aff976000] Area of a shaded region (circle minus rectangle)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 260,
-		  "height": 260,
-		  "radius": 120,
+		  "width": 320,
+		  "height": 320,
+		  "radius": 140,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -1130,7 +1130,7 @@ describe("circleDiagram widget tests", () => {
 		      "label": "12 cm"
 		    }
 		  ],
-		  "areaLabel": " ",
+		  "areaLabel": "3 cm × 10 cm",
 		  "fillColor": "#ccfaff",
 		  "innerRadius": null,
 		  "strokeColor": "#11accd",
@@ -1154,40 +1154,40 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x589d76b058f6795c
-	// Question: Area of the shaded region between two circles
+	// Question: Area of a shaded annulus
 	// Widget key: image_1
-	test("circle-diagram - [x589d76b058f6795c] Area of the shaded region between two circles", async () => {
+	test("circle-diagram - [x589d76b058f6795c] Area of a shaded annulus", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 240,
-		  "height": 240,
-		  "radius": 105,
+		  "width": 360,
+		  "height": 360,
+		  "radius": 140,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
 		    {
-		      "type": "innerRadius",
-		      "angle": 90,
-		      "color": "#1fab54",
-		      "label": " "
-		    },
-		    {
 		      "type": "radius",
 		      "angle": 0,
 		      "color": "#11accd",
-		      "label": " "
+		      "label": "7 cm"
+		    },
+		    {
+		      "type": "innerRadius",
+		      "angle": 90,
+		      "color": "#1fab54",
+		      "label": "3 cm"
 		    }
 		  ],
 		  "areaLabel": " ",
-		  "fillColor": "#FDFDFD",
-		  "innerRadius": 45,
+		  "fillColor": "#FFFFFF",
+		  "innerRadius": 60,
 		  "strokeColor": "#11accd",
 		  "showCenterDot": false,
-		  "annulusFillColor": "rgba(204,250,255,0.5)"
+		  "annulusFillColor": "#ccfaff"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1206,9 +1206,9 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8d3bac83c8697585
-	// Question: Area of the shaded region between two concentric circles
+	// Question: Area of the shaded region between two circles
 	// Widget key: image_1
-	test("circle-diagram - [x8d3bac83c8697585] Area of the shaded region between two concentric circles", async () => {
+	test("circle-diagram - [x8d3bac83c8697585] Area of the shaded region between two circles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1222,15 +1222,15 @@ describe("circleDiagram widget tests", () => {
 		  "rotation": 0,
 		  "segments": [
 		    {
-		      "type": "radius",
-		      "angle": 0,
-		      "color": "#11accd",
-		      "label": " "
-		    },
-		    {
 		      "type": "innerRadius",
 		      "angle": 90,
 		      "color": "#1fab54",
+		      "label": " "
+		    },
+		    {
+		      "type": "radius",
+		      "angle": 0,
+		      "color": "#11accd",
 		      "label": " "
 		    }
 		  ],
@@ -1239,7 +1239,7 @@ describe("circleDiagram widget tests", () => {
 		  "innerRadius": 45,
 		  "strokeColor": "#11accd",
 		  "showCenterDot": false,
-		  "annulusFillColor": "#CCFAFF"
+		  "annulusFillColor": "rgba(204, 250, 255, 0.5)"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1267,8 +1267,8 @@ describe("circleDiagram widget tests", () => {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 240,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "radius": 100,
 		  "sectors": [],
 		  "rotation": 0,
@@ -1277,21 +1277,67 @@ describe("circleDiagram widget tests", () => {
 		      "type": "radius",
 		      "angle": 0,
 		      "color": "#11accd",
-		      "label": " "
+		      "label": "5 cm"
 		    },
 		    {
 		      "type": "innerRadius",
 		      "angle": 90,
 		      "color": "#1fab54",
-		      "label": " "
+		      "label": "3 cm"
+		    }
+		  ],
+		  "areaLabel": "Shaded region",
+		  "fillColor": "#FFFFFF",
+		  "innerRadius": 60,
+		  "strokeColor": "#11accd",
+		  "showCenterDot": true,
+		  "annulusFillColor": "#ccfaff"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x74eb96d7a07de3a4
+	// Question: Area of the shaded region between a circle and a rectangle
+	// Widget key: image_1
+	test("circle-diagram - [x74eb96d7a07de3a4] Area of the shaded region between a circle and a rectangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 300,
+		  "height": 300,
+		  "radius": 120,
+		  "sectors": [],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "radius",
+		      "angle": 0,
+		      "color": "#11accd",
+		      "label": "4 cm"
 		    }
 		  ],
 		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF00",
-		  "innerRadius": 60,
+		  "fillColor": "#ccfaff80",
+		  "innerRadius": null,
 		  "strokeColor": "#11accd",
-		  "showCenterDot": false,
-		  "annulusFillColor": "#ccfaff"
+		  "showCenterDot": true,
+		  "annulusFillColor": "transparent"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1319,87 +1365,28 @@ describe("circleDiagram widget tests", () => {
 		  "arcs": [
 		    {
 		      "label": "?",
-		      "endAngle": 180,
-		      "startAngle": 0,
-		      "strokeColor": "#29abca"
-		    }
-		  ],
-		  "type": "circleDiagram",
-		  "shape": "semicircle",
-		  "width": 250,
-		  "height": 163,
-		  "radius": 100,
-		  "sectors": [],
-		  "rotation": 0,
-		  "segments": [
-		    {
-		      "type": "diameter",
-		      "angle": 0,
-		      "color": "#e65a4c",
-		      "label": "8"
-		    }
-		  ],
-		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF00",
-		  "innerRadius": null,
-		  "strokeColor": "#00000000",
-		  "showCenterDot": true,
-		  "annulusFillColor": "#00000000"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for circleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe4a65d7f45d5c2da
-	// Question: Find the arc length of a semicircle
-	// Widget key: image_1
-	test("circle-diagram - [xe4a65d7f45d5c2da] Find the arc length of a semicircle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "arcs": [
-		    {
-		      "label": "?",
 		      "endAngle": 270,
 		      "startAngle": 90,
 		      "strokeColor": "#29abca"
 		    }
 		  ],
 		  "type": "circleDiagram",
-		  "shape": "semicircle",
-		  "width": 150,
-		  "height": 250,
-		  "radius": 100,
+		  "shape": "circle",
+		  "width": 400,
+		  "height": 400,
+		  "radius": 160,
 		  "sectors": [],
-		  "rotation": 90,
+		  "rotation": 0,
 		  "segments": [
 		    {
 		      "type": "diameter",
 		      "angle": 90,
-		      "color": "#000000",
-		      "label": " "
-		    },
-		    {
-		      "type": "radius",
-		      "angle": 90,
-		      "color": "#000000",
-		      "label": "5"
+		      "color": "#e65a4c",
+		      "label": "8"
 		    }
 		  ],
 		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF00",
+		  "fillColor": "#FFFFFF",
 		  "innerRadius": null,
 		  "strokeColor": "#000000",
 		  "showCenterDot": true,
@@ -1421,10 +1408,69 @@ describe("circleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xebb1e43c6e6056f7
-	// Question: Find the arc length of a partial circle
+	// Extracted from question: xe4a65d7f45d5c2da
+	// Question: Arc length of a semicircle
 	// Widget key: image_1
-	test("circle-diagram - [xebb1e43c6e6056f7] Find the arc length of a partial circle", async () => {
+	test("circle-diagram - [xe4a65d7f45d5c2da] Arc length of a semicircle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [
+		    {
+		      "label": "?",
+		      "endAngle": 270,
+		      "startAngle": 90,
+		      "strokeColor": "#29abca"
+		    }
+		  ],
+		  "type": "circleDiagram",
+		  "shape": "semicircle",
+		  "width": 350,
+		  "height": 350,
+		  "radius": 140,
+		  "sectors": [],
+		  "rotation": 90,
+		  "segments": [
+		    {
+		      "type": "diameter",
+		      "angle": 90,
+		      "color": "#000000",
+		      "label": " "
+		    },
+		    {
+		      "type": "radius",
+		      "angle": 90,
+		      "color": "#000000",
+		      "label": "5"
+		    }
+		  ],
+		  "areaLabel": " ",
+		  "fillColor": "#FFFFFF",
+		  "innerRadius": null,
+		  "strokeColor": "#00000000",
+		  "showCenterDot": true,
+		  "annulusFillColor": "transparent"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xebb1e43c6e6056f7
+	// Question: Find the arc length of a three-quarter circle
+	// Widget key: image_1
+	test("circle-diagram - [xebb1e43c6e6056f7] Find the arc length of a three-quarter circle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1438,18 +1484,10 @@ describe("circleDiagram widget tests", () => {
 		  ],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 250,
-		  "height": 250,
-		  "radius": 100,
-		  "sectors": [
-		    {
-		      "label": " ",
-		      "endAngle": 90,
-		      "fillColor": "#FFFFFF00",
-		      "startAngle": 0,
-		      "showRightAngleMarker": true
-		    }
-		  ],
+		  "width": 340,
+		  "height": 340,
+		  "radius": 130,
+		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
 		    {
@@ -1461,14 +1499,14 @@ describe("circleDiagram widget tests", () => {
 		    {
 		      "type": "radius",
 		      "angle": 90,
-		      "color": "#e65a4c",
+		      "color": "#000000",
 		      "label": " "
 		    }
 		  ],
 		  "areaLabel": " ",
 		  "fillColor": "#FFFFFF00",
 		  "innerRadius": null,
-		  "strokeColor": "#FFFFFF00",
+		  "strokeColor": "#00000000",
 		  "showCenterDot": true,
 		  "annulusFillColor": "transparent"
 		} as unknown as WidgetInput
@@ -1498,36 +1536,36 @@ describe("circleDiagram widget tests", () => {
 		  "arcs": [
 		    {
 		      "label": "?",
-		      "endAngle": 270,
-		      "startAngle": 90,
+		      "endAngle": 180,
+		      "startAngle": 0,
 		      "strokeColor": "#29abca"
 		    }
 		  ],
 		  "type": "circleDiagram",
 		  "shape": "semicircle",
-		  "width": 300,
-		  "height": 300,
-		  "radius": 120,
+		  "width": 350,
+		  "height": 350,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 270,
 		  "segments": [
 		    {
 		      "type": "radius",
-		      "angle": 90,
-		      "color": "#000000",
+		      "angle": 180,
+		      "color": "#e65a4c",
 		      "label": "9"
 		    },
 		    {
 		      "type": "radius",
-		      "angle": 270,
+		      "angle": 0,
 		      "color": "#000000",
 		      "label": " "
 		    }
 		  ],
 		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF",
+		  "fillColor": "#FFFFFF00",
 		  "innerRadius": null,
-		  "strokeColor": "#000000",
+		  "strokeColor": "#FFFFFF00",
 		  "showCenterDot": true,
 		  "annulusFillColor": "transparent"
 		} as unknown as WidgetInput
@@ -1548,9 +1586,9 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe22a7c3ae17893d1
-	// Question: Find the arc length of a partial circle
+	// Question: Arc length of a three-fourths circle
 	// Widget key: image_1
-	test("circle-diagram - [xe22a7c3ae17893d1] Find the arc length of a partial circle", async () => {
+	test("circle-diagram - [xe22a7c3ae17893d1] Arc length of a three-fourths circle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1564,12 +1602,12 @@ describe("circleDiagram widget tests", () => {
 		  ],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 250,
-		  "height": 250,
-		  "radius": 100,
+		  "width": 350,
+		  "height": 350,
+		  "radius": 140,
 		  "sectors": [
 		    {
-		      "label": " ",
+		      "label": null,
 		      "endAngle": 90,
 		      "fillColor": "#FFFFFF00",
 		      "startAngle": 0,
@@ -1581,22 +1619,22 @@ describe("circleDiagram widget tests", () => {
 		    {
 		      "type": "radius",
 		      "angle": 0,
-		      "color": "#e65a4c",
+		      "color": "#000000",
 		      "label": "2"
 		    },
 		    {
 		      "type": "radius",
 		      "angle": 90,
 		      "color": "#000000",
-		      "label": " "
+		      "label": null
 		    }
 		  ],
-		  "areaLabel": " ",
+		  "areaLabel": null,
 		  "fillColor": "#FFFFFF00",
 		  "innerRadius": null,
 		  "strokeColor": "#00000000",
 		  "showCenterDot": true,
-		  "annulusFillColor": "transparent"
+		  "annulusFillColor": "#00000000"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1615,21 +1653,27 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb6a6310a58f2acf8
-	// Question: Arc length of three-fourths of a circle
+	// Question: Arc length of a partial circle
 	// Widget key: image_1
-	test("circle-diagram - [xb6a6310a58f2acf8] Arc length of three-fourths of a circle", async () => {
+	test("circle-diagram - [xb6a6310a58f2acf8] Arc length of a partial circle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [
 		    {
-		      "label": " ",
-		      "endAngle": 360,
+		      "label": "?",
+		      "endAngle": 270,
 		      "startAngle": 180,
 		      "strokeColor": "#29abca"
 		    },
 		    {
-		      "label": "?",
+		      "label": " ",
+		      "endAngle": 360,
+		      "startAngle": 270,
+		      "strokeColor": "#29abca"
+		    },
+		    {
+		      "label": " ",
 		      "endAngle": 90,
 		      "startAngle": 0,
 		      "strokeColor": "#29abca"
@@ -1637,8 +1681,8 @@ describe("circleDiagram widget tests", () => {
 		  ],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 250,
-		  "height": 250,
+		  "width": 360,
+		  "height": 360,
 		  "radius": 100,
 		  "sectors": [
 		    {
@@ -1660,16 +1704,16 @@ describe("circleDiagram widget tests", () => {
 		    {
 		      "type": "radius",
 		      "angle": 180,
-		      "color": "#e65a4c",
+		      "color": "#000000",
 		      "label": " "
 		    }
 		  ],
 		  "areaLabel": " ",
 		  "fillColor": "#FFFFFF00",
 		  "innerRadius": null,
-		  "strokeColor": "#00000000",
+		  "strokeColor": "#FFFFFF00",
 		  "showCenterDot": true,
-		  "annulusFillColor": "transparent"
+		  "annulusFillColor": "#FFFFFF00"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1704,9 +1748,9 @@ describe("circleDiagram widget tests", () => {
 		  ],
 		  "type": "circleDiagram",
 		  "shape": "semicircle",
-		  "width": 250,
-		  "height": 163,
-		  "radius": 100,
+		  "width": 400,
+		  "height": 320,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -1718,7 +1762,7 @@ describe("circleDiagram widget tests", () => {
 		    }
 		  ],
 		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF",
+		  "fillColor": "#FFFFFF00",
 		  "innerRadius": null,
 		  "strokeColor": "#29abca",
 		  "showCenterDot": true,
@@ -1757,9 +1801,9 @@ describe("circleDiagram widget tests", () => {
 		  ],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 320,
-		  "height": 320,
-		  "radius": 120,
+		  "width": 350,
+		  "height": 350,
+		  "radius": 140,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -1810,14 +1854,14 @@ describe("circleDiagram widget tests", () => {
 		  ],
 		  "type": "circleDiagram",
 		  "shape": "quarter-circle",
-		  "width": 250,
-		  "height": 250,
-		  "radius": 100,
+		  "width": 350,
+		  "height": 350,
+		  "radius": 140,
 		  "sectors": [
 		    {
-		      "label": " ",
+		      "label": null,
 		      "endAngle": 90,
-		      "fillColor": "#FFFFFF",
+		      "fillColor": "#00000000",
 		      "startAngle": 0,
 		      "showRightAngleMarker": true
 		    }
@@ -1834,10 +1878,10 @@ describe("circleDiagram widget tests", () => {
 		      "type": "radius",
 		      "angle": 90,
 		      "color": "#000000",
-		      "label": " "
+		      "label": null
 		    }
 		  ],
-		  "areaLabel": " ",
+		  "areaLabel": null,
 		  "fillColor": "#FFFFFF",
 		  "innerRadius": null,
 		  "strokeColor": "#000000",
@@ -1861,9 +1905,9 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd3cba57e7152980b
-	// Question: Arc length of a partial circle
+	// Question: Arc length of a quarter circle
 	// Widget key: image_1
-	test("circle-diagram - [xd3cba57e7152980b] Arc length of a partial circle", async () => {
+	test("circle-diagram - [xd3cba57e7152980b] Arc length of a quarter circle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1877,19 +1921,11 @@ describe("circleDiagram widget tests", () => {
 		  ],
 		  "type": "circleDiagram",
 		  "shape": "quarter-circle",
-		  "width": 250,
-		  "height": 250,
-		  "radius": 100,
-		  "sectors": [
-		    {
-		      "label": null,
-		      "endAngle": 270,
-		      "fillColor": "#FFFFFF00",
-		      "startAngle": 180,
-		      "showRightAngleMarker": true
-		    }
-		  ],
-		  "rotation": 0,
+		  "width": 300,
+		  "height": 300,
+		  "radius": 120,
+		  "sectors": [],
+		  "rotation": 180,
 		  "segments": [
 		    {
 		      "type": "radius",
@@ -1905,7 +1941,7 @@ describe("circleDiagram widget tests", () => {
 		    }
 		  ],
 		  "areaLabel": null,
-		  "fillColor": "#FFFFFF",
+		  "fillColor": "#FFFFFF00",
 		  "innerRadius": null,
 		  "strokeColor": "#000000",
 		  "showCenterDot": true,
@@ -1944,29 +1980,29 @@ describe("circleDiagram widget tests", () => {
 		  ],
 		  "type": "circleDiagram",
 		  "shape": "semicircle",
-		  "width": 250,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "radius": 100,
 		  "sectors": [],
-		  "rotation": 0,
+		  "rotation": 180,
 		  "segments": [
 		    {
 		      "type": "radius",
 		      "angle": 0,
-		      "color": "#000000",
+		      "color": "#e65a4c",
 		      "label": "11"
 		    },
 		    {
 		      "type": "radius",
 		      "angle": 180,
 		      "color": "#000000",
-		      "label": " "
+		      "label": null
 		    }
 		  ],
-		  "areaLabel": " ",
+		  "areaLabel": null,
 		  "fillColor": "#FFFFFF",
 		  "innerRadius": null,
-		  "strokeColor": "#000000",
+		  "strokeColor": "#29abca",
 		  "showCenterDot": true,
 		  "annulusFillColor": "transparent"
 		} as unknown as WidgetInput
@@ -1987,39 +2023,39 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x012ab26fce14c204
-	// Question: Arc length of a quarter circle
+	// Question: Find the arc length of a quarter circle
 	// Widget key: image_1
-	test("circle-diagram - [x012ab26fce14c204] Arc length of a quarter circle", async () => {
+	test("circle-diagram - [x012ab26fce14c204] Find the arc length of a quarter circle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [
 		    {
 		      "label": "?",
-		      "endAngle": 180,
-		      "startAngle": 90,
+		      "endAngle": 90,
+		      "startAngle": 0,
 		      "strokeColor": "#29abca"
 		    }
 		  ],
 		  "type": "circleDiagram",
-		  "shape": "quarter-circle",
-		  "width": 300,
-		  "height": 300,
-		  "radius": 120,
+		  "shape": "circle",
+		  "width": 360,
+		  "height": 360,
+		  "radius": 140,
 		  "sectors": [
 		    {
-		      "label": null,
-		      "endAngle": 180,
-		      "fillColor": "#FFFFFF00",
-		      "startAngle": 90,
+		      "label": " ",
+		      "endAngle": 90,
+		      "fillColor": "#00000000",
+		      "startAngle": 0,
 		      "showRightAngleMarker": true
 		    }
 		  ],
-		  "rotation": 90,
+		  "rotation": 0,
 		  "segments": [
 		    {
 		      "type": "radius",
-		      "angle": 180,
+		      "angle": 0,
 		      "color": "#000000",
 		      "label": "1"
 		    },
@@ -2027,13 +2063,13 @@ describe("circleDiagram widget tests", () => {
 		      "type": "radius",
 		      "angle": 90,
 		      "color": "#000000",
-		      "label": null
+		      "label": " "
 		    }
 		  ],
-		  "areaLabel": null,
-		  "fillColor": "#FFFFFF",
+		  "areaLabel": " ",
+		  "fillColor": "#FFFFFF00",
 		  "innerRadius": null,
-		  "strokeColor": "#000000",
+		  "strokeColor": "#00000000",
 		  "showCenterDot": true,
 		  "annulusFillColor": "transparent"
 		} as unknown as WidgetInput
@@ -2054,18 +2090,18 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd10ccb78f63d32da
-	// Question: Find the area of a semicircle (radius 4)
+	// Question: Find the area of a semicircle
 	// Widget key: image_1
-	test("circle-diagram - [xd10ccb78f63d32da] Find the area of a semicircle (radius 4)", async () => {
+	test("circle-diagram - [xd10ccb78f63d32da] Find the area of a semicircle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "semicircle",
-		  "width": 250,
-		  "height": 175,
-		  "radius": 100,
+		  "width": 400,
+		  "height": 300,
+		  "radius": 140,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -2077,7 +2113,7 @@ describe("circleDiagram widget tests", () => {
 		    },
 		    {
 		      "type": "radius",
-		      "angle": 0,
+		      "angle": 90,
 		      "color": "#000000",
 		      "label": "4"
 		    }
@@ -2106,17 +2142,17 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xab2d6f389a133f2a
-	// Question: Find the area of a semicircle
+	// Question: Find the area of a semicircle (radius 2)
 	// Widget key: image_1
-	test("circle-diagram - [xab2d6f389a133f2a] Find the area of a semicircle", async () => {
+	test("circle-diagram - [xab2d6f389a133f2a] Find the area of a semicircle (radius 2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "semicircle",
-		  "width": 250,
-		  "height": 175,
+		  "width": 300,
+		  "height": 300,
 		  "radius": 100,
 		  "sectors": [],
 		  "rotation": 0,
@@ -2124,7 +2160,7 @@ describe("circleDiagram widget tests", () => {
 		    {
 		      "type": "diameter",
 		      "angle": 0,
-		      "color": "#000000",
+		      "color": "#e65a4c",
 		      "label": " "
 		    },
 		    {
@@ -2158,18 +2194,18 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x550d5723faebeb90
-	// Question: Area of a quarter circle
+	// Question: Find the area of a shaded sector
 	// Widget key: image_1
-	test("circle-diagram - [x550d5723faebeb90] Area of a quarter circle", async () => {
+	test("circle-diagram - [x550d5723faebeb90] Find the area of a shaded sector", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 250,
-		  "height": 250,
-		  "radius": 100,
+		  "width": 320,
+		  "height": 320,
+		  "radius": 140,
 		  "sectors": [
 		    {
 		      "label": null,
@@ -2183,21 +2219,21 @@ describe("circleDiagram widget tests", () => {
 		  "segments": [
 		    {
 		      "type": "radius",
-		      "angle": 270,
+		      "angle": 180,
 		      "color": "#000000",
 		      "label": "10"
 		    },
 		    {
 		      "type": "radius",
-		      "angle": 180,
+		      "angle": 270,
 		      "color": "#000000",
 		      "label": null
 		    }
 		  ],
 		  "areaLabel": null,
-		  "fillColor": "#FFFFFF",
+		  "fillColor": "#FFFFFF00",
 		  "innerRadius": null,
-		  "strokeColor": "#000000",
+		  "strokeColor": "#00000000",
 		  "showCenterDot": true,
 		  "annulusFillColor": "transparent"
 		} as unknown as WidgetInput
@@ -2218,18 +2254,18 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4ecc16c27339a3fe
-	// Question: Find the area of a semicircle from its diameter
+	// Question: Area of a semicircle
 	// Widget key: image_1
-	test("circle-diagram - [x4ecc16c27339a3fe] Find the area of a semicircle from its diameter", async () => {
+	test("circle-diagram - [x4ecc16c27339a3fe] Area of a semicircle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "semicircle",
-		  "width": 250,
-		  "height": 250,
-		  "radius": 100,
+		  "width": 350,
+		  "height": 350,
+		  "radius": 120,
 		  "sectors": [],
 		  "rotation": 270,
 		  "segments": [
@@ -2264,30 +2300,30 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa877d3c25ea77c1c
-	// Question: Find the area of a three-quarter circle
+	// Question: Find the area of three-fourths of a circle
 	// Widget key: image_1
-	test("circle-diagram - [xa877d3c25ea77c1c] Find the area of a three-quarter circle", async () => {
+	test("circle-diagram - [xa877d3c25ea77c1c] Find the area of three-fourths of a circle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "arcs": [
-		    {
-		      "label": " ",
-		      "endAngle": 360,
-		      "startAngle": 90,
-		      "strokeColor": "#000000"
-		    }
-		  ],
+		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 250,
-		  "height": 250,
-		  "radius": 100,
+		  "width": 350,
+		  "height": 350,
+		  "radius": 140,
 		  "sectors": [
 		    {
 		      "label": " ",
+		      "endAngle": 360,
+		      "fillColor": "#E8F4FD",
+		      "startAngle": 90,
+		      "showRightAngleMarker": false
+		    },
+		    {
+		      "label": " ",
 		      "endAngle": 90,
-		      "fillColor": "#FFFFFF00",
+		      "fillColor": "#FFFFFF",
 		      "startAngle": 0,
 		      "showRightAngleMarker": true
 		    }
@@ -2297,101 +2333,14 @@ describe("circleDiagram widget tests", () => {
 		    {
 		      "type": "radius",
 		      "angle": 0,
-		      "color": "#e65a4c",
+		      "color": "#000000",
 		      "label": "6"
 		    },
 		    {
 		      "type": "radius",
 		      "angle": 90,
 		      "color": "#000000",
-		      "label": " "
-		    }
-		  ],
-		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF00",
-		  "innerRadius": null,
-		  "strokeColor": "#FFFFFF00",
-		  "showCenterDot": true,
-		  "annulusFillColor": "#FFFFFF00"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for circleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf5f42395039aab6b
-	// Question: Area of three-fourths of a circle
-	// Widget key: image_1
-	test("circle-diagram - [xf5f42395039aab6b] Area of three-fourths of a circle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "arcs": [
-		    {
-		      "label": " ",
-		      "endAngle": 360,
-		      "startAngle": 180,
-		      "strokeColor": "#000000"
-		    },
-		    {
-		      "label": " ",
-		      "endAngle": 90,
-		      "startAngle": 0,
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "type": "circleDiagram",
-		  "shape": "circle",
-		  "width": 250,
-		  "height": 250,
-		  "radius": 100,
-		  "sectors": [
-		    {
-		      "label": " ",
-		      "endAngle": 360,
-		      "fillColor": "#E8F4FD",
-		      "startAngle": 180,
-		      "showRightAngleMarker": false
-		    },
-		    {
-		      "label": " ",
-		      "endAngle": 90,
-		      "fillColor": "#E8F4FD",
-		      "startAngle": 0,
-		      "showRightAngleMarker": false
-		    },
-		    {
-		      "label": " ",
-		      "endAngle": 180,
-		      "fillColor": "#FFFFFF",
-		      "startAngle": 90,
-		      "showRightAngleMarker": true
-		    }
-		  ],
-		  "rotation": 0,
-		  "segments": [
-		    {
-		      "type": "radius",
-		      "angle": 180,
-		      "color": "#e65a4c",
-		      "label": "4"
-		    },
-		    {
-		      "type": "radius",
-		      "angle": 90,
-		      "color": "#000000",
-		      "label": "4"
+		      "label": "6"
 		    }
 		  ],
 		  "areaLabel": " ",
@@ -2417,21 +2366,95 @@ describe("circleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x245cfd8b0a9759e0
-	// Question: Find the area of a semicircle from its radius
+	// Extracted from question: xf5f42395039aab6b
+	// Question: Area of three-fourths of a circle
 	// Widget key: image_1
-	test("circle-diagram - [x245cfd8b0a9759e0] Find the area of a semicircle from its radius", async () => {
+	test("circle-diagram - [xf5f42395039aab6b] Area of three-fourths of a circle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 350,
+		  "height": 350,
+		  "radius": 140,
+		  "sectors": [
+		    {
+		      "label": " ",
+		      "endAngle": 360,
+		      "fillColor": "#E8F4FD",
+		      "startAngle": 180,
+		      "showRightAngleMarker": false
+		    },
+		    {
+		      "label": " ",
+		      "endAngle": 90,
+		      "fillColor": "#E8F4FD",
+		      "startAngle": 0,
+		      "showRightAngleMarker": false
+		    },
+		    {
+		      "label": " ",
+		      "endAngle": 180,
+		      "fillColor": "#FFFFFF00",
+		      "startAngle": 90,
+		      "showRightAngleMarker": true
+		    }
+		  ],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "radius",
+		      "angle": 180,
+		      "color": "#e65a4c",
+		      "label": "4"
+		    },
+		    {
+		      "type": "radius",
+		      "angle": 90,
+		      "color": "#000000",
+		      "label": " "
+		    }
+		  ],
+		  "areaLabel": " ",
+		  "fillColor": "#FFFFFF00",
+		  "innerRadius": null,
+		  "strokeColor": "#000000",
+		  "showCenterDot": true,
+		  "annulusFillColor": "transparent"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x245cfd8b0a9759e0
+	// Question: Find the area of a semicircle
+	// Widget key: image_1
+	test("circle-diagram - [x245cfd8b0a9759e0] Find the area of a semicircle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "semicircle",
-		  "width": 250,
-		  "height": 250,
-		  "radius": 100,
+		  "width": 350,
+		  "height": 350,
+		  "radius": 140,
 		  "sectors": [],
-		  "rotation": 270,
+		  "rotation": 90,
 		  "segments": [
 		    {
 		      "type": "diameter",
@@ -2470,24 +2493,24 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xad84dc6c9fa1c0e1
-	// Question: Area of a semicircle
+	// Question: Find the area of a semicircle from its diameter
 	// Widget key: image_1
-	test("circle-diagram - [xad84dc6c9fa1c0e1] Area of a semicircle", async () => {
+	test("circle-diagram - [xad84dc6c9fa1c0e1] Find the area of a semicircle from its diameter", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "semicircle",
-		  "width": 250,
-		  "height": 250,
-		  "radius": 100,
+		  "width": 320,
+		  "height": 320,
+		  "radius": 140,
 		  "sectors": [],
-		  "rotation": 270,
+		  "rotation": 90,
 		  "segments": [
 		    {
 		      "type": "diameter",
-		      "angle": 180,
+		      "angle": 90,
 		      "color": "#e65a4c",
 		      "label": "14"
 		    }
@@ -2516,30 +2539,97 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1de9ca02493bae17
-	// Question: Find the area of a quarter circle
+	// Question: Area of a quarter circle
 	// Widget key: image_1
-	test("circle-diagram - [x1de9ca02493bae17] Find the area of a quarter circle", async () => {
+	test("circle-diagram - [x1de9ca02493bae17] Area of a quarter circle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "quarter-circle",
-		  "width": 250,
-		  "height": 250,
-		  "radius": 100,
+		  "width": 350,
+		  "height": 350,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 90,
 		  "segments": [
 		    {
 		      "type": "radius",
 		      "angle": 180,
-		      "color": "#000000",
+		      "color": "#e65a4c",
 		      "label": "8"
 		    },
 		    {
 		      "type": "radius",
 		      "angle": 90,
+		      "color": "#000000",
+		      "label": null
+		    }
+		  ],
+		  "areaLabel": null,
+		  "fillColor": "#FFFFFF00",
+		  "innerRadius": null,
+		  "strokeColor": "#000000",
+		  "showCenterDot": true,
+		  "annulusFillColor": "transparent"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcd23f9a85dfcd40b
+	// Question: Find the area of a three-quarter circle
+	// Widget key: image_1
+	test("circle-diagram - [xcd23f9a85dfcd40b] Find the area of a three-quarter circle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 300,
+		  "height": 300,
+		  "radius": 100,
+		  "sectors": [
+		    {
+		      "label": " ",
+		      "endAngle": 270,
+		      "fillColor": "#E8F4FD",
+		      "startAngle": 0,
+		      "showRightAngleMarker": false
+		    },
+		    {
+		      "label": " ",
+		      "endAngle": 360,
+		      "fillColor": "#FFFFFF",
+		      "startAngle": 270,
+		      "showRightAngleMarker": true
+		    }
+		  ],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "radius",
+		      "angle": 0,
+		      "color": "#e65a4c",
+		      "label": "2"
+		    },
+		    {
+		      "type": "radius",
+		      "angle": 270,
 		      "color": "#000000",
 		      "label": " "
 		    }
@@ -2567,86 +2657,19 @@ describe("circleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xcd23f9a85dfcd40b
-	// Question: Find the area of three-fourths of a circle
-	// Widget key: image_1
-	test("circle-diagram - [xcd23f9a85dfcd40b] Find the area of three-fourths of a circle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "arcs": [
-		    {
-		      "label": " ",
-		      "endAngle": 270,
-		      "startAngle": 0,
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "type": "circleDiagram",
-		  "shape": "circle",
-		  "width": 250,
-		  "height": 250,
-		  "radius": 100,
-		  "sectors": [
-		    {
-		      "label": " ",
-		      "endAngle": 360,
-		      "fillColor": "#FFFFFF00",
-		      "startAngle": 270,
-		      "showRightAngleMarker": true
-		    }
-		  ],
-		  "rotation": 0,
-		  "segments": [
-		    {
-		      "type": "radius",
-		      "angle": 0,
-		      "color": "#e65a4c",
-		      "label": "2"
-		    },
-		    {
-		      "type": "radius",
-		      "angle": 270,
-		      "color": "#000000",
-		      "label": " "
-		    }
-		  ],
-		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF00",
-		  "innerRadius": null,
-		  "strokeColor": "#000000",
-		  "showCenterDot": true,
-		  "annulusFillColor": "transparent"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for circleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x29a1937a05edd7a6
-	// Question: Find the area of a semicircle from its diameter
+	// Question: Find the area of a semicircle (diameter given)
 	// Widget key: image_1
-	test("circle-diagram - [x29a1937a05edd7a6] Find the area of a semicircle from its diameter", async () => {
+	test("circle-diagram - [x29a1937a05edd7a6] Find the area of a semicircle (diameter given)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "semicircle",
-		  "width": 250,
-		  "height": 175,
-		  "radius": 100,
+		  "width": 400,
+		  "height": 300,
+		  "radius": 120,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -2687,15 +2710,22 @@ describe("circleDiagram widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "arcs": [],
+		  "arcs": [
+		    {
+		      "label": "Arc",
+		      "endAngle": 90,
+		      "startAngle": 0,
+		      "strokeColor": "#000000"
+		    }
+		  ],
 		  "type": "circleDiagram",
 		  "shape": "quarter-circle",
-		  "width": 250,
-		  "height": 250,
-		  "radius": 110,
+		  "width": 300,
+		  "height": 300,
+		  "radius": 130,
 		  "sectors": [
 		    {
-		      "label": " ",
+		      "label": "90°",
 		      "endAngle": 90,
 		      "fillColor": "#FFFFFF00",
 		      "startAngle": 0,
@@ -2714,13 +2744,168 @@ describe("circleDiagram widget tests", () => {
 		      "type": "radius",
 		      "angle": 90,
 		      "color": "#000000",
-		      "label": " "
+		      "label": "2"
 		    }
 		  ],
 		  "areaLabel": " ",
 		  "fillColor": "#FFFFFF00",
 		  "innerRadius": null,
 		  "strokeColor": "#000000",
+		  "showCenterDot": true,
+		  "annulusFillColor": "#FFFFFF00"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xabe6ed366c0c0473
+	// Question: Find the rope length around Earth (circumference in terms of pi)
+	// Widget key: image_1
+	test("circle-diagram - [xabe6ed366c0c0473] Find the rope length around Earth (circumference in terms of pi)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 402,
+		  "height": 402,
+		  "radius": 160,
+		  "sectors": [],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "radius",
+		      "angle": 0,
+		      "color": "#1E90FF",
+		      "label": "6371 km"
+		    }
+		  ],
+		  "areaLabel": "Earth",
+		  "fillColor": "#E8F4FD",
+		  "innerRadius": 150,
+		  "strokeColor": "#000000",
+		  "showCenterDot": true,
+		  "annulusFillColor": "rgba(255, 99, 71, 0.4)"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4139736ff42aefd2
+	// Question: Identify the shape of a vertical cross-section
+	// Widget key: choice_b_shape
+	test("circle-diagram - [x4139736ff42aefd2] Identify the shape of a vertical cross-section", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 320,
+		  "height": 320,
+		  "radius": 120,
+		  "sectors": [],
+		  "rotation": 0,
+		  "segments": [],
+		  "areaLabel": " ",
+		  "fillColor": "#FFFFFF",
+		  "innerRadius": null,
+		  "strokeColor": "#000000",
+		  "showCenterDot": false,
+		  "annulusFillColor": "transparent"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6d4dfb26a3b44a3e
+	// Question: Identify the image of a point after a 90° clockwise rotation
+	// Widget key: image_1
+	test("circle-diagram - [x6d4dfb26a3b44a3e] Identify the image of a point after a 90° clockwise rotation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 325,
+		  "height": 325,
+		  "radius": 140,
+		  "sectors": [],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "radius",
+		      "angle": 68.199,
+		      "color": "#11accd",
+		      "label": "P"
+		    },
+		    {
+		      "type": "radius",
+		      "angle": 338.199,
+		      "color": "#e07d10",
+		      "label": "A"
+		    },
+		    {
+		      "type": "radius",
+		      "angle": 8.199,
+		      "color": "#e07d10",
+		      "label": "B"
+		    },
+		    {
+		      "type": "radius",
+		      "angle": 158.199,
+		      "color": "#e07d10",
+		      "label": "C"
+		    },
+		    {
+		      "type": "radius",
+		      "angle": 188.199,
+		      "color": "#e07d10",
+		      "label": "D"
+		    }
+		  ],
+		  "areaLabel": "center",
+		  "fillColor": "#FFFFFF",
+		  "innerRadius": null,
+		  "strokeColor": "#b3b3b3",
 		  "showCenterDot": true,
 		  "annulusFillColor": "transparent"
 		} as unknown as WidgetInput
@@ -2740,74 +2925,59 @@ describe("circleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xabe6ed366c0c0473
-	// Question: Length of a rope around Earth
+	// Extracted from question: x014b6ef7252c3176
+	// Question: Identify the image after a 270° clockwise rotation
 	// Widget key: image_1
-	test("circle-diagram - [xabe6ed366c0c0473] Length of a rope around Earth", async () => {
+	test("circle-diagram - [x014b6ef7252c3176] Identify the image after a 270° clockwise rotation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 402,
-		  "height": 402,
-		  "radius": 150,
+		  "width": 300,
+		  "height": 300,
+		  "radius": 130,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
 		    {
 		      "type": "radius",
-		      "angle": 0,
-		      "color": "#11accd",
-		      "label": "6371 km"
+		      "angle": 157.4,
+		      "color": "#000000",
+		      "label": "A"
+		    },
+		    {
+		      "type": "radius",
+		      "angle": 113.2,
+		      "color": "#000000",
+		      "label": "B"
+		    },
+		    {
+		      "type": "radius",
+		      "angle": 68.2,
+		      "color": "#000000",
+		      "label": "R"
+		    },
+		    {
+		      "type": "radius",
+		      "angle": 23.2,
+		      "color": "#000000",
+		      "label": "D"
+		    },
+		    {
+		      "type": "radius",
+		      "angle": 338.2,
+		      "color": "#000000",
+		      "label": "C"
 		    }
 		  ],
-		  "areaLabel": null,
-		  "fillColor": "#FFFFFF",
-		  "innerRadius": null,
-		  "strokeColor": "#ff4d4d",
-		  "showCenterDot": true,
-		  "annulusFillColor": "#FFE9E9"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for circleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4139736ff42aefd2
-	// Question: Cross section of a block of butter
-	// Widget key: choice_b_shape
-	test("circle-diagram - [x4139736ff42aefd2] Cross section of a block of butter", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "arcs": [],
-		  "type": "circleDiagram",
-		  "shape": "circle",
-		  "width": 120,
-		  "height": 120,
-		  "radius": 50,
-		  "sectors": [],
-		  "rotation": 0,
-		  "segments": [],
-		  "areaLabel": null,
+		  "areaLabel": "center",
 		  "fillColor": "#FFFFFF",
 		  "innerRadius": null,
 		  "strokeColor": "#000000",
-		  "showCenterDot": false,
-		  "annulusFillColor": ""
+		  "showCenterDot": true,
+		  "annulusFillColor": "transparent"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2835,21 +3005,21 @@ describe("circleDiagram widget tests", () => {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 320,
-		  "height": 320,
-		  "radius": 120,
+		  "width": 360,
+		  "height": 360,
+		  "radius": 150,
 		  "sectors": [
 		    {
 		      "label": " ",
 		      "endAngle": 90,
-		      "fillColor": "#87CEEB",
+		      "fillColor": "#B3D7FF",
 		      "startAngle": 0,
 		      "showRightAngleMarker": false
 		    },
 		    {
 		      "label": " ",
 		      "endAngle": 180,
-		      "fillColor": "#87CEEB",
+		      "fillColor": "#B3D7FF",
 		      "startAngle": 90,
 		      "showRightAngleMarker": false
 		    }
@@ -2857,27 +3027,15 @@ describe("circleDiagram widget tests", () => {
 		  "rotation": 0,
 		  "segments": [
 		    {
-		      "type": "radius",
+		      "type": "diameter",
 		      "angle": 0,
-		      "color": "#666666",
+		      "color": "#000000",
 		      "label": " "
 		    },
 		    {
-		      "type": "radius",
+		      "type": "diameter",
 		      "angle": 90,
-		      "color": "#666666",
-		      "label": " "
-		    },
-		    {
-		      "type": "radius",
-		      "angle": 180,
-		      "color": "#666666",
-		      "label": " "
-		    },
-		    {
-		      "type": "radius",
-		      "angle": 270,
-		      "color": "#666666",
+		      "color": "#000000",
 		      "label": " "
 		    }
 		  ],
@@ -2885,8 +3043,8 @@ describe("circleDiagram widget tests", () => {
 		  "fillColor": "#FFFFFF",
 		  "innerRadius": null,
 		  "strokeColor": "#000000",
-		  "showCenterDot": true,
-		  "annulusFillColor": "transparent"
+		  "showCenterDot": false,
+		  "annulusFillColor": "#00000000"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2905,21 +3063,21 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x65c4f90e3938e921
-	// Question: What percent of the circle is shaded?
+	// Question: Percent represented by the shaded area
 	// Widget key: image_1
-	test("circle-diagram - [x65c4f90e3938e921] What percent of the circle is shaded?", async () => {
+	test("circle-diagram - [x65c4f90e3938e921] Percent represented by the shaded area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 126,
-		  "height": 126,
-		  "radius": 60,
+		  "width": 400,
+		  "height": 400,
+		  "radius": 150,
 		  "sectors": [
 		    {
-		      "label": null,
+		      "label": " ",
 		      "endAngle": 90,
 		      "fillColor": "#7854ab",
 		      "startAngle": 0,
@@ -2932,16 +3090,16 @@ describe("circleDiagram widget tests", () => {
 		      "type": "diameter",
 		      "angle": 0,
 		      "color": "#7854ab",
-		      "label": null
+		      "label": " "
 		    },
 		    {
 		      "type": "diameter",
 		      "angle": 90,
 		      "color": "#7854ab",
-		      "label": null
+		      "label": " "
 		    }
 		  ],
-		  "areaLabel": null,
+		  "areaLabel": " ",
 		  "fillColor": "#FFFFFF",
 		  "innerRadius": null,
 		  "strokeColor": "#7854ab",
@@ -2964,177 +3122,33 @@ describe("circleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa0183e5bd946dbda
-	// Question: Scale drawing: cookie diameter
-	// Widget key: choice_a_cookie
-	test("circle-diagram - [xa0183e5bd946dbda] Scale drawing: cookie diameter (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "arcs": [],
-		  "type": "circleDiagram",
-		  "shape": "circle",
-		  "width": 320,
-		  "height": 320,
-		  "radius": 120,
-		  "sectors": [],
-		  "rotation": 0,
-		  "segments": [
-		    {
-		      "type": "diameter",
-		      "angle": 0,
-		      "color": "#000000",
-		      "label": "12.5 units"
-		    }
-		  ],
-		  "areaLabel": "cookie",
-		  "fillColor": "#FFFFFF",
-		  "innerRadius": null,
-		  "strokeColor": "#000000",
-		  "showCenterDot": true,
-		  "annulusFillColor": "#FFE5B4"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for circleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa0183e5bd946dbda
-	// Question: Scale drawing: cookie diameter
-	// Widget key: choice_b_cookie
-	test("circle-diagram - [xa0183e5bd946dbda] Scale drawing: cookie diameter (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "arcs": [],
-		  "type": "circleDiagram",
-		  "shape": "circle",
-		  "width": 320,
-		  "height": 320,
-		  "radius": 120,
-		  "sectors": [],
-		  "rotation": 0,
-		  "segments": [
-		    {
-		      "type": "diameter",
-		      "angle": 0,
-		      "color": "#000000",
-		      "label": "5 units"
-		    }
-		  ],
-		  "areaLabel": "cookie",
-		  "fillColor": "#FFFFFF",
-		  "innerRadius": null,
-		  "strokeColor": "#000000",
-		  "showCenterDot": true,
-		  "annulusFillColor": "#FFE5B4"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for circleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa0183e5bd946dbda
-	// Question: Scale drawing: cookie diameter
-	// Widget key: choice_c_cookie
-	test("circle-diagram - [xa0183e5bd946dbda] Scale drawing: cookie diameter (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "arcs": [],
-		  "type": "circleDiagram",
-		  "shape": "circle",
-		  "width": 320,
-		  "height": 320,
-		  "radius": 120,
-		  "sectors": [],
-		  "rotation": 0,
-		  "segments": [
-		    {
-		      "type": "diameter",
-		      "angle": 0,
-		      "color": "#000000",
-		      "label": "2.5 units"
-		    }
-		  ],
-		  "areaLabel": "cookie",
-		  "fillColor": "#FFFFFF",
-		  "innerRadius": null,
-		  "strokeColor": "#000000",
-		  "showCenterDot": true,
-		  "annulusFillColor": "#FFE5B4"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for circleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4b06d32f4a8d1e6d
-	// Question: Similarity of circles via translation and dilation
+	// Extracted from question: x00dff9034f2ddb48
+	// Question: Volume of a hemispherical bowl
 	// Widget key: image_1
-	test("circle-diagram - [x4b06d32f4a8d1e6d] Similarity of circles via translation and dilation", async () => {
+	test("circle-diagram - [x00dff9034f2ddb48] Volume of a hemispherical bowl", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
-		  "shape": "circle",
-		  "width": 300,
-		  "height": 300,
-		  "radius": 112.5,
+		  "shape": "semicircle",
+		  "width": 360,
+		  "height": 360,
+		  "radius": 150,
 		  "sectors": [],
-		  "rotation": 0,
+		  "rotation": 180,
 		  "segments": [
-		    {
-		      "type": "innerRadius",
-		      "angle": 315,
-		      "color": "#0c7f99",
-		      "label": "Q"
-		    },
 		    {
 		      "type": "radius",
-		      "angle": 45,
-		      "color": "#ed5fa6",
-		      "label": "S"
+		      "angle": 180,
+		      "color": "#000000",
+		      "label": "15 cm"
 		    }
 		  ],
-		  "areaLabel": "R",
-		  "fillColor": "#FFFFFF00",
-		  "innerRadius": 37.5,
-		  "strokeColor": "#ed5fa6",
+		  "areaLabel": "hemisphere",
+		  "fillColor": "#FFFFFF",
+		  "innerRadius": null,
+		  "strokeColor": "#000000",
 		  "showCenterDot": true,
 		  "annulusFillColor": "transparent"
 		} as unknown as WidgetInput
@@ -3154,19 +3168,209 @@ describe("circleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x79fa0a69b5eafc99
-	// Question: Find the circumference of a circle from its diameter
-	// Widget key: image_1
-	test("circle-diagram - [x79fa0a69b5eafc99] Find the circumference of a circle from its diameter", async () => {
+	// Extracted from question: xa0183e5bd946dbda
+	// Question: Select the correctly scaled cookie diameter
+	// Widget key: choice_a_cookie
+	test("circle-diagram - [xa0183e5bd946dbda] Select the correctly scaled cookie diameter (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 154,
-		  "height": 154,
-		  "radius": 70,
+		  "width": 400,
+		  "height": 400,
+		  "radius": 150,
+		  "sectors": [],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "diameter",
+		      "angle": 0,
+		      "color": "#000000",
+		      "label": "12.5 units"
+		    }
+		  ],
+		  "areaLabel": "Cookie",
+		  "fillColor": "#F5DEB3",
+		  "innerRadius": null,
+		  "strokeColor": "#000000",
+		  "showCenterDot": true,
+		  "annulusFillColor": "transparent"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa0183e5bd946dbda
+	// Question: Select the correctly scaled cookie diameter
+	// Widget key: choice_b_cookie
+	test("circle-diagram - [xa0183e5bd946dbda] Select the correctly scaled cookie diameter (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 400,
+		  "height": 400,
+		  "radius": 150,
+		  "sectors": [],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "diameter",
+		      "angle": 0,
+		      "color": "#000000",
+		      "label": "5 units"
+		    }
+		  ],
+		  "areaLabel": "Cookie",
+		  "fillColor": "#F5DEB3",
+		  "innerRadius": null,
+		  "strokeColor": "#000000",
+		  "showCenterDot": true,
+		  "annulusFillColor": "transparent"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa0183e5bd946dbda
+	// Question: Select the correctly scaled cookie diameter
+	// Widget key: choice_c_cookie
+	test("circle-diagram - [xa0183e5bd946dbda] Select the correctly scaled cookie diameter (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 400,
+		  "height": 400,
+		  "radius": 150,
+		  "sectors": [],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "diameter",
+		      "angle": 0,
+		      "color": "#000000",
+		      "label": "2.5 units"
+		    }
+		  ],
+		  "areaLabel": "Cookie",
+		  "fillColor": "#F5DEB3",
+		  "innerRadius": null,
+		  "strokeColor": "#000000",
+		  "showCenterDot": true,
+		  "annulusFillColor": "transparent"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4b06d32f4a8d1e6d
+	// Question: Are the circles similar?
+	// Widget key: image_1
+	test("circle-diagram - [x4b06d32f4a8d1e6d] Are the circles similar?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 300,
+		  "height": 300,
+		  "radius": 120,
+		  "sectors": [],
+		  "rotation": 0,
+		  "segments": [
+		    {
+		      "type": "innerRadius",
+		      "angle": 30,
+		      "color": "#0c7f99",
+		      "label": "PQ"
+		    },
+		    {
+		      "type": "radius",
+		      "angle": 210,
+		      "color": "#ca337c",
+		      "label": "RS"
+		    }
+		  ],
+		  "areaLabel": ":",
+		  "fillColor": "#FFFFFF",
+		  "innerRadius": 55,
+		  "strokeColor": "#0c7f99",
+		  "showCenterDot": true,
+		  "annulusFillColor": "#E8F4FD"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for circleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x79fa0a69b5eafc99
+	// Question: Find the circumference from the diameter
+	// Widget key: image_1
+	test("circle-diagram - [x79fa0a69b5eafc99] Find the circumference from the diameter", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "arcs": [],
+		  "type": "circleDiagram",
+		  "shape": "circle",
+		  "width": 360,
+		  "height": 360,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -3201,18 +3405,18 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd4ffbcc37cacab47
-	// Question: Find the circumference of a circle from its radius
+	// Question: Circumference of a circle
 	// Widget key: image_1
-	test("circle-diagram - [xd4ffbcc37cacab47] Find the circumference of a circle from its radius", async () => {
+	test("circle-diagram - [xd4ffbcc37cacab47] Circumference of a circle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 220,
-		  "height": 220,
-		  "radius": 100,
+		  "width": 320,
+		  "height": 320,
+		  "radius": 120,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -3256,9 +3460,9 @@ describe("circleDiagram widget tests", () => {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 154,
-		  "height": 154,
-		  "radius": 70,
+		  "width": 360,
+		  "height": 360,
+		  "radius": 140,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -3270,7 +3474,7 @@ describe("circleDiagram widget tests", () => {
 		    }
 		  ],
 		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF00",
+		  "fillColor": "#FFFFFF",
 		  "innerRadius": null,
 		  "strokeColor": "#000000",
 		  "showCenterDot": false,
@@ -3293,18 +3497,18 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x770c5bce6147b48a
-	// Question: Circumference of a circle from its diameter
+	// Question: Circumference of a circle (use 3.14)
 	// Widget key: image_1
-	test("circle-diagram - [x770c5bce6147b48a] Circumference of a circle from its diameter", async () => {
+	test("circle-diagram - [x770c5bce6147b48a] Circumference of a circle (use 3.14)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 154,
-		  "height": 154,
-		  "radius": 70,
+		  "width": 360,
+		  "height": 360,
+		  "radius": 150,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -3315,12 +3519,12 @@ describe("circleDiagram widget tests", () => {
 		      "label": "4 cm"
 		    }
 		  ],
-		  "areaLabel": null,
-		  "fillColor": "#FFFFFF00",
+		  "areaLabel": " ",
+		  "fillColor": "#FFFFFF",
 		  "innerRadius": null,
 		  "strokeColor": "#000000",
 		  "showCenterDot": false,
-		  "annulusFillColor": ""
+		  "annulusFillColor": "transparent"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3339,18 +3543,18 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa4c494e65cc6c162
-	// Question: Circumference of a circle (use 3.14 for π)
+	// Question: Circumference of a circle with a given radius
 	// Widget key: image_1
-	test("circle-diagram - [xa4c494e65cc6c162] Circumference of a circle (use 3.14 for π)", async () => {
+	test("circle-diagram - [xa4c494e65cc6c162] Circumference of a circle with a given radius", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 220,
-		  "height": 220,
-		  "radius": 100,
+		  "width": 320,
+		  "height": 320,
+		  "radius": 140,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -3385,18 +3589,18 @@ describe("circleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf3d4405a2a083f5b
-	// Question: Circumference of a circle
+	// Question: Find the circumference of a circle from its radius
 	// Widget key: image_1
-	test("circle-diagram - [xf3d4405a2a083f5b] Circumference of a circle", async () => {
+	test("circle-diagram - [xf3d4405a2a083f5b] Find the circumference of a circle from its radius", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "arcs": [],
 		  "type": "circleDiagram",
 		  "shape": "circle",
-		  "width": 220,
-		  "height": 220,
-		  "radius": 100,
+		  "width": 360,
+		  "height": 360,
+		  "radius": 140,
 		  "sectors": [],
 		  "rotation": 0,
 		  "segments": [
@@ -3408,10 +3612,10 @@ describe("circleDiagram widget tests", () => {
 		    }
 		  ],
 		  "areaLabel": " ",
-		  "fillColor": "#FFFFFF",
+		  "fillColor": "#FFFFFF00",
 		  "innerRadius": null,
 		  "strokeColor": "#000000",
-		  "showCenterDot": false,
+		  "showCenterDot": true,
 		  "annulusFillColor": "transparent"
 		} as unknown as WidgetInput
 

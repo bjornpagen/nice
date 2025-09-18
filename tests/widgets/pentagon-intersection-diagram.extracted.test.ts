@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.939Z
+// Generated on: 2025-09-18T05:17:02.128Z
 // Widget Type: pentagonIntersectionDiagram
 // Source: Real questions from database
 //
@@ -25,10 +25,10 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("pentagonIntersectionDiagram widget tests", () => {
-	// Extracted from question: xaf0ea8571c1f5f57
-	// Question: Find the measure of an angle in a star figure
+	// Extracted from question: x385cc98268fb3a25
+	// Question: Measure of an angle in a star-shaped figure
 	// Widget key: image_1
-	test("pentagon-intersection-diagram - [xaf0ea8571c1f5f57] Find the measure of an angle in a star figure", async () => {
+	test("pentagon-intersection-diagram - [x385cc98268fb3a25] Measure of an angle in a star-shaped figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -39,21 +39,8 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		    {
 		      "rx": 32.5,
 		      "ry": 32.5,
-		      "color": "#ca337c",
-		      "label": "36°",
-		      "startX": 237.301,
-		      "startY": 54.916,
-		      "endDeltaX": 23.815,
-		      "endDeltaY": 0.624,
-		      "sweepFlag": 0,
-		      "largeArcFlag": 0,
-		      "xAxisRotation": 0
-		    },
-		    {
-		      "rx": 32.5,
-		      "ry": 32.5,
 		      "color": "#1fab54",
-		      "label": "39°",
+		      "label": "31°",
 		      "startX": 124.896,
 		      "startY": 379.109,
 		      "endDeltaX": -13.78,
@@ -63,14 +50,27 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		      "xAxisRotation": 0
 		    },
 		    {
+		      "rx": 32.5,
+		      "ry": 32.5,
+		      "color": "#ca337c",
+		      "label": "47°",
+		      "startX": 237.301,
+		      "startY": 54.916,
+		      "endDeltaX": 23.815,
+		      "endDeltaY": 0.624,
+		      "sweepFlag": 0,
+		      "largeArcFlag": 0,
+		      "xAxisRotation": 0
+		    },
+		    {
 		      "rx": 25,
 		      "ry": 25,
 		      "color": "#11accd",
 		      "label": "x",
-		      "startX": 310.571,
-		      "startY": 233.233,
-		      "endDeltaX": 26.32,
-		      "endDeltaY": 8.299,
+		      "startX": 349.7,
+		      "startY": 202.108,
+		      "endDeltaX": -31.437,
+		      "endDeltaY": -6.682,
 		      "sweepFlag": 0,
 		      "largeArcFlag": 0,
 		      "xAxisRotation": 0
@@ -142,10 +142,10 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x822e771ad1df774e
-	// Question: Find the measure of angle x
+	// Extracted from question: xaf0ea8571c1f5f57
+	// Question: Find the measure of ∠x in a star figure
 	// Widget key: image_1
-	test("pentagon-intersection-diagram - [x822e771ad1df774e] Find the measure of angle x", async () => {
+	test("pentagon-intersection-diagram - [xaf0ea8571c1f5f57] Find the measure of ∠x in a star figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -153,19 +153,6 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		  "width": 500,
 		  "height": 425,
 		  "khanArcs": [
-		    {
-		      "rx": 32.5,
-		      "ry": 32.5,
-		      "color": "#ca337c",
-		      "label": "105°",
-		      "startX": 278.146,
-		      "startY": 258.75,
-		      "endDeltaX": -56.292,
-		      "endDeltaY": 0,
-		      "sweepFlag": 0,
-		      "largeArcFlag": 0,
-		      "xAxisRotation": 0
-		    },
 		    {
 		      "rx": 32.5,
 		      "ry": 32.5,
@@ -180,14 +167,27 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		      "xAxisRotation": 0
 		    },
 		    {
+		      "rx": 32.5,
+		      "ry": 32.5,
+		      "color": "#ca337c",
+		      "label": "36°",
+		      "startX": 237.301,
+		      "startY": 54.916,
+		      "endDeltaX": 23.815,
+		      "endDeltaY": 0.624,
+		      "sweepFlag": 0,
+		      "largeArcFlag": 0,
+		      "xAxisRotation": 0
+		    },
+		    {
 		      "rx": 25,
 		      "ry": 25,
-		      "color": "#e07d10",
+		      "color": "#11accd",
 		      "label": "x",
-		      "startX": 163.952,
-		      "startY": 241.757,
-		      "endDeltaX": 25.199,
-		      "endDeltaY": -8.187,
+		      "startX": 310.571,
+		      "startY": 233.233,
+		      "endDeltaX": 26.32,
+		      "endDeltaY": 8.299,
 		      "sweepFlag": 0,
 		      "largeArcFlag": 0,
 		      "xAxisRotation": 0
@@ -197,12 +197,12 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		    {
 		      "x": 50,
 		      "y": 125,
-		      "id": "E"
+		      "id": "A"
 		    },
 		    {
 		      "x": 450,
 		      "y": 125,
-		      "id": "B"
+		      "id": "C"
 		    },
 		    {
 		      "x": 100,
@@ -212,12 +212,12 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		    {
 		      "x": 250,
 		      "y": 25,
-		      "id": "A"
+		      "id": "B"
 		    },
 		    {
 		      "x": 400,
 		      "y": 400,
-		      "id": "C"
+		      "id": "E"
 		    }
 		  ],
 		  "intersectionLines": []
@@ -238,10 +238,10 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x71af25c5bcc927c6
-	// Question: Measure of angle x in a star figure
+	// Extracted from question: x822e771ad1df774e
+	// Question: Find the measure of an angle in a star figure
 	// Widget key: image_1
-	test("pentagon-intersection-diagram - [x71af25c5bcc927c6] Measure of angle x in a star figure", async () => {
+	test("pentagon-intersection-diagram - [x822e771ad1df774e] Find the measure of an angle in a star figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -252,8 +252,21 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		    {
 		      "rx": 32.5,
 		      "ry": 32.5,
+		      "color": "#1fab54",
+		      "label": "39°",
+		      "startX": 124.896,
+		      "startY": 379.109,
+		      "endDeltaX": -13.78,
+		      "endDeltaY": -9.649,
+		      "sweepFlag": 0,
+		      "largeArcFlag": 0,
+		      "xAxisRotation": 0
+		    },
+		    {
+		      "rx": 32.5,
+		      "ry": 32.5,
 		      "color": "#ca337c",
-		      "label": "107°",
+		      "label": "105°",
 		      "startX": 278.146,
 		      "startY": 258.75,
 		      "endDeltaX": -56.292,
@@ -262,6 +275,97 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		      "largeArcFlag": 0,
 		      "xAxisRotation": 0
 		    },
+		    {
+		      "rx": 25,
+		      "ry": 25,
+		      "color": "#11accd",
+		      "label": "x",
+		      "startX": 180.565,
+		      "startY": 194.842,
+		      "endDeltaX": -30.531,
+		      "endDeltaY": 7.613,
+		      "sweepFlag": 0,
+		      "largeArcFlag": 0,
+		      "xAxisRotation": 0
+		    }
+		  ],
+		  "pentagonPoints": [
+		    {
+		      "x": 250,
+		      "y": 25,
+		      "id": "A"
+		    },
+		    {
+		      "x": 450,
+		      "y": 125,
+		      "id": "B"
+		    },
+		    {
+		      "x": 400,
+		      "y": 400,
+		      "id": "C"
+		    },
+		    {
+		      "x": 100,
+		      "y": 400,
+		      "id": "D"
+		    },
+		    {
+		      "x": 50,
+		      "y": 125,
+		      "id": "E"
+		    }
+		  ],
+		  "intersectionLines": [
+		    {
+		      "to": "C",
+		      "from": "A"
+		    },
+		    {
+		      "to": "E",
+		      "from": "C"
+		    },
+		    {
+		      "to": "B",
+		      "from": "E"
+		    },
+		    {
+		      "to": "D",
+		      "from": "B"
+		    },
+		    {
+		      "to": "A",
+		      "from": "D"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pentagonIntersectionDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa9fae08294b8cb07
+	// Question: Find the measure of ∠x
+	// Widget key: image_1
+	test("pentagon-intersection-diagram - [xa9fae08294b8cb07] Find the measure of ∠x", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pentagonIntersectionDiagram",
+		  "width": 500,
+		  "height": 425,
+		  "khanArcs": [
 		    {
 		      "rx": 32.5,
 		      "ry": 32.5,
@@ -276,14 +380,27 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		      "xAxisRotation": 0
 		    },
 		    {
+		      "rx": 32.5,
+		      "ry": 32.5,
+		      "color": "#ca337c",
+		      "label": "40°",
+		      "startX": 237.301,
+		      "startY": 54.916,
+		      "endDeltaX": 23.815,
+		      "endDeltaY": 0.624,
+		      "sweepFlag": 0,
+		      "largeArcFlag": 0,
+		      "xAxisRotation": 0
+		    },
+		    {
 		      "rx": 25,
 		      "ry": 25,
-		      "color": "#11accd",
-		      "label": "x°",
-		      "startX": 180.565,
-		      "startY": 194.842,
-		      "endDeltaX": -30.531,
-		      "endDeltaY": 7.613,
+		      "color": "#7854ab",
+		      "label": "x",
+		      "startX": 318.263,
+		      "startY": 195.426,
+		      "endDeltaX": -7.414,
+		      "endDeltaY": 38.144,
 		      "sweepFlag": 0,
 		      "largeArcFlag": 0,
 		      "xAxisRotation": 0
@@ -355,39 +472,52 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x5d3635cafb31cb73
-	// Question: Identify the angle relationship
+	// Extracted from question: x71af25c5bcc927c6
+	// Question: Find the measure of angle x
 	// Widget key: image_1
-	test("pentagon-intersection-diagram - [x5d3635cafb31cb73] Identify the angle relationship", async () => {
+	test("pentagon-intersection-diagram - [x71af25c5bcc927c6] Find the measure of angle x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pentagonIntersectionDiagram",
-		  "width": 300,
-		  "height": 300,
+		  "width": 500,
+		  "height": 425,
 		  "khanArcs": [
 		    {
-		      "rx": 12.38,
-		      "ry": 12.38,
+		      "rx": 25,
+		      "ry": 25,
 		      "color": "#11accd",
-		      "label": "a",
-		      "startX": 125.333,
-		      "startY": 105.978,
-		      "endDeltaX": -16.213,
-		      "endDeltaY": 11.828,
+		      "label": "107°",
+		      "startX": 180.565,
+		      "startY": 194.842,
+		      "endDeltaX": -30.531,
+		      "endDeltaY": 7.613,
 		      "sweepFlag": 0,
 		      "largeArcFlag": 0,
 		      "xAxisRotation": 0
 		    },
 		    {
-		      "rx": 12.398,
-		      "ry": 12.398,
+		      "rx": 32.5,
+		      "ry": 32.5,
 		      "color": "#1fab54",
-		      "label": "b",
-		      "startX": 117.673,
-		      "startY": 129.543,
-		      "endDeltaX": 16.225,
-		      "endDeltaY": -11.758,
+		      "label": "31°",
+		      "startX": 124.896,
+		      "startY": 379.109,
+		      "endDeltaX": -13.78,
+		      "endDeltaY": -9.649,
+		      "sweepFlag": 0,
+		      "largeArcFlag": 0,
+		      "xAxisRotation": 0
+		    },
+		    {
+		      "rx": 25,
+		      "ry": 25,
+		      "color": "#e07d10",
+		      "label": "x",
+		      "startX": 163.952,
+		      "startY": 241.757,
+		      "endDeltaX": 25.199,
+		      "endDeltaY": -8.187,
 		      "sweepFlag": 0,
 		      "largeArcFlag": 0,
 		      "xAxisRotation": 0
@@ -395,28 +525,124 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		  ],
 		  "pentagonPoints": [
 		    {
-		      "x": 150,
-		      "y": 30.22,
+		      "x": 50,
+		      "y": 125,
 		      "id": "A"
 		    },
 		    {
-		      "x": 271.05,
-		      "y": 118.168,
+		      "x": 450,
+		      "y": 125,
 		      "id": "B"
 		    },
 		    {
-		      "x": 224.813,
-		      "y": 260.471,
+		      "x": 100,
+		      "y": 400,
 		      "id": "C"
 		    },
 		    {
-		      "x": 75.187,
-		      "y": 260.471,
+		      "x": 250,
+		      "y": 25,
 		      "id": "D"
 		    },
 		    {
-		      "x": 28.95,
-		      "y": 118.168,
+		      "x": 400,
+		      "y": 400,
+		      "id": "E"
+		    }
+		  ],
+		  "intersectionLines": []
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pentagonIntersectionDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2fb0aa3be3c7bc30
+	// Question: Find the measure of an angle in a star-shaped figure
+	// Widget key: image_1
+	test("pentagon-intersection-diagram - [x2fb0aa3be3c7bc30] Find the measure of an angle in a star-shaped figure", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pentagonIntersectionDiagram",
+		  "width": 500,
+		  "height": 425,
+		  "khanArcs": [
+		    {
+		      "rx": 32.5,
+		      "ry": 32.5,
+		      "color": "#1fab54",
+		      "label": "33°",
+		      "startX": 124.896,
+		      "startY": 379.109,
+		      "endDeltaX": -13.78,
+		      "endDeltaY": -9.649,
+		      "sweepFlag": 0,
+		      "largeArcFlag": 0,
+		      "xAxisRotation": 0
+		    },
+		    {
+		      "rx": 32.5,
+		      "ry": 32.5,
+		      "color": "#ca337c",
+		      "label": "46°",
+		      "startX": 237.301,
+		      "startY": 54.916,
+		      "endDeltaX": 23.815,
+		      "endDeltaY": 0.624,
+		      "sweepFlag": 0,
+		      "largeArcFlag": 0,
+		      "xAxisRotation": 0
+		    },
+		    {
+		      "rx": 25,
+		      "ry": 25,
+		      "color": "#11accd",
+		      "label": "x°",
+		      "startX": 349.7,
+		      "startY": 202.108,
+		      "endDeltaX": -31.437,
+		      "endDeltaY": -6.682,
+		      "sweepFlag": 0,
+		      "largeArcFlag": 0,
+		      "xAxisRotation": 0
+		    }
+		  ],
+		  "pentagonPoints": [
+		    {
+		      "x": 250,
+		      "y": 25,
+		      "id": "A"
+		    },
+		    {
+		      "x": 450,
+		      "y": 125,
+		      "id": "B"
+		    },
+		    {
+		      "x": 360,
+		      "y": 385,
+		      "id": "C"
+		    },
+		    {
+		      "x": 140,
+		      "y": 385,
+		      "id": "D"
+		    },
+		    {
+		      "x": 50,
+		      "y": 125,
 		      "id": "E"
 		    }
 		  ],
@@ -426,11 +652,115 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		      "from": "A"
 		    },
 		    {
+		      "to": "E",
+		      "from": "C"
+		    },
+		    {
+		      "to": "B",
+		      "from": "E"
+		    },
+		    {
 		      "to": "D",
-		      "from": "A"
+		      "from": "B"
+		    },
+		    {
+		      "to": "A",
+		      "from": "D"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pentagonIntersectionDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x33d0bb177a3a4add
+	// Question: Find x using supplementary angles
+	// Widget key: image_1
+	test("pentagon-intersection-diagram - [x33d0bb177a3a4add] Find x using supplementary angles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pentagonIntersectionDiagram",
+		  "width": 390,
+		  "height": 368.334,
+		  "khanArcs": [
+		    {
+		      "rx": 18.57,
+		      "ry": 18.57,
+		      "color": "#1fab54",
+		      "label": "x",
+		      "startX": 254.7375,
+		      "startY": 137.667,
+		      "endDeltaX": -24.321,
+		      "endDeltaY": -17.742,
+		      "sweepFlag": 0,
+		      "largeArcFlag": 0,
+		      "xAxisRotation": 0
+		    },
+		    {
+		      "rx": 18.57,
+		      "ry": 18.57,
+		      "color": "#11accd",
+		      "label": "100°",
+		      "startX": 254.7375,
+		      "startY": 137.667,
+		      "endDeltaX": -24.321,
+		      "endDeltaY": -17.742,
+		      "sweepFlag": 0,
+		      "largeArcFlag": 1,
+		      "xAxisRotation": 0
+		    }
+		  ],
+		  "pentagonPoints": [
+		    {
+		      "x": 303.063,
+		      "y": 343.7355,
+		      "id": "A"
+		    },
+		    {
+		      "x": 369.8505,
+		      "y": 138.1875,
+		      "id": "B"
+		    },
+		    {
+		      "x": 195,
+		      "y": 11.1525,
+		      "id": "C"
+		    },
+		    {
+		      "x": 20.151,
+		      "y": 138.1875,
+		      "id": "D"
+		    },
+		    {
+		      "x": 86.937,
+		      "y": 343.7355,
+		      "id": "E"
+		    }
+		  ],
+		  "intersectionLines": [
+		    {
+		      "to": "A",
+		      "from": "C"
 		    },
 		    {
 		      "to": "E",
+		      "from": "C"
+		    },
+		    {
+		      "to": "D",
 		      "from": "B"
 		    }
 		  ]
@@ -460,7 +790,7 @@ describe("pentagonIntersectionDiagram widget tests", () => {
 		const input = {
 		  "type": "pentagonIntersectionDiagram",
 		  "width": 300,
-		  "height": 273,
+		  "height": 300,
 		  "khanArcs": [
 		    {
 		      "rx": 37.37,

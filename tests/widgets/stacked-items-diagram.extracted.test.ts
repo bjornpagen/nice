@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-16T22:12:51.233Z
+// Generated on: 2025-09-18T05:17:02.168Z
 // Widget Type: stackedItemsDiagram
 // Source: Real questions from database
 //
@@ -26,26 +26,26 @@ import * as logger from "@superbuilders/slog"
 
 describe("stackedItemsDiagram widget tests", () => {
 	// Extracted from question: x1205d7d7
-	// Question: Cost of an ice cream cone with 5 scoops
+	// Question: Cost of an ice cream cone
 	// Widget key: image_1
-	test("stacked-items-diagram - [x1205d7d7] Cost of an ice cream cone with 5 scoops", async () => {
+	test("stacked-items-diagram - [x1205d7d7] Cost of an ice cream cone", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "stackedItemsDiagram",
 		  "count": 5,
-		  "width": 120,
-		  "height": 300,
+		  "width": 320,
+		  "height": 420,
 		  "altText": "Ice cream with 5 scoops stacked vertically on a cone.",
 		  "overlap": 0.8,
 		  "baseItem": {
-		    "size": 64,
+		    "size": 80,
 		    "emoji": "🍦",
 		    "label": "ice cream cone"
 		  },
 		  "orientation": "vertical",
 		  "stackedItem": {
-		    "size": 56,
+		    "size": 64,
 		    "emoji": "🍨",
 		    "label": "scoop of ice cream"
 		  }

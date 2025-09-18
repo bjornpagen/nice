@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.973Z
+// Generated on: 2025-09-18T05:17:02.170Z
 // Widget Type: hangerDiagram
 // Source: Real questions from database
 //
@@ -26,20 +26,20 @@ import * as logger from "@superbuilders/slog"
 
 describe("hangerDiagram widget tests", () => {
 	// Extracted from question: xba981b30cbe68354
-	// Question: Solve for h from a balanced hanger
+	// Question: Find the value of h from a hanger diagram
 	// Widget key: image_1
-	test("hanger-diagram - [xba981b30cbe68354] Solve for h from a balanced hanger", async () => {
+	test("hanger-diagram - [xba981b30cbe68354] Find the value of h from a hanger diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 156,
+		  "width": 400,
+		  "height": 320,
 		  "leftSide": [
 		    {
 		      "label": "h",
 		      "shape": "pentagon",
-		      "backgroundColor": "#F4F0FF"
+		      "backgroundColor": "#F4F8FF"
 		    },
 		    {
 		      "label": 9,
@@ -51,7 +51,7 @@ describe("hangerDiagram widget tests", () => {
 		    {
 		      "label": 14,
 		      "shape": "square",
-		      "backgroundColor": "#FFF5CC"
+		      "backgroundColor": "#E6FFEE"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -79,13 +79,13 @@ describe("hangerDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 110,
+		  "width": 400,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": 15,
 		      "shape": "square",
-		      "backgroundColor": "#F4F8FF"
+		      "backgroundColor": "#FFF5CC"
 		    }
 		  ],
 		  "rightSide": [
@@ -97,7 +97,7 @@ describe("hangerDiagram widget tests", () => {
 		    {
 		      "label": 8,
 		      "shape": "square",
-		      "backgroundColor": "#FFF5CC"
+		      "backgroundColor": "#F4F8FF"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -118,32 +118,32 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc8fb56456e01507c
-	// Question: Solve for g using a balanced hanger
+	// Question: Solve for g from a balanced hanger
 	// Widget key: image_1
-	test("hanger-diagram - [xc8fb56456e01507c] Solve for g using a balanced hanger", async () => {
+	test("hanger-diagram - [xc8fb56456e01507c] Solve for g from a balanced hanger", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 110,
+		  "width": 400,
+		  "height": 320,
 		  "leftSide": [
 		    {
 		      "label": 30,
 		      "shape": "square",
-		      "backgroundColor": "#E6FFEE"
+		      "backgroundColor": "#FFF5CC"
 		    }
 		  ],
 		  "rightSide": [
 		    {
 		      "label": 26,
 		      "shape": "square",
-		      "backgroundColor": "#FFF5CC"
+		      "backgroundColor": "#F4F8FF"
 		    },
 		    {
 		      "label": "g",
 		      "shape": "square",
-		      "backgroundColor": "#F4F8FF"
+		      "backgroundColor": "#E6FFEE"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -164,15 +164,15 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9834712212681367
-	// Question: Find the value of d from a balanced hanger diagram
+	// Question: Find the value of d from a balanced hanger
 	// Widget key: image_1
-	test("hanger-diagram - [x9834712212681367] Find the value of d from a balanced hanger diagram", async () => {
+	test("hanger-diagram - [x9834712212681367] Find the value of d from a balanced hanger", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 119,
+		  "width": 400,
+		  "height": 320,
 		  "leftSide": [
 		    {
 		      "label": 6,
@@ -182,14 +182,14 @@ describe("hangerDiagram widget tests", () => {
 		    {
 		      "label": "d",
 		      "shape": "hexagon",
-		      "backgroundColor": "#E6FFEE"
+		      "backgroundColor": "#FFF5CC"
 		    }
 		  ],
 		  "rightSide": [
 		    {
 		      "label": 21,
 		      "shape": "square",
-		      "backgroundColor": "#F4F8FF"
+		      "backgroundColor": "#E6FFEE"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -210,15 +210,15 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe0956d0ca8d9bdeb
-	// Question: Solve for j from a balanced hanger
+	// Question: Find the value of j from a balanced hanger
 	// Widget key: image_1
-	test("hanger-diagram - [xe0956d0ca8d9bdeb] Solve for j from a balanced hanger", async () => {
+	test("hanger-diagram - [xe0956d0ca8d9bdeb] Find the value of j from a balanced hanger", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 119,
+		  "width": 400,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": 5,
@@ -228,7 +228,7 @@ describe("hangerDiagram widget tests", () => {
 		    {
 		      "label": "j",
 		      "shape": "hexagon",
-		      "backgroundColor": "#FFE6F0"
+		      "backgroundColor": "#E6FFEE"
 		    }
 		  ],
 		  "rightSide": [
@@ -263,20 +263,20 @@ describe("hangerDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 110,
+		  "width": 400,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": 16,
 		      "shape": "square",
-		      "backgroundColor": "#F4F8FF"
+		      "backgroundColor": "#FFF5CC"
 		    }
 		  ],
 		  "rightSide": [
 		    {
 		      "label": "n",
 		      "shape": "triangle",
-		      "backgroundColor": "#E6FFEE"
+		      "backgroundColor": "#F4F8FF"
 		    },
 		    {
 		      "label": 10,
@@ -309,33 +309,33 @@ describe("hangerDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 183,
+		  "width": 400,
+		  "height": 320,
 		  "leftSide": [
 		    {
 		      "label": "u",
 		      "shape": "hexagon",
-		      "backgroundColor": "#FFE6E6"
+		      "backgroundColor": "#FFF5CC"
 		    },
 		    {
 		      "label": "u",
 		      "shape": "hexagon",
-		      "backgroundColor": "#FFE6E6"
+		      "backgroundColor": "#FFF5CC"
 		    },
 		    {
 		      "label": "u",
 		      "shape": "hexagon",
-		      "backgroundColor": "#FFE6E6"
+		      "backgroundColor": "#FFF5CC"
 		    },
 		    {
 		      "label": "u",
 		      "shape": "hexagon",
-		      "backgroundColor": "#FFE6E6"
+		      "backgroundColor": "#FFF5CC"
 		    },
 		    {
 		      "label": "u",
 		      "shape": "hexagon",
-		      "backgroundColor": "#FFE6E6"
+		      "backgroundColor": "#FFF5CC"
 		    }
 		  ],
 		  "rightSide": [
@@ -363,15 +363,15 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb137180f3ee3aff2
-	// Question: Find the value of r from a balanced hanger
+	// Question: Solve for r using a balanced hanger
 	// Widget key: image_1
-	test("hanger-diagram - [xb137180f3ee3aff2] Find the value of r from a balanced hanger", async () => {
+	test("hanger-diagram - [xb137180f3ee3aff2] Solve for r using a balanced hanger", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 156,
+		  "width": 400,
+		  "height": 340,
 		  "leftSide": [
 		    {
 		      "label": 32,
@@ -426,30 +426,30 @@ describe("hangerDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 500,
-		  "height": 250,
+		  "width": 400,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": 27,
 		      "shape": "square",
-		      "backgroundColor": "#FFF5CC"
+		      "backgroundColor": "#E6F0FF"
 		    }
 		  ],
 		  "rightSide": [
 		    {
 		      "label": "v",
 		      "shape": "circle",
-		      "backgroundColor": "#E6FFEE"
+		      "backgroundColor": "#FFF5CC"
 		    },
 		    {
 		      "label": "v",
 		      "shape": "circle",
-		      "backgroundColor": "#E6FFEE"
+		      "backgroundColor": "#FFF5CC"
 		    },
 		    {
 		      "label": "v",
 		      "shape": "circle",
-		      "backgroundColor": "#E6FFEE"
+		      "backgroundColor": "#FFF5CC"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -470,15 +470,15 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe7c1c0f9f15d2432
-	// Question: Find the value of t from a balanced hanger
+	// Question: Solve for t from a balanced hanger
 	// Widget key: image_1
-	test("hanger-diagram - [xe7c1c0f9f15d2432] Find the value of t from a balanced hanger", async () => {
+	test("hanger-diagram - [xe7c1c0f9f15d2432] Solve for t from a balanced hanger", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 205,
+		  "width": 400,
+		  "height": 350,
 		  "leftSide": [
 		    {
 		      "label": "t",
@@ -541,15 +541,15 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbb6d5288507ae03f
-	// Question: Solve for c using a balanced hanger
+	// Question: Solve for c from a balanced hanger
 	// Widget key: image_1
-	test("hanger-diagram - [xbb6d5288507ae03f] Solve for c using a balanced hanger", async () => {
+	test("hanger-diagram - [xbb6d5288507ae03f] Solve for c from a balanced hanger", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 187,
+		  "width": 400,
+		  "height": 320,
 		  "leftSide": [
 		    {
 		      "label": 24,
@@ -561,32 +561,32 @@ describe("hangerDiagram widget tests", () => {
 		    {
 		      "label": "c",
 		      "shape": "circle",
-		      "backgroundColor": "#E6FFEE"
+		      "backgroundColor": "#F4F8FF"
 		    },
 		    {
 		      "label": "c",
 		      "shape": "circle",
-		      "backgroundColor": "#E6FFEE"
+		      "backgroundColor": "#F4F8FF"
 		    },
 		    {
 		      "label": "c",
 		      "shape": "circle",
-		      "backgroundColor": "#E6FFEE"
+		      "backgroundColor": "#F4F8FF"
 		    },
 		    {
 		      "label": "c",
 		      "shape": "circle",
-		      "backgroundColor": "#E6FFEE"
+		      "backgroundColor": "#F4F8FF"
 		    },
 		    {
 		      "label": "c",
 		      "shape": "circle",
-		      "backgroundColor": "#E6FFEE"
+		      "backgroundColor": "#F4F8FF"
 		    },
 		    {
 		      "label": "c",
 		      "shape": "circle",
-		      "backgroundColor": "#E6FFEE"
+		      "backgroundColor": "#F4F8FF"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -607,15 +607,15 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5ff4153a982797c6
-	// Question: Solve for a from a balanced hanger
+	// Question: Find the value of a from a balanced hanger
 	// Widget key: image_1
-	test("hanger-diagram - [x5ff4153a982797c6] Solve for a from a balanced hanger", async () => {
+	test("hanger-diagram - [x5ff4153a982797c6] Find the value of a from a balanced hanger", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 110,
+		  "width": 400,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": "a",
@@ -632,7 +632,7 @@ describe("hangerDiagram widget tests", () => {
 		    {
 		      "label": 36,
 		      "shape": "square",
-		      "backgroundColor": "#FFF5CC"
+		      "backgroundColor": "#E6FFEE"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -660,8 +660,8 @@ describe("hangerDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 183.333,
+		  "width": 400,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": 45,
@@ -673,17 +673,17 @@ describe("hangerDiagram widget tests", () => {
 		    {
 		      "label": "z",
 		      "shape": "triangle",
-		      "backgroundColor": "#FFF5CC"
+		      "backgroundColor": "#FFECE6"
 		    },
 		    {
 		      "label": "z",
 		      "shape": "triangle",
-		      "backgroundColor": "#FFF5CC"
+		      "backgroundColor": "#FFECE6"
 		    },
 		    {
 		      "label": "z",
 		      "shape": "triangle",
-		      "backgroundColor": "#FFF5CC"
+		      "backgroundColor": "#FFECE6"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -704,15 +704,15 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2c28c2860a5feef7
-	// Question: Write an equation from a balanced hanger diagram
+	// Question: Write an equation from a balanced hanger
 	// Widget key: image_1
-	test("hanger-diagram - [x2c28c2860a5feef7] Write an equation from a balanced hanger diagram", async () => {
+	test("hanger-diagram - [x2c28c2860a5feef7] Write an equation from a balanced hanger", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 320,
-		  "height": 187,
+		  "width": 400,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": "1/5",
@@ -722,14 +722,14 @@ describe("hangerDiagram widget tests", () => {
 		    {
 		      "label": "z",
 		      "shape": "triangle",
-		      "backgroundColor": "#E6FFEE"
+		      "backgroundColor": "#FFF5CC"
 		    }
 		  ],
 		  "rightSide": [
 		    {
 		      "label": "3/5",
 		      "shape": "square",
-		      "backgroundColor": "#F4F8FF"
+		      "backgroundColor": "#E6FFEE"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -757,23 +757,23 @@ describe("hangerDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": "p",
 		      "shape": "hexagon",
-		      "backgroundColor": "#F4F0FF"
+		      "backgroundColor": "#F4F8FF"
 		    },
 		    {
 		      "label": "p",
 		      "shape": "hexagon",
-		      "backgroundColor": "#F4F0FF"
+		      "backgroundColor": "#F4F8FF"
 		    },
 		    {
 		      "label": "p",
 		      "shape": "hexagon",
-		      "backgroundColor": "#F4F0FF"
+		      "backgroundColor": "#F4F8FF"
 		    }
 		  ],
 		  "rightSide": [
@@ -801,15 +801,15 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x05bbc87fe429e2e9
-	// Question: Write an equation from a balanced hanger diagram
+	// Question: Write an equation from a balanced hanger
 	// Widget key: image_1
-	test("hanger-diagram - [x05bbc87fe429e2e9] Write an equation from a balanced hanger diagram", async () => {
+	test("hanger-diagram - [x05bbc87fe429e2e9] Write an equation from a balanced hanger", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
 		  "width": 320,
-		  "height": 267,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": 1,
@@ -882,15 +882,15 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x506aef4743280d14
-	// Question: Select an equation from a balanced hanger and find m
+	// Question: Balanced hanger: Select an equation and solve for m
 	// Widget key: image_1
-	test("hanger-diagram - [x506aef4743280d14] Select an equation from a balanced hanger and find m", async () => {
+	test("hanger-diagram - [x506aef4743280d14] Balanced hanger: Select an equation and solve for m", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 203,
-		  "height": 220,
+		  "width": 400,
+		  "height": 320,
 		  "leftSide": [
 		    {
 		      "label": "m",
@@ -950,25 +950,25 @@ describe("hangerDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 110,
+		  "width": 400,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": "k",
 		      "shape": "hexagon",
-		      "backgroundColor": "#F4F0FF"
+		      "backgroundColor": "#F4F8FF"
 		    },
 		    {
 		      "label": "k",
 		      "shape": "hexagon",
-		      "backgroundColor": "#F4F0FF"
+		      "backgroundColor": "#F4F8FF"
 		    }
 		  ],
 		  "rightSide": [
 		    {
 		      "label": 18,
 		      "shape": "square",
-		      "backgroundColor": "#F4F8FF"
+		      "backgroundColor": "#FFF5CC"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -989,15 +989,15 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbed56df7026ec360
-	// Question: Select an equation from a balanced hanger and find b
+	// Question: Balanced hanger: select an equation and solve for b
 	// Widget key: image_1
-	test("hanger-diagram - [xbed56df7026ec360] Select an equation from a balanced hanger and find b", async () => {
+	test("hanger-diagram - [xbed56df7026ec360] Balanced hanger: select an equation and solve for b", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 110,
+		  "width": 400,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": 27,
@@ -1009,7 +1009,7 @@ describe("hangerDiagram widget tests", () => {
 		    {
 		      "label": "b",
 		      "shape": "circle",
-		      "backgroundColor": "#FFF5CC"
+		      "backgroundColor": "#FFEFD5"
 		    },
 		    {
 		      "label": 9,
@@ -1035,20 +1035,20 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x19dbc69eea8f8d47
-	// Question: Select an equation from a balanced hanger and solve for h
+	// Question: Balanced hanger: choose an equation and solve for h
 	// Widget key: image_1
-	test("hanger-diagram - [x19dbc69eea8f8d47] Select an equation from a balanced hanger and solve for h", async () => {
+	test("hanger-diagram - [x19dbc69eea8f8d47] Balanced hanger: choose an equation and solve for h", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 128.333,
+		  "width": 400,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": "h",
 		      "shape": "hexagon",
-		      "backgroundColor": "#F4F8FF"
+		      "backgroundColor": "#F4F0FF"
 		    },
 		    {
 		      "label": 7,
@@ -1081,15 +1081,15 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3f4289200e75bd94
-	// Question: Write an equation from a balanced hanger
+	// Question: Write an equation for a balanced hanger
 	// Widget key: image_1
-	test("hanger-diagram - [x3f4289200e75bd94] Write an equation from a balanced hanger", async () => {
+	test("hanger-diagram - [x3f4289200e75bd94] Write an equation for a balanced hanger", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "leftSide": [
 		    {
 		      "label": "x",
@@ -1137,20 +1137,20 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xffb04c29985491e2
-	// Question: Select an equation from a balanced hanger and find the value of c
+	// Question: Equation from a balanced hanger and find the value
 	// Widget key: image_1
-	test("hanger-diagram - [xffb04c29985491e2] Select an equation from a balanced hanger and find the value of c", async () => {
+	test("hanger-diagram - [xffb04c29985491e2] Equation from a balanced hanger and find the value", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 220,
-		  "height": 110,
+		  "width": 400,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": 9,
 		      "shape": "square",
-		      "backgroundColor": "#F4F8FF"
+		      "backgroundColor": "#FFF5CC"
 		    }
 		  ],
 		  "rightSide": [
@@ -1190,8 +1190,8 @@ describe("hangerDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 300,
 		  "leftSide": [
 		    {
 		      "label": 9.1,
@@ -1208,7 +1208,7 @@ describe("hangerDiagram widget tests", () => {
 		    {
 		      "label": 4,
 		      "shape": "square",
-		      "backgroundColor": "#F4F8FF"
+		      "backgroundColor": "#FFF5CC"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -1229,15 +1229,15 @@ describe("hangerDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0f57b9ee12b30bdd
-	// Question: Write an equation to represent a balanced hanger
+	// Question: Write an equation from a balanced hanger
 	// Widget key: image_1
-	test("hanger-diagram - [x0f57b9ee12b30bdd] Write an equation to represent a balanced hanger", async () => {
+	test("hanger-diagram - [x0f57b9ee12b30bdd] Write an equation from a balanced hanger", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "hangerDiagram",
 		  "width": 320,
-		  "height": 240,
+		  "height": 320,
 		  "leftSide": [
 		    {
 		      "label": 12,

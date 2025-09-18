@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.963Z
+// Generated on: 2025-09-18T05:17:02.162Z
 // Widget Type: dotPlot
 // Source: Real questions from database
 //
@@ -26,9 +26,9 @@ import * as logger from "@superbuilders/slog"
 
 describe("dotPlot widget tests", () => {
 	// Extracted from question: xbb6a2bdd4885505a
-	// Question: Compare dot plot and box plot: median and mode
+	// Question: Median and mode: dot plot vs. box plot
 	// Widget key: image_1
-	test("dot-plot - [xbb6a2bdd4885505a] Compare dot plot and box plot: median and mode", async () => {
+	test("dot-plot - [xbb6a2bdd4885505a] Median and mode: dot plot vs. box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -81,9 +81,9 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 500,
-		  "height": 250,
-		  "dotColor": "#0c7f99",
+		  "width": 400,
+		  "height": 300,
+		  "dotColor": "#0C7F99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -103,9 +103,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xe2f8841804b6fb91
-	// Question: Dot plot vs. box plot: quartiles and counts
+	// Question: Dot plot vs. box plot: quartile visibility and counting
 	// Widget key: image_1
-	test("dot-plot - [xe2f8841804b6fb91] Dot plot vs. box plot: quartiles and counts", async () => {
+	test("dot-plot - [xe2f8841804b6fb91] Dot plot vs. box plot: quartile visibility and counting", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -170,9 +170,9 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 320,
-		  "height": 189,
-		  "dotColor": "#0C7F99",
+		  "width": 400,
+		  "height": 350,
+		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -192,9 +192,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x8c717a352b878dc6
-	// Question: Compare features of a histogram and a dot plot
+	// Question: Compare information from a histogram versus a dot plot
 	// Widget key: image_2
-	test("dot-plot - [x8c717a352b878dc6] Compare features of a histogram and a dot plot", async () => {
+	test("dot-plot - [x8c717a352b878dc6] Compare information from a histogram versus a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -242,13 +242,13 @@ describe("dotPlot widget tests", () => {
 		      "value": 16
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 22
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 320,
-		  "height": 178,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -269,9 +269,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x4edfab7c7aae9b1c
-	// Question: Choose the appropriate display: histogram vs. dot plot
+	// Question: Compare information in a histogram and a dot plot
 	// Widget key: image_2
-	test("dot-plot - [x4edfab7c7aae9b1c] Choose the appropriate display: histogram vs. dot plot", async () => {
+	test("dot-plot - [x4edfab7c7aae9b1c] Compare information in a histogram and a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -324,8 +324,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 320,
-		  "height": 178,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -346,9 +346,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xbab2bf42865b4f25
-	// Question: Choose the appropriate display: dot plot vs. box plot
+	// Question: Compare dot plot and box plot
 	// Widget key: image_1
-	test("dot-plot - [xbab2bf42865b4f25] Choose the appropriate display: dot plot vs. box plot", async () => {
+	test("dot-plot - [xbab2bf42865b4f25] Compare dot plot and box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -413,8 +413,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 320,
-		  "height": 189,
+		  "width": 400,
+		  "height": 340,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -435,9 +435,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x532581f0c3a0f52e
-	// Question: Dot plot vs. box plot: interpret features
+	// Question: Dot plot versus box plot: identifying display features
 	// Widget key: image_1
-	test("dot-plot - [x532581f0c3a0f52e] Dot plot vs. box plot: interpret features", async () => {
+	test("dot-plot - [x532581f0c3a0f52e] Dot plot versus box plot: identifying display features", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -490,8 +490,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 246,
-		  "height": 135,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -512,9 +512,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9d0637b3f5e3152e
-	// Question: Interpret information from dot plots of 40-yard dash times
+	// Question: Interpret dot plots of 40-yard dash times
 	// Widget key: image_1
-	test("dot-plot - [x9d0637b3f5e3152e] Interpret information from dot plots of 40-yard dash times", async () => {
+	test("dot-plot - [x9d0637b3f5e3152e] Interpret dot plots of 40-yard dash times", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -583,8 +583,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 479,
-		  "height": 123,
+		  "width": 480,
+		  "height": 360,
 		  "dotColor": "#4472C4",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -605,9 +605,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x632572377039f094
-	// Question: Interpret dot plots for Olympic shot put qualifiers
+	// Question: Interpret dot plots: Olympic vs U.S. qualifiers
 	// Widget key: image_1
-	test("dot-plot - [x632572377039f094] Interpret dot plots for Olympic shot put qualifiers", async () => {
+	test("dot-plot - [x632572377039f094] Interpret dot plots: Olympic vs U.S. qualifiers", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -684,8 +684,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 600,
-		  "height": 280,
+		  "width": 480,
+		  "height": 360,
 		  "dotColor": "#4472C4",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -706,9 +706,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xb25e6358788dc517
-	// Question: Identify information from dot plots
-	// Widget key: image_1
-	test("dot-plot - [xb25e6358788dc517] Identify information from dot plots", async () => {
+	// Question: Interpreting swim times from dot plots
+	// Widget key: dot_plots_image
+	test("dot-plot - [xb25e6358788dc517] Interpreting swim times from dot plots", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -766,9 +766,9 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 183,
+		  "height": 360,
 		  "dotColor": "#1E90FF",
-		  "dotRadius": 5
+		  "dotRadius": 4
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -787,16 +787,16 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xc9a596325615e289
-	// Question: Interpret information from dot plots of swim times
+	// Question: Interpret dot plots of Olympic backstroke times
 	// Widget key: image_1
-	test("dot-plot - [xc9a596325615e289] Interpret information from dot plots of swim times", async () => {
+	test("dot-plot - [xc9a596325615e289] Interpret dot plots of Olympic backstroke times", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 58,
 		    "min": 56,
-		    "label": "Time, in seconds",
+		    "label": "Time (seconds)",
 		    "tickInterval": 0.1
 		  },
 		  "data": [
@@ -851,7 +851,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 478,
-		  "height": 153,
+		  "height": 320,
 		  "dotColor": "#4472C4",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -872,9 +872,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa4563b962a69b37e
-	// Question: Interpret dot plots: Olympic final vs. U.S. qualifiers
+	// Question: Interpret dot plots for 100-meter dash times
 	// Widget key: image_1
-	test("dot-plot - [xa4563b962a69b37e] Interpret dot plots: Olympic final vs. U.S. qualifiers", async () => {
+	test("dot-plot - [xa4563b962a69b37e] Interpret dot plots for 100-meter dash times", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -948,9 +948,180 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 240,
+		  "height": 320,
 		  "dotColor": "#4472C4",
 		  "dotRadius": 4
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for dotPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbaa89dd13d73c64b
+	// Question: Select the dot plot for alien toe lengths
+	// Widget key: dot_plot_choice_a
+	test("dot-plot - [xbaa89dd13d73c64b] Select the dot plot for alien toe lengths (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 19,
+		    "min": 15,
+		    "label": "Length of big toe (in centimeters)",
+		    "tickInterval": 1
+		  },
+		  "data": [
+		    {
+		      "count": 1,
+		      "value": 15
+		    },
+		    {
+		      "count": 3,
+		      "value": 16
+		    },
+		    {
+		      "count": 2,
+		      "value": 17
+		    },
+		    {
+		      "count": 1,
+		      "value": 18
+		    },
+		    {
+		      "count": 0,
+		      "value": 19
+		    }
+		  ],
+		  "type": "dotPlot",
+		  "width": 400,
+		  "height": 350,
+		  "dotColor": "#6495ED",
+		  "dotRadius": 5
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for dotPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbaa89dd13d73c64b
+	// Question: Select the dot plot for alien toe lengths
+	// Widget key: dot_plot_choice_b
+	test("dot-plot - [xbaa89dd13d73c64b] Select the dot plot for alien toe lengths (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 19,
+		    "min": 15,
+		    "label": "Length of big toe (in centimeters)",
+		    "tickInterval": 1
+		  },
+		  "data": [
+		    {
+		      "count": 0,
+		      "value": 15
+		    },
+		    {
+		      "count": 0,
+		      "value": 16
+		    },
+		    {
+		      "count": 2,
+		      "value": 17
+		    },
+		    {
+		      "count": 0,
+		      "value": 18
+		    },
+		    {
+		      "count": 0,
+		      "value": 19
+		    }
+		  ],
+		  "type": "dotPlot",
+		  "width": 400,
+		  "height": 350,
+		  "dotColor": "#6495ED",
+		  "dotRadius": 5
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for dotPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbaa89dd13d73c64b
+	// Question: Select the dot plot for alien toe lengths
+	// Widget key: dot_plot_choice_c
+	test("dot-plot - [xbaa89dd13d73c64b] Select the dot plot for alien toe lengths (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 19,
+		    "min": 15,
+		    "label": "Length of big toe (in centimeters)",
+		    "tickInterval": 1
+		  },
+		  "data": [
+		    {
+		      "count": 1,
+		      "value": 15
+		    },
+		    {
+		      "count": 2,
+		      "value": 16
+		    },
+		    {
+		      "count": 3,
+		      "value": 17
+		    },
+		    {
+		      "count": 1,
+		      "value": 18
+		    },
+		    {
+		      "count": 0,
+		      "value": 19
+		    }
+		  ],
+		  "type": "dotPlot",
+		  "width": 400,
+		  "height": 350,
+		  "dotColor": "#6495ED",
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1004,10 +1175,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 333,
-		  "height": 160,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1044,27 +1215,27 @@ describe("dotPlot widget tests", () => {
 		      "value": 0
 		    },
 		    {
-		      "count": 4,
+		      "count": 3,
 		      "value": 1
 		    },
 		    {
-		      "count": 2,
+		      "count": 4,
 		      "value": 2
 		    },
 		    {
-		      "count": 3,
+		      "count": 0,
 		      "value": 3
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 4
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 333,
-		  "height": 160,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1101,15 +1272,15 @@ describe("dotPlot widget tests", () => {
 		      "value": 0
 		    },
 		    {
-		      "count": 2,
+		      "count": 4,
 		      "value": 1
 		    },
 		    {
-		      "count": 5,
+		      "count": 2,
 		      "value": 2
 		    },
 		    {
-		      "count": 0,
+		      "count": 1,
 		      "value": 3
 		    },
 		    {
@@ -1118,10 +1289,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 333,
-		  "height": 160,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1176,7 +1347,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 143,
+		  "height": 300,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -1233,7 +1404,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 143,
+		  "height": 300,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -1290,7 +1461,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 143,
+		  "height": 300,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -1342,10 +1513,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 128,
+		  "width": 360,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1378,11 +1549,11 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 53
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 54
 		    },
 		    {
@@ -1390,15 +1561,15 @@ describe("dotPlot widget tests", () => {
 		      "value": 55
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 56
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 128,
+		  "width": 360,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1435,7 +1606,7 @@ describe("dotPlot widget tests", () => {
 		      "value": 53
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 54
 		    },
 		    {
@@ -1443,15 +1614,15 @@ describe("dotPlot widget tests", () => {
 		      "value": 55
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 56
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 128,
+		  "width": 360,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1470,9 +1641,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xaceefb9b9e15bd89
-	// Question: Create a dot plot from season losses
+	// Question: Create a dot plot from data
 	// Widget key: dot_plot_choice_a
-	test("dot-plot - [xaceefb9b9e15bd89] Create a dot plot from season losses (1)", async () => {
+	test("dot-plot - [xaceefb9b9e15bd89] Create a dot plot from data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1501,10 +1672,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 128,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1523,9 +1694,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xaceefb9b9e15bd89
-	// Question: Create a dot plot from season losses
+	// Question: Create a dot plot from data
 	// Widget key: dot_plot_choice_b
-	test("dot-plot - [xaceefb9b9e15bd89] Create a dot plot from season losses (2)", async () => {
+	test("dot-plot - [xaceefb9b9e15bd89] Create a dot plot from data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1541,7 +1712,7 @@ describe("dotPlot widget tests", () => {
 		      "value": 9
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 10
 		    },
 		    {
@@ -1549,15 +1720,15 @@ describe("dotPlot widget tests", () => {
 		      "value": 11
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 12
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 128,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1576,9 +1747,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xaceefb9b9e15bd89
-	// Question: Create a dot plot from season losses
+	// Question: Create a dot plot from data
 	// Widget key: dot_plot_choice_c
-	test("dot-plot - [xaceefb9b9e15bd89] Create a dot plot from season losses (3)", async () => {
+	test("dot-plot - [xaceefb9b9e15bd89] Create a dot plot from data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1594,11 +1765,11 @@ describe("dotPlot widget tests", () => {
 		      "value": 9
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 10
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 11
 		    },
 		    {
@@ -1607,181 +1778,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 128,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#6495ED",
-		  "dotRadius": 4
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for dotPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbaa89dd13d73c64b
-	// Question: Select the dot plot for toe lengths
-	// Widget key: dot_plot_choice_a
-	test("dot-plot - [xbaa89dd13d73c64b] Select the dot plot for toe lengths (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "axis": {
-		    "max": 19,
-		    "min": 15,
-		    "label": "Length of big toe (in centimeters)",
-		    "tickInterval": 1
-		  },
-		  "data": [
-		    {
-		      "count": 1,
-		      "value": 15
-		    },
-		    {
-		      "count": 3,
-		      "value": 16
-		    },
-		    {
-		      "count": 2,
-		      "value": 17
-		    },
-		    {
-		      "count": 1,
-		      "value": 18
-		    },
-		    {
-		      "count": 0,
-		      "value": 19
-		    }
-		  ],
-		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 150,
-		  "dotColor": "#6495ED",
-		  "dotRadius": 4
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for dotPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbaa89dd13d73c64b
-	// Question: Select the dot plot for toe lengths
-	// Widget key: dot_plot_choice_b
-	test("dot-plot - [xbaa89dd13d73c64b] Select the dot plot for toe lengths (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "axis": {
-		    "max": 19,
-		    "min": 15,
-		    "label": "Length of big toe (in centimeters)",
-		    "tickInterval": 1
-		  },
-		  "data": [
-		    {
-		      "count": 1,
-		      "value": 15
-		    },
-		    {
-		      "count": 2,
-		      "value": 16
-		    },
-		    {
-		      "count": 2,
-		      "value": 17
-		    },
-		    {
-		      "count": 2,
-		      "value": 18
-		    },
-		    {
-		      "count": 0,
-		      "value": 19
-		    }
-		  ],
-		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 150,
-		  "dotColor": "#6495ED",
-		  "dotRadius": 4
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for dotPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbaa89dd13d73c64b
-	// Question: Select the dot plot for toe lengths
-	// Widget key: dot_plot_choice_c
-	test("dot-plot - [xbaa89dd13d73c64b] Select the dot plot for toe lengths (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "axis": {
-		    "max": 19,
-		    "min": 15,
-		    "label": "Length of big toe (in centimeters)",
-		    "tickInterval": 1
-		  },
-		  "data": [
-		    {
-		      "count": 1,
-		      "value": 15
-		    },
-		    {
-		      "count": 2,
-		      "value": 16
-		    },
-		    {
-		      "count": 3,
-		      "value": 17
-		    },
-		    {
-		      "count": 1,
-		      "value": 18
-		    },
-		    {
-		      "count": 0,
-		      "value": 19
-		    }
-		  ],
-		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 150,
-		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1800,9 +1800,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xce50411d3ccce4b0
-	// Question: Select the correct dot plot for cars sold
+	// Question: Create a dot plot from monthly car sales
 	// Widget key: dot_plot_choice_a
-	test("dot-plot - [xce50411d3ccce4b0] Select the correct dot plot for cars sold (1)", async () => {
+	test("dot-plot - [xce50411d3ccce4b0] Create a dot plot from monthly car sales (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1827,10 +1827,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 143,
-		  "dotColor": "#6495ed",
-		  "dotRadius": 4
+		  "width": 400,
+		  "height": 320,
+		  "dotColor": "#6495ED",
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1849,9 +1849,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xce50411d3ccce4b0
-	// Question: Select the correct dot plot for cars sold
+	// Question: Create a dot plot from monthly car sales
 	// Widget key: dot_plot_choice_b
-	test("dot-plot - [xce50411d3ccce4b0] Select the correct dot plot for cars sold (2)", async () => {
+	test("dot-plot - [xce50411d3ccce4b0] Create a dot plot from monthly car sales (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1863,15 +1863,23 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
+		      "count": 3,
+		      "value": 20
+		    },
+		    {
+		      "count": 2,
+		      "value": 21
+		    },
+		    {
 		      "count": 1,
 		      "value": 23
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 333,
-		  "height": 116,
-		  "dotColor": "#6495ed",
-		  "dotRadius": 4
+		  "width": 400,
+		  "height": 320,
+		  "dotColor": "#6495ED",
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1890,9 +1898,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xce50411d3ccce4b0
-	// Question: Select the correct dot plot for cars sold
+	// Question: Create a dot plot from monthly car sales
 	// Widget key: dot_plot_choice_c
-	test("dot-plot - [xce50411d3ccce4b0] Select the correct dot plot for cars sold (3)", async () => {
+	test("dot-plot - [xce50411d3ccce4b0] Create a dot plot from monthly car sales (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1921,10 +1929,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 143,
-		  "dotColor": "#6495ed",
-		  "dotRadius": 4
+		  "width": 400,
+		  "height": 320,
+		  "dotColor": "#6495ED",
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1974,10 +1982,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 142.5,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2010,15 +2018,27 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
+		      "count": 1,
+		      "value": 8
+		    },
+		    {
 		      "count": 2,
+		      "value": 9
+		    },
+		    {
+		      "count": 3,
 		      "value": 10
+		    },
+		    {
+		      "count": 1,
+		      "value": 11
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 127.5,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2055,23 +2075,23 @@ describe("dotPlot widget tests", () => {
 		      "value": 8
 		    },
 		    {
-		      "count": 2,
+		      "count": 3,
 		      "value": 9
 		    },
 		    {
-		      "count": 3,
+		      "count": 1,
 		      "value": 10
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 11
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 142.5,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2125,10 +2145,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 143,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2161,11 +2181,11 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
-		      "count": 1,
+		      "count": 0,
 		      "value": 0
 		    },
 		    {
-		      "count": 0,
+		      "count": 1,
 		      "value": 1
 		    },
 		    {
@@ -2173,19 +2193,19 @@ describe("dotPlot widget tests", () => {
 		      "value": 2
 		    },
 		    {
-		      "count": 1,
+		      "count": 3,
 		      "value": 3
 		    },
 		    {
-		      "count": 3,
+		      "count": 1,
 		      "value": 4
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 143,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2239,10 +2259,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 143,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2261,9 +2281,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x1b4bcd98cce06119
-	// Question: Create a dot plot from a frequency table
+	// Question: Create a dot plot from fines data
 	// Widget key: dot_plot_choice_a
-	test("dot-plot - [x1b4bcd98cce06119] Create a dot plot from a frequency table (1)", async () => {
+	test("dot-plot - [x1b4bcd98cce06119] Create a dot plot from fines data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2274,6 +2294,10 @@ describe("dotPlot widget tests", () => {
 		    "tickInterval": 1
 		  },
 		  "data": [
+		    {
+		      "count": 0,
+		      "value": 0
+		    },
 		    {
 		      "count": 1,
 		      "value": 1
@@ -2285,13 +2309,17 @@ describe("dotPlot widget tests", () => {
 		    {
 		      "count": 1,
 		      "value": 3
+		    },
+		    {
+		      "count": 0,
+		      "value": 4
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 158,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2310,9 +2338,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x1b4bcd98cce06119
-	// Question: Create a dot plot from a frequency table
+	// Question: Create a dot plot from fines data
 	// Widget key: dot_plot_choice_b
-	test("dot-plot - [x1b4bcd98cce06119] Create a dot plot from a frequency table (2)", async () => {
+	test("dot-plot - [x1b4bcd98cce06119] Create a dot plot from fines data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2324,6 +2352,10 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
+		      "count": 0,
+		      "value": 0
+		    },
+		    {
 		      "count": 1,
 		      "value": 1
 		    },
@@ -2332,15 +2364,19 @@ describe("dotPlot widget tests", () => {
 		      "value": 2
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 3
+		    },
+		    {
+		      "count": 0,
+		      "value": 4
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 158,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2359,9 +2395,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x1b4bcd98cce06119
-	// Question: Create a dot plot from a frequency table
+	// Question: Create a dot plot from fines data
 	// Widget key: dot_plot_choice_c
-	test("dot-plot - [x1b4bcd98cce06119] Create a dot plot from a frequency table (3)", async () => {
+	test("dot-plot - [x1b4bcd98cce06119] Create a dot plot from fines data (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2373,23 +2409,31 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
-		      "count": 1,
-		      "value": 1
+		      "count": 0,
+		      "value": 0
 		    },
 		    {
 		      "count": 2,
-		      "value": 2
+		      "value": 1
 		    },
 		    {
 		      "count": 3,
+		      "value": 2
+		    },
+		    {
+		      "count": 1,
 		      "value": 3
+		    },
+		    {
+		      "count": 0,
+		      "value": 4
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 158,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2439,10 +2483,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 130,
+		  "width": 360,
+		  "height": 300,
 		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2479,7 +2523,7 @@ describe("dotPlot widget tests", () => {
 		      "value": 3
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 4
 		    },
 		    {
@@ -2487,15 +2531,15 @@ describe("dotPlot widget tests", () => {
 		      "value": 5
 		    },
 		    {
-		      "count": 2,
+		      "count": 3,
 		      "value": 6
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 130,
+		  "width": 360,
+		  "height": 300,
 		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2528,27 +2572,27 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
-		      "count": 1,
+		      "count": 0,
 		      "value": 3
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 4
 		    },
 		    {
-		      "count": 3,
+		      "count": 2,
 		      "value": 5
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 6
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 130,
+		  "width": 360,
+		  "height": 300,
 		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2567,9 +2611,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xad94c69805ed3988
-	// Question: Create a dot plot from data about siblings
+	// Question: Create a dot plot from data
 	// Widget key: dot_plot_choice_a
-	test("dot-plot - [xad94c69805ed3988] Create a dot plot from data about siblings (1)", async () => {
+	test("dot-plot - [xad94c69805ed3988] Create a dot plot from data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2602,10 +2646,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2624,9 +2668,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xad94c69805ed3988
-	// Question: Create a dot plot from data about siblings
+	// Question: Create a dot plot from data
 	// Widget key: dot_plot_choice_b
-	test("dot-plot - [xad94c69805ed3988] Create a dot plot from data about siblings (2)", async () => {
+	test("dot-plot - [xad94c69805ed3988] Create a dot plot from data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2659,10 +2703,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2681,9 +2725,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xad94c69805ed3988
-	// Question: Create a dot plot from data about siblings
+	// Question: Create a dot plot from data
 	// Widget key: dot_plot_choice_c
-	test("dot-plot - [xad94c69805ed3988] Create a dot plot from data about siblings (3)", async () => {
+	test("dot-plot - [xad94c69805ed3988] Create a dot plot from data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2696,24 +2740,85 @@ describe("dotPlot widget tests", () => {
 		  "data": [
 		    {
 		      "count": 1,
+		      "value": 0
+		    },
+		    {
+		      "count": 1,
 		      "value": 1
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 2
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 3
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 4
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
+		  "dotColor": "#6495ED",
+		  "dotRadius": 5
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for dotPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf3f9cc7c1aaab1e4
+	// Question: Create a dot plot from Mandy's push-up data
+	// Widget key: dot_plot_choice_a
+	test("dot-plot - [xf3f9cc7c1aaab1e4] Create a dot plot from Mandy's push-up data (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 35,
+		    "min": 31,
+		    "label": "Number of push-ups",
+		    "tickInterval": 1
+		  },
+		  "data": [
+		    {
+		      "count": 1,
+		      "value": 31
+		    },
+		    {
+		      "count": 1,
+		      "value": 32
+		    },
+		    {
+		      "count": 0,
+		      "value": 33
+		    },
+		    {
+		      "count": 1,
+		      "value": 34
+		    },
+		    {
+		      "count": 4,
+		      "value": 35
+		    }
+		  ],
+		  "type": "dotPlot",
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -2734,66 +2839,66 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf3f9cc7c1aaab1e4
-	// Question: Create a dot plot from data about push-ups
-	// Widget key: dot_plot_choice_a
-	test("dot-plot - [xf3f9cc7c1aaab1e4] Create a dot plot from data about push-ups (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "axis": {
-		    "max": 35,
-		    "min": 31,
-		    "label": "Number of push-ups",
-		    "tickInterval": 1
-		  },
-		  "data": [
-		    {
-		      "count": 1,
-		      "value": 31
-		    },
-		    {
-		      "count": 1,
-		      "value": 32
-		    },
-		    {
-		      "count": 0,
-		      "value": 33
-		    },
-		    {
-		      "count": 1,
-		      "value": 34
-		    },
-		    {
-		      "count": 4,
-		      "value": 35
-		    }
-		  ],
-		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 158,
-		  "dotColor": "#6495ed",
-		  "dotRadius": 4
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for dotPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf3f9cc7c1aaab1e4
-	// Question: Create a dot plot from data about push-ups
+	// Question: Create a dot plot from Mandy's push-up data
 	// Widget key: dot_plot_choice_b
-	test("dot-plot - [xf3f9cc7c1aaab1e4] Create a dot plot from data about push-ups (2)", async () => {
+	test("dot-plot - [xf3f9cc7c1aaab1e4] Create a dot plot from Mandy's push-up data (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 35,
+		    "min": 31,
+		    "label": "Number of push-ups",
+		    "tickInterval": 1
+		  },
+		  "data": [
+		    {
+		      "count": 0,
+		      "value": 31
+		    },
+		    {
+		      "count": 0,
+		      "value": 32
+		    },
+		    {
+		      "count": 0,
+		      "value": 33
+		    },
+		    {
+		      "count": 0,
+		      "value": 34
+		    },
+		    {
+		      "count": 4,
+		      "value": 35
+		    }
+		  ],
+		  "type": "dotPlot",
+		  "width": 400,
+		  "height": 320,
+		  "dotColor": "#6495ED",
+		  "dotRadius": 4
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for dotPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf3f9cc7c1aaab1e4
+	// Question: Create a dot plot from Mandy's push-up data
+	// Widget key: dot_plot_choice_c
+	test("dot-plot - [xf3f9cc7c1aaab1e4] Create a dot plot from Mandy's push-up data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2826,66 +2931,9 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 158,
-		  "dotColor": "#6495ed",
-		  "dotRadius": 4
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for dotPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf3f9cc7c1aaab1e4
-	// Question: Create a dot plot from data about push-ups
-	// Widget key: dot_plot_choice_c
-	test("dot-plot - [xf3f9cc7c1aaab1e4] Create a dot plot from data about push-ups (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "axis": {
-		    "max": 35,
-		    "min": 31,
-		    "label": "Number of push-ups",
-		    "tickInterval": 1
-		  },
-		  "data": [
-		    {
-		      "count": 1,
-		      "value": 31
-		    },
-		    {
-		      "count": 1,
-		      "value": 32
-		    },
-		    {
-		      "count": 0,
-		      "value": 33
-		    },
-		    {
-		      "count": 1,
-		      "value": 34
-		    },
-		    {
-		      "count": 3,
-		      "value": 35
-		    }
-		  ],
-		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 158,
-		  "dotColor": "#6495ed",
+		  "width": 400,
+		  "height": 320,
+		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -2905,9 +2953,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x718a3a6b130ad13b
-	// Question: Create a dot plot from a frequency table
+	// Question: Create a dot plot from a frequency table of dog walks
 	// Widget key: dot_plot_choice_a
-	test("dot-plot - [x718a3a6b130ad13b] Create a dot plot from a frequency table (2)", async () => {
+	test("dot-plot - [x718a3a6b130ad13b] Create a dot plot from a frequency table of dog walks (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2940,10 +2988,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 142.5,
-		  "dotColor": "#6495ed",
-		  "dotRadius": 4
+		  "width": 400,
+		  "height": 300,
+		  "dotColor": "#6495ED",
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2962,9 +3010,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x718a3a6b130ad13b
-	// Question: Create a dot plot from a frequency table
+	// Question: Create a dot plot from a frequency table of dog walks
 	// Widget key: dot_plot_choice_b
-	test("dot-plot - [x718a3a6b130ad13b] Create a dot plot from a frequency table (3)", async () => {
+	test("dot-plot - [x718a3a6b130ad13b] Create a dot plot from a frequency table of dog walks (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2980,15 +3028,15 @@ describe("dotPlot widget tests", () => {
 		      "value": 5
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 6
 		    },
 		    {
-		      "count": 4,
+		      "count": 2,
 		      "value": 7
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 8
 		    },
 		    {
@@ -2997,10 +3045,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 142.5,
-		  "dotColor": "#6495ed",
-		  "dotRadius": 4
+		  "width": 400,
+		  "height": 300,
+		  "dotColor": "#6495ED",
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3019,9 +3067,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x718a3a6b130ad13b
-	// Question: Create a dot plot from a frequency table
+	// Question: Create a dot plot from a frequency table of dog walks
 	// Widget key: dot_plot_choice_c
-	test("dot-plot - [x718a3a6b130ad13b] Create a dot plot from a frequency table (4)", async () => {
+	test("dot-plot - [x718a3a6b130ad13b] Create a dot plot from a frequency table of dog walks (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3033,11 +3081,11 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 5
 		    },
 		    {
-		      "count": 2,
+		      "count": 3,
 		      "value": 6
 		    },
 		    {
@@ -3054,10 +3102,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 142.5,
-		  "dotColor": "#6495ed",
-		  "dotRadius": 4
+		  "width": 400,
+		  "height": 300,
+		  "dotColor": "#6495ED",
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3076,9 +3124,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf3a6aff295aa2018
-	// Question: Create a dot plot of season wins
+	// Question: Select the correct dot plot for the team's wins
 	// Widget key: dot_plot_choice_a
-	test("dot-plot - [xf3a6aff295aa2018] Create a dot plot of season wins (1)", async () => {
+	test("dot-plot - [xf3a6aff295aa2018] Select the correct dot plot for the team's wins (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3108,7 +3156,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 300,
-		  "height": 128,
+		  "height": 300,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -3129,9 +3177,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf3a6aff295aa2018
-	// Question: Create a dot plot of season wins
+	// Question: Select the correct dot plot for the team's wins
 	// Widget key: dot_plot_choice_b
-	test("dot-plot - [xf3a6aff295aa2018] Create a dot plot of season wins (2)", async () => {
+	test("dot-plot - [xf3a6aff295aa2018] Select the correct dot plot for the team's wins (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3147,7 +3195,7 @@ describe("dotPlot widget tests", () => {
 		      "value": 4
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 5
 		    },
 		    {
@@ -3155,13 +3203,13 @@ describe("dotPlot widget tests", () => {
 		      "value": 6
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 7
 		    }
 		  ],
 		  "type": "dotPlot",
 		  "width": 300,
-		  "height": 128,
+		  "height": 300,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -3182,9 +3230,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf3a6aff295aa2018
-	// Question: Create a dot plot of season wins
+	// Question: Select the correct dot plot for the team's wins
 	// Widget key: dot_plot_choice_c
-	test("dot-plot - [xf3a6aff295aa2018] Create a dot plot of season wins (3)", async () => {
+	test("dot-plot - [xf3a6aff295aa2018] Select the correct dot plot for the team's wins (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3214,7 +3262,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 300,
-		  "height": 128,
+		  "height": 300,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -3266,10 +3314,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 180,
-		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "width": 400,
+		  "height": 320,
+		  "dotColor": "#6495ed",
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3302,27 +3350,27 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
-		      "count": 3,
+		      "count": 2,
 		      "value": 15
 		    },
 		    {
-		      "count": 2,
+		      "count": 3,
 		      "value": 16
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 17
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 18
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 180,
-		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "width": 400,
+		  "height": 320,
+		  "dotColor": "#6495ed",
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3372,10 +3420,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 180,
-		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "width": 400,
+		  "height": 320,
+		  "dotColor": "#6495ed",
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3394,9 +3442,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x59752094d780c40c
-	// Question: Create a dot plot from concert data
+	// Question: Select the dot plot that represents the data
 	// Widget key: dot_plot_choice_a
-	test("dot-plot - [x59752094d780c40c] Create a dot plot from concert data (1)", async () => {
+	test("dot-plot - [x59752094d780c40c] Select the dot plot that represents the data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3425,8 +3473,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -3447,9 +3495,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x59752094d780c40c
-	// Question: Create a dot plot from concert data
+	// Question: Select the dot plot that represents the data
 	// Widget key: dot_plot_choice_b
-	test("dot-plot - [x59752094d780c40c] Create a dot plot from concert data (2)", async () => {
+	test("dot-plot - [x59752094d780c40c] Select the dot plot that represents the data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3461,11 +3509,11 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 0
 		    },
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 1
 		    },
 		    {
@@ -3478,8 +3526,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -3500,9 +3548,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x59752094d780c40c
-	// Question: Create a dot plot from concert data
+	// Question: Select the dot plot that represents the data
 	// Widget key: dot_plot_choice_c
-	test("dot-plot - [x59752094d780c40c] Create a dot plot from concert data (3)", async () => {
+	test("dot-plot - [x59752094d780c40c] Select the dot plot that represents the data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3514,11 +3562,11 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 0
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 1
 		    },
 		    {
@@ -3531,8 +3579,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -3584,10 +3632,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3628,19 +3676,19 @@ describe("dotPlot widget tests", () => {
 		      "value": 81
 		    },
 		    {
-		      "count": 3,
+		      "count": 2,
 		      "value": 82
 		    },
 		    {
-		      "count": 0,
+		      "count": 2,
 		      "value": 83
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3677,23 +3725,23 @@ describe("dotPlot widget tests", () => {
 		      "value": 80
 		    },
 		    {
-		      "count": 1,
+		      "count": 3,
 		      "value": 81
 		    },
 		    {
-		      "count": 3,
+		      "count": 2,
 		      "value": 82
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 83
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3712,9 +3760,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x140f48bf340cd9dd
-	// Question: Select the dot plot that matches a frequency table
+	// Question: Create a dot plot from a frequency table
 	// Widget key: dot_plot_choice_a
-	test("dot-plot - [x140f48bf340cd9dd] Select the dot plot that matches a frequency table (2)", async () => {
+	test("dot-plot - [x140f48bf340cd9dd] Create a dot plot from a frequency table (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3743,10 +3791,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 142.5,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3765,9 +3813,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x140f48bf340cd9dd
-	// Question: Select the dot plot that matches a frequency table
+	// Question: Create a dot plot from a frequency table
 	// Widget key: dot_plot_choice_b
-	test("dot-plot - [x140f48bf340cd9dd] Select the dot plot that matches a frequency table (3)", async () => {
+	test("dot-plot - [x140f48bf340cd9dd] Create a dot plot from a frequency table (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3779,27 +3827,15 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
-		      "count": 2,
-		      "value": 9
-		    },
-		    {
-		      "count": 2,
-		      "value": 10
-		    },
-		    {
 		      "count": 3,
-		      "value": 11
-		    },
-		    {
-		      "count": 2,
-		      "value": 12
+		      "value": 10
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 142.5,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3818,9 +3854,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x140f48bf340cd9dd
-	// Question: Select the dot plot that matches a frequency table
+	// Question: Create a dot plot from a frequency table
 	// Widget key: dot_plot_choice_c
-	test("dot-plot - [x140f48bf340cd9dd] Select the dot plot that matches a frequency table (4)", async () => {
+	test("dot-plot - [x140f48bf340cd9dd] Create a dot plot from a frequency table (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3849,10 +3885,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 142.5,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3902,10 +3938,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 135,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3955,10 +3991,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 135,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3991,27 +4027,27 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
-		      "count": 1,
+		      "count": 2,
 		      "value": 0
 		    },
 		    {
-		      "count": 2,
+		      "count": 1,
 		      "value": 1
 		    },
 		    {
-		      "count": 3,
+		      "count": 2,
 		      "value": 2
 		    },
 		    {
-		      "count": 2,
+		      "count": 3,
 		      "value": 3
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 300,
-		  "height": 135,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4030,9 +4066,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9e2319dcf55903fe
-	// Question: Create a dot plot from tournament data
+	// Question: Select the dot plot for Hugo's fish data
 	// Widget key: dot_plot_choice_a
-	test("dot-plot - [x9e2319dcf55903fe] Create a dot plot from tournament data (1)", async () => {
+	test("dot-plot - [x9e2319dcf55903fe] Select the dot plot for Hugo's fish data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4062,7 +4098,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 300,
-		  "height": 143,
+		  "height": 402,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -4083,9 +4119,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9e2319dcf55903fe
-	// Question: Create a dot plot from tournament data
+	// Question: Select the dot plot for Hugo's fish data
 	// Widget key: dot_plot_choice_b
-	test("dot-plot - [x9e2319dcf55903fe] Create a dot plot from tournament data (2)", async () => {
+	test("dot-plot - [x9e2319dcf55903fe] Select the dot plot for Hugo's fish data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4115,7 +4151,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 300,
-		  "height": 143,
+		  "height": 402,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -4136,9 +4172,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9e2319dcf55903fe
-	// Question: Create a dot plot from tournament data
+	// Question: Select the dot plot for Hugo's fish data
 	// Widget key: dot_plot_choice_c
-	test("dot-plot - [x9e2319dcf55903fe] Create a dot plot from tournament data (3)", async () => {
+	test("dot-plot - [x9e2319dcf55903fe] Select the dot plot for Hugo's fish data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4168,7 +4204,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 300,
-		  "height": 143,
+		  "height": 402,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -4189,9 +4225,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x22e93a12ac3e2872
-	// Question: Select the dot plot for Sandy’s honey jars
+	// Question: Create a dot plot from data
 	// Widget key: dot_plot_choice_a
-	test("dot-plot - [x22e93a12ac3e2872] Select the dot plot for Sandy’s honey jars (1)", async () => {
+	test("dot-plot - [x22e93a12ac3e2872] Create a dot plot from data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4224,9 +4260,9 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 128,
-		  "dotColor": "#6495ED",
+		  "width": 380,
+		  "height": 320,
+		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -4246,9 +4282,66 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x22e93a12ac3e2872
-	// Question: Select the dot plot for Sandy’s honey jars
+	// Question: Create a dot plot from data
 	// Widget key: dot_plot_choice_b
-	test("dot-plot - [x22e93a12ac3e2872] Select the dot plot for Sandy’s honey jars (2)", async () => {
+	test("dot-plot - [x22e93a12ac3e2872] Create a dot plot from data (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 4,
+		    "min": 0,
+		    "label": "Number of jars of honey",
+		    "tickInterval": 1
+		  },
+		  "data": [
+		    {
+		      "count": 1,
+		      "value": 0
+		    },
+		    {
+		      "count": 2,
+		      "value": 1
+		    },
+		    {
+		      "count": 1,
+		      "value": 2
+		    },
+		    {
+		      "count": 2,
+		      "value": 3
+		    },
+		    {
+		      "count": 1,
+		      "value": 4
+		    }
+		  ],
+		  "type": "dotPlot",
+		  "width": 380,
+		  "height": 320,
+		  "dotColor": "#6495ed",
+		  "dotRadius": 4
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for dotPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x22e93a12ac3e2872
+	// Question: Create a dot plot from data
+	// Widget key: dot_plot_choice_c
+	test("dot-plot - [x22e93a12ac3e2872] Create a dot plot from data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4281,66 +4374,9 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 128,
-		  "dotColor": "#6495ED",
-		  "dotRadius": 4
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for dotPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x22e93a12ac3e2872
-	// Question: Select the dot plot for Sandy’s honey jars
-	// Widget key: dot_plot_choice_c
-	test("dot-plot - [x22e93a12ac3e2872] Select the dot plot for Sandy’s honey jars (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "axis": {
-		    "max": 4,
-		    "min": 0,
-		    "label": "Number of jars of honey",
-		    "tickInterval": 1
-		  },
-		  "data": [
-		    {
-		      "count": 0,
-		      "value": 0
-		    },
-		    {
-		      "count": 1,
-		      "value": 1
-		    },
-		    {
-		      "count": 2,
-		      "value": 2
-		    },
-		    {
-		      "count": 1,
-		      "value": 3
-		    },
-		    {
-		      "count": 2,
-		      "value": 4
-		    }
-		  ],
-		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 128,
-		  "dotColor": "#6495ED",
+		  "width": 380,
+		  "height": 320,
+		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -4360,9 +4396,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x47bd997cb3578760
-	// Question: Identify the mistake when finding the median from a dot plot
+	// Question: Identify a mistake when finding the median from a dot plot
 	// Widget key: image_1
-	test("dot-plot - [x47bd997cb3578760] Identify the mistake when finding the median from a dot plot", async () => {
+	test("dot-plot - [x47bd997cb3578760] Identify a mistake when finding the median from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4395,8 +4431,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 210,
-		  "height": 177,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -4452,8 +4488,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 255,
-		  "height": 165,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -4506,7 +4542,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 300,
-		  "height": 213,
+		  "height": 300,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -4527,9 +4563,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf4050902d0994bcc
-	// Question: Describe clusters and gaps on a dot plot
+	// Question: Identify clusters and gaps on a dot plot
 	// Widget key: image_2
-	test("dot-plot - [xf4050902d0994bcc] Describe clusters and gaps on a dot plot", async () => {
+	test("dot-plot - [xf4050902d0994bcc] Identify clusters and gaps on a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4587,7 +4623,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 225,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -4668,7 +4704,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 255,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -4689,9 +4725,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x4a0f30baab9cda53
-	// Question: Describe attendance distribution: clusters, gaps, and peaks
-	// Widget key: image_2
-	test("dot-plot - [x4a0f30baab9cda53] Describe attendance distribution: clusters, gaps, and peaks", async () => {
+	// Question: Identify clusters, gaps, and peaks on a dot plot
+	// Widget key: image_1
+	test("dot-plot - [x4a0f30baab9cda53] Identify clusters, gaps, and peaks on a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4703,12 +4739,24 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
+		      "count": 0,
+		      "value": 4
+		    },
+		    {
 		      "count": 1,
 		      "value": 5
 		    },
 		    {
 		      "count": 1,
 		      "value": 6
+		    },
+		    {
+		      "count": 0,
+		      "value": 7
+		    },
+		    {
+		      "count": 0,
+		      "value": 8
 		    },
 		    {
 		      "count": 2,
@@ -4741,7 +4789,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 360,
-		  "height": 225,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -4762,9 +4810,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x82c3aff1903cde48
-	// Question: Identify clusters, gaps, and peaks on a dot plot
+	// Question: Describe clusters, gaps, and peaks on a dot plot
 	// Widget key: image_2
-	test("dot-plot - [x82c3aff1903cde48] Identify clusters, gaps, and peaks on a dot plot", async () => {
+	test("dot-plot - [x82c3aff1903cde48] Describe clusters, gaps, and peaks on a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4850,7 +4898,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 171,
+		  "height": 340,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -4871,9 +4919,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xd0ab9291434aa106
-	// Question: Describe a dot plot using clusters, gaps, and peaks
+	// Question: Describe clusters, gaps, and peaks in a dot plot
 	// Widget key: image_2
-	test("dot-plot - [xd0ab9291434aa106] Describe a dot plot using clusters, gaps, and peaks", async () => {
+	test("dot-plot - [xd0ab9291434aa106] Describe clusters, gaps, and peaks in a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4931,7 +4979,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 210,
+		  "height": 330,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -4952,9 +5000,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xd26475e505ed0557
-	// Question: Describe clusters, gaps, and peaks on a dot plot
+	// Question: Identify statements about clusters, gaps, and peaks in a dot plot
 	// Widget key: image_2
-	test("dot-plot - [xd26475e505ed0557] Describe clusters, gaps, and peaks on a dot plot", async () => {
+	test("dot-plot - [xd26475e505ed0557] Identify statements about clusters, gaps, and peaks in a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5012,7 +5060,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 240,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -5033,9 +5081,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x8a7f623a7752983f
-	// Question: Describe a wage distribution: clusters, gaps, and peaks
-	// Widget key: image_1
-	test("dot-plot - [x8a7f623a7752983f] Describe a wage distribution: clusters, gaps, and peaks", async () => {
+	// Question: Describe peaks and gaps in a wage distribution
+	// Widget key: image_3
+	test("dot-plot - [x8a7f623a7752983f] Describe peaks and gaps in a wage distribution", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5097,7 +5145,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 213,
+		  "height": 320,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -5118,9 +5166,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa81135661bd671fa
-	// Question: Describe clusters, gaps, and peaks in a sleep dot plot
+	// Question: Identify clusters, gaps, and peaks on a dot plot
 	// Widget key: image_2
-	test("dot-plot - [xa81135661bd671fa] Describe clusters, gaps, and peaks in a sleep dot plot", async () => {
+	test("dot-plot - [xa81135661bd671fa] Identify clusters, gaps, and peaks on a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5162,7 +5210,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 390,
-		  "height": 225,
+		  "height": 320,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -5183,9 +5231,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x504990648c319d58
-	// Question: Describe clusters, gaps, and peaks on a dot plot
+	// Question: Describe clusters and peaks in a dot plot of teacher ages
 	// Widget key: image_2
-	test("dot-plot - [x504990648c319d58] Describe clusters, gaps, and peaks on a dot plot", async () => {
+	test("dot-plot - [x504990648c319d58] Describe clusters and peaks in a dot plot of teacher ages", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5283,7 +5331,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 225,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -5304,9 +5352,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xca70b26fee88192e
-	// Question: Describe a temperature distribution: clusters, gaps, and peaks
+	// Question: Identify a feature of a temperature distribution
 	// Widget key: image_2
-	test("dot-plot - [xca70b26fee88192e] Describe a temperature distribution: clusters, gaps, and peaks", async () => {
+	test("dot-plot - [xca70b26fee88192e] Identify a feature of a temperature distribution", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5355,8 +5403,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 270,
-		  "height": 240,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -5416,8 +5464,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 260,
-		  "height": 208,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -5485,8 +5533,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 260,
-		  "height": 166,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -5550,10 +5598,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 260,
-		  "height": 151,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5611,10 +5659,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 260,
-		  "height": 185,
+		  "width": 400,
+		  "height": 360,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5633,9 +5681,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x57d33c7a69bc6992
-	// Question: Typical number of chocolate chips in Shawn's cookies
+	// Question: Typical number of chocolate chips from a dot plot
 	// Widget key: image_1
-	test("dot-plot - [x57d33c7a69bc6992] Typical number of chocolate chips in Shawn's cookies", async () => {
+	test("dot-plot - [x57d33c7a69bc6992] Typical number of chocolate chips from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5673,9 +5721,9 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 320,
-		  "height": 178,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5694,9 +5742,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xecbc10379edcdf4d
-	// Question: Compare the Typical Number of People per Table
+	// Question: Compare typical number of people per table from dot plots
 	// Widget key: image_1
-	test("dot-plot - [xecbc10379edcdf4d] Compare the Typical Number of People per Table (1)", async () => {
+	test("dot-plot - [xecbc10379edcdf4d] Compare typical number of people per table from dot plots (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5733,8 +5781,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 260,
-		  "height": 180,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -5755,9 +5803,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xecbc10379edcdf4d
-	// Question: Compare the Typical Number of People per Table
+	// Question: Compare typical number of people per table from dot plots
 	// Widget key: image_2
-	test("dot-plot - [xecbc10379edcdf4d] Compare the Typical Number of People per Table (2)", async () => {
+	test("dot-plot - [xecbc10379edcdf4d] Compare typical number of people per table from dot plots (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5798,8 +5846,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 260,
-		  "height": 130,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -5863,8 +5911,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 600,
-		  "height": 300,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -5920,8 +5968,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 260,
-		  "height": 154,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -5977,8 +6025,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 260,
-		  "height": 154,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -6030,8 +6078,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 240,
-		  "height": 213,
+		  "width": 360,
+		  "height": 320,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -6083,8 +6131,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 240,
-		  "height": 213,
+		  "width": 360,
+		  "height": 320,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -6105,9 +6153,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x722409275f11e711
-	// Question: Identify a typical value from a dot plot
+	// Question: Typical number of wildcards in Sampson's decks
 	// Widget key: image_1
-	test("dot-plot - [x722409275f11e711] Identify a typical value from a dot plot", async () => {
+	test("dot-plot - [x722409275f11e711] Typical number of wildcards in Sampson's decks", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6141,9 +6189,9 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 400,
-		  "height": 250,
+		  "height": 320,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -6162,9 +6210,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xb8bd8cf8c133bbf7
-	// Question: Typical mass from a dot plot
+	// Question: Identify a typical mass from a dot plot
 	// Widget key: image_1
-	test("dot-plot - [xb8bd8cf8c133bbf7] Typical mass from a dot plot", async () => {
+	test("dot-plot - [xb8bd8cf8c133bbf7] Identify a typical mass from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6222,7 +6270,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 318,
-		  "height": 224,
+		  "height": 320,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -6290,8 +6338,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 246,
-		  "height": 212,
+		  "width": 420,
+		  "height": 320,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -6312,9 +6360,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x41951cf7d9a5bbbe
-	// Question: Identify a typical number from a dot plot
+	// Question: Identify a typical value from a dot plot
 	// Widget key: image_1
-	test("dot-plot - [x41951cf7d9a5bbbe] Identify a typical number from a dot plot", async () => {
+	test("dot-plot - [x41951cf7d9a5bbbe] Identify a typical value from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6375,8 +6423,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 210,
-		  "height": 272,
+		  "width": 400,
+		  "height": 320,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -6397,9 +6445,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xae15a632aa9037e3
-	// Question: Compare typical injuries per game
+	// Question: Compare typical injuries per game using dot plots
 	// Widget key: image_1
-	test("dot-plot - [xae15a632aa9037e3] Compare typical injuries per game (1)", async () => {
+	test("dot-plot - [xae15a632aa9037e3] Compare typical injuries per game using dot plots (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6428,8 +6476,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 260,
-		  "height": 178,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -6450,9 +6498,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xae15a632aa9037e3
-	// Question: Compare typical injuries per game
+	// Question: Compare typical injuries per game using dot plots
 	// Widget key: image_2
-	test("dot-plot - [xae15a632aa9037e3] Compare typical injuries per game (2)", async () => {
+	test("dot-plot - [xae15a632aa9037e3] Compare typical injuries per game using dot plots (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6481,8 +6529,69 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 260,
-		  "height": 192,
+		  "width": 400,
+		  "height": 300,
+		  "dotColor": "#11accd",
+		  "dotRadius": 4
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for dotPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x46737fa249a0abbc
+	// Question: Effect of removing a high outlier on mean and median
+	// Widget key: image_1
+	test("dot-plot - [x46737fa249a0abbc] Effect of removing a high outlier on mean and median", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 40,
+		    "min": 15,
+		    "label": "Wage (dollars per hour)",
+		    "tickInterval": 1
+		  },
+		  "data": [
+		    {
+		      "count": 1,
+		      "value": 15
+		    },
+		    {
+		      "count": 1,
+		      "value": 16
+		    },
+		    {
+		      "count": 1,
+		      "value": 18
+		    },
+		    {
+		      "count": 1,
+		      "value": 19
+		    },
+		    {
+		      "count": 1,
+		      "value": 20
+		    },
+		    {
+		      "count": 1,
+		      "value": 40
+		    }
+		  ],
+		  "type": "dotPlot",
+		  "width": 320,
+		  "height": 320,
 		  "dotColor": "#11accd",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -6503,9 +6612,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf3716b60367d9fe0
-	// Question: Effect of a low score on mean and median
+	// Question: Effect of a low outlier on mean and median
 	// Widget key: image_1
-	test("dot-plot - [xf3716b60367d9fe0] Effect of a low score on mean and median", async () => {
+	test("dot-plot - [xf3716b60367d9fe0] Effect of a low outlier on mean and median", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6538,10 +6647,10 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 320,
-		  "height": 165,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#11accd",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -6560,9 +6669,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x372cda7c9b1a0c1d
-	// Question: Find the mean absolute deviation from a dot plot
+	// Question: Mean absolute deviation from a dot plot
 	// Widget key: image_1
-	test("dot-plot - [x372cda7c9b1a0c1d] Find the mean absolute deviation from a dot plot", async () => {
+	test("dot-plot - [x372cda7c9b1a0c1d] Mean absolute deviation from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6600,7 +6709,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 133,
+		  "height": 320,
 		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -6653,7 +6762,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 465,
-		  "height": 165,
+		  "height": 300,
 		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -6710,9 +6819,9 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 160,
+		  "height": 300,
 		  "dotColor": "#6495ED",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -6767,7 +6876,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 318,
-		  "height": 180,
+		  "height": 320,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -6788,9 +6897,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x821d9dbd028c36eb
-	// Question: Find the fewest goals from a dot plot
+	// Question: Fewest goals on a dot plot
 	// Widget key: image_1
-	test("dot-plot - [x821d9dbd028c36eb] Find the fewest goals from a dot plot", async () => {
+	test("dot-plot - [x821d9dbd028c36eb] Fewest goals on a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6819,8 +6928,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 270,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -6841,9 +6950,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xb694799911f7cf5a
-	// Question: Count albums with at least 11 songs from a dot plot
+	// Question: Count albums with at least 11 songs
 	// Widget key: image_1
-	test("dot-plot - [xb694799911f7cf5a] Count albums with at least 11 songs from a dot plot", async () => {
+	test("dot-plot - [xb694799911f7cf5a] Count albums with at least 11 songs", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6892,9 +7001,9 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 165,
-		  "dotColor": "#0C7F99",
+		  "width": 400,
+		  "height": 300,
+		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -6958,8 +7067,8 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 390,
-		  "height": 180,
-		  "dotColor": "#0C7F99",
+		  "height": 300,
+		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -6979,9 +7088,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x0823de00f93952c9
-	// Question: Count days with temperature at least 16 °C
+	// Question: Count days with a high temperature of at least 16 °C
 	// Widget key: image_1
-	test("dot-plot - [x0823de00f93952c9] Count days with temperature at least 16 °C", async () => {
+	test("dot-plot - [x0823de00f93952c9] Count days with a high temperature of at least 16 °C", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7047,7 +7156,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 366,
-		  "height": 180,
+		  "height": 320,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -7068,9 +7177,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xd4ec2c27959890a8
-	// Question: Find the minimum from a dot plot
+	// Question: Find the fewest goals from a dot plot
 	// Widget key: image_1
-	test("dot-plot - [xd4ec2c27959890a8] Find the minimum from a dot plot", async () => {
+	test("dot-plot - [xd4ec2c27959890a8] Find the fewest goals from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7099,8 +7208,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 270,
-		  "height": 150,
+		  "width": 360,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -7121,9 +7230,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x345a14f71efc3c32
-	// Question: Count rocks from a dot plot
+	// Question: Count rocks in a dot plot
 	// Widget key: image_1
-	test("dot-plot - [x345a14f71efc3c32] Count rocks from a dot plot", async () => {
+	test("dot-plot - [x345a14f71efc3c32] Count rocks in a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7165,9 +7274,9 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 150,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -7186,9 +7295,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xba318eeb3575f528
-	// Question: Count tables with fewer than 2 players from a dot plot
+	// Question: Read a dot plot: tables with fewer than 2 players
 	// Widget key: image_1
-	test("dot-plot - [xba318eeb3575f528] Count tables with fewer than 2 players from a dot plot", async () => {
+	test("dot-plot - [xba318eeb3575f528] Read a dot plot: tables with fewer than 2 players", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7230,7 +7339,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 390,
-		  "height": 180,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -7265,10 +7374,6 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
-		      "count": 0,
-		      "value": 1
-		    },
-		    {
 		      "count": 1,
 		      "value": 2
 		    },
@@ -7290,8 +7395,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 165,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -7351,8 +7456,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 180,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -7387,10 +7492,6 @@ describe("dotPlot widget tests", () => {
 		  },
 		  "data": [
 		    {
-		      "count": 0,
-		      "value": 1
-		    },
-		    {
 		      "count": 1,
 		      "value": 2
 		    },
@@ -7412,8 +7513,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 165,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -7466,7 +7567,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 160,
+		  "height": 320,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -7519,7 +7620,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 160,
+		  "height": 320,
 		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -7572,7 +7673,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 450,
-		  "height": 180,
+		  "height": 300,
 		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -7625,8 +7726,8 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 160,
-		  "dotColor": "#6495ED",
+		  "height": 300,
+		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -7678,7 +7779,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 390,
-		  "height": 158,
+		  "height": 300,
 		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -7727,7 +7828,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 140,
+		  "height": 300,
 		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -7772,8 +7873,8 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 420,
-		  "height": 180,
-		  "dotColor": "#6495ED",
+		  "height": 300,
+		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -7825,8 +7926,8 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 148,
-		  "dotColor": "#6495ED",
+		  "height": 320,
+		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -7878,8 +7979,8 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 383,
-		  "height": 180,
-		  "dotColor": "#6495ed",
+		  "height": 320,
+		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -7923,7 +8024,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 465,
-		  "height": 203,
+		  "height": 300,
 		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -7944,9 +8045,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x8330c9d328261afa
-	// Question: Find the interquartile range from a dot plot
+	// Question: Find the interquartile range (IQR) from a dot plot
 	// Widget key: image_2
-	test("dot-plot - [x8330c9d328261afa] Find the interquartile range from a dot plot", async () => {
+	test("dot-plot - [x8330c9d328261afa] Find the interquartile range (IQR) from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7980,8 +8081,8 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 315,
-		  "height": 150,
-		  "dotColor": "#6495ED",
+		  "height": 300,
+		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -8001,9 +8102,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xc03860fdcca022e0
-	// Question: Interquartile range from a dot plot
+	// Question: Find the interquartile range from a dot plot
 	// Widget key: image_2
-	test("dot-plot - [xc03860fdcca022e0] Interquartile range from a dot plot", async () => {
+	test("dot-plot - [xc03860fdcca022e0] Find the interquartile range from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8037,8 +8138,8 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 345,
-		  "height": 150,
-		  "dotColor": "#6495ED",
+		  "height": 300,
+		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -8098,7 +8199,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 345,
-		  "height": 165,
+		  "height": 300,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -8155,9 +8256,9 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 345,
-		  "height": 150,
+		  "height": 300,
 		  "dotColor": "#6495ed",
-		  "dotRadius": 4
+		  "dotRadius": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -8216,8 +8317,8 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 360,
-		  "height": 150,
-		  "dotColor": "#6495ED",
+		  "height": 300,
+		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -8273,7 +8374,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 345,
-		  "height": 150,
+		  "height": 300,
 		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -8334,7 +8435,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 315,
-		  "height": 150,
+		  "height": 300,
 		  "dotColor": "#6495ed",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -8355,9 +8456,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x559e442eca8138ff
-	// Question: Interquartile range from a dot plot
+	// Question: Find the interquartile range from a dot plot
 	// Widget key: image_2
-	test("dot-plot - [x559e442eca8138ff] Interquartile range from a dot plot", async () => {
+	test("dot-plot - [x559e442eca8138ff] Find the interquartile range from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8391,7 +8492,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 345,
-		  "height": 180,
+		  "height": 300,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -8412,9 +8513,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xc6b669317a8fac28
-	// Question: Identify the shape of a distribution from a dot plot
+	// Question: Identify the distribution shape from a dot plot
 	// Widget key: image_2
-	test("dot-plot - [xc6b669317a8fac28] Identify the shape of a distribution from a dot plot", async () => {
+	test("dot-plot - [xc6b669317a8fac28] Identify the distribution shape from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8460,8 +8561,8 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 195,
-		  "dotColor": "#0c7f99",
+		  "height": 300,
+		  "dotColor": "#0C7F99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -8481,9 +8582,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x94273188cfe70a21
-	// Question: Describe the shape of a distribution from a dot plot
+	// Question: Identify the shape of a distribution from a dot plot
 	// Widget key: image_2
-	test("dot-plot - [x94273188cfe70a21] Describe the shape of a distribution from a dot plot", async () => {
+	test("dot-plot - [x94273188cfe70a21] Identify the shape of a distribution from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8537,8 +8638,8 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 327,
-		  "height": 255,
-		  "dotColor": "#0C7F99",
+		  "height": 350,
+		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -8601,8 +8702,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 270,
-		  "height": 240,
+		  "width": 400,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -8623,9 +8724,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x4afc7ba3afc6066b
-	// Question: Describe the shape of a distribution
+	// Question: Describe the shape of a distribution (dot plot)
 	// Widget key: image_2
-	test("dot-plot - [x4afc7ba3afc6066b] Describe the shape of a distribution", async () => {
+	test("dot-plot - [x4afc7ba3afc6066b] Describe the shape of a distribution (dot plot)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8679,7 +8780,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 336,
-		  "height": 285,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -8700,9 +8801,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa0e6f5b7f8ca8b68
-	// Question: Describe the shape of the distribution of snow days
+	// Question: Describe the distribution's shape
 	// Widget key: image_2
-	test("dot-plot - [xa0e6f5b7f8ca8b68] Describe the shape of the distribution of snow days", async () => {
+	test("dot-plot - [xa0e6f5b7f8ca8b68] Describe the distribution's shape", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8748,7 +8849,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 255,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -8769,9 +8870,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xbe92e4785da18fcb
-	// Question: Identify the shape of a distribution from a dot plot
+	// Question: Describe the shape of a distribution
 	// Widget key: image_2
-	test("dot-plot - [xbe92e4785da18fcb] Identify the shape of a distribution from a dot plot", async () => {
+	test("dot-plot - [xbe92e4785da18fcb] Describe the shape of a distribution", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8825,7 +8926,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 240,
+		  "height": 330,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -8846,9 +8947,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x974b4e1bfd527dd1
-	// Question: Describe the shape of a distribution from a dot plot
+	// Question: Describe the shape of a distribution
 	// Widget key: image_2
-	test("dot-plot - [x974b4e1bfd527dd1] Describe the shape of a distribution from a dot plot", async () => {
+	test("dot-plot - [x974b4e1bfd527dd1] Describe the shape of a distribution", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8898,7 +8999,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 255,
+		  "height": 330,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -8919,9 +9020,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x96c129eb2b8d1437
-	// Question: Describe the shape of a sleep distribution
+	// Question: Describe the shape of a distribution from a dot plot
 	// Widget key: image_1
-	test("dot-plot - [x96c129eb2b8d1437] Describe the shape of a sleep distribution", async () => {
+	test("dot-plot - [x96c129eb2b8d1437] Describe the shape of a distribution from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8967,7 +9068,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 390,
-		  "height": 225,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -9040,7 +9141,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 210,
+		  "height": 330,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -9109,7 +9210,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 225,
+		  "height": 300,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -9130,9 +9231,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7a3d0d55c1c33130
-	// Question: Describe the shape of a distribution from a dot plot
-	// Widget key: image_1
-	test("dot-plot - [x7a3d0d55c1c33130] Describe the shape of a distribution from a dot plot", async () => {
+	// Question: Identify the shape of the distribution from a dot plot
+	// Widget key: image_2
+	test("dot-plot - [x7a3d0d55c1c33130] Identify the shape of the distribution from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9174,8 +9275,8 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 330,
-		  "height": 180,
-		  "dotColor": "#0C7F99",
+		  "height": 300,
+		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
 
@@ -9195,9 +9296,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: xc88ff22f16e630fc
-	// Question: Describe the shape of a distribution from a dot plot
+	// Question: Describe the distribution shape from a dot plot
 	// Widget key: image_2
-	test("dot-plot - [xc88ff22f16e630fc] Describe the shape of a distribution from a dot plot", async () => {
+	test("dot-plot - [xc88ff22f16e630fc] Describe the distribution shape from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9278,8 +9379,8 @@ describe("dotPlot widget tests", () => {
 		    }
 		  ],
 		  "type": "dotPlot",
-		  "width": 330,
-		  "height": 225,
+		  "width": 400,
+		  "height": 350,
 		  "dotColor": "#0c7f99",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -9300,9 +9401,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9914565e51c0d31f
-	// Question: Estimate probability from a dot plot (exactly 6 vitamins)
+	// Question: Estimate experimental probability from a dot plot
 	// Widget key: image_1
-	test("dot-plot - [x9914565e51c0d31f] Estimate probability from a dot plot (exactly 6 vitamins)", async () => {
+	test("dot-plot - [x9914565e51c0d31f] Estimate experimental probability from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9344,7 +9445,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 180,
+		  "height": 320,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -9365,9 +9466,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x27c76cb60c01d29c
-	// Question: Estimate probability from a dot plot
+	// Question: Estimate experimental probability from a dot plot
 	// Widget key: image_1
-	test("dot-plot - [x27c76cb60c01d29c] Estimate probability from a dot plot", async () => {
+	test("dot-plot - [x27c76cb60c01d29c] Estimate experimental probability from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9401,7 +9502,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 420,
-		  "height": 225,
+		  "height": 300,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput
@@ -9422,9 +9523,9 @@ describe("dotPlot widget tests", () => {
 	})
 
 	// Extracted from question: x06b55e2ad511bc76
-	// Question: Estimate probability from a dot plot (pets)
+	// Question: Estimate probability from a dot plot
 	// Widget key: image_1
-	test("dot-plot - [x06b55e2ad511bc76] Estimate probability from a dot plot (pets)", async () => {
+	test("dot-plot - [x06b55e2ad511bc76] Estimate probability from a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9474,7 +9575,7 @@ describe("dotPlot widget tests", () => {
 		  ],
 		  "type": "dotPlot",
 		  "width": 480,
-		  "height": 183,
+		  "height": 320,
 		  "dotColor": "#6495ED",
 		  "dotRadius": 4
 		} as unknown as WidgetInput

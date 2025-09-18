@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.936Z
+// Generated on: 2025-09-18T05:17:02.122Z
 // Widget Type: discreteObjectRatioDiagram
 // Source: Real questions from database
 //
@@ -25,174 +25,6 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("discreteObjectRatioDiagram widget tests", () => {
-	// Extracted from question: x2cdeff9e053edd45
-	// Question: Probability of drawing a blue or red marble
-	// Widget key: image_1
-	test("discrete-object-ratio-diagram - [x2cdeff9e053edd45] Probability of drawing a blue or red marble", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "discreteObjectRatioDiagram",
-		  "title": null,
-		  "width": 480,
-		  "height": 160,
-		  "objects": [
-		    {
-		      "count": 8,
-		      "emoji": "🔴"
-		    },
-		    {
-		      "count": 5,
-		      "emoji": "🟢"
-		    },
-		    {
-		      "count": 8,
-		      "emoji": "🔵"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for discreteObjectRatioDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x13f9d45cda6eac17
-	// Question: Probability of drawing a blue marble
-	// Widget key: image_1
-	test("discrete-object-ratio-diagram - [x13f9d45cda6eac17] Probability of drawing a blue marble", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "discreteObjectRatioDiagram",
-		  "title": null,
-		  "width": 480,
-		  "height": 160,
-		  "objects": [
-		    {
-		      "count": 5,
-		      "emoji": "🔴"
-		    },
-		    {
-		      "count": 4,
-		      "emoji": "🟢"
-		    },
-		    {
-		      "count": 3,
-		      "emoji": "🔵"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for discreteObjectRatioDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8b89440ec2f6fc34
-	// Question: Probability of not drawing a blue marble
-	// Widget key: image_1
-	test("discrete-object-ratio-diagram - [x8b89440ec2f6fc34] Probability of not drawing a blue marble", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "discreteObjectRatioDiagram",
-		  "title": "Marbles in the bag",
-		  "width": 480,
-		  "height": 160,
-		  "objects": [
-		    {
-		      "count": 1,
-		      "emoji": "🔴"
-		    },
-		    {
-		      "count": 2,
-		      "emoji": "🟢"
-		    },
-		    {
-		      "count": 7,
-		      "emoji": "🔵"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for discreteObjectRatioDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc3db6fb416d05357
-	// Question: Probability of drawing a blue marble
-	// Widget key: image_1
-	test("discrete-object-ratio-diagram - [xc3db6fb416d05357] Probability of drawing a blue marble", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "discreteObjectRatioDiagram",
-		  "title": "Bag of marbles",
-		  "width": 480,
-		  "height": 240,
-		  "objects": [
-		    {
-		      "count": 5,
-		      "emoji": "🔴"
-		    },
-		    {
-		      "count": 3,
-		      "emoji": "🟢"
-		    },
-		    {
-		      "count": 12,
-		      "emoji": "🔵"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for discreteObjectRatioDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x0edaeaa7d07c9f64
 	// Question: Probability of selecting an apple
 	// Widget key: image_1
@@ -202,8 +34,8 @@ describe("discreteObjectRatioDiagram widget tests", () => {
 		const input = {
 		  "type": "discreteObjectRatioDiagram",
 		  "title": "Four apples and five bananas.",
-		  "width": 270,
-		  "height": 162,
+		  "width": 360,
+		  "height": 320,
 		  "objects": [
 		    {
 		      "count": 4,
@@ -232,16 +64,16 @@ describe("discreteObjectRatioDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x23980263d7f9cc69
-	// Question: Write an equation for Larry's reading time
+	// Question: Write an equation to model reading time
 	// Widget key: image_1
-	test("discrete-object-ratio-diagram - [x23980263d7f9cc69] Write an equation for Larry's reading time", async () => {
+	test("discrete-object-ratio-diagram - [x23980263d7f9cc69] Write an equation to model reading time", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "discreteObjectRatioDiagram",
 		  "title": "Image of 5 books.",
-		  "width": 184,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "objects": [
 		    {
 		      "count": 5,
@@ -266,16 +98,16 @@ describe("discreteObjectRatioDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb893bf1f0e48d890
-	// Question: Select the equation that matches the situation
+	// Question: Select the equation that matches a reading scenario
 	// Widget key: image_1
-	test("discrete-object-ratio-diagram - [xb893bf1f0e48d890] Select the equation that matches the situation", async () => {
+	test("discrete-object-ratio-diagram - [xb893bf1f0e48d890] Select the equation that matches a reading scenario", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "discreteObjectRatioDiagram",
-		  "title": "<none>",
-		  "width": 235,
-		  "height": 150,
+		  "title": "Image of 8 books.",
+		  "width": 400,
+		  "height": 300,
 		  "objects": [
 		    {
 		      "count": 8,
@@ -300,20 +132,20 @@ describe("discreteObjectRatioDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xcb5a887c55e85365
-	// Question: Write an equation to describe pages read
+	// Question: Write an equation for pages read at a constant rate
 	// Widget key: image_1
-	test("discrete-object-ratio-diagram - [xcb5a887c55e85365] Write an equation to describe pages read", async () => {
+	test("discrete-object-ratio-diagram - [xcb5a887c55e85365] Write an equation for pages read at a constant rate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "discreteObjectRatioDiagram",
 		  "title": "Image of 5 books.",
-		  "width": 170,
-		  "height": 150,
+		  "width": 320,
+		  "height": 320,
 		  "objects": [
 		    {
 		      "count": 5,
-		      "emoji": "📚"
+		      "emoji": "📘"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -334,16 +166,16 @@ describe("discreteObjectRatioDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x890b80a083e430a8
-	// Question: Describe the ratio of small balls to total balls
+	// Question: Complete ratio statements from an image
 	// Widget key: image_1
-	test("discrete-object-ratio-diagram - [x890b80a083e430a8] Describe the ratio of small balls to total balls", async () => {
+	test("discrete-object-ratio-diagram - [x890b80a083e430a8] Complete ratio statements from an image", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "discreteObjectRatioDiagram",
-		  "title": "Small balls and total balls",
-		  "width": 500,
-		  "height": 220,
+		  "title": "A group of 6 large soccer balls and 9 small baseballs.",
+		  "width": 320,
+		  "height": 320,
 		  "objects": [
 		    {
 		      "count": 9,
@@ -371,25 +203,33 @@ describe("discreteObjectRatioDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xaaa5d24fb5ecf526
-	// Question: Best prediction for repeated draws with replacement
-	// Widget key: image_1
-	test("discrete-object-ratio-diagram - [xaaa5d24fb5ecf526] Best prediction for repeated draws with replacement", async () => {
+	// Extracted from question: x3b23ab4479e78201
+	// Question: Mean from a pictograph
+	// Widget key: image_2
+	test("discrete-object-ratio-diagram - [x3b23ab4479e78201] Mean from a pictograph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "discreteObjectRatioDiagram",
-		  "title": "3 purple marbles and 4 blue marbles",
-		  "width": 480,
-		  "height": 160,
+		  "title": "Home runs hit by each team in a baseball league.",
+		  "width": 350,
+		  "height": 413,
 		  "objects": [
 		    {
-		      "count": 3,
-		      "emoji": "🟣"
+		      "count": 7,
+		      "emoji": "⚾"
+		    },
+		    {
+		      "count": 2,
+		      "emoji": "⚾"
 		    },
 		    {
 		      "count": 4,
-		      "emoji": "🔵"
+		      "emoji": "⚾"
+		    },
+		    {
+		      "count": 3,
+		      "emoji": "⚾"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -419,15 +259,15 @@ describe("discreteObjectRatioDiagram widget tests", () => {
 		  "type": "discreteObjectRatioDiagram",
 		  "title": "5 eggs and 3 chicks.",
 		  "width": 320,
-		  "height": 180,
+		  "height": 320,
 		  "objects": [
-		    {
-		      "count": 3,
-		      "emoji": "🐥"
-		    },
 		    {
 		      "count": 5,
 		      "emoji": "🥚"
+		    },
+		    {
+		      "count": 3,
+		      "emoji": "🐥"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -457,15 +297,53 @@ describe("discreteObjectRatioDiagram widget tests", () => {
 		  "type": "discreteObjectRatioDiagram",
 		  "title": "6 bananas and 2 apples.",
 		  "width": 320,
-		  "height": 180,
+		  "height": 300,
 		  "objects": [
-		    {
-		      "count": 6,
-		      "emoji": "🍌"
-		    },
 		    {
 		      "count": 2,
 		      "emoji": "🍎"
+		    },
+		    {
+		      "count": 6,
+		      "emoji": "🍌"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for discreteObjectRatioDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x70d4ff682334d643
+	// Question: Ratio of turtles to total animals
+	// Widget key: animals_image
+	test("discrete-object-ratio-diagram - [x70d4ff682334d643] Ratio of turtles to total animals", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "discreteObjectRatioDiagram",
+		  "title": "5 turtles and 3 seals.",
+		  "width": 400,
+		  "height": 320,
+		  "objects": [
+		    {
+		      "count": 5,
+		      "emoji": "🐢"
+		    },
+		    {
+		      "count": 3,
+		      "emoji": "🦭"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -493,9 +371,9 @@ describe("discreteObjectRatioDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "discreteObjectRatioDiagram",
-		  "title": "3 cookies and 1 ice cream cone",
+		  "title": "Cookies and ice cream cones",
 		  "width": 320,
-		  "height": 180,
+		  "height": 320,
 		  "objects": [
 		    {
 		      "count": 3,
@@ -533,7 +411,7 @@ describe("discreteObjectRatioDiagram widget tests", () => {
 		  "type": "discreteObjectRatioDiagram",
 		  "title": "2 sharks and 8 whales.",
 		  "width": 320,
-		  "height": 180,
+		  "height": 320,
 		  "objects": [
 		    {
 		      "count": 2,
@@ -569,9 +447,9 @@ describe("discreteObjectRatioDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "discreteObjectRatioDiagram",
-		  "title": "5 cows and 2 chunks of cheese.",
-		  "width": 320,
-		  "height": 180,
+		  "title": "Cows and chunks of cheese",
+		  "width": 400,
+		  "height": 320,
 		  "objects": [
 		    {
 		      "count": 5,
@@ -607,13 +485,13 @@ describe("discreteObjectRatioDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "discreteObjectRatioDiagram",
-		  "title": "2 rabbits and 4 raccoons.",
+		  "title": "2 rabbits and 4 raccoons",
 		  "width": 355,
-		  "height": 163,
+		  "height": 300,
 		  "objects": [
 		    {
 		      "count": 2,
-		      "emoji": "🐰"
+		      "emoji": "🐇"
 		    },
 		    {
 		      "count": 4,
@@ -646,12 +524,12 @@ describe("discreteObjectRatioDiagram widget tests", () => {
 		const input = {
 		  "type": "discreteObjectRatioDiagram",
 		  "title": "4 chicks and 5 penguins",
-		  "width": 320,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "objects": [
 		    {
 		      "count": 4,
-		      "emoji": "🐤"
+		      "emoji": "🐥"
 		    },
 		    {
 		      "count": 5,

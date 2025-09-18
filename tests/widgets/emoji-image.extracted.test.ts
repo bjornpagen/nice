@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.961Z
+// Generated on: 2025-09-18T05:17:02.159Z
 // Widget Type: emojiImage
 // Source: Real questions from database
 //
@@ -26,9 +26,9 @@ import * as logger from "@superbuilders/slog"
 
 describe("emojiImage widget tests", () => {
 	// Extracted from question: x55f71405cf06631f
-	// Question: Write an equation for the total number of video games
+	// Question: Write an equation to describe a situation with video games
 	// Widget key: image_1
-	test("emoji-image - [x55f71405cf06631f] Write an equation for the total number of video games", async () => {
+	test("emoji-image - [x55f71405cf06631f] Write an equation to describe a situation with video games", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -53,9 +53,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x51e3b5963c108af0
-	// Question: Select an equation for a purchase scenario
+	// Question: Select the equation that matches a notebook purchase
 	// Widget key: image_1
-	test("emoji-image - [x51e3b5963c108af0] Select an equation for a purchase scenario", async () => {
+	test("emoji-image - [x51e3b5963c108af0] Select the equation that matches a notebook purchase", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -80,13 +80,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x086ab312b79982be
-	// Question: Write an equation: Chas and Tyler's video games
+	// Question: Write an equation to describe a total number of video games
 	// Widget key: image_1
-	test("emoji-image - [x086ab312b79982be] Write an equation: Chas and Tyler's video games", async () => {
+	test("emoji-image - [x086ab312b79982be] Write an equation to describe a total number of video games", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 110,
+		  "size": 100,
 		  "type": "emojiImage",
 		  "emoji": "🎮"
 		} as unknown as WidgetInput
@@ -107,13 +107,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x62d4d9ffe09b71e0
-	// Question: Write an equation to describe hats made
+	// Question: Write an equation for a hat-making total
 	// Widget key: image_1
-	test("emoji-image - [x62d4d9ffe09b71e0] Write an equation to describe hats made", async () => {
+	test("emoji-image - [x62d4d9ffe09b71e0] Write an equation for a hat-making total", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 200,
+		  "size": 196,
 		  "type": "emojiImage",
 		  "emoji": "🎩"
 		} as unknown as WidgetInput
@@ -134,9 +134,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x2b350466cf5f9a8c
-	// Question: Select an equation for a pizza purchase
+	// Question: Select the equation that matches the pizza situation
 	// Widget key: image_1
-	test("emoji-image - [x2b350466cf5f9a8c] Select an equation for a pizza purchase", async () => {
+	test("emoji-image - [x2b350466cf5f9a8c] Select the equation that matches the pizza situation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -161,9 +161,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x24354d2be3988f0c
-	// Question: Select the equation that matches this situation
+	// Question: Select an equation to represent total basketball points
 	// Widget key: image_1
-	test("emoji-image - [x24354d2be3988f0c] Select the equation that matches this situation", async () => {
+	test("emoji-image - [x24354d2be3988f0c] Select an equation to represent total basketball points", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -188,13 +188,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x871a4ae714a31690
-	// Question: Select the equation for ticket purchases
+	// Question: Select the equation for roller-skating tickets
 	// Widget key: image_1
-	test("emoji-image - [x871a4ae714a31690] Select the equation for ticket purchases", async () => {
+	test("emoji-image - [x871a4ae714a31690] Select the equation for roller-skating tickets", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 150,
+		  "size": 128,
 		  "type": "emojiImage",
 		  "emoji": "🛼"
 		} as unknown as WidgetInput
@@ -215,9 +215,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x75fb06c9b1216273
-	// Question: Write an equation for a fundraising goal
+	// Question: Write an equation for a fundraiser goal
 	// Widget key: image_1
-	test("emoji-image - [x75fb06c9b1216273] Write an equation for a fundraising goal", async () => {
+	test("emoji-image - [x75fb06c9b1216273] Write an equation for a fundraiser goal", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -242,9 +242,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xda0ea6ee85463bf9
-	// Question: Select the equation for the total ticket cost
+	// Question: Select the equation for buying tickets
 	// Widget key: image_1
-	test("emoji-image - [xda0ea6ee85463bf9] Select the equation for the total ticket cost", async () => {
+	test("emoji-image - [xda0ea6ee85463bf9] Select the equation for buying tickets", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -269,9 +269,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x68ad8a0e1bc14da0
-	// Question: Select the equation for cookies sold
+	// Question: Select the equation for a cookie fundraiser
 	// Widget key: image_1
-	test("emoji-image - [x68ad8a0e1bc14da0] Select the equation for cookies sold", async () => {
+	test("emoji-image - [x68ad8a0e1bc14da0] Select the equation for a cookie fundraiser", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -296,9 +296,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x9b7be4c68e50af88
-	// Question: Write an equation to describe movie spending
+	// Question: Write an equation for money spent at the movie theater
 	// Widget key: image_1
-	test("emoji-image - [x9b7be4c68e50af88] Write an equation to describe movie spending", async () => {
+	test("emoji-image - [x9b7be4c68e50af88] Write an equation for money spent at the movie theater", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -323,13 +323,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xcf1c6d5f1e7fc31c
-	// Question: Select multiplication and division equations for a rectangular area
+	// Question: Select multiplication and division equations for the area of a rectangle
 	// Widget key: image_1
-	test("emoji-image - [xcf1c6d5f1e7fc31c] Select multiplication and division equations for a rectangular area", async () => {
+	test("emoji-image - [xcf1c6d5f1e7fc31c] Select multiplication and division equations for the area of a rectangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 256,
+		  "size": 128,
 		  "type": "emojiImage",
 		  "emoji": "🎨"
 		} as unknown as WidgetInput
@@ -350,9 +350,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x8a49329a
-	// Question: Compare speeds represented by equations
+	// Question: Select equations with speed less than the leatherback sea turtle
 	// Widget key: image_1
-	test("emoji-image - [x8a49329a] Compare speeds represented by equations", async () => {
+	test("emoji-image - [x8a49329a] Select equations with speed less than the leatherback sea turtle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -377,13 +377,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xef1fe9b0
-	// Question: Compare speed from a distance–time graph to a peregrine falcon
+	// Question: Compare a speed from a graph to the Peregrine Falcon
 	// Widget key: image_2
-	test("emoji-image - [xef1fe9b0] Compare speed from a distance–time graph to a peregrine falcon", async () => {
+	test("emoji-image - [xef1fe9b0] Compare a speed from a graph to the Peregrine Falcon", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 128,
+		  "size": 120,
 		  "type": "emojiImage",
 		  "emoji": "🦅"
 		} as unknown as WidgetInput
@@ -404,9 +404,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xc72be93336750776
-	// Question: Interpret a spring motion graph and complete statements
+	// Question: Interpret a spring motion graph
 	// Widget key: image_1
-	test("emoji-image - [xc72be93336750776] Interpret a spring motion graph and complete statements", async () => {
+	test("emoji-image - [xc72be93336750776] Interpret a spring motion graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -430,37 +430,10 @@ describe("emojiImage widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1205d7d7
-	// Question: Cost of an ice cream cone with multiple scoops
-	// Widget key: image_1
-	test("emoji-image - [x1205d7d7] Cost of an ice cream cone with multiple scoops", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "size": 266,
-		  "type": "emojiImage",
-		  "emoji": "🍦"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for emojiImage", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x75d21b08c59bfbd3
-	// Question: Select an equation for the rabbit’s hops
+	// Question: Select an equation to model rabbit hops to a plant
 	// Widget key: image_1
-	test("emoji-image - [x75d21b08c59bfbd3] Select an equation for the rabbit’s hops", async () => {
+	test("emoji-image - [x75d21b08c59bfbd3] Select an equation to model rabbit hops to a plant", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -485,15 +458,15 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x9ea840b837e6e1d2
-	// Question: Choose an equation to model a change in rainwater volume
+	// Question: Match a situation to an equation: rainwater volume change
 	// Widget key: image_1
-	test("emoji-image - [x9ea840b837e6e1d2] Choose an equation to model a change in rainwater volume", async () => {
+	test("emoji-image - [x9ea840b837e6e1d2] Match a situation to an equation: rainwater volume change", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 128,
+		  "size": 256,
 		  "type": "emojiImage",
-		  "emoji": "🛢️"
+		  "emoji": "💧"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -512,9 +485,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x2dbd4779b8b742a5
-	// Question: Interpret a negative position value
+	// Question: Interpret the meaning of -61 in a position equation
 	// Widget key: image_1
-	test("emoji-image - [x2dbd4779b8b742a5] Interpret a negative position value", async () => {
+	test("emoji-image - [x2dbd4779b8b742a5] Interpret the meaning of -61 in a position equation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -539,13 +512,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x4e66c31776f4cd33
-	// Question: Interpret a negative result in a height context
+	// Question: Interpret a negative value in a height context
 	// Widget key: image_1
-	test("emoji-image - [x4e66c31776f4cd33] Interpret a negative result in a height context", async () => {
+	test("emoji-image - [x4e66c31776f4cd33] Interpret a negative value in a height context", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 100,
+		  "size": 128,
 		  "type": "emojiImage",
 		  "emoji": "🪣"
 		} as unknown as WidgetInput
@@ -572,7 +545,7 @@ describe("emojiImage widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 64,
+		  "size": 48,
 		  "type": "emojiImage",
 		  "emoji": "🪄"
 		} as unknown as WidgetInput
@@ -599,7 +572,7 @@ describe("emojiImage widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 48,
+		  "size": 64,
 		  "type": "emojiImage",
 		  "emoji": "⚾"
 		} as unknown as WidgetInput
@@ -620,13 +593,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x6f6997d1de52c08b
-	// Question: Mean Absolute Deviation from a Pictograph
-	// Widget key: image_key
-	test("emoji-image - [x6f6997d1de52c08b] Mean Absolute Deviation from a Pictograph", async () => {
+	// Question: Mean absolute deviation from a pictograph
+	// Widget key: image_3
+	test("emoji-image - [x6f6997d1de52c08b] Mean absolute deviation from a pictograph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 64,
+		  "size": 48,
 		  "type": "emojiImage",
 		  "emoji": "🏀"
 		} as unknown as WidgetInput
@@ -647,9 +620,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x014e5b2f8efff0f1
-	// Question: Find the mean absolute deviation from a pictograph
+	// Question: Mean absolute deviation from a pictograph
 	// Widget key: image_3
-	test("emoji-image - [x014e5b2f8efff0f1] Find the mean absolute deviation from a pictograph", async () => {
+	test("emoji-image - [x014e5b2f8efff0f1] Mean absolute deviation from a pictograph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -674,13 +647,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x37831c3f8c0f1dab
-	// Question: Mean absolute deviation from a pictograph
+	// Question: Find the mean absolute deviation from a pictograph
 	// Widget key: image_3
-	test("emoji-image - [x37831c3f8c0f1dab] Mean absolute deviation from a pictograph", async () => {
+	test("emoji-image - [x37831c3f8c0f1dab] Find the mean absolute deviation from a pictograph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 48,
+		  "size": 64,
 		  "type": "emojiImage",
 		  "emoji": "🪄"
 		} as unknown as WidgetInput
@@ -701,9 +674,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xa6ac2285fb5d1ce1
-	// Question: Find the mean absolute deviation (MAD) from a pictograph
-	// Widget key: image_key
-	test("emoji-image - [xa6ac2285fb5d1ce1] Find the mean absolute deviation (MAD) from a pictograph", async () => {
+	// Question: Mean absolute deviation from a pictograph
+	// Widget key: image_3
+	test("emoji-image - [xa6ac2285fb5d1ce1] Mean absolute deviation from a pictograph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -728,13 +701,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x32fb260c8794ec37
-	// Question: Temperature distance and change for a sweat lodge
+	// Question: Temperature difference and change in a sweat lodge
 	// Widget key: image_3
-	test("emoji-image - [x32fb260c8794ec37] Temperature distance and change for a sweat lodge", async () => {
+	test("emoji-image - [x32fb260c8794ec37] Temperature difference and change in a sweat lodge", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 128,
+		  "size": 100,
 		  "type": "emojiImage",
 		  "emoji": "🛖"
 		} as unknown as WidgetInput
@@ -755,9 +728,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x1d65ce343e5ac07c
-	// Question: Change in telescope angle and angular distance
+	// Question: Change and distance in telescope angle
 	// Widget key: image_1
-	test("emoji-image - [x1d65ce343e5ac07c] Change in telescope angle and angular distance", async () => {
+	test("emoji-image - [x1d65ce343e5ac07c] Change and distance in telescope angle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -782,9 +755,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x7f06648951f9474c
-	// Question: Distance and change in height
+	// Question: Distance and change in height between a toilet seat and pit
 	// Widget key: image_1
-	test("emoji-image - [x7f06648951f9474c] Distance and change in height", async () => {
+	test("emoji-image - [x7f06648951f9474c] Distance and change in height between a toilet seat and pit", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -809,9 +782,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xd8a3c5c5f905cefd
-	// Question: Select expressions for the distance between elevations
+	// Question: Select expressions for distance using absolute value
 	// Widget key: image_1
-	test("emoji-image - [xd8a3c5c5f905cefd] Select expressions for the distance between elevations", async () => {
+	test("emoji-image - [xd8a3c5c5f905cefd] Select expressions for distance using absolute value", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -836,13 +809,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x765d245599a8ca4a
-	// Question: Distance between a nail and a magnet
+	// Question: Select expressions for the distance between a nail and a magnet
 	// Widget key: image_1
-	test("emoji-image - [x765d245599a8ca4a] Distance between a nail and a magnet", async () => {
+	test("emoji-image - [x765d245599a8ca4a] Select expressions for the distance between a nail and a magnet", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 100,
+		  "size": 128,
 		  "type": "emojiImage",
 		  "emoji": "🧲"
 		} as unknown as WidgetInput
@@ -863,13 +836,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x3b23ab4479e78201
-	// Question: Find the mean from a pictograph
+	// Question: Mean from a pictograph
 	// Widget key: image_3
-	test("emoji-image - [x3b23ab4479e78201] Find the mean from a pictograph", async () => {
+	test("emoji-image - [x3b23ab4479e78201] Mean from a pictograph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 64,
+		  "size": 48,
 		  "type": "emojiImage",
 		  "emoji": "⚾"
 		} as unknown as WidgetInput
@@ -896,7 +869,7 @@ describe("emojiImage widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 48,
+		  "size": 64,
 		  "type": "emojiImage",
 		  "emoji": "🪄"
 		} as unknown as WidgetInput
@@ -1058,7 +1031,7 @@ describe("emojiImage widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 128,
+		  "size": 100,
 		  "type": "emojiImage",
 		  "emoji": "🥛"
 		} as unknown as WidgetInput
@@ -1079,13 +1052,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xe2db69200259decf
-	// Question: Determine actual length from a scale drawing
+	// Question: Find the actual length from a scale drawing
 	// Widget key: image_1
-	test("emoji-image - [xe2db69200259decf] Determine actual length from a scale drawing", async () => {
+	test("emoji-image - [xe2db69200259decf] Find the actual length from a scale drawing", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 128,
+		  "size": 256,
 		  "type": "emojiImage",
 		  "emoji": "🌭"
 		} as unknown as WidgetInput
@@ -1106,15 +1079,15 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x92fcee6e7d13e9f1
-	// Question: Select the best scale drawing of the chick's height
-	// Widget key: choice_a_chick
-	test("emoji-image - [x92fcee6e7d13e9f1] Select the best scale drawing of the chick's height (1)", async () => {
+	// Question: Choose the correctly scaled chick drawing
+	// Widget key: chick_choice_a
+	test("emoji-image - [x92fcee6e7d13e9f1] Choose the correctly scaled chick drawing (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "size": 96,
 		  "type": "emojiImage",
-		  "emoji": "🐥"
+		  "emoji": "🐤"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1133,15 +1106,15 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x92fcee6e7d13e9f1
-	// Question: Select the best scale drawing of the chick's height
-	// Widget key: choice_b_chick
-	test("emoji-image - [x92fcee6e7d13e9f1] Select the best scale drawing of the chick's height (2)", async () => {
+	// Question: Choose the correctly scaled chick drawing
+	// Widget key: chick_choice_b
+	test("emoji-image - [x92fcee6e7d13e9f1] Choose the correctly scaled chick drawing (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "size": 96,
 		  "type": "emojiImage",
-		  "emoji": "🐥"
+		  "emoji": "🐤"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1160,15 +1133,15 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x92fcee6e7d13e9f1
-	// Question: Select the best scale drawing of the chick's height
-	// Widget key: choice_c_chick
-	test("emoji-image - [x92fcee6e7d13e9f1] Select the best scale drawing of the chick's height (3)", async () => {
+	// Question: Choose the correctly scaled chick drawing
+	// Widget key: chick_choice_c
+	test("emoji-image - [x92fcee6e7d13e9f1] Choose the correctly scaled chick drawing (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "size": 96,
 		  "type": "emojiImage",
-		  "emoji": "🐥"
+		  "emoji": "🐤"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1187,13 +1160,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x92d41847ba64073d
-	// Question: Find the actual height from a scale drawing
+	// Question: Find actual height from a scale drawing
 	// Widget key: image_1
-	test("emoji-image - [x92d41847ba64073d] Find the actual height from a scale drawing", async () => {
+	test("emoji-image - [x92d41847ba64073d] Find actual height from a scale drawing", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 128,
+		  "size": 265,
 		  "type": "emojiImage",
 		  "emoji": "🐔"
 		} as unknown as WidgetInput
@@ -1214,13 +1187,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xd88b2feef661918f
-	// Question: Select the correctly scaled fox drawing
+	// Question: Select the drawing that matches the chosen scale
 	// Widget key: choice_a_fox
-	test("emoji-image - [xd88b2feef661918f] Select the correctly scaled fox drawing (1)", async () => {
+	test("emoji-image - [xd88b2feef661918f] Select the drawing that matches the chosen scale (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 96,
+		  "size": 64,
 		  "type": "emojiImage",
 		  "emoji": "🦊"
 		} as unknown as WidgetInput
@@ -1241,13 +1214,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xd88b2feef661918f
-	// Question: Select the correctly scaled fox drawing
+	// Question: Select the drawing that matches the chosen scale
 	// Widget key: choice_b_fox
-	test("emoji-image - [xd88b2feef661918f] Select the correctly scaled fox drawing (2)", async () => {
+	test("emoji-image - [xd88b2feef661918f] Select the drawing that matches the chosen scale (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 96,
+		  "size": 64,
 		  "type": "emojiImage",
 		  "emoji": "🦊"
 		} as unknown as WidgetInput
@@ -1268,13 +1241,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xd88b2feef661918f
-	// Question: Select the correctly scaled fox drawing
+	// Question: Select the drawing that matches the chosen scale
 	// Widget key: choice_c_fox
-	test("emoji-image - [xd88b2feef661918f] Select the correctly scaled fox drawing (3)", async () => {
+	test("emoji-image - [xd88b2feef661918f] Select the drawing that matches the chosen scale (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 96,
+		  "size": 64,
 		  "type": "emojiImage",
 		  "emoji": "🦊"
 		} as unknown as WidgetInput
@@ -1295,15 +1268,15 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x142f90fb79308478
-	// Question: Select the fastest car from unit rate options
+	// Question: Select the fastest car
 	// Widget key: choice_a_image
-	test("emoji-image - [x142f90fb79308478] Select the fastest car from unit rate options", async () => {
+	test("emoji-image - [x142f90fb79308478] Select the fastest car", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "size": 100,
 		  "type": "emojiImage",
-		  "emoji": "🅰️"
+		  "emoji": "🚗"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1322,13 +1295,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xbdc2bbeefc70686a
-	// Question: Select the fastest swimmer
-	// Widget key: choice_c_stopwatch
-	test("emoji-image - [xbdc2bbeefc70686a] Select the fastest swimmer", async () => {
+	// Question: Select the fastest swimmer based on unit rate
+	// Widget key: choice_c_image
+	test("emoji-image - [xbdc2bbeefc70686a] Select the fastest swimmer based on unit rate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 100,
+		  "size": 64,
 		  "type": "emojiImage",
 		  "emoji": "⏱️"
 		} as unknown as WidgetInput
@@ -1349,15 +1322,15 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xbfefd12ce7cf2dbc
-	// Question: Select the least expensive corn per ounce
-	// Widget key: image_choice_b
-	test("emoji-image - [xbfefd12ce7cf2dbc] Select the least expensive corn per ounce", async () => {
+	// Question: Select the brand with the least expensive corn per ounce
+	// Widget key: choice_b_image
+	test("emoji-image - [xbfefd12ce7cf2dbc] Select the brand with the least expensive corn per ounce", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "size": 170,
 		  "type": "emojiImage",
-		  "emoji": "🥫"
+		  "emoji": "🌽"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1382,7 +1355,7 @@ describe("emojiImage widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 128,
+		  "size": 100,
 		  "type": "emojiImage",
 		  "emoji": "👟"
 		} as unknown as WidgetInput
@@ -1403,9 +1376,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x0a8d9d04576fe4a8
-	// Question: Write an equation and determine chips per cookie
+	// Question: Write an equation and find chips per cookie
 	// Widget key: image_1
-	test("emoji-image - [x0a8d9d04576fe4a8] Write an equation and determine chips per cookie", async () => {
+	test("emoji-image - [x0a8d9d04576fe4a8] Write an equation and find chips per cookie", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1430,9 +1403,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x9b7e654c073a0896
-	// Question: Write an equation and find the total weight of apples
+	// Question: Write an equation and find the total weight of a basket of apples
 	// Widget key: image_1
-	test("emoji-image - [x9b7e654c073a0896] Write an equation and find the total weight of apples", async () => {
+	test("emoji-image - [x9b7e654c073a0896] Write an equation and find the total weight of a basket of apples", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1463,7 +1436,7 @@ describe("emojiImage widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 100,
+		  "size": 128,
 		  "type": "emojiImage",
 		  "emoji": "👟"
 		} as unknown as WidgetInput
@@ -1484,9 +1457,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x15d2dcd0e27eb903
-	// Question: Write an equation to split cheese evenly
+	// Question: Write an equation and find ounces of cheese per sandwich
 	// Widget key: image_1
-	test("emoji-image - [x15d2dcd0e27eb903] Write an equation to split cheese evenly", async () => {
+	test("emoji-image - [x15d2dcd0e27eb903] Write an equation and find ounces of cheese per sandwich", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1511,9 +1484,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x04feb3ec13257226
-	// Question: Write an equation and find the amount spent at a water park
+	// Question: Write an equation and find the spending amount
 	// Widget key: image_1
-	test("emoji-image - [x04feb3ec13257226] Write an equation and find the amount spent at a water park", async () => {
+	test("emoji-image - [x04feb3ec13257226] Write an equation and find the spending amount", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1544,7 +1517,7 @@ describe("emojiImage widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 128,
+		  "size": 100,
 		  "type": "emojiImage",
 		  "emoji": "👟"
 		} as unknown as WidgetInput
@@ -1565,13 +1538,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x2681c412bdb911a1
-	// Question: Write an equation and find Juan's cookie dough orders
+	// Question: Write an equation for cookie dough orders
 	// Widget key: image_1
-	test("emoji-image - [x2681c412bdb911a1] Write an equation and find Juan's cookie dough orders", async () => {
+	test("emoji-image - [x2681c412bdb911a1] Write an equation for cookie dough orders", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 128,
+		  "size": 150,
 		  "type": "emojiImage",
 		  "emoji": "🍪"
 		} as unknown as WidgetInput
@@ -1592,9 +1565,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x9aac4ede4aa67bbe
-	// Question: Write an equation for pizza slices and find slices per pizza
+	// Question: Write an equation and find slices per pizza
 	// Widget key: image_1
-	test("emoji-image - [x9aac4ede4aa67bbe] Write an equation for pizza slices and find slices per pizza", async () => {
+	test("emoji-image - [x9aac4ede4aa67bbe] Write an equation and find slices per pizza", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1619,9 +1592,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x5577531efc3f45ac
-	// Question: Write an equation and find the number of dog treats
+	// Question: Write an equation and find how many dog treats
 	// Widget key: image_1
-	test("emoji-image - [x5577531efc3f45ac] Write an equation and find the number of dog treats", async () => {
+	test("emoji-image - [x5577531efc3f45ac] Write an equation and find how many dog treats", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1673,9 +1646,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x6a728c8bb2eaa5a2
-	// Question: Write an equation for dog treats and find the number of bags
+	// Question: Write an equation and find the number of bags of dog treats
 	// Widget key: image_1
-	test("emoji-image - [x6a728c8bb2eaa5a2] Write an equation for dog treats and find the number of bags", async () => {
+	test("emoji-image - [x6a728c8bb2eaa5a2] Write an equation and find the number of bags of dog treats", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1700,9 +1673,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xea02fa98a3716d6c
-	// Question: Write an equation and find the number of laps walked
+	// Question: Write an equation and find the number of laps
 	// Widget key: image_1
-	test("emoji-image - [xea02fa98a3716d6c] Write an equation and find the number of laps walked", async () => {
+	test("emoji-image - [xea02fa98a3716d6c] Write an equation and find the number of laps", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1754,9 +1727,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: xf14d099205e09746
-	// Question: Write an equation for ice cream truck sales and find the number sold
+	// Question: Write an equation and find the number sold
 	// Widget key: image_1
-	test("emoji-image - [xf14d099205e09746] Write an equation for ice cream truck sales and find the number sold", async () => {
+	test("emoji-image - [xf14d099205e09746] Write an equation and find the number sold", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1781,15 +1754,15 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x63919a7f1673bc18
-	// Question: Write an equation for Amia's flowers and find the total
+	// Question: Write an equation and find the total number of flowers
 	// Widget key: image_1
-	test("emoji-image - [x63919a7f1673bc18] Write an equation for Amia's flowers and find the total", async () => {
+	test("emoji-image - [x63919a7f1673bc18] Write an equation and find the total number of flowers", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "size": 128,
 		  "type": "emojiImage",
-		  "emoji": "🌸"
+		  "emoji": "🌹"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1816,7 +1789,7 @@ describe("emojiImage widget tests", () => {
 		const input = {
 		  "size": 136,
 		  "type": "emojiImage",
-		  "emoji": "🍨"
+		  "emoji": "🍦"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1861,37 +1834,10 @@ describe("emojiImage widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x6ed17026d8bfe0bb
-	// Question: Find volume by water displacement in a rectangular glass
-	// Widget key: image_1
-	test("emoji-image - [x6ed17026d8bfe0bb] Find volume by water displacement in a rectangular glass", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "size": 96,
-		  "type": "emojiImage",
-		  "emoji": "💍"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for emojiImage", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x69dfec8f676fda0e
-	// Question: Select the smallest truck that meets the space requirement
+	// Question: Choose the smallest truck that meets the volume requirement
 	// Widget key: image_1
-	test("emoji-image - [x69dfec8f676fda0e] Select the smallest truck that meets the space requirement", async () => {
+	test("emoji-image - [x69dfec8f676fda0e] Choose the smallest truck that meets the volume requirement", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1916,13 +1862,13 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x216b6f3d41a78199
-	// Question: Choose the smallest moving truck that meets a volume requirement
+	// Question: Choose the smallest moving truck that meets the volume requirement
 	// Widget key: image_1
-	test("emoji-image - [x216b6f3d41a78199] Choose the smallest moving truck that meets a volume requirement", async () => {
+	test("emoji-image - [x216b6f3d41a78199] Choose the smallest moving truck that meets the volume requirement", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 100,
+		  "size": 64,
 		  "type": "emojiImage",
 		  "emoji": "🚚"
 		} as unknown as WidgetInput
@@ -1943,9 +1889,9 @@ describe("emojiImage widget tests", () => {
 	})
 
 	// Extracted from question: x4f18f88add5e993d
-	// Question: Compare refrigerator volumes from base area and height
+	// Question: Compare refrigerator volumes
 	// Widget key: image_1
-	test("emoji-image - [x4f18f88add5e993d] Compare refrigerator volumes from base area and height", async () => {
+	test("emoji-image - [x4f18f88add5e993d] Compare refrigerator volumes", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1969,43 +1915,16 @@ describe("emojiImage widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd9d03a194cdc8ae4
-	// Question: Find the volume of a ring by water displacement
+	// Extracted from question: xad911af252ca42bf
+	// Question: Identify the net of a cube
 	// Widget key: image_1
-	test("emoji-image - [xd9d03a194cdc8ae4] Find the volume of a ring by water displacement", async () => {
+	test("emoji-image - [xad911af252ca42bf] Identify the net of a cube", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "size": 120,
 		  "type": "emojiImage",
-		  "emoji": "💍"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for emojiImage", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x29a33987cc70cc98
-	// Question: Identify the shape formed by a net
-	// Widget key: choice_basketball_image
-	test("emoji-image - [x29a33987cc70cc98] Identify the shape formed by a net", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "size": 64,
-		  "type": "emojiImage",
-		  "emoji": "🏀"
+		  "emoji": "🎲"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2030,7 +1949,7 @@ describe("emojiImage widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "size": 96,
+		  "size": 120,
 		  "type": "emojiImage",
 		  "emoji": "🏜️"
 		} as unknown as WidgetInput
@@ -2050,63 +1969,9 @@ describe("emojiImage widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xf8498b902f74bfd6
-	// Question: Ratio of chicks to eggs
-	// Widget key: explanation_image_1
-	test("emoji-image - [xf8498b902f74bfd6] Ratio of chicks to eggs", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "size": 100,
-		  "type": "emojiImage",
-		  "emoji": "🐥"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for emojiImage", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x70d4ff682334d643
-	// Question: Ratio of turtles to total animals
-	// Widget key: image_1
-	test("emoji-image - [x70d4ff682334d643] Ratio of turtles to total animals", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "size": 100,
-		  "type": "emojiImage",
-		  "emoji": "🐢"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for emojiImage", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x6ef8f4eac2e3f75f
 	// Question: Ratio of cookies to ice cream cones
-	// Widget key: explanation_image_1
+	// Widget key: cookie_image
 	test("emoji-image - [x6ef8f4eac2e3f75f] Ratio of cookies to ice cream cones", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2131,63 +1996,9 @@ describe("emojiImage widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x94428d0ee089a38d
-	// Question: Ratio of sharks to total animals
-	// Widget key: shark_image
-	test("emoji-image - [x94428d0ee089a38d] Ratio of sharks to total animals", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "size": 100,
-		  "type": "emojiImage",
-		  "emoji": "🦈"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for emojiImage", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8c833e327631f33c
-	// Question: Ratio of raccoons to total animals
-	// Widget key: explanation_image_1
-	test("emoji-image - [x8c833e327631f33c] Ratio of raccoons to total animals", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "size": 100,
-		  "type": "emojiImage",
-		  "emoji": "🦝"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for emojiImage", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x675601e0d938dab4
 	// Question: Ratio of penguins to total birds
-	// Widget key: penguin_image
+	// Widget key: explanation_image_1
 	test("emoji-image - [x675601e0d938dab4] Ratio of penguins to total birds", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility

@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.972Z
+// Generated on: 2025-09-18T05:17:02.170Z
 // Widget Type: pictograph
 // Source: Real questions from database
 //
@@ -122,9 +122,9 @@ describe("pictograph widget tests", () => {
 	})
 
 	// Extracted from question: x6f6997d1de52c08b
-	// Question: Mean Absolute Deviation from a Pictograph
-	// Widget key: pictograph_image
-	test("pictograph - [x6f6997d1de52c08b] Mean Absolute Deviation from a Pictograph", async () => {
+	// Question: Mean absolute deviation from a pictograph
+	// Widget key: image_2
+	test("pictograph - [x6f6997d1de52c08b] Mean absolute deviation from a pictograph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -170,9 +170,9 @@ describe("pictograph widget tests", () => {
 	})
 
 	// Extracted from question: x014e5b2f8efff0f1
-	// Question: Find the mean absolute deviation from a pictograph
+	// Question: Mean absolute deviation from a pictograph
 	// Widget key: image_2
-	test("pictograph - [x014e5b2f8efff0f1] Find the mean absolute deviation from a pictograph", async () => {
+	test("pictograph - [x014e5b2f8efff0f1] Mean absolute deviation from a pictograph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -218,9 +218,9 @@ describe("pictograph widget tests", () => {
 	})
 
 	// Extracted from question: x37831c3f8c0f1dab
-	// Question: Mean absolute deviation from a pictograph
+	// Question: Find the mean absolute deviation from a pictograph
 	// Widget key: image_2
-	test("pictograph - [x37831c3f8c0f1dab] Mean absolute deviation from a pictograph", async () => {
+	test("pictograph - [x37831c3f8c0f1dab] Find the mean absolute deviation from a pictograph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -266,9 +266,9 @@ describe("pictograph widget tests", () => {
 	})
 
 	// Extracted from question: xa6ac2285fb5d1ce1
-	// Question: Find the mean absolute deviation (MAD) from a pictograph
-	// Widget key: pictograph_image
-	test("pictograph - [xa6ac2285fb5d1ce1] Find the mean absolute deviation (MAD) from a pictograph", async () => {
+	// Question: Mean absolute deviation from a pictograph
+	// Widget key: image_2
+	test("pictograph - [xa6ac2285fb5d1ce1] Mean absolute deviation from a pictograph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -296,54 +296,6 @@ describe("pictograph widget tests", () => {
 		  ],
 		  "type": "pictograph",
 		  "title": "Pieces of stinky cheese in each student's lunch box."
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pictograph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3b23ab4479e78201
-	// Question: Find the mean from a pictograph
-	// Widget key: image_2
-	test("pictograph - [x3b23ab4479e78201] Find the mean from a pictograph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "key": {
-		    "icon": "⚾",
-		    "label": "= 1 home run"
-		  },
-		  "data": [
-		    {
-		      "category": "Lancers",
-		      "iconCount": 7
-		    },
-		    {
-		      "category": "Huskies",
-		      "iconCount": 2
-		    },
-		    {
-		      "category": "Grizzlies",
-		      "iconCount": 4
-		    },
-		    {
-		      "category": "Raiders",
-		      "iconCount": 3
-		    }
-		  ],
-		  "type": "pictograph",
-		  "title": "Home runs hit by each team in a baseball league."
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)

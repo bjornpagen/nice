@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.955Z
+// Generated on: 2025-09-18T05:17:02.149Z
 // Widget Type: pointPlotGraph
 // Source: Real questions from database
 //
@@ -33,22 +33,22 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 230,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 9,
-		    "min": -1,
+		    "max": 10,
+		    "min": -10,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
-		    "min": -7,
+		    "max": 10,
+		    "min": -10,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 280,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 2,
@@ -84,29 +84,29 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x3655a9298adc15cd
-	// Question: Distance between two points
+	// Question: Distance between two points on the coordinate plane
 	// Widget key: image_1
-	test("point-plot-graph - [x3655a9298adc15cd] Distance between two points", async () => {
+	test("point-plot-graph - [x3655a9298adc15cd] Distance between two points on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 260,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 8,
 		    "min": -4,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
+		    "max": 11,
+		    "min": -1,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 270,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": -2,
@@ -142,9 +142,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2bf4ce9bb856d003
-	// Question: Distance between two points on a coordinate plane
+	// Question: Distance between two points on the coordinate plane
 	// Widget key: image_1
-	test("point-plot-graph - [x2bf4ce9bb856d003] Distance between two points on a coordinate plane", async () => {
+	test("point-plot-graph - [x2bf4ce9bb856d003] Distance between two points on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -153,18 +153,18 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 260,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 4,
@@ -207,22 +207,22 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 240,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 260,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": -6,
@@ -258,41 +258,41 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd0740915570d6e2b
-	// Question: Distance between two points on a coordinate plane
+	// Question: Distance between two points
 	// Widget key: image_1
-	test("point-plot-graph - [xd0740915570d6e2b] Distance between two points on a coordinate plane", async () => {
+	test("point-plot-graph - [xd0740915570d6e2b] Distance between two points", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 250,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 250,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 4,
 		      "y": 2,
-		      "id": "p1",
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 8,
 		      "y": 5,
-		      "id": "p2",
+		      "id": "P2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -316,29 +316,29 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x36fe74d2210a22d5
-	// Question: Distance between two points
+	// Question: Distance between two points on a coordinate plane
 	// Widget key: image_1
-	test("point-plot-graph - [x36fe74d2210a22d5] Distance between two points", async () => {
+	test("point-plot-graph - [x36fe74d2210a22d5] Distance between two points on a coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 250,
+		  "width": 300,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 0,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 240,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 2,
@@ -374,29 +374,29 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x3c3c1872c06233d4
-	// Question: Find the distance between two points on a coordinate plane
+	// Question: Distance between two points on a coordinate plane
 	// Widget key: image_1
-	test("point-plot-graph - [x3c3c1872c06233d4] Find the distance between two points on a coordinate plane", async () => {
+	test("point-plot-graph - [x3c3c1872c06233d4] Distance between two points on a coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 250,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 2,
+		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 240,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 3,
@@ -431,10 +431,10 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x036186d82b8c0a9d
-	// Question: Write the coordinates of a graphed point
-	// Widget key: image_1
-	test("point-plot-graph - [x036186d82b8c0a9d] Write the coordinates of a graphed point", async () => {
+	// Extracted from question: x7e1f38002b202ced
+	// Question: Identify the coordinates of a plotted point
+	// Widget key: image_2
+	test("point-plot-graph - [x7e1f38002b202ced] Identify the coordinates of a plotted point", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -443,14 +443,72 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "y-axis",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -4,
+		      "y": 0,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "origin",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x036186d82b8c0a9d
+	// Question: Write the coordinates of point M
+	// Widget key: image_1
+	test("point-plot-graph - [x036186d82b8c0a9d] Write the coordinates of point M", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 5,
+		    "min": -5,
+		    "label": "x-axis",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "min": -5,
+		    "label": "y-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -483,9 +541,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0a74fe926ac43d8e
-	// Question: Identify the coordinates of point A
+	// Question: Identify the coordinates of a graphed point
 	// Widget key: image_2
-	test("point-plot-graph - [x0a74fe926ac43d8e] Identify the coordinates of point A", async () => {
+	test("point-plot-graph - [x0a74fe926ac43d8e] Identify the coordinates of a graphed point", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -494,14 +552,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -512,64 +570,6 @@ describe("pointPlotGraph widget tests", () => {
 		      "y": 7,
 		      "id": "A",
 		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "origin",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7e1f38002b202ced
-	// Question: Identify the ordered pair for a graphed point
-	// Widget key: image_2
-	test("point-plot-graph - [x7e1f38002b202ced] Identify the ordered pair for a graphed point", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": 0,
-		      "id": "B",
-		      "label": "B",
 		      "style": "closed"
 		    }
 		  ],
@@ -592,9 +592,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2e2d4d901215a1bc
-	// Question: Identify the ordered pair for a plotted point
+	// Question: Identify an ordered pair from a graphed point
 	// Widget key: image_2
-	test("point-plot-graph - [x2e2d4d901215a1bc] Identify the ordered pair for a plotted point", async () => {
+	test("point-plot-graph - [x2e2d4d901215a1bc] Identify an ordered pair from a graphed point", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -603,14 +603,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "y-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -643,9 +643,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5589868dc8cb1096
-	// Question: Identify the ordered pair for a graphed point
+	// Question: Which ordered pair represents point D?
 	// Widget key: image_2
-	test("point-plot-graph - [x5589868dc8cb1096] Identify the ordered pair for a graphed point", async () => {
+	test("point-plot-graph - [x5589868dc8cb1096] Which ordered pair represents point D?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -654,14 +654,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -694,60 +694,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7c8e7b2dd73b3179
-	// Question: Identify the graph of the point (8, −5)
+	// Question: Graph a point on the coordinate plane
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x7c8e7b2dd73b3179] Identify the graph of the point (8, −5) (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 8,
-		      "y": -5,
-		      "id": "A1",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7c8e7b2dd73b3179
-	// Question: Identify the graph of the point (8, −5)
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [x7c8e7b2dd73b3179] Identify the graph of the point (8, −5) (2)", async () => {
+	test("point-plot-graph - [x7c8e7b2dd73b3179] Graph a point on the coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -772,7 +721,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 8,
 		      "y": 5,
-		      "id": "B1",
+		      "id": "P",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -796,9 +745,60 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7c8e7b2dd73b3179
-	// Question: Identify the graph of the point (8, −5)
+	// Question: Graph a point on the coordinate plane
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [x7c8e7b2dd73b3179] Graph a point on the coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 8,
+		      "y": -5,
+		      "id": "P",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7c8e7b2dd73b3179
+	// Question: Graph a point on the coordinate plane
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x7c8e7b2dd73b3179] Identify the graph of the point (8, −5) (3)", async () => {
+	test("point-plot-graph - [x7c8e7b2dd73b3179] Graph a point on the coordinate plane (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -823,7 +823,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -8,
 		      "y": -5,
-		      "id": "C1",
+		      "id": "P",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -847,60 +847,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x80c8f6d7b84f6237
-	// Question: Select the graph that plots (3, 0)
+	// Question: Plot a point on the coordinate plane
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x80c8f6d7b84f6237] Select the graph that plots (3, 0) (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": 0,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x80c8f6d7b84f6237
-	// Question: Select the graph that plots (3, 0)
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [x80c8f6d7b84f6237] Select the graph that plots (3, 0) (2)", async () => {
+	test("point-plot-graph - [x80c8f6d7b84f6237] Plot a point on the coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -925,7 +874,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "p1",
+		      "id": "P_origin",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -949,9 +898,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x80c8f6d7b84f6237
-	// Question: Select the graph that plots (3, 0)
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x80c8f6d7b84f6237] Select the graph that plots (3, 0) (3)", async () => {
+	// Question: Plot a point on the coordinate plane
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [x80c8f6d7b84f6237] Plot a point on the coordinate plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -974,9 +923,60 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 325,
 		  "points": [
 		    {
-		      "x": -3,
+		      "x": 3,
 		      "y": 0,
-		      "id": "p1",
+		      "id": "P_correct",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x80c8f6d7b84f6237
+	// Question: Plot a point on the coordinate plane
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x80c8f6d7b84f6237] Plot a point on the coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 6,
+		    "min": -6,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "min": -6,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 3,
+		      "id": "P_distractor",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -1000,9 +1000,111 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x54d37c22378e7b9f
-	// Question: Graph a point on the coordinate plane
+	// Question: Select the graph of a point on the coordinate plane
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x54d37c22378e7b9f] Graph a point on the coordinate plane (1)", async () => {
+	test("point-plot-graph - [x54d37c22378e7b9f] Select the graph of a point on the coordinate plane (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": -4,
+		      "id": "A_point",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x54d37c22378e7b9f
+	// Question: Select the graph of a point on the coordinate plane
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [x54d37c22378e7b9f] Select the graph of a point on the coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "B_point",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x54d37c22378e7b9f
+	// Question: Select the graph of a point on the coordinate plane
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x54d37c22378e7b9f] Select the graph of a point on the coordinate plane (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1027,161 +1129,8 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -6,
 		      "y": 4,
-		      "id": "P1",
+		      "id": "C_point",
 		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x54d37c22378e7b9f
-	// Question: Graph a point on the coordinate plane
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [x54d37c22378e7b9f] Graph a point on the coordinate plane (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": -4,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x54d37c22378e7b9f
-	// Question: Graph a point on the coordinate plane
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x54d37c22378e7b9f] Graph a point on the coordinate plane (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 6,
-		      "y": -4,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7cd061603aeeb6ce
-	// Question: Write the coordinates of a graphed point
-	// Widget key: image_1
-	test("point-plot-graph - [x7cd061603aeeb6ce] Write the coordinates of a graphed point", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": -6,
-		      "id": "R",
-		      "label": "R",
 		      "style": "closed"
 		    }
 		  ],
@@ -1215,14 +1164,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": " ",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": " ",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1254,10 +1203,61 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4be080f22820fcfe
-	// Question: Write the coordinates of a point on the coordinate plane
+	// Extracted from question: x7cd061603aeeb6ce
+	// Question: Write the coordinates of a point from a graph
 	// Widget key: image_1
-	test("point-plot-graph - [x4be080f22820fcfe] Write the coordinates of a point on the coordinate plane", async () => {
+	test("point-plot-graph - [x7cd061603aeeb6ce] Write the coordinates of a point from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x-axis",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y-axis",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": -6,
+		      "id": "point_R",
+		      "label": "R",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4be080f22820fcfe
+	// Question: Write the coordinates of a graphed point
+	// Widget key: image_1
+	test("point-plot-graph - [x4be080f22820fcfe] Write the coordinates of a graphed point", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1266,14 +1266,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "x-axis",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "y-axis",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1307,7 +1307,7 @@ describe("pointPlotGraph widget tests", () => {
 
 	// Extracted from question: x12b80844841e694a
 	// Question: Graph a point on the coordinate plane
-	// Widget key: graph_choice_a
+	// Widget key: point_choice_a
 	test("point-plot-graph - [x12b80844841e694a] Graph a point on the coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -1332,8 +1332,8 @@ describe("pointPlotGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": 1.5,
-		      "y": 1.5,
-		      "id": "p_a1",
+		      "y": -1.5,
+		      "id": "pt_a",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -1358,7 +1358,7 @@ describe("pointPlotGraph widget tests", () => {
 
 	// Extracted from question: x12b80844841e694a
 	// Question: Graph a point on the coordinate plane
-	// Widget key: graph_choice_b
+	// Widget key: point_choice_b
 	test("point-plot-graph - [x12b80844841e694a] Graph a point on the coordinate plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -1383,8 +1383,8 @@ describe("pointPlotGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": 1.5,
-		      "y": -1.5,
-		      "id": "p_b1",
+		      "y": 1.5,
+		      "id": "pt_b",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -1409,7 +1409,7 @@ describe("pointPlotGraph widget tests", () => {
 
 	// Extracted from question: x12b80844841e694a
 	// Question: Graph a point on the coordinate plane
-	// Widget key: graph_choice_c
+	// Widget key: point_choice_c
 	test("point-plot-graph - [x12b80844841e694a] Graph a point on the coordinate plane (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -1435,7 +1435,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -1.5,
 		      "y": -1.5,
-		      "id": "p_c1",
+		      "id": "pt_c",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -1459,9 +1459,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x628d5c49063669da
-	// Question: Identify the ordered pair of a graphed point
+	// Question: Identify the coordinates of a plotted point
 	// Widget key: image_2
-	test("point-plot-graph - [x628d5c49063669da] Identify the ordered pair of a graphed point", async () => {
+	test("point-plot-graph - [x628d5c49063669da] Identify the coordinates of a plotted point", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1470,14 +1470,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1488,13 +1488,6 @@ describe("pointPlotGraph widget tests", () => {
 		      "y": 4,
 		      "id": "F",
 		      "label": "F",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "O",
-		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -1517,9 +1510,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x196d1c8c9518d82e
-	// Question: Write the coordinates of point P
+	// Question: Write the coordinates of a graphed point
 	// Widget key: image_1
-	test("point-plot-graph - [x196d1c8c9518d82e] Write the coordinates of point P", async () => {
+	test("point-plot-graph - [x196d1c8c9518d82e] Write the coordinates of a graphed point", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1528,19 +1521,26 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 325,
 		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "origin",
+		      "label": "",
+		      "style": "closed"
+		    },
 		    {
 		      "x": 8,
 		      "y": -8,
@@ -1568,9 +1568,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0046c09e3a6b3fb0
-	// Question: Write the coordinates of a plotted point
+	// Question: Coordinates of a graphed point
 	// Widget key: image_1
-	test("point-plot-graph - [x0046c09e3a6b3fb0] Write the coordinates of a plotted point", async () => {
+	test("point-plot-graph - [x0046c09e3a6b3fb0] Coordinates of a graphed point", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1579,15 +1579,15 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
-		    "tickInterval": 1,
+		    "label": "x-axis",
+		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
-		    "tickInterval": 1,
+		    "label": "y-axis",
+		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "height": 325,
@@ -1630,14 +1630,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1646,7 +1646,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 6,
 		      "y": -5,
-		      "id": "C",
+		      "id": "point_C",
 		      "label": "C",
 		      "style": "closed"
 		    }
@@ -1670,9 +1670,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xad8b05eaac754d6d
-	// Question: Write the coordinates of a plotted point
+	// Question: Write the coordinates of a point on the coordinate plane
 	// Widget key: image_1
-	test("point-plot-graph - [xad8b05eaac754d6d] Write the coordinates of a plotted point", async () => {
+	test("point-plot-graph - [xad8b05eaac754d6d] Write the coordinates of a point on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1681,14 +1681,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1721,9 +1721,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x41b45a4fd5133152
-	// Question: Write the coordinates of a plotted point
+	// Question: Write the coordinates of a graphed point
 	// Widget key: image_1
-	test("point-plot-graph - [x41b45a4fd5133152] Write the coordinates of a plotted point", async () => {
+	test("point-plot-graph - [x41b45a4fd5133152] Write the coordinates of a graphed point", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1732,14 +1732,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1772,9 +1772,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe0942c18f0ff61da
-	// Question: Select the graph of a point on the coordinate plane
+	// Question: Graph the point (0, −9)
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [xe0942c18f0ff61da] Select the graph of a point on the coordinate plane (1)", async () => {
+	test("point-plot-graph - [xe0942c18f0ff61da] Graph the point (0, −9) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1798,8 +1798,8 @@ describe("pointPlotGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": 0,
-		      "y": 9,
-		      "id": "P_A",
+		      "y": 0,
+		      "id": "p_a",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -1823,9 +1823,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe0942c18f0ff61da
-	// Question: Select the graph of a point on the coordinate plane
+	// Question: Graph the point (0, −9)
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [xe0942c18f0ff61da] Select the graph of a point on the coordinate plane (2)", async () => {
+	test("point-plot-graph - [xe0942c18f0ff61da] Graph the point (0, −9) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1850,7 +1850,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": -9,
-		      "id": "P_B",
+		      "id": "p_b",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -1874,9 +1874,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe0942c18f0ff61da
-	// Question: Select the graph of a point on the coordinate plane
+	// Question: Graph the point (0, −9)
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [xe0942c18f0ff61da] Select the graph of a point on the coordinate plane (3)", async () => {
+	test("point-plot-graph - [xe0942c18f0ff61da] Graph the point (0, −9) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1899,9 +1899,9 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 325,
 		  "points": [
 		    {
-		      "x": 9,
-		      "y": 0,
-		      "id": "P_C",
+		      "x": 0,
+		      "y": 9,
+		      "id": "p_c",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -1925,9 +1925,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5ca32a31bd8019a1
-	// Question: Select the graph with the point (2, 9)
+	// Question: Identify a point on the coordinate plane
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x5ca32a31bd8019a1] Select the graph with the point (2, 9) (1)", async () => {
+	test("point-plot-graph - [x5ca32a31bd8019a1] Identify a point on the coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1952,7 +1952,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "pt_a",
+		      "id": "A_point_origin",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -1976,9 +1976,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5ca32a31bd8019a1
-	// Question: Select the graph with the point (2, 9)
+	// Question: Identify a point on the coordinate plane
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x5ca32a31bd8019a1] Select the graph with the point (2, 9) (2)", async () => {
+	test("point-plot-graph - [x5ca32a31bd8019a1] Identify a point on the coordinate plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2003,7 +2003,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 9,
-		      "id": "pt_b",
+		      "id": "B_point_correct",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -2027,9 +2027,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5ca32a31bd8019a1
-	// Question: Select the graph with the point (2, 9)
+	// Question: Identify a point on the coordinate plane
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x5ca32a31bd8019a1] Select the graph with the point (2, 9) (3)", async () => {
+	test("point-plot-graph - [x5ca32a31bd8019a1] Identify a point on the coordinate plane (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2054,7 +2054,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 0,
-		      "id": "pt_c",
+		      "id": "C_point_partial",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -2078,9 +2078,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x1ff9d77b07e1e511
-	// Question: Identify a plotted point on the coordinate plane
+	// Question: Graph a point on the coordinate plane
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x1ff9d77b07e1e511] Identify a plotted point on the coordinate plane (1)", async () => {
+	test("point-plot-graph - [x1ff9d77b07e1e511] Graph a point on the coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2104,8 +2104,8 @@ describe("pointPlotGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": 0,
-		      "y": 0,
-		      "id": "p_origin",
+		      "y": 7,
+		      "id": "pt_a",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -2129,9 +2129,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x1ff9d77b07e1e511
-	// Question: Identify a plotted point on the coordinate plane
+	// Question: Graph a point on the coordinate plane
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x1ff9d77b07e1e511] Identify a plotted point on the coordinate plane (2)", async () => {
+	test("point-plot-graph - [x1ff9d77b07e1e511] Graph a point on the coordinate plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2156,7 +2156,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -1,
 		      "y": 7,
-		      "id": "p_correct",
+		      "id": "pt_b",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -2180,9 +2180,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x1ff9d77b07e1e511
-	// Question: Identify a plotted point on the coordinate plane
+	// Question: Graph a point on the coordinate plane
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x1ff9d77b07e1e511] Identify a plotted point on the coordinate plane (3)", async () => {
+	test("point-plot-graph - [x1ff9d77b07e1e511] Graph a point on the coordinate plane (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2205,9 +2205,9 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 325,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 7,
-		      "id": "p_reflection",
+		      "x": 7,
+		      "y": -1,
+		      "id": "pt_c",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -2231,9 +2231,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5afbaf9337ce2124
-	// Question: Predict total gems from a time–gems graph
+	// Question: Predict gems earned from a time–gems graph
 	// Widget key: image_1
-	test("point-plot-graph - [x5afbaf9337ce2124] Predict total gems from a time–gems graph", async () => {
+	test("point-plot-graph - [x5afbaf9337ce2124] Predict gems earned from a time–gems graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2258,21 +2258,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 16,
-		      "id": "p1",
+		      "id": "P1",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
 		      "x": 4,
 		      "y": 32,
-		      "id": "p2",
+		      "id": "P2",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
 		      "x": 6,
 		      "y": 48,
-		      "id": "p3",
+		      "id": "P3",
 		      "label": "",
 		      "style": "open"
 		    }
@@ -2303,43 +2303,43 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 306.743,
+		  "width": 320,
 		  "xAxis": {
 		    "max": 30,
 		    "min": 0,
-		    "label": "t = charging time in minutes",
+		    "label": "t (minutes)",
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 500,
 		    "min": 0,
-		    "label": "k = range gain",
+		    "label": "k (kilometers)",
 		    "tickInterval": 100,
 		    "showGridLines": true
 		  },
-		  "height": 292.8,
+		  "height": 320,
 		  "points": [
 		    {
 		      "x": 10,
 		      "y": 150,
-		      "id": "P1",
-		      "label": "",
-		      "style": "open"
+		      "id": "p1",
+		      "label": "(10, 150)",
+		      "style": "closed"
 		    },
 		    {
 		      "x": 20,
 		      "y": 300,
-		      "id": "P2",
-		      "label": "",
-		      "style": "open"
+		      "id": "p2",
+		      "label": "(20, 300)",
+		      "style": "closed"
 		    },
 		    {
 		      "x": 30,
 		      "y": 450,
-		      "id": "P3",
-		      "label": "",
-		      "style": "open"
+		      "id": "p3",
+		      "label": "(30, 450)",
+		      "style": "closed"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -2426,14 +2426,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xed60a66425c0fd5c
-	// Question: Find the cat’s age from a graph
+	// Question: Find the cat's age from a graph
 	// Widget key: image_1
-	test("point-plot-graph - [xed60a66425c0fd5c] Find the cat’s age from a graph", async () => {
+	test("point-plot-graph - [xed60a66425c0fd5c] Find the cat's age from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 293,
+		  "width": 300,
 		  "xAxis": {
 		    "max": 12,
 		    "min": 0,
@@ -2448,7 +2448,7 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 301,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 6,
@@ -2491,9 +2491,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7de1dd925472715e
-	// Question: Time to reach 200 XP from a graph
+	// Question: Find hours to reach 200 XP from a graph
 	// Widget key: image_1
-	test("point-plot-graph - [x7de1dd925472715e] Time to reach 200 XP from a graph", async () => {
+	test("point-plot-graph - [x7de1dd925472715e] Find hours to reach 200 XP from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2502,14 +2502,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 7,
 		    "min": 0,
-		    "label": "t=playing time in hours",
+		    "label": "Playing time (hours)",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 80,
 		    "min": 0,
-		    "label": "p=total XP",
+		    "label": "Total XP",
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
@@ -2518,21 +2518,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 25,
-		      "id": "P1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
 		      "x": 4,
 		      "y": 50,
-		      "id": "P2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
 		      "x": 6,
 		      "y": 75,
-		      "id": "P3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "open"
 		    }
@@ -2556,115 +2556,50 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x06b45565427e1cf8
-	// Question: Complete an equation from a growth graph
+	// Question: Complete an equation for sponge age from height
 	// Widget key: image_1
-	test("point-plot-graph - [x06b45565427e1cf8] Complete an equation from a growth graph", async () => {
+	test("point-plot-graph - [x06b45565427e1cf8] Complete an equation for sponge age from height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 293,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 12,
 		    "min": 0,
-		    "label": "a=age in years",
+		    "label": "a = age in years",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 24,
 		    "min": 0,
-		    "label": "h=height in centimeters",
+		    "label": "h = height in centimeters",
 		    "tickInterval": 4,
 		    "showGridLines": true
 		  },
-		  "height": 301,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 4,
 		      "y": 8,
-		      "id": "P1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
 		      "x": 8,
 		      "y": 16,
-		      "id": "P2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
 		      "x": 10,
 		      "y": 20,
-		      "id": "P3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "open"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf1525a9c62d5925c
-	// Question: Complete an equation from a graph of coral growth
-	// Widget key: image_1
-	test("point-plot-graph - [xf1525a9c62d5925c] Complete an equation from a graph of coral growth", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 303.257,
-		  "xAxis": {
-		    "max": 7,
-		    "min": 0,
-		    "label": "a=age in years",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 50,
-		    "min": 0,
-		    "label": "h=height in centimeters",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "height": 295.24,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 15,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 30,
-		      "id": "P2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 45,
-		      "id": "P3",
-		      "label": "",
-		      "style": "closed"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -2686,14 +2621,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x26bddf3c838d6b4a
-	// Question: Complete an equation from a charging-time graph
+	// Question: Write an equation from a charging graph
 	// Widget key: image_1
-	test("point-plot-graph - [x26bddf3c838d6b4a] Complete an equation from a charging-time graph", async () => {
+	test("point-plot-graph - [x26bddf3c838d6b4a] Write an equation from a charging graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 298.9,
+		  "width": 300,
 		  "xAxis": {
 		    "max": 20,
 		    "min": 0,
@@ -2708,27 +2643,27 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
-		  "height": 292.8,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 5,
 		      "y": 20,
 		      "id": "P1",
-		      "label": "",
+		      "label": "(5, 20)",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 10,
 		      "y": 40,
 		      "id": "P2",
-		      "label": "",
+		      "label": "(10, 40)",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 15,
 		      "y": 60,
 		      "id": "P3",
-		      "label": "",
+		      "label": "(15, 60)",
 		      "style": "closed"
 		    }
 		  ],
@@ -2751,25 +2686,25 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb586221f1efc806a
-	// Question: Identify the rule relating x- and y-coordinates from a graph
+	// Question: Identify a linear rule from a graph
 	// Widget key: image_1
-	test("point-plot-graph - [xb586221f1efc806a] Identify the rule relating x- and y-coordinates from a graph", async () => {
+	test("point-plot-graph - [xb586221f1efc806a] Identify a linear rule from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
 		  "width": 350,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -2778,217 +2713,22 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 3,
-		      "id": "p1",
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 5,
-		      "id": "p2",
+		      "id": "P2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 7,
-		      "id": "p3",
+		      "id": "P3",
 		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcbcfa527e2618095
-	// Question: Select the graph that represents y = 0.5x
-	// Widget key: choice_a_graph
-	test("point-plot-graph - [xcbcfa527e2618095] Select the graph that represents y = 0.5x (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 220,
-		  "xAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 220,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "a1",
-		      "label": "(0, 0)",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 5,
-		      "id": "a2",
-		      "label": "(5, 5)",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 8,
-		      "id": "a3",
-		      "label": "(8, 8)",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcbcfa527e2618095
-	// Question: Select the graph that represents y = 0.5x
-	// Widget key: choice_b_graph
-	test("point-plot-graph - [xcbcfa527e2618095] Select the graph that represents y = 0.5x (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 220,
-		  "xAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 220,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 5,
-		      "id": "b1",
-		      "label": "(2, 5)",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 7,
-		      "id": "b2",
-		      "label": "(4, 7)",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 9,
-		      "id": "b3",
-		      "label": "(6, 9)",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcbcfa527e2618095
-	// Question: Select the graph that represents y = 0.5x
-	// Widget key: choice_c_graph
-	test("point-plot-graph - [xcbcfa527e2618095] Select the graph that represents y = 0.5x (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 220,
-		  "xAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 220,
-		  "points": [
-		    {
-		      "x": 4,
-		      "y": 2,
-		      "id": "c1",
-		      "label": "(4, 2)",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 3,
-		      "id": "c2",
-		      "label": "(6, 3)",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 4,
-		      "id": "c3",
-		      "label": "(8, 4)",
 		      "style": "closed"
 		    }
 		  ],
@@ -3018,41 +2758,41 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "x-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "y-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 4,
 		      "y": 1,
-		      "id": "A1",
+		      "id": "a1",
 		      "label": "(4, 1)",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 8,
 		      "y": 3,
-		      "id": "A2",
+		      "id": "a2",
 		      "label": "(8, 3)",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 10,
 		      "y": 4,
-		      "id": "A3",
+		      "id": "a3",
 		      "label": "(10, 4)",
 		      "style": "closed"
 		    }
@@ -3083,41 +2823,41 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "x-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "y-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 1,
 		      "y": 3,
-		      "id": "B1",
+		      "id": "b1",
 		      "label": "(1, 3)",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 7,
-		      "id": "B2",
+		      "id": "b2",
 		      "label": "(3, 7)",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 9,
-		      "id": "B3",
+		      "id": "b3",
 		      "label": "(4, 9)",
 		      "style": "closed"
 		    }
@@ -3148,41 +2888,41 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "x-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "y-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 2,
 		      "y": 6,
-		      "id": "C1",
+		      "id": "c1",
 		      "label": "(2, 6)",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
 		      "y": 8,
-		      "id": "C2",
+		      "id": "c2",
 		      "label": "(6, 8)",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 8,
 		      "y": 9,
-		      "id": "C3",
+		      "id": "c3",
 		      "label": "(8, 9)",
 		      "style": "closed"
 		    }
@@ -3205,48 +2945,48 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3dd5461e83f8f1e8
-	// Question: Select the graph for y = 3x − 2
+	// Extracted from question: xcbcfa527e2618095
+	// Question: Identify the graph of y = 0.5x
 	// Widget key: choice_a_graph
-	test("point-plot-graph - [x3dd5461e83f8f1e8] Select the graph for y = 3x − 2 (1)", async () => {
+	test("point-plot-graph - [xcbcfa527e2618095] Identify the graph of y = 0.5x (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 11,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 11,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 4,
-		      "y": 2,
+		      "x": 0,
+		      "y": 0,
 		      "id": "A1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 7,
+		      "x": 5,
 		      "y": 5,
 		      "id": "A2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 9,
-		      "y": 7,
+		      "x": 8,
+		      "y": 8,
 		      "id": "A3",
 		      "label": "",
 		      "style": "closed"
@@ -3270,48 +3010,48 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3dd5461e83f8f1e8
-	// Question: Select the graph for y = 3x − 2
+	// Extracted from question: xcbcfa527e2618095
+	// Question: Identify the graph of y = 0.5x
 	// Widget key: choice_b_graph
-	test("point-plot-graph - [x3dd5461e83f8f1e8] Select the graph for y = 3x − 2 (2)", async () => {
+	test("point-plot-graph - [xcbcfa527e2618095] Identify the graph of y = 0.5x (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 11,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 11,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 1,
+		      "x": 2,
+		      "y": 5,
 		      "id": "B1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 2,
-		      "y": 4,
+		      "x": 4,
+		      "y": 7,
 		      "id": "B2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": 10,
+		      "x": 6,
+		      "y": 9,
 		      "id": "B3",
 		      "label": "",
 		      "style": "closed"
@@ -3335,48 +3075,48 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3dd5461e83f8f1e8
-	// Question: Select the graph for y = 3x − 2
+	// Extracted from question: xcbcfa527e2618095
+	// Question: Identify the graph of y = 0.5x
 	// Widget key: choice_c_graph
-	test("point-plot-graph - [x3dd5461e83f8f1e8] Select the graph for y = 3x − 2 (3)", async () => {
+	test("point-plot-graph - [xcbcfa527e2618095] Identify the graph of y = 0.5x (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 11,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 11,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 2,
-		      "y": 6,
+		      "x": 4,
+		      "y": 2,
 		      "id": "C1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": 7,
+		      "x": 6,
+		      "y": 3,
 		      "id": "C2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 6,
-		      "y": 8,
+		      "x": 8,
+		      "y": 4,
 		      "id": "C3",
 		      "label": "",
 		      "style": "closed"
@@ -3400,49 +3140,49 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1f1c66c0f31e14ab
-	// Question: Select the graph that satisfies y = x − 1
+	// Extracted from question: x3dd5461e83f8f1e8
+	// Question: Select the graph that represents y = 3x − 2
 	// Widget key: choice_a_graph
-	test("point-plot-graph - [x1f1c66c0f31e14ab] Select the graph that satisfies y = x − 1 (1)", async () => {
+	test("point-plot-graph - [x3dd5461e83f8f1e8] Select the graph that represents y = 3x − 2 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "x-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "y-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 2,
-		      "y": 1,
-		      "id": "a1",
+		      "x": 4,
+		      "y": 2,
+		      "id": "A_p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 5,
-		      "y": 4,
-		      "id": "a2",
+		      "x": 7,
+		      "y": 5,
+		      "id": "A_p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 8,
+		      "x": 9,
 		      "y": 7,
-		      "id": "a3",
+		      "id": "A_p3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3465,49 +3205,49 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1f1c66c0f31e14ab
-	// Question: Select the graph that satisfies y = x − 1
+	// Extracted from question: x3dd5461e83f8f1e8
+	// Question: Select the graph that represents y = 3x − 2
 	// Widget key: choice_b_graph
-	test("point-plot-graph - [x1f1c66c0f31e14ab] Select the graph that satisfies y = x − 1 (2)", async () => {
+	test("point-plot-graph - [x3dd5461e83f8f1e8] Select the graph that represents y = 3x − 2 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "x-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "y-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 0,
-		      "y": 2,
-		      "id": "b1",
+		      "x": 1,
+		      "y": 1,
+		      "id": "B_p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 4,
+		      "id": "B_p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
-		      "y": 3,
-		      "id": "b2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 4,
-		      "id": "b3",
+		      "y": 10,
+		      "id": "B_p3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3530,50 +3270,245 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1f1c66c0f31e14ab
-	// Question: Select the graph that satisfies y = x − 1
+	// Extracted from question: x3dd5461e83f8f1e8
+	// Question: Select the graph that represents y = 3x − 2
 	// Widget key: choice_c_graph
-	test("point-plot-graph - [x1f1c66c0f31e14ab] Select the graph that satisfies y = x − 1 (3)", async () => {
+	test("point-plot-graph - [x3dd5461e83f8f1e8] Select the graph that represents y = 3x − 2 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "x-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "y-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 2,
 		      "y": 6,
-		      "id": "c1",
+		      "id": "C_p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 7,
+		      "id": "C_p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
 		      "y": 8,
-		      "id": "c2",
+		      "id": "C_p3",
 		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1f1c66c0f31e14ab
+	// Question: Identify the graph that satisfies y = x − 1
+	// Widget key: choice_a_graph
+	test("point-plot-graph - [x1f1c66c0f31e14ab] Identify the graph that satisfies y = x − 1 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 1,
+		      "id": "a1",
+		      "label": "(2, 1)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 4,
+		      "id": "a2",
+		      "label": "(5, 4)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 7,
+		      "id": "a3",
+		      "label": "(8, 7)",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1f1c66c0f31e14ab
+	// Question: Identify the graph that satisfies y = x − 1
+	// Widget key: choice_b_graph
+	test("point-plot-graph - [x1f1c66c0f31e14ab] Identify the graph that satisfies y = x − 1 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 2,
+		      "id": "b1",
+		      "label": "(0, 2)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 3,
+		      "id": "b2",
+		      "label": "(4, 3)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 4,
+		      "id": "b3",
+		      "label": "(8, 4)",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1f1c66c0f31e14ab
+	// Question: Identify the graph that satisfies y = x − 1
+	// Widget key: choice_c_graph
+	test("point-plot-graph - [x1f1c66c0f31e14ab] Identify the graph that satisfies y = x − 1 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 6,
+		      "id": "c1",
+		      "label": "(2, 6)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 8,
+		      "id": "c2",
+		      "label": "(6, 8)",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 10,
 		      "y": 10,
 		      "id": "c3",
-		      "label": "",
+		      "label": "(10, 10)",
 		      "style": "closed"
 		    }
 		  ],
@@ -3596,48 +3531,48 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0c3b12cef7f2d0a0
-	// Question: Select the graph that shows y = 2x
+	// Question: Identify the graph of y = 2x
 	// Widget key: choice_a_graph
-	test("point-plot-graph - [x0c3b12cef7f2d0a0] Select the graph that shows y = 2x (1)", async () => {
+	test("point-plot-graph - [x0c3b12cef7f2d0a0] Identify the graph of y = 2x (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "x-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "y-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 2,
 		      "y": 4,
-		      "id": "a_p1",
+		      "id": "A1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 8,
-		      "id": "a_p2",
+		      "id": "A2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 10,
-		      "id": "a_p3",
+		      "id": "A3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3661,48 +3596,48 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0c3b12cef7f2d0a0
-	// Question: Select the graph that shows y = 2x
+	// Question: Identify the graph of y = 2x
 	// Widget key: choice_b_graph
-	test("point-plot-graph - [x0c3b12cef7f2d0a0] Select the graph that shows y = 2x (2)", async () => {
+	test("point-plot-graph - [x0c3b12cef7f2d0a0] Identify the graph of y = 2x (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "x-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "y-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0,
 		      "y": 2,
-		      "id": "b_p1",
+		      "id": "B1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 3,
-		      "id": "b_p2",
+		      "id": "B2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 8,
 		      "y": 4,
-		      "id": "b_p3",
+		      "id": "B3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3726,48 +3661,48 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0c3b12cef7f2d0a0
-	// Question: Select the graph that shows y = 2x
+	// Question: Identify the graph of y = 2x
 	// Widget key: choice_c_graph
-	test("point-plot-graph - [x0c3b12cef7f2d0a0] Select the graph that shows y = 2x (3)", async () => {
+	test("point-plot-graph - [x0c3b12cef7f2d0a0] Identify the graph of y = 2x (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "x-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "y-axis",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 2,
 		      "y": 6,
-		      "id": "c_p1",
+		      "id": "C1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 5,
-		      "id": "c_p2",
+		      "id": "C2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 8,
 		      "y": 3,
-		      "id": "c_p3",
+		      "id": "C3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3791,9 +3726,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7014b34ee5cf4e9a
-	// Question: Select the rule that describes the x–y relationship from a graph
+	// Question: Select the rule that matches the graph
 	// Widget key: image_1
-	test("point-plot-graph - [x7014b34ee5cf4e9a] Select the rule that describes the x–y relationship from a graph", async () => {
+	test("point-plot-graph - [x7014b34ee5cf4e9a] Select the rule that matches the graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3802,14 +3737,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -3818,21 +3753,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "P1",
+		      "id": "pt1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 4,
-		      "id": "P2",
+		      "id": "pt2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 8,
-		      "id": "P3",
+		      "id": "pt3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3856,9 +3791,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8c69f47ee973cddd
-	// Question: Identify the rule from a graph
+	// Question: Identify the rule relating x- and y-coordinates on a graph
 	// Widget key: image_1
-	test("point-plot-graph - [x8c69f47ee973cddd] Identify the rule from a graph", async () => {
+	test("point-plot-graph - [x8c69f47ee973cddd] Identify the rule relating x- and y-coordinates on a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3867,14 +3802,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -3883,21 +3818,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 1,
 		      "y": 3,
-		      "id": "P1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 6,
-		      "id": "P2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 7,
 		      "y": 9,
-		      "id": "P3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3921,29 +3856,29 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb1ae73731b900706
-	// Question: Identify the graph of y = 0.5x + 5
+	// Question: Choose the graph for y = 0.5x + 5
 	// Widget key: choice_a_graph
-	test("point-plot-graph - [xb1ae73731b900706] Identify the graph of y = 0.5x + 5 (1)", async () => {
+	test("point-plot-graph - [xb1ae73731b900706] Choose the graph for y = 0.5x + 5 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 0,
@@ -3986,46 +3921,46 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb1ae73731b900706
-	// Question: Identify the graph of y = 0.5x + 5
+	// Question: Choose the graph for y = 0.5x + 5
 	// Widget key: choice_b_graph
-	test("point-plot-graph - [xb1ae73731b900706] Identify the graph of y = 0.5x + 5 (2)", async () => {
+	test("point-plot-graph - [xb1ae73731b900706] Choose the graph for y = 0.5x + 5 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 1,
+		      "x": 2,
 		      "y": 0,
 		      "id": "B1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
+		      "x": 4,
 		      "y": 4,
 		      "id": "B2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 6,
+		      "x": 8,
 		      "y": 10,
 		      "id": "B3",
 		      "label": "",
@@ -4051,29 +3986,29 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb1ae73731b900706
-	// Question: Identify the graph of y = 0.5x + 5
+	// Question: Choose the graph for y = 0.5x + 5
 	// Widget key: choice_c_graph
-	test("point-plot-graph - [xb1ae73731b900706] Identify the graph of y = 0.5x + 5 (3)", async () => {
+	test("point-plot-graph - [xb1ae73731b900706] Choose the graph for y = 0.5x + 5 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 2,
@@ -4116,9 +4051,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x67f0d68c46348de2
-	// Question: Identify the rule relating x- and y-coordinates from a graph
+	// Question: Identify the rule from a coordinate graph
 	// Widget key: image_1
-	test("point-plot-graph - [x67f0d68c46348de2] Identify the rule relating x- and y-coordinates from a graph", async () => {
+	test("point-plot-graph - [x67f0d68c46348de2] Identify the rule from a coordinate graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4127,14 +4062,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4188,22 +4123,22 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 1,
@@ -4253,22 +4188,22 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 2,
@@ -4318,22 +4253,22 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 220,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 0,
@@ -4376,9 +4311,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x269f8b74f65ab145
-	// Question: Identify the rule relating x- and y-coordinates from a graph
+	// Question: Identify the rule relating x and y on a graph
 	// Widget key: image_1
-	test("point-plot-graph - [x269f8b74f65ab145] Identify the rule relating x- and y-coordinates from a graph", async () => {
+	test("point-plot-graph - [x269f8b74f65ab145] Identify the rule relating x and y on a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4387,14 +4322,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4441,9 +4376,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xa532544c3ddcbd1e
-	// Question: Identify the rule from the graph
+	// Question: Identify the rule relating x and y from the graph
 	// Widget key: image_1
-	test("point-plot-graph - [xa532544c3ddcbd1e] Identify the rule from the graph", async () => {
+	test("point-plot-graph - [xa532544c3ddcbd1e] Identify the rule relating x and y from the graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4452,14 +4387,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4506,9 +4441,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x45403aa384d69054
-	// Question: Identify the rule from a graph
+	// Question: Identify the rule from a plotted graph
 	// Widget key: image_1
-	test("point-plot-graph - [x45403aa384d69054] Identify the rule from a graph", async () => {
+	test("point-plot-graph - [x45403aa384d69054] Identify the rule from a plotted graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4517,14 +4452,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4533,21 +4468,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 2,
-		      "id": "P1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 6,
-		      "id": "P2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 8,
-		      "id": "P3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -4571,24 +4506,24 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc55ca0bf22c8247e
-	// Question: Plot points and determine proportionality
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [xc55ca0bf22c8247e] Plot points and determine proportionality (2)", async () => {
+	// Question: Plot points from a table and determine proportionality
+	// Widget key: plot_choice_a
+	test("point-plot-graph - [xc55ca0bf22c8247e] Plot points from a table and determine proportionality (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
 		  "width": 360,
 		  "xAxis": {
-		    "max": 6.5,
-		    "min": -1,
+		    "max": 6,
+		    "min": 1,
 		    "label": "Hours",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 55,
-		    "min": -5,
+		    "max": 50,
+		    "min": 5,
 		    "label": "Earnings",
 		    "tickInterval": 5,
 		    "showGridLines": true
@@ -4636,24 +4571,24 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc55ca0bf22c8247e
-	// Question: Plot points and determine proportionality
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [xc55ca0bf22c8247e] Plot points and determine proportionality (3)", async () => {
+	// Question: Plot points from a table and determine proportionality
+	// Widget key: plot_choice_b
+	test("point-plot-graph - [xc55ca0bf22c8247e] Plot points from a table and determine proportionality (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
 		  "width": 360,
 		  "xAxis": {
-		    "max": 6.5,
-		    "min": -1,
+		    "max": 6,
+		    "min": 1,
 		    "label": "Hours",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 55,
-		    "min": -5,
+		    "max": 50,
+		    "min": 5,
 		    "label": "Earnings",
 		    "tickInterval": 5,
 		    "showGridLines": true
@@ -4661,30 +4596,23 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 360,
 		  "points": [
 		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "p0",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
 		      "x": 1,
-		      "y": 10,
-		      "id": "p1",
+		      "y": 30,
+		      "id": "q1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 20,
-		      "id": "p2",
+		      "id": "q2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
-		      "y": 30,
-		      "id": "p3",
+		      "y": 10,
+		      "id": "q3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -4708,24 +4636,24 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc55ca0bf22c8247e
-	// Question: Plot points and determine proportionality
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [xc55ca0bf22c8247e] Plot points and determine proportionality (4)", async () => {
+	// Question: Plot points from a table and determine proportionality
+	// Widget key: plot_choice_c
+	test("point-plot-graph - [xc55ca0bf22c8247e] Plot points from a table and determine proportionality (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
 		  "width": 360,
 		  "xAxis": {
-		    "max": 6.5,
-		    "min": -1,
+		    "max": 6,
+		    "min": 1,
 		    "label": "Hours",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 55,
-		    "min": -5,
+		    "max": 50,
+		    "min": 5,
 		    "label": "Earnings",
 		    "tickInterval": 5,
 		    "showGridLines": true
@@ -4735,21 +4663,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 1,
 		      "y": 15,
-		      "id": "q1",
+		      "id": "r1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 25,
-		      "id": "q2",
+		      "id": "r2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 35,
-		      "id": "q3",
+		      "id": "r3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -4773,9 +4701,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xac9ca145e3ff81d4
-	// Question: Plot points from a table and determine proportionality
-	// Widget key: plot_choice_a
-	test("point-plot-graph - [xac9ca145e3ff81d4] Plot points from a table and determine proportionality (1)", async () => {
+	// Question: Plot ordered pairs and identify proportionality
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [xac9ca145e3ff81d4] Plot ordered pairs and identify proportionality (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4838,9 +4766,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xac9ca145e3ff81d4
-	// Question: Plot points from a table and determine proportionality
-	// Widget key: plot_choice_b
-	test("point-plot-graph - [xac9ca145e3ff81d4] Plot points from a table and determine proportionality (2)", async () => {
+	// Question: Plot ordered pairs and identify proportionality
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [xac9ca145e3ff81d4] Plot ordered pairs and identify proportionality (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4864,7 +4792,7 @@ describe("pointPlotGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": 1,
-		      "y": 4,
+		      "y": 5,
 		      "id": "q1",
 		      "label": "",
 		      "style": "closed"
@@ -4878,7 +4806,7 @@ describe("pointPlotGraph widget tests", () => {
 		    },
 		    {
 		      "x": 12,
-		      "y": 16,
+		      "y": 15,
 		      "id": "q3",
 		      "label": "",
 		      "style": "closed"
@@ -4903,9 +4831,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xac9ca145e3ff81d4
-	// Question: Plot points from a table and determine proportionality
-	// Widget key: plot_choice_c
-	test("point-plot-graph - [xac9ca145e3ff81d4] Plot points from a table and determine proportionality (3)", async () => {
+	// Question: Plot ordered pairs and identify proportionality
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [xac9ca145e3ff81d4] Plot ordered pairs and identify proportionality (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4968,9 +4896,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0c6519c79d1c60af
-	// Question: Plot ordered pairs and identify a proportional relationship
-	// Widget key: plot_choice_a
-	test("point-plot-graph - [x0c6519c79d1c60af] Plot ordered pairs and identify a proportional relationship (2)", async () => {
+	// Question: Plot ordered pairs and determine proportionality
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [x0c6519c79d1c60af] Plot ordered pairs and determine proportionality (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4978,14 +4906,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "width": 360,
 		  "xAxis": {
 		    "max": 4.5,
-		    "min": -0.5,
+		    "min": 0,
 		    "label": "Storage (GB)",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 500,
-		    "min": -50,
+		    "min": 0,
 		    "label": "Songs",
 		    "tickInterval": 50,
 		    "showGridLines": true
@@ -4995,21 +4923,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 0.5,
 		      "y": 100,
-		      "id": "a_p1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": 200,
-		      "id": "a_p2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 400,
-		      "id": "a_p3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -5033,9 +4961,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0c6519c79d1c60af
-	// Question: Plot ordered pairs and identify a proportional relationship
-	// Widget key: plot_choice_b
-	test("point-plot-graph - [x0c6519c79d1c60af] Plot ordered pairs and identify a proportional relationship (3)", async () => {
+	// Question: Plot ordered pairs and determine proportionality
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [x0c6519c79d1c60af] Plot ordered pairs and determine proportionality (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5043,14 +4971,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "width": 360,
 		  "xAxis": {
 		    "max": 4.5,
-		    "min": -0.5,
+		    "min": 0,
 		    "label": "Storage (GB)",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 500,
-		    "min": -50,
+		    "min": 0,
 		    "label": "Songs",
 		    "tickInterval": 50,
 		    "showGridLines": true
@@ -5060,21 +4988,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 0.5,
 		      "y": 100,
-		      "id": "b_p1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
-		      "y": 400,
-		      "id": "b_p2",
+		      "y": 150,
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
-		      "y": 200,
-		      "id": "b_p3",
+		      "y": 400,
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -5098,9 +5026,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0c6519c79d1c60af
-	// Question: Plot ordered pairs and identify a proportional relationship
-	// Widget key: plot_choice_c
-	test("point-plot-graph - [x0c6519c79d1c60af] Plot ordered pairs and identify a proportional relationship (4)", async () => {
+	// Question: Plot ordered pairs and determine proportionality
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x0c6519c79d1c60af] Plot ordered pairs and determine proportionality (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5108,14 +5036,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "width": 360,
 		  "xAxis": {
 		    "max": 4.5,
-		    "min": -0.5,
+		    "min": 0,
 		    "label": "Storage (GB)",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 500,
-		    "min": -50,
+		    "min": 0,
 		    "label": "Songs",
 		    "tickInterval": 50,
 		    "showGridLines": true
@@ -5123,30 +5051,23 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 360,
 		  "points": [
 		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "c_p0",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
 		      "x": 0.5,
 		      "y": 100,
-		      "id": "c_p1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": 200,
-		      "id": "c_p2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
-		      "y": 400,
-		      "id": "c_p3",
+		      "y": 300,
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -5170,24 +5091,24 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x454440a0107897f9
-	// Question: Plot points from a table and check proportionality
+	// Question: Plot ordered pairs and assess proportionality
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x454440a0107897f9] Plot points from a table and check proportionality (1)", async () => {
+	test("point-plot-graph - [x454440a0107897f9] Plot ordered pairs and assess proportionality (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
 		  "width": 360,
 		  "xAxis": {
-		    "max": 20,
-		    "min": 0,
+		    "max": 22,
+		    "min": -4,
 		    "label": "Kilometers",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 50,
-		    "min": 0,
+		    "max": 55,
+		    "min": -5,
 		    "label": "Minutes",
 		    "tickInterval": 5,
 		    "showGridLines": true
@@ -5197,21 +5118,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 5,
 		      "y": 10,
-		      "id": "A1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 11,
 		      "y": 15,
-		      "id": "A2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 18,
 		      "y": 20,
-		      "id": "A3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -5235,89 +5156,24 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x454440a0107897f9
-	// Question: Plot points from a table and check proportionality
+	// Question: Plot ordered pairs and assess proportionality
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x454440a0107897f9] Plot points from a table and check proportionality (2)", async () => {
+	test("point-plot-graph - [x454440a0107897f9] Plot ordered pairs and assess proportionality (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
 		  "width": 360,
 		  "xAxis": {
-		    "max": 20,
-		    "min": 0,
+		    "max": 22,
+		    "min": -4,
 		    "label": "Kilometers",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 50,
-		    "min": 0,
-		    "label": "Minutes",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": 10,
-		      "id": "B1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 11,
-		      "y": 15,
-		      "id": "B2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 18,
-		      "y": 25,
-		      "id": "B3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x454440a0107897f9
-	// Question: Plot points from a table and check proportionality
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x454440a0107897f9] Plot points from a table and check proportionality (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 360,
-		  "xAxis": {
-		    "max": 20,
-		    "min": 0,
-		    "label": "Kilometers",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 50,
-		    "min": 0,
+		    "max": 55,
+		    "min": -5,
 		    "label": "Minutes",
 		    "tickInterval": 5,
 		    "showGridLines": true
@@ -5327,21 +5183,86 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 10,
 		      "y": 5,
-		      "id": "C1",
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 15,
+		      "y": 11,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 20,
+		      "y": 18,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x454440a0107897f9
+	// Question: Plot ordered pairs and assess proportionality
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x454440a0107897f9] Plot ordered pairs and assess proportionality (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 22,
+		    "min": -4,
+		    "label": "Kilometers",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 55,
+		    "min": -5,
+		    "label": "Minutes",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 20,
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 11,
-		      "y": 15,
-		      "id": "C2",
+		      "y": 10,
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 18,
-		      "y": 20,
-		      "id": "C3",
+		      "y": 15,
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -5365,9 +5286,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5a6c2961568b8359
-	// Question: Plot ordered pairs and assess proportionality
+	// Question: Plot points from a table and test proportionality
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x5a6c2961568b8359] Plot ordered pairs and assess proportionality (2)", async () => {
+	test("point-plot-graph - [x5a6c2961568b8359] Plot points from a table and test proportionality (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5430,74 +5351,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5a6c2961568b8359
-	// Question: Plot ordered pairs and assess proportionality
+	// Question: Plot points from a table and test proportionality
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x5a6c2961568b8359] Plot ordered pairs and assess proportionality (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 360,
-		  "xAxis": {
-		    "max": 6,
-		    "min": 0,
-		    "label": "Targets hit",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 18,
-		    "min": 0,
-		    "label": "Points",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 2,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 4,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 10,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5a6c2961568b8359
-	// Question: Plot ordered pairs and assess proportionality
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x5a6c2961568b8359] Plot ordered pairs and assess proportionality (4)", async () => {
+	test("point-plot-graph - [x5a6c2961568b8359] Plot points from a table and test proportionality (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5522,215 +5378,150 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 1,
 		      "y": 3,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 6,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 12,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5a6c2961568b8359
+	// Question: Plot points from a table and test proportionality
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x5a6c2961568b8359] Plot points from a table and test proportionality (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 6,
+		    "min": 0,
+		    "label": "Targets hit",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 18,
+		    "min": 0,
+		    "label": "Points",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 3,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 5,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 16,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7af3956dfc88e036
+	// Question: Find a unit rate from a coordinate plane
+	// Widget key: image_1
+	test("point-plot-graph - [x7af3956dfc88e036] Find a unit rate from a coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 380,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Time, seconds",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 40,
+		    "min": 0,
+		    "label": "Distance, meters",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "height": 380,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 18,
 		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
-		      "y": 6,
+		      "y": 27,
 		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 5,
-		      "y": 12,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xca2ec09641388000
-	// Question: Plot ordered pairs and assess proportionality
-	// Widget key: plot_choice_a
-	test("point-plot-graph - [xca2ec09641388000] Plot ordered pairs and assess proportionality (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 360,
-		  "xAxis": {
-		    "max": 24,
-		    "min": 0,
-		    "label": "Chicken wings",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 12,
-		    "min": 0,
-		    "label": "Price",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 8,
-		      "y": 5,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 16,
-		      "y": 8,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 24,
-		      "y": 10,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xca2ec09641388000
-	// Question: Plot ordered pairs and assess proportionality
-	// Widget key: plot_choice_b
-	test("point-plot-graph - [xca2ec09641388000] Plot ordered pairs and assess proportionality (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 360,
-		  "xAxis": {
-		    "max": 24,
-		    "min": 0,
-		    "label": "Chicken wings",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 12,
-		    "min": 0,
-		    "label": "Price",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 8,
-		      "y": 5,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 16,
-		      "y": 8,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 24,
-		      "y": 12,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xca2ec09641388000
-	// Question: Plot ordered pairs and assess proportionality
-	// Widget key: plot_choice_c
-	test("point-plot-graph - [xca2ec09641388000] Plot ordered pairs and assess proportionality (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 360,
-		  "xAxis": {
-		    "max": 24,
-		    "min": 0,
-		    "label": "Chicken wings",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 12,
-		    "min": 0,
-		    "label": "Price",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 8,
-		      "y": 5,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 16,
-		      "y": 10,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 24,
-		      "y": 12,
+		      "x": 4,
+		      "y": 36,
 		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
@@ -5755,9 +5546,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x977b42e29d280d15
-	// Question: Add an ordered pair to a proportional relationship graph
+	// Question: Add an equivalent ordered pair to a constant-speed graph
 	// Widget key: image_1
-	test("point-plot-graph - [x977b42e29d280d15] Add an ordered pair to a proportional relationship graph", async () => {
+	test("point-plot-graph - [x977b42e29d280d15] Add an equivalent ordered pair to a constant-speed graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5771,7 +5562,7 @@ describe("pointPlotGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 70,
+		    "max": 60,
 		    "min": 0,
 		    "label": "Distance, kilometers",
 		    "tickInterval": 10,
@@ -5782,21 +5573,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 3,
 		      "y": 30,
-		      "id": "P1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 40,
-		      "id": "P2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 50,
-		      "id": "P3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -5820,9 +5611,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc80f466d62443c8e
-	// Question: Choose an ordered pair on a constant-rate graph
+	// Question: Add an ordered pair to a constant-rate graph
 	// Widget key: image_1
-	test("point-plot-graph - [xc80f466d62443c8e] Choose an ordered pair on a constant-rate graph", async () => {
+	test("point-plot-graph - [xc80f466d62443c8e] Add an ordered pair to a constant-rate graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5847,21 +5638,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 3,
 		      "y": 45,
-		      "id": "p1",
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 60,
-		      "id": "p2",
+		      "id": "P2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 75,
-		      "id": "p3",
+		      "id": "P3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -5885,9 +5676,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8162ca287ecd407a
-	// Question: Complete a ratio table and select the graph
+	// Question: Complete a ratio table and select the corresponding graph
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x8162ca287ecd407a] Complete a ratio table and select the graph (2)", async () => {
+	test("point-plot-graph - [x8162ca287ecd407a] Complete a ratio table and select the corresponding graph (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5895,15 +5686,15 @@ describe("pointPlotGraph widget tests", () => {
 		  "width": 345,
 		  "xAxis": {
 		    "max": 6,
-		    "min": -1,
-		    "label": "x",
+		    "min": 0,
+		    "label": "Servings",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 95,
-		    "min": -10,
-		    "label": "y",
+		    "max": 100,
+		    "min": 0,
+		    "label": "Crackers",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
@@ -5950,9 +5741,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8162ca287ecd407a
-	// Question: Complete a ratio table and select the graph
+	// Question: Complete a ratio table and select the corresponding graph
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x8162ca287ecd407a] Complete a ratio table and select the graph (3)", async () => {
+	test("point-plot-graph - [x8162ca287ecd407a] Complete a ratio table and select the corresponding graph (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5960,15 +5751,15 @@ describe("pointPlotGraph widget tests", () => {
 		  "width": 345,
 		  "xAxis": {
 		    "max": 6,
-		    "min": -1,
-		    "label": "x",
+		    "min": 0,
+		    "label": "Servings",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 95,
-		    "min": -10,
-		    "label": "y",
+		    "max": 100,
+		    "min": 0,
+		    "label": "Crackers",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
@@ -5977,21 +5768,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 1,
 		      "y": 30,
-		      "id": "q1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 45,
-		      "id": "q2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 60,
-		      "id": "q3",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -6015,9 +5792,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8162ca287ecd407a
-	// Question: Complete a ratio table and select the graph
+	// Question: Complete a ratio table and select the corresponding graph
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x8162ca287ecd407a] Complete a ratio table and select the graph (4)", async () => {
+	test("point-plot-graph - [x8162ca287ecd407a] Complete a ratio table and select the corresponding graph (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6025,15 +5802,15 @@ describe("pointPlotGraph widget tests", () => {
 		  "width": 345,
 		  "xAxis": {
 		    "max": 6,
-		    "min": -1,
-		    "label": "x",
+		    "min": 0,
+		    "label": "Servings",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 95,
-		    "min": -10,
-		    "label": "y",
+		    "max": 100,
+		    "min": 0,
+		    "label": "Crackers",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
@@ -6041,86 +5818,21 @@ describe("pointPlotGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": 1,
-		      "y": 3,
-		      "id": "r1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 6,
-		      "id": "r2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 9,
-		      "id": "r3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7af3956dfc88e036
-	// Question: Find a unit rate from a coordinate plane (zip line)
-	// Widget key: image_1
-	test("point-plot-graph - [x7af3956dfc88e036] Find a unit rate from a coordinate plane (zip line)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 380,
-		  "xAxis": {
-		    "max": 5,
-		    "min": 0,
-		    "label": "Time, seconds",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 40,
-		    "min": 0,
-		    "label": "Distance, meters",
-		    "tickInterval": 10,
-		    "showGridLines": true
-		  },
-		  "height": 380,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 18,
+		      "y": 30,
 		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": 27,
+		      "x": 2,
+		      "y": 90,
 		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": 36,
+		      "x": 3,
+		      "y": 60,
 		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
@@ -6145,9 +5857,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xaef9a6943b79a975
-	// Question: Complete a ratio table and select a graph
+	// Question: Complete a ratio table and select the correct graph
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [xaef9a6943b79a975] Complete a ratio table and select a graph (2)", async () => {
+	test("point-plot-graph - [xaef9a6943b79a975] Complete a ratio table and select the correct graph (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6170,23 +5882,16 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 5,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
 		      "x": 3,
 		      "y": 15,
-		      "id": "p2",
+		      "id": "A1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 25,
-		      "id": "p3",
+		      "id": "A2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -6210,9 +5915,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xaef9a6943b79a975
-	// Question: Complete a ratio table and select a graph
+	// Question: Complete a ratio table and select the correct graph
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [xaef9a6943b79a975] Complete a ratio table and select a graph (3)", async () => {
+	test("point-plot-graph - [xaef9a6943b79a975] Complete a ratio table and select the correct graph (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6235,23 +5940,74 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 5,
-		      "id": "p1",
+		      "x": 3,
+		      "y": 10,
+		      "id": "B1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
+		      "x": 5,
+		      "y": 20,
+		      "id": "B2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xaef9a6943b79a975
+	// Question: Complete a ratio table and select the correct graph
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [xaef9a6943b79a975] Complete a ratio table and select the correct graph (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 7,
+		    "min": -1,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 35,
+		    "min": -4,
+		    "label": "y",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
 		      "x": 3,
-		      "y": 10,
-		      "id": "p2",
+		      "y": 25,
+		      "id": "C1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 15,
-		      "id": "p3",
+		      "id": "C2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -6275,74 +6031,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xaef9a6943b79a975
-	// Question: Complete a ratio table and select a graph
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [xaef9a6943b79a975] Complete a ratio table and select a graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 7,
-		    "min": -1,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 35,
-		    "min": -4,
-		    "label": "y",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 5,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 5,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 5,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xaef9a6943b79a975
-	// Question: Complete a ratio table and select a graph
-	// Widget key: coordinate_plane
-	test("point-plot-graph - [xaef9a6943b79a975] Complete a ratio table and select a graph (5)", async () => {
+	// Question: Complete a ratio table and select the correct graph
+	// Widget key: coordinate_plane_empty
+	test("point-plot-graph - [xaef9a6943b79a975] Complete a ratio table and select the correct graph (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6383,9 +6074,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xf2660f36ee4b3823
-	// Question: Determine water used from points on a coordinate plane
+	// Question: Predict water use from a coordinate plane
 	// Widget key: image_1
-	test("point-plot-graph - [xf2660f36ee4b3823] Determine water used from points on a coordinate plane", async () => {
+	test("point-plot-graph - [xf2660f36ee4b3823] Predict water use from a coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6402,7 +6093,7 @@ describe("pointPlotGraph widget tests", () => {
 		    "max": 100,
 		    "min": 0,
 		    "label": "Water, liters",
-		    "tickInterval": 10,
+		    "tickInterval": 12,
 		    "showGridLines": true
 		  },
 		  "height": 380,
@@ -6448,14 +6139,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd43197955121dfac
-	// Question: Complete a ratio table and select the correct graph
+	// Question: Complete a ratio table and select the corresponding graph
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [xd43197955121dfac] Complete a ratio table and select the correct graph (2)", async () => {
+	test("point-plot-graph - [xd43197955121dfac] Complete a ratio table and select the corresponding graph (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 425,
+		  "width": 345,
 		  "xAxis": {
 		    "max": 7,
 		    "min": 0,
@@ -6470,7 +6161,7 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 3,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 345,
 		  "points": [
 		    {
 		      "x": 1,
@@ -6513,9 +6204,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd43197955121dfac
-	// Question: Complete a ratio table and select the correct graph
+	// Question: Complete a ratio table and select the corresponding graph
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [xd43197955121dfac] Complete a ratio table and select the correct graph (3)", async () => {
+	test("point-plot-graph - [xd43197955121dfac] Complete a ratio table and select the corresponding graph (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6540,21 +6231,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 1,
 		      "y": 6,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 24,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 18,
-		      "id": "p3",
+		      "id": "q1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -6578,14 +6255,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd43197955121dfac
-	// Question: Complete a ratio table and select the correct graph
+	// Question: Complete a ratio table and select the corresponding graph
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [xd43197955121dfac] Complete a ratio table and select the correct graph (4)", async () => {
+	test("point-plot-graph - [xd43197955121dfac] Complete a ratio table and select the corresponding graph (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 425,
+		  "width": 345,
 		  "xAxis": {
 		    "max": 7,
 		    "min": 0,
@@ -6600,26 +6277,26 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 3,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 345,
 		  "points": [
 		    {
 		      "x": 1,
 		      "y": 6,
-		      "id": "p1",
+		      "id": "r1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
-		      "y": 12,
-		      "id": "p2",
+		      "y": 24,
+		      "id": "r2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
-		      "y": 16,
-		      "id": "p3",
+		      "y": 18,
+		      "id": "r3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -6643,9 +6320,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb88066673a648f85
-	// Question: Find the maximum number of swimmers with 3 lifeguards
+	// Question: Maximum swimmers with a given number of lifeguards
 	// Widget key: image_1
-	test("point-plot-graph - [xb88066673a648f85] Find the maximum number of swimmers with 3 lifeguards", async () => {
+	test("point-plot-graph - [xb88066673a648f85] Maximum swimmers with a given number of lifeguards", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6670,19 +6347,149 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 80,
-		      "id": "p1",
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 160,
-		      "id": "p2",
+		      "id": "P2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
+		      "y": 200,
+		      "id": "P3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x109a849190c03f75
+	// Question: Choose an ordered pair that fits the graph
+	// Widget key: image_1
+	test("point-plot-graph - [x109a849190c03f75] Choose an ordered pair that fits the graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 380,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Water (scoops)",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Salt (scoops)",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 380,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 2.5,
+		      "id": "P1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 3,
+		      "id": "P2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 4,
+		      "id": "P3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7fef064a2899e61f
+	// Question: Bricks per layer from a coordinate plane
+	// Widget key: image_1
+	test("point-plot-graph - [x7fef064a2899e61f] Bricks per layer from a coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 380,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Layers",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 210,
+		    "min": 0,
+		    "label": "Bricks",
+		    "tickInterval": 50,
+		    "showGridLines": true
+		  },
+		  "height": 380,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 100,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 150,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
 		      "y": 200,
 		      "id": "p3",
 		      "label": "",
@@ -6707,75 +6514,10 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7fef064a2899e61f
-	// Question: Find bricks per layer from a coordinate plane
-	// Widget key: image_1
-	test("point-plot-graph - [x7fef064a2899e61f] Find bricks per layer from a coordinate plane", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 380,
-		  "xAxis": {
-		    "max": 5,
-		    "min": 0,
-		    "label": "Layers",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 250,
-		    "min": 0,
-		    "label": "Bricks",
-		    "tickInterval": 50,
-		    "showGridLines": true
-		  },
-		  "height": 380,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 100,
-		      "id": "pt_2_100",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 150,
-		      "id": "pt_3_150",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 200,
-		      "id": "pt_4_200",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x7b2618b90a78b2cb
-	// Question: How many gummy bears are in 4 servings?
+	// Question: How many gummy bears in 4 servings?
 	// Widget key: image_1
-	test("point-plot-graph - [x7b2618b90a78b2cb] How many gummy bears are in 4 servings?", async () => {
+	test("point-plot-graph - [x7b2618b90a78b2cb] How many gummy bears in 4 servings?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6789,7 +6531,7 @@ describe("pointPlotGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 120,
+		    "max": 100,
 		    "min": 0,
 		    "label": "Gummy bears",
 		    "tickInterval": 20,
@@ -6838,9 +6580,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xa05304bd64e75388
-	// Question: Choose an ordered pair for the salsa recipe graph
+	// Question: Equivalent ratios on a coordinate graph
 	// Widget key: image_1
-	test("point-plot-graph - [xa05304bd64e75388] Choose an ordered pair for the salsa recipe graph", async () => {
+	test("point-plot-graph - [xa05304bd64e75388] Equivalent ratios on a coordinate graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6865,85 +6607,20 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 6,
-		      "id": "p1",
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 9,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 15,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd4d80139db310fd9
-	// Question: Select an ordered pair that fits a constant-speed graph
-	// Widget key: image_1
-	test("point-plot-graph - [xd4d80139db310fd9] Select an ordered pair that fits a constant-speed graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 380,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Hours",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 40,
-		    "min": 0,
-		    "label": "Distance, kilometers",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "height": 380,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 10,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 20,
 		      "id": "P2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
-		      "y": 25,
+		      "y": 15,
 		      "id": "P3",
 		      "label": "",
 		      "style": "closed"
@@ -6967,146 +6644,95 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: xd4d80139db310fd9
+	// Question: Select an ordered pair for a constant-speed graph
+	// Widget key: image_1
+	test("point-plot-graph - [xd4d80139db310fd9] Select an ordered pair for a constant-speed graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 380,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Hours",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 30,
+		    "min": 0,
+		    "label": "Distance, kilometers",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "height": 380,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 10,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 20,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 25,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: xa7f850fa44b3de33
-	// Question: Complete a ratio table and select the correct graph
+	// Question: Complete a ratio table and select a graph
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [xa7f850fa44b3de33] Complete a ratio table and select the correct graph (2)", async () => {
+	test("point-plot-graph - [xa7f850fa44b3de33] Complete a ratio table and select a graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 425,
+		  "width": 345,
 		  "xAxis": {
-		    "max": 6,
-		    "min": -1,
-		    "label": "x",
+		    "max": 5,
+		    "min": 0,
+		    "label": "Rice balls",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 600,
-		    "min": -100,
-		    "label": "y",
-		    "tickInterval": 100,
+		    "max": 450,
+		    "min": 0,
+		    "label": "Rice, grams",
+		    "tickInterval": 50,
 		    "showGridLines": true
 		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 200,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 400,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa7f850fa44b3de33
-	// Question: Complete a ratio table and select the correct graph
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [xa7f850fa44b3de33] Complete a ratio table and select the correct graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 6,
-		    "min": -1,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 600,
-		    "min": -100,
-		    "label": "y",
-		    "tickInterval": 100,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 100,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 200,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa7f850fa44b3de33
-	// Question: Complete a ratio table and select the correct graph
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [xa7f850fa44b3de33] Complete a ratio table and select the correct graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 6,
-		    "min": -1,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 600,
-		    "min": -100,
-		    "label": "y",
-		    "tickInterval": 100,
-		    "showGridLines": true
-		  },
-		  "height": 425,
+		  "height": 345,
 		  "points": [
 		    {
 		      "x": 1,
@@ -7121,8 +6747,174 @@ describe("pointPlotGraph widget tests", () => {
 		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 400,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
 		    }
 		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa7f850fa44b3de33
+	// Question: Complete a ratio table and select a graph
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [xa7f850fa44b3de33] Complete a ratio table and select a graph (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 345,
+		  "xAxis": {
+		    "max": 5,
+		    "min": 0,
+		    "label": "Rice balls",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 450,
+		    "min": 0,
+		    "label": "Rice, grams",
+		    "tickInterval": 50,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 100,
+		      "id": "q1",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa7f850fa44b3de33
+	// Question: Complete a ratio table and select a graph
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [xa7f850fa44b3de33] Complete a ratio table and select a graph (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 345,
+		  "xAxis": {
+		    "max": 5,
+		    "min": 0,
+		    "label": "Rice balls",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 450,
+		    "min": 0,
+		    "label": "Rice, grams",
+		    "tickInterval": 50,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 100,
+		      "id": "r1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 300,
+		      "id": "r2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 400,
+		      "id": "r4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa7f850fa44b3de33
+	// Question: Complete a ratio table and select a graph
+	// Widget key: coordinate_plane_empty
+	test("point-plot-graph - [xa7f850fa44b3de33] Complete a ratio table and select a graph (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 6,
+		    "min": -1,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 600,
+		    "min": -100,
+		    "label": "y",
+		    "tickInterval": 100,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -7170,6 +6962,20 @@ describe("pointPlotGraph widget tests", () => {
 		      "x": 15,
 		      "y": 1,
 		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 30,
+		      "y": 2,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 45,
+		      "y": 3,
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -7226,14 +7032,14 @@ describe("pointPlotGraph widget tests", () => {
 		    },
 		    {
 		      "x": 30,
-		      "y": 2,
+		      "y": 3,
 		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 45,
-		      "y": 3,
+		      "y": 4,
 		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
@@ -7283,22 +7089,22 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 15,
-		      "y": 1,
+		      "x": 1,
+		      "y": 15,
 		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 30,
-		      "y": 3,
+		      "x": 2,
+		      "y": 30,
 		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 45,
-		      "y": 2,
+		      "x": 3,
+		      "y": 45,
 		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
@@ -7322,31 +7128,46 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9ffa92ab135f2aeb
-	// Question: Complete a ratio table and select the correct graph
-	// Widget key: coordinate_plane_empty
-	test("point-plot-graph - [x9ffa92ab135f2aeb] Complete a ratio table and select the correct graph (5)", async () => {
+	// Extracted from question: x3d89f552fbb972ee
+	// Question: Angle of rotation about the origin
+	// Widget key: image_1
+	test("point-plot-graph - [x3d89f552fbb972ee] Angle of rotation about the origin", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 425,
+		  "width": 325,
 		  "xAxis": {
-		    "max": 50,
-		    "min": -5,
+		    "max": 8,
+		    "min": -8,
 		    "label": "x",
-		    "tickInterval": 5,
+		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
-		    "min": -1,
+		    "max": 8,
+		    "min": -8,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
-		  "points": [],
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": 4,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": -4,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -7366,9 +7187,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0848f9ca10386954
-	// Question: Determine angles of rotation from a coordinate plane
+	// Question: Determine angles of rotation about the origin
 	// Widget key: image_1
-	test("point-plot-graph - [x0848f9ca10386954] Determine angles of rotation from a coordinate plane", async () => {
+	test("point-plot-graph - [x0848f9ca10386954] Determine angles of rotation about the origin", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7377,14 +7198,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -7401,7 +7222,7 @@ describe("pointPlotGraph widget tests", () => {
 		      "x": 5,
 		      "y": 1,
 		      "id": "Aprime",
-		      "label": "A'",
+		      "label": "A′",
 		      "style": "closed"
 		    }
 		  ],
@@ -7424,9 +7245,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x66f0bccdd354052d
-	// Question: Plot the image of a point under a translation
+	// Question: Translate a point on the coordinate plane
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x66f0bccdd354052d] Plot the image of a point under a translation (1)", async () => {
+	test("point-plot-graph - [x66f0bccdd354052d] Translate a point on the coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7449,8 +7270,458 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 325,
 		  "points": [
 		    {
+		      "x": 3,
+		      "y": -1,
+		      "id": "Q",
+		      "label": "Q",
+		      "style": "closed"
+		    },
+		    {
 		      "x": 0,
 		      "y": -1,
+		      "id": "Qprime_candidate",
+		      "label": "Q′",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x66f0bccdd354052d
+	// Question: Translate a point on the coordinate plane
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [x66f0bccdd354052d] Translate a point on the coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": -1,
+		      "id": "Q",
+		      "label": "Q",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 3,
+		      "id": "Qprime_candidate",
+		      "label": "Q′",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x66f0bccdd354052d
+	// Question: Translate a point on the coordinate plane
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x66f0bccdd354052d] Translate a point on the coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": -1,
+		      "id": "Q",
+		      "label": "Q",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 3,
+		      "id": "Qprime_candidate",
+		      "label": "Q′",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x66f0bccdd354052d
+	// Question: Translate a point on the coordinate plane
+	// Widget key: coordinate_plane_initial
+	test("point-plot-graph - [x66f0bccdd354052d] Translate a point on the coordinate plane (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": -1,
+		      "id": "Q",
+		      "label": "Q",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x65fea0e77b813718
+	// Question: Translate a point on the coordinate plane
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [x65fea0e77b813718] Translate a point on the coordinate plane (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 4,
+		      "id": "a-p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 4,
+		      "id": "a-p2",
+		      "label": "",
+		      "style": "open"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x65fea0e77b813718
+	// Question: Translate a point on the coordinate plane
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [x65fea0e77b813718] Translate a point on the coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 4,
+		      "id": "b-p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "id": "b-p2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x65fea0e77b813718
+	// Question: Translate a point on the coordinate plane
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x65fea0e77b813718] Translate a point on the coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 4,
+		      "id": "c-p1",
+		      "label": "",
+		      "style": "open"
+		    },
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "id": "c-p2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x65fea0e77b813718
+	// Question: Translate a point on the coordinate plane
+	// Widget key: coordinate_plane
+	test("point-plot-graph - [x65fea0e77b813718] Translate a point on the coordinate plane (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 4,
+		      "id": "p-q",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x329ce52b272ac791
+	// Question: Plot the image of a translated point
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [x329ce52b272ac791] Plot the image of a translated point (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 8,
+		      "y": 3,
 		      "id": "pt_a",
 		      "label": "",
 		      "style": "closed"
@@ -7474,10 +7745,10 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x66f0bccdd354052d
-	// Question: Plot the image of a point under a translation
+	// Extracted from question: x329ce52b272ac791
+	// Question: Plot the image of a translated point
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x66f0bccdd354052d] Plot the image of a point under a translation (2)", async () => {
+	test("point-plot-graph - [x329ce52b272ac791] Plot the image of a translated point (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7525,10 +7796,10 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x66f0bccdd354052d
-	// Question: Plot the image of a point under a translation
+	// Extracted from question: x329ce52b272ac791
+	// Question: Plot the image of a translated point
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x66f0bccdd354052d] Plot the image of a point under a translation (3)", async () => {
+	test("point-plot-graph - [x329ce52b272ac791] Plot the image of a translated point (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7551,8 +7822,8 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 325,
 		  "points": [
 		    {
-		      "x": 3,
-		      "y": 3,
+		      "x": 0,
+		      "y": 7,
 		      "id": "pt_c",
 		      "label": "",
 		      "style": "closed"
@@ -7576,342 +7847,15 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x65fea0e77b813718
-	// Question: Translate a point on a coordinate plane
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [x65fea0e77b813718] Translate a point on a coordinate plane (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 4,
-		      "id": "a_q",
-		      "label": "Q",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 3,
-		      "id": "a_img",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x65fea0e77b813718
-	// Question: Translate a point on a coordinate plane
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [x65fea0e77b813718] Translate a point on a coordinate plane (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 4,
-		      "id": "b_q",
-		      "label": "Q",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 5,
-		      "id": "b_img",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x65fea0e77b813718
-	// Question: Translate a point on a coordinate plane
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x65fea0e77b813718] Translate a point on a coordinate plane (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 4,
-		      "id": "c_q",
-		      "label": "Q",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 5,
-		      "id": "c_img",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x329ce52b272ac791
-	// Question: Image of a point under a translation
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [x329ce52b272ac791] Image of a point under a translation (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 3,
-		      "id": "pt1",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x329ce52b272ac791
-	// Question: Image of a point under a translation
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [x329ce52b272ac791] Image of a point under a translation (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 5,
-		      "id": "pt1",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x329ce52b272ac791
-	// Question: Image of a point under a translation
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x329ce52b272ac791] Image of a point under a translation (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 4,
-		      "y": 3,
-		      "id": "pt1",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x329ce52b272ac791
-	// Question: Image of a point under a translation
+	// Question: Plot the image of a translated point
 	// Widget key: coordinate_plane_initial
-	test("point-plot-graph - [x329ce52b272ac791] Image of a point under a translation (4)", async () => {
+	test("point-plot-graph - [x329ce52b272ac791] Plot the image of a translated point (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 400,
+		  "width": 325,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -7926,7 +7870,7 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 325,
 		  "points": [
 		    {
 		      "x": 4,
@@ -7956,13 +7900,13 @@ describe("pointPlotGraph widget tests", () => {
 
 	// Extracted from question: x25751e4741cc427e
 	// Question: Translate a point on the coordinate plane
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [x25751e4741cc427e] Translate a point on the coordinate plane (1)", async () => {
+	// Widget key: coordinate_plane_initial
+	test("point-plot-graph - [x25751e4741cc427e] Translate a point on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 325,
+		  "width": 425,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -7977,114 +7921,63 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 4,
-		      "y": 5,
-		      "id": "pt_a",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x25751e4741cc427e
-	// Question: Translate a point on the coordinate plane
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [x25751e4741cc427e] Translate a point on the coordinate plane (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 4,
-		      "y": -2,
-		      "id": "pt_b",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x25751e4741cc427e
-	// Question: Translate a point on the coordinate plane
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x25751e4741cc427e] Translate a point on the coordinate plane (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
+		  "height": 425,
 		  "points": [
 		    {
 		      "x": -1,
-		      "y": -2,
-		      "id": "pt_c",
+		      "y": 5,
+		      "id": "p",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7e51d4802a64528d
+	// Question: Translate a point on the coordinate plane
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [x7e51d4802a64528d] Translate a point on the coordinate plane (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": -4,
+		      "id": "A",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -8108,9 +8001,111 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7e51d4802a64528d
-	// Question: Plot the image of a point under a translation
+	// Question: Translate a point on the coordinate plane
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [x7e51d4802a64528d] Translate a point on the coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 2,
+		      "id": "B",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7e51d4802a64528d
+	// Question: Translate a point on the coordinate plane
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x7e51d4802a64528d] Translate a point on the coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": -4,
+		      "id": "C",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7e51d4802a64528d
+	// Question: Translate a point on the coordinate plane
 	// Widget key: coordinate_plane_initial
-	test("point-plot-graph - [x7e51d4802a64528d] Plot the image of a point under a translation", async () => {
+	test("point-plot-graph - [x7e51d4802a64528d] Translate a point on the coordinate plane (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8159,9 +8154,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x26ae8086aa6ab989
-	// Question: Image of a point under a translation
+	// Question: Plot the image of a point under a translation
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x26ae8086aa6ab989] Image of a point under a translation (1)", async () => {
+	test("point-plot-graph - [x26ae8086aa6ab989] Plot the image of a point under a translation (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8186,14 +8181,14 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -4,
 		      "y": 4,
-		      "id": "Q_a",
+		      "id": "Q",
 		      "label": "Q",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -3,
-		      "y": 6,
-		      "id": "Q_prime_a",
+		      "y": 4,
+		      "id": "Q_prime",
 		      "label": "Q'",
 		      "style": "closed"
 		    }
@@ -8217,9 +8212,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x26ae8086aa6ab989
-	// Question: Image of a point under a translation
+	// Question: Plot the image of a point under a translation
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x26ae8086aa6ab989] Image of a point under a translation (2)", async () => {
+	test("point-plot-graph - [x26ae8086aa6ab989] Plot the image of a point under a translation (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8244,14 +8239,14 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -4,
 		      "y": 4,
-		      "id": "Q_b",
+		      "id": "Q",
 		      "label": "Q",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -5,
+		      "x": -3,
 		      "y": 6,
-		      "id": "Q_prime_b",
+		      "id": "Q_prime",
 		      "label": "Q'",
 		      "style": "closed"
 		    }
@@ -8275,9 +8270,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x26ae8086aa6ab989
-	// Question: Image of a point under a translation
+	// Question: Plot the image of a point under a translation
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x26ae8086aa6ab989] Image of a point under a translation (3)", async () => {
+	test("point-plot-graph - [x26ae8086aa6ab989] Plot the image of a point under a translation (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8302,14 +8297,14 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -4,
 		      "y": 4,
-		      "id": "Q_c",
+		      "id": "Q",
 		      "label": "Q",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -3,
-		      "y": 2,
-		      "id": "Q_prime_c",
+		      "x": -4,
+		      "y": 6,
+		      "id": "Q_prime",
 		      "label": "Q'",
 		      "style": "closed"
 		    }
@@ -8332,10 +8327,89 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x1a489d7abf06d964
+	// Question: Image of a point after a 180° rotation
+	// Widget key: image_1
+	test("point-plot-graph - [x1a489d7abf06d964] Image of a point after a 180° rotation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 7,
+		    "min": -7,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 7,
+		    "min": -7,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 4,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 0,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 0,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": 0,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": 0,
+		      "id": "Q",
+		      "label": "Q",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: xb61f99316b7bbdde
-	// Question: Plot two points and find their distance
+	// Question: Plot two points and find the distance
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [xb61f99316b7bbdde] Plot two points and find their distance (1)", async () => {
+	test("point-plot-graph - [xb61f99316b7bbdde] Plot two points and find the distance (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8360,14 +8434,14 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -3,
 		      "y": -4,
-		      "id": "p1",
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
 		      "y": -4,
-		      "id": "p2",
+		      "id": "P2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -8391,9 +8465,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb61f99316b7bbdde
-	// Question: Plot two points and find their distance
+	// Question: Plot two points and find the distance
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [xb61f99316b7bbdde] Plot two points and find their distance (2)", async () => {
+	test("point-plot-graph - [xb61f99316b7bbdde] Plot two points and find the distance (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8416,16 +8490,16 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": -6,
-		      "y": -4,
-		      "id": "p1",
+		      "x": -3,
+		      "y": 4,
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
+		      "x": 6,
 		      "y": -4,
-		      "id": "p2",
+		      "id": "P2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -8449,9 +8523,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb61f99316b7bbdde
-	// Question: Plot two points and find their distance
+	// Question: Plot two points and find the distance
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [xb61f99316b7bbdde] Plot two points and find their distance (3)", async () => {
+	test("point-plot-graph - [xb61f99316b7bbdde] Plot two points and find the distance (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8476,14 +8550,14 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -3,
 		      "y": -4,
-		      "id": "p1",
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
 		      "y": 4,
-		      "id": "p2",
+		      "id": "P2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -8507,9 +8581,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0a1f5c1423a51975
-	// Question: Plot points and find the distance on the coordinate plane
+	// Question: Plot two points and find the distance
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x0a1f5c1423a51975] Plot points and find the distance on the coordinate plane (1)", async () => {
+	test("point-plot-graph - [x0a1f5c1423a51975] Plot two points and find the distance (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8531,595 +8605,16 @@ describe("pointPlotGraph widget tests", () => {
 		  },
 		  "height": 425,
 		  "points": [
-		    {
-		      "x": -6,
-		      "y": 8,
-		      "id": "a1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 8,
-		      "id": "a2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0a1f5c1423a51975
-	// Question: Plot points and find the distance on the coordinate plane
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [x0a1f5c1423a51975] Plot points and find the distance on the coordinate plane (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": -8,
-		      "id": "b1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -8,
-		      "id": "b2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0a1f5c1423a51975
-	// Question: Plot points and find the distance on the coordinate plane
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x0a1f5c1423a51975] Plot points and find the distance on the coordinate plane (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": 8,
-		      "id": "c1",
-		      "label": "",
-		      "style": "closed"
-		    },
 		    {
 		      "x": 6,
 		      "y": 8,
-		      "id": "c2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb0349cbae6416de6
-	// Question: Distance between two plotted points
-	// Widget key: coordinate_plane_empty
-	test("point-plot-graph - [xb0349cbae6416de6] Distance between two plotted points", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x746e761ee63e52a4
-	// Question: Select two points 3 units from point C with the same y-coordinate
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [x746e761ee63e52a4] Select two points 3 units from point C with the same y-coordinate (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": -5,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -9,
-		      "y": -5,
-		      "id": "P_left",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x746e761ee63e52a4
-	// Question: Select two points 3 units from point C with the same y-coordinate
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [x746e761ee63e52a4] Select two points 3 units from point C with the same y-coordinate (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -9,
-		      "y": -5,
-		      "id": "P_left",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": -5,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": -5,
-		      "id": "P_right",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x746e761ee63e52a4
-	// Question: Select two points 3 units from point C with the same y-coordinate
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x746e761ee63e52a4] Select two points 3 units from point C with the same y-coordinate (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": -5,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": -5,
-		      "id": "P_right",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0711e6ae63700ab5
-	// Question: Plot two points 8 units from a given point
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [x0711e6ae63700ab5] Plot two points 8 units from a given point (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": 0,
-		      "id": "point_B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 8,
-		      "id": "point_top",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0711e6ae63700ab5
-	// Question: Plot two points 8 units from a given point
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [x0711e6ae63700ab5] Plot two points 8 units from a given point (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": 0,
-		      "id": "point_B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 8,
-		      "id": "point_top",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": -8,
-		      "id": "point_bottom",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0711e6ae63700ab5
-	// Question: Plot two points 8 units from a given point
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x0711e6ae63700ab5] Plot two points 8 units from a given point (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": 0,
-		      "id": "point_B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": -8,
-		      "id": "point_bottom",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4b65f94bc86d24c0
-	// Question: Plot points and find the distance between them
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [x4b65f94bc86d24c0] Plot points and find the distance between them (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -8,
-		      "y": 7,
 		      "id": "a_p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 5,
-		      "y": 7,
+		      "x": 0,
+		      "y": 8,
 		      "id": "a_p2",
 		      "label": "",
 		      "style": "closed"
@@ -9143,10 +8638,662 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4b65f94bc86d24c0
-	// Question: Plot points and find the distance between them
+	// Extracted from question: x0a1f5c1423a51975
+	// Question: Plot two points and find the distance
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x4b65f94bc86d24c0] Plot points and find the distance between them (2)", async () => {
+	test("point-plot-graph - [x0a1f5c1423a51975] Plot two points and find the distance (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 8,
+		      "id": "b_p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 8,
+		      "id": "b_p2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0a1f5c1423a51975
+	// Question: Plot two points and find the distance
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x0a1f5c1423a51975] Plot two points and find the distance (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": -8,
+		      "id": "c_p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -8,
+		      "id": "c_p2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb0349cbae6416de6
+	// Question: Plot two points and find the distance
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [xb0349cbae6416de6] Plot two points and find the distance (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 8,
+		      "id": "A1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": -3,
+		      "id": "A2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb0349cbae6416de6
+	// Question: Plot two points and find the distance
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [xb0349cbae6416de6] Plot two points and find the distance (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 8,
+		      "id": "B1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": -3,
+		      "id": "B2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb0349cbae6416de6
+	// Question: Plot two points and find the distance
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [xb0349cbae6416de6] Plot two points and find the distance (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 8,
+		      "id": "C1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": 3,
+		      "id": "C2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x746e761ee63e52a4
+	// Question: Select the graph with two points 3 units from Point C
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [x746e761ee63e52a4] Select the graph with two points 3 units from Point C (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": -5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -9,
+		      "y": -5,
+		      "id": "P_left",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x746e761ee63e52a4
+	// Question: Select the graph with two points 3 units from Point C
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [x746e761ee63e52a4] Select the graph with two points 3 units from Point C (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": -5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -9,
+		      "y": -5,
+		      "id": "P_left",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -5,
+		      "id": "P_right",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x746e761ee63e52a4
+	// Question: Select the graph with two points 3 units from Point C
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x746e761ee63e52a4] Select the graph with two points 3 units from Point C (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": -5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -5,
+		      "id": "P_right",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0711e6ae63700ab5
+	// Question: Select the graph with two points 8 units from B sharing the same x-coordinate
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [x0711e6ae63700ab5] Select the graph with two points 8 units from B sharing the same x-coordinate (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 0,
+		      "id": "base_B",
+		      "label": "",
+		      "style": "open"
+		    },
+		    {
+		      "x": -6,
+		      "y": 8,
+		      "id": "upper_point",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": -8,
+		      "id": "lower_point",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0711e6ae63700ab5
+	// Question: Select the graph with two points 8 units from B sharing the same x-coordinate
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [x0711e6ae63700ab5] Select the graph with two points 8 units from B sharing the same x-coordinate (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 0,
+		      "id": "base_B",
+		      "label": "",
+		      "style": "open"
+		    },
+		    {
+		      "x": -6,
+		      "y": 8,
+		      "id": "upper_only",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0711e6ae63700ab5
+	// Question: Select the graph with two points 8 units from B sharing the same x-coordinate
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x0711e6ae63700ab5] Select the graph with two points 8 units from B sharing the same x-coordinate (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 0,
+		      "id": "base_B",
+		      "label": "",
+		      "style": "open"
+		    },
+		    {
+		      "x": -6,
+		      "y": -8,
+		      "id": "lower_only",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4b65f94bc86d24c0
+	// Question: Plot two points and find the distance
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [x4b65f94bc86d24c0] Plot two points and find the distance (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9171,14 +9318,14 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -8,
 		      "y": -7,
-		      "id": "b_p1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": -7,
-		      "id": "b_p2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -9202,9 +9349,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x4b65f94bc86d24c0
-	// Question: Plot points and find the distance between them
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x4b65f94bc86d24c0] Plot points and find the distance between them (3)", async () => {
+	// Question: Plot two points and find the distance
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [x4b65f94bc86d24c0] Plot two points and find the distance (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9227,16 +9374,16 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 8,
+		      "x": -8,
 		      "y": 7,
-		      "id": "c_p1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 7,
-		      "id": "c_p2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -9259,10 +9406,10 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x318cdce7bc0279f3
-	// Question: Distance between two points with the same x-coordinate
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [x318cdce7bc0279f3] Distance between two points with the same x-coordinate (1)", async () => {
+	// Extracted from question: x4b65f94bc86d24c0
+	// Question: Plot two points and find the distance
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x4b65f94bc86d24c0] Plot two points and find the distance (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9285,15 +9432,15 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 2,
-		      "y": 0,
+		      "x": -8,
+		      "y": 7,
 		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 2,
-		      "y": -5,
+		      "x": 5,
+		      "y": -7,
 		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
@@ -9318,9 +9465,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x318cdce7bc0279f3
-	// Question: Distance between two points with the same x-coordinate
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [x318cdce7bc0279f3] Distance between two points with the same x-coordinate (2)", async () => {
+	// Question: Plot points and find the distance between them
+	// Widget key: plot_choice_a
+	test("point-plot-graph - [x318cdce7bc0279f3] Plot points and find the distance between them (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9345,14 +9492,14 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 0,
-		      "id": "p1",
+		      "id": "A1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 5,
-		      "id": "p2",
+		      "id": "A2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -9376,9 +9523,67 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x318cdce7bc0279f3
-	// Question: Distance between two points with the same x-coordinate
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x318cdce7bc0279f3] Distance between two points with the same x-coordinate (3)", async () => {
+	// Question: Plot points and find the distance between them
+	// Widget key: plot_choice_b
+	test("point-plot-graph - [x318cdce7bc0279f3] Plot points and find the distance between them (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 0,
+		      "id": "B1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": -5,
+		      "id": "B2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x318cdce7bc0279f3
+	// Question: Plot points and find the distance between them
+	// Widget key: plot_choice_c
+	test("point-plot-graph - [x318cdce7bc0279f3] Plot points and find the distance between them (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9403,14 +9608,14 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 2,
-		      "id": "p1",
+		      "id": "C1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -5,
 		      "y": 2,
-		      "id": "p2",
+		      "id": "C2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -9434,9 +9639,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x571eb5d86582fbb0
-	// Question: Identify the point located 5 units from M
+	// Question: Find what is 5 units from a point on the coordinate plane
 	// Widget key: image_1
-	test("point-plot-graph - [x571eb5d86582fbb0] Identify the point located 5 units from M", async () => {
+	test("point-plot-graph - [x571eb5d86582fbb0] Find what is 5 units from a point on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9445,14 +9650,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "x",
+		    "label": " ",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "y",
+		    "label": " ",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -9461,21 +9666,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 1,
 		      "y": 6,
-		      "id": "A",
+		      "id": "pt-a",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
 		      "y": 1,
-		      "id": "B",
+		      "id": "pt-b",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -1,
 		      "y": -6,
-		      "id": "C",
+		      "id": "pt-c",
 		      "label": "C",
 		      "style": "closed"
 		    }
@@ -9499,9 +9704,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0a849d40bbb49351
-	// Question: Identify the point 6 units from M
+	// Question: Identify the point a fixed distance from a given point
 	// Widget key: image_1
-	test("point-plot-graph - [x0a849d40bbb49351] Identify the point 6 units from M", async () => {
+	test("point-plot-graph - [x0a849d40bbb49351] Identify the point a fixed distance from a given point", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9526,21 +9731,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -2,
 		      "y": 2,
-		      "id": "A",
+		      "id": "ptA",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 7,
 		      "y": -4,
-		      "id": "B",
+		      "id": "ptB",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -7,
 		      "y": -6,
-		      "id": "C",
+		      "id": "ptC",
 		      "label": "C",
 		      "style": "closed"
 		    }
@@ -9564,9 +9769,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6d891389619ba1e5
-	// Question: Identify the point 3 units from M on the coordinate plane
+	// Question: Identify the point 3 units from M
 	// Widget key: image_1
-	test("point-plot-graph - [x6d891389619ba1e5] Identify the point 3 units from M on the coordinate plane", async () => {
+	test("point-plot-graph - [x6d891389619ba1e5] Identify the point 3 units from M", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9575,14 +9780,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -9591,21 +9796,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -3,
 		      "y": -3,
-		      "id": "A",
+		      "id": "pt-a",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": -5,
-		      "id": "B",
+		      "id": "pt-b",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 1,
-		      "id": "C",
+		      "id": "pt-c",
 		      "label": "C",
 		      "style": "closed"
 		    }
@@ -9640,14 +9845,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -9656,21 +9861,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 4,
 		      "y": 2,
-		      "id": "A",
+		      "id": "ptA",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -4,
 		      "y": 2,
-		      "id": "B",
+		      "id": "ptB",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": -3,
-		      "id": "C",
+		      "id": "ptC",
 		      "label": "C",
 		      "style": "closed"
 		    }
@@ -9694,9 +9899,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xda124c90a3284ca2
-	// Question: Plot two points and find their distance
+	// Question: Plot two points and find the distance
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [xda124c90a3284ca2] Plot two points and find their distance (1)", async () => {
+	test("point-plot-graph - [xda124c90a3284ca2] Plot two points and find the distance (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9721,14 +9926,14 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 4,
-		      "id": "p1",
+		      "id": "A_p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": -8,
-		      "id": "p2",
+		      "id": "A_p2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -9752,9 +9957,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xda124c90a3284ca2
-	// Question: Plot two points and find their distance
+	// Question: Plot two points and find the distance
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [xda124c90a3284ca2] Plot two points and find their distance (2)", async () => {
+	test("point-plot-graph - [xda124c90a3284ca2] Plot two points and find the distance (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9779,14 +9984,14 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 4,
-		      "id": "p1",
+		      "id": "B_p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 8,
-		      "y": 2,
-		      "id": "p2",
+		      "x": 2,
+		      "y": 8,
+		      "id": "B_p2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -9810,9 +10015,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xda124c90a3284ca2
-	// Question: Plot two points and find their distance
+	// Question: Plot two points and find the distance
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [xda124c90a3284ca2] Plot two points and find their distance (3)", async () => {
+	test("point-plot-graph - [xda124c90a3284ca2] Plot two points and find the distance (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9835,16 +10040,16 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": -2,
-		      "y": 4,
-		      "id": "p1",
+		      "x": 4,
+		      "y": 2,
+		      "id": "C_p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 2,
-		      "y": -8,
-		      "id": "p2",
+		      "x": -8,
+		      "y": 2,
+		      "id": "C_p2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -9868,9 +10073,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x66f95f54c47c75d0
-	// Question: Identify the point 4 units from M
+	// Question: Identify the point 4 units from M on a coordinate grid
 	// Widget key: image_1
-	test("point-plot-graph - [x66f95f54c47c75d0] Identify the point 4 units from M", async () => {
+	test("point-plot-graph - [x66f95f54c47c75d0] Identify the point 4 units from M on a coordinate grid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9879,14 +10084,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -9895,20 +10100,266 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 9,
 		      "y": -4,
-		      "id": "A",
+		      "id": "point-A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": 1,
-		      "id": "B",
+		      "id": "point-B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -4,
 		      "y": 9,
+		      "id": "point-C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 0,
+		      "id": "point-M",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa47987e3e61344d9
+	// Question: Plot two points and find the distance between them
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [xa47987e3e61344d9] Plot two points and find the distance between them (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": -4,
+		      "id": "A1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 4,
+		      "id": "A2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa47987e3e61344d9
+	// Question: Plot two points and find the distance between them
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [xa47987e3e61344d9] Plot two points and find the distance between them (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": 4,
+		      "id": "B1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 4,
+		      "id": "B2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa47987e3e61344d9
+	// Question: Plot two points and find the distance between them
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [xa47987e3e61344d9] Plot two points and find the distance between them (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": 4,
+		      "id": "C1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": -4,
+		      "id": "C2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2025f0d42cef2755
+	// Question: Identify what is 4 units from a point
+	// Widget key: image_1
+	test("point-plot-graph - [x2025f0d42cef2755] Identify what is 4 units from a point", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -4,
+		      "y": 2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 7,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -8,
+		      "y": -6,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
@@ -9932,184 +10383,10 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa47987e3e61344d9
-	// Question: Select the plotted points and find the distance
-	// Widget key: points_graph_choice_a
-	test("point-plot-graph - [xa47987e3e61344d9] Select the plotted points and find the distance (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": -4,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": -4,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa47987e3e61344d9
-	// Question: Select the plotted points and find the distance
-	// Widget key: points_graph_choice_b
-	test("point-plot-graph - [xa47987e3e61344d9] Select the plotted points and find the distance (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": 4,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa47987e3e61344d9
-	// Question: Select the plotted points and find the distance
-	// Widget key: points_graph_choice_c
-	test("point-plot-graph - [xa47987e3e61344d9] Select the plotted points and find the distance (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": 4,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": -4,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x067e3e95f42bd0c5
-	// Question: Select the graph with two points 7 units from point D sharing the same x-coordinate
+	// Question: Plot two points with the same x-coordinate and a distance of 7 units
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x067e3e95f42bd0c5] Select the graph with two points 7 units from point D sharing the same x-coordinate (1)", async () => {
+	test("point-plot-graph - [x067e3e95f42bd0c5] Plot two points with the same x-coordinate and a distance of 7 units (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10134,14 +10411,14 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -4,
 		      "y": 1,
-		      "id": "D_a",
+		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -4,
 		      "y": 8,
-		      "id": "upper_only_a",
+		      "id": "P_up",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10165,9 +10442,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x067e3e95f42bd0c5
-	// Question: Select the graph with two points 7 units from point D sharing the same x-coordinate
+	// Question: Plot two points with the same x-coordinate and a distance of 7 units
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x067e3e95f42bd0c5] Select the graph with two points 7 units from point D sharing the same x-coordinate (2)", async () => {
+	test("point-plot-graph - [x067e3e95f42bd0c5] Plot two points with the same x-coordinate and a distance of 7 units (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10192,21 +10469,21 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -4,
 		      "y": 1,
-		      "id": "D_b",
+		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -4,
 		      "y": 8,
-		      "id": "upper_b",
+		      "id": "P_up",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -4,
 		      "y": -6,
-		      "id": "lower_b",
+		      "id": "P_down",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10230,9 +10507,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x067e3e95f42bd0c5
-	// Question: Select the graph with two points 7 units from point D sharing the same x-coordinate
+	// Question: Plot two points with the same x-coordinate and a distance of 7 units
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x067e3e95f42bd0c5] Select the graph with two points 7 units from point D sharing the same x-coordinate (3)", async () => {
+	test("point-plot-graph - [x067e3e95f42bd0c5] Plot two points with the same x-coordinate and a distance of 7 units (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10257,15 +10534,66 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -4,
 		      "y": 1,
-		      "id": "D_c",
+		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -4,
 		      "y": -6,
-		      "id": "lower_only_c",
+		      "id": "P_down",
 		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x067e3e95f42bd0c5
+	// Question: Plot two points with the same x-coordinate and a distance of 7 units
+	// Widget key: coordinate_plane_with_point_d
+	test("point-plot-graph - [x067e3e95f42bd0c5] Plot two points with the same x-coordinate and a distance of 7 units (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -4,
+		      "y": 1,
+		      "id": "D",
+		      "label": "D",
 		      "style": "closed"
 		    }
 		  ],
@@ -10314,16 +10642,9 @@ describe("pointPlotGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": 5,
-		      "y": 3,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 9,
-		      "id": "p2",
-		      "label": "",
+		      "y": 6,
+		      "id": "A",
+		      "label": "A",
 		      "style": "closed"
 		    }
 		  ],
@@ -10371,16 +10692,23 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 2,
+		      "x": 5,
 		      "y": 6,
-		      "id": "p1",
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 3,
+		      "id": "P_lower",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 8,
-		      "y": 6,
-		      "id": "p2",
+		      "x": 5,
+		      "y": 9,
+		      "id": "P_upper",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10430,68 +10758,17 @@ describe("pointPlotGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": 5,
-		      "y": 4,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 8,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1a798373be341c6e
-	// Question: Select two points 3 units from Point A with the same x-coordinate
-	// Widget key: graph_stimulus
-	test("point-plot-graph - [x1a798373be341c6e] Select two points 3 units from Point A with the same x-coordinate (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 5,
 		      "y": 6,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 9,
+		      "id": "P_upper",
+		      "label": "",
+		      "style": "closed"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -10513,9 +10790,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x73a831da4cc5d438
-	// Question: Select the graph with two points 6 units from point B on the same horizontal line
+	// Question: Plot two points 6 units from point B
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x73a831da4cc5d438] Select the graph with two points 6 units from point B on the same horizontal line (1)", async () => {
+	test("point-plot-graph - [x73a831da4cc5d438] Plot two points 6 units from point B (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10547,7 +10824,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 7,
 		      "y": 3,
-		      "id": "P_right",
+		      "id": "R",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10571,9 +10848,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x73a831da4cc5d438
-	// Question: Select the graph with two points 6 units from point B on the same horizontal line
+	// Question: Plot two points 6 units from point B
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x73a831da4cc5d438] Select the graph with two points 6 units from point B on the same horizontal line (2)", async () => {
+	test("point-plot-graph - [x73a831da4cc5d438] Plot two points 6 units from point B (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10605,14 +10882,14 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -5,
 		      "y": 3,
-		      "id": "P_left",
+		      "id": "L",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 7,
 		      "y": 3,
-		      "id": "P_right",
+		      "id": "R",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10636,9 +10913,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x73a831da4cc5d438
-	// Question: Select the graph with two points 6 units from point B on the same horizontal line
+	// Question: Plot two points 6 units from point B
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x73a831da4cc5d438] Select the graph with two points 6 units from point B on the same horizontal line (3)", async () => {
+	test("point-plot-graph - [x73a831da4cc5d438] Plot two points 6 units from point B (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10670,7 +10947,7 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -5,
 		      "y": 3,
-		      "id": "P_left",
+		      "id": "L",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10694,9 +10971,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x73a831da4cc5d438
-	// Question: Select the graph with two points 6 units from point B on the same horizontal line
-	// Widget key: stimulus_graph
-	test("point-plot-graph - [x73a831da4cc5d438] Select the graph with two points 6 units from point B on the same horizontal line (4)", async () => {
+	// Question: Plot two points 6 units from point B
+	// Widget key: coordinate_plane_empty
+	test("point-plot-graph - [x73a831da4cc5d438] Plot two points 6 units from point B (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10745,9 +11022,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x113b5d8f7e46ae46
-	// Question: Identify two points 7 units from point C with the same y-coordinate
+	// Question: Select two points 7 units from a given point with the same y-coordinate
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x113b5d8f7e46ae46] Identify two points 7 units from point C with the same y-coordinate (1)", async () => {
+	test("point-plot-graph - [x113b5d8f7e46ae46] Select two points 7 units from a given point with the same y-coordinate (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10773,20 +11050,13 @@ describe("pointPlotGraph widget tests", () => {
 		      "x": 1,
 		      "y": -4,
 		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": -4,
-		      "id": "A1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
 		      "y": -4,
-		      "id": "A2",
+		      "id": "left_point",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10810,9 +11080,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x113b5d8f7e46ae46
-	// Question: Identify two points 7 units from point C with the same y-coordinate
+	// Question: Select two points 7 units from a given point with the same y-coordinate
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x113b5d8f7e46ae46] Identify two points 7 units from point C with the same y-coordinate (2)", async () => {
+	test("point-plot-graph - [x113b5d8f7e46ae46] Select two points 7 units from a given point with the same y-coordinate (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10838,71 +11108,20 @@ describe("pointPlotGraph widget tests", () => {
 		      "x": 1,
 		      "y": -4,
 		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": -4,
-		      "id": "B1",
 		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x113b5d8f7e46ae46
-	// Question: Identify two points 7 units from point C with the same y-coordinate
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x113b5d8f7e46ae46] Identify two points 7 units from point C with the same y-coordinate (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": -4,
-		      "id": "C",
-		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
 		      "y": -4,
-		      "id": "C1",
+		      "id": "left_point",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": -4,
+		      "id": "right_point",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10926,9 +11145,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x113b5d8f7e46ae46
-	// Question: Identify two points 7 units from point C with the same y-coordinate
-	// Widget key: coordinate_plane_c
-	test("point-plot-graph - [x113b5d8f7e46ae46] Identify two points 7 units from point C with the same y-coordinate (4)", async () => {
+	// Question: Select two points 7 units from a given point with the same y-coordinate
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x113b5d8f7e46ae46] Select two points 7 units from a given point with the same y-coordinate (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10954,7 +11173,107 @@ describe("pointPlotGraph widget tests", () => {
 		      "x": 1,
 		      "y": -4,
 		      "id": "C",
-		      "label": "C",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": -4,
+		      "id": "right_point",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbc78fdd06685c4d8
+	// Question: True/False statements about points on a coordinate plane
+	// Widget key: image_1
+	test("point-plot-graph - [xbc78fdd06685c4d8] True/False statements about points on a coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 440,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -7,
+		      "y": 9,
+		      "id": "cafeteria",
+		      "label": "Cafeteria",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": -2,
+		      "id": "math",
+		      "label": "Math",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": -5,
+		      "id": "science",
+		      "label": "Science",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 9,
+		      "id": "library",
+		      "label": "Library",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -5,
+		      "id": "art",
+		      "label": "Art",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 4,
+		      "id": "band",
+		      "label": "Band",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": -8,
+		      "id": "history",
+		      "label": "History",
 		      "style": "closed"
 		    }
 		  ],
@@ -10977,9 +11296,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0352e335a7bc03c5
-	// Question: Temperature on the second day from a graph
+	// Question: Read a temperature from a coordinate graph
 	// Widget key: image_2
-	test("point-plot-graph - [x0352e335a7bc03c5] Temperature on the second day from a graph", async () => {
+	test("point-plot-graph - [x0352e335a7bc03c5] Read a temperature from a coordinate graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11004,156 +11323,49 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 1,
 		      "y": -3,
-		      "id": "pt1",
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": -4,
-		      "id": "pt2",
+		      "id": "P2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 2,
-		      "id": "pt3",
+		      "id": "P3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 5,
-		      "id": "pt4",
+		      "id": "P4",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": -2,
-		      "id": "pt5",
+		      "id": "P5",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
 		      "y": 0,
-		      "id": "pt6",
+		      "id": "P6",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 7,
 		      "y": -2,
-		      "id": "pt7",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc6eb9d4c89de4f9d
-	// Question: Identify the day from a coordinate graph
-	// Widget key: image_2
-	test("point-plot-graph - [xc6eb9d4c89de4f9d] Identify the day from a coordinate graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 470,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Number of days",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 30,
-		    "min": 0,
-		    "label": "Number of minutes",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "height": 435,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 20,
-		      "id": "pt1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 19,
-		      "id": "pt2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 25,
-		      "id": "pt3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 20,
-		      "id": "pt4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 23,
-		      "id": "pt5",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 21,
-		      "id": "pt6",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": 22,
-		      "id": "pt7",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 24,
-		      "id": "pt8",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 9,
-		      "y": 18,
-		      "id": "pt9",
+		      "id": "P7",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -11195,7 +11407,7 @@ describe("pointPlotGraph widget tests", () => {
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "Temperature (in degrees Celsius)",
+		    "label": "Temperature (°C)",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -11204,49 +11416,49 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 1,
 		      "y": -4,
-		      "id": "p1",
+		      "id": "day1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": -4,
-		      "id": "p2",
+		      "id": "day2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 6,
-		      "id": "p3",
+		      "id": "day3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 7,
-		      "id": "p4",
+		      "id": "day4",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 9,
-		      "id": "p5",
+		      "id": "day5",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
 		      "y": 0,
-		      "id": "p6",
+		      "id": "day6",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 7,
 		      "y": -2,
-		      "id": "p7",
+		      "id": "day7",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -11270,9 +11482,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x71f3f65c13f67086
-	// Question: Find days ago from a commute-time graph
-	// Widget key: image_2
-	test("point-plot-graph - [x71f3f65c13f67086] Find days ago from a commute-time graph", async () => {
+	// Question: Read a commute time from a graph
+	// Widget key: image_1
+	test("point-plot-graph - [x71f3f65c13f67086] Read a commute time from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11288,7 +11500,7 @@ describe("pointPlotGraph widget tests", () => {
 		  "yAxis": {
 		    "max": 30,
 		    "min": -1,
-		    "label": "Number of minutes",
+		    "label": "Minutes",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -11297,56 +11509,56 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -9,
 		      "y": 18,
-		      "id": "p1",
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -8,
 		      "y": 24,
-		      "id": "p2",
+		      "id": "P2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -7,
 		      "y": 22,
-		      "id": "p3",
+		      "id": "P3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
 		      "y": 21,
-		      "id": "p4",
+		      "id": "P4",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -5,
 		      "y": 23,
-		      "id": "p5",
+		      "id": "P5",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -4,
 		      "y": 20,
-		      "id": "p6",
+		      "id": "P6",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -3,
 		      "y": 25,
-		      "id": "p7",
+		      "id": "P7",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -2,
 		      "y": 19,
-		      "id": "p8",
+		      "id": "P8",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -11370,14 +11582,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x074e933f0d3ee41a
-	// Question: Interpret a point on a temperature–day graph
+	// Question: Interpret point A on a coordinate plane
 	// Widget key: image_3
-	test("point-plot-graph - [x074e933f0d3ee41a] Interpret a point on a temperature–day graph", async () => {
+	test("point-plot-graph - [x074e933f0d3ee41a] Interpret point A on a coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 463,
+		  "width": 462.727,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -11392,47 +11604,47 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 434,
+		  "height": 434.091,
 		  "points": [
 		    {
 		      "x": 4,
 		      "y": 7,
-		      "id": "ptA",
+		      "id": "pA",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": -4,
-		      "id": "pt1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": -4,
-		      "id": "pt2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 0,
-		      "id": "pt3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
 		      "y": 9,
-		      "id": "pt4",
+		      "id": "p4",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 7,
 		      "y": -2,
-		      "id": "pt5",
+		      "id": "p5",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -11456,9 +11668,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xedceeeef075177b2
-	// Question: Evaluate statements about a coordinate graph (True/False)
+	// Question: True/false statements about a coordinate plane
 	// Widget key: image_1
-	test("point-plot-graph - [xedceeeef075177b2] Evaluate statements about a coordinate graph (True/False)", async () => {
+	test("point-plot-graph - [xedceeeef075177b2] True/false statements about a coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11467,26 +11679,19 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 425,
 		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "home",
-		      "label": "Home",
-		      "style": "closed"
-		    },
 		    {
 		      "x": -5,
 		      "y": 6,
@@ -11499,6 +11704,13 @@ describe("pointPlotGraph widget tests", () => {
 		      "y": -3,
 		      "id": "library",
 		      "label": "Library",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "home",
+		      "label": "Home",
 		      "style": "closed"
 		    },
 		    {
@@ -11549,9 +11761,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6a6b12c694e76bdf
-	// Question: Find the time when the temperature was 7 °C
+	// Question: Read a temperature–time graph
 	// Widget key: image_3
-	test("point-plot-graph - [x6a6b12c694e76bdf] Find the time when the temperature was 7 °C", async () => {
+	test("point-plot-graph - [x6a6b12c694e76bdf] Read a temperature–time graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11576,70 +11788,70 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 6,
-		      "id": "p0",
+		      "id": "p0_6",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": 4,
-		      "id": "p1",
+		      "id": "p1_4",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 7,
-		      "id": "p2",
+		      "id": "p2_7",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 8,
-		      "id": "p3",
+		      "id": "p3_8",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 4.5,
-		      "id": "p4",
+		      "id": "p4_4_5",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 5,
-		      "id": "p5",
+		      "id": "p5_5",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
 		      "y": 1,
-		      "id": "p6",
+		      "id": "p6_1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 7,
 		      "y": 2,
-		      "id": "p7",
+		      "id": "p7_2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 8,
 		      "y": -3,
-		      "id": "p8",
+		      "id": "p8_-3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 9,
 		      "y": -2,
-		      "id": "p9",
+		      "id": "p9_-2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -11663,9 +11875,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb80e977a1d7ad2bc
-	// Question: Determine truth values from a coordinate graph
+	// Question: Interpret a graph: true or false
 	// Widget key: image_1
-	test("point-plot-graph - [xb80e977a1d7ad2bc] Determine truth values from a coordinate graph", async () => {
+	test("point-plot-graph - [xb80e977a1d7ad2bc] Interpret a graph: true or false", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11674,14 +11886,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -1,
-		    "label": "Number of days",
+		    "label": "Days in July",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "Net electricity use (kilowatt-hours)",
+		    "label": "Net electricity use (kWh)",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -11756,9 +11968,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x20f43ecafc24ad4f
-	// Question: Identify the coldest temperature from a coordinate graph
+	// Question: Identify the coldest temperature from a graph
 	// Widget key: image_5
-	test("point-plot-graph - [x20f43ecafc24ad4f] Identify the coldest temperature from a coordinate graph", async () => {
+	test("point-plot-graph - [x20f43ecafc24ad4f] Identify the coldest temperature from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11869,10 +12081,103 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xcb9b4ea1428381b4
-	// Question: Difference between temperatures at 3 p.m. and 7 p.m.
+	// Extracted from question: x37fa5721684c7aa0
+	// Question: Identify a location by x-coordinate
 	// Widget key: image_1
-	test("point-plot-graph - [xcb9b4ea1428381b4] Difference between temperatures at 3 p.m. and 7 p.m.", async () => {
+	test("point-plot-graph - [x37fa5721684c7aa0] Identify a location by x-coordinate", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 440,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -5,
+		      "y": 6,
+		      "id": "courthouse",
+		      "label": "Courthouse",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": -3,
+		      "id": "library",
+		      "label": "Library",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "home",
+		      "label": "Home",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -6,
+		      "id": "bank",
+		      "label": "Bank",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 6,
+		      "id": "grocery_store",
+		      "label": "Grocery Store",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": -8,
+		      "id": "hospital",
+		      "label": "Hospital",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 0,
+		      "id": "school",
+		      "label": "School",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcb9b4ea1428381b4
+	// Question: Find a temperature difference from a coordinate graph
+	// Widget key: image_1
+	test("point-plot-graph - [xcb9b4ea1428381b4] Find a temperature difference from a coordinate graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11881,14 +12186,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "Number of hours",
+		    "label": "Number of hours (before/after noon)",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "Temperature (degrees Celsius)",
+		    "label": "Temperature (°C)",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -11983,10 +12288,205 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd786a14488ad3f36
-	// Question: Plot the image of a point under dilation
+	// Extracted from question: xedff36d830ee5daf
+	// Question: Dilate a point about a center (scale factor 1/4)
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [xd786a14488ad3f36] Plot the image of a point under dilation (1)", async () => {
+	test("point-plot-graph - [xedff36d830ee5daf] Dilate a point about a center (scale factor 1/4) (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 350,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 350,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": -5,
+		      "id": "P",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 7,
+		      "id": "B",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 1,
+		      "id": "B_prime",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xedff36d830ee5daf
+	// Question: Dilate a point about a center (scale factor 1/4)
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [xedff36d830ee5daf] Dilate a point about a center (scale factor 1/4) (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 350,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 350,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": -5,
+		      "id": "P",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 7,
+		      "id": "B",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": -2,
+		      "id": "B_prime",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xedff36d830ee5daf
+	// Question: Dilate a point about a center (scale factor 1/4)
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [xedff36d830ee5daf] Dilate a point about a center (scale factor 1/4) (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 350,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 350,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": -5,
+		      "id": "P",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 7,
+		      "id": "B",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 4,
+		      "id": "B_prime",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd786a14488ad3f36
+	// Question: Image of a point under dilation about the origin
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [xd786a14488ad3f36] Image of a point under dilation about the origin (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12011,7 +12511,14 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 6,
-		      "id": "ptA",
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -3,
+		      "id": "candidate_image",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -12035,9 +12542,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd786a14488ad3f36
-	// Question: Plot the image of a point under dilation
+	// Question: Image of a point under dilation about the origin
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [xd786a14488ad3f36] Plot the image of a point under dilation (2)", async () => {
+	test("point-plot-graph - [xd786a14488ad3f36] Image of a point under dilation about the origin (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12061,8 +12568,15 @@ describe("pointPlotGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": 0,
+		      "y": 6,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
 		      "y": 3,
-		      "id": "ptB",
+		      "id": "candidate_image",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -12086,9 +12600,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd786a14488ad3f36
-	// Question: Plot the image of a point under dilation
+	// Question: Image of a point under dilation about the origin
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [xd786a14488ad3f36] Plot the image of a point under dilation (3)", async () => {
+	test("point-plot-graph - [xd786a14488ad3f36] Image of a point under dilation about the origin (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12110,10 +12624,17 @@ describe("pointPlotGraph widget tests", () => {
 		  },
 		  "height": 300,
 		  "points": [
+		    {
+		      "x": 0,
+		      "y": 6,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
 		    {
 		      "x": 3,
 		      "y": 0,
-		      "id": "ptC",
+		      "id": "candidate_image",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -12137,49 +12658,35 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6d7c5581bca5d4ba
-	// Question: Plot the image of a point under dilation
+	// Question: Dilation of a point about a center
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x6d7c5581bca5d4ba] Plot the image of a point under dilation (1)", async () => {
+	test("point-plot-graph - [x6d7c5581bca5d4ba] Dilation of a point about a center (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 230,
+		  "width": 320,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
+		    "max": 10,
+		    "min": 0,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
+		    "max": 10,
+		    "min": 0,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 230,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": -2,
-		      "y": -1,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -1,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": -1,
-		      "id": "C_prime_wrong_dir",
-		      "label": "C'",
+		      "x": 10,
+		      "y": 0,
+		      "id": "pt",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -12202,49 +12709,35 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6d7c5581bca5d4ba
-	// Question: Plot the image of a point under dilation
+	// Question: Dilation of a point about a center
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x6d7c5581bca5d4ba] Plot the image of a point under dilation (2)", async () => {
+	test("point-plot-graph - [x6d7c5581bca5d4ba] Dilation of a point about a center (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 230,
+		  "width": 320,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
+		    "max": 10,
+		    "min": 0,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
+		    "max": 10,
+		    "min": 0,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 230,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": -2,
-		      "y": -1,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -1,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": -1,
-		      "id": "C_prime_correct",
-		      "label": "C'",
+		      "x": 5,
+		      "y": 0,
+		      "id": "pt",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -12267,244 +12760,35 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6d7c5581bca5d4ba
-	// Question: Plot the image of a point under dilation
+	// Question: Dilation of a point about a center
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x6d7c5581bca5d4ba] Plot the image of a point under dilation (3)", async () => {
+	test("point-plot-graph - [x6d7c5581bca5d4ba] Dilation of a point about a center (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 230,
+		  "width": 320,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
+		    "max": 10,
+		    "min": 0,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
+		    "max": 10,
+		    "min": 0,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 230,
+		  "height": 320,
 		  "points": [
-		    {
-		      "x": -2,
-		      "y": -1,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -1,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
 		    {
 		      "x": 0,
-		      "y": -1,
-		      "id": "C_prime_half",
-		      "label": "C'",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xedff36d830ee5daf
-	// Question: Plot the image of a point under a dilation
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [xedff36d830ee5daf] Plot the image of a point under a dilation (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 230,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 230,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": -5,
-		      "id": "P_a",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 7,
-		      "id": "B_a",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -8,
-		      "y": -8,
-		      "id": "Bprime_a",
-		      "label": "B'",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xedff36d830ee5daf
-	// Question: Plot the image of a point under a dilation
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [xedff36d830ee5daf] Plot the image of a point under a dilation (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 230,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 230,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": -5,
-		      "id": "P_b",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 7,
-		      "id": "B_b",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": -2,
-		      "id": "Bprime_b",
-		      "label": "B'",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xedff36d830ee5daf
-	// Question: Plot the image of a point under a dilation
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [xedff36d830ee5daf] Plot the image of a point under a dilation (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 230,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 230,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": -5,
-		      "id": "P_c",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 7,
-		      "id": "B_c",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 1,
-		      "id": "Bprime_c",
-		      "label": "B'",
+		      "y": 10,
+		      "id": "pt",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -12528,13 +12812,13 @@ describe("pointPlotGraph widget tests", () => {
 
 	// Extracted from question: x0868dc390e73f9e4
 	// Question: Image of a point under dilation about the origin
-	// Widget key: plane_with_B
+	// Widget key: graph_choice_a
 	test("point-plot-graph - [x0868dc390e73f9e4] Image of a point under dilation about the origin (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 425,
+		  "width": 320,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -12549,71 +12833,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 320,
 		  "points": [
-		    {
-		      "x": 1,
-		      "y": 1,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0868dc390e73f9e4
-	// Question: Image of a point under dilation about the origin
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [x0868dc390e73f9e4] Image of a point under dilation about the origin (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 255,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 255,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 1,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
 		    {
 		      "x": 2,
 		      "y": 2,
-		      "id": "candidate",
-		      "label": "",
+		      "id": "Bp_optionA",
+		      "label": "B′",
 		      "style": "closed"
 		    }
 		  ],
@@ -12638,12 +12864,12 @@ describe("pointPlotGraph widget tests", () => {
 	// Extracted from question: x0868dc390e73f9e4
 	// Question: Image of a point under dilation about the origin
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x0868dc390e73f9e4] Image of a point under dilation about the origin (3)", async () => {
+	test("point-plot-graph - [x0868dc390e73f9e4] Image of a point under dilation about the origin (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 255,
+		  "width": 320,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -12658,20 +12884,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 255,
+		  "height": 320,
 		  "points": [
-		    {
-		      "x": 1,
-		      "y": 1,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
 		    {
 		      "x": 4,
 		      "y": 4,
-		      "id": "candidate",
-		      "label": "",
+		      "id": "Bp_optionB",
+		      "label": "B′",
 		      "style": "closed"
 		    }
 		  ],
@@ -12696,12 +12915,12 @@ describe("pointPlotGraph widget tests", () => {
 	// Extracted from question: x0868dc390e73f9e4
 	// Question: Image of a point under dilation about the origin
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x0868dc390e73f9e4] Image of a point under dilation about the origin (4)", async () => {
+	test("point-plot-graph - [x0868dc390e73f9e4] Image of a point under dilation about the origin (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 255,
+		  "width": 320,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -12716,20 +12935,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 255,
+		  "height": 320,
 		  "points": [
-		    {
-		      "x": 1,
-		      "y": 1,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
 		    {
 		      "x": -4,
 		      "y": -4,
-		      "id": "candidate",
-		      "label": "",
+		      "id": "Bp_optionC",
+		      "label": "B′",
 		      "style": "closed"
 		    }
 		  ],
@@ -12752,48 +12964,48 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe6bce54b4419452a
-	// Question: Dilate a point about a center with scale factor 1/2
-	// Widget key: dilation_choice_a
-	test("point-plot-graph - [xe6bce54b4419452a] Dilate a point about a center with scale factor 1/2 (1)", async () => {
+	// Question: Dilate a point about a center by a scale factor of 1/2
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [xe6bce54b4419452a] Dilate a point about a center by a scale factor of 1/2 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 230,
+		  "width": 300,
 		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
+		    "max": 8,
+		    "min": -8,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
+		    "max": 8,
+		    "min": -8,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 230,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 6,
-		      "y": 0,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 4,
+		      "x": -4,
+		      "y": 3,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 0,
+		      "x": 2,
+		      "y": -1,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
 		      "y": 2,
-		      "id": "Bprime",
+		      "id": "B_image_wrong_A",
 		      "label": "B'",
 		      "style": "closed"
 		    }
@@ -12817,48 +13029,48 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe6bce54b4419452a
-	// Question: Dilate a point about a center with scale factor 1/2
-	// Widget key: dilation_choice_b
-	test("point-plot-graph - [xe6bce54b4419452a] Dilate a point about a center with scale factor 1/2 (2)", async () => {
+	// Question: Dilate a point about a center by a scale factor of 1/2
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [xe6bce54b4419452a] Dilate a point about a center by a scale factor of 1/2 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 230,
+		  "width": 300,
 		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
+		    "max": 8,
+		    "min": -8,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
+		    "max": 8,
+		    "min": -8,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 230,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 6,
-		      "y": 0,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 4,
+		      "x": -4,
+		      "y": 3,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": 2,
-		      "id": "Bprime",
+		      "x": 2,
+		      "y": -1,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 1,
+		      "id": "B_image_correct",
 		      "label": "B'",
 		      "style": "closed"
 		    }
@@ -12882,48 +13094,48 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe6bce54b4419452a
-	// Question: Dilate a point about a center with scale factor 1/2
-	// Widget key: dilation_choice_c
-	test("point-plot-graph - [xe6bce54b4419452a] Dilate a point about a center with scale factor 1/2 (3)", async () => {
+	// Question: Dilate a point about a center by a scale factor of 1/2
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [xe6bce54b4419452a] Dilate a point about a center by a scale factor of 1/2 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 230,
+		  "width": 300,
 		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
+		    "max": 8,
+		    "min": -8,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
+		    "max": 8,
+		    "min": -8,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 230,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 6,
-		      "y": 0,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 4,
+		      "x": -4,
+		      "y": 3,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 9,
-		      "y": 2,
-		      "id": "Bprime",
+		      "x": 2,
+		      "y": -1,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": 5,
+		      "id": "B_image_wrong_C",
 		      "label": "B'",
 		      "style": "closed"
 		    }
@@ -12954,7 +13166,7 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 255,
+		  "width": 320,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -12969,20 +13181,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 255,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": -5,
-		      "y": 5,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -1,
-		      "y": -1,
-		      "id": "Cprime",
-		      "label": "C'",
+		      "x": 1,
+		      "y": 1,
+		      "id": "P_a",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -13012,7 +13217,7 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 255,
+		  "width": 320,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -13027,20 +13232,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 255,
+		  "height": 320,
 		  "points": [
-		    {
-		      "x": -5,
-		      "y": 5,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
 		    {
 		      "x": -1,
 		      "y": 1,
-		      "id": "Cprime",
-		      "label": "C'",
+		      "id": "P_b",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -13070,7 +13268,7 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 255,
+		  "width": 320,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -13085,20 +13283,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 255,
+		  "height": 320,
 		  "points": [
 		    {
 		      "x": -5,
 		      "y": 5,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 1,
-		      "id": "Cprime",
-		      "label": "C'",
+		      "id": "P_c",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -13121,14 +13312,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8f39e2de63e5db28
-	// Question: Dilate a point about the origin (scale factor 2)
+	// Question: Dilate a point about the origin
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x8f39e2de63e5db28] Dilate a point about the origin (scale factor 2) (1)", async () => {
+	test("point-plot-graph - [x8f39e2de63e5db28] Dilate a point about the origin (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 425,
+		  "width": 350,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -13143,20 +13334,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 350,
 		  "points": [
 		    {
 		      "x": -3,
 		      "y": -2,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": -6,
-		      "id": "D_prime",
-		      "label": "D′",
+		      "id": "p1",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -13179,14 +13363,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8f39e2de63e5db28
-	// Question: Dilate a point about the origin (scale factor 2)
+	// Question: Dilate a point about the origin
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x8f39e2de63e5db28] Dilate a point about the origin (scale factor 2) (2)", async () => {
+	test("point-plot-graph - [x8f39e2de63e5db28] Dilate a point about the origin (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 425,
+		  "width": 350,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -13201,20 +13385,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 350,
 		  "points": [
-		    {
-		      "x": -3,
-		      "y": -2,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
 		    {
 		      "x": -6,
 		      "y": -4,
-		      "id": "D_prime",
-		      "label": "D′",
+		      "id": "p1",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -13237,14 +13414,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8f39e2de63e5db28
-	// Question: Dilate a point about the origin (scale factor 2)
+	// Question: Dilate a point about the origin
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x8f39e2de63e5db28] Dilate a point about the origin (scale factor 2) (3)", async () => {
+	test("point-plot-graph - [x8f39e2de63e5db28] Dilate a point about the origin (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 425,
+		  "width": 350,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -13259,20 +13436,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 350,
 		  "points": [
-		    {
-		      "x": -3,
-		      "y": -2,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
 		    {
 		      "x": 6,
 		      "y": 4,
-		      "id": "D_prime",
-		      "label": "D′",
+		      "id": "p1",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -13295,14 +13465,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6f4b09d1c4997a93
-	// Question: Dilate a point about a center (scale factor 3)
+	// Question: Dilate a point about another point (scale factor 3)
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x6f4b09d1c4997a93] Dilate a point about a center (scale factor 3) (1)", async () => {
+	test("point-plot-graph - [x6f4b09d1c4997a93] Dilate a point about another point (scale factor 3) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 400,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -13317,27 +13487,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [
-		    {
-		      "x": 2,
-		      "y": 5,
-		      "id": "choiceA_A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 6,
-		      "id": "choiceA_P",
-		      "label": "P",
-		      "style": "closed"
-		    },
 		    {
 		      "x": 0,
 		      "y": 4,
-		      "id": "choiceA_Aprime",
-		      "label": "A'",
+		      "id": "A_prime",
+		      "label": "A′",
 		      "style": "closed"
 		    }
 		  ],
@@ -13360,14 +13516,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6f4b09d1c4997a93
-	// Question: Dilate a point about a center (scale factor 3)
+	// Question: Dilate a point about another point (scale factor 3)
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x6f4b09d1c4997a93] Dilate a point about a center (scale factor 3) (2)", async () => {
+	test("point-plot-graph - [x6f4b09d1c4997a93] Dilate a point about another point (scale factor 3) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 400,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -13382,27 +13538,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [
-		    {
-		      "x": 2,
-		      "y": 5,
-		      "id": "choiceB_A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 6,
-		      "id": "choiceB_P",
-		      "label": "P",
-		      "style": "closed"
-		    },
 		    {
 		      "x": -2,
 		      "y": 3,
-		      "id": "choiceB_Aprime",
-		      "label": "A'",
+		      "id": "A_prime",
+		      "label": "A′",
 		      "style": "closed"
 		    }
 		  ],
@@ -13425,14 +13567,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6f4b09d1c4997a93
-	// Question: Dilate a point about a center (scale factor 3)
+	// Question: Dilate a point about another point (scale factor 3)
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x6f4b09d1c4997a93] Dilate a point about a center (scale factor 3) (3)", async () => {
+	test("point-plot-graph - [x6f4b09d1c4997a93] Dilate a point about another point (scale factor 3) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 400,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -13447,27 +13589,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 2,
-		      "y": 5,
-		      "id": "choiceC_A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 6,
-		      "id": "choiceC_P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 2,
-		      "id": "choiceC_Aprime",
-		      "label": "A'",
+		      "x": 8,
+		      "y": 8,
+		      "id": "A_prime",
+		      "label": "A′",
 		      "style": "closed"
 		    }
 		  ],
@@ -13490,9 +13618,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5449087e792daae3
-	// Question: Plot the image of a point under dilation
+	// Question: Plot the image of a point under a dilation about a center
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x5449087e792daae3] Plot the image of a point under dilation (1)", async () => {
+	test("point-plot-graph - [x5449087e792daae3] Plot the image of a point under a dilation about a center (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13516,21 +13644,21 @@ describe("pointPlotGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": 0,
-		      "y": 0,
+		      "y": 4,
 		      "id": "P",
 		      "label": "P",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
-		      "y": -1,
+		      "y": 2,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
-		      "y": -2,
+		      "y": 0,
 		      "id": "Aprime",
 		      "label": "A'",
 		      "style": "closed"
@@ -13555,9 +13683,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5449087e792daae3
-	// Question: Plot the image of a point under dilation
+	// Question: Plot the image of a point under a dilation about a center
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x5449087e792daae3] Plot the image of a point under dilation (2)", async () => {
+	test("point-plot-graph - [x5449087e792daae3] Plot the image of a point under a dilation about a center (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13581,14 +13709,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": 0,
-		      "y": 0,
+		      "y": 4,
 		      "id": "P",
 		      "label": "P",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
-		      "y": -1,
+		      "y": 2,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
@@ -13620,9 +13748,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5449087e792daae3
-	// Question: Plot the image of a point under dilation
+	// Question: Plot the image of a point under a dilation about a center
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x5449087e792daae3] Plot the image of a point under dilation (3)", async () => {
+	test("point-plot-graph - [x5449087e792daae3] Plot the image of a point under a dilation about a center (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13646,21 +13774,21 @@ describe("pointPlotGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": 0,
-		      "y": 0,
+		      "y": 4,
 		      "id": "P",
 		      "label": "P",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
-		      "y": -1,
+		      "y": 2,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
-		      "y": 4,
+		      "y": -2,
 		      "id": "Aprime",
 		      "label": "A'",
 		      "style": "closed"
@@ -13685,14 +13813,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xbe00292aec67729a
-	// Question: Dilate a point about the origin (scale factor 3)
+	// Question: Dilate a point about the origin on a coordinate plane
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [xbe00292aec67729a] Dilate a point about the origin (scale factor 3) (1)", async () => {
+	test("point-plot-graph - [xbe00292aec67729a] Dilate a point about the origin on a coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 255,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -13707,20 +13835,20 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 255,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": -2,
 		      "y": 0,
-		      "id": "D_orig",
-		      "label": "",
+		      "id": "Da",
+		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
 		      "y": 0,
-		      "id": "candidate",
-		      "label": "",
+		      "id": "Dprime_a",
+		      "label": "D'",
 		      "style": "closed"
 		    }
 		  ],
@@ -13743,14 +13871,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xbe00292aec67729a
-	// Question: Dilate a point about the origin (scale factor 3)
+	// Question: Dilate a point about the origin on a coordinate plane
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [xbe00292aec67729a] Dilate a point about the origin (scale factor 3) (2)", async () => {
+	test("point-plot-graph - [xbe00292aec67729a] Dilate a point about the origin on a coordinate plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 255,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -13765,20 +13893,20 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 255,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": -2,
 		      "y": 0,
-		      "id": "D_orig",
-		      "label": "",
+		      "id": "Db",
+		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
 		      "y": 0,
-		      "id": "D_image",
-		      "label": "",
+		      "id": "Dprime_b",
+		      "label": "D'",
 		      "style": "closed"
 		    }
 		  ],
@@ -13801,14 +13929,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xbe00292aec67729a
-	// Question: Dilate a point about the origin (scale factor 3)
+	// Question: Dilate a point about the origin on a coordinate plane
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [xbe00292aec67729a] Dilate a point about the origin (scale factor 3) (3)", async () => {
+	test("point-plot-graph - [xbe00292aec67729a] Dilate a point about the origin on a coordinate plane (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 255,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -13823,20 +13951,71 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 255,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": -2,
 		      "y": 0,
-		      "id": "D_orig",
-		      "label": "",
+		      "id": "Dc",
+		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -4,
+		      "x": -3,
 		      "y": 0,
-		      "id": "candidate",
-		      "label": "",
+		      "id": "Dprime_c",
+		      "label": "D'",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbe00292aec67729a
+	// Question: Dilate a point about the origin on a coordinate plane
+	// Widget key: coordinate_plane_stimulus
+	test("point-plot-graph - [xbe00292aec67729a] Dilate a point about the origin on a coordinate plane (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 0,
+		      "id": "D",
+		      "label": "D",
 		      "style": "closed"
 		    }
 		  ],
@@ -13859,114 +14038,49 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe41a4baf75672192
-	// Question: Plot the image of a point under a dilation
+	// Question: Dilate a point about a center by a given scale factor
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [xe41a4baf75672192] Plot the image of a point under a dilation (1)", async () => {
+	test("point-plot-graph - [xe41a4baf75672192] Dilate a point about a center by a given scale factor (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 230,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "",
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "",
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 230,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 11,
+		      "x": -7,
+		      "y": 3,
 		      "id": "P",
 		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 13,
-		      "y": 2,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 9,
-		      "y": 5,
-		      "id": "D_prime_option",
-		      "label": "D′",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe41a4baf75672192
-	// Question: Plot the image of a point under a dilation
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [xe41a4baf75672192] Plot the image of a point under a dilation (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 230,
-		  "xAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 230,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 11,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 13,
-		      "y": 2,
-		      "id": "D",
-		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
-		      "y": 8,
-		      "id": "D_prime_option",
-		      "label": "D′",
+		      "y": -6,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -3,
+		      "id": "candidate_A",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -13989,49 +14103,114 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe41a4baf75672192
-	// Question: Plot the image of a point under a dilation
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [xe41a4baf75672192] Plot the image of a point under a dilation (3)", async () => {
+	// Question: Dilate a point about a center by a given scale factor
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [xe41a4baf75672192] Dilate a point about a center by a given scale factor (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 230,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "",
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "",
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 230,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 11,
+		      "x": -7,
+		      "y": 3,
 		      "id": "P",
 		      "label": "P",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 13,
-		      "y": 2,
+		      "x": 5,
+		      "y": -6,
 		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": 6,
-		      "id": "D_prime_option",
-		      "label": "D′",
+		      "x": -3,
+		      "y": 0,
+		      "id": "candidate_B",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe41a4baf75672192
+	// Question: Dilate a point about a center by a given scale factor
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [xe41a4baf75672192] Dilate a point about a center by a given scale factor (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -7,
+		      "y": 3,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": -6,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": -1,
+		      "id": "candidate_C",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -14054,14 +14233,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5c392ed5f3a7a46f
-	// Question: Plot the image of a point under dilation
+	// Question: Dilate a point about the origin by a factor of one-third
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x5c392ed5f3a7a46f] Plot the image of a point under dilation (1)", async () => {
+	test("point-plot-graph - [x5c392ed5f3a7a46f] Dilate a point about the origin by a factor of one-third (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 400,
+		  "width": 425,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -14076,676 +14255,115 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": -4,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5c392ed5f3a7a46f
+	// Question: Dilate a point about the origin by a factor of one-third
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [x5c392ed5f3a7a46f] Dilate a point about the origin by a factor of one-third (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": -2,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5c392ed5f3a7a46f
+	// Question: Dilate a point about the origin by a factor of one-third
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x5c392ed5f3a7a46f] Dilate a point about the origin by a factor of one-third (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
 		  "points": [
 		    {
 		      "x": -1,
 		      "y": 2,
-		      "id": "optA",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5c392ed5f3a7a46f
-	// Question: Plot the image of a point under dilation
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [x5c392ed5f3a7a46f] Plot the image of a point under dilation (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": -2,
-		      "id": "optB",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5c392ed5f3a7a46f
-	// Question: Plot the image of a point under dilation
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x5c392ed5f3a7a46f] Plot the image of a point under dilation (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": -6,
-		      "id": "optC",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa9ca26f62775919b
-	// Question: Reflect a point across the x-axis
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [xa9ca26f62775919b] Reflect a point across the x-axis (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": -5,
 		      "id": "p1",
 		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa9ca26f62775919b
-	// Question: Reflect a point across the x-axis
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [xa9ca26f62775919b] Reflect a point across the x-axis (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": 5,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa9ca26f62775919b
-	// Question: Reflect a point across the x-axis
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [xa9ca26f62775919b] Reflect a point across the x-axis (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": -5,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa9ca26f62775919b
-	// Question: Reflect a point across the x-axis
-	// Widget key: coordinate_plane_empty
-	test("point-plot-graph - [xa9ca26f62775919b] Reflect a point across the x-axis (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": -5,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3fe10c20aea32b7b
-	// Question: Reflect a point across the y-axis
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [x3fe10c20aea32b7b] Reflect a point across the y-axis (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 290,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 290,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": -6,
-		      "id": "choiceA_point",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3fe10c20aea32b7b
-	// Question: Reflect a point across the y-axis
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [x3fe10c20aea32b7b] Reflect a point across the y-axis (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 290,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 290,
-		  "points": [
-		    {
-		      "x": 6,
-		      "y": 6,
-		      "id": "choiceB_point",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3fe10c20aea32b7b
-	// Question: Reflect a point across the y-axis
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x3fe10c20aea32b7b] Reflect a point across the y-axis (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 290,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 290,
-		  "points": [
-		    {
-		      "x": 6,
-		      "y": -6,
-		      "id": "choiceC_point",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3fe10c20aea32b7b
-	// Question: Reflect a point across the y-axis
-	// Widget key: stimulus_graph
-	test("point-plot-graph - [x3fe10c20aea32b7b] Reflect a point across the y-axis (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": 6,
-		      "id": "stimP",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf5caad0b269d58a2
-	// Question: Reflect a point across a line
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [xf5caad0b269d58a2] Reflect a point across a line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": -1,
-		      "id": "p1",
-		      "label": "C′",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf5caad0b269d58a2
-	// Question: Reflect a point across a line
-	// Widget key: graph_choice_b
-	test("point-plot-graph - [xf5caad0b269d58a2] Reflect a point across a line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": -1,
-		      "id": "p1",
-		      "label": "C′",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf5caad0b269d58a2
-	// Question: Reflect a point across a line
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [xf5caad0b269d58a2] Reflect a point across a line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": 1,
-		      "id": "p1",
-		      "label": "C′",
 		      "style": "closed"
 		    }
 		  ],
@@ -14775,7 +14393,7 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 290,
+		  "width": 350,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -14790,12 +14408,12 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 290,
+		  "height": 350,
 		  "points": [
 		    {
-		      "x": -2,
-		      "y": -5,
-		      "id": "p1",
+		      "x": 2,
+		      "y": 5,
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -14826,7 +14444,7 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 290,
+		  "width": 350,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -14841,12 +14459,12 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 290,
+		  "height": 350,
 		  "points": [
 		    {
 		      "x": -2,
 		      "y": 5,
-		      "id": "p1",
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -14877,7 +14495,7 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 290,
+		  "width": 350,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -14892,12 +14510,471 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 290,
+		  "height": 350,
 		  "points": [
 		    {
-		      "x": 2,
+		      "x": -2,
 		      "y": -5,
-		      "id": "p1",
+		      "id": "P1",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa9ca26f62775919b
+	// Question: Reflect a point across the x-axis
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [xa9ca26f62775919b] Reflect a point across the x-axis (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 320,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": 5,
+		      "id": "choiceA_point",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa9ca26f62775919b
+	// Question: Reflect a point across the x-axis
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [xa9ca26f62775919b] Reflect a point across the x-axis (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 320,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": 5,
+		      "id": "choiceB_point",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa9ca26f62775919b
+	// Question: Reflect a point across the x-axis
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [xa9ca26f62775919b] Reflect a point across the x-axis (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 320,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": -5,
+		      "id": "choiceC_point",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3fe10c20aea32b7b
+	// Question: Reflect a point across the y-axis
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [x3fe10c20aea32b7b] Reflect a point across the y-axis (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 320,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 6,
+		      "id": "optA_point",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3fe10c20aea32b7b
+	// Question: Reflect a point across the y-axis
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [x3fe10c20aea32b7b] Reflect a point across the y-axis (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 320,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 6,
+		      "id": "optB_point",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3fe10c20aea32b7b
+	// Question: Reflect a point across the y-axis
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [x3fe10c20aea32b7b] Reflect a point across the y-axis (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 320,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": -6,
+		      "id": "optC_point",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf5caad0b269d58a2
+	// Question: Reflect a point across a line on a coordinate plane
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [xf5caad0b269d58a2] Reflect a point across a line on a coordinate plane (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 320,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 1,
+		      "id": "choice_a_point",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf5caad0b269d58a2
+	// Question: Reflect a point across a line on a coordinate plane
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [xf5caad0b269d58a2] Reflect a point across a line on a coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 320,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": -1,
+		      "id": "choice_b_point",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf5caad0b269d58a2
+	// Question: Reflect a point across a line on a coordinate plane
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [xf5caad0b269d58a2] Reflect a point across a line on a coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 320,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": -1,
+		      "id": "choice_c_point",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -14928,7 +15005,7 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 400,
+		  "width": 320,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -14943,12 +15020,12 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 6,
+		      "x": -6,
 		      "y": 5,
-		      "id": "p1",
+		      "id": "img_correct",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -14979,7 +15056,7 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 400,
+		  "width": 320,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -14994,12 +15071,12 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": -6,
+		      "x": 6,
 		      "y": 5,
-		      "id": "p1",
+		      "id": "img_distractor1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -15030,7 +15107,7 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 400,
+		  "width": 320,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -15045,12 +15122,12 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 320,
 		  "points": [
 		    {
 		      "x": -6,
 		      "y": -5,
-		      "id": "p1",
+		      "id": "img_distractor2",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -15074,14 +15151,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7da2cdc751aa884b
-	// Question: Reflect a point across line m
+	// Question: Reflect a point across a line
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x7da2cdc751aa884b] Reflect a point across line m (1)", async () => {
+	test("point-plot-graph - [x7da2cdc751aa884b] Reflect a point across a line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 400,
+		  "width": 350,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -15096,13 +15173,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 350,
 		  "points": [
 		    {
 		      "x": 0,
 		      "y": 5,
-		      "id": "image_point",
-		      "label": "B'",
+		      "id": "image_point_a",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -15125,14 +15202,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7da2cdc751aa884b
-	// Question: Reflect a point across line m
+	// Question: Reflect a point across a line
 	// Widget key: graph_choice_b
-	test("point-plot-graph - [x7da2cdc751aa884b] Reflect a point across line m (2)", async () => {
+	test("point-plot-graph - [x7da2cdc751aa884b] Reflect a point across a line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 400,
+		  "width": 350,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -15147,13 +15224,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 350,
 		  "points": [
 		    {
 		      "x": 0,
 		      "y": -5,
-		      "id": "image_point",
-		      "label": "B'",
+		      "id": "image_point_b",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -15176,14 +15253,14 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7da2cdc751aa884b
-	// Question: Reflect a point across line m
+	// Question: Reflect a point across a line
 	// Widget key: graph_choice_c
-	test("point-plot-graph - [x7da2cdc751aa884b] Reflect a point across line m (3)", async () => {
+	test("point-plot-graph - [x7da2cdc751aa884b] Reflect a point across a line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 400,
+		  "width": 350,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -15198,63 +15275,12 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 350,
 		  "points": [
 		    {
-		      "x": 2,
+		      "x": 5,
 		      "y": -5,
-		      "id": "image_point",
-		      "label": "B'",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb93d4ff5889d1d9b
-	// Question: Reflect a point across a line on a coordinate plane
-	// Widget key: reflection_choice_a
-	test("point-plot-graph - [xb93d4ff5889d1d9b] Reflect a point across a line on a coordinate plane (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 3,
-		      "id": "p1",
+		      "id": "image_point_c",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -15278,9 +15304,60 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb93d4ff5889d1d9b
-	// Question: Reflect a point across a line on a coordinate plane
-	// Widget key: reflection_choice_b
-	test("point-plot-graph - [xb93d4ff5889d1d9b] Reflect a point across a line on a coordinate plane (2)", async () => {
+	// Question: Reflect a point across a line
+	// Widget key: graph_choice_a
+	test("point-plot-graph - [xb93d4ff5889d1d9b] Reflect a point across a line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pointPlotGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": -7,
+		      "id": "d_prime_a",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pointPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb93d4ff5889d1d9b
+	// Question: Reflect a point across a line
+	// Widget key: graph_choice_b
+	test("point-plot-graph - [xb93d4ff5889d1d9b] Reflect a point across a line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15305,8 +15382,8 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 7,
-		      "id": "p1",
-		      "label": "",
+		      "id": "d_prime_b",
+		      "label": "D′",
 		      "style": "closed"
 		    }
 		  ],
@@ -15329,9 +15406,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb93d4ff5889d1d9b
-	// Question: Reflect a point across a line on a coordinate plane
-	// Widget key: reflection_choice_c
-	test("point-plot-graph - [xb93d4ff5889d1d9b] Reflect a point across a line on a coordinate plane (3)", async () => {
+	// Question: Reflect a point across a line
+	// Widget key: graph_choice_c
+	test("point-plot-graph - [xb93d4ff5889d1d9b] Reflect a point across a line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15354,10 +15431,10 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": 2,
-		      "y": 6,
-		      "id": "p1",
-		      "label": "",
+		      "x": -2,
+		      "y": 7,
+		      "id": "d_prime_c",
+		      "label": "D′",
 		      "style": "closed"
 		    }
 		  ],
@@ -15387,7 +15464,7 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 425,
+		  "width": 350,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -15402,13 +15479,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 350,
 		  "points": [
 		    {
 		      "x": 0,
 		      "y": 4,
-		      "id": "Qprime_a",
-		      "label": "Q'",
+		      "id": "choiceA_point",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -15438,7 +15515,7 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 425,
+		  "width": 350,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -15453,13 +15530,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 350,
 		  "points": [
 		    {
 		      "x": 0,
 		      "y": -4,
-		      "id": "Qprime_b",
-		      "label": "Q'",
+		      "id": "choiceB_point",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -15489,7 +15566,7 @@ describe("pointPlotGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pointPlotGraph",
-		  "width": 425,
+		  "width": 350,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -15504,13 +15581,13 @@ describe("pointPlotGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 350,
 		  "points": [
 		    {
 		      "x": 4,
 		      "y": 0,
-		      "id": "Qprime_c",
-		      "label": "Q'",
+		      "id": "choiceC_point",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -15533,9 +15610,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x15909e4866aa5ffa
-	// Question: Determine if a graph represents a function
+	// Question: Does the graph represent a function?
 	// Widget key: image_1
-	test("point-plot-graph - [x15909e4866aa5ffa] Determine if a graph represents a function", async () => {
+	test("point-plot-graph - [x15909e4866aa5ffa] Does the graph represent a function?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15544,14 +15621,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -15560,42 +15637,42 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -6,
 		      "y": -7,
-		      "id": "P1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -5,
 		      "y": 7,
-		      "id": "P2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -4,
 		      "y": -4,
-		      "id": "P3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -2,
 		      "y": 7,
-		      "id": "P4",
+		      "id": "p4",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": 6,
-		      "id": "P5",
+		      "id": "p5",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": -3,
-		      "id": "P6",
+		      "id": "p6",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -15630,14 +15707,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -15646,42 +15723,42 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -6,
 		      "y": 2,
-		      "id": "P1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -2,
 		      "y": -3,
-		      "id": "P2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -1,
 		      "y": 2,
-		      "id": "P3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
 		      "y": 3,
-		      "id": "P4",
+		      "id": "p4",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 1,
-		      "id": "P5",
+		      "id": "p5",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
 		      "y": -7,
-		      "id": "P6",
+		      "id": "p6",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -15705,9 +15782,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0fb96588608f1210
-	// Question: Does the graphed relation represent a function?
+	// Question: Determine whether the graph represents a function
 	// Widget key: image_1
-	test("point-plot-graph - [x0fb96588608f1210] Does the graphed relation represent a function?", async () => {
+	test("point-plot-graph - [x0fb96588608f1210] Determine whether the graph represents a function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15716,14 +15793,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -15809,14 +15886,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -15825,49 +15902,49 @@ describe("pointPlotGraph widget tests", () => {
 		    {
 		      "x": -7,
 		      "y": 3,
-		      "id": "P1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -3,
 		      "y": 0,
-		      "id": "P2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -1,
 		      "y": 6,
-		      "id": "P3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": -5,
-		      "id": "P4",
+		      "id": "p4",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": -6,
-		      "id": "P5",
+		      "id": "p5",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 6,
-		      "id": "P6",
+		      "id": "p6",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 7,
 		      "y": -4,
-		      "id": "P7",
+		      "id": "p7",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -15902,14 +15979,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -15977,9 +16054,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x3152e5f9b81f9b64
-	// Question: Determine whether a graph represents a function
+	// Question: Does the graph represent a function?
 	// Widget key: image_1
-	test("point-plot-graph - [x3152e5f9b81f9b64] Determine whether a graph represents a function", async () => {
+	test("point-plot-graph - [x3152e5f9b81f9b64] Does the graph represent a function?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15988,14 +16065,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -16063,9 +16140,9 @@ describe("pointPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x28e494ce9749917d
-	// Question: Does the graph represent a function?
+	// Question: Determine whether a graph represents a function
 	// Widget key: image_1
-	test("point-plot-graph - [x28e494ce9749917d] Does the graph represent a function?", async () => {
+	test("point-plot-graph - [x28e494ce9749917d] Determine whether a graph represents a function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -16074,14 +16151,14 @@ describe("pointPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -16148,10 +16225,10 @@ describe("pointPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x864348e6b3571126
-	// Question: Draw a rectangle on a coordinate plane
+	// Extracted from question: x95ae2112be449690
+	// Question: Select the rectangle on a coordinate plane
 	// Widget key: graph_choice_a
-	test("point-plot-graph - [x864348e6b3571126] Draw a rectangle on a coordinate plane", async () => {
+	test("point-plot-graph - [x95ae2112be449690] Select the rectangle on a coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -16174,248 +16251,16 @@ describe("pointPlotGraph widget tests", () => {
 		  "height": 325,
 		  "points": [
 		    {
-		      "x": -3,
-		      "y": 2,
-		      "id": "P1",
-		      "label": " ",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 2,
-		      "id": "P2",
-		      "label": " ",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xfeabeeb8281f94ac
-	// Question: Select a rectangle given two vertices and perimeter
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [xfeabeeb8281f94ac] Select a rectangle given two vertices and perimeter", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 340,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": 4,
+		      "x": -1,
+		      "y": 7,
 		      "id": "UL",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
-		      "y": 4,
+		      "y": 7,
 		      "id": "UR",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbc1d82d67dc942a5
-	// Question: Identify a rectangle from two vertices and a perimeter
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [xbc1d82d67dc942a5] Identify a rectangle from two vertices and a perimeter", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 340,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": 6,
-		      "id": "UL",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 6,
-		      "id": "UR",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x35e51c1d2eb8e23e
-	// Question: Identify a rectangle from coordinates and area
-	// Widget key: graph_choice_a
-	test("point-plot-graph - [x35e51c1d2eb8e23e] Identify a rectangle from coordinates and area", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 340,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": 0,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 0,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pointPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9117b7858e7f418f
-	// Question: Identify a rectangle on the coordinate plane
-	// Widget key: graph_choice_c
-	test("point-plot-graph - [x9117b7858e7f418f] Identify a rectangle on the coordinate plane", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pointPlotGraph",
-		  "width": 340,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": -3,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": -3,
-		      "id": "P2",
 		      "label": "",
 		      "style": "closed"
 		    }

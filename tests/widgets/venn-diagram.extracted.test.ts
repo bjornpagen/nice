@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.959Z
+// Generated on: 2025-09-18T05:17:02.154Z
 // Widget Type: vennDiagram
 // Source: Real questions from database
 //
@@ -26,24 +26,24 @@ import * as logger from "@superbuilders/slog"
 
 describe("vennDiagram widget tests", () => {
 	// Extracted from question: x7bfa8efd005608e3
-	// Question: Complete a two-way frequency table from a Venn diagram
-	// Widget key: venn_image
-	test("venn-diagram - [x7bfa8efd005608e3] Complete a two-way frequency table from a Venn diagram", async () => {
+	// Question: Complete a Two-Way Frequency Table from a Venn Diagram
+	// Widget key: image_1
+	test("venn-diagram - [x7bfa8efd005608e3] Complete a Two-Way Frequency Table from a Venn Diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "vennDiagram",
 		  "width": 350,
-		  "height": 262,
+		  "height": 300,
 		  "circleA": {
-		    "color": "#4F79FF80",
+		    "color": "#4E79A780",
 		    "count": 7,
-		    "label": "Wore a tie"
+		    "label": "Wore a Tie"
 		  },
 		  "circleB": {
-		    "color": "#D81B6080",
+		    "color": "#D6272880",
 		    "count": 5,
-		    "label": "Received a compliment"
+		    "label": "Received a Compliment"
 		  },
 		  "outsideCount": 10,
 		  "intersectionCount": 8
@@ -64,23 +64,62 @@ describe("vennDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9987e96f3253973f
+	// Extracted from question: x2da876528f5927a0
 	// Question: Complete a two-way frequency table from a Venn diagram
 	// Widget key: venn_image
-	test("venn-diagram - [x9987e96f3253973f] Complete a two-way frequency table from a Venn diagram", async () => {
+	test("venn-diagram - [x2da876528f5927a0] Complete a two-way frequency table from a Venn diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "vennDiagram",
-		  "width": 350,
-		  "height": 262,
+		  "width": 420,
+		  "height": 320,
 		  "circleA": {
-		    "color": "#4F81BD80",
+		    "color": "#4F81FF80",
+		    "count": 14,
+		    "label": "10,000 hours"
+		  },
+		  "circleB": {
+		    "color": "#FF4F5A80",
+		    "count": 8,
+		    "label": "Won major"
+		  },
+		  "outsideCount": 6,
+		  "intersectionCount": 37
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for vennDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9987e96f3253973f
+	// Question: Complete a Two-Way Frequency Table (Dogs and Cats)
+	// Widget key: venn_image
+	test("venn-diagram - [x9987e96f3253973f] Complete a Two-Way Frequency Table (Dogs and Cats)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "vennDiagram",
+		  "width": 400,
+		  "height": 300,
+		  "circleA": {
+		    "color": "#4F81E180",
 		    "count": 5,
 		    "label": "Have a dog"
 		  },
 		  "circleB": {
-		    "color": "#C0504D80",
+		    "color": "#C0000080",
 		    "count": 6,
 		    "label": "Have a cat"
 		  },
@@ -104,66 +143,27 @@ describe("vennDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x47fe1dcc0683e6b8
-	// Question: Complete a Two-Way Frequency Table (Candies)
+	// Question: Complete a two-way frequency table from a Venn diagram
 	// Widget key: venn_image
-	test("venn-diagram - [x47fe1dcc0683e6b8] Complete a Two-Way Frequency Table (Candies)", async () => {
+	test("venn-diagram - [x47fe1dcc0683e6b8] Complete a two-way frequency table from a Venn diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "vennDiagram",
-		  "width": 350,
-		  "height": 262,
+		  "width": 400,
+		  "height": 320,
 		  "circleA": {
-		    "color": "#4C6EF5AA",
+		    "color": "#4F83FF80",
 		    "count": 6,
 		    "label": "Chocolate"
 		  },
 		  "circleB": {
-		    "color": "#E03131AA",
+		    "color": "#E31A1C80",
 		    "count": 1,
 		    "label": "Coconut"
 		  },
 		  "outsideCount": 2,
 		  "intersectionCount": 3
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for vennDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2da876528f5927a0
-	// Question: Complete a Two-Way Frequency Table from a Venn Diagram
-	// Widget key: image_1
-	test("venn-diagram - [x2da876528f5927a0] Complete a Two-Way Frequency Table from a Venn Diagram", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "vennDiagram",
-		  "width": 350,
-		  "height": 262,
-		  "circleA": {
-		    "color": "#4A90E280",
-		    "count": 14,
-		    "label": "10,000 hours"
-		  },
-		  "circleB": {
-		    "color": "#D0021B80",
-		    "count": 8,
-		    "label": "Won major"
-		  },
-		  "outsideCount": 6,
-		  "intersectionCount": 37
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -189,15 +189,15 @@ describe("vennDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "vennDiagram",
-		  "width": 350,
-		  "height": 262,
+		  "width": 420,
+		  "height": 320,
 		  "circleA": {
-		    "color": "#4F81BD80",
+		    "color": "#4E79A780",
 		    "count": 0,
 		    "label": "Studied for"
 		  },
 		  "circleB": {
-		    "color": "#C0504D80",
+		    "color": "#E1575980",
 		    "count": 2,
 		    "label": "Passed"
 		  },
@@ -221,22 +221,22 @@ describe("vennDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x316af7c25381119c
-	// Question: Complete a Two-Way Frequency Table
+	// Question: Complete a two-way frequency table from a Venn diagram
 	// Widget key: venn_widget
-	test("venn-diagram - [x316af7c25381119c] Complete a Two-Way Frequency Table", async () => {
+	test("venn-diagram - [x316af7c25381119c] Complete a two-way frequency table from a Venn diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "vennDiagram",
-		  "width": 350,
-		  "height": 262,
+		  "width": 400,
+		  "height": 300,
 		  "circleA": {
-		    "color": "#4F86F7AA",
+		    "color": "#4C78A880",
 		    "count": 27,
 		    "label": "Cold medicine"
 		  },
 		  "circleB": {
-		    "color": "#E53935AA",
+		    "color": "#E4575680",
 		    "count": 20,
 		    "label": "Cold longer than 7 days"
 		  },
@@ -260,22 +260,22 @@ describe("vennDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9534f2e4ae832609
-	// Question: Complete a Two-Way Frequency Table from a Venn Diagram
+	// Question: Complete a two-way frequency table from a Venn diagram
 	// Widget key: venn_image
-	test("venn-diagram - [x9534f2e4ae832609] Complete a Two-Way Frequency Table from a Venn Diagram", async () => {
+	test("venn-diagram - [x9534f2e4ae832609] Complete a two-way frequency table from a Venn diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "vennDiagram",
-		  "width": 350,
-		  "height": 262,
+		  "width": 400,
+		  "height": 300,
 		  "circleA": {
-		    "color": "#4E79A780",
+		    "color": "#4F81BDCC",
 		    "count": 17,
 		    "label": "Foreign language"
 		  },
 		  "circleB": {
-		    "color": "#E1575980",
+		    "color": "#C00000CC",
 		    "count": 12,
 		    "label": "Sport"
 		  },
@@ -299,22 +299,22 @@ describe("vennDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbce4e4db20a1f148
-	// Question: Complete a Two-Way Frequency Table from a Venn Diagram
+	// Question: Complete a two-way frequency table from a Venn diagram
 	// Widget key: venn_image
-	test("venn-diagram - [xbce4e4db20a1f148] Complete a Two-Way Frequency Table from a Venn Diagram", async () => {
+	test("venn-diagram - [xbce4e4db20a1f148] Complete a two-way frequency table from a Venn diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "vennDiagram",
-		  "width": 350,
-		  "height": 262,
+		  "width": 400,
+		  "height": 300,
 		  "circleA": {
-		    "color": "#4F81FF80",
+		    "color": "#4F81BD80",
 		    "count": 5,
 		    "label": "Australia"
 		  },
 		  "circleB": {
-		    "color": "#E3263680",
+		    "color": "#C0504D80",
 		    "count": 6,
 		    "label": "United States"
 		  },
@@ -339,21 +339,21 @@ describe("vennDiagram widget tests", () => {
 
 	// Extracted from question: x544f8e3a8ef6c493
 	// Question: Complete a two-way frequency table from a Venn diagram
-	// Widget key: image_1
+	// Widget key: venn_image
 	test("venn-diagram - [x544f8e3a8ef6c493] Complete a two-way frequency table from a Venn diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "vennDiagram",
-		  "width": 350,
-		  "height": 262,
+		  "width": 440,
+		  "height": 320,
 		  "circleA": {
-		    "color": "#4F81BD80",
+		    "color": "#4C78BA80",
 		    "count": 4,
 		    "label": "Like vegetables"
 		  },
 		  "circleB": {
-		    "color": "#C0504D80",
+		    "color": "#D6272F80",
 		    "count": 8,
 		    "label": "Like fruit"
 		  },
@@ -378,21 +378,21 @@ describe("vennDiagram widget tests", () => {
 
 	// Extracted from question: x9b3992fe3e1009c3
 	// Question: Complete a two-way frequency table from a Venn diagram
-	// Widget key: venn_image
+	// Widget key: image_1
 	test("venn-diagram - [x9b3992fe3e1009c3] Complete a two-way frequency table from a Venn diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "vennDiagram",
-		  "width": 350,
-		  "height": 262,
+		  "width": 400,
+		  "height": 300,
 		  "circleA": {
-		    "color": "#4F81BD80",
+		    "color": "#4F83FF80",
 		    "count": 5,
 		    "label": "Multiple of 3"
 		  },
 		  "circleB": {
-		    "color": "#C0504D80",
+		    "color": "#D32F2F80",
 		    "count": 2,
 		    "label": "Multiple of 4"
 		  },

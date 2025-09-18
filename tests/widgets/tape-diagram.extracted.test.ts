@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.967Z
+// Generated on: 2025-09-18T05:17:02.166Z
 // Widget Type: tapeDiagram
 // Source: Real questions from database
 //
@@ -26,30 +26,30 @@ import * as logger from "@superbuilders/slog"
 
 describe("tapeDiagram widget tests", () => {
 	// Extracted from question: x9179bb7f94901e42
-	// Question: Complete a table of student counts for given percentages
+	// Question: Complete the table: percentages of graduating students
 	// Widget key: image_1
-	test("tape-diagram - [x9179bb7f94901e42] Complete a table of student counts for given percentages", async () => {
+	test("tape-diagram - [x9179bb7f94901e42] Complete the table: percentages of graduating students", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1.5
 		    },
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "units",
-		          "endUnit": 4,
-		          "startUnit": 0
+		          "by": "percent",
+		          "endPct": 100,
+		          "startPct": 0
 		        },
 		        "label": null,
 		        "style": {
-		          "fill": "#0c7f99",
+		          "fill": "#7854ab",
 		          "kind": "solid",
 		          "fillOpacity": 0.3
 		        }
@@ -60,7 +60,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 4,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [
 		    {
@@ -72,8 +72,8 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 2
+		        "stroke": null,
+		        "strokeWidth": null
 		      },
 		      "labelTop": "240",
 		      "labelBottom": "100 percent"
@@ -99,15 +99,15 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3feca2d6df92fe75
-	// Question: Percentages of a height from a tape diagram
+	// Question: Complete a percentage table from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [x3feca2d6df92fe75] Percentages of a height from a tape diagram", async () => {
+	test("tape-diagram - [x3feca2d6df92fe75] Complete a percentage table from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
@@ -145,10 +145,25 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": null,
-		        "strokeWidth": null
+		        "stroke": "#000000",
+		        "strokeWidth": 2
 		      },
 		      "labelTop": "132",
+		      "labelBottom": " "
+		    },
+		    {
+		      "span": {
+		        "by": "units",
+		        "endUnit": 6,
+		        "startUnit": 0
+		      },
+		      "tape": "top",
+		      "style": {
+		        "kind": "curly",
+		        "stroke": "#000000",
+		        "strokeWidth": 2
+		      },
+		      "labelTop": " ",
 		      "labelBottom": "150 percent"
 		    }
 		  ],
@@ -172,15 +187,15 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x638cb84bd59cb4ed
-	// Question: Complete a table of percentages from a tape diagram
+	// Question: Percentages of hair length before a haircut
 	// Widget key: image_1
-	test("tape-diagram - [x638cb84bd59cb4ed] Complete a table of percentages from a tape diagram", async () => {
+	test("tape-diagram - [x638cb84bd59cb4ed] Percentages of hair length before a haircut", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
@@ -195,18 +210,18 @@ describe("tapeDiagram widget tests", () => {
 		        },
 		        "label": null,
 		        "style": {
-		          "fill": "#0c7f99",
+		          "fill": "#7854ab",
 		          "kind": "solid",
 		          "fillOpacity": 0.3
 		        }
 		      }
 		    ],
-		    "label": null,
+		    "label": " ",
 		    "extent": null,
 		    "unitsTotal": 5,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [
 		    {
@@ -218,10 +233,25 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 2
+		        "stroke": null,
+		        "strokeWidth": null
 		      },
 		      "labelTop": "12",
+		      "labelBottom": " "
+		    },
+		    {
+		      "span": {
+		        "by": "units",
+		        "endUnit": 3,
+		        "startUnit": 0
+		      },
+		      "tape": "top",
+		      "style": {
+		        "kind": "curly",
+		        "stroke": null,
+		        "strokeWidth": null
+		      },
+		      "labelTop": " ",
 		      "labelBottom": "60 percent"
 		    }
 		  ],
@@ -245,19 +275,19 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x33697ffaa3a7b6ab
-	// Question: Complete a table of percentages for a steaming time
+	// Question: Complete a table of percentages of a time interval
 	// Widget key: image_1
-	test("tape-diagram - [x33697ffaa3a7b6ab] Complete a table of percentages for a steaming time", async () => {
+	test("tape-diagram - [x33697ffaa3a7b6ab] Complete a table of percentages of a time interval", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
 		    "fills": [
 		      {
@@ -274,12 +304,12 @@ describe("tapeDiagram widget tests", () => {
 		        }
 		      }
 		    ],
-		    "label": " ",
+		    "label": null,
 		    "extent": null,
 		    "unitsTotal": 5,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [
 		    {
@@ -318,19 +348,19 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xab6e6fb17f088b55
-	// Question: Percentages of research time from a tape diagram
+	// Question: Complete a percentage table from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [xab6e6fb17f088b55] Percentages of research time from a tape diagram", async () => {
+	test("tape-diagram - [xab6e6fb17f088b55] Complete a percentage table from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 1
+		      "strokeWidth": 2
 		    },
 		    "fills": [
 		      {
@@ -341,7 +371,7 @@ describe("tapeDiagram widget tests", () => {
 		        },
 		        "label": null,
 		        "style": {
-		          "fill": "#7854ab",
+		          "fill": "#0c7f99",
 		          "kind": "solid",
 		          "fillOpacity": 0.3
 		        }
@@ -352,7 +382,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 11,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 1.5
+		    "defaultStrokeWidth": 2
 		  },
 		  "brackets": [
 		    {
@@ -365,7 +395,7 @@ describe("tapeDiagram widget tests", () => {
 		      "style": {
 		        "kind": "curly",
 		        "stroke": "#000000",
-		        "strokeWidth": 1.5
+		        "strokeWidth": 2
 		      },
 		      "labelTop": "120",
 		      "labelBottom": "100 percent"
@@ -391,15 +421,15 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6798155e9cdba62c
-	// Question: Complete the table: percentages of haircuts
+	// Question: Complete a percentage table from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [x6798155e9cdba62c] Complete the table: percentages of haircuts", async () => {
+	test("tape-diagram - [x6798155e9cdba62c] Complete a percentage table from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
@@ -414,13 +444,13 @@ describe("tapeDiagram widget tests", () => {
 		        },
 		        "label": null,
 		        "style": {
-		          "fill": "#0c7f99",
+		          "fill": "#7854ab",
 		          "kind": "solid",
 		          "fillOpacity": 0.3
 		        }
 		      }
 		    ],
-		    "label": null,
+		    "label": " ",
 		    "extent": null,
 		    "unitsTotal": 10,
 		    "roundedCaps": false,
@@ -437,25 +467,10 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 1.5
+		        "stroke": null,
+		        "strokeWidth": null
 		      },
 		      "labelTop": "70",
-		      "labelBottom": null
-		    },
-		    {
-		      "span": {
-		        "by": "units",
-		        "endUnit": 10,
-		        "startUnit": 0
-		      },
-		      "tape": "top",
-		      "style": {
-		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 1.5
-		      },
-		      "labelTop": null,
 		      "labelBottom": "100 percent"
 		    }
 		  ],
@@ -479,15 +494,15 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc9ad00f58d3b6529
-	// Question: Complete the table: percentages of poems
+	// Question: Complete the percentages table from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [xc9ad00f58d3b6529] Complete the table: percentages of poems", async () => {
+	test("tape-diagram - [xc9ad00f58d3b6529] Complete the percentages table from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
@@ -552,19 +567,19 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd8f16c72635b39b0
-	// Question: Complete percentages table from a tape diagram
+	// Question: Complete the table: percentages of teeth on a comb
 	// Widget key: image_1
-	test("tape-diagram - [xd8f16c72635b39b0] Complete percentages table from a tape diagram", async () => {
+	test("tape-diagram - [xd8f16c72635b39b0] Complete the table: percentages of teeth on a comb", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 128,
+		  "width": 400,
+		  "height": 350,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
 		    "fills": [
 		      {
@@ -575,18 +590,18 @@ describe("tapeDiagram widget tests", () => {
 		        },
 		        "label": null,
 		        "style": {
-		          "fill": "#0c7f99",
+		          "fill": "#7854ab",
 		          "kind": "solid",
 		          "fillOpacity": 0.3
 		        }
 		      }
 		    ],
-		    "label": " ",
+		    "label": "Teeth on a comb",
 		    "extent": null,
 		    "unitsTotal": 10,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [
 		    {
@@ -625,15 +640,15 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfa76c4b9d5950a6e
-	// Question: Complete the table of study time percentages
+	// Question: Complete the table for percentages of Elizabeth's study time
 	// Widget key: image_1
-	test("tape-diagram - [xfa76c4b9d5950a6e] Complete the table of study time percentages", async () => {
+	test("tape-diagram - [xfa76c4b9d5950a6e] Complete the table for percentages of Elizabeth's study time", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
 		  "width": 320,
-		  "height": 128,
+		  "height": 300,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
@@ -648,7 +663,7 @@ describe("tapeDiagram widget tests", () => {
 		        },
 		        "label": null,
 		        "style": {
-		          "fill": "#7854ab",
+		          "fill": "#0c7f99",
 		          "kind": "solid",
 		          "fillOpacity": 0.3
 		        }
@@ -675,7 +690,7 @@ describe("tapeDiagram widget tests", () => {
 		        "strokeWidth": null
 		      },
 		      "labelTop": "91",
-		      "labelBottom": "70 percent"
+		      "labelBottom": "70%"
 		    }
 		  ],
 		  "bottomTape": null,
@@ -698,19 +713,19 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x927c35dc59ff7d11
-	// Question: Complete a percentage table from a tape diagram
+	// Question: Complete the percentage table from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [x927c35dc59ff7d11] Complete a percentage table from a tape diagram", async () => {
+	test("tape-diagram - [x927c35dc59ff7d11] Complete the percentage table from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 128,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
 		    "fills": [
 		      {
@@ -732,7 +747,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 7,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [
 		    {
@@ -771,22 +786,22 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc62f04eb5d67e2ce
-	// Question: Complete a ratio table for fruit and biscuits
+	// Question: Complete a ratio table for monkey food
 	// Widget key: image_1
-	test("tape-diagram - [xc62f04eb5d67e2ce] Complete a ratio table for fruit and biscuits", async () => {
+	test("tape-diagram - [xc62f04eb5d67e2ce] Complete a ratio table for monkey food", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 168,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
 		      "strokeWidth": 1
 		    },
 		    "fills": [],
-		    "label": null,
+		    "label": "Fruit mass",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 7,
@@ -835,7 +850,7 @@ describe("tapeDiagram widget tests", () => {
 		      "strokeWidth": 1
 		    },
 		    "fills": [],
-		    "label": null,
+		    "label": "Biscuit mass",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 5,
@@ -873,14 +888,14 @@ describe("tapeDiagram widget tests", () => {
 		const input = {
 		  "type": "tapeDiagram",
 		  "width": 320,
-		  "height": 168,
+		  "height": 368,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 1
+		      "strokeWidth": 2
 		    },
 		    "fills": [],
-		    "label": "Winning spaces",
+		    "label": null,
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 5,
@@ -901,11 +916,11 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": null,
-		        "strokeWidth": null
+		        "stroke": "#000000",
+		        "strokeWidth": 1.5
 		      },
 		      "labelTop": "Winning spaces",
-		      "labelBottom": " "
+		      "labelBottom": null
 		    },
 		    {
 		      "span": {
@@ -916,27 +931,31 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "bottom",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": null,
-		        "strokeWidth": null
+		        "stroke": "#000000",
+		        "strokeWidth": 1.5
 		      },
-		      "labelTop": " ",
+		      "labelTop": null,
 		      "labelBottom": "Non-winning spaces"
 		    }
 		  ],
 		  "bottomTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 1
+		      "strokeWidth": 2
 		    },
 		    "fills": [],
-		    "label": "Non-winning spaces",
-		    "extent": null,
+		    "label": null,
+		    "extent": {
+		      "by": "units",
+		      "endUnit": 6,
+		      "startUnit": 0
+		    },
 		    "unitsTotal": 6,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
 		    "defaultStrokeWidth": 1.5
 		  },
-		  "referenceUnitsTotal": 6
+		  "referenceUnitsTotal": 11
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -955,36 +974,22 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x92a4eee133015446
-	// Question: Complete a table from a ratio tape diagram
+	// Question: Complete a table using a ratio from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [x92a4eee133015446] Complete a table from a ratio tape diagram", async () => {
+	test("tape-diagram - [x92a4eee133015446] Complete a table using a ratio from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 168,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
 		      "strokeWidth": 1
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 4,
-		          "startUnit": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#63d9ea",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
-		    "label": "Prisms",
+		    "fills": [],
+		    "label": " ",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 4,
@@ -993,7 +998,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 4,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [
 		    {
@@ -1032,22 +1037,8 @@ describe("tapeDiagram widget tests", () => {
 		      "show": true,
 		      "strokeWidth": 1
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 1,
-		          "startUnit": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#aa87ff",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
-		    "label": "Pyramids",
+		    "fills": [],
+		    "label": " ",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 1,
@@ -1056,9 +1047,9 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
-		  "referenceUnitsTotal": 5
+		  "referenceUnitsTotal": 4
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1077,36 +1068,22 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6ae32e36d5116582
-	// Question: Find Ginny's spells from a tape diagram
+	// Question: Find Ginny's spells from a tape diagram ratio
 	// Widget key: image_1
-	test("tape-diagram - [x6ae32e36d5116582] Find Ginny's spells from a tape diagram", async () => {
+	test("tape-diagram - [x6ae32e36d5116582] Find Ginny's spells from a tape diagram ratio", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 168,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
 		      "strokeWidth": 2
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 4,
-		          "startUnit": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#63d9ea",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
-		    "label": " ",
+		    "fills": [],
+		    "label": "Luna's spells",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 4,
@@ -1127,7 +1104,7 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
+		        "stroke": null,
 		        "strokeWidth": 2
 		      },
 		      "labelTop": "Luna's spells",
@@ -1142,7 +1119,7 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "bottom",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
+		        "stroke": null,
 		        "strokeWidth": 2
 		      },
 		      "labelTop": " ",
@@ -1154,22 +1131,8 @@ describe("tapeDiagram widget tests", () => {
 		      "show": true,
 		      "strokeWidth": 2
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 5,
-		          "startUnit": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#aa87ff",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
-		    "label": " ",
+		    "fills": [],
+		    "label": "Ginny's spells",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 5,
@@ -1199,40 +1162,26 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x203c92ded4f962a6
-	// Question: Complete a table using a tape-diagram ratio
+	// Question: Complete the table using a ratio tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [x203c92ded4f962a6] Complete a table using a tape-diagram ratio", async () => {
+	test("tape-diagram - [x203c92ded4f962a6] Complete the table using a ratio tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 168,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "percent",
-		          "endPct": 100,
-		          "startPct": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#63d9ea",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
-		    "label": null,
+		    "fills": [],
+		    "label": "Blue pieces",
 		    "extent": {
-		      "by": "percent",
-		      "endPct": 60,
-		      "startPct": 0
+		      "by": "units",
+		      "endUnit": 3,
+		      "startUnit": 0
 		    },
 		    "unitsTotal": 3,
 		    "roundedCaps": false,
@@ -1242,9 +1191,9 @@ describe("tapeDiagram widget tests", () => {
 		  "brackets": [
 		    {
 		      "span": {
-		        "by": "percent",
-		        "endPct": 100,
-		        "startPct": 0
+		        "by": "units",
+		        "endUnit": 3,
+		        "startUnit": 0
 		      },
 		      "tape": "top",
 		      "style": {
@@ -1253,13 +1202,13 @@ describe("tapeDiagram widget tests", () => {
 		        "strokeWidth": null
 		      },
 		      "labelTop": "Blue pieces",
-		      "labelBottom": null
+		      "labelBottom": " "
 		    },
 		    {
 		      "span": {
-		        "by": "percent",
-		        "endPct": 100,
-		        "startPct": 0
+		        "by": "units",
+		        "endUnit": 5,
+		        "startUnit": 0
 		      },
 		      "tape": "bottom",
 		      "style": {
@@ -1267,42 +1216,28 @@ describe("tapeDiagram widget tests", () => {
 		        "stroke": null,
 		        "strokeWidth": null
 		      },
-		      "labelTop": null,
+		      "labelTop": " ",
 		      "labelBottom": "Purple pieces"
 		    }
 		  ],
 		  "bottomTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "percent",
-		          "endPct": 100,
-		          "startPct": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#aa87ff",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
-		    "label": null,
+		    "fills": [],
+		    "label": "Purple pieces",
 		    "extent": {
-		      "by": "percent",
-		      "endPct": 100,
-		      "startPct": 0
+		      "by": "units",
+		      "endUnit": 5,
+		      "startUnit": 0
 		    },
 		    "unitsTotal": 5,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
 		    "defaultStrokeWidth": 1.5
 		  },
-		  "referenceUnitsTotal": null
+		  "referenceUnitsTotal": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1328,38 +1263,20 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 168,
+		  "width": 400,
+		  "height": 300,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 3,
-		          "startUnit": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#ff9c39",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
-		    "label": "Cheese pizzas",
-		    "extent": {
-		      "by": "units",
-		      "endUnit": 3,
-		      "startUnit": 0
-		    },
+		    "fills": [],
+		    "label": null,
+		    "extent": null,
 		    "unitsTotal": 3,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [
 		    {
@@ -1371,8 +1288,8 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 2
+		        "stroke": null,
+		        "strokeWidth": null
 		      },
 		      "labelTop": "Cheese pizzas",
 		      "labelBottom": null
@@ -1386,8 +1303,8 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "bottom",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 2
+		        "stroke": null,
+		        "strokeWidth": null
 		      },
 		      "labelTop": null,
 		      "labelBottom": "Pepperoni pizzas"
@@ -1396,24 +1313,10 @@ describe("tapeDiagram widget tests", () => {
 		  "bottomTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 1,
-		          "startUnit": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#f9685d",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
-		    "label": "Pepperoni pizzas",
+		    "fills": [],
+		    "label": null,
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 1,
@@ -1422,7 +1325,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": 3
 		} as unknown as WidgetInput
@@ -1443,26 +1346,26 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5b15e7772fa32391
-	// Question: Teeth on a smaller gear from a ratio
+	// Question: Teeth on the smaller gear from a ratio
 	// Widget key: image_1
-	test("tape-diagram - [x5b15e7772fa32391] Teeth on a smaller gear from a ratio", async () => {
+	test("tape-diagram - [x5b15e7772fa32391] Teeth on the smaller gear from a ratio", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 168,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 1
+		      "strokeWidth": 2
 		    },
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "percent",
-		          "endPct": 100,
-		          "startPct": 0
+		          "by": "units",
+		          "endUnit": 6,
+		          "startUnit": 0
 		        },
 		        "label": null,
 		        "style": {
@@ -1481,14 +1384,14 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 6,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 1.5
+		    "defaultStrokeWidth": 2
 		  },
 		  "brackets": [
 		    {
 		      "span": {
-		        "by": "percent",
-		        "endPct": 100,
-		        "startPct": 0
+		        "by": "units",
+		        "endUnit": 6,
+		        "startUnit": 0
 		      },
 		      "tape": "top",
 		      "style": {
@@ -1497,13 +1400,13 @@ describe("tapeDiagram widget tests", () => {
 		        "strokeWidth": null
 		      },
 		      "labelTop": "Teeth per larger gear",
-		      "labelBottom": "Teeth per larger gear"
+		      "labelBottom": null
 		    },
 		    {
 		      "span": {
-		        "by": "percent",
-		        "endPct": 100,
-		        "startPct": 0
+		        "by": "units",
+		        "endUnit": 1,
+		        "startUnit": 0
 		      },
 		      "tape": "bottom",
 		      "style": {
@@ -1511,21 +1414,21 @@ describe("tapeDiagram widget tests", () => {
 		        "stroke": null,
 		        "strokeWidth": null
 		      },
-		      "labelTop": "Teeth per smaller gear",
+		      "labelTop": null,
 		      "labelBottom": "Teeth per smaller gear"
 		    }
 		  ],
 		  "bottomTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 1
+		      "strokeWidth": 2
 		    },
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "percent",
-		          "endPct": 100,
-		          "startPct": 0
+		          "by": "units",
+		          "endUnit": 1,
+		          "startUnit": 0
 		        },
 		        "label": null,
 		        "style": {
@@ -1544,7 +1447,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 1.5
+		    "defaultStrokeWidth": 2
 		  },
 		  "referenceUnitsTotal": 6
 		} as unknown as WidgetInput
@@ -1565,23 +1468,27 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7e160d7a5ea40bc1
-	// Question: Complete a ratio table for flies and mosquitoes
+	// Question: Complete a table using a ratio from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [x7e160d7a5ea40bc1] Complete a ratio table for flies and mosquitoes", async () => {
+	test("tape-diagram - [x7e160d7a5ea40bc1] Complete a table using a ratio from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 200,
-		  "height": 168,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
 		      "strokeWidth": 1
 		    },
 		    "fills": [],
-		    "label": null,
-		    "extent": null,
+		    "label": "Flies",
+		    "extent": {
+		      "by": "units",
+		      "endUnit": 3,
+		      "startUnit": 0
+		    },
 		    "unitsTotal": 3,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
@@ -1590,9 +1497,9 @@ describe("tapeDiagram widget tests", () => {
 		  "brackets": [
 		    {
 		      "span": {
-		        "by": "units",
-		        "endUnit": 3,
-		        "startUnit": 0
+		        "by": "percent",
+		        "endPct": 100,
+		        "startPct": 0
 		      },
 		      "tape": "top",
 		      "style": {
@@ -1601,13 +1508,13 @@ describe("tapeDiagram widget tests", () => {
 		        "strokeWidth": null
 		      },
 		      "labelTop": "Flies",
-		      "labelBottom": null
+		      "labelBottom": " "
 		    },
 		    {
 		      "span": {
-		        "by": "units",
-		        "endUnit": 7,
-		        "startUnit": 0
+		        "by": "percent",
+		        "endPct": 100,
+		        "startPct": 0
 		      },
 		      "tape": "bottom",
 		      "style": {
@@ -1615,7 +1522,7 @@ describe("tapeDiagram widget tests", () => {
 		        "stroke": null,
 		        "strokeWidth": null
 		      },
-		      "labelTop": null,
+		      "labelTop": " ",
 		      "labelBottom": "Mosquitoes"
 		    }
 		  ],
@@ -1625,14 +1532,18 @@ describe("tapeDiagram widget tests", () => {
 		      "strokeWidth": 1
 		    },
 		    "fills": [],
-		    "label": null,
-		    "extent": null,
+		    "label": "Mosquitoes",
+		    "extent": {
+		      "by": "units",
+		      "endUnit": 7,
+		      "startUnit": 0
+		    },
 		    "unitsTotal": 7,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
 		    "defaultStrokeWidth": 1.5
 		  },
-		  "referenceUnitsTotal": null
+		  "referenceUnitsTotal": 7
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1651,35 +1562,21 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xad341496a795b8e1
-	// Question: Find the text area from a tape diagram ratio
+	// Question: Find text area from a tape-diagram ratio
 	// Widget key: image_1
-	test("tape-diagram - [xad341496a795b8e1] Find the text area from a tape diagram ratio", async () => {
+	test("tape-diagram - [xad341496a795b8e1] Find text area from a tape-diagram ratio", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 168,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 3,
-		          "startUnit": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#a75a05",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
+		    "fills": [],
 		    "label": "Text area",
 		    "extent": {
 		      "by": "units",
@@ -1689,7 +1586,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 3,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [
 		    {
@@ -1701,11 +1598,11 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": null,
-		        "strokeWidth": 2
+		        "stroke": "#000000",
+		        "strokeWidth": 1.5
 		      },
 		      "labelTop": "Text area",
-		      "labelBottom": null
+		      "labelBottom": " "
 		    },
 		    {
 		      "span": {
@@ -1716,33 +1613,19 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "bottom",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": null,
-		        "strokeWidth": 2
+		        "stroke": "#000000",
+		        "strokeWidth": 1.5
 		      },
-		      "labelTop": null,
+		      "labelTop": " ",
 		      "labelBottom": "Illustration area"
 		    }
 		  ],
 		  "bottomTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 2,
-		          "startUnit": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#f9685d",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
+		    "fills": [],
 		    "label": "Illustration area",
 		    "extent": {
 		      "by": "units",
@@ -1752,7 +1635,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 2,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": 3
 		} as unknown as WidgetInput
@@ -1773,61 +1656,71 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x24829dc37c9e42af
-	// Question: Find the number of brown notebooks from a ratio tape diagram
+	// Question: Find the number of brown notebooks from a tape-diagram ratio
 	// Widget key: image_1
-	test("tape-diagram - [x24829dc37c9e42af] Find the number of brown notebooks from a ratio tape diagram", async () => {
+	test("tape-diagram - [x24829dc37c9e42af] Find the number of brown notebooks from a tape-diagram ratio", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 168,
+		  "width": 360,
+		  "height": 300,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
 		      "strokeWidth": 2
 		    },
-		    "fills": [],
-		    "label": "\"",
-		    "extent": {
-		      "by": "units",
-		      "endUnit": 5,
-		      "startUnit": 0
-		    },
+		    "fills": [
+		      {
+		        "span": {
+		          "by": "units",
+		          "endUnit": 5,
+		          "startUnit": 0
+		        },
+		        "label": null,
+		        "style": {
+		          "fill": "#a75a05",
+		          "kind": "solid",
+		          "fillOpacity": 0.3
+		        }
+		      }
+		    ],
+		    "label": "Brown notebooks",
+		    "extent": null,
 		    "unitsTotal": 5,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [
 		    {
 		      "span": {
-		        "by": "units",
-		        "endUnit": 5,
-		        "startUnit": 0
+		        "by": "percent",
+		        "endPct": 100,
+		        "startPct": 0
 		      },
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": null,
-		        "strokeWidth": null
+		        "stroke": "#000000",
+		        "strokeWidth": 2
 		      },
 		      "labelTop": "Brown notebooks",
-		      "labelBottom": "\""
+		      "labelBottom": " "
 		    },
 		    {
 		      "span": {
-		        "by": "units",
-		        "endUnit": 3,
-		        "startUnit": 0
+		        "by": "percent",
+		        "endPct": 100,
+		        "startPct": 0
 		      },
 		      "tape": "bottom",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": null,
-		        "strokeWidth": null
+		        "stroke": "#000000",
+		        "strokeWidth": 2
 		      },
-		      "labelTop": "\"",
+		      "labelTop": " ",
 		      "labelBottom": "Red notebooks"
 		    }
 		  ],
@@ -1836,8 +1729,22 @@ describe("tapeDiagram widget tests", () => {
 		      "show": true,
 		      "strokeWidth": 2
 		    },
-		    "fills": [],
-		    "label": "\"",
+		    "fills": [
+		      {
+		        "span": {
+		          "by": "units",
+		          "endUnit": 3,
+		          "startUnit": 0
+		        },
+		        "label": null,
+		        "style": {
+		          "fill": "#f9685d",
+		          "kind": "solid",
+		          "fillOpacity": 0.3
+		        }
+		      }
+		    ],
+		    "label": "Red notebooks",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 3,
@@ -1846,7 +1753,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 3,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": 5
 		} as unknown as WidgetInput
@@ -1867,22 +1774,22 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9400830e7c702aaf
-	// Question: Complete a ratio table from a tape diagram
+	// Question: Complete a ratio table for kazoos and whistles
 	// Widget key: image_1
-	test("tape-diagram - [x9400830e7c702aaf] Complete a ratio table from a tape diagram", async () => {
+	test("tape-diagram - [x9400830e7c702aaf] Complete a ratio table for kazoos and whistles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 168,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
 		      "strokeWidth": 1
 		    },
 		    "fills": [],
-		    "label": null,
+		    "label": "Kazoos",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 3,
@@ -1896,32 +1803,32 @@ describe("tapeDiagram widget tests", () => {
 		  "brackets": [
 		    {
 		      "span": {
-		        "by": "percent",
-		        "endPct": 100,
-		        "startPct": 0
+		        "by": "units",
+		        "endUnit": 3,
+		        "startUnit": 0
 		      },
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 1.5
+		        "stroke": null,
+		        "strokeWidth": null
 		      },
 		      "labelTop": "Kazoos",
-		      "labelBottom": null
+		      "labelBottom": " "
 		    },
 		    {
 		      "span": {
-		        "by": "percent",
-		        "endPct": 100,
-		        "startPct": 0
+		        "by": "units",
+		        "endUnit": 5,
+		        "startUnit": 0
 		      },
 		      "tape": "bottom",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 1.5
+		        "stroke": null,
+		        "strokeWidth": null
 		      },
-		      "labelTop": null,
+		      "labelTop": " ",
 		      "labelBottom": "Whistles"
 		    }
 		  ],
@@ -1931,8 +1838,12 @@ describe("tapeDiagram widget tests", () => {
 		      "strokeWidth": 1
 		    },
 		    "fills": [],
-		    "label": null,
-		    "extent": null,
+		    "label": "Whistles",
+		    "extent": {
+		      "by": "units",
+		      "endUnit": 5,
+		      "startUnit": 0
+		    },
 		    "unitsTotal": 5,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
@@ -1964,12 +1875,12 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 168,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
 		    "fills": [
 		      {
@@ -1980,18 +1891,22 @@ describe("tapeDiagram widget tests", () => {
 		        },
 		        "label": null,
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 2
+		          "fill": "#aa87ff",
+		          "kind": "solid",
+		          "fillOpacity": 0.3
 		        }
 		      }
 		    ],
 		    "label": "Ducklings",
-		    "extent": null,
+		    "extent": {
+		      "by": "units",
+		      "endUnit": 5,
+		      "startUnit": 0
+		    },
 		    "unitsTotal": 5,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [
 		    {
@@ -2027,8 +1942,8 @@ describe("tapeDiagram widget tests", () => {
 		  ],
 		  "bottomTape": {
 		    "grid": {
-		      "show": true,
-		      "strokeWidth": 2
+		      "show": false,
+		      "strokeWidth": null
 		    },
 		    "fills": [
 		      {
@@ -2039,9 +1954,9 @@ describe("tapeDiagram widget tests", () => {
 		        },
 		        "label": null,
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 2
+		          "fill": "#63d9ea",
+		          "kind": "solid",
+		          "fillOpacity": 0.3
 		        }
 		      }
 		    ],
@@ -2051,12 +1966,12 @@ describe("tapeDiagram widget tests", () => {
 		      "endUnit": 1,
 		      "startUnit": 0
 		    },
-		    "unitsTotal": 5,
+		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
-		  "referenceUnitsTotal": null
+		  "referenceUnitsTotal": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2075,36 +1990,22 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x35a2d75b63b87f91
-	// Question: Complete a table using a tape diagram and a ratio
+	// Question: Complete a ratio table from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [x35a2d75b63b87f91] Complete a table using a tape diagram and a ratio", async () => {
+	test("tape-diagram - [x35a2d75b63b87f91] Complete a ratio table from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
 		  "width": 320,
-		  "height": 168,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
 		      "strokeWidth": 1
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "percent",
-		          "endPct": 100,
-		          "startPct": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#aa87ff",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
-		    "label": " ",
+		    "fills": [],
+		    "label": "Solid balloons",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 4,
@@ -2125,11 +2026,11 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 1.5
+		        "stroke": null,
+		        "strokeWidth": null
 		      },
 		      "labelTop": "Solid balloons",
-		      "labelBottom": " "
+		      "labelBottom": null
 		    },
 		    {
 		      "span": {
@@ -2140,10 +2041,10 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "bottom",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 1.5
+		        "stroke": null,
+		        "strokeWidth": null
 		      },
-		      "labelTop": " ",
+		      "labelTop": null,
 		      "labelBottom": "Striped balloons"
 		    }
 		  ],
@@ -2152,22 +2053,8 @@ describe("tapeDiagram widget tests", () => {
 		      "show": true,
 		      "strokeWidth": 1
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "percent",
-		          "endPct": 100,
-		          "startPct": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#63d9ea",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
-		    "label": " ",
+		    "fills": [],
+		    "label": "Striped balloons",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 3,
@@ -2197,19 +2084,19 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x06344eab12fe4d26
-	// Question: Complete a ratio table from a tape diagram
+	// Question: Complete a ratio table for donut topping
 	// Widget key: image_1
-	test("tape-diagram - [x06344eab12fe4d26] Complete a ratio table from a tape diagram", async () => {
+	test("tape-diagram - [x06344eab12fe4d26] Complete a ratio table for donut topping", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
 		  "width": 320,
-		  "height": 168,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
 		    "fills": [
 		      {
@@ -2235,35 +2122,35 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 3,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [
 		    {
 		      "span": {
-		        "by": "units",
-		        "endUnit": 3,
-		        "startUnit": 0
+		        "by": "percent",
+		        "endPct": 100,
+		        "startPct": 0
 		      },
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 2
+		        "stroke": null,
+		        "strokeWidth": null
 		      },
 		      "labelTop": "Sugar",
 		      "labelBottom": " "
 		    },
 		    {
 		      "span": {
-		        "by": "units",
-		        "endUnit": 2,
-		        "startUnit": 0
+		        "by": "percent",
+		        "endPct": 100,
+		        "startPct": 0
 		      },
 		      "tape": "bottom",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 2
+		        "stroke": null,
+		        "strokeWidth": null
 		      },
 		      "labelTop": " ",
 		      "labelBottom": "Cinnamon"
@@ -2272,7 +2159,7 @@ describe("tapeDiagram widget tests", () => {
 		  "bottomTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
 		    "fills": [
 		      {
@@ -2298,7 +2185,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 2,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": 3
 		} as unknown as WidgetInput
@@ -2327,14 +2214,14 @@ describe("tapeDiagram widget tests", () => {
 		const input = {
 		  "type": "tapeDiagram",
 		  "width": 320,
-		  "height": 168,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": null
+		      "strokeWidth": 1
 		    },
 		    "fills": [],
-		    "label": " ",
+		    "label": "Oil",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 2,
@@ -2359,7 +2246,7 @@ describe("tapeDiagram widget tests", () => {
 		        "strokeWidth": null
 		      },
 		      "labelTop": "Oil",
-		      "labelBottom": " "
+		      "labelBottom": "Oil"
 		    },
 		    {
 		      "span": {
@@ -2373,23 +2260,23 @@ describe("tapeDiagram widget tests", () => {
 		        "stroke": null,
 		        "strokeWidth": null
 		      },
-		      "labelTop": " ",
+		      "labelTop": "Vinegar",
 		      "labelBottom": "Vinegar"
 		    }
 		  ],
 		  "bottomTape": {
 		    "grid": {
-		      "show": true,
-		      "strokeWidth": null
+		      "show": false,
+		      "strokeWidth": 1
 		    },
 		    "fills": [],
-		    "label": " ",
+		    "label": "Vinegar",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 1,
 		      "startUnit": 0
 		    },
-		    "unitsTotal": 2,
+		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
 		    "defaultStrokeWidth": 1.5
@@ -2420,28 +2307,14 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 265,
-		  "height": 168,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 1
+		      "strokeWidth": 1.5
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 4,
-		          "startUnit": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#63d9ea",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
+		    "fills": [],
 		    "label": "Grandparents",
 		    "extent": {
 		      "by": "units",
@@ -2488,23 +2361,9 @@ describe("tapeDiagram widget tests", () => {
 		  "bottomTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 1
+		      "strokeWidth": 1.5
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 6,
-		          "startUnit": 0
-		        },
-		        "label": null,
-		        "style": {
-		          "fill": "#f9685d",
-		          "kind": "solid",
-		          "fillOpacity": 0.3
-		        }
-		      }
-		    ],
+		    "fills": [],
 		    "label": "Cousins",
 		    "extent": {
 		      "by": "units",
@@ -2542,8 +2401,8 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 520,
-		  "height": 220,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
@@ -2578,9 +2437,9 @@ describe("tapeDiagram widget tests", () => {
 		  "brackets": [
 		    {
 		      "span": {
-		        "by": "units",
-		        "endUnit": 4,
-		        "startUnit": 0
+		        "by": "percent",
+		        "endPct": 100,
+		        "startPct": 0
 		      },
 		      "tape": "top",
 		      "style": {
@@ -2593,9 +2452,9 @@ describe("tapeDiagram widget tests", () => {
 		    },
 		    {
 		      "span": {
-		        "by": "units",
-		        "endUnit": 12,
-		        "startUnit": 0
+		        "by": "percent",
+		        "endPct": 100,
+		        "startPct": 0
 		      },
 		      "tape": "bottom",
 		      "style": {
@@ -2628,7 +2487,11 @@ describe("tapeDiagram widget tests", () => {
 		      }
 		    ],
 		    "label": "Spices, grams",
-		    "extent": null,
+		    "extent": {
+		      "by": "units",
+		      "endUnit": 12,
+		      "startUnit": 0
+		    },
 		    "unitsTotal": 12,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
@@ -2653,15 +2516,15 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7557ddfaf0f7cd2c
-	// Question: Ratio of blue paint to total paint
+	// Question: Blue-to-total paint ratio from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [x7557ddfaf0f7cd2c] Ratio of blue paint to total paint", async () => {
+	test("tape-diagram - [x7557ddfaf0f7cd2c] Blue-to-total paint ratio from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 265,
-		  "height": 168,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
@@ -2683,7 +2546,11 @@ describe("tapeDiagram widget tests", () => {
 		      }
 		    ],
 		    "label": "Blue volume",
-		    "extent": null,
+		    "extent": {
+		      "by": "units",
+		      "endUnit": 10,
+		      "startUnit": 0
+		    },
 		    "unitsTotal": 10,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
@@ -2699,11 +2566,11 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 2
+		        "stroke": null,
+		        "strokeWidth": null
 		      },
 		      "labelTop": "Blue volume",
-		      "labelBottom": " "
+		      "labelBottom": "Total volume"
 		    },
 		    {
 		      "span": {
@@ -2714,10 +2581,10 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "bottom",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": "#000000",
-		        "strokeWidth": 2
+		        "stroke": null,
+		        "strokeWidth": null
 		      },
-		      "labelTop": " ",
+		      "labelTop": "Red volume",
 		      "labelBottom": "Red volume"
 		    }
 		  ],
@@ -2747,7 +2614,7 @@ describe("tapeDiagram widget tests", () => {
 		      "endUnit": 6,
 		      "startUnit": 0
 		    },
-		    "unitsTotal": 6,
+		    "unitsTotal": 10,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
 		    "defaultStrokeWidth": 2
@@ -2771,15 +2638,15 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3f83f4362194af38
-	// Question: Ratio of days biking to days walking
+	// Question: Ratio of days biking to walking
 	// Widget key: image_1
-	test("tape-diagram - [x3f83f4362194af38] Ratio of days biking to days walking", async () => {
+	test("tape-diagram - [x3f83f4362194af38] Ratio of days biking to walking", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
 		  "width": 320,
-		  "height": 168,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
@@ -2900,12 +2767,12 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 265,
-		  "height": 168,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1.5
 		    },
 		    "fills": [
 		      {
@@ -2922,7 +2789,7 @@ describe("tapeDiagram widget tests", () => {
 		        }
 		      }
 		    ],
-		    "label": " ",
+		    "label": "Puzzles started",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 6,
@@ -2931,7 +2798,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 6,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [
 		    {
@@ -2943,8 +2810,8 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "top",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": null,
-		        "strokeWidth": null
+		        "stroke": "#000000",
+		        "strokeWidth": 2
 		      },
 		      "labelTop": "Puzzles started",
 		      "labelBottom": " "
@@ -2958,8 +2825,8 @@ describe("tapeDiagram widget tests", () => {
 		      "tape": "bottom",
 		      "style": {
 		        "kind": "curly",
-		        "stroke": null,
-		        "strokeWidth": null
+		        "stroke": "#000000",
+		        "strokeWidth": 2
 		      },
 		      "labelTop": " ",
 		      "labelBottom": "Puzzles not started"
@@ -2968,7 +2835,7 @@ describe("tapeDiagram widget tests", () => {
 		  "bottomTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1.5
 		    },
 		    "fills": [
 		      {
@@ -2985,7 +2852,7 @@ describe("tapeDiagram widget tests", () => {
 		        }
 		      }
 		    ],
-		    "label": " ",
+		    "label": "Puzzles not started",
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 9,
@@ -2994,7 +2861,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 9,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": 9
 		} as unknown as WidgetInput
@@ -3015,15 +2882,15 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd3c78bc95db4eb64
-	// Question: Find the ratio of fish to total pets from a diagram
+	// Question: Ratio of fish to total pets from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [xd3c78bc95db4eb64] Find the ratio of fish to total pets from a diagram", async () => {
+	test("tape-diagram - [xd3c78bc95db4eb64] Ratio of fish to total pets from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 265,
-		  "height": 168,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
@@ -3044,7 +2911,7 @@ describe("tapeDiagram widget tests", () => {
 		        }
 		      }
 		    ],
-		    "label": " ",
+		    "label": null,
 		    "extent": {
 		      "by": "units",
 		      "endUnit": 3,
@@ -3053,7 +2920,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 3,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [
 		    {
@@ -3069,7 +2936,7 @@ describe("tapeDiagram widget tests", () => {
 		        "strokeWidth": null
 		      },
 		      "labelTop": "Cats",
-		      "labelBottom": " "
+		      "labelBottom": null
 		    },
 		    {
 		      "span": {
@@ -3083,7 +2950,7 @@ describe("tapeDiagram widget tests", () => {
 		        "stroke": null,
 		        "strokeWidth": null
 		      },
-		      "labelTop": " ",
+		      "labelTop": null,
 		      "labelBottom": "Fish"
 		    }
 		  ],
@@ -3107,16 +2974,12 @@ describe("tapeDiagram widget tests", () => {
 		        }
 		      }
 		    ],
-		    "label": " ",
-		    "extent": {
-		      "by": "units",
-		      "endUnit": 9,
-		      "startUnit": 0
-		    },
+		    "label": null,
+		    "extent": null,
 		    "unitsTotal": 9,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": 9
 		} as unknown as WidgetInput
@@ -3137,15 +3000,15 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3bd73035781ad0a3
-	// Question: Solve for f using a tape diagram
+	// Question: Find the value of f from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [x3bd73035781ad0a3] Solve for f using a tape diagram", async () => {
+	test("tape-diagram - [x3bd73035781ad0a3] Find the value of f from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
@@ -3154,9 +3017,9 @@ describe("tapeDiagram widget tests", () => {
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "percent",
-		          "endPct": 100,
-		          "startPct": 0
+		          "by": "units",
+		          "endUnit": 19,
+		          "startUnit": 0
 		        },
 		        "label": {
 		          "text": "19",
@@ -3174,7 +3037,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 19,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [],
 		  "bottomTape": {
@@ -3185,9 +3048,9 @@ describe("tapeDiagram widget tests", () => {
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "percent",
-		          "endPct": 85,
-		          "startPct": 0
+		          "by": "units",
+		          "endUnit": 16,
+		          "startUnit": 0
 		        },
 		        "label": {
 		          "text": "16",
@@ -3201,16 +3064,16 @@ describe("tapeDiagram widget tests", () => {
 		      },
 		      {
 		        "span": {
-		          "by": "percent",
-		          "endPct": 100,
-		          "startPct": 85
+		          "by": "units",
+		          "endUnit": 19,
+		          "startUnit": 16
 		        },
 		        "label": {
 		          "text": "f",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffe6bf",
+		          "fill": "#ffe6cc",
 		          "kind": "solid",
 		          "fillOpacity": 1
 		        }
@@ -3221,9 +3084,9 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 19,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
-		  "referenceUnitsTotal": null
+		  "referenceUnitsTotal": 19
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3250,7 +3113,7 @@ describe("tapeDiagram widget tests", () => {
 		const input = {
 		  "type": "tapeDiagram",
 		  "width": 320,
-		  "height": 160,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
@@ -3259,40 +3122,40 @@ describe("tapeDiagram widget tests", () => {
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "percent",
-		          "endPct": 65,
-		          "startPct": 0
+		          "by": "units",
+		          "endUnit": 15,
+		          "startUnit": 0
 		        },
 		        "label": {
-		          "text": "15 units",
+		          "text": "15",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#cfe8ff",
+		          "fill": "#a8d5ff",
 		          "kind": "solid",
-		          "fillOpacity": 1
+		          "fillOpacity": 0.7
 		        }
 		      },
 		      {
 		        "span": {
-		          "by": "percent",
-		          "endPct": 100,
-		          "startPct": 65
+		          "by": "units",
+		          "endUnit": 23,
+		          "startUnit": 15
 		        },
 		        "label": {
-		          "text": "x units",
+		          "text": "x",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#e6f5d0",
+		          "fill": "#ffd59e",
 		          "kind": "solid",
-		          "fillOpacity": 1
+		          "fillOpacity": 0.7
 		        }
 		      }
 		    ],
 		    "label": " ",
 		    "extent": null,
-		    "unitsTotal": 100,
+		    "unitsTotal": 23,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
 		    "defaultStrokeWidth": 2
@@ -3306,24 +3169,24 @@ describe("tapeDiagram widget tests", () => {
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "percent",
-		          "endPct": 100,
-		          "startPct": 0
+		          "by": "units",
+		          "endUnit": 23,
+		          "startUnit": 0
 		        },
 		        "label": {
-		          "text": "23 units",
+		          "text": "23",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#f6d5d5",
+		          "fill": "#e6e6e6",
 		          "kind": "solid",
-		          "fillOpacity": 1
+		          "fillOpacity": 0.7
 		        }
 		      }
 		    ],
 		    "label": " ",
 		    "extent": null,
-		    "unitsTotal": 100,
+		    "unitsTotal": 23,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
 		    "defaultStrokeWidth": 2
@@ -3347,15 +3210,15 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe88fc3be71298a35
-	// Question: Solve for q using a tape diagram
+	// Question: Find q from a tape diagram equation
 	// Widget key: image_1
-	test("tape-diagram - [xe88fc3be71298a35] Solve for q using a tape diagram", async () => {
+	test("tape-diagram - [xe88fc3be71298a35] Find q from a tape diagram equation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 300,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
@@ -3369,7 +3232,7 @@ describe("tapeDiagram widget tests", () => {
 		          "startUnit": 0
 		        },
 		        "label": {
-		          "text": "8 units",
+		          "text": "8",
 		          "placement": "inside"
 		        },
 		        "style": {
@@ -3385,7 +3248,7 @@ describe("tapeDiagram widget tests", () => {
 		          "startUnit": 8
 		        },
 		        "label": {
-		          "text": "q units",
+		          "text": "q",
 		          "placement": "inside"
 		        },
 		        "style": {
@@ -3395,7 +3258,7 @@ describe("tapeDiagram widget tests", () => {
 		        }
 		      }
 		    ],
-		    "label": null,
+		    "label": " ",
 		    "extent": null,
 		    "unitsTotal": 12,
 		    "roundedCaps": false,
@@ -3416,7 +3279,7 @@ describe("tapeDiagram widget tests", () => {
 		          "startUnit": 0
 		        },
 		        "label": {
-		          "text": "12 units",
+		          "text": "12",
 		          "placement": "inside"
 		        },
 		        "style": {
@@ -3426,7 +3289,7 @@ describe("tapeDiagram widget tests", () => {
 		        }
 		      }
 		    ],
-		    "label": null,
+		    "label": " ",
 		    "extent": null,
 		    "unitsTotal": 12,
 		    "roundedCaps": false,
@@ -3459,8 +3322,8 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
@@ -3469,43 +3332,45 @@ describe("tapeDiagram widget tests", () => {
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "units",
-		          "endUnit": 16,
-		          "startUnit": 0
+		          "by": "percent",
+		          "endPct": 38.095238095238095,
+		          "startPct": 0
 		        },
 		        "label": {
 		          "text": "h",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 2
+		          "kind": "hatch",
+		          "color": "#000000",
+		          "spacing": 4,
+		          "angleDeg": 45,
+		          "strokeWidth": 1
 		        }
 		      },
 		      {
 		        "span": {
-		          "by": "units",
-		          "endUnit": 42,
-		          "startUnit": 16
+		          "by": "percent",
+		          "endPct": 100,
+		          "startPct": 38.095238095238095
 		        },
 		        "label": {
 		          "text": "26",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 2
+		          "fill": "#dddddd",
+		          "kind": "solid",
+		          "fillOpacity": 1
 		        }
 		      }
 		    ],
-		    "label": null,
+		    "label": " ",
 		    "extent": null,
 		    "unitsTotal": 42,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [],
 		  "bottomTape": {
@@ -3516,27 +3381,27 @@ describe("tapeDiagram widget tests", () => {
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "units",
-		          "endUnit": 42,
-		          "startUnit": 0
+		          "by": "percent",
+		          "endPct": 100,
+		          "startPct": 0
 		        },
 		        "label": {
 		          "text": "42",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 2
+		          "fill": "#eeeeee",
+		          "kind": "solid",
+		          "fillOpacity": 1
 		        }
 		      }
 		    ],
-		    "label": null,
+		    "label": " ",
 		    "extent": null,
 		    "unitsTotal": 42,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": null
 		} as unknown as WidgetInput
@@ -3557,19 +3422,19 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf94352c24b2386df
-	// Question: Solve for k using a tape diagram
+	// Question: Solve for k from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [xf94352c24b2386df] Solve for k using a tape diagram", async () => {
+	test("tape-diagram - [xf94352c24b2386df] Solve for k from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
-		      "show": true,
-		      "strokeWidth": 1
+		      "show": false,
+		      "strokeWidth": null
 		    },
 		    "fills": [
 		      {
@@ -3583,24 +3448,24 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#d0e6fa",
+		          "fill": "#f2f2f2",
 		          "kind": "solid",
 		          "fillOpacity": 1
 		        }
 		      }
 		    ],
-		    "label": "Top",
+		    "label": " ",
 		    "extent": null,
 		    "unitsTotal": 17,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [],
 		  "bottomTape": {
 		    "grid": {
-		      "show": true,
-		      "strokeWidth": 1
+		      "show": false,
+		      "strokeWidth": null
 		    },
 		    "fills": [
 		      {
@@ -3614,7 +3479,7 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffd89e",
+		          "fill": "#add8e6",
 		          "kind": "solid",
 		          "fillOpacity": 1
 		        }
@@ -3630,18 +3495,20 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#b7f0b1",
-		          "kind": "solid",
-		          "fillOpacity": 1
+		          "kind": "hatch",
+		          "color": "#000000",
+		          "spacing": null,
+		          "angleDeg": 45,
+		          "strokeWidth": 1.5
 		        }
 		      }
 		    ],
-		    "label": "Bottom",
+		    "label": " ",
 		    "extent": null,
 		    "unitsTotal": 17,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": null
 		} as unknown as WidgetInput
@@ -3662,15 +3529,15 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe19d3516638a71be
-	// Question: Find y from a tape diagram
+	// Question: Find the value of y from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [xe19d3516638a71be] Find y from a tape diagram", async () => {
+	test("tape-diagram - [xe19d3516638a71be] Find the value of y from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 300,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
@@ -3688,9 +3555,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#b3d3f2",
+		          "fill": "#ffffff",
 		          "kind": "solid",
-		          "fillOpacity": 1
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -3704,9 +3571,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#b3d3f2",
+		          "fill": "#ffffff",
 		          "kind": "solid",
-		          "fillOpacity": 1
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -3720,18 +3587,14 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#b3d3f2",
+		          "fill": "#ffffff",
 		          "kind": "solid",
-		          "fillOpacity": 1
+		          "fillOpacity": 0
 		        }
 		      }
 		    ],
-		    "label": " ",
-		    "extent": {
-		      "by": "units",
-		      "endUnit": 3,
-		      "startUnit": 0
-		    },
+		    "label": null,
+		    "extent": null,
 		    "unitsTotal": 3,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
@@ -3755,24 +3618,20 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#f9d47a",
+		          "fill": "#ffffff",
 		          "kind": "solid",
-		          "fillOpacity": 1
+		          "fillOpacity": 0
 		        }
 		      }
 		    ],
-		    "label": " ",
-		    "extent": {
-		      "by": "units",
-		      "endUnit": 3,
-		      "startUnit": 0
-		    },
+		    "label": null,
+		    "extent": null,
 		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
 		    "defaultStrokeWidth": 2
 		  },
-		  "referenceUnitsTotal": 3
+		  "referenceUnitsTotal": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3798,38 +3657,43 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
 		      "strokeWidth": null
 		    },
-		    "fills": [],
+		    "fills": [
+		      {
+		        "span": {
+		          "by": "percent",
+		          "endPct": 100,
+		          "startPct": 0
+		        },
+		        "label": {
+		          "text": "25",
+		          "placement": "inside"
+		        },
+		        "style": {
+		          "fill": "#e0e0e0",
+		          "kind": "solid",
+		          "fillOpacity": 1
+		        }
+		      }
+		    ],
 		    "label": " ",
-		    "extent": null,
-		    "unitsTotal": 25,
+		    "extent": {
+		      "by": "percent",
+		      "endPct": 100,
+		      "startPct": 0
+		    },
+		    "unitsTotal": 100,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
-		  "brackets": [
-		    {
-		      "span": {
-		        "by": "percent",
-		        "endPct": 100,
-		        "startPct": 0
-		      },
-		      "tape": "top",
-		      "style": {
-		        "kind": "straight",
-		        "stroke": "#000000",
-		        "strokeWidth": 2
-		      },
-		      "labelTop": "25 units",
-		      "labelBottom": " "
-		    }
-		  ],
+		  "brackets": [],
 		  "bottomTape": {
 		    "grid": {
 		      "show": false,
@@ -3839,42 +3703,46 @@ describe("tapeDiagram widget tests", () => {
 		      {
 		        "span": {
 		          "by": "percent",
-		          "endPct": 52,
+		          "endPct": 65,
 		          "startPct": 0
 		        },
 		        "label": {
-		          "text": "x units",
+		          "text": "x",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 2
+		          "fill": "#cfe2f3",
+		          "kind": "solid",
+		          "fillOpacity": 1
 		        }
 		      },
 		      {
 		        "span": {
 		          "by": "percent",
 		          "endPct": 100,
-		          "startPct": 52
+		          "startPct": 65
 		        },
 		        "label": {
-		          "text": "13 units",
+		          "text": "13",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 2
+		          "fill": "#ffe599",
+		          "kind": "solid",
+		          "fillOpacity": 1
 		        }
 		      }
 		    ],
 		    "label": " ",
-		    "extent": null,
-		    "unitsTotal": 25,
+		    "extent": {
+		      "by": "percent",
+		      "endPct": 100,
+		      "startPct": 0
+		    },
+		    "unitsTotal": 100,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": null
 		} as unknown as WidgetInput
@@ -3895,45 +3763,46 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbc31c3b806bdfe76
-	// Question: Find d from a tape diagram
+	// Question: Find the value of d from a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [xbc31c3b806bdfe76] Find d from a tape diagram", async () => {
+	test("tape-diagram - [xbc31c3b806bdfe76] Find the value of d from a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
-		      "strokeWidth": 1.5
+		      "strokeWidth": null
 		    },
-		    "fills": [],
-		    "label": " ",
+		    "fills": [
+		      {
+		        "span": {
+		          "by": "percent",
+		          "endPct": 100,
+		          "startPct": 0
+		        },
+		        "label": {
+		          "text": "35 units",
+		          "placement": "inside"
+		        },
+		        "style": {
+		          "fill": "#FFFFFF",
+		          "kind": "solid",
+		          "fillOpacity": 0
+		        }
+		      }
+		    ],
+		    "label": null,
 		    "extent": null,
-		    "unitsTotal": 5,
+		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
 		    "defaultStrokeWidth": 2
 		  },
-		  "brackets": [
-		    {
-		      "span": {
-		        "by": "units",
-		        "endUnit": 5,
-		        "startUnit": 0
-		      },
-		      "tape": "top",
-		      "style": {
-		        "kind": "straight",
-		        "stroke": "#000000",
-		        "strokeWidth": 2
-		      },
-		      "labelTop": "35 units",
-		      "labelBottom": " "
-		    }
-		  ],
+		  "brackets": [],
 		  "bottomTape": {
 		    "grid": {
 		      "show": true,
@@ -3951,9 +3820,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 1.5
+		          "fill": "#FFFFFF",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -3967,9 +3836,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 1.5
+		          "fill": "#FFFFFF",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -3983,9 +3852,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 1.5
+		          "fill": "#FFFFFF",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -3999,9 +3868,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 1.5
+		          "fill": "#FFFFFF",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -4015,13 +3884,13 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 1.5
+		          "fill": "#FFFFFF",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      }
 		    ],
-		    "label": " ",
+		    "label": null,
 		    "extent": null,
 		    "unitsTotal": 5,
 		    "roundedCaps": false,
@@ -4055,147 +3924,49 @@ describe("tapeDiagram widget tests", () => {
 		const input = {
 		  "type": "tapeDiagram",
 		  "width": 320,
-		  "height": 160,
+		  "height": 300,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 1,
-		          "startUnit": 0
-		        },
-		        "label": {
-		          "text": "p",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "fill": "#FFFFFF",
-		          "kind": "solid",
-		          "fillOpacity": 0
-		        }
-		      },
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 2,
-		          "startUnit": 1
-		        },
-		        "label": {
-		          "text": "p",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "fill": "#FFFFFF",
-		          "kind": "solid",
-		          "fillOpacity": 0
-		        }
-		      },
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 3,
-		          "startUnit": 2
-		        },
-		        "label": {
-		          "text": "p",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "fill": "#FFFFFF",
-		          "kind": "solid",
-		          "fillOpacity": 0
-		        }
-		      },
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 4,
-		          "startUnit": 3
-		        },
-		        "label": {
-		          "text": "p",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "fill": "#FFFFFF",
-		          "kind": "solid",
-		          "fillOpacity": 0
-		        }
-		      },
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 5,
-		          "startUnit": 4
-		        },
-		        "label": {
-		          "text": "p",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "fill": "#FFFFFF",
-		          "kind": "solid",
-		          "fillOpacity": 0
-		        }
-		      },
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 6,
-		          "startUnit": 5
-		        },
-		        "label": {
-		          "text": "p",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "fill": "#FFFFFF",
-		          "kind": "solid",
-		          "fillOpacity": 0
-		        }
-		      }
-		    ],
+		    "fills": [],
 		    "label": " ",
 		    "extent": null,
 		    "unitsTotal": 6,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
-		  "brackets": [],
+		  "brackets": [
+		    {
+		      "span": {
+		        "by": "units",
+		        "endUnit": 1,
+		        "startUnit": 0
+		      },
+		      "tape": "bottom",
+		      "style": {
+		        "kind": "straight",
+		        "stroke": null,
+		        "strokeWidth": null
+		      },
+		      "labelTop": "36",
+		      "labelBottom": " "
+		    }
+		  ],
 		  "bottomTape": {
 		    "grid": {
 		      "show": false,
 		      "strokeWidth": null
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 1,
-		          "startUnit": 0
-		        },
-		        "label": {
-		          "text": "36",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "fill": "#FFFFFF",
-		          "kind": "solid",
-		          "fillOpacity": 0
-		        }
-		      }
-		    ],
+		    "fills": [],
 		    "label": " ",
 		    "extent": null,
 		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": null
 		} as unknown as WidgetInput
@@ -4223,8 +3994,8 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 300,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
@@ -4238,19 +4009,19 @@ describe("tapeDiagram widget tests", () => {
 		          "startPct": 0
 		        },
 		        "label": {
-		          "text": "24",
+		          "text": "24 units",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 0
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      }
 		    ],
-		    "label": " ",
+		    "label": "\n",
 		    "extent": null,
-		    "unitsTotal": 8,
+		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
 		    "defaultStrokeWidth": 2
@@ -4273,9 +4044,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 0
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -4289,9 +4060,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 0
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -4305,9 +4076,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 0
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -4321,9 +4092,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 0
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -4337,9 +4108,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 0
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -4353,9 +4124,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 0
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -4369,9 +4140,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 0
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -4385,13 +4156,13 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 0
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      }
 		    ],
-		    "label": " ",
+		    "label": "\n",
 		    "extent": null,
 		    "unitsTotal": 8,
 		    "roundedCaps": false,
@@ -4417,19 +4188,19 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfaf97eba50870110
-	// Question: Solve for s using a tape diagram
+	// Question: Find s from a tape diagram equation
 	// Widget key: image_1
-	test("tape-diagram - [xfaf97eba50870110] Solve for s using a tape diagram", async () => {
+	test("tape-diagram - [xfaf97eba50870110] Find s from a tape diagram equation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
 		    "fills": [
 		      {
@@ -4445,7 +4216,7 @@ describe("tapeDiagram widget tests", () => {
 		        "style": {
 		          "kind": "outline",
 		          "stroke": "#000000",
-		          "strokeWidth": 0
+		          "strokeWidth": 1
 		        }
 		      },
 		      {
@@ -4461,7 +4232,7 @@ describe("tapeDiagram widget tests", () => {
 		        "style": {
 		          "kind": "outline",
 		          "stroke": "#000000",
-		          "strokeWidth": 0
+		          "strokeWidth": 1
 		        }
 		      },
 		      {
@@ -4477,7 +4248,7 @@ describe("tapeDiagram widget tests", () => {
 		        "style": {
 		          "kind": "outline",
 		          "stroke": "#000000",
-		          "strokeWidth": 0
+		          "strokeWidth": 1
 		        }
 		      },
 		      {
@@ -4493,47 +4264,46 @@ describe("tapeDiagram widget tests", () => {
 		        "style": {
 		          "kind": "outline",
 		          "stroke": "#000000",
-		          "strokeWidth": 0
+		          "strokeWidth": 1
 		        }
 		      }
 		    ],
-		    "label": " ",
+		    "label": "Top tape",
 		    "extent": null,
 		    "unitsTotal": 4,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
-		  "brackets": [],
+		  "brackets": [
+		    {
+		      "span": {
+		        "by": "percent",
+		        "endPct": 100,
+		        "startPct": 0
+		      },
+		      "tape": "bottom",
+		      "style": {
+		        "kind": "straight",
+		        "stroke": null,
+		        "strokeWidth": null
+		      },
+		      "labelTop": "20",
+		      "labelBottom": "units"
+		    }
+		  ],
 		  "bottomTape": {
 		    "grid": {
 		      "show": false,
 		      "strokeWidth": null
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 1,
-		          "startUnit": 0
-		        },
-		        "label": {
-		          "text": "20",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 0
-		        }
-		      }
-		    ],
-		    "label": " ",
+		    "fills": [],
+		    "label": "Bottom tape",
 		    "extent": null,
-		    "unitsTotal": 1,
+		    "unitsTotal": 4,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": null
 		} as unknown as WidgetInput
@@ -4562,41 +4332,42 @@ describe("tapeDiagram widget tests", () => {
 		const input = {
 		  "type": "tapeDiagram",
 		  "width": 320,
-		  "height": 160,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
-		    "fills": [],
+		    "fills": [
+		      {
+		        "span": {
+		          "by": "units",
+		          "endUnit": 1,
+		          "startUnit": 0
+		        },
+		        "label": {
+		          "text": "63",
+		          "placement": "inside"
+		        },
+		        "style": {
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1.5
+		        }
+		      }
+		    ],
 		    "label": " ",
 		    "extent": null,
-		    "unitsTotal": 7,
+		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
-		  "brackets": [
-		    {
-		      "span": {
-		        "by": "units",
-		        "endUnit": 7,
-		        "startUnit": 0
-		      },
-		      "tape": "top",
-		      "style": {
-		        "kind": "straight",
-		        "stroke": null,
-		        "strokeWidth": null
-		      },
-		      "labelTop": "63",
-		      "labelBottom": " "
-		    }
-		  ],
+		  "brackets": [],
 		  "bottomTape": {
 		    "grid": {
-		      "show": true,
-		      "strokeWidth": 2
+		      "show": false,
+		      "strokeWidth": 1
 		    },
 		    "fills": [
 		      {
@@ -4610,9 +4381,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1.5
 		        }
 		      },
 		      {
@@ -4626,9 +4397,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1.5
 		        }
 		      },
 		      {
@@ -4642,9 +4413,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1.5
 		        }
 		      },
 		      {
@@ -4658,9 +4429,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1.5
 		        }
 		      },
 		      {
@@ -4674,9 +4445,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1.5
 		        }
 		      },
 		      {
@@ -4690,9 +4461,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1.5
 		        }
 		      },
 		      {
@@ -4706,9 +4477,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1.5
 		        }
 		      }
 		    ],
@@ -4717,144 +4488,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 7,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
-		  },
-		  "referenceUnitsTotal": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for tapeDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xecb69f289dd126b5
-	// Question: Write an equation from a tape diagram and solve for y
-	// Widget key: image_1
-	test("tape-diagram - [xecb69f289dd126b5] Write an equation from a tape diagram and solve for y", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
-		  "topTape": {
-		    "grid": {
-		      "show": false,
-		      "strokeWidth": null
-		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 16,
-		          "startUnit": 0
-		        },
-		        "label": {
-		          "text": "16",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "fill": "#e6f2ff",
-		          "kind": "solid",
-		          "fillOpacity": 1
-		        }
-		      }
-		    ],
-		    "label": " ",
-		    "extent": null,
-		    "unitsTotal": 16,
-		    "roundedCaps": false,
-		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
-		  },
-		  "brackets": [],
-		  "bottomTape": {
-		    "grid": {
-		      "show": true,
-		      "strokeWidth": 2
-		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 1,
-		          "startUnit": 0
-		        },
-		        "label": {
-		          "text": "y",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "fill": "#d9ead3",
-		          "kind": "solid",
-		          "fillOpacity": 1
-		        }
-		      },
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 2,
-		          "startUnit": 1
-		        },
-		        "label": {
-		          "text": "y",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "fill": "#d9ead3",
-		          "kind": "solid",
-		          "fillOpacity": 1
-		        }
-		      },
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 3,
-		          "startUnit": 2
-		        },
-		        "label": {
-		          "text": "y",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "fill": "#d9ead3",
-		          "kind": "solid",
-		          "fillOpacity": 1
-		        }
-		      },
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 4,
-		          "startUnit": 3
-		        },
-		        "label": {
-		          "text": "y",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "fill": "#d9ead3",
-		          "kind": "solid",
-		          "fillOpacity": 1
-		        }
-		      }
-		    ],
-		    "label": " ",
-		    "extent": null,
-		    "unitsTotal": 4,
-		    "roundedCaps": false,
-		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": null
 		} as unknown as WidgetInput
@@ -4882,12 +4516,12 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 480,
-		  "height": 180,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
 		    "fills": [
 		      {
@@ -4901,9 +4535,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 2
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
@@ -4917,9 +4551,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 2
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      }
 		    ],
@@ -4928,19 +4562,19 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 2,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [],
 		  "bottomTape": {
 		    "grid": {
 		      "show": false,
-		      "strokeWidth": 2
+		      "strokeWidth": null
 		    },
 		    "fills": [
 		      {
 		        "span": {
 		          "by": "units",
-		          "endUnit": 2,
+		          "endUnit": 1,
 		          "startUnit": 0
 		        },
 		        "label": {
@@ -4948,20 +4582,20 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "outline",
-		          "stroke": "#000000",
-		          "strokeWidth": 2
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      }
 		    ],
 		    "label": " ",
 		    "extent": null,
-		    "unitsTotal": 2,
+		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
-		  "referenceUnitsTotal": 2
+		  "referenceUnitsTotal": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4987,8 +4621,8 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 300,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
@@ -4998,7 +4632,7 @@ describe("tapeDiagram widget tests", () => {
 		      {
 		        "span": {
 		          "by": "percent",
-		          "endPct": 28,
+		          "endPct": 30,
 		          "startPct": 0
 		        },
 		        "label": {
@@ -5006,7 +4640,7 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#11accd",
+		          "fill": "#cce5ff",
 		          "kind": "solid",
 		          "fillOpacity": 1
 		        }
@@ -5015,20 +4649,22 @@ describe("tapeDiagram widget tests", () => {
 		        "span": {
 		          "by": "percent",
 		          "endPct": 100,
-		          "startPct": 28
+		          "startPct": 30
 		        },
 		        "label": {
 		          "text": "m",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffd05b",
-		          "kind": "solid",
-		          "fillOpacity": 1
+		          "kind": "hatch",
+		          "color": "#000000",
+		          "spacing": 4,
+		          "angleDeg": 45,
+		          "strokeWidth": 1
 		        }
 		      }
 		    ],
-		    "label": " ",
+		    "label": "Top",
 		    "extent": null,
 		    "unitsTotal": 10,
 		    "roundedCaps": false,
@@ -5053,13 +4689,13 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#c1e3f3",
+		          "fill": "#ffd966",
 		          "kind": "solid",
 		          "fillOpacity": 1
 		        }
 		      }
 		    ],
-		    "label": " ",
+		    "label": "Bottom",
 		    "extent": null,
 		    "unitsTotal": 10,
 		    "roundedCaps": false,
@@ -5084,16 +4720,16 @@ describe("tapeDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x6089758dca05221e
-	// Question: Write an equation from a tape diagram and find w
+	// Extracted from question: xecb69f289dd126b5
+	// Question: Write an equation from a tape diagram and solve
 	// Widget key: image_1
-	test("tape-diagram - [x6089758dca05221e] Write an equation from a tape diagram and find w", async () => {
+	test("tape-diagram - [xecb69f289dd126b5] Write an equation from a tape diagram and solve", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
 		  "width": 320,
-		  "height": 160,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
@@ -5107,69 +4743,101 @@ describe("tapeDiagram widget tests", () => {
 		          "startPct": 0
 		        },
 		        "label": {
-		          "text": "25",
+		          "text": "16 units",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#d0e8ff",
+		          "fill": "#ffffff",
 		          "kind": "solid",
-		          "fillOpacity": 1
+		          "fillOpacity": 0
 		        }
 		      }
 		    ],
-		    "label": " ",
+		    "label": null,
 		    "extent": null,
-		    "unitsTotal": 10,
+		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 1.5
+		    "defaultStrokeWidth": 2
 		  },
 		  "brackets": [],
 		  "bottomTape": {
 		    "grid": {
-		      "show": false,
-		      "strokeWidth": null
+		      "show": true,
+		      "strokeWidth": 2
 		    },
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "percent",
-		          "endPct": 40,
-		          "startPct": 0
+		          "by": "units",
+		          "endUnit": 1,
+		          "startUnit": 0
 		        },
 		        "label": {
-		          "text": "10",
+		          "text": "y",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffe0b2",
+		          "fill": "#ffffff",
 		          "kind": "solid",
-		          "fillOpacity": 1
+		          "fillOpacity": 0
 		        }
 		      },
 		      {
 		        "span": {
-		          "by": "percent",
-		          "endPct": 100,
-		          "startPct": 40
+		          "by": "units",
+		          "endUnit": 2,
+		          "startUnit": 1
 		        },
 		        "label": {
-		          "text": "w",
+		          "text": "y",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#d5f5d5",
+		          "fill": "#ffffff",
 		          "kind": "solid",
-		          "fillOpacity": 1
+		          "fillOpacity": 0
+		        }
+		      },
+		      {
+		        "span": {
+		          "by": "units",
+		          "endUnit": 3,
+		          "startUnit": 2
+		        },
+		        "label": {
+		          "text": "y",
+		          "placement": "inside"
+		        },
+		        "style": {
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
+		        }
+		      },
+		      {
+		        "span": {
+		          "by": "units",
+		          "endUnit": 4,
+		          "startUnit": 3
+		        },
+		        "label": {
+		          "text": "y",
+		          "placement": "inside"
+		        },
+		        "style": {
+		          "fill": "#ffffff",
+		          "kind": "solid",
+		          "fillOpacity": 0
 		        }
 		      }
 		    ],
-		    "label": " ",
+		    "label": null,
 		    "extent": null,
-		    "unitsTotal": 10,
+		    "unitsTotal": 4,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 1.5
+		    "defaultStrokeWidth": 2
 		  },
 		  "referenceUnitsTotal": null
 		} as unknown as WidgetInput
@@ -5190,15 +4858,15 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9b187096bb636675
-	// Question: Write an equation from a tape diagram and find the value
+	// Question: Write an equation from a tape diagram and find the value of a
 	// Widget key: image_1
-	test("tape-diagram - [x9b187096bb636675] Write an equation from a tape diagram and find the value", async () => {
+	test("tape-diagram - [x9b187096bb636675] Write an equation from a tape diagram and find the value of a", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
@@ -5216,9 +4884,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#b3d9ff",
-		          "kind": "solid",
-		          "fillOpacity": 1
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 2
 		        }
 		      },
 		      {
@@ -5232,13 +4900,13 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#f2f2f2",
-		          "kind": "solid",
-		          "fillOpacity": 1
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 2
 		        }
 		      }
 		    ],
-		    "label": "Top",
+		    "label": "Top tape",
 		    "extent": null,
 		    "unitsTotal": 100,
 		    "roundedCaps": false,
@@ -5263,13 +4931,13 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#e6f5d6",
-		          "kind": "solid",
-		          "fillOpacity": 1
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 2
 		        }
 		      }
 		    ],
-		    "label": "Bottom",
+		    "label": "Bottom tape",
 		    "extent": null,
 		    "unitsTotal": 100,
 		    "roundedCaps": false,
@@ -5294,16 +4962,16 @@ describe("tapeDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xec3628ab2fd554f5
-	// Question: Write an equation from a tape diagram and find g
+	// Extracted from question: x6089758dca05221e
+	// Question: Write an equation from a tape diagram and solve for w
 	// Widget key: image_1
-	test("tape-diagram - [xec3628ab2fd554f5] Write an equation from a tape diagram and find g", async () => {
+	test("tape-diagram - [x6089758dca05221e] Write an equation from a tape diagram and solve for w", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 300,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
@@ -5312,24 +4980,24 @@ describe("tapeDiagram widget tests", () => {
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "percent",
-		          "endPct": 100,
-		          "startPct": 0
+		          "by": "units",
+		          "endUnit": 25,
+		          "startUnit": 0
 		        },
 		        "label": {
-		          "text": "20",
+		          "text": "25",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
+		          "fill": "#cfe5ff",
 		          "kind": "solid",
-		          "fillOpacity": 0
+		          "fillOpacity": 1
 		        }
 		      }
 		    ],
 		    "label": " ",
 		    "extent": null,
-		    "unitsTotal": 1,
+		    "unitsTotal": 25,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
 		    "defaultStrokeWidth": 2
@@ -5337,46 +5005,46 @@ describe("tapeDiagram widget tests", () => {
 		  "brackets": [],
 		  "bottomTape": {
 		    "grid": {
-		      "show": true,
+		      "show": false,
 		      "strokeWidth": null
 		    },
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "percent",
-		          "endPct": 50,
-		          "startPct": 0
+		          "by": "units",
+		          "endUnit": 10,
+		          "startUnit": 0
 		        },
 		        "label": {
-		          "text": "g",
+		          "text": "10",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
+		          "fill": "#ffe08a",
 		          "kind": "solid",
-		          "fillOpacity": 0
+		          "fillOpacity": 1
 		        }
 		      },
 		      {
 		        "span": {
-		          "by": "percent",
-		          "endPct": 100,
-		          "startPct": 50
+		          "by": "units",
+		          "endUnit": 25,
+		          "startUnit": 10
 		        },
 		        "label": {
-		          "text": "g",
+		          "text": "w",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
+		          "fill": "#ffd1d1",
 		          "kind": "solid",
-		          "fillOpacity": 0
+		          "fillOpacity": 1
 		        }
 		      }
 		    ],
 		    "label": " ",
 		    "extent": null,
-		    "unitsTotal": 2,
+		    "unitsTotal": 25,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
 		    "defaultStrokeWidth": 2
@@ -5399,16 +5067,121 @@ describe("tapeDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc1b390ca506f8849
-	// Question: Write an equation from a tape diagram and find t
+	// Extracted from question: xec3628ab2fd554f5
+	// Question: Write an equation from a tape diagram and solve for g
 	// Widget key: image_1
-	test("tape-diagram - [xc1b390ca506f8849] Write an equation from a tape diagram and find t", async () => {
+	test("tape-diagram - [xec3628ab2fd554f5] Write an equation from a tape diagram and solve for g", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
+		  "topTape": {
+		    "grid": {
+		      "show": true,
+		      "strokeWidth": 1
+		    },
+		    "fills": [
+		      {
+		        "span": {
+		          "by": "units",
+		          "endUnit": 1,
+		          "startUnit": 0
+		        },
+		        "label": {
+		          "text": "20 units",
+		          "placement": "inside"
+		        },
+		        "style": {
+		          "fill": "#cfe8ff",
+		          "kind": "solid",
+		          "fillOpacity": 1
+		        }
+		      }
+		    ],
+		    "label": " ",
+		    "extent": null,
+		    "unitsTotal": 1,
+		    "roundedCaps": false,
+		    "defaultStroke": "#000000",
+		    "defaultStrokeWidth": 1.5
+		  },
+		  "brackets": [],
+		  "bottomTape": {
+		    "grid": {
+		      "show": true,
+		      "strokeWidth": 1
+		    },
+		    "fills": [
+		      {
+		        "span": {
+		          "by": "units",
+		          "endUnit": 1,
+		          "startUnit": 0
+		        },
+		        "label": {
+		          "text": "g units",
+		          "placement": "inside"
+		        },
+		        "style": {
+		          "fill": "#ffe4b5",
+		          "kind": "solid",
+		          "fillOpacity": 1
+		        }
+		      },
+		      {
+		        "span": {
+		          "by": "units",
+		          "endUnit": 2,
+		          "startUnit": 1
+		        },
+		        "label": {
+		          "text": "g units",
+		          "placement": "inside"
+		        },
+		        "style": {
+		          "fill": "#ffe4b5",
+		          "kind": "solid",
+		          "fillOpacity": 1
+		        }
+		      }
+		    ],
+		    "label": " ",
+		    "extent": null,
+		    "unitsTotal": 2,
+		    "roundedCaps": false,
+		    "defaultStroke": "#000000",
+		    "defaultStrokeWidth": 1.5
+		  },
+		  "referenceUnitsTotal": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for tapeDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc1b390ca506f8849
+	// Question: Write an equation from a tape diagram and solve for t
+	// Widget key: image_1
+	test("tape-diagram - [xc1b390ca506f8849] Write an equation from a tape diagram and solve for t", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "tapeDiagram",
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
@@ -5426,7 +5199,7 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#cce5ff",
+		          "fill": "#a6cee3",
 		          "kind": "solid",
 		          "fillOpacity": 1
 		        }
@@ -5442,7 +5215,7 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffd6a5",
+		          "fill": "#fdae61",
 		          "kind": "solid",
 		          "fillOpacity": 1
 		        }
@@ -5473,7 +5246,7 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#e8f5e9",
+		          "fill": "#b2df8a",
 		          "kind": "solid",
 		          "fillOpacity": 1
 		        }
@@ -5512,12 +5285,12 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
 		    "fills": [
 		      {
@@ -5531,9 +5304,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 0
 		        }
 		      },
 		      {
@@ -5547,9 +5320,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 0
 		        }
 		      },
 		      {
@@ -5563,9 +5336,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 0
 		        }
 		      },
 		      {
@@ -5579,9 +5352,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 0
 		        }
 		      },
 		      {
@@ -5595,9 +5368,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 0
 		        }
 		      },
 		      {
@@ -5611,18 +5384,22 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 0
 		        }
 		      }
 		    ],
-		    "label": " ",
-		    "extent": null,
+		    "label": "Top tape",
+		    "extent": {
+		      "by": "units",
+		      "endUnit": 6,
+		      "startUnit": 0
+		    },
 		    "unitsTotal": 6,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [],
 		  "bottomTape": {
@@ -5634,7 +5411,7 @@ describe("tapeDiagram widget tests", () => {
 		      {
 		        "span": {
 		          "by": "units",
-		          "endUnit": 1,
+		          "endUnit": 6,
 		          "startUnit": 0
 		        },
 		        "label": {
@@ -5642,20 +5419,24 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 0
 		        }
 		      }
 		    ],
-		    "label": " ",
-		    "extent": null,
-		    "unitsTotal": 1,
+		    "label": "Bottom tape",
+		    "extent": {
+		      "by": "units",
+		      "endUnit": 6,
+		      "startUnit": 0
+		    },
+		    "unitsTotal": 6,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
-		  "referenceUnitsTotal": null
+		  "referenceUnitsTotal": 6
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5681,12 +5462,12 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
 		    "fills": [
 		      {
@@ -5700,9 +5481,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
+		          "fill": "#e0f0ff",
 		          "kind": "solid",
-		          "fillOpacity": 0
+		          "fillOpacity": 0.4
 		        }
 		      },
 		      {
@@ -5716,9 +5497,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
+		          "fill": "#e0f0ff",
 		          "kind": "solid",
-		          "fillOpacity": 0
+		          "fillOpacity": 0.4
 		        }
 		      },
 		      {
@@ -5732,9 +5513,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
+		          "fill": "#e0f0ff",
 		          "kind": "solid",
-		          "fillOpacity": 0
+		          "fillOpacity": 0.4
 		        }
 		      },
 		      {
@@ -5748,9 +5529,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
+		          "fill": "#e0f0ff",
 		          "kind": "solid",
-		          "fillOpacity": 0
+		          "fillOpacity": 0.4
 		        }
 		      },
 		      {
@@ -5764,9 +5545,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
+		          "fill": "#e0f0ff",
 		          "kind": "solid",
-		          "fillOpacity": 0
+		          "fillOpacity": 0.4
 		        }
 		      },
 		      {
@@ -5780,9 +5561,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
+		          "fill": "#e0f0ff",
 		          "kind": "solid",
-		          "fillOpacity": 0
+		          "fillOpacity": 0.4
 		        }
 		      }
 		    ],
@@ -5791,7 +5572,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 6,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "brackets": [],
 		  "bottomTape": {
@@ -5811,9 +5592,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
+		          "fill": "#fdeccb",
 		          "kind": "solid",
-		          "fillOpacity": 0
+		          "fillOpacity": 0.5
 		        }
 		      }
 		    ],
@@ -5822,7 +5603,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": null
 		} as unknown as WidgetInput
@@ -5850,43 +5631,42 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
 		      "strokeWidth": null
 		    },
-		    "fills": [
-		      {
-		        "span": {
-		          "by": "units",
-		          "endUnit": 1,
-		          "startUnit": 0
-		        },
-		        "label": {
-		          "text": "1.75 units",
-		          "placement": "inside"
-		        },
-		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
-		        }
-		      }
-		    ],
+		    "fills": [],
 		    "label": " ",
 		    "extent": null,
 		    "unitsTotal": 1,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
-		  "brackets": [],
+		  "brackets": [
+		    {
+		      "span": {
+		        "by": "percent",
+		        "endPct": 100,
+		        "startPct": 0
+		      },
+		      "tape": "top",
+		      "style": {
+		        "kind": "straight",
+		        "stroke": null,
+		        "strokeWidth": null
+		      },
+		      "labelTop": "1.75 units",
+		      "labelBottom": " "
+		    }
+		  ],
 		  "bottomTape": {
 		    "grid": {
 		      "show": true,
-		      "strokeWidth": 2
+		      "strokeWidth": 1
 		    },
 		    "fills": [
 		      {
@@ -5900,9 +5680,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1
 		        }
 		      },
 		      {
@@ -5916,9 +5696,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1
 		        }
 		      },
 		      {
@@ -5932,9 +5712,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1
 		        }
 		      },
 		      {
@@ -5948,9 +5728,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1
 		        }
 		      },
 		      {
@@ -5964,9 +5744,9 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffffff",
-		          "kind": "solid",
-		          "fillOpacity": 0
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1
 		        }
 		      }
 		    ],
@@ -5975,7 +5755,7 @@ describe("tapeDiagram widget tests", () => {
 		    "unitsTotal": 5,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
-		    "defaultStrokeWidth": 2
+		    "defaultStrokeWidth": 1.5
 		  },
 		  "referenceUnitsTotal": null
 		} as unknown as WidgetInput
@@ -5996,15 +5776,15 @@ describe("tapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf6d2dfeea49770e6
-	// Question: Write an equation from a tape diagram
+	// Question: Write an equation to represent a tape diagram
 	// Widget key: image_1
-	test("tape-diagram - [xf6d2dfeea49770e6] Write an equation from a tape diagram", async () => {
+	test("tape-diagram - [xf6d2dfeea49770e6] Write an equation to represent a tape diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 480,
-		  "height": 200,
+		  "width": 400,
+		  "height": 320,
 		  "topTape": {
 		    "grid": {
 		      "show": false,
@@ -6014,7 +5794,7 @@ describe("tapeDiagram widget tests", () => {
 		      {
 		        "span": {
 		          "by": "percent",
-		          "endPct": 60,
+		          "endPct": 51.85,
 		          "startPct": 0
 		        },
 		        "label": {
@@ -6031,20 +5811,20 @@ describe("tapeDiagram widget tests", () => {
 		        "span": {
 		          "by": "percent",
 		          "endPct": 100,
-		          "startPct": 60
+		          "startPct": 51.85
 		        },
 		        "label": {
 		          "text": "1.3",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#ffd1a9",
+		          "fill": "#ffe0b2",
 		          "kind": "solid",
 		          "fillOpacity": 1
 		        }
 		      }
 		    ],
-		    "label": "Top",
+		    "label": " ",
 		    "extent": null,
 		    "unitsTotal": 10,
 		    "roundedCaps": false,
@@ -6069,13 +5849,13 @@ describe("tapeDiagram widget tests", () => {
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#d5f5e3",
+		          "fill": "#d6f5d6",
 		          "kind": "solid",
 		          "fillOpacity": 1
 		        }
 		      }
 		    ],
-		    "label": "Bottom",
+		    "label": " ",
 		    "extent": null,
 		    "unitsTotal": 10,
 		    "roundedCaps": false,
@@ -6108,37 +5888,33 @@ describe("tapeDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "tapeDiagram",
-		  "width": 320,
-		  "height": 160,
+		  "width": 400,
+		  "height": 300,
 		  "topTape": {
 		    "grid": {
-		      "show": true,
-		      "strokeWidth": 1
+		      "show": false,
+		      "strokeWidth": null
 		    },
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "units",
-		          "endUnit": 11,
-		          "startUnit": 0
+		          "by": "percent",
+		          "endPct": 100,
+		          "startPct": 0
 		        },
 		        "label": {
 		          "text": "11",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#dbe9ff",
+		          "fill": "#ffffff",
 		          "kind": "solid",
-		          "fillOpacity": 1
+		          "fillOpacity": 0
 		        }
 		      }
 		    ],
 		    "label": " ",
-		    "extent": {
-		      "by": "units",
-		      "endUnit": 11,
-		      "startUnit": 0
-		    },
+		    "extent": null,
 		    "unitsTotal": 11,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
@@ -6147,57 +5923,51 @@ describe("tapeDiagram widget tests", () => {
 		  "brackets": [],
 		  "bottomTape": {
 		    "grid": {
-		      "show": true,
-		      "strokeWidth": 1
+		      "show": false,
+		      "strokeWidth": null
 		    },
 		    "fills": [
 		      {
 		        "span": {
-		          "by": "units",
-		          "endUnit": 5,
-		          "startUnit": 0
+		          "by": "percent",
+		          "endPct": 45.45,
+		          "startPct": 0
 		        },
 		        "label": {
 		          "text": "5",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "fill": "#cbb7f7",
-		          "kind": "solid",
-		          "fillOpacity": 1
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1.5
 		        }
 		      },
 		      {
 		        "span": {
-		          "by": "units",
-		          "endUnit": 11,
-		          "startUnit": 5
+		          "by": "percent",
+		          "endPct": 100,
+		          "startPct": 45.45
 		        },
 		        "label": {
 		          "text": "b",
 		          "placement": "inside"
 		        },
 		        "style": {
-		          "kind": "hatch",
-		          "color": "#000000",
-		          "spacing": 4,
-		          "angleDeg": 45,
-		          "strokeWidth": 1
+		          "kind": "outline",
+		          "stroke": "#000000",
+		          "strokeWidth": 1.5
 		        }
 		      }
 		    ],
 		    "label": " ",
-		    "extent": {
-		      "by": "units",
-		      "endUnit": 11,
-		      "startUnit": 0
-		    },
+		    "extent": null,
 		    "unitsTotal": 11,
 		    "roundedCaps": false,
 		    "defaultStroke": "#000000",
 		    "defaultStrokeWidth": 1.5
 		  },
-		  "referenceUnitsTotal": 11
+		  "referenceUnitsTotal": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)

@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.965Z
+// Generated on: 2025-09-18T05:17:02.164Z
 // Widget Type: doubleNumberLine
 // Source: Real questions from database
 //
@@ -26,19 +26,19 @@ import * as logger from "@superbuilders/slog"
 
 describe("doubleNumberLine widget tests", () => {
 	// Extracted from question: x5fa5b5e029e54e5e
-	// Question: Complete a double number line for equivalent ratios
+	// Question: Complete the double number line: candy and toys
 	// Widget key: image_1
-	test("double-number-line - [x5fa5b5e029e54e5e] Complete a double number line for equivalent ratios (1)", async () => {
+	test("double-number-line - [x5fa5b5e029e54e5e] Complete the double number line: candy and toys (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Candy, pieces",
 		    "ticks": [
-		      "0",
+		      0,
 		      "",
 		      "",
 		      "",
@@ -48,7 +48,7 @@ describe("doubleNumberLine widget tests", () => {
 		  "bottomLine": {
 		    "label": "Toys",
 		    "ticks": [
-		      "0",
+		      0,
 		      "",
 		      "",
 		      "",
@@ -73,15 +73,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5fa5b5e029e54e5e
-	// Question: Complete a double number line for equivalent ratios
+	// Question: Complete the double number line: candy and toys
 	// Widget key: choice_a_dnl
-	test("double-number-line - [x5fa5b5e029e54e5e] Complete a double number line for equivalent ratios (2)", async () => {
+	test("double-number-line - [x5fa5b5e029e54e5e] Complete the double number line: candy and toys (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Candy, pieces",
 		    "ticks": [
@@ -120,15 +120,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5fa5b5e029e54e5e
-	// Question: Complete a double number line for equivalent ratios
+	// Question: Complete the double number line: candy and toys
 	// Widget key: choice_b_dnl
-	test("double-number-line - [x5fa5b5e029e54e5e] Complete a double number line for equivalent ratios (3)", async () => {
+	test("double-number-line - [x5fa5b5e029e54e5e] Complete the double number line: candy and toys (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Candy, pieces",
 		    "ticks": [
@@ -167,15 +167,62 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe41317a0ad0df775
-	// Question: Select the equivalent double number line (hours and cranes)
-	// Widget key: choice_a_dnl
-	test("double-number-line - [xe41317a0ad0df775] Select the equivalent double number line (hours and cranes) (1)", async () => {
+	// Question: Equivalent ratios on a double number line (hours and cranes)
+	// Widget key: image_1
+	test("double-number-line - [xe41317a0ad0df775] Equivalent ratios on a double number line (hours and cranes) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
+		  "topLine": {
+		    "label": "Hours",
+		    "ticks": [
+		      0,
+		      "",
+		      "",
+		      "",
+		      4
+		    ]
+		  },
+		  "bottomLine": {
+		    "label": "Cranes",
+		    "ticks": [
+		      0,
+		      "",
+		      "",
+		      "",
+		      28
+		    ]
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for doubleNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe41317a0ad0df775
+	// Question: Equivalent ratios on a double number line (hours and cranes)
+	// Widget key: choice_a_dnl
+	test("double-number-line - [xe41317a0ad0df775] Equivalent ratios on a double number line (hours and cranes) (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "doubleNumberLine",
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Hours",
 		    "ticks": [
@@ -214,15 +261,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe41317a0ad0df775
-	// Question: Select the equivalent double number line (hours and cranes)
+	// Question: Equivalent ratios on a double number line (hours and cranes)
 	// Widget key: choice_b_dnl
-	test("double-number-line - [xe41317a0ad0df775] Select the equivalent double number line (hours and cranes) (2)", async () => {
+	test("double-number-line - [xe41317a0ad0df775] Equivalent ratios on a double number line (hours and cranes) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Hours",
 		    "ticks": [
@@ -260,63 +307,16 @@ describe("doubleNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xe41317a0ad0df775
-	// Question: Select the equivalent double number line (hours and cranes)
-	// Widget key: stimulus_dnl
-	test("double-number-line - [xe41317a0ad0df775] Select the equivalent double number line (hours and cranes) (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
-		  "topLine": {
-		    "label": "Hours",
-		    "ticks": [
-		      "0",
-		      "",
-		      "",
-		      "",
-		      "4"
-		    ]
-		  },
-		  "bottomLine": {
-		    "label": "Cranes",
-		    "ticks": [
-		      "0",
-		      "",
-		      "",
-		      "",
-		      "28"
-		    ]
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for doubleNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x927b8bcd7c6456a5
-	// Question: Select the equivalent double number line for pies and apples
+	// Question: Equivalent ratios on a double number line (pies and apples)
 	// Widget key: image_1
-	test("double-number-line - [x927b8bcd7c6456a5] Select the equivalent double number line for pies and apples (1)", async () => {
+	test("double-number-line - [x927b8bcd7c6456a5] Equivalent ratios on a double number line (pies and apples) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Pies",
 		    "ticks": [
@@ -355,15 +355,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x927b8bcd7c6456a5
-	// Question: Select the equivalent double number line for pies and apples
+	// Question: Equivalent ratios on a double number line (pies and apples)
 	// Widget key: choice_a_dnl
-	test("double-number-line - [x927b8bcd7c6456a5] Select the equivalent double number line for pies and apples (2)", async () => {
+	test("double-number-line - [x927b8bcd7c6456a5] Equivalent ratios on a double number line (pies and apples) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Pies",
 		    "ticks": [
@@ -402,15 +402,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x927b8bcd7c6456a5
-	// Question: Select the equivalent double number line for pies and apples
+	// Question: Equivalent ratios on a double number line (pies and apples)
 	// Widget key: choice_b_dnl
-	test("double-number-line - [x927b8bcd7c6456a5] Select the equivalent double number line for pies and apples (3)", async () => {
+	test("double-number-line - [x927b8bcd7c6456a5] Equivalent ratios on a double number line (pies and apples) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Pies",
 		    "ticks": [
@@ -449,19 +449,19 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xfde66648c76fee89
-	// Question: Complete the double number line for fat and protein
+	// Question: Complete a double number line for equivalent ratios
 	// Widget key: image_1
-	test("double-number-line - [xfde66648c76fee89] Complete the double number line for fat and protein (1)", async () => {
+	test("double-number-line - [xfde66648c76fee89] Complete a double number line for equivalent ratios (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Fat, grams",
 		    "ticks": [
-		      0,
+		      "0",
 		      "",
 		      "",
 		      "",
@@ -471,7 +471,7 @@ describe("doubleNumberLine widget tests", () => {
 		  "bottomLine": {
 		    "label": "Protein, grams",
 		    "ticks": [
-		      0,
+		      "0",
 		      "",
 		      "",
 		      "",
@@ -496,15 +496,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xfde66648c76fee89
-	// Question: Complete the double number line for fat and protein
+	// Question: Complete a double number line for equivalent ratios
 	// Widget key: choice_a_dnl
-	test("double-number-line - [xfde66648c76fee89] Complete the double number line for fat and protein (2)", async () => {
+	test("double-number-line - [xfde66648c76fee89] Complete a double number line for equivalent ratios (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Fat, grams",
 		    "ticks": [
@@ -543,15 +543,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xfde66648c76fee89
-	// Question: Complete the double number line for fat and protein
+	// Question: Complete a double number line for equivalent ratios
 	// Widget key: choice_b_dnl
-	test("double-number-line - [xfde66648c76fee89] Complete the double number line for fat and protein (3)", async () => {
+	test("double-number-line - [xfde66648c76fee89] Complete a double number line for equivalent ratios (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Fat, grams",
 		    "ticks": [
@@ -590,15 +590,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x6b9cc22db794915a
-	// Question: Double number line: cherries and cost
+	// Question: Select the equivalent double number line for cherries and cost
 	// Widget key: image_1
-	test("double-number-line - [x6b9cc22db794915a] Double number line: cherries and cost (1)", async () => {
+	test("double-number-line - [x6b9cc22db794915a] Select the equivalent double number line for cherries and cost (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 600,
-		  "height": 180,
+		  "width": 400,
+		  "height": 320,
 		  "topLine": {
 		    "label": "Cherries, kilograms",
 		    "ticks": [
@@ -637,15 +637,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x6b9cc22db794915a
-	// Question: Double number line: cherries and cost
+	// Question: Select the equivalent double number line for cherries and cost
 	// Widget key: choice_a_dnl
-	test("double-number-line - [x6b9cc22db794915a] Double number line: cherries and cost (2)", async () => {
+	test("double-number-line - [x6b9cc22db794915a] Select the equivalent double number line for cherries and cost (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 600,
-		  "height": 180,
+		  "width": 420,
+		  "height": 320,
 		  "topLine": {
 		    "label": "Cherries, kilograms",
 		    "ticks": [
@@ -684,15 +684,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x6b9cc22db794915a
-	// Question: Double number line: cherries and cost
+	// Question: Select the equivalent double number line for cherries and cost
 	// Widget key: choice_b_dnl
-	test("double-number-line - [x6b9cc22db794915a] Double number line: cherries and cost (3)", async () => {
+	test("double-number-line - [x6b9cc22db794915a] Select the equivalent double number line for cherries and cost (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 600,
-		  "height": 180,
+		  "width": 420,
+		  "height": 320,
 		  "topLine": {
 		    "label": "Cherries, kilograms",
 		    "ticks": [
@@ -731,15 +731,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc57d751010264518
-	// Question: Complete the double number line: coupons and tickets
+	// Question: Complete a double number line for equivalent ratios
 	// Widget key: image_1
-	test("double-number-line - [xc57d751010264518] Complete the double number line: coupons and tickets (1)", async () => {
+	test("double-number-line - [xc57d751010264518] Complete a double number line for equivalent ratios (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Food coupons",
 		    "ticks": [
@@ -778,15 +778,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc57d751010264518
-	// Question: Complete the double number line: coupons and tickets
+	// Question: Complete a double number line for equivalent ratios
 	// Widget key: choice_a_dnl
-	test("double-number-line - [xc57d751010264518] Complete the double number line: coupons and tickets (2)", async () => {
+	test("double-number-line - [xc57d751010264518] Complete a double number line for equivalent ratios (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Food coupons",
 		    "ticks": [
@@ -825,15 +825,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc57d751010264518
-	// Question: Complete the double number line: coupons and tickets
+	// Question: Complete a double number line for equivalent ratios
 	// Widget key: choice_b_dnl
-	test("double-number-line - [xc57d751010264518] Complete the double number line: coupons and tickets (3)", async () => {
+	test("double-number-line - [xc57d751010264518] Complete a double number line for equivalent ratios (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Food coupons",
 		    "ticks": [
@@ -872,15 +872,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x574891a3db7a916f
-	// Question: Complete a double number line for beads and ribbons
+	// Question: Complete a double number line for equivalent ratios
 	// Widget key: image_1
-	test("double-number-line - [x574891a3db7a916f] Complete a double number line for beads and ribbons (1)", async () => {
+	test("double-number-line - [x574891a3db7a916f] Complete a double number line for equivalent ratios (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Beads",
 		    "ticks": [
@@ -919,15 +919,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x574891a3db7a916f
-	// Question: Complete a double number line for beads and ribbons
+	// Question: Complete a double number line for equivalent ratios
 	// Widget key: choice_a_dnl
-	test("double-number-line - [x574891a3db7a916f] Complete a double number line for beads and ribbons (2)", async () => {
+	test("double-number-line - [x574891a3db7a916f] Complete a double number line for equivalent ratios (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Beads",
 		    "ticks": [
@@ -966,15 +966,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x574891a3db7a916f
-	// Question: Complete a double number line for beads and ribbons
+	// Question: Complete a double number line for equivalent ratios
 	// Widget key: choice_b_dnl
-	test("double-number-line - [x574891a3db7a916f] Complete a double number line for beads and ribbons (3)", async () => {
+	test("double-number-line - [x574891a3db7a916f] Complete a double number line for equivalent ratios (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Beads",
 		    "ticks": [
@@ -1013,15 +1013,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x3fd9ae08b0f9c4b8
-	// Question: Select an equivalent double number line
+	// Question: Equivalent values on a double number line (time and people)
 	// Widget key: image_1
-	test("double-number-line - [x3fd9ae08b0f9c4b8] Select an equivalent double number line (1)", async () => {
+	test("double-number-line - [x3fd9ae08b0f9c4b8] Equivalent values on a double number line (time and people) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Time, minutes",
 		    "ticks": [
@@ -1060,15 +1060,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x3fd9ae08b0f9c4b8
-	// Question: Select an equivalent double number line
+	// Question: Equivalent values on a double number line (time and people)
 	// Widget key: choice_a_dnl
-	test("double-number-line - [x3fd9ae08b0f9c4b8] Select an equivalent double number line (2)", async () => {
+	test("double-number-line - [x3fd9ae08b0f9c4b8] Equivalent values on a double number line (time and people) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Time, minutes",
 		    "ticks": [
@@ -1107,15 +1107,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x3fd9ae08b0f9c4b8
-	// Question: Select an equivalent double number line
+	// Question: Equivalent values on a double number line (time and people)
 	// Widget key: choice_b_dnl
-	test("double-number-line - [x3fd9ae08b0f9c4b8] Select an equivalent double number line (3)", async () => {
+	test("double-number-line - [x3fd9ae08b0f9c4b8] Equivalent values on a double number line (time and people) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Time, minutes",
 		    "ticks": [
@@ -1154,15 +1154,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe3cd3120e416ae1e
-	// Question: Complete a double number line for equivalent ratios
+	// Question: Complete a double number line for a trail mix ratio
 	// Widget key: image_1
-	test("double-number-line - [xe3cd3120e416ae1e] Complete a double number line for equivalent ratios (1)", async () => {
+	test("double-number-line - [xe3cd3120e416ae1e] Complete a double number line for a trail mix ratio (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Almonds, grams",
 		    "ticks": [
@@ -1201,15 +1201,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe3cd3120e416ae1e
-	// Question: Complete a double number line for equivalent ratios
+	// Question: Complete a double number line for a trail mix ratio
 	// Widget key: choice_a_dnl
-	test("double-number-line - [xe3cd3120e416ae1e] Complete a double number line for equivalent ratios (2)", async () => {
+	test("double-number-line - [xe3cd3120e416ae1e] Complete a double number line for a trail mix ratio (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Almonds, grams",
 		    "ticks": [
@@ -1248,15 +1248,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe3cd3120e416ae1e
-	// Question: Complete a double number line for equivalent ratios
+	// Question: Complete a double number line for a trail mix ratio
 	// Widget key: choice_b_dnl
-	test("double-number-line - [xe3cd3120e416ae1e] Complete a double number line for equivalent ratios (3)", async () => {
+	test("double-number-line - [xe3cd3120e416ae1e] Complete a double number line for a trail mix ratio (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Almonds, grams",
 		    "ticks": [
@@ -1295,15 +1295,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x22009b1c4482a866
-	// Question: Complete a double number line for equivalent ratios
+	// Question: Complete a double number line for a ratio
 	// Widget key: image_1
-	test("double-number-line - [x22009b1c4482a866] Complete a double number line for equivalent ratios (1)", async () => {
+	test("double-number-line - [x22009b1c4482a866] Complete a double number line for a ratio (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Side dishes",
 		    "ticks": [
@@ -1342,15 +1342,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x22009b1c4482a866
-	// Question: Complete a double number line for equivalent ratios
+	// Question: Complete a double number line for a ratio
 	// Widget key: choice_a_dnl
-	test("double-number-line - [x22009b1c4482a866] Complete a double number line for equivalent ratios (2)", async () => {
+	test("double-number-line - [x22009b1c4482a866] Complete a double number line for a ratio (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Side dishes",
 		    "ticks": [
@@ -1389,15 +1389,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x22009b1c4482a866
-	// Question: Complete a double number line for equivalent ratios
+	// Question: Complete a double number line for a ratio
 	// Widget key: choice_b_dnl
-	test("double-number-line - [x22009b1c4482a866] Complete a double number line for equivalent ratios (3)", async () => {
+	test("double-number-line - [x22009b1c4482a866] Complete a double number line for a ratio (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Side dishes",
 		    "ticks": [
@@ -1436,15 +1436,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x38761d74178ec71b
-	// Question: Select the double number line that shows equivalent values
+	// Question: Select the equivalent double number line for packages and pencils
 	// Widget key: image_1
-	test("double-number-line - [x38761d74178ec71b] Select the double number line that shows equivalent values (1)", async () => {
+	test("double-number-line - [x38761d74178ec71b] Select the equivalent double number line for packages and pencils (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 320,
 		  "topLine": {
 		    "label": "Packages",
 		    "ticks": [
@@ -1483,15 +1483,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x38761d74178ec71b
-	// Question: Select the double number line that shows equivalent values
+	// Question: Select the equivalent double number line for packages and pencils
 	// Widget key: choice_a_dnl
-	test("double-number-line - [x38761d74178ec71b] Select the double number line that shows equivalent values (2)", async () => {
+	test("double-number-line - [x38761d74178ec71b] Select the equivalent double number line for packages and pencils (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 320,
 		  "topLine": {
 		    "label": "Packages",
 		    "ticks": [
@@ -1530,15 +1530,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x38761d74178ec71b
-	// Question: Select the double number line that shows equivalent values
+	// Question: Select the equivalent double number line for packages and pencils
 	// Widget key: choice_b_dnl
-	test("double-number-line - [x38761d74178ec71b] Select the double number line that shows equivalent values (3)", async () => {
+	test("double-number-line - [x38761d74178ec71b] Select the equivalent double number line for packages and pencils (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 320,
 		  "topLine": {
 		    "label": "Packages",
 		    "ticks": [
@@ -1584,8 +1584,8 @@ describe("doubleNumberLine widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 320,
 		  "topLine": {
 		    "label": "Distance, kilometers",
 		    "ticks": [
@@ -1631,8 +1631,8 @@ describe("doubleNumberLine widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 320,
 		  "topLine": {
 		    "label": "Distance, kilometers",
 		    "ticks": [
@@ -1678,8 +1678,8 @@ describe("doubleNumberLine widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 320,
 		  "topLine": {
 		    "label": "Distance, kilometers",
 		    "ticks": [
@@ -1718,15 +1718,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x47ae021cf3a00c6a
-	// Question: Complete the percentage table from a double number line
+	// Question: Complete a percentage table from a double number line
 	// Widget key: image_1
-	test("double-number-line - [x47ae021cf3a00c6a] Complete the percentage table from a double number line", async () => {
+	test("double-number-line - [x47ae021cf3a00c6a] Complete a percentage table from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Distance, meters",
 		    "ticks": [
@@ -1737,8 +1737,8 @@ describe("doubleNumberLine widget tests", () => {
 		  "bottomLine": {
 		    "label": "Percentage",
 		    "ticks": [
-		      "0 percent",
-		      "100 percent"
+		      0,
+		      100
 		    ]
 		  }
 		} as unknown as WidgetInput
@@ -1759,15 +1759,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb924926a93d7095a
-	// Question: Percentages of banjos on a double number line
+	// Question: Complete percentages from a double number line
 	// Widget key: image_1
-	test("double-number-line - [xb924926a93d7095a] Percentages of banjos on a double number line", async () => {
+	test("double-number-line - [xb924926a93d7095a] Complete percentages from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Banjos",
 		    "ticks": [
@@ -1800,15 +1800,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8d6317e3903a3e5f
-	// Question: Complete a table of percentages from a double number line
+	// Question: Percentages of time from a double number line
 	// Widget key: image_1
-	test("double-number-line - [x8d6317e3903a3e5f] Complete a table of percentages from a double number line", async () => {
+	test("double-number-line - [x8d6317e3903a3e5f] Percentages of time from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 500,
 		  "topLine": {
 		    "label": "Time, seconds",
 		    "ticks": [
@@ -1819,8 +1819,8 @@ describe("doubleNumberLine widget tests", () => {
 		  "bottomLine": {
 		    "label": "Percentage",
 		    "ticks": [
-		      0,
-		      100
+		      "0 percent",
+		      "100 percent"
 		    ]
 		  }
 		} as unknown as WidgetInput
@@ -1841,15 +1841,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc185efc8b0fda786
-	// Question: Complete the table of days and percentages
+	// Question: Complete a percentage table from a double number line
 	// Widget key: image_1
-	test("double-number-line - [xc185efc8b0fda786] Complete the table of days and percentages", async () => {
+	test("double-number-line - [xc185efc8b0fda786] Complete a percentage table from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Time, days",
 		    "ticks": [
@@ -1860,8 +1860,8 @@ describe("doubleNumberLine widget tests", () => {
 		  "bottomLine": {
 		    "label": "Percentage",
 		    "ticks": [
-		      "0%",
-		      "100%"
+		      "0 percent",
+		      "100 percent"
 		    ]
 		  }
 		} as unknown as WidgetInput
@@ -1890,7 +1890,7 @@ describe("doubleNumberLine widget tests", () => {
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "People",
 		    "ticks": [
@@ -1923,15 +1923,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x94a2f9d2a9675051
-	// Question: Complete the table: ages and percentages
+	// Question: Percentages of Itzel's age
 	// Widget key: image_1
-	test("double-number-line - [x94a2f9d2a9675051] Complete the table: ages and percentages", async () => {
+	test("double-number-line - [x94a2f9d2a9675051] Percentages of Itzel's age", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Age, years",
 		    "ticks": [
@@ -1964,15 +1964,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x17d286c5fd268ced
-	// Question: Complete the table for auction attendance percentages
+	// Question: Complete the attendance table using a double number line
 	// Widget key: image_1
-	test("double-number-line - [x17d286c5fd268ced] Complete the table for auction attendance percentages", async () => {
+	test("double-number-line - [x17d286c5fd268ced] Complete the attendance table using a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "People",
 		    "ticks": [
@@ -2005,15 +2005,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xda750be488d145af
-	// Question: Distances for percentages of a carousel rotation
+	// Question: Complete the table from a double number line (carousel rotation)
 	// Widget key: image_1
-	test("double-number-line - [xda750be488d145af] Distances for percentages of a carousel rotation", async () => {
+	test("double-number-line - [xda750be488d145af] Complete the table from a double number line (carousel rotation)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Distance, meters",
 		    "ticks": [
@@ -2046,15 +2046,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x97905bb1dc74d640
-	// Question: Complete the table: percentages of a mass
+	// Question: Complete a table of percentages from a double number line
 	// Widget key: image_1
-	test("double-number-line - [x97905bb1dc74d640] Complete the table: percentages of a mass", async () => {
+	test("double-number-line - [x97905bb1dc74d640] Complete a table of percentages from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Mass, kilograms",
 		    "ticks": [
@@ -2087,15 +2087,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb59c6a60c50f9d85
-	// Question: Complete the table: percentages of Go games played
+	// Question: Complete percentages from a double number line
 	// Widget key: image_1
-	test("double-number-line - [xb59c6a60c50f9d85] Complete the table: percentages of Go games played", async () => {
+	test("double-number-line - [xb59c6a60c50f9d85] Complete percentages from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Games",
 		    "ticks": [
@@ -2128,15 +2128,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xfe723c069c0378ec
-	// Question: Percentages from a double number line
+	// Question: Complete a percentage table from a double number line
 	// Widget key: image_1
-	test("double-number-line - [xfe723c069c0378ec] Percentages from a double number line", async () => {
+	test("double-number-line - [xfe723c069c0378ec] Complete a percentage table from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Distance, kilometers",
 		    "ticks": [
@@ -2147,8 +2147,49 @@ describe("doubleNumberLine widget tests", () => {
 		  "bottomLine": {
 		    "label": "Percentage",
 		    "ticks": [
-		      "0 percent",
-		      "100 percent"
+		      0,
+		      100
+		    ]
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for doubleNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x638d18acba0e3b22
+	// Question: Choose the table that represents the cost per game of bowling
+	// Widget key: image_1
+	test("double-number-line - [x638d18acba0e3b22] Choose the table that represents the cost per game of bowling", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "doubleNumberLine",
+		  "width": 400,
+		  "height": 300,
+		  "topLine": {
+		    "label": "Games",
+		    "ticks": [
+		      0,
+		      1
+		    ]
+		  },
+		  "bottomLine": {
+		    "label": "Cost (dollars)",
+		    "ticks": [
+		      0,
+		      14
 		    ]
 		  }
 		} as unknown as WidgetInput
@@ -2169,15 +2210,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xcb698f8548e176bc
-	// Question: Complete the table from the double number line (cupcakes)
+	// Question: Complete the table from a double number line
 	// Widget key: image_1
-	test("double-number-line - [xcb698f8548e176bc] Complete the table from the double number line (cupcakes)", async () => {
+	test("double-number-line - [xcb698f8548e176bc] Complete the table from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Cupcakes",
 		    "ticks": [
@@ -2218,7 +2259,7 @@ describe("doubleNumberLine widget tests", () => {
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Time (minutes)",
 		    "ticks": [
@@ -2250,16 +2291,59 @@ describe("doubleNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7e43407413526d13
-	// Question: Complete the table from a double number line
+	// Extracted from question: x3c0d5acf2d120eb5
+	// Question: Complete the table to match a double number line
 	// Widget key: image_1
-	test("double-number-line - [x7e43407413526d13] Complete the table from a double number line", async () => {
+	test("double-number-line - [x3c0d5acf2d120eb5] Complete the table to match a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
+		  "topLine": {
+		    "label": "Loaves",
+		    "ticks": [
+		      0,
+		      1,
+		      2
+		    ]
+		  },
+		  "bottomLine": {
+		    "label": "Bananas",
+		    "ticks": [
+		      "0",
+		      "2 1/2",
+		      "5"
+		    ]
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for doubleNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7e43407413526d13
+	// Question: Complete the ratio table from a double number line
+	// Widget key: image_1
+	test("double-number-line - [x7e43407413526d13] Complete the ratio table from a double number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "doubleNumberLine",
+		  "width": 350,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Adults",
 		    "ticks": [
@@ -2291,59 +2375,16 @@ describe("doubleNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3c0d5acf2d120eb5
-	// Question: Complete a table from a double number line
-	// Widget key: double_number_line_image
-	test("double-number-line - [x3c0d5acf2d120eb5] Complete a table from a double number line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "doubleNumberLine",
-		  "width": 350,
-		  "height": 120,
-		  "topLine": {
-		    "label": "Loaves",
-		    "ticks": [
-		      0,
-		      1,
-		      2
-		    ]
-		  },
-		  "bottomLine": {
-		    "label": "Bananas",
-		    "ticks": [
-		      0,
-		      "2 1/2",
-		      5
-		    ]
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for doubleNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xaa634690def2dac3
-	// Question: Complete a table from a double number line
+	// Question: Complete the table from a double number line
 	// Widget key: image_1
-	test("double-number-line - [xaa634690def2dac3] Complete a table from a double number line", async () => {
+	test("double-number-line - [xaa634690def2dac3] Complete the table from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Time (seconds)",
 		    "ticks": [
@@ -2376,15 +2417,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x473b036aa45f6284
-	// Question: Select the table that represents the butter-use rate
+	// Question: Choose the table that represents the butter-usage rate
 	// Widget key: image_1
-	test("double-number-line - [x473b036aa45f6284] Select the table that represents the butter-use rate", async () => {
+	test("double-number-line - [x473b036aa45f6284] Choose the table that represents the butter-usage rate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 330,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Time (days)",
 		    "ticks": [
@@ -2416,57 +2457,16 @@ describe("doubleNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x638d18acba0e3b22
-	// Question: Select the table for bowling cost per game
-	// Widget key: image_1
-	test("double-number-line - [x638d18acba0e3b22] Select the table for bowling cost per game", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "doubleNumberLine",
-		  "width": 350,
-		  "height": 120,
-		  "topLine": {
-		    "label": "Games",
-		    "ticks": [
-		      0,
-		      1
-		    ]
-		  },
-		  "bottomLine": {
-		    "label": "Cost (dollars)",
-		    "ticks": [
-		      0,
-		      14
-		    ]
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for doubleNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x14ac2f13d6151c6d
-	// Question: Select the table that represents the dragonfly's rate
+	// Question: Select the table that represents the dragonfly's flight rate
 	// Widget key: image_1
-	test("double-number-line - [x14ac2f13d6151c6d] Select the table that represents the dragonfly's rate", async () => {
+	test("double-number-line - [x14ac2f13d6151c6d] Select the table that represents the dragonfly's flight rate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Time (seconds)",
 		    "ticks": [
@@ -2499,15 +2499,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x88026e2b66de923c
-	// Question: Select a table to match a double number line (model trains)
+	// Question: Select a table representing Irene's model-train rate
 	// Widget key: image_1
-	test("double-number-line - [x88026e2b66de923c] Select a table to match a double number line (model trains)", async () => {
+	test("double-number-line - [x88026e2b66de923c] Select a table representing Irene's model-train rate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 330,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Weeks",
 		    "ticks": [
@@ -2540,15 +2540,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x6cc2d446ffdea7fc
-	// Question: Complete the table from a double number line (eggs and time)
+	// Question: Complete a ratio table from a double number line
 	// Widget key: image_1
-	test("double-number-line - [x6cc2d446ffdea7fc] Complete the table from a double number line (eggs and time)", async () => {
+	test("double-number-line - [x6cc2d446ffdea7fc] Complete a ratio table from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Eggs",
 		    "ticks": [
@@ -2589,7 +2589,7 @@ describe("doubleNumberLine widget tests", () => {
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 350,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Rows",
 		    "ticks": [
@@ -2622,15 +2622,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x572c5bfe04734de1
-	// Question: Select the table for the cost per kilogram of chocolate
+	// Question: Select the table that represents the cost per kilogram of chocolate
 	// Widget key: image_1
-	test("double-number-line - [x572c5bfe04734de1] Select the table for the cost per kilogram of chocolate", async () => {
+	test("double-number-line - [x572c5bfe04734de1] Select the table that represents the cost per kilogram of chocolate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 330,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Chocolate (kg)",
 		    "ticks": [
@@ -2663,15 +2663,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x88dee6d57c0f1dc0
-	// Question: Find feet in 3 miles using a double number line
+	// Question: How many feet are in 3 miles?
 	// Widget key: image_1
-	test("double-number-line - [x88dee6d57c0f1dc0] Find feet in 3 miles using a double number line", async () => {
+	test("double-number-line - [x88dee6d57c0f1dc0] How many feet are in 3 miles?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 330,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Feet",
 		    "ticks": [
@@ -2708,15 +2708,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbff764969a70b964
-	// Question: Cups in 3 gallons from a double number line
+	// Question: Cups and gallons on a double number line
 	// Widget key: image_1
-	test("double-number-line - [xbff764969a70b964] Cups in 3 gallons from a double number line", async () => {
+	test("double-number-line - [xbff764969a70b964] Cups and gallons on a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 330,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Cups",
 		    "ticks": [
@@ -2755,19 +2755,19 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbcea461ece156510
-	// Question: Yards in 4 miles using a double number line
+	// Question: How many yards are in 4 miles?
 	// Widget key: image_1
-	test("double-number-line - [xbcea461ece156510] Yards in 4 miles using a double number line", async () => {
+	test("double-number-line - [xbcea461ece156510] How many yards are in 4 miles?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 330,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Yards",
 		    "ticks": [
-		      0,
+		      "0",
 		      "",
 		      "",
 		      "",
@@ -2778,12 +2778,12 @@ describe("doubleNumberLine widget tests", () => {
 		  "bottomLine": {
 		    "label": "Miles",
 		    "ticks": [
-		      0,
+		      "0",
 		      "",
 		      "",
 		      "",
 		      "",
-		      5
+		      "5"
 		    ]
 		  }
 		} as unknown as WidgetInput
@@ -2804,15 +2804,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x665684bb4edf0685
-	// Question: Find minutes in 2 days using a double number line
+	// Question: Find minutes in two days using a double number line
 	// Widget key: image_1
-	test("double-number-line - [x665684bb4edf0685] Find minutes in 2 days using a double number line", async () => {
+	test("double-number-line - [x665684bb4edf0685] Find minutes in two days using a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
 		  "width": 330,
-		  "height": 120,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Minutes",
 		    "ticks": [
@@ -2850,65 +2850,16 @@ describe("doubleNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xf4cbfb52eba71ff8
-	// Question: Find the cost for 5 kilograms of almonds
-	// Widget key: image_1
-	test("double-number-line - [xf4cbfb52eba71ff8] Find the cost for 5 kilograms of almonds", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
-		  "topLine": {
-		    "label": "Almonds, kilograms",
-		    "ticks": [
-		      0,
-		      "",
-		      "",
-		      "",
-		      4,
-		      ""
-		    ]
-		  },
-		  "bottomLine": {
-		    "label": "Cost, dollars",
-		    "ticks": [
-		      0,
-		      "",
-		      "",
-		      "",
-		      34,
-		      ""
-		    ]
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for doubleNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x54239abcf23f600e
-	// Question: Find distance from a double number line
+	// Question: Find distance from a double number line ratio
 	// Widget key: image_1
-	test("double-number-line - [x54239abcf23f600e] Find distance from a double number line", async () => {
+	test("double-number-line - [x54239abcf23f600e] Find distance from a double number line ratio", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Time, seconds",
 		    "ticks": [
@@ -2948,16 +2899,65 @@ describe("doubleNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2f3f556a6429f6af
-	// Question: Find an equivalent ratio from a double number line
+	// Extracted from question: xf4cbfb52eba71ff8
+	// Question: Find the cost for 5 kilograms from a double number line
 	// Widget key: image_1
-	test("double-number-line - [x2f3f556a6429f6af] Find an equivalent ratio from a double number line", async () => {
+	test("double-number-line - [xf4cbfb52eba71ff8] Find the cost for 5 kilograms from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 320,
+		  "topLine": {
+		    "label": "Almonds, kilograms",
+		    "ticks": [
+		      0,
+		      "",
+		      "",
+		      "",
+		      4,
+		      ""
+		    ]
+		  },
+		  "bottomLine": {
+		    "label": "Cost, dollars",
+		    "ticks": [
+		      0,
+		      "",
+		      "",
+		      "",
+		      34,
+		      ""
+		    ]
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for doubleNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2f3f556a6429f6af
+	// Question: Trade wool for ore using a double number line
+	// Widget key: image_1
+	test("double-number-line - [x2f3f556a6429f6af] Trade wool for ore using a double number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "doubleNumberLine",
+		  "width": 400,
+		  "height": 320,
 		  "topLine": {
 		    "label": "Ore cards",
 		    "ticks": [
@@ -2998,15 +2998,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe44e04923c702180
-	// Question: Distance from a double number line (sea turtle)
+	// Question: Find distance from a double number line
 	// Widget key: image_1
-	test("double-number-line - [xe44e04923c702180] Distance from a double number line (sea turtle)", async () => {
+	test("double-number-line - [xe44e04923c702180] Find distance from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 320,
 		  "topLine": {
 		    "label": "Time, seconds",
 		    "ticks": [
@@ -3045,15 +3045,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x07f195bee2c0bda7
-	// Question: Find the cost from a double number line
+	// Question: Find the cost for 3 bottles using a double number line
 	// Widget key: image_1
-	test("double-number-line - [x07f195bee2c0bda7] Find the cost from a double number line", async () => {
+	test("double-number-line - [x07f195bee2c0bda7] Find the cost for 3 bottles using a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Bottles",
 		    "ticks": [
@@ -3101,8 +3101,8 @@ describe("doubleNumberLine widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 360,
+		  "height": 320,
 		  "topLine": {
 		    "label": "Meat, kilograms",
 		    "ticks": [
@@ -3143,15 +3143,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x7844686c0457981c
-	// Question: Find the unit cost from a double number line
+	// Question: Find a unit price from a double number line
 	// Widget key: image_1
-	test("double-number-line - [x7844686c0457981c] Find the unit cost from a double number line", async () => {
+	test("double-number-line - [x7844686c0457981c] Find a unit price from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Avocados, kilograms",
 		    "ticks": [
@@ -3192,15 +3192,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe19151859974d3e4
-	// Question: Find a length from a double number line
+	// Question: Find a length from a double number line ratio
 	// Widget key: image_1
-	test("double-number-line - [xe19151859974d3e4] Find a length from a double number line", async () => {
+	test("double-number-line - [xe19151859974d3e4] Find a length from a double number line ratio", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Time, minutes",
 		    "ticks": [
@@ -3241,21 +3241,21 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbab7adf7ced6d186
-	// Question: Fetches on a double number line
+	// Question: Predict fetches from a double number line
 	// Widget key: image_1
-	test("double-number-line - [xbab7adf7ced6d186] Fetches on a double number line", async () => {
+	test("double-number-line - [xbab7adf7ced6d186] Predict fetches from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Time, minutes",
 		    "ticks": [
-		      0,
+		      "0",
 		      "",
-		      2,
+		      "2",
 		      "",
 		      ""
 		    ]
@@ -3263,9 +3263,9 @@ describe("doubleNumberLine widget tests", () => {
 		  "bottomLine": {
 		    "label": "Fetches",
 		    "ticks": [
-		      0,
+		      "0",
 		      "",
-		      6,
+		      "6",
 		      "",
 		      ""
 		    ]
@@ -3288,15 +3288,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0d90ea044261bf41
-	// Question: Use a double number line to extend a ratio
+	// Question: Use a double number line to find an equivalent ratio
 	// Widget key: image_1
-	test("double-number-line - [x0d90ea044261bf41] Use a double number line to extend a ratio", async () => {
+	test("double-number-line - [x0d90ea044261bf41] Use a double number line to find an equivalent ratio", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Time, minutes",
 		    "ticks": [
@@ -3344,8 +3344,8 @@ describe("doubleNumberLine widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "topLine": {
 		    "label": "Shirts",
 		    "ticks": [
@@ -3386,15 +3386,15 @@ describe("doubleNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x45121d74cc801fc1
-	// Question: Typing rate from a double number line
+	// Question: Words typed from a double number line
 	// Widget key: image_1
-	test("double-number-line - [x45121d74cc801fc1] Typing rate from a double number line", async () => {
+	test("double-number-line - [x45121d74cc801fc1] Words typed from a double number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "doubleNumberLine",
-		  "width": 280,
-		  "height": 120,
+		  "width": 400,
+		  "height": 320,
 		  "topLine": {
 		    "label": "Time, minutes",
 		    "ticks": [

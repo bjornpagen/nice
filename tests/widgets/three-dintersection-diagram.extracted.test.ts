@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.971Z
+// Generated on: 2025-09-18T05:17:02.169Z
 // Widget Type: threeDIntersectionDiagram
 // Source: Real questions from database
 //
@@ -26,9 +26,9 @@ import * as logger from "@superbuilders/slog"
 
 describe("threeDIntersectionDiagram widget tests", () => {
 	// Extracted from question: xddab61063efd799b
-	// Question: Identify the vertical cross-section of a square pyramid
+	// Question: Vertical cross-section of a square pyramid
 	// Widget key: pyramid_image
-	test("three-dintersection-diagram - [xddab61063efd799b] Identify the vertical cross-section of a square pyramid", async () => {
+	test("three-dintersection-diagram - [xddab61063efd799b] Vertical cross-section of a square pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -38,17 +38,15 @@ describe("threeDIntersectionDiagram widget tests", () => {
 		    "orientation": "vertical"
 		  },
 		  "solid": {
-		    "type": "squarePyramid",
-		    "height": 12,
-		    "baseSide": 10
+		    "type": "squarePyramid"
 		  },
-		  "width": 332,
-		  "height": 398,
+		  "width": 400,
+		  "height": 400,
 		  "viewOptions": {
 		    "showLabels": false,
 		    "projectionAngle": 30,
 		    "showHiddenEdges": true,
-		    "intersectionColor": "#66cdaa"
+		    "intersectionColor": "#11accd"
 		  }
 		} as unknown as WidgetInput
 
@@ -68,22 +66,19 @@ describe("threeDIntersectionDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4139736ff42aefd2
-	// Question: Cross section of a block of butter
+	// Question: Identify the shape of a vertical cross-section
 	// Widget key: image_1
-	test("three-dintersection-diagram - [x4139736ff42aefd2] Cross section of a block of butter", async () => {
+	test("three-dintersection-diagram - [x4139736ff42aefd2] Identify the shape of a vertical cross-section", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "threeDIntersectionDiagram",
 		  "plane": {
-		    "position": 0.7,
+		    "position": 0.5,
 		    "orientation": "vertical"
 		  },
 		  "solid": {
-		    "type": "rectangularPrism",
-		    "depth": 4,
-		    "width": 2,
-		    "height": 2
+		    "type": "rectangularPrism"
 		  },
 		  "width": 398,
 		  "height": 398,
@@ -91,7 +86,7 @@ describe("threeDIntersectionDiagram widget tests", () => {
 		    "showLabels": false,
 		    "projectionAngle": 30,
 		    "showHiddenEdges": true,
-		    "intersectionColor": "#ff4444aa"
+		    "intersectionColor": "#FF0000"
 		  }
 		} as unknown as WidgetInput
 
@@ -111,9 +106,9 @@ describe("threeDIntersectionDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7b7f9e81dc7e0cea
-	// Question: Cross-section of a pentagonal prism
+	// Question: Cross-section of a pentagonal prism by a horizontal plane
 	// Widget key: image_1
-	test("three-dintersection-diagram - [x7b7f9e81dc7e0cea] Cross-section of a pentagonal prism", async () => {
+	test("three-dintersection-diagram - [x7b7f9e81dc7e0cea] Cross-section of a pentagonal prism by a horizontal plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -123,9 +118,7 @@ describe("threeDIntersectionDiagram widget tests", () => {
 		    "orientation": "horizontal"
 		  },
 		  "solid": {
-		    "side": 4,
-		    "type": "pentagonalPrism",
-		    "height": 10
+		    "type": "pentagonalPrism"
 		  },
 		  "width": 400,
 		  "height": 310,
@@ -153,9 +146,9 @@ describe("threeDIntersectionDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7c120e3f24093a5b
-	// Question: Identify the cross-section of a triangular prism (tent)
+	// Question: Identify the cross-section of a triangular prism
 	// Widget key: image_1
-	test("three-dintersection-diagram - [x7c120e3f24093a5b] Identify the cross-section of a triangular prism (tent)", async () => {
+	test("three-dintersection-diagram - [x7c120e3f24093a5b] Identify the cross-section of a triangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -165,9 +158,7 @@ describe("threeDIntersectionDiagram widget tests", () => {
 		    "orientation": "vertical"
 		  },
 		  "solid": {
-		    "type": "squarePyramid",
-		    "height": 6,
-		    "baseSide": 8
+		    "type": "rectangularPrism"
 		  },
 		  "width": 397,
 		  "height": 336,
@@ -175,7 +166,7 @@ describe("threeDIntersectionDiagram widget tests", () => {
 		    "showLabels": false,
 		    "projectionAngle": 30,
 		    "showHiddenEdges": true,
-		    "intersectionColor": "#ff0000"
+		    "intersectionColor": "#ff4d4d"
 		  }
 		} as unknown as WidgetInput
 
@@ -194,25 +185,23 @@ describe("threeDIntersectionDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x141c0caeea18da08
-	// Question: Identify the cross-section of a sliced square pyramid
+	// Extracted from question: x72bb801397b54d5e
+	// Question: Identify the cross-section of a square-based pyramid
 	// Widget key: pyramid_image
-	test("three-dintersection-diagram - [x141c0caeea18da08] Identify the cross-section of a sliced square pyramid", async () => {
+	test("three-dintersection-diagram - [x72bb801397b54d5e] Identify the cross-section of a square-based pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "threeDIntersectionDiagram",
 		  "plane": {
-		    "position": 0.75,
-		    "orientation": "vertical"
+		    "position": 0.55,
+		    "orientation": "horizontal"
 		  },
 		  "solid": {
-		    "type": "squarePyramid",
-		    "height": 12,
-		    "baseSide": 10
+		    "type": "squarePyramid"
 		  },
-		  "width": 332,
-		  "height": 398,
+		  "width": 399,
+		  "height": 359,
 		  "viewOptions": {
 		    "showLabels": false,
 		    "projectionAngle": 30,
@@ -236,52 +225,10 @@ describe("threeDIntersectionDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x72bb801397b54d5e
-	// Question: Identify the cross-section of a right square pyramid
-	// Widget key: image_1
-	test("three-dintersection-diagram - [x72bb801397b54d5e] Identify the cross-section of a right square pyramid", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "threeDIntersectionDiagram",
-		  "plane": {
-		    "position": 0.55,
-		    "orientation": "horizontal"
-		  },
-		  "solid": {
-		    "type": "squarePyramid",
-		    "height": 14,
-		    "baseSide": 10
-		  },
-		  "width": 400,
-		  "height": 360,
-		  "viewOptions": {
-		    "showLabels": false,
-		    "projectionAngle": 30,
-		    "showHiddenEdges": true,
-		    "intersectionColor": "#ff000055"
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for threeDIntersectionDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x80dc1341b9007790
-	// Question: Identify the cross-section of a right prism
-	// Widget key: prism_image
-	test("three-dintersection-diagram - [x80dc1341b9007790] Identify the cross-section of a right prism", async () => {
+	// Question: Identify the horizontal cross-section of a right prism
+	// Widget key: image_1
+	test("three-dintersection-diagram - [x80dc1341b9007790] Identify the horizontal cross-section of a right prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -291,10 +238,7 @@ describe("threeDIntersectionDiagram widget tests", () => {
 		    "orientation": "horizontal"
 		  },
 		  "solid": {
-		    "type": "rectangularPrism",
-		    "depth": 2,
-		    "width": 2,
-		    "height": 4
+		    "type": "rectangularPrism"
 		  },
 		  "width": 400,
 		  "height": 350,
@@ -302,50 +246,7 @@ describe("threeDIntersectionDiagram widget tests", () => {
 		    "showLabels": false,
 		    "projectionAngle": 30,
 		    "showHiddenEdges": true,
-		    "intersectionColor": "#ff4444"
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for threeDIntersectionDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc8ec7679f407c09d
-	// Question: Cross-section of a triangular prism by a horizontal plane
-	// Widget key: image_1
-	test("three-dintersection-diagram - [xc8ec7679f407c09d] Cross-section of a triangular prism by a horizontal plane", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "threeDIntersectionDiagram",
-		  "plane": {
-		    "position": 0.5,
-		    "orientation": "horizontal"
-		  },
-		  "solid": {
-		    "type": "rectangularPrism",
-		    "depth": 4,
-		    "width": 4,
-		    "height": 6
-		  },
-		  "width": 500,
-		  "height": 350,
-		  "viewOptions": {
-		    "showLabels": false,
-		    "projectionAngle": 30,
-		    "showHiddenEdges": true,
-		    "intersectionColor": "#ff4d4d"
+		    "intersectionColor": "#ff3333"
 		  }
 		} as unknown as WidgetInput
 
@@ -365,30 +266,27 @@ describe("threeDIntersectionDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa33f179a801021da
-	// Question: Vertical cross-section of a rectangular prism
-	// Widget key: prism_slice_image
-	test("three-dintersection-diagram - [xa33f179a801021da] Vertical cross-section of a rectangular prism", async () => {
+	// Question: Cross-section of a right rectangular prism by a vertical plane
+	// Widget key: image_1
+	test("three-dintersection-diagram - [xa33f179a801021da] Cross-section of a right rectangular prism by a vertical plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "threeDIntersectionDiagram",
 		  "plane": {
-		    "position": 0.35,
+		    "position": 0.5,
 		    "orientation": "vertical"
 		  },
 		  "solid": {
-		    "type": "rectangularPrism",
-		    "depth": 2,
-		    "width": 2,
-		    "height": 4
+		    "type": "rectangularPrism"
 		  },
-		  "width": 400,
-		  "height": 300,
+		  "width": 340,
+		  "height": 440,
 		  "viewOptions": {
 		    "showLabels": false,
 		    "projectionAngle": 30,
 		    "showHiddenEdges": true,
-		    "intersectionColor": "#ff4d4d"
+		    "intersectionColor": "#ff000020"
 		  }
 		} as unknown as WidgetInput
 
@@ -408,24 +306,22 @@ describe("threeDIntersectionDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xaaf221c1e7ea291e
-	// Question: Cross-section of an inverted square pyramid
+	// Question: Identify the shape of a horizontal cross-section of a square pyramid
 	// Widget key: image_1
-	test("three-dintersection-diagram - [xaaf221c1e7ea291e] Cross-section of an inverted square pyramid", async () => {
+	test("three-dintersection-diagram - [xaaf221c1e7ea291e] Identify the shape of a horizontal cross-section of a square pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "threeDIntersectionDiagram",
 		  "plane": {
-		    "position": 0.38,
+		    "position": 0.45,
 		    "orientation": "horizontal"
 		  },
 		  "solid": {
-		    "type": "squarePyramid",
-		    "height": 12,
-		    "baseSide": 10
+		    "type": "squarePyramid"
 		  },
-		  "width": 399,
-		  "height": 239,
+		  "width": 400,
+		  "height": 320,
 		  "viewOptions": {
 		    "showLabels": false,
 		    "projectionAngle": 30,

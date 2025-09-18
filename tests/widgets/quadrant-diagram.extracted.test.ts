@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.950Z
+// Generated on: 2025-09-18T05:17:02.143Z
 // Widget Type: quadrantDiagram
 // Source: Real questions from database
 //
@@ -25,16 +25,43 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("quadrantDiagram widget tests", () => {
-	// Extracted from question: x4dfd01c273d9be42
-	// Question: Possible locations with negative x and nonzero y
-	// Widget key: image_1
-	test("quadrant-diagram - [x4dfd01c273d9be42] Possible locations with negative x and nonzero y", async () => {
+	// Extracted from question: x1b85dd1aa9a70c56
+	// Question: Identify the quadrant from coordinates
+	// Widget key: image_2
+	test("quadrant-diagram - [x1b85dd1aa9a70c56] Identify the quadrant from coordinates", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 350,
+		  "height": 350
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for quadrantDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4dfd01c273d9be42
+	// Question: Determine possible quadrants from coordinate signs
+	// Widget key: image_1
+	test("quadrant-diagram - [x4dfd01c273d9be42] Determine possible quadrants from coordinate signs", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "quadrantDiagram",
+		  "width": 350,
+		  "height": 350
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -53,15 +80,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x77f8f52306d7816c
-	// Question: Identify whether a point lies on an axis or in a quadrant
+	// Question: Identify a point's quadrant or axis from coordinates
 	// Widget key: image_1
-	test("quadrant-diagram - [x77f8f52306d7816c] Identify whether a point lies on an axis or in a quadrant", async () => {
+	test("quadrant-diagram - [x77f8f52306d7816c] Identify a point's quadrant or axis from coordinates", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 350,
+		  "height": 350
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -80,15 +107,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0ab0213e4a437137
-	// Question: Locations on the coordinate plane for a positive y-coordinate
+	// Question: Locations for a point with a positive y-coordinate
 	// Widget key: image_1
-	test("quadrant-diagram - [x0ab0213e4a437137] Locations on the coordinate plane for a positive y-coordinate", async () => {
+	test("quadrant-diagram - [x0ab0213e4a437137] Locations for a point with a positive y-coordinate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 350,
+		  "height": 350
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -107,15 +134,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfb6f8989bdcc6386
-	// Question: Identify a point's location from its coordinates
+	// Question: Identify coordinate signs and axis location
 	// Widget key: image_1
-	test("quadrant-diagram - [xfb6f8989bdcc6386] Identify a point's location from its coordinates", async () => {
+	test("quadrant-diagram - [xfb6f8989bdcc6386] Identify coordinate signs and axis location", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 300,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -134,42 +161,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe9c2095eb3a4b2eb
-	// Question: Identify the location of a point with y-coordinate 0
+	// Question: Locate a point with y = 0
 	// Widget key: image_1
-	test("quadrant-diagram - [xe9c2095eb3a4b2eb] Identify the location of a point with y-coordinate 0", async () => {
+	test("quadrant-diagram - [xe9c2095eb3a4b2eb] Locate a point with y = 0", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for quadrantDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1b85dd1aa9a70c56
-	// Question: Identify the quadrant from coordinates
-	// Widget key: image_2
-	test("quadrant-diagram - [x1b85dd1aa9a70c56] Identify the quadrant from coordinates", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 350,
+		  "height": 350
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -188,15 +188,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xaf5acb3a8cedffa3
-	// Question: Identify a point's location on the coordinate plane
+	// Question: Where can a point with x = 0 and y ≠ 0 be located?
 	// Widget key: image_1
-	test("quadrant-diagram - [xaf5acb3a8cedffa3] Identify a point's location on the coordinate plane", async () => {
+	test("quadrant-diagram - [xaf5acb3a8cedffa3] Where can a point with x = 0 and y ≠ 0 be located?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 300,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -215,15 +215,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x10a418f614b84945
-	// Question: Location of a point on the coordinate plane
+	// Question: Locate (0, 4) on the coordinate plane
 	// Widget key: image_1
-	test("quadrant-diagram - [x10a418f614b84945] Location of a point on the coordinate plane", async () => {
+	test("quadrant-diagram - [x10a418f614b84945] Locate (0, 4) on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 325,
+		  "height": 325
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -249,8 +249,8 @@ describe("quadrantDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 300,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -276,8 +276,8 @@ describe("quadrantDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 325,
+		  "height": 325
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -296,15 +296,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x052bdb6e56052cdb
-	// Question: Locate a point on the coordinate plane
+	// Question: Identify the location of a point on the coordinate plane
 	// Widget key: image_1
-	test("quadrant-diagram - [x052bdb6e56052cdb] Locate a point on the coordinate plane", async () => {
+	test("quadrant-diagram - [x052bdb6e56052cdb] Identify the location of a point on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 325,
+		  "height": 325
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -323,15 +323,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbb17edb65603da67
-	// Question: Quadrants for coordinates with different signs
+	// Question: Identify quadrants for opposite-signed coordinates
 	// Widget key: image_1
-	test("quadrant-diagram - [xbb17edb65603da67] Quadrants for coordinates with different signs", async () => {
+	test("quadrant-diagram - [xbb17edb65603da67] Identify quadrants for opposite-signed coordinates", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 300,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -357,8 +357,8 @@ describe("quadrantDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 300,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -377,15 +377,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x71a4488d3d95206a
-	// Question: Identify the quadrant of a point on the coordinate plane
+	// Question: Identify a point's quadrant
 	// Widget key: image_1
-	test("quadrant-diagram - [x71a4488d3d95206a] Identify the quadrant of a point on the coordinate plane", async () => {
+	test("quadrant-diagram - [x71a4488d3d95206a] Identify a point's quadrant", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 325,
+		  "height": 325
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -404,15 +404,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x537a27c662daa9d7
-	// Question: Identify the quadrant of a point
+	// Question: Identify the quadrant of a point on the coordinate plane
 	// Widget key: image_1
-	test("quadrant-diagram - [x537a27c662daa9d7] Identify the quadrant of a point", async () => {
+	test("quadrant-diagram - [x537a27c662daa9d7] Identify the quadrant of a point on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 300,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -431,15 +431,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x21d48c12ac64a44b
-	// Question: Determine quadrants from coordinate signs
+	// Question: Quadrant location from coordinate signs
 	// Widget key: image_1
-	test("quadrant-diagram - [x21d48c12ac64a44b] Determine quadrants from coordinate signs", async () => {
+	test("quadrant-diagram - [x21d48c12ac64a44b] Quadrant location from coordinate signs", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 400,
+		  "height": 400
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -458,15 +458,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x19530bd5ce68991f
-	// Question: Locate a point by quadrant on the coordinate plane
+	// Question: Identify the quadrant of a point
 	// Widget key: image_1
-	test("quadrant-diagram - [x19530bd5ce68991f] Locate a point by quadrant on the coordinate plane", async () => {
+	test("quadrant-diagram - [x19530bd5ce68991f] Identify the quadrant of a point", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 325,
+		  "height": 325
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -485,15 +485,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x059a5f7522ef5a47
-	// Question: Possible locations of a point by signs of coordinates
+	// Question: Possible locations from coordinate signs
 	// Widget key: image_1
-	test("quadrant-diagram - [x059a5f7522ef5a47] Possible locations of a point by signs of coordinates", async () => {
+	test("quadrant-diagram - [x059a5f7522ef5a47] Possible locations from coordinate signs", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 350,
+		  "height": 350
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -512,15 +512,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbb939b14175fc648
-	// Question: Identify the quadrant from a point’s coordinates
+	// Question: Identify the quadrant and signs of coordinates
 	// Widget key: image_1
-	test("quadrant-diagram - [xbb939b14175fc648] Identify the quadrant from a point’s coordinates", async () => {
+	test("quadrant-diagram - [xbb939b14175fc648] Identify the quadrant and signs of coordinates", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 400,
+		  "height": 400
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -539,15 +539,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf9128dba71f4288e
-	// Question: Identify signs of coordinates and the quadrant
+	// Question: Identify the quadrant and signs of coordinates
 	// Widget key: image_1
-	test("quadrant-diagram - [xf9128dba71f4288e] Identify signs of coordinates and the quadrant", async () => {
+	test("quadrant-diagram - [xf9128dba71f4288e] Identify the quadrant and signs of coordinates", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 400,
+		  "height": 400
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -566,15 +566,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1e5b3ee9ba3968ca
-	// Question: Identify the quadrant of a point
+	// Question: Identify signs of coordinates and the quadrant
 	// Widget key: image_1
-	test("quadrant-diagram - [x1e5b3ee9ba3968ca] Identify the quadrant of a point", async () => {
+	test("quadrant-diagram - [x1e5b3ee9ba3968ca] Identify signs of coordinates and the quadrant", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 350,
+		  "height": 350
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -593,15 +593,15 @@ describe("quadrantDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x17cd38faad19f71f
-	// Question: Identify the signs of coordinates and the quadrant
+	// Question: Identify quadrant and coordinate signs for a point
 	// Widget key: image_1
-	test("quadrant-diagram - [x17cd38faad19f71f] Identify the signs of coordinates and the quadrant", async () => {
+	test("quadrant-diagram - [x17cd38faad19f71f] Identify quadrant and coordinate signs for a point", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "quadrantDiagram",
-		  "width": 275,
-		  "height": 275
+		  "width": 300,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)

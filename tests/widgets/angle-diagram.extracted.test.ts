@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.938Z
+// Generated on: 2025-09-18T05:17:02.125Z
 // Widget Type: angleDiagram
 // Source: Real questions from database
 //
@@ -26,9 +26,9 @@ import * as logger from "@superbuilders/slog"
 
 describe("angleDiagram widget tests", () => {
 	// Extracted from question: x6e9e86cc211fa244
-	// Question: Find x from a diagram with intersecting lines
+	// Question: Find the value of x
 	// Widget key: image_1
-	test("angle-diagram - [x6e9e86cc211fa244] Find x from a diagram with intersecting lines", async () => {
+	test("angle-diagram - [x6e9e86cc211fa244] Find the value of x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -65,7 +65,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "x°",
-		      "radius": 42.23,
+		      "radius": 42,
 		      "vertex": "E",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "F"
@@ -74,7 +74,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "115°",
-		      "radius": 29.656,
+		      "radius": 30,
 		      "vertex": "E",
 		      "pointOnFirstRay": "F",
 		      "pointOnSecondRay": "D"
@@ -83,13 +83,13 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "160°",
-		      "radius": 36.519,
+		      "radius": 36,
 		      "vertex": "E",
 		      "pointOnFirstRay": "C",
 		      "pointOnSecondRay": "B"
 		    }
 		  ],
-		  "height": 220,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 80,
@@ -106,15 +106,15 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 87.237,
-		      "y": 161.042,
+		      "x": 143.431,
+		      "y": 63.431,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 312.763,
-		      "y": 78.958,
+		      "x": 256.569,
+		      "y": 176.569,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
@@ -127,15 +127,15 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 143.431,
-		      "y": 63.431,
+		      "x": 87.237,
+		      "y": 161.042,
 		      "id": "F",
 		      "label": "F",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 256.569,
-		      "y": 176.569,
+		      "x": 312.763,
+		      "y": 78.958,
 		      "id": "G",
 		      "label": "G",
 		      "shape": "circle"
@@ -159,31 +159,31 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8f50b6a1b24722e2
-	// Question: Find x using angles on a straight line
+	// Question: Find an angle on a straight line
 	// Widget key: image_1
-	test("angle-diagram - [x8f50b6a1b24722e2] Find x using angles on a straight line", async () => {
+	test("angle-diagram - [x8f50b6a1b24722e2] Find an angle on a straight line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "A",
-		      "from": "E"
+		      "to": "B",
+		      "from": "A"
 		    },
 		    {
 		      "to": "C",
 		      "from": "A"
 		    },
 		    {
-		      "to": "A",
-		      "from": "D"
-		    },
-		    {
-		      "to": "F",
+		      "to": "D",
 		      "from": "A"
 		    },
 		    {
-		      "to": "B",
+		      "to": "E",
+		      "from": "A"
+		    },
+		    {
+		      "to": "F",
 		      "from": "A"
 		    }
 		  ],
@@ -193,8 +193,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#7854ab",
-		      "label": "x°",
-		      "radius": 25,
+		      "label": "x",
+		      "radius": 24.5,
 		      "vertex": "A",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "B"
@@ -203,7 +203,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "80°",
-		      "radius": 30,
+		      "radius": 14.3,
 		      "vertex": "A",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
@@ -212,13 +212,13 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "60°",
-		      "radius": 38,
+		      "radius": 37.6,
 		      "vertex": "A",
 		      "pointOnFirstRay": "C",
 		      "pointOnSecondRay": "F"
 		    }
 		  ],
-		  "height": 188,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 150,
@@ -228,38 +228,38 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 60,
-		      "y": 112.5,
-		      "id": "D",
-		      "label": "D",
+		      "x": 187.5,
+		      "y": 47.548,
+		      "id": "B",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 240,
-		      "y": 112.5,
-		      "id": "F",
-		      "label": "F",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 185,
-		      "y": 173.1,
+		      "x": 255.715,
+		      "y": 150.977,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 115,
-		      "y": 51.9,
+		      "x": 136.976,
+		      "y": 38.639,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 44.285,
+		      "y": 74.023,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 96.4,
-		      "y": 157.5,
-		      "id": "B",
-		      "label": "B",
+		      "x": 159.768,
+		      "y": 167.895,
+		      "id": "F",
+		      "label": "F",
 		      "shape": "circle"
 		    }
 		  ]
@@ -281,9 +281,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xecfe09ccf1fdad12
-	// Question: Find x using vertical angles
+	// Question: Find the value of x (vertical angles)
 	// Widget key: image_1
-	test("angle-diagram - [xecfe09ccf1fdad12] Find x using vertical angles", async () => {
+	test("angle-diagram - [xecfe09ccf1fdad12] Find the value of x (vertical angles)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -318,6 +318,15 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
+		      "color": "#e07d10",
+		      "label": "x",
+		      "radius": 40,
+		      "vertex": "E",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "G"
+		    },
+		    {
+		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "50°",
 		      "radius": 29,
@@ -333,18 +342,9 @@ describe("angleDiagram widget tests", () => {
 		      "vertex": "E",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "x°",
-		      "radius": 40,
-		      "vertex": "E",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "G"
 		    }
 		  ],
-		  "height": 220,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 80,
@@ -413,121 +413,10 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd02bf192b0664b0e
-	// Question: Find x using angles on a straight line
-	// Widget key: image_1
-	test("angle-diagram - [xd02bf192b0664b0e] Find x using angles on a straight line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "E",
-		      "from": "A"
-		    },
-		    {
-		      "to": "D",
-		      "from": "A"
-		    },
-		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
-		      "from": "A"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 300,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "100°",
-		      "radius": 26,
-		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "x",
-		      "radius": 36,
-		      "vertex": "A",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#7854ab",
-		      "label": "20°",
-		      "radius": 26,
-		      "vertex": "A",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "D"
-		    }
-		  ],
-		  "height": 150,
-		  "points": [
-		    {
-		      "x": 30,
-		      "y": 100,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 150,
-		      "y": 100,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 270,
-		      "y": 100,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 100,
-		      "y": 40,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 210,
-		      "y": 60,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x82ee0db4f4cb3f33
-	// Question: Find x from intersecting lines
+	// Question: Find the value of x using vertical angles
 	// Widget key: image_1
-	test("angle-diagram - [x82ee0db4f4cb3f33] Find x from intersecting lines", async () => {
+	test("angle-diagram - [x82ee0db4f4cb3f33] Find the value of x using vertical angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -563,17 +452,17 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "x°",
-		      "radius": 54,
+		      "label": "20°",
+		      "radius": 46,
 		      "vertex": "E",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "G"
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "80°",
-		      "radius": 24,
+		      "radius": 32,
 		      "vertex": "E",
 		      "pointOnFirstRay": "F",
 		      "pointOnSecondRay": "D"
@@ -581,14 +470,14 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
-		      "label": "20°",
-		      "radius": 38,
+		      "label": "x°",
+		      "radius": 40,
 		      "vertex": "E",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "B"
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "G"
 		    }
 		  ],
-		  "height": 220,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 80,
@@ -598,7 +487,7 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 320,
+		      "x": 330,
 		      "y": 120,
 		      "id": "B",
 		      "label": "B",
@@ -612,8 +501,8 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 312.763,
-		      "y": 78.958,
+		      "x": 322.16,
+		      "y": 75.537,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
@@ -657,10 +546,121 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xfec970bd53fdc0c0
-	// Question: Find x using vertical and linear angles
+	// Extracted from question: xd02bf192b0664b0e
+	// Question: Find the value of x from angles on a straight line
 	// Widget key: image_1
-	test("angle-diagram - [xfec970bd53fdc0c0] Find x using vertical and linear angles", async () => {
+	test("angle-diagram - [xd02bf192b0664b0e] Find the value of x from angles on a straight line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "E",
+		      "from": "A"
+		    },
+		    {
+		      "to": "D",
+		      "from": "A"
+		    },
+		    {
+		      "to": "B",
+		      "from": "A"
+		    },
+		    {
+		      "to": "C",
+		      "from": "A"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 300,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "100°",
+		      "radius": 28,
+		      "vertex": "A",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "B"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "x°",
+		      "radius": 42,
+		      "vertex": "A",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#7854ab",
+		      "label": "20°",
+		      "radius": 56,
+		      "vertex": "A",
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "D"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 150,
+		      "y": 75,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 163.024,
+		      "y": 222.722,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 255.715,
+		      "y": 151.954,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 262.072,
+		      "y": 55.39,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 37.928,
+		      "y": 94.61,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfec970bd53fdc0c0
+	// Question: Find the angle measure x
+	// Widget key: image_1
+	test("angle-diagram - [xfec970bd53fdc0c0] Find the angle measure x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -691,82 +691,82 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "55°",
-		      "radius": 24,
+		      "radius": 36,
 		      "vertex": "G",
 		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "A"
 		    },
 		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "x°",
-		      "radius": 30,
-		      "vertex": "G",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "F"
-		    },
-		    {
 		      "type": "right",
-		      "color": "#000000",
+		      "color": "#ca337c",
 		      "label": "90°",
 		      "vertex": "G",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "B"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "x°",
+		      "radius": 52,
+		      "vertex": "G",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "F"
 		    }
 		  ],
-		  "height": 188,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 75,
+		      "x": 200,
+		      "y": 200,
 		      "id": "G",
 		      "label": "G",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 44.285,
-		      "y": 36.523,
+		      "x": 340,
+		      "y": 200,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 255.715,
-		      "y": 113.477,
+		      "x": 60,
+		      "y": 200,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 167.956,
-		      "y": 25.666,
+		      "x": 200,
+		      "y": 60,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 124.348,
-		      "y": 145.477,
+		      "x": 200,
+		      "y": 340,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 103.923,
-		      "y": 107.264,
+		      "x": 320,
+		      "y": 280,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 211.436,
-		      "y": 31.982,
+		      "x": 80,
+		      "y": 120,
 		      "id": "F",
 		      "label": "F",
 		      "shape": "circle"
@@ -790,9 +790,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7115cd1d45cfddde
-	// Question: Find the value of x in the angle diagram
+	// Question: Find the angle measure x
 	// Widget key: image_1
-	test("angle-diagram - [x7115cd1d45cfddde] Find the value of x in the angle diagram", async () => {
+	test("angle-diagram - [x7115cd1d45cfddde] Find the angle measure x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -826,21 +826,21 @@ describe("angleDiagram widget tests", () => {
 		  "width": 360,
 		  "angles": [
 		    {
+		      "type": "right",
+		      "color": "#000000",
+		      "label": "right angle",
+		      "vertex": "G",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
 		      "type": "arc",
-		      "color": "#1fab54",
+		      "color": "#e07d10",
 		      "label": "73°",
 		      "radius": 36,
 		      "vertex": "G",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "F"
-		    },
-		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": null,
-		      "vertex": "G",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "arc",
@@ -855,8 +855,8 @@ describe("angleDiagram widget tests", () => {
 		  "height": 360,
 		  "points": [
 		    {
-		      "x": 180,
-		      "y": 30,
+		      "x": 30,
+		      "y": 180,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
@@ -869,8 +869,8 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 30,
-		      "y": 180,
+		      "x": 180,
+		      "y": 30,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
@@ -922,9 +922,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7d1bc4fe377db62e
-	// Question: Find x using angles on a straight line
+	// Question: Find x using a straight angle
 	// Widget key: image_1
-	test("angle-diagram - [x7d1bc4fe377db62e] Find x using angles on a straight line", async () => {
+	test("angle-diagram - [x7d1bc4fe377db62e] Find x using a straight angle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -947,13 +947,13 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 26,
+		      "label": "x°",
+		      "radius": 40,
 		      "vertex": "A",
 		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "B"
@@ -962,7 +962,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "105°",
-		      "radius": 32,
+		      "radius": 55,
 		      "vertex": "A",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
@@ -971,47 +971,47 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#7854ab",
 		      "label": "25°",
-		      "radius": 38,
+		      "radius": 35,
 		      "vertex": "A",
 		      "pointOnFirstRay": "C",
 		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 37.5,
+		      "x": 40,
+		      "y": 150,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 180,
+		      "y": 150,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 106.982,
-		      "y": 98.936,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 255.715,
-		      "y": 75.977,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 262.072,
-		      "y": 27.695,
+		      "x": 320,
+		      "y": 150,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 37.928,
-		      "y": 47.305,
-		      "id": "E",
-		      "label": "E",
+		      "x": 120,
+		      "y": 240,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 280,
+		      "y": 120,
+		      "id": "C",
+		      "label": "C",
 		      "shape": "circle"
 		    }
 		  ]
@@ -1033,32 +1033,32 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa73eb3d94de20437
-	// Question: Find the value of x from the diagram
+	// Question: Find x using vertical angles
 	// Widget key: image_1
-	test("angle-diagram - [xa73eb3d94de20437] Find the value of x from the diagram", async () => {
+	test("angle-diagram - [xa73eb3d94de20437] Find x using vertical angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "E",
-		      "from": "A"
+		      "to": "A",
+		      "from": "E"
 		    },
 		    {
 		      "to": "B",
 		      "from": "E"
 		    },
 		    {
-		      "to": "E",
-		      "from": "C"
+		      "to": "C",
+		      "from": "E"
 		    },
 		    {
 		      "to": "D",
 		      "from": "E"
 		    },
 		    {
-		      "to": "E",
-		      "from": "F"
+		      "to": "F",
+		      "from": "E"
 		    },
 		    {
 		      "to": "G",
@@ -1072,7 +1072,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "130°",
-		      "radius": 22,
+		      "radius": 28,
 		      "vertex": "E",
 		      "pointOnFirstRay": "F",
 		      "pointOnSecondRay": "D"
@@ -1081,7 +1081,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "20°",
-		      "radius": 59,
+		      "radius": 42,
 		      "vertex": "E",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "B"
@@ -1089,14 +1089,14 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
-		      "label": "x",
+		      "label": "x°",
 		      "radius": 36,
 		      "vertex": "E",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "G"
 		    }
 		  ],
-		  "height": 220,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 80,
@@ -1166,46 +1166,38 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd8f03f67f2960370
-	// Question: Find x from a diagram of supplementary angles
+	// Question: Find the value of x from a diagram of supplementary angles
 	// Widget key: image_1
-	test("angle-diagram - [xd8f03f67f2960370] Find x from a diagram of supplementary angles", async () => {
+	test("angle-diagram - [xd8f03f67f2960370] Find the value of x from a diagram of supplementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "P",
+		      "to": "B",
 		      "from": "A"
 		    },
 		    {
-		      "to": "B",
-		      "from": "P"
+		      "to": "A",
+		      "from": "B"
 		    },
 		    {
 		      "to": "D",
 		      "from": "P"
 		    },
 		    {
-		      "to": "P",
-		      "from": "D"
-		    },
-		    {
 		      "to": "C",
 		      "from": "P"
-		    },
-		    {
-		      "to": "P",
-		      "from": "C"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "32°",
-		      "radius": 28,
+		      "radius": 40,
 		      "vertex": "P",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "B"
@@ -1214,47 +1206,47 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "x",
-		      "radius": 40,
+		      "radius": 60,
 		      "vertex": "P",
 		      "pointOnFirstRay": "C",
 		      "pointOnSecondRay": "B"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 80,
-		      "y": 80,
+		      "x": 60,
+		      "y": 150,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 160,
-		      "y": 80,
+		      "x": 200,
+		      "y": 150,
 		      "id": "P",
 		      "label": "P",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 240,
-		      "y": 80,
+		      "x": 340,
+		      "y": 150,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 220,
-		      "y": 40,
-		      "id": "D",
-		      "label": "D",
+		      "x": 120,
+		      "y": 240,
+		      "id": "C",
+		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 220,
-		      "y": 120,
-		      "id": "C",
-		      "label": "C",
+		      "x": 300,
+		      "y": 60,
+		      "id": "D",
+		      "label": "D",
 		      "shape": "circle"
 		    }
 		  ]
@@ -1276,9 +1268,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x59f54e6c74998af9
-	// Question: Find an angle measure using a diagram
+	// Question: Find x using angle relationships
 	// Widget key: image_1
-	test("angle-diagram - [x59f54e6c74998af9] Find an angle measure using a diagram", async () => {
+	test("angle-diagram - [x59f54e6c74998af9] Find x using angle relationships", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1315,76 +1307,76 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "30°",
-		      "radius": 45,
+		      "radius": 50,
 		      "vertex": "G",
 		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "A"
 		    },
 		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "x°",
-		      "radius": 22,
-		      "vertex": "G",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "F"
-		    },
-		    {
 		      "type": "right",
-		      "color": "#000000",
+		      "color": "#ca337c",
 		      "label": "90°",
 		      "vertex": "G",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "x°",
+		      "radius": 35,
+		      "vertex": "G",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "F"
 		    }
 		  ],
-		  "height": 188,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 150,
-		      "y": 75,
+		      "y": 150,
 		      "id": "G",
 		      "label": "G",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 255.715,
-		      "y": 113.477,
+		      "x": 243.969,
+		      "y": 115.798,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 44.285,
-		      "y": 36.523,
+		      "x": 56.031,
+		      "y": 184.202,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 167.956,
-		      "y": 25.666,
+		      "x": 115.798,
+		      "y": 56.031,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 124.348,
-		      "y": 145.477,
+		      "x": 184.202,
+		      "y": 243.969,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 205.395,
-		      "y": 65.232,
+		      "x": 248.481,
+		      "y": 167.365,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 57.674,
-		      "y": 91.28,
+		      "x": 51.519,
+		      "y": 132.635,
 		      "id": "F",
 		      "label": "F",
 		      "shape": "circle"
@@ -1416,19 +1408,27 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "B",
+		      "to": "G",
 		      "from": "A"
 		    },
 		    {
-		      "to": "D",
+		      "to": "B",
+		      "from": "G"
+		    },
+		    {
+		      "to": "G",
 		      "from": "C"
 		    },
 		    {
-		      "to": "F",
+		      "to": "D",
+		      "from": "G"
+		    },
+		    {
+		      "to": "G",
 		      "from": "E"
 		    },
 		    {
-		      "to": "A",
+		      "to": "F",
 		      "from": "G"
 		    }
 		  ],
@@ -1437,21 +1437,21 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "15°",
-		      "radius": 60,
-		      "vertex": "G",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "x°",
 		      "radius": 36,
 		      "vertex": "G",
 		      "pointOnFirstRay": "F",
 		      "pointOnSecondRay": "A"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "15°",
+		      "radius": 45,
+		      "vertex": "G",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "right",
@@ -1532,32 +1532,32 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x43a99f4654e7ccb2
-	// Question: Find the value of x from the diagram
+	// Question: Find x from vertical and right angles
 	// Widget key: image_1
-	test("angle-diagram - [x43a99f4654e7ccb2] Find the value of x from the diagram", async () => {
+	test("angle-diagram - [x43a99f4654e7ccb2] Find x from vertical and right angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "G",
-		      "from": "A"
+		      "to": "A",
+		      "from": "G"
 		    },
 		    {
 		      "to": "B",
 		      "from": "G"
 		    },
 		    {
-		      "to": "G",
-		      "from": "C"
+		      "to": "C",
+		      "from": "G"
 		    },
 		    {
 		      "to": "D",
 		      "from": "G"
 		    },
 		    {
-		      "to": "G",
-		      "from": "E"
+		      "to": "E",
+		      "from": "G"
 		    },
 		    {
 		      "to": "F",
@@ -1571,7 +1571,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "77°",
-		      "radius": 50,
+		      "radius": 36,
 		      "vertex": "G",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "F"
@@ -1588,7 +1588,7 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "right",
 		      "color": "#000000",
-		      "label": "right angle",
+		      "label": "90°",
 		      "vertex": "G",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "C"
@@ -1625,15 +1625,15 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 240,
-		      "y": 30,
+		      "x": 120,
+		      "y": 330,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 120,
-		      "y": 330,
+		      "x": 240,
+		      "y": 30,
 		      "id": "F",
 		      "label": "F",
 		      "shape": "circle"
@@ -1664,9 +1664,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa7480f4e19d27ae7
-	// Question: Solve for x using angle relationships
+	// Question: Find x from a vertical and right-angle diagram
 	// Widget key: image_1
-	test("angle-diagram - [xa7480f4e19d27ae7] Solve for x using angle relationships", async () => {
+	test("angle-diagram - [xa7480f4e19d27ae7] Find x from a vertical and right-angle diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1701,15 +1701,6 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "x°",
-		      "radius": 36,
-		      "vertex": "G",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "A"
-		    },
-		    {
-		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "23°",
 		      "radius": 60,
@@ -1720,23 +1711,32 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "right",
 		      "color": "#000000",
-		      "label": "90°",
+		      "label": " ",
 		      "vertex": "G",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "x°",
+		      "radius": 36,
+		      "vertex": "G",
+		      "pointOnFirstRay": "F",
+		      "pointOnSecondRay": "A"
 		    }
 		  ],
 		  "height": 360,
 		  "points": [
 		    {
-		      "x": 30,
+		      "x": 330,
 		      "y": 180,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 330,
+		      "x": 30,
 		      "y": 180,
 		      "id": "B",
 		      "label": "B",
@@ -1796,24 +1796,24 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8e2be1b19a572cc0
-	// Question: Find x from supplementary angles
+	// Question: Find x using supplementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x8e2be1b19a572cc0] Find x from supplementary angles", async () => {
+	test("angle-diagram - [x8e2be1b19a572cc0] Find x using supplementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "P",
-		      "from": "A"
+		      "to": "A",
+		      "from": "P"
 		    },
 		    {
 		      "to": "B",
 		      "from": "P"
 		    },
 		    {
-		      "to": "P",
-		      "from": "C"
+		      "to": "C",
+		      "from": "P"
 		    },
 		    {
 		      "to": "D",
@@ -1821,60 +1821,60 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "133°",
-		      "radius": 42,
+		      "radius": 44,
 		      "vertex": "P",
-		      "pointOnFirstRay": "C",
+		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "x",
-		      "radius": 28,
+		      "radius": 30,
 		      "vertex": "P",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "B"
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 81.818,
-		      "y": 81.818,
+		      "x": 50,
+		      "y": 150,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 163.636,
-		      "y": 81.818,
-		      "id": "P",
-		      "label": "P",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 245.455,
-		      "y": 81.818,
+		      "x": 350,
+		      "y": 150,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 108.889,
-		      "y": 142.621,
+		      "x": 200,
+		      "y": 150,
+		      "id": "P",
+		      "label": "P",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300,
+		      "y": 90,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 218.383,
-		      "y": 21.015,
+		      "x": 100,
+		      "y": 210,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
@@ -1898,21 +1898,13 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe35f285a291b3e78
-	// Question: Find x from adjacent angles on a line
+	// Question: Find the angle on a straight line
 	// Widget key: image_1
-	test("angle-diagram - [xe35f285a291b3e78] Find x from adjacent angles on a line", async () => {
+	test("angle-diagram - [xe35f285a291b3e78] Find the angle on a straight line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
-		    {
-		      "to": "A",
-		      "from": "E"
-		    },
-		    {
-		      "to": "C",
-		      "from": "A"
-		    },
 		    {
 		      "to": "A",
 		      "from": "D"
@@ -1922,18 +1914,26 @@ describe("angleDiagram widget tests", () => {
 		      "from": "A"
 		    },
 		    {
+		      "to": "A",
+		      "from": "E"
+		    },
+		    {
+		      "to": "C",
+		      "from": "A"
+		    },
+		    {
 		      "to": "B",
 		      "from": "A"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#7854ab",
 		      "label": "64°",
-		      "radius": 28,
+		      "radius": 42,
 		      "vertex": "A",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "B"
@@ -1941,8 +1941,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "x°",
-		      "radius": 22,
+		      "label": "x",
+		      "radius": 34,
 		      "vertex": "A",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
@@ -1951,54 +1951,54 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "60°",
-		      "radius": 36,
+		      "radius": 50,
 		      "vertex": "A",
 		      "pointOnFirstRay": "C",
 		      "pointOnSecondRay": "F"
 		    }
 		  ],
-		  "height": 188,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 112.5,
+		      "x": 180,
+		      "y": 180,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 218.516,
-		      "y": 81.995,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 247.428,
-		      "y": 168.75,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 52.572,
-		      "y": 56.25,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 136.976,
-		      "y": 38.639,
+		      "x": 40,
+		      "y": 180,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 159.768,
-		      "y": 167.895,
+		      "x": 320,
+		      "y": 180,
 		      "id": "F",
 		      "label": "F",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 100,
+		      "y": 260,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 260,
+		      "y": 100,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 136,
+		      "y": 90,
+		      "id": "B",
+		      "label": "B",
 		      "shape": "circle"
 		    }
 		  ]
@@ -2020,9 +2020,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x62964f1824b8dd7e
-	// Question: Find the value of x from a diagram
+	// Question: Find x using vertical angles
 	// Widget key: image_1
-	test("angle-diagram - [x62964f1824b8dd7e] Find the value of x from a diagram", async () => {
+	test("angle-diagram - [x62964f1824b8dd7e] Find x using vertical angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2058,32 +2058,32 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "20°",
-		      "radius": 64.157,
-		      "vertex": "E",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
 		      "label": "25°",
-		      "radius": 44.397,
+		      "radius": 52,
 		      "vertex": "E",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "G"
 		    },
 		    {
 		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "20°",
+		      "radius": 40,
+		      "vertex": "E",
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "B"
+		    },
+		    {
+		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "x°",
-		      "radius": 47.23,
+		      "radius": 48,
 		      "vertex": "E",
 		      "pointOnFirstRay": "F",
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 220,
+		  "height": 420,
 		  "points": [
 		    {
 		      "x": 80,
@@ -2100,15 +2100,15 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 87.237,
-		      "y": 161.042,
+		      "x": 127.495,
+		      "y": 86.191,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 322.16,
-		      "y": 75.537,
+		      "x": 272.505,
+		      "y": 153.809,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
@@ -2121,15 +2121,15 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 127.495,
-		      "y": 86.191,
+		      "x": 87.237,
+		      "y": 161.042,
 		      "id": "F",
 		      "label": "F",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 272.505,
-		      "y": 153.809,
+		      "x": 322.16,
+		      "y": 75.537,
 		      "id": "G",
 		      "label": "G",
 		      "shape": "circle"
@@ -2153,32 +2153,32 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x83dd0d8eb6dd176e
-	// Question: Solve for x using vertical angles
+	// Question: Find x using vertical angles
 	// Widget key: image_1
-	test("angle-diagram - [x83dd0d8eb6dd176e] Solve for x using vertical angles", async () => {
+	test("angle-diagram - [x83dd0d8eb6dd176e] Find x using vertical angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "E",
-		      "from": "A"
+		      "to": "A",
+		      "from": "E"
 		    },
 		    {
 		      "to": "B",
 		      "from": "E"
 		    },
 		    {
-		      "to": "E",
-		      "from": "C"
+		      "to": "C",
+		      "from": "E"
 		    },
 		    {
 		      "to": "D",
 		      "from": "E"
 		    },
 		    {
-		      "to": "E",
-		      "from": "F"
+		      "to": "F",
+		      "from": "E"
 		    },
 		    {
 		      "to": "G",
@@ -2191,7 +2191,7 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "x°",
+		      "label": "x",
 		      "radius": 34,
 		      "vertex": "E",
 		      "pointOnFirstRay": "F",
@@ -2216,7 +2216,7 @@ describe("angleDiagram widget tests", () => {
 		      "pointOnSecondRay": "B"
 		    }
 		  ],
-		  "height": 220,
+		  "height": 500,
 		  "points": [
 		    {
 		      "x": 80,
@@ -2233,15 +2233,15 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 312.763,
-		      "y": 78.958,
+		      "x": 87.237,
+		      "y": 161.042,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 87.237,
-		      "y": 161.042,
+		      "x": 312.763,
+		      "y": 78.958,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
@@ -2286,9 +2286,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8f74903a625b3524
-	// Question: Find the measure of x using a right angle and vertical angles
+	// Question: Find x using vertical and right angles
 	// Widget key: image_1
-	test("angle-diagram - [x8f74903a625b3524] Find the measure of x using a right angle and vertical angles", async () => {
+	test("angle-diagram - [x8f74903a625b3524] Find x using vertical and right angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2342,7 +2342,7 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "right",
 		      "color": "#000000",
-		      "label": "right angle",
+		      "label": " ",
 		      "vertex": "G",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "C"
@@ -2379,15 +2379,15 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 240,
-		      "y": 30,
+		      "x": 120,
+		      "y": 330,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 120,
-		      "y": 330,
+		      "x": 240,
+		      "y": 30,
 		      "id": "F",
 		      "label": "F",
 		      "shape": "circle"
@@ -2418,39 +2418,35 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3314c13cd34b8038
-	// Question: Find x in an angle diagram with perpendicular lines
+	// Question: Find the angle measure x
 	// Widget key: image_1
-	test("angle-diagram - [x3314c13cd34b8038] Find x in an angle diagram with perpendicular lines", async () => {
+	test("angle-diagram - [x3314c13cd34b8038] Find the angle measure x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
 		      "to": "A",
-		      "from": "B"
+		      "from": "G"
 		    },
 		    {
-		      "to": "D",
-		      "from": "C"
+		      "to": "B",
+		      "from": "G"
 		    },
 		    {
 		      "to": "C",
-		      "from": "D"
+		      "from": "G"
+		    },
+		    {
+		      "to": "D",
+		      "from": "G"
 		    },
 		    {
 		      "to": "E",
-		      "from": "F"
+		      "from": "G"
 		    },
 		    {
 		      "to": "F",
-		      "from": "E"
-		    },
-		    {
-		      "to": "B",
 		      "from": "G"
 		    }
 		  ],
@@ -2459,21 +2455,21 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x°",
-		      "radius": 36,
-		      "vertex": "G",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "30°",
 		      "radius": 60,
 		      "vertex": "G",
 		      "pointOnFirstRay": "F",
 		      "pointOnSecondRay": "D"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "x°",
+		      "radius": 36,
+		      "vertex": "G",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "B"
 		    }
 		  ],
 		  "height": 360,
@@ -2546,35 +2542,59 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x551d953eddab023b
-	// Question: Find the measure of an angle with parallel lines
+	// Question: Find the measure of an angle using parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [x551d953eddab023b] Find the measure of an angle with parallel lines", async () => {
+	test("angle-diagram - [x551d953eddab023b] Find the measure of an angle using parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "E",
-		      "from": "D"
-		    },
-		    {
 		      "to": "C",
 		      "from": "B"
 		    },
 		    {
-		      "to": "A",
-		      "from": "F"
+		      "to": "B",
+		      "from": "C"
 		    },
 		    {
-		      "to": "C",
-		      "from": "A"
+		      "to": "E",
+		      "from": "D"
+		    },
+		    {
+		      "to": "D",
+		      "from": "E"
 		    },
 		    {
 		      "to": "B",
 		      "from": "A"
 		    },
 		    {
+		      "to": "A",
+		      "from": "B"
+		    },
+		    {
+		      "to": "C",
+		      "from": "A"
+		    },
+		    {
+		      "to": "A",
+		      "from": "C"
+		    },
+		    {
+		      "to": "F",
+		      "from": "C"
+		    },
+		    {
+		      "to": "C",
+		      "from": "F"
+		    },
+		    {
 		      "to": "D",
+		      "from": "A"
+		    },
+		    {
+		      "to": "F",
 		      "from": "A"
 		    }
 		  ],
@@ -2585,7 +2605,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#28ae7b",
 		      "label": "54°",
-		      "radius": 26,
+		      "radius": 24,
 		      "vertex": "B",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "C"
@@ -2594,7 +2614,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#9d38bd",
 		      "label": "105°",
-		      "radius": 30,
+		      "radius": 24,
 		      "vertex": "A",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
@@ -2603,47 +2623,47 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "x",
-		      "radius": 34,
+		      "radius": 32,
 		      "vertex": "A",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "F"
 		    }
 		  ],
-		  "height": 256,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 32,
-		      "y": 160,
+		      "y": 64,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 120,
-		      "y": 160,
+		      "x": 240,
+		      "y": 64,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
+		      "x": 120,
+		      "y": 160,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
 		      "x": 32,
-		      "y": 64,
+		      "y": 160,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 256,
-		      "y": 64,
+		      "y": 160,
 		      "id": "E",
 		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 240,
-		      "y": 64,
-		      "id": "A",
-		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
@@ -2671,22 +2691,151 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd4514a449fcd8a57
+	// Extracted from question: x0e615763bdb875f0
 	// Question: Find the measure of an angle with parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [xd4514a449fcd8a57] Find the measure of an angle with parallel lines", async () => {
+	test("angle-diagram - [x0e615763bdb875f0] Find the measure of an angle with parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "J",
+		      "to": "C",
+		      "from": "B"
+		    },
+		    {
+		      "to": "R1",
+		      "from": "C"
+		    },
+		    {
+		      "to": "A",
+		      "from": "D"
+		    },
+		    {
+		      "to": "E",
 		      "from": "A"
 		    },
 		    {
-		      "to": "K",
-		      "from": "A"
+		      "to": "C",
+		      "from": "F"
 		    },
+		    {
+		      "to": "A",
+		      "from": "C"
+		    },
+		    {
+		      "to": "B",
+		      "from": "A"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 400,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "42°",
+		      "radius": 26,
+		      "vertex": "B",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#9d38bd",
+		      "label": "105°",
+		      "radius": 30,
+		      "vertex": "A",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "x",
+		      "radius": 44,
+		      "vertex": "A",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "C"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 240,
+		      "y": 64,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 32,
+		      "y": 160,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 120,
+		      "y": 160,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 32,
+		      "y": 64,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 304,
+		      "y": 64,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 40,
+		      "y": 224,
+		      "id": "F",
+		      "label": "F",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 256,
+		      "y": 160,
+		      "id": "R1",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3219470dc07c5635
+	// Question: Find the measure of an angle with parallel lines
+	// Widget key: image_1
+	test("angle-diagram - [x3219470dc07c5635] Find the measure of an angle with parallel lines", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
 		    {
 		      "to": "I",
 		      "from": "H"
@@ -2694,16 +2843,32 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "to": "K",
 		      "from": "J"
+		    },
+		    {
+		      "to": "H",
+		      "from": "A"
+		    },
+		    {
+		      "to": "J",
+		      "from": "A"
+		    },
+		    {
+		      "to": "I",
+		      "from": "A"
+		    },
+		    {
+		      "to": "K",
+		      "from": "A"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 478,
+		  "width": 480,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#7854ab",
-		      "label": "x",
-		      "radius": 27,
+		      "color": "#e07d10",
+		      "label": "66°",
+		      "radius": 28,
 		      "vertex": "A",
 		      "pointOnFirstRay": "H",
 		      "pointOnSecondRay": "I"
@@ -2712,7 +2877,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "56°",
-		      "radius": 27,
+		      "radius": 22,
 		      "vertex": "H",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "I"
@@ -2720,46 +2885,46 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "60°",
-		      "radius": 20,
+		      "label": "x°",
+		      "radius": 24,
 		      "vertex": "K",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "J"
 		    }
 		  ],
-		  "height": 365,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 59.4,
-		      "y": 324,
+		      "x": 140,
+		      "y": 80,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 83.7,
-		      "y": 166.86,
+		      "x": 135.294,
+		      "y": 94.118,
 		      "id": "H",
 		      "label": "H",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 98.28,
-		      "y": 69.12,
-		      "id": "J",
-		      "label": "J",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 258.66,
-		      "y": 297.81,
+		      "x": 154.545,
+		      "y": 101.818,
 		      "id": "I",
 		      "label": "I",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 380.7,
-		      "y": 281.07,
+		      "x": 94.118,
+		      "y": 217.647,
+		      "id": "J",
+		      "label": "J",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 281.818,
+		      "y": 292.727,
 		      "id": "K",
 		      "label": "K",
 		      "shape": "circle"
@@ -2782,45 +2947,45 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xe81e51593e7b6615
-	// Question: Find the measure of an angle with parallel lines
+	// Extracted from question: xe63d7f1f7b9efb64
+	// Question: Find the measure of an angle using parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [xe81e51593e7b6615] Find the measure of an angle with parallel lines", async () => {
+	test("angle-diagram - [xe63d7f1f7b9efb64] Find the measure of an angle using parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
-		    {
-		      "to": "J",
-		      "from": "A"
-		    },
-		    {
-		      "to": "K",
-		      "from": "A"
-		    },
-		    {
-		      "to": "K",
-		      "from": "J"
-		    },
 		    {
 		      "to": "I",
 		      "from": "H"
 		    },
 		    {
 		      "to": "H",
-		      "from": "A"
+		      "from": "I"
 		    },
 		    {
-		      "to": "A",
-		      "from": "H"
+		      "to": "K",
+		      "from": "J"
 		    },
 		    {
 		      "to": "J",
 		      "from": "K"
 		    },
 		    {
-		      "to": "I",
+		      "to": "J",
 		      "from": "A"
+		    },
+		    {
+		      "to": "A",
+		      "from": "J"
+		    },
+		    {
+		      "to": "K",
+		      "from": "A"
+		    },
+		    {
+		      "to": "A",
+		      "from": "K"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -2828,30 +2993,30 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "62°",
-		      "radius": 22,
-		      "vertex": "K",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "J"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "66°",
-		      "radius": 27,
-		      "vertex": "H",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "I"
-		    },
-		    {
-		      "type": "arc",
 		      "color": "#7854ab",
-		      "label": "x",
+		      "label": "45°",
 		      "radius": 27,
 		      "vertex": "A",
 		      "pointOnFirstRay": "H",
 		      "pointOnSecondRay": "I"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "63°",
+		      "radius": 27,
+		      "vertex": "J",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "K"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "x",
+		      "radius": 20,
+		      "vertex": "I",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "H"
 		    }
 		  ],
 		  "height": 365,
@@ -2864,13 +3029,6 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 98.28,
-		      "y": 69.12,
-		      "id": "J",
-		      "label": "J",
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 83.7,
 		      "y": 166.86,
 		      "id": "H",
@@ -2878,10 +3036,10 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 380.7,
-		      "y": 281.07,
-		      "id": "K",
-		      "label": "K",
+		      "x": 98.28,
+		      "y": 69.12,
+		      "id": "J",
+		      "label": "J",
 		      "shape": "circle"
 		    },
 		    {
@@ -2889,6 +3047,13 @@ describe("angleDiagram widget tests", () => {
 		      "y": 297.81,
 		      "id": "I",
 		      "label": "I",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 380.7,
+		      "y": 281.07,
+		      "id": "K",
+		      "label": "K",
 		      "shape": "circle"
 		    }
 		  ]
@@ -2910,28 +3075,44 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x39c3e9eeec47b83a
-	// Question: Find the measure of an angle with parallel lines and a transversal
+	// Question: Find the measure of an angle with parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [x39c3e9eeec47b83a] Find the measure of an angle with parallel lines and a transversal", async () => {
+	test("angle-diagram - [x39c3e9eeec47b83a] Find the measure of an angle with parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "K",
+		      "to": "J",
+		      "from": "A"
+		    },
+		    {
+		      "to": "A",
 		      "from": "J"
+		    },
+		    {
+		      "to": "K",
+		      "from": "A"
+		    },
+		    {
+		      "to": "A",
+		      "from": "K"
 		    },
 		    {
 		      "to": "I",
 		      "from": "H"
 		    },
 		    {
-		      "to": "J",
-		      "from": "A"
+		      "to": "H",
+		      "from": "I"
 		    },
 		    {
 		      "to": "K",
-		      "from": "A"
+		      "from": "J"
+		    },
+		    {
+		      "to": "J",
+		      "from": "K"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -2939,9 +3120,9 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#7854ab",
+		      "color": "#e07d10",
 		      "label": "59°",
-		      "radius": 27,
+		      "radius": 30,
 		      "vertex": "A",
 		      "pointOnFirstRay": "H",
 		      "pointOnSecondRay": "I"
@@ -2950,7 +3131,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "61°",
-		      "radius": 27,
+		      "radius": 24,
 		      "vertex": "H",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "I"
@@ -2958,8 +3139,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 20.25,
+		      "label": "x°",
+		      "radius": 22,
 		      "vertex": "K",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "J"
@@ -2975,13 +3156,6 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 98.28,
-		      "y": 69.12,
-		      "id": "J",
-		      "label": "J",
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 83.7,
 		      "y": 166.86,
 		      "id": "H",
@@ -2993,6 +3167,13 @@ describe("angleDiagram widget tests", () => {
 		      "y": 297.81,
 		      "id": "I",
 		      "label": "I",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 106.92,
+		      "y": 13.5,
+		      "id": "J",
+		      "label": "J",
 		      "shape": "circle"
 		    },
 		    {
@@ -3020,178 +3201,40 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x385cc98268fb3a25
-	// Question: Measure an angle in a star figure
+	// Extracted from question: xf6ae0db16770bfb9
+	// Question: Measure of an angle with parallel and perpendicular lines
 	// Widget key: image_1
-	test("angle-diagram - [x385cc98268fb3a25] Measure an angle in a star figure", async () => {
+	test("angle-diagram - [xf6ae0db16770bfb9] Measure of an angle with parallel and perpendicular lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
-		    {
-		      "to": "C",
-		      "from": "A"
-		    },
 		    {
 		      "to": "D",
-		      "from": "C"
-		    },
-		    {
-		      "to": "B",
-		      "from": "D"
-		    },
-		    {
-		      "to": "E",
-		      "from": "B"
-		    },
-		    {
-		      "to": "A",
-		      "from": "E"
-		    },
-		    {
-		      "to": "C",
-		      "from": "H"
-		    },
-		    {
-		      "to": "E",
-		      "from": "H"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 500,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#ca337c",
-		      "label": "47°",
-		      "radius": 25,
-		      "vertex": "B",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "E"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "31°",
-		      "radius": 32.5,
-		      "vertex": "D",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 25,
-		      "vertex": "H",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "E"
-		    }
-		  ],
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 50,
-		      "y": 125,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 250,
-		      "y": 25,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 450,
-		      "y": 125,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 100,
-		      "y": 400,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 400,
-		      "y": 400,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 330,
-		      "y": 200,
-		      "id": "H",
-		      "label": "H",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf6ae0db16770bfb9
-	// Question: Find the measure of angle x
-	// Widget key: image_1
-	test("angle-diagram - [xf6ae0db16770bfb9] Find the measure of angle x", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "A",
-		      "from": "D"
+		      "from": "A"
 		    },
 		    {
 		      "to": "E",
 		      "from": "A"
 		    },
 		    {
-		      "to": "B",
-		      "from": "F"
-		    },
-		    {
-		      "to": "C",
+		      "to": "F",
 		      "from": "B"
 		    },
 		    {
 		      "to": "G",
-		      "from": "C"
+		      "from": "B"
 		    },
 		    {
-		      "to": "A",
-		      "from": "K"
-		    },
-		    {
-		      "to": "L",
+		      "to": "K",
 		      "from": "A"
 		    },
 		    {
-		      "to": "A",
-		      "from": "I"
+		      "to": "L",
+		      "from": "B"
 		    },
 		    {
-		      "to": "C",
+		      "to": "I",
 		      "from": "A"
 		    },
 		    {
@@ -3215,7 +3258,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "59°",
-		      "radius": 26.25,
+		      "radius": 26,
 		      "vertex": "C",
 		      "pointOnFirstRay": "G",
 		      "pointOnSecondRay": "J"
@@ -3318,147 +3361,10 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x0e615763bdb875f0
-	// Question: Find the measure of an angle using parallel lines
+	// Extracted from question: xd4514a449fcd8a57
+	// Question: Find an angle measure with parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [x0e615763bdb875f0] Find the measure of an angle using parallel lines", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "A",
-		      "from": "D"
-		    },
-		    {
-		      "to": "E",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
-		      "from": "B"
-		    },
-		    {
-		      "to": "R",
-		      "from": "C"
-		    },
-		    {
-		      "to": "C",
-		      "from": "F"
-		    },
-		    {
-		      "to": "A",
-		      "from": "C"
-		    },
-		    {
-		      "to": "B",
-		      "from": "A"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 320,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "42°",
-		      "radius": 28,
-		      "vertex": "B",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#9d38bd",
-		      "label": "105°",
-		      "radius": 34,
-		      "vertex": "A",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 46,
-		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "C"
-		    }
-		  ],
-		  "height": 256,
-		  "points": [
-		    {
-		      "x": 240,
-		      "y": 64,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 32,
-		      "y": 64,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 304,
-		      "y": 64,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 32,
-		      "y": 160,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 120,
-		      "y": 160,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 256,
-		      "y": 160,
-		      "id": "R",
-		      "label": "R",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 40,
-		      "y": 224,
-		      "id": "F",
-		      "label": "F",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3219470dc07c5635
-	// Question: Find the measure of an angle with parallel lines
-	// Widget key: image_1
-	test("angle-diagram - [x3219470dc07c5635] Find the measure of an angle with parallel lines", async () => {
+	test("angle-diagram - [xd4514a449fcd8a57] Find an angle measure with parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3476,11 +3382,11 @@ describe("angleDiagram widget tests", () => {
 		      "from": "A"
 		    },
 		    {
-		      "to": "I",
+		      "to": "J",
 		      "from": "A"
 		    },
 		    {
-		      "to": "J",
+		      "to": "I",
 		      "from": "A"
 		    },
 		    {
@@ -3493,9 +3399,9 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "66°",
-		      "radius": 30,
+		      "color": "#7854ab",
+		      "label": "x",
+		      "radius": 34,
 		      "vertex": "A",
 		      "pointOnFirstRay": "H",
 		      "pointOnSecondRay": "I"
@@ -3504,7 +3410,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "56°",
-		      "radius": 26,
+		      "radius": 28,
 		      "vertex": "H",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "I"
@@ -3512,8 +3418,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 24,
+		      "label": "60°",
+		      "radius": 22,
 		      "vertex": "K",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "J"
@@ -3522,36 +3428,36 @@ describe("angleDiagram widget tests", () => {
 		  "height": 365,
 		  "points": [
 		    {
-		      "x": 106.92,
-		      "y": 13.5,
+		      "x": 180,
+		      "y": 20,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 98.28,
-		      "y": 69.12,
+		      "x": 100,
+		      "y": 220,
 		      "id": "H",
 		      "label": "H",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 380.7,
-		      "y": 281.07,
+		      "x": 220,
+		      "y": 160,
 		      "id": "I",
 		      "label": "I",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 83.7,
-		      "y": 166.86,
+		      "x": 60,
+		      "y": 320,
 		      "id": "J",
 		      "label": "J",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 258.66,
-		      "y": 297.81,
+		      "x": 240,
+		      "y": 230,
 		      "id": "K",
 		      "label": "K",
 		      "shape": "circle"
@@ -3574,29 +3480,37 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xe63d7f1f7b9efb64
-	// Question: Find the measure of an angle with parallel lines
+	// Extracted from question: xe81e51593e7b6615
+	// Question: Measure an angle formed by parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [xe63d7f1f7b9efb64] Find the measure of an angle with parallel lines", async () => {
+	test("angle-diagram - [xe81e51593e7b6615] Measure an angle formed by parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "K",
-		      "from": "J"
-		    },
-		    {
-		      "to": "I",
-		      "from": "H"
+		      "to": "H",
+		      "from": "A"
 		    },
 		    {
 		      "to": "J",
 		      "from": "A"
 		    },
 		    {
+		      "to": "I",
+		      "from": "A"
+		    },
+		    {
 		      "to": "K",
 		      "from": "A"
+		    },
+		    {
+		      "to": "I",
+		      "from": "H"
+		    },
+		    {
+		      "to": "K",
+		      "from": "J"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -3605,29 +3519,29 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#7854ab",
-		      "label": "45°",
-		      "radius": 28,
+		      "label": "x",
+		      "radius": 27,
 		      "vertex": "A",
 		      "pointOnFirstRay": "H",
 		      "pointOnSecondRay": "I"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 20,
-		      "vertex": "I",
+		      "color": "#1fab54",
+		      "label": "66°",
+		      "radius": 27,
+		      "vertex": "H",
 		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "H"
+		      "pointOnSecondRay": "I"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "63°",
-		      "radius": 18,
-		      "vertex": "J",
+		      "color": "#11accd",
+		      "label": "62°",
+		      "radius": 20,
+		      "vertex": "K",
 		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "K"
+		      "pointOnSecondRay": "J"
 		    }
 		  ],
 		  "height": 365,
@@ -3647,17 +3561,17 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 258.66,
-		      "y": 297.81,
-		      "id": "I",
-		      "label": "I",
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 98.28,
 		      "y": 69.12,
 		      "id": "J",
 		      "label": "J",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 258.66,
+		      "y": 297.81,
+		      "id": "I",
+		      "label": "I",
 		      "shape": "circle"
 		    },
 		    {
@@ -3698,28 +3612,52 @@ describe("angleDiagram widget tests", () => {
 		      "from": "D"
 		    },
 		    {
+		      "to": "D",
+		      "from": "E"
+		    },
+		    {
 		      "to": "G",
 		      "from": "F"
+		    },
+		    {
+		      "to": "F",
+		      "from": "G"
 		    },
 		    {
 		      "to": "L",
 		      "from": "K"
 		    },
 		    {
+		      "to": "K",
+		      "from": "L"
+		    },
+		    {
 		      "to": "J",
 		      "from": "I"
 		    },
 		    {
-		      "to": "B",
+		      "to": "I",
+		      "from": "J"
+		    },
+		    {
+		      "to": "I",
 		      "from": "A"
 		    },
 		    {
-		      "to": "C",
-		      "from": "B"
+		      "to": "K",
+		      "from": "A"
 		    },
 		    {
-		      "to": "A",
+		      "to": "G",
 		      "from": "C"
+		    },
+		    {
+		      "to": "J",
+		      "from": "C"
+		    },
+		    {
+		      "to": "F",
+		      "from": "B"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -3737,8 +3675,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 26.25,
+		      "label": "x°",
+		      "radius": 26,
 		      "vertex": "C",
 		      "pointOnFirstRay": "G",
 		      "pointOnSecondRay": "J"
@@ -3842,13 +3780,21 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x06cb57b9146cf1aa
-	// Question: Find the measure of an angle with parallel and perpendicular lines
+	// Question: Find the measure of angle x
 	// Widget key: image_1
-	test("angle-diagram - [x06cb57b9146cf1aa] Find the measure of an angle with parallel and perpendicular lines", async () => {
+	test("angle-diagram - [x06cb57b9146cf1aa] Find the measure of angle x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
+		    {
+		      "to": "A",
+		      "from": "K"
+		    },
+		    {
+		      "to": "L",
+		      "from": "A"
+		    },
 		    {
 		      "to": "A",
 		      "from": "D"
@@ -3858,16 +3804,20 @@ describe("angleDiagram widget tests", () => {
 		      "from": "A"
 		    },
 		    {
-		      "to": "D",
-		      "from": "A"
+		      "to": "A",
+		      "from": "I"
 		    },
 		    {
-		      "to": "A",
-		      "from": "E"
+		      "to": "J",
+		      "from": "A"
 		    },
 		    {
 		      "to": "B",
 		      "from": "F"
+		    },
+		    {
+		      "to": "G",
+		      "from": "B"
 		    },
 		    {
 		      "to": "C",
@@ -3876,66 +3826,6 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "to": "G",
 		      "from": "C"
-		    },
-		    {
-		      "to": "F",
-		      "from": "B"
-		    },
-		    {
-		      "to": "B",
-		      "from": "C"
-		    },
-		    {
-		      "to": "C",
-		      "from": "G"
-		    },
-		    {
-		      "to": "A",
-		      "from": "K"
-		    },
-		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "L",
-		      "from": "B"
-		    },
-		    {
-		      "to": "K",
-		      "from": "A"
-		    },
-		    {
-		      "to": "A",
-		      "from": "B"
-		    },
-		    {
-		      "to": "B",
-		      "from": "L"
-		    },
-		    {
-		      "to": "A",
-		      "from": "I"
-		    },
-		    {
-		      "to": "C",
-		      "from": "A"
-		    },
-		    {
-		      "to": "J",
-		      "from": "C"
-		    },
-		    {
-		      "to": "I",
-		      "from": "A"
-		    },
-		    {
-		      "to": "A",
-		      "from": "C"
-		    },
-		    {
-		      "to": "C",
-		      "from": "J"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -3944,17 +3834,17 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "x",
-		      "radius": 30,
+		      "label": " ",
+		      "radius": 35,
 		      "vertex": "A",
-		      "pointOnFirstRay": "I",
-		      "pointOnSecondRay": "K"
+		      "pointOnFirstRay": "K",
+		      "pointOnSecondRay": "I"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "63°",
-		      "radius": 26,
+		      "radius": 26.25,
 		      "vertex": "C",
 		      "pointOnFirstRay": "G",
 		      "pointOnSecondRay": "J"
@@ -4066,24 +3956,28 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "J",
-		      "from": "A"
-		    },
-		    {
-		      "to": "K",
-		      "from": "A"
-		    },
-		    {
-		      "to": "H",
-		      "from": "A"
+		      "to": "I",
+		      "from": "H"
 		    },
 		    {
 		      "to": "K",
 		      "from": "J"
 		    },
 		    {
+		      "to": "H",
+		      "from": "A"
+		    },
+		    {
 		      "to": "I",
-		      "from": "H"
+		      "from": "A"
+		    },
+		    {
+		      "to": "J",
+		      "from": "A"
+		    },
+		    {
+		      "to": "K",
+		      "from": "A"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -4091,65 +3985,65 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#7854ab",
+		      "color": "#11accd",
 		      "label": "46°",
-		      "radius": 27,
+		      "radius": 36,
 		      "vertex": "A",
 		      "pointOnFirstRay": "H",
 		      "pointOnSecondRay": "I"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 20,
-		      "vertex": "I",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "H"
-		    },
-		    {
-		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "67°",
-		      "radius": 27,
+		      "radius": 26,
 		      "vertex": "J",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "K"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#7854ab",
+		      "label": "x",
+		      "radius": 28,
+		      "vertex": "I",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "H"
 		    }
 		  ],
 		  "height": 365,
 		  "points": [
 		    {
-		      "x": 59.4,
-		      "y": 324,
+		      "x": 220,
+		      "y": 200,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 83.7,
-		      "y": 166.86,
+		      "x": 100,
+		      "y": 260,
 		      "id": "H",
 		      "label": "H",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 258.66,
-		      "y": 297.81,
+		      "x": 380,
+		      "y": 300,
 		      "id": "I",
 		      "label": "I",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 98.28,
-		      "y": 69.12,
+		      "x": 120,
+		      "y": 120,
 		      "id": "J",
 		      "label": "J",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 380.7,
-		      "y": 281.07,
+		      "x": 420,
+		      "y": 160,
 		      "id": "K",
 		      "label": "K",
 		      "shape": "circle"
@@ -4173,9 +4067,309 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3aec75df765101a5
+	// Question: Find an angle using parallel lines and the triangle angle sum
+	// Widget key: image_1
+	test("angle-diagram - [x3aec75df765101a5] Find an angle using parallel lines and the triangle angle sum", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "E",
+		      "from": "A"
+		    },
+		    {
+		      "to": "A",
+		      "from": "E"
+		    },
+		    {
+		      "to": "C",
+		      "from": "B"
+		    },
+		    {
+		      "to": "B",
+		      "from": "C"
+		    },
+		    {
+		      "to": "C",
+		      "from": "A"
+		    },
+		    {
+		      "to": "A",
+		      "from": "C"
+		    },
+		    {
+		      "to": "B",
+		      "from": "A"
+		    },
+		    {
+		      "to": "A",
+		      "from": "B"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 320,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28AE7B",
+		      "label": "102°",
+		      "radius": 28,
+		      "vertex": "A",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#9D38BD",
+		      "label": "41°",
+		      "radius": 24,
+		      "vertex": "B",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11ACCD",
+		      "label": "x",
+		      "radius": 36,
+		      "vertex": "A",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "C"
+		    }
+		  ],
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": 32,
+		      "y": 64,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 240,
+		      "y": 64,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 120,
+		      "y": 160,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 256,
+		      "y": 160,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x96f329d4d5f67e9d
+	// Question: Find the measure of an angle with parallel and perpendicular lines
+	// Widget key: image_1
+	test("angle-diagram - [x96f329d4d5f67e9d] Find the measure of an angle with parallel and perpendicular lines", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "E",
+		      "from": "D"
+		    },
+		    {
+		      "to": "D",
+		      "from": "E"
+		    },
+		    {
+		      "to": "G",
+		      "from": "F"
+		    },
+		    {
+		      "to": "F",
+		      "from": "G"
+		    },
+		    {
+		      "to": "L",
+		      "from": "K"
+		    },
+		    {
+		      "to": "K",
+		      "from": "L"
+		    },
+		    {
+		      "to": "J",
+		      "from": "I"
+		    },
+		    {
+		      "to": "I",
+		      "from": "J"
+		    },
+		    {
+		      "to": "K",
+		      "from": "A"
+		    },
+		    {
+		      "to": "I",
+		      "from": "A"
+		    },
+		    {
+		      "to": "G",
+		      "from": "C"
+		    },
+		    {
+		      "to": "J",
+		      "from": "C"
+		    },
+		    {
+		      "to": "A",
+		      "from": "B"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 490,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "62°",
+		      "radius": 35,
+		      "vertex": "A",
+		      "pointOnFirstRay": "I",
+		      "pointOnSecondRay": "K"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "x",
+		      "radius": 26,
+		      "vertex": "C",
+		      "pointOnFirstRay": "G",
+		      "pointOnSecondRay": "J"
+		    }
+		  ],
+		  "height": 350,
+		  "points": [
+		    {
+		      "x": 35,
+		      "y": 105,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 455,
+		      "y": 105,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 35,
+		      "y": 245,
+		      "id": "F",
+		      "label": "F",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 455,
+		      "y": 245,
+		      "id": "G",
+		      "label": "G",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 210,
+		      "y": 35,
+		      "id": "K",
+		      "label": "K",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 210,
+		      "y": 315,
+		      "id": "L",
+		      "label": "L",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 140,
+		      "y": 35,
+		      "id": "I",
+		      "label": "I",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 420,
+		      "y": 315,
+		      "id": "J",
+		      "label": "J",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 210,
+		      "y": 105,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 210,
+		      "y": 245,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 350,
+		      "y": 245,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1cecffe43f8e8316
 	// Question: Find the measure of an angle with parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [x3aec75df765101a5] Find the measure of an angle with parallel lines", async () => {
+	test("angle-diagram - [x1cecffe43f8e8316] Find the measure of an angle with parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4195,10 +4389,6 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "to": "B",
 		      "from": "A"
-		    },
-		    {
-		      "to": "E",
-		      "from": "A"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -4207,7 +4397,7 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#28ae7b",
-		      "label": "41°",
+		      "label": "42°",
 		      "radius": 24,
 		      "vertex": "B",
 		      "pointOnFirstRay": "A",
@@ -4216,7 +4406,7 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#9d38bd",
-		      "label": "102°",
+		      "label": "103°",
 		      "radius": 24,
 		      "vertex": "A",
 		      "pointOnFirstRay": "B",
@@ -4228,11 +4418,11 @@ describe("angleDiagram widget tests", () => {
 		      "label": "x",
 		      "radius": 32,
 		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "C"
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "F"
 		    }
 		  ],
-		  "height": 256,
+		  "height": 320,
 		  "points": [
 		    {
 		      "x": 120,
@@ -4294,10 +4484,132 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x96f329d4d5f67e9d
-	// Question: Measure of an angle with parallel and perpendicular lines
+	// Extracted from question: x2c9752318dc1d1fd
+	// Question: Measure of an angle with parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [x96f329d4d5f67e9d] Measure of an angle with parallel and perpendicular lines", async () => {
+	test("angle-diagram - [x2c9752318dc1d1fd] Measure of an angle with parallel lines", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "C",
+		      "from": "B"
+		    },
+		    {
+		      "to": "E",
+		      "from": "D"
+		    },
+		    {
+		      "to": "A",
+		      "from": "F"
+		    },
+		    {
+		      "to": "C",
+		      "from": "A"
+		    },
+		    {
+		      "to": "B",
+		      "from": "A"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 400,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "42°",
+		      "radius": 28,
+		      "vertex": "B",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#9d38bd",
+		      "label": "109°",
+		      "radius": 32,
+		      "vertex": "A",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "x",
+		      "radius": 44,
+		      "vertex": "A",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "C"
+		    }
+		  ],
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": 150,
+		      "y": 200,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 40,
+		      "y": 80,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300,
+		      "y": 80,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 40,
+		      "y": 200,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 320,
+		      "y": 200,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 50,
+		      "y": 280,
+		      "id": "F",
+		      "label": "F",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x196a976b808c4e5c
+	// Question: Find the measure of an angle with parallel and perpendicular lines
+	// Widget key: image_1
+	test("angle-diagram - [x196a976b808c4e5c] Find the measure of an angle with parallel and perpendicular lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4311,8 +4623,12 @@ describe("angleDiagram widget tests", () => {
 		      "from": "A"
 		    },
 		    {
-		      "to": "C",
+		      "to": "B",
 		      "from": "F"
+		    },
+		    {
+		      "to": "C",
+		      "from": "B"
 		    },
 		    {
 		      "to": "G",
@@ -4349,7 +4665,7 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "62°",
+		      "label": "x",
 		      "radius": 35,
 		      "vertex": "A",
 		      "pointOnFirstRay": "I",
@@ -4358,7 +4674,7 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "x°",
+		      "label": "70°",
 		      "radius": 26.25,
 		      "vertex": "C",
 		      "pointOnFirstRay": "G",
@@ -4462,711 +4778,88 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa9fae08294b8cb07
-	// Question: Find the measure of ∠x
+	// Extracted from question: x0cc9b5263c86adfd
+	// Question: Compare an angle to 125°
 	// Widget key: image_1
-	test("angle-diagram - [xa9fae08294b8cb07] Find the measure of ∠x", async () => {
+	test("angle-diagram - [x0cc9b5263c86adfd] Compare an angle to 125°", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
-		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
-		      "from": "B"
-		    },
-		    {
-		      "to": "D",
-		      "from": "C"
-		    },
-		    {
-		      "to": "E",
-		      "from": "D"
-		    },
-		    {
-		      "to": "A",
-		      "from": "E"
-		    },
-		    {
-		      "to": "H",
-		      "from": "B"
-		    },
-		    {
-		      "to": "C",
-		      "from": "H"
-		    },
-		    {
-		      "to": "H",
-		      "from": "E"
-		    },
-		    {
-		      "to": "A",
-		      "from": "H"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 500,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "31°",
-		      "radius": 32.5,
-		      "vertex": "C",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "D"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#ca337c",
-		      "label": "40°",
-		      "radius": 32.5,
-		      "vertex": "D",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "E"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 25,
-		      "vertex": "H",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "B"
-		    }
-		  ],
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 50,
-		      "y": 125,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 450,
-		      "y": 125,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 100,
-		      "y": 400,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 250,
-		      "y": 25,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 400,
-		      "y": 400,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 250,
-		      "y": 282.143,
-		      "id": "H",
-		      "label": "H",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1cecffe43f8e8316
-	// Question: Find the measure of an angle with parallel lines
-	// Widget key: image_1
-	test("angle-diagram - [x1cecffe43f8e8316] Find the measure of an angle with parallel lines", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "C",
-		      "from": "B"
-		    },
-		    {
-		      "to": "B",
-		      "from": "C"
-		    },
-		    {
-		      "to": "D",
-		      "from": "E"
-		    },
-		    {
-		      "to": "E",
-		      "from": "D"
-		    },
-		    {
-		      "to": "C",
-		      "from": "F"
-		    },
-		    {
-		      "to": "F",
-		      "from": "C"
-		    },
-		    {
-		      "to": "C",
-		      "from": "A"
-		    },
-		    {
-		      "to": "A",
-		      "from": "C"
-		    },
-		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "A",
-		      "from": "B"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 320,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "42°",
-		      "radius": 24,
-		      "vertex": "B",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#9d38bd",
-		      "label": "103°",
-		      "radius": 24,
-		      "vertex": "A",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 32,
-		      "vertex": "A",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "F"
-		    }
-		  ],
-		  "height": 256,
-		  "points": [
-		    {
-		      "x": 32,
-		      "y": 64,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 240,
-		      "y": 64,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 32,
-		      "y": 160,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 120,
-		      "y": 160,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 256,
-		      "y": 160,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 40,
-		      "y": 224,
-		      "id": "F",
-		      "label": "F",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2c9752318dc1d1fd
-	// Question: Find the measure of an angle with parallel lines
-	// Widget key: image_1
-	test("angle-diagram - [x2c9752318dc1d1fd] Find the measure of an angle with parallel lines", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "C",
-		      "from": "B"
-		    },
-		    {
-		      "to": "B",
-		      "from": "C"
-		    },
-		    {
-		      "to": "E",
-		      "from": "D"
-		    },
-		    {
-		      "to": "D",
-		      "from": "E"
-		    },
-		    {
-		      "to": "C",
-		      "from": "F"
-		    },
-		    {
-		      "to": "F",
-		      "from": "C"
-		    },
-		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "A",
-		      "from": "B"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 320,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "42°",
-		      "radius": 24,
-		      "vertex": "B",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#9d38bd",
-		      "label": "109°",
-		      "radius": 24,
-		      "vertex": "A",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#ca337c",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "C",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "A"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 32,
-		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "C"
-		    }
-		  ],
-		  "height": 256,
-		  "points": [
-		    {
-		      "x": 120,
-		      "y": 160,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 32,
-		      "y": 64,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 240,
-		      "y": 64,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 32,
-		      "y": 160,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 256,
-		      "y": 160,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 40,
-		      "y": 224,
-		      "id": "F",
-		      "label": "F",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x196a976b808c4e5c
-	// Question: Find the measure of angle x
-	// Widget key: image_1
-	test("angle-diagram - [x196a976b808c4e5c] Find the measure of angle x", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "A",
-		      "from": "D"
-		    },
-		    {
-		      "to": "E",
-		      "from": "A"
-		    },
-		    {
-		      "to": "B",
-		      "from": "F"
-		    },
-		    {
-		      "to": "C",
-		      "from": "B"
-		    },
-		    {
-		      "to": "G",
-		      "from": "C"
-		    },
-		    {
-		      "to": "A",
-		      "from": "K"
-		    },
-		    {
-		      "to": "B",
-		      "from": "A"
-		    },
 		    {
 		      "to": "L",
-		      "from": "B"
+		      "from": "O"
 		    },
 		    {
-		      "to": "A",
-		      "from": "I"
+		      "to": "R",
+		      "from": "O"
 		    },
 		    {
-		      "to": "C",
-		      "from": "A"
+		      "to": "U",
+		      "from": "O"
 		    },
 		    {
-		      "to": "J",
-		      "from": "C"
+		      "to": "D",
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 490,
+		  "width": 420,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "x°",
-		      "radius": 35,
-		      "vertex": "A",
-		      "pointOnFirstRay": "I",
-		      "pointOnSecondRay": "K"
+		      "radius": 50,
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "U"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "70°",
-		      "radius": 26.25,
-		      "vertex": "C",
-		      "pointOnFirstRay": "J",
-		      "pointOnSecondRay": "G"
+		      "label": "125°",
+		      "radius": 45,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 350,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 35,
-		      "y": 105,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 455,
-		      "y": 105,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 35,
-		      "y": 245,
-		      "id": "F",
-		      "label": "F",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 455,
-		      "y": 245,
-		      "id": "G",
-		      "label": "G",
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 210,
-		      "y": 35,
-		      "id": "K",
-		      "label": "K",
+		      "y": 150,
+		      "id": "O",
+		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 210,
-		      "y": 315,
+		      "x": 10,
+		      "y": 150,
 		      "id": "L",
 		      "label": "L",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 140,
-		      "y": 35,
-		      "id": "I",
-		      "label": "I",
+		      "x": 410,
+		      "y": 150,
+		      "id": "R",
+		      "label": "R",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 420,
-		      "y": 315,
-		      "id": "J",
-		      "label": "J",
+		      "x": 63.73,
+		      "y": 13.6,
+		      "id": "U",
+		      "label": "U",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 210,
-		      "y": 105,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 210,
-		      "y": 245,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 350,
-		      "y": 245,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2fb0aa3be3c7bc30
-	// Question: Find the measure of ∠x
-	// Widget key: image_1
-	test("angle-diagram - [x2fb0aa3be3c7bc30] Find the measure of ∠x", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "C",
-		      "from": "A"
-		    },
-		    {
-		      "to": "B",
-		      "from": "C"
-		    },
-		    {
-		      "to": "D",
-		      "from": "B"
-		    },
-		    {
-		      "to": "E",
-		      "from": "D"
-		    },
-		    {
-		      "to": "A",
-		      "from": "E"
-		    },
-		    {
-		      "to": "C",
-		      "from": "H"
-		    },
-		    {
-		      "to": "E",
-		      "from": "H"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 500,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "46°",
-		      "radius": 32.5,
-		      "vertex": "B",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "D"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#ca337c",
-		      "label": "33°",
-		      "radius": 32.5,
-		      "vertex": "D",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "E"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 25,
-		      "vertex": "H",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "E"
-		    }
-		  ],
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 50,
-		      "y": 125,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 450,
-		      "y": 125,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 100,
-		      "y": 400,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 250,
-		      "y": 25,
+		      "x": 324.72,
+		      "y": 313.83,
 		      "id": "D",
 		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 400,
-		      "y": 400,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 328.26,
-		      "y": 220.65,
-		      "id": "H",
-		      "label": "H",
 		      "shape": "circle"
 		    }
 		  ]
@@ -5188,184 +4881,86 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbb6e8e1ac97e8e33
-	// Question: Compare an angle to 35 degrees
+	// Question: Compare an angle measure to 35 degrees
 	// Widget key: image_1
-	test("angle-diagram - [xbb6e8e1ac97e8e33] Compare an angle to 35 degrees", async () => {
+	test("angle-diagram - [xbb6e8e1ac97e8e33] Compare an angle measure to 35 degrees", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "T",
-		      "from": "V"
+		      "to": "U",
+		      "from": "O"
 		    },
-		    {
-		      "to": "B",
-		      "from": "V"
-		    },
-		    {
-		      "to": "UR",
-		      "from": "V"
-		    },
-		    {
-		      "to": "DL",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 252,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "x°",
-		      "radius": 36,
-		      "vertex": "V",
-		      "pointOnFirstRay": "T",
-		      "pointOnSecondRay": "UR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "35°",
-		      "radius": 28,
-		      "vertex": "V",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "DL"
-		    }
-		  ],
-		  "height": 180,
-		  "points": [
-		    {
-		      "x": 126,
-		      "y": 90,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 126,
-		      "y": 10,
-		      "id": "T",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 126,
-		      "y": 170,
-		      "id": "B",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 172,
-		      "y": 10,
-		      "id": "UR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 58,
-		      "y": 170,
-		      "id": "DL",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa962aa93e220520c
-	// Question: Compare an angle to 73 degrees
-	// Widget key: image_1
-	test("angle-diagram - [xa962aa93e220520c] Compare an angle to 73 degrees", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
 		    {
 		      "to": "D",
-		      "from": "U"
+		      "from": "O"
 		    },
 		    {
-		      "to": "A",
-		      "from": "V"
+		      "to": "NE",
+		      "from": "O"
 		    },
 		    {
-		      "to": "B",
-		      "from": "V"
+		      "to": "SW",
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 252,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "x",
-		      "radius": 17,
-		      "vertex": "V",
+		      "radius": 44,
+		      "vertex": "O",
 		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "A"
+		      "pointOnSecondRay": "NE"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "73°",
-		      "radius": 15,
-		      "vertex": "V",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "D"
+		      "label": "35°",
+		      "radius": 36,
+		      "vertex": "O",
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "SW"
 		    }
 		  ],
-		  "height": 180,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 126,
-		      "y": 90,
-		      "id": "V",
+		      "x": 180,
+		      "y": 150,
+		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 231.954,
-		      "y": 33.663,
-		      "id": "A",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 11.243,
-		      "y": 125.085,
-		      "id": "B",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 126,
-		      "y": 0,
+		      "x": 180,
+		      "y": 30,
 		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 126,
-		      "y": 180,
+		      "x": 180,
+		      "y": 270,
 		      "id": "D",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 280,
+		      "y": 60,
+		      "id": "NE",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 100,
+		      "y": 240,
+		      "id": "SW",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -5388,86 +4983,86 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4b383f26b066c157
-	// Question: Compare angle x to 100 degrees
+	// Question: Compare an angle to 100°
 	// Widget key: image_1
-	test("angle-diagram - [x4b383f26b066c157] Compare angle x to 100 degrees", async () => {
+	test("angle-diagram - [x4b383f26b066c157] Compare an angle to 100°", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
 		      "to": "L",
-		      "from": "V"
-		    },
-		    {
-		      "to": "R",
-		      "from": "V"
+		      "from": "O"
 		    },
 		    {
 		      "to": "UR",
-		      "from": "V"
+		      "from": "O"
 		    },
 		    {
-		      "to": "LL",
-		      "from": "V"
+		      "to": "DR",
+		      "from": "O"
+		    },
+		    {
+		      "to": "BL",
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 252,
+		  "width": 420,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
+		      "color": "#1fab54",
 		      "label": "x°",
-		      "radius": 28,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR"
+		      "radius": 44,
+		      "vertex": "O",
+		      "pointOnFirstRay": "UR",
+		      "pointOnSecondRay": "DR"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#1fab54",
+		      "color": "#11accd",
 		      "label": "100°",
-		      "radius": 28,
-		      "vertex": "V",
+		      "radius": 36,
+		      "vertex": "O",
 		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "LL"
+		      "pointOnSecondRay": "BL"
 		    }
 		  ],
-		  "height": 180,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 126,
-		      "y": 90,
-		      "id": "V",
-		      "label": " ",
+		      "x": 210,
+		      "y": 150,
+		      "id": "O",
+		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 6,
-		      "y": 90,
+		      "x": 30,
+		      "y": 150,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 246,
-		      "y": 90,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 206,
+		      "x": 250,
 		      "y": 40,
 		      "id": "UR",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 46,
-		      "y": 140,
-		      "id": "LL",
+		      "x": 250,
+		      "y": 260,
+		      "id": "DR",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 170,
+		      "y": 260,
+		      "id": "BL",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -5506,70 +5101,172 @@ describe("angleDiagram widget tests", () => {
 		      "from": "O"
 		    },
 		    {
+		      "to": "UR",
+		      "from": "O"
+		    },
+		    {
+		      "to": "DL",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 360,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "x",
+		      "radius": 46,
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "UR"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "60°",
+		      "radius": 48,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "DL"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 180,
+		      "y": 150,
+		      "id": "O",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 30,
+		      "y": 150,
+		      "id": "L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 330,
+		      "y": 150,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 240,
+		      "y": 20,
+		      "id": "UR",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 100,
+		      "y": 260,
+		      "id": "DL",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa962aa93e220520c
+	// Question: Compare an angle to a given degree measure
+	// Widget key: image_1
+	test("angle-diagram - [xa962aa93e220520c] Compare an angle to a given degree measure", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
 		      "to": "U",
 		      "from": "O"
 		    },
 		    {
 		      "to": "D",
 		      "from": "O"
+		    },
+		    {
+		      "to": "TR",
+		      "from": "O"
+		    },
+		    {
+		      "to": "BL",
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 252,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#1fab54",
+		      "color": "#11accd",
 		      "label": "x°",
-		      "radius": 15.617,
+		      "radius": 44,
 		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "U"
+		      "pointOnFirstRay": "U",
+		      "pointOnSecondRay": "TR"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "60°",
-		      "radius": 17.552,
+		      "color": "#1fab54",
+		      "label": "73°",
+		      "radius": 52,
 		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "BL"
 		    }
 		  ],
-		  "height": 180,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 6,
-		      "y": 90,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 246,
-		      "y": 90,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 126,
-		      "y": 90,
+		      "x": 180,
+		      "y": 180,
 		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 167.042,
-		      "y": -22.763,
+		      "x": 180,
+		      "y": 40,
 		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 66,
-		      "y": 193.923,
+		      "x": 180,
+		      "y": 320,
 		      "id": "D",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 320,
+		      "y": 80,
+		      "id": "TR",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 60,
+		      "y": 300,
+		      "id": "BL",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -5592,188 +5289,86 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5a1a723174c1ad9f
-	// Question: Compare an angle to 43 degrees
+	// Question: Compare x to 43°
 	// Widget key: image_1
-	test("angle-diagram - [x5a1a723174c1ad9f] Compare an angle to 43 degrees", async () => {
+	test("angle-diagram - [x5a1a723174c1ad9f] Compare x to 43°", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "O",
-		      "from": "L"
-		    },
-		    {
-		      "to": "R",
+		      "to": "H_right",
 		      "from": "O"
 		    },
 		    {
-		      "to": "O",
-		      "from": "U"
+		      "to": "H_left",
+		      "from": "O"
 		    },
 		    {
-		      "to": "D",
+		      "to": "S_upRight",
+		      "from": "O"
+		    },
+		    {
+		      "to": "S_downLeft",
 		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 264,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#6495ed",
 		      "label": "43°",
-		      "radius": 24,
+		      "radius": 40,
 		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "U"
+		      "pointOnFirstRay": "H_right",
+		      "pointOnSecondRay": "S_upRight"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#28ae7b",
-		      "label": "x",
-		      "radius": 24,
-		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "D"
-		    }
-		  ],
-		  "height": 156,
-		  "points": [
-		    {
-		      "x": 12,
-		      "y": 78,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 132,
-		      "y": 78,
-		      "id": "O",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 252,
-		      "y": 78,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 194.2,
-		      "y": 20,
-		      "id": "U",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 65.5,
-		      "y": 140,
-		      "id": "D",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0cc9b5263c86adfd
-	// Question: Compare an angle measure to 125°
-	// Widget key: image_1
-	test("angle-diagram - [x0cc9b5263c86adfd] Compare an angle measure to 125°", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "L",
-		      "from": "V"
-		    },
-		    {
-		      "to": "R",
-		      "from": "V"
-		    },
-		    {
-		      "to": "UL",
-		      "from": "V"
-		    },
-		    {
-		      "to": "BR",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 252,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
 		      "label": "x°",
-		      "radius": 26,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UL"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "125°",
-		      "radius": 22,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "BR"
+		      "radius": 40,
+		      "vertex": "O",
+		      "pointOnFirstRay": "H_left",
+		      "pointOnSecondRay": "S_downLeft"
 		    }
 		  ],
-		  "height": 180,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 126,
-		      "y": 90,
-		      "id": "V",
+		      "x": 200,
+		      "y": 150,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 380,
+		      "y": 150,
+		      "id": "H_right",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 6,
-		      "y": 90,
-		      "id": "L",
+		      "x": 20,
+		      "y": 150,
+		      "id": "H_left",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 246,
-		      "y": 90,
-		      "id": "R",
+		      "x": 330,
+		      "y": 30,
+		      "id": "S_upRight",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 38.238,
-		      "y": 8.16,
-		      "id": "UL",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 194.829,
-		      "y": 188.298,
-		      "id": "BR",
+		      "x": 70,
+		      "y": 270,
+		      "id": "S_downLeft",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -5796,9 +5391,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x286708e3421d8daa
-	// Question: Compare an angle to 110 degrees
+	// Question: Compare an angle measure to 110°
 	// Widget key: image_1
-	test("angle-diagram - [x286708e3421d8daa] Compare an angle to 110 degrees", async () => {
+	test("angle-diagram - [x286708e3421d8daa] Compare an angle measure to 110°", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5812,7 +5407,7 @@ describe("angleDiagram widget tests", () => {
 		      "from": "O"
 		    },
 		    {
-		      "to": "T",
+		      "to": "U",
 		      "from": "O"
 		    },
 		    {
@@ -5821,60 +5416,60 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 264,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#28ae7b",
-		      "label": "x",
-		      "radius": 24,
+		      "label": " ",
+		      "radius": 40,
 		      "vertex": "O",
 		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "T"
+		      "pointOnSecondRay": "U"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#6495ed",
-		      "label": "110°",
-		      "radius": 24,
+		      "label": " ",
+		      "radius": 40,
 		      "vertex": "O",
 		      "pointOnFirstRay": "R",
 		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 156,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 132,
-		      "y": 78,
+		      "x": 200,
+		      "y": 150,
 		      "id": "O",
-		      "label": " ",
+		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 12,
-		      "y": 78,
+		      "x": 40,
+		      "y": 150,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 252,
-		      "y": 78,
+		      "x": 360,
+		      "y": 150,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 160.4,
-		      "y": 0,
-		      "id": "T",
+		      "x": 330,
+		      "y": 30,
+		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 103.6,
-		      "y": 156,
+		      "x": 70,
+		      "y": 270,
 		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
@@ -5898,519 +5493,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x71f13f5e86684d01
-	// Question: Compare an angle to 37°
+	// Question: Compare an angle to 37 degrees using vertical angles
 	// Widget key: image_1
-	test("angle-diagram - [x71f13f5e86684d01] Compare an angle to 37°", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "L",
-		      "from": "V"
-		    },
-		    {
-		      "to": "R",
-		      "from": "V"
-		    },
-		    {
-		      "to": "UR",
-		      "from": "V"
-		    },
-		    {
-		      "to": "DL",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 264,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "37°",
-		      "radius": 24,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x°",
-		      "radius": 24,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "DL"
-		    }
-		  ],
-		  "height": 156,
-		  "points": [
-		    {
-		      "x": 12,
-		      "y": 78,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 252,
-		      "y": 78,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 227.836,
-		      "y": 5.782,
-		      "id": "UR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 36.164,
-		      "y": 150.218,
-		      "id": "DL",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 132,
-		      "y": 78,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd1e2406bfd5f928a
-	// Question: Compare an angle to 46 degrees
-	// Widget key: image_1
-	test("angle-diagram - [xd1e2406bfd5f928a] Compare an angle to 46 degrees", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "L",
-		      "from": "O"
-		    },
-		    {
-		      "to": "R",
-		      "from": "O"
-		    },
-		    {
-		      "to": "UR",
-		      "from": "O"
-		    },
-		    {
-		      "to": "LL",
-		      "from": "O"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 252,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "x°",
-		      "radius": 29,
-		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "46°",
-		      "radius": 22,
-		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "LL"
-		    }
-		  ],
-		  "height": 180,
-		  "points": [
-		    {
-		      "x": 126,
-		      "y": 90,
-		      "id": "O",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 6,
-		      "y": 90,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 246,
-		      "y": 90,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 227.766,
-		      "y": 26.41,
-		      "id": "UR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 42.641,
-		      "y": 176.321,
-		      "id": "LL",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xea05f580f8688a96
-	// Question: Compare an angle to 95 degrees
-	// Widget key: image_1
-	test("angle-diagram - [xea05f580f8688a96] Compare an angle to 95 degrees", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "left",
-		      "from": "vertex"
-		    },
-		    {
-		      "to": "right",
-		      "from": "vertex"
-		    },
-		    {
-		      "to": "upRight",
-		      "from": "vertex"
-		    },
-		    {
-		      "to": "downRight",
-		      "from": "vertex"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 252,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "x°",
-		      "radius": 18,
-		      "vertex": "vertex",
-		      "pointOnFirstRay": "right",
-		      "pointOnSecondRay": "upRight"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "95°",
-		      "radius": 16,
-		      "vertex": "vertex",
-		      "pointOnFirstRay": "left",
-		      "pointOnSecondRay": "downRight"
-		    }
-		  ],
-		  "height": 252,
-		  "points": [
-		    {
-		      "x": 126,
-		      "y": 126,
-		      "id": "vertex",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 7.823,
-		      "y": 146.838,
-		      "id": "left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 244.177,
-		      "y": 105.162,
-		      "id": "right",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 146.838,
-		      "y": 7.823,
-		      "id": "upRight",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 157.058,
-		      "y": 241.911,
-		      "id": "downRight",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd26985a79594db70
-	// Question: Compare an angle measure using vertical angles
-	// Widget key: image_1
-	test("angle-diagram - [xd26985a79594db70] Compare an angle measure using vertical angles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "Hleft",
-		      "from": "O"
-		    },
-		    {
-		      "to": "Hright",
-		      "from": "O"
-		    },
-		    {
-		      "to": "T",
-		      "from": "O"
-		    },
-		    {
-		      "to": "BL",
-		      "from": "O"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 252,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x",
-		      "radius": 24,
-		      "vertex": "O",
-		      "pointOnFirstRay": "Hleft",
-		      "pointOnSecondRay": "T"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "146°",
-		      "radius": 24,
-		      "vertex": "O",
-		      "pointOnFirstRay": "Hright",
-		      "pointOnSecondRay": "BL"
-		    }
-		  ],
-		  "height": 156,
-		  "points": [
-		    {
-		      "x": 132,
-		      "y": 78,
-		      "id": "O",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 12,
-		      "y": 78,
-		      "id": "Hleft",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 252,
-		      "y": 78,
-		      "id": "Hright",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 231.485,
-		      "y": 10.897,
-		      "id": "T",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 32.515,
-		      "y": 145.103,
-		      "id": "BL",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcb0992be8a8cd4df
-	// Question: Compare angle x to 106 degrees
-	// Widget key: image_1
-	test("angle-diagram - [xcb0992be8a8cd4df] Compare angle x to 106 degrees", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "TL",
-		      "from": "V"
-		    },
-		    {
-		      "to": "BR",
-		      "from": "V"
-		    },
-		    {
-		      "to": "TR",
-		      "from": "V"
-		    },
-		    {
-		      "to": "BL",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 186,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x°",
-		      "radius": 26,
-		      "vertex": "V",
-		      "pointOnFirstRay": "TR",
-		      "pointOnSecondRay": "BR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "106°",
-		      "radius": 24,
-		      "vertex": "V",
-		      "pointOnFirstRay": "BL",
-		      "pointOnSecondRay": "TL"
-		    }
-		  ],
-		  "height": 210,
-		  "points": [
-		    {
-		      "x": 90,
-		      "y": 102,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 22.897,
-		      "y": 2.515,
-		      "id": "TL",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 183.258,
-		      "y": 177.518,
-		      "id": "BR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 167.135,
-		      "y": 10.075,
-		      "id": "TR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 12.865,
-		      "y": 193.925,
-		      "id": "BL",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf733f093e33ee94e
-	// Question: Compare an angle to 139° using a diagram
-	// Widget key: image_1
-	test("angle-diagram - [xf733f093e33ee94e] Compare an angle to 139° using a diagram", async () => {
+	test("angle-diagram - [x71f13f5e86684d01] Compare an angle to 37 degrees using vertical angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6433,28 +5518,538 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 264,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#0066CC",
-		      "label": "x",
-		      "radius": 36,
+		      "color": "#6495ed",
+		      "label": " ",
+		      "radius": 42,
 		      "vertex": "V",
-		      "pointOnFirstRay": "L",
+		      "pointOnFirstRay": "R",
 		      "pointOnSecondRay": "U"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#FF00AF",
-		      "label": "139°",
-		      "radius": 36,
+		      "color": "#28ae7b",
+		      "label": " ",
+		      "radius": 42,
 		      "vertex": "V",
-		      "pointOnFirstRay": "R",
+		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 180,
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 180,
+		      "y": 180,
+		      "id": "V",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 40,
+		      "y": 180,
+		      "id": "L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 320,
+		      "y": 180,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300,
+		      "y": 60,
+		      "id": "U",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 60,
+		      "y": 300,
+		      "id": "D",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd1e2406bfd5f928a
+	// Question: Compare angle x to 46 degrees
+	// Widget key: image_1
+	test("angle-diagram - [xd1e2406bfd5f928a] Compare angle x to 46 degrees", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "L",
+		      "from": "O"
+		    },
+		    {
+		      "to": "R",
+		      "from": "O"
+		    },
+		    {
+		      "to": "U",
+		      "from": "O"
+		    },
+		    {
+		      "to": "D",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 360,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "x°",
+		      "radius": 29,
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "U"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "46°",
+		      "radius": 22,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "D"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 90,
+		      "id": "L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 126,
+		      "y": 90,
+		      "id": "O",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 246,
+		      "y": 90,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 227.766,
+		      "y": 26.41,
+		      "id": "U",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 42.641,
+		      "y": 176.321,
+		      "id": "D",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xea05f580f8688a96
+	// Question: Compare an angle measure to 95 degrees
+	// Widget key: image_1
+	test("angle-diagram - [xea05f580f8688a96] Compare an angle measure to 95 degrees", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "L",
+		      "from": "V"
+		    },
+		    {
+		      "to": "R",
+		      "from": "V"
+		    },
+		    {
+		      "to": "U",
+		      "from": "V"
+		    },
+		    {
+		      "to": "D",
+		      "from": "V"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 360,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "x",
+		      "radius": 42,
+		      "vertex": "V",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "U"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "95°",
+		      "radius": 48,
+		      "vertex": "V",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "D"
+		    }
+		  ],
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 180,
+		      "y": 180,
+		      "id": "V",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 60,
+		      "y": 220,
+		      "id": "L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 320,
+		      "y": 120,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 220,
+		      "y": 60,
+		      "id": "U",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 240,
+		      "y": 320,
+		      "id": "D",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd26985a79594db70
+	// Question: Compare an angle to 146 degrees
+	// Widget key: image_1
+	test("angle-diagram - [xd26985a79594db70] Compare an angle to 146 degrees", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "O",
+		      "from": "L"
+		    },
+		    {
+		      "to": "R",
+		      "from": "O"
+		    },
+		    {
+		      "to": "TR",
+		      "from": "O"
+		    },
+		    {
+		      "to": "O",
+		      "from": "BL"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 360,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 50,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "TR"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#6495ED",
+		      "label": "146°",
+		      "radius": 50,
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "BL"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 40,
+		      "y": 180,
+		      "id": "L",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 180,
+		      "y": 180,
+		      "id": "O",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 340,
+		      "y": 180,
+		      "id": "R",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300,
+		      "y": 100,
+		      "id": "TR",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 60,
+		      "y": 260,
+		      "id": "BL",
+		      "label": null,
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcb0992be8a8cd4df
+	// Question: Compare an angle to 106 degrees
+	// Widget key: image_1
+	test("angle-diagram - [xcb0992be8a8cd4df] Compare an angle to 106 degrees", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "NW",
+		      "from": "V"
+		    },
+		    {
+		      "to": "SE",
+		      "from": "V"
+		    },
+		    {
+		      "to": "NE",
+		      "from": "V"
+		    },
+		    {
+		      "to": "SW",
+		      "from": "V"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 372,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "x°",
+		      "radius": 36,
+		      "vertex": "V",
+		      "pointOnFirstRay": "NE",
+		      "pointOnSecondRay": "SE"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "106°",
+		      "radius": 44,
+		      "vertex": "V",
+		      "pointOnFirstRay": "SW",
+		      "pointOnSecondRay": "NW"
+		    }
+		  ],
+		  "height": 420,
+		  "points": [
+		    {
+		      "x": 180,
+		      "y": 204,
+		      "id": "V",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 45.794,
+		      "y": 5.03,
+		      "id": "NW",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 366.516,
+		      "y": 355.036,
+		      "id": "SE",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 334.27,
+		      "y": 20.15,
+		      "id": "NE",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 25.73,
+		      "y": 387.85,
+		      "id": "SW",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf733f093e33ee94e
+	// Question: Compare angle x to 139 degrees
+	// Widget key: image_1
+	test("angle-diagram - [xf733f093e33ee94e] Compare angle x to 139 degrees", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "L",
+		      "from": "O"
+		    },
+		    {
+		      "to": "R",
+		      "from": "O"
+		    },
+		    {
+		      "to": "U",
+		      "from": "O"
+		    },
+		    {
+		      "to": "D",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 400,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 24,
+		      "vertex": "O",
+		      "pointOnFirstRay": "U",
+		      "pointOnSecondRay": "L"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "139°",
+		      "radius": 24,
+		      "vertex": "O",
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "R"
+		    }
+		  ],
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 12,
@@ -6487,7 +6082,7 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "x": 132,
 		      "y": 90,
-		      "id": "V",
+		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -6518,78 +6113,78 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
-		      "from": "V"
+		      "to": "baseLeft",
+		      "from": "vertex"
 		    },
 		    {
-		      "to": "R",
-		      "from": "V"
+		      "to": "baseRight",
+		      "from": "vertex"
 		    },
 		    {
-		      "to": "UR",
-		      "from": "V"
+		      "to": "upperRight",
+		      "from": "vertex"
 		    },
 		    {
-		      "to": "LL",
-		      "from": "V"
+		      "to": "lowerLeft",
+		      "from": "vertex"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 252,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "x°",
-		      "radius": 16,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR"
+		      "label": "x",
+		      "radius": 36,
+		      "vertex": "vertex",
+		      "pointOnFirstRay": "upperRight",
+		      "pointOnSecondRay": "baseRight"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "50°",
-		      "radius": 20,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "LL"
+		      "radius": 28,
+		      "vertex": "vertex",
+		      "pointOnFirstRay": "lowerLeft",
+		      "pointOnSecondRay": "baseLeft"
 		    }
 		  ],
-		  "height": 168,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 126,
-		      "y": 102,
-		      "id": "V",
+		      "x": 180,
+		      "y": 170,
+		      "id": "vertex",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 13.237,
-		      "y": 60.958,
-		      "id": "L",
+		      "x": 60,
+		      "y": 120,
+		      "id": "baseLeft",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 238.763,
-		      "y": 143.042,
-		      "id": "R",
+		      "x": 320,
+		      "y": 230,
+		      "id": "baseRight",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 203.135,
-		      "y": 10.075,
-		      "id": "UR",
+		      "x": 300,
+		      "y": 60,
+		      "id": "upperRight",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 22.077,
-		      "y": 162,
-		      "id": "LL",
+		      "x": 80,
+		      "y": 300,
+		      "id": "lowerLeft",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -6612,86 +6207,86 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd76d96174d28987b
-	// Question: Compare angle x to 151 degrees
+	// Question: Compare angle measures in a diagram
 	// Widget key: image_1
-	test("angle-diagram - [xd76d96174d28987b] Compare angle x to 151 degrees", async () => {
+	test("angle-diagram - [xd76d96174d28987b] Compare angle measures in a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
 		      "to": "L",
-		      "from": "V"
+		      "from": "O"
 		    },
 		    {
 		      "to": "R",
-		      "from": "V"
+		      "from": "O"
 		    },
 		    {
-		      "to": "U",
-		      "from": "V"
+		      "to": "UL",
+		      "from": "O"
 		    },
 		    {
-		      "to": "D",
-		      "from": "V"
+		      "to": "LR",
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 252,
+		  "width": 350,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 22,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "U"
+		      "label": "x°",
+		      "radius": 44,
+		      "vertex": "O",
+		      "pointOnFirstRay": "UL",
+		      "pointOnSecondRay": "R"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "151°",
-		      "radius": 22,
-		      "vertex": "V",
+		      "radius": 34,
+		      "vertex": "O",
 		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "D"
+		      "pointOnSecondRay": "LR"
 		    }
 		  ],
-		  "height": 180,
+		  "height": 350,
 		  "points": [
 		    {
-		      "x": 126,
-		      "y": 90,
-		      "id": "V",
+		      "x": 175,
+		      "y": 175,
+		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 6,
-		      "y": 90,
+		      "x": 45,
+		      "y": 175,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 246,
-		      "y": 90,
+		      "x": 305,
+		      "y": 175,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 9.565,
-		      "y": 60.97,
-		      "id": "U",
+		      "x": 60,
+		      "y": 115,
+		      "id": "UL",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 230.954,
-		      "y": 148.177,
-		      "id": "D",
+		      "x": 305,
+		      "y": 235,
+		      "id": "LR",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -6714,391 +6309,85 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc2dab77d822123a9
-	// Question: Compare an angle to 79°
+	// Question: Compare an angle to 79 degrees
 	// Widget key: image_1
-	test("angle-diagram - [xc2dab77d822123a9] Compare an angle to 79°", async () => {
+	test("angle-diagram - [xc2dab77d822123a9] Compare an angle to 79 degrees", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "UL",
-		      "from": "V"
-		    },
-		    {
-		      "to": "RD",
-		      "from": "V"
-		    },
-		    {
-		      "to": "TR",
-		      "from": "V"
-		    },
-		    {
-		      "to": "BL",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 252,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x°",
-		      "radius": 26,
-		      "vertex": "V",
-		      "pointOnFirstRay": "RD",
-		      "pointOnSecondRay": "TR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "79°",
-		      "radius": 28,
-		      "vertex": "V",
-		      "pointOnFirstRay": "UL",
-		      "pointOnSecondRay": "BL"
-		    }
-		  ],
-		  "height": 198,
-		  "points": [
-		    {
-		      "x": 126,
-		      "y": 90,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 13.237,
-		      "y": 48.958,
-		      "id": "UL",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 238.763,
-		      "y": 131.042,
-		      "id": "RD",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 210.853,
-		      "y": 5.147,
-		      "id": "TR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 64.195,
-		      "y": 192.86,
-		      "id": "BL",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7ea5dabc820a7c9a
-	// Question: Compare an angle measure to 43°
-	// Widget key: image_1
-	test("angle-diagram - [x7ea5dabc820a7c9a] Compare an angle measure to 43°", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "L",
+		      "to": "A",
 		      "from": "O"
 		    },
 		    {
-		      "to": "R",
+		      "to": "B",
 		      "from": "O"
 		    },
 		    {
-		      "to": "UR",
+		      "to": "C",
 		      "from": "O"
-		    },
-		    {
-		      "to": "BL",
-		      "from": "O"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 252,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "x°",
-		      "radius": 28,
-		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "43°",
-		      "radius": 26,
-		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "BL"
-		    }
-		  ],
-		  "height": 210,
-		  "points": [
-		    {
-		      "x": 126,
-		      "y": 102,
-		      "id": "O",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 6.894,
-		      "y": 116.624,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 245.543,
-		      "y": 112.459,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 203.135,
-		      "y": 10.075,
-		      "id": "UR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 48.865,
-		      "y": 193.925,
-		      "id": "BL",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xee4df19301f8d39b
-	// Question: Compare an angle to 94°
-	// Widget key: image_1
-	test("angle-diagram - [xee4df19301f8d39b] Compare an angle to 94°", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "O",
-		      "from": "L"
-		    },
-		    {
-		      "to": "R",
-		      "from": "O"
-		    },
-		    {
-		      "to": "O",
-		      "from": "UL"
-		    },
-		    {
-		      "to": "DR",
-		      "from": "O"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 264,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "94°",
-		      "radius": 28,
-		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UL"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#000000",
-		      "label": "x°",
-		      "radius": 28,
-		      "vertex": "O",
-		      "pointOnFirstRay": "DR",
-		      "pointOnSecondRay": "R"
-		    }
-		  ],
-		  "height": 156,
-		  "points": [
-		    {
-		      "x": 12,
-		      "y": 78,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 252,
-		      "y": 78,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 132,
-		      "y": 78,
-		      "id": "O",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 110,
-		      "y": 40,
-		      "id": "UL",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 154,
-		      "y": 116,
-		      "id": "DR",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xafccb931b5145374
-	// Question: Compare angle x to 27°
-	// Widget key: image_1
-	test("angle-diagram - [xafccb931b5145374] Compare angle x to 27°", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "R",
-		      "from": "V"
-		    },
-		    {
-		      "to": "L",
-		      "from": "V"
-		    },
-		    {
-		      "to": "U",
-		      "from": "V"
 		    },
 		    {
 		      "to": "D",
-		      "from": "V"
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 252,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "x°",
-		      "radius": 45,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "U"
+		      "label": "x",
+		      "radius": 36,
+		      "vertex": "O",
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "27°",
-		      "radius": 33,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
+		      "label": "79°",
+		      "radius": 30,
+		      "vertex": "O",
+		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 90,
+		  "height": 314.286,
 		  "points": [
 		    {
-		      "x": 126,
-		      "y": 42,
-		      "id": "V",
+		      "x": 201,
+		      "y": 142.857,
+		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 246,
-		      "y": 42,
-		      "id": "R",
+		      "x": 21.011,
+		      "y": 77.712,
+		      "id": "A",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 6,
-		      "y": 42,
-		      "id": "L",
+		      "x": 378.988,
+		      "y": 208.003,
+		      "id": "B",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 241.911,
-		      "y": 10.942,
-		      "id": "U",
+		      "x": 334.687,
+		      "y": 8.17,
+		      "id": "C",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 19.08,
-		      "y": 96.479,
+		      "x": 101.897,
+		      "y": 306.127,
 		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
@@ -7121,41 +6410,351 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x0bfe7b7296550082
-	// Question: Find the angle measure with parallel lines and a transversal
+	// Extracted from question: x7ea5dabc820a7c9a
+	// Question: Compare an angle to 43°
 	// Widget key: image_1
-	test("angle-diagram - [x0bfe7b7296550082] Find the angle measure with parallel lines and a transversal", async () => {
+	test("angle-diagram - [x7ea5dabc820a7c9a] Compare an angle to 43°", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "T",
-		      "from": "TL"
+		      "to": "R",
+		      "from": "O"
+		    },
+		    {
+		      "to": "L",
+		      "from": "O"
+		    },
+		    {
+		      "to": "UR",
+		      "from": "O"
+		    },
+		    {
+		      "to": "DL",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 420,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "x",
+		      "radius": 50,
+		      "vertex": "O",
+		      "pointOnFirstRay": "UR",
+		      "pointOnSecondRay": "R"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "43°",
+		      "radius": 50,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "DL"
+		    }
+		  ],
+		  "height": 350,
+		  "points": [
+		    {
+		      "x": 210,
+		      "y": 170,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 409.238,
+		      "y": 187.432,
+		      "id": "R",
+		      "label": "R",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 11.49,
+		      "y": 194.373,
+		      "id": "L",
+		      "label": "L",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 338.558,
+		      "y": 16.792,
+		      "id": "UR",
+		      "label": "U",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 81.442,
+		      "y": 323.208,
+		      "id": "DL",
+		      "label": "D",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xee4df19301f8d39b
+	// Question: Compare an angle measure to 94 degrees
+	// Widget key: image_1
+	test("angle-diagram - [xee4df19301f8d39b] Compare an angle measure to 94 degrees", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "L",
+		      "from": "O"
+		    },
+		    {
+		      "to": "R",
+		      "from": "O"
+		    },
+		    {
+		      "to": "UL",
+		      "from": "O"
+		    },
+		    {
+		      "to": "DR",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 360,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "94°",
+		      "radius": 46,
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "UL"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 46,
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "DR"
+		    }
+		  ],
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 180,
+		      "y": 180,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 40,
+		      "y": 180,
+		      "id": "L",
+		      "label": "L",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 320,
+		      "y": 180,
+		      "id": "R",
+		      "label": "R",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 100,
+		      "y": 100,
+		      "id": "UL",
+		      "label": "U",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 260,
+		      "y": 260,
+		      "id": "DR",
+		      "label": "D",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xafccb931b5145374
+	// Question: Compare the angle measure to 27°
+	// Widget key: image_1
+	test("angle-diagram - [xafccb931b5145374] Compare the angle measure to 27°", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "V",
+		      "from": "L"
+		    },
+		    {
+		      "to": "R",
+		      "from": "V"
+		    },
+		    {
+		      "to": "UR",
+		      "from": "V"
+		    },
+		    {
+		      "to": "LL",
+		      "from": "V"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 400,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "x°",
+		      "radius": 46,
+		      "vertex": "V",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "UR"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "27°",
+		      "radius": 56,
+		      "vertex": "V",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "LL"
+		    }
+		  ],
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": 200,
+		      "y": 160,
+		      "id": "V",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 40,
+		      "y": 160,
+		      "id": "L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 360,
+		      "y": 160,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 350,
+		      "y": 80,
+		      "id": "UR",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 60,
+		      "y": 270,
+		      "id": "LL",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0bfe7b7296550082
+	// Question: Find an angle using parallel lines and a transversal
+	// Widget key: image_1
+	test("angle-diagram - [x0bfe7b7296550082] Find an angle using parallel lines and a transversal", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "TL",
+		      "from": "T"
 		    },
 		    {
 		      "to": "TR",
 		      "from": "T"
 		    },
 		    {
-		      "to": "B",
-		      "from": "BL"
+		      "to": "BL",
+		      "from": "B"
 		    },
 		    {
 		      "to": "BR",
 		      "from": "B"
 		    },
 		    {
-		      "to": "T",
-		      "from": "U"
+		      "to": "TS",
+		      "from": "T"
+		    },
+		    {
+		      "to": "TS",
+		      "from": "B"
+		    },
+		    {
+		      "to": "BS",
+		      "from": "B"
 		    },
 		    {
 		      "to": "B",
 		      "from": "T"
-		    },
-		    {
-		      "to": "D",
-		      "from": "B"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -7168,7 +6767,7 @@ describe("angleDiagram widget tests", () => {
 		      "radius": 24,
 		      "vertex": "T",
 		      "pointOnFirstRay": "TL",
-		      "pointOnSecondRay": "U"
+		      "pointOnSecondRay": "TS"
 		    },
 		    {
 		      "type": "arc",
@@ -7177,7 +6776,7 @@ describe("angleDiagram widget tests", () => {
 		      "radius": 24,
 		      "vertex": "B",
 		      "pointOnFirstRay": "BL",
-		      "pointOnSecondRay": "D"
+		      "pointOnSecondRay": "TS"
 		    }
 		  ],
 		  "height": 336,
@@ -7213,163 +6812,28 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "x": 127.645,
 		      "y": 11.527,
-		      "id": "U",
+		      "id": "TS",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 232.355,
 		      "y": 324.473,
-		      "id": "D",
+		      "id": "BS",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 147.159,
-		      "y": 69.848,
+		      "x": 154.79,
+		      "y": 92.62,
 		      "id": "T",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 183.053,
-		      "y": 234.208,
+		      "x": 205.205,
+		      "y": 243.346,
 		      "id": "B",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8f57deefcc39d884
-	// Question: Find x using corresponding angles
-	// Widget key: image_1
-	test("angle-diagram - [x8f57deefcc39d884] Find x using corresponding angles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "V1",
-		      "from": "T1"
-		    },
-		    {
-		      "to": "T2",
-		      "from": "V1"
-		    },
-		    {
-		      "to": "V2",
-		      "from": "B1"
-		    },
-		    {
-		      "to": "B2",
-		      "from": "V2"
-		    },
-		    {
-		      "to": "V2",
-		      "from": "S2"
-		    },
-		    {
-		      "to": "V1",
-		      "from": "V2"
-		    },
-		    {
-		      "to": "S1",
-		      "from": "V1"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 360,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x",
-		      "radius": 24,
-		      "vertex": "V1",
-		      "pointOnFirstRay": "T1",
-		      "pointOnSecondRay": "S1"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "116°",
-		      "radius": 24,
-		      "vertex": "V2",
-		      "pointOnFirstRay": "B1",
-		      "pointOnSecondRay": "V1"
-		    }
-		  ],
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 120,
-		      "y": 50,
-		      "id": "T1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 240,
-		      "y": 100,
-		      "id": "V1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 360,
-		      "y": 150,
-		      "id": "T2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 40,
-		      "y": 130,
-		      "id": "B1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 160,
-		      "y": 180,
-		      "id": "V2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 280,
-		      "y": 230,
-		      "id": "B2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 320,
-		      "y": 20,
-		      "id": "S1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 80,
-		      "y": 260,
-		      "id": "S2",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -7392,40 +6856,52 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9c9de026df590299
-	// Question: Find an angle formed by a transversal and parallel lines
+	// Question: Find the measure of an angle formed by a transversal of parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [x9c9de026df590299] Find an angle formed by a transversal and parallel lines", async () => {
+	test("angle-diagram - [x9c9de026df590299] Find the measure of an angle formed by a transversal of parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "A",
-		      "from": "L1"
+		      "to": "P1b",
+		      "from": "P1a"
 		    },
 		    {
-		      "to": "L2",
-		      "from": "A"
+		      "to": "P1a",
+		      "from": "P1b"
 		    },
 		    {
-		      "to": "B",
-		      "from": "U1"
+		      "to": "P2b",
+		      "from": "P2a"
 		    },
 		    {
-		      "to": "U2",
-		      "from": "B"
-		    },
-		    {
-		      "to": "A",
-		      "from": "T1"
-		    },
-		    {
-		      "to": "B",
-		      "from": "A"
+		      "to": "P2a",
+		      "from": "P2b"
 		    },
 		    {
 		      "to": "T2",
-		      "from": "B"
+		      "from": "T1"
+		    },
+		    {
+		      "to": "T1",
+		      "from": "T2"
+		    },
+		    {
+		      "to": "P1a",
+		      "from": "V_left"
+		    },
+		    {
+		      "to": "T2",
+		      "from": "V_left"
+		    },
+		    {
+		      "to": "P2a",
+		      "from": "V_right"
+		    },
+		    {
+		      "to": "T1",
+		      "from": "V_right"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -7436,75 +6912,210 @@ describe("angleDiagram widget tests", () => {
 		      "color": "#6495ed",
 		      "label": "131°",
 		      "radius": 24,
-		      "vertex": "A",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "L2"
+		      "vertex": "V_left",
+		      "pointOnFirstRay": "T2",
+		      "pointOnSecondRay": "P1a"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#28ae7b",
-		      "label": "x°",
+		      "label": "x",
 		      "radius": 24,
-		      "vertex": "B",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "U2"
+		      "vertex": "V_right",
+		      "pointOnFirstRay": "T1",
+		      "pointOnSecondRay": "P2a"
 		    }
 		  ],
 		  "height": 360,
 		  "points": [
 		    {
-		      "x": 30,
-		      "y": 110,
-		      "id": "L1",
+		      "x": 20.901,
+		      "y": 105.754,
+		      "id": "P1a",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 140,
-		      "y": 180,
-		      "id": "A",
+		      "x": 254.246,
+		      "y": 339.099,
+		      "id": "P1b",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 320,
-		      "id": "L2",
+		      "x": 105.754,
+		      "y": 20.901,
+		      "id": "P2a",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 110,
-		      "y": 30,
-		      "id": "U1",
+		      "x": 339.099,
+		      "y": 254.246,
+		      "id": "P2b",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 170,
-		      "id": "B",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 360,
-		      "y": 250,
-		      "id": "U2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 20,
-		      "y": 190,
+		      "x": 15.402,
+		      "y": 191.51,
 		      "id": "T1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 340,
-		      "y": 170,
+		      "x": 344.598,
+		      "y": 168.49,
 		      "id": "T2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 100.982,
+		      "y": 185.547,
+		      "id": "V_left",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 259.607,
+		      "y": 174.456,
+		      "id": "V_right",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8f57deefcc39d884
+	// Question: Find an angle using corresponding angles
+	// Widget key: image_1
+	test("angle-diagram - [x8f57deefcc39d884] Find an angle using corresponding angles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "V_top",
+		      "from": "T1"
+		    },
+		    {
+		      "to": "T2",
+		      "from": "V_top"
+		    },
+		    {
+		      "to": "V_bottom",
+		      "from": "B1"
+		    },
+		    {
+		      "to": "B2",
+		      "from": "V_bottom"
+		    },
+		    {
+		      "to": "V_bottom",
+		      "from": "R1"
+		    },
+		    {
+		      "to": "V_top",
+		      "from": "V_bottom"
+		    },
+		    {
+		      "to": "R2",
+		      "from": "V_top"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 360,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 24,
+		      "vertex": "V_top",
+		      "pointOnFirstRay": "T1",
+		      "pointOnSecondRay": "R2"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "116°",
+		      "radius": 24,
+		      "vertex": "V_bottom",
+		      "pointOnFirstRay": "B1",
+		      "pointOnSecondRay": "V_top"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 50.52,
+		      "y": 31.424,
+		      "id": "T1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 355.402,
+		      "y": 157.71,
+		      "id": "T2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 4.599,
+		      "y": 142.29,
+		      "id": "B1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 309.479,
+		      "y": 268.576,
+		      "id": "B2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 56.422,
+		      "y": 259.332,
+		      "id": "R1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 303.578,
+		      "y": 40.668,
+		      "id": "R2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 229.6,
+		      "y": 105.57,
+		      "id": "V_top",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 129.73,
+		      "y": 194.13,
+		      "id": "V_bottom",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -7527,32 +7138,40 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6db80002631e214d
-	// Question: Find an angle measure with parallel lines and a transversal
+	// Question: Find the value of x using parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [x6db80002631e214d] Find an angle measure with parallel lines and a transversal", async () => {
+	test("angle-diagram - [x6db80002631e214d] Find the value of x using parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "P1",
+		      "to": "B",
+		      "from": "A"
+		    },
+		    {
+		      "to": "D",
+		      "from": "C"
+		    },
+		    {
+		      "to": "F",
+		      "from": "E"
+		    },
+		    {
+		      "to": "B",
 		      "from": "L"
 		    },
 		    {
-		      "to": "P2",
+		      "to": "E",
 		      "from": "L"
 		    },
 		    {
-		      "to": "Q1",
+		      "to": "C",
 		      "from": "R"
 		    },
 		    {
-		      "to": "Q2",
+		      "to": "F",
 		      "from": "R"
-		    },
-		    {
-		      "to": "R",
-		      "from": "L"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -7560,63 +7179,77 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "label": "44°",
-		      "radius": 24,
+		      "radius": 28,
 		      "vertex": "L",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "P1"
+		      "pointOnFirstRay": "F",
+		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x°",
-		      "radius": 24,
+		      "color": "#28AE7B",
+		      "label": "x",
+		      "radius": 28,
 		      "vertex": "R",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "Q1"
+		      "pointOnFirstRay": "F",
+		      "pointOnSecondRay": "C"
 		    }
 		  ],
 		  "height": 336,
 		  "points": [
 		    {
-		      "x": 254.246,
-		      "y": 8.901,
-		      "id": "P1",
-		      "label": " ",
+		      "x": 60,
+		      "y": 280,
+		      "id": "A",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 20.901,
-		      "y": 242.246,
-		      "id": "P2",
-		      "label": " ",
+		      "x": 300,
+		      "y": 40,
+		      "id": "B",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 339.099,
-		      "y": 93.754,
-		      "id": "Q1",
-		      "label": " ",
+		      "x": 120,
+		      "y": 320,
+		      "id": "C",
+		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 105.754,
-		      "y": 327.099,
-		      "id": "Q2",
-		      "label": " ",
+		      "x": 360,
+		      "y": 80,
+		      "id": "D",
+		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 93.673,
-		      "y": 169.474,
+		      "x": 20,
+		      "y": 175,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 340,
+		      "y": 165,
+		      "id": "F",
+		      "label": "F",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 169.677,
+		      "y": 170.323,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 266.31,
-		      "y": 166.543,
+		      "x": 272.903,
+		      "y": 167.097,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
@@ -7640,39 +7273,39 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xdc60eb138cdcb592
-	// Question: Find the angle measure using parallel lines and a transversal
+	// Question: Find the measure of angle x with a transversal
 	// Widget key: image_1
-	test("angle-diagram - [xdc60eb138cdcb592] Find the angle measure using parallel lines and a transversal", async () => {
+	test("angle-diagram - [xdc60eb138cdcb592] Find the measure of angle x with a transversal", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "R1",
-		      "from": "L1"
+		      "to": "T",
+		      "from": "L_top"
 		    },
 		    {
-		      "to": "R2",
-		      "from": "L2"
-		    },
-		    {
-		      "to": "D",
-		      "from": "U"
-		    },
-		    {
-		      "to": "R1",
+		      "to": "R_top",
 		      "from": "T"
 		    },
 		    {
-		      "to": "U",
-		      "from": "T"
+		      "to": "B",
+		      "from": "L_bot"
 		    },
 		    {
-		      "to": "L2",
+		      "to": "R_bot",
 		      "from": "B"
 		    },
 		    {
-		      "to": "D",
+		      "to": "T",
+		      "from": "U_trans"
+		    },
+		    {
+		      "to": "B",
+		      "from": "T"
+		    },
+		    {
+		      "to": "D_trans",
 		      "from": "B"
 		    }
 		  ],
@@ -7681,21 +7314,21 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x",
+		      "color": "#6495ed",
+		      "label": " ",
 		      "radius": 24,
-		      "vertex": "T",
-		      "pointOnFirstRay": "R1",
-		      "pointOnSecondRay": "U"
+		      "vertex": "B",
+		      "pointOnFirstRay": "R_bot",
+		      "pointOnSecondRay": "D_trans"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "105°",
+		      "color": "#28ae7b",
+		      "label": " ",
 		      "radius": 24,
-		      "vertex": "B",
-		      "pointOnFirstRay": "L2",
-		      "pointOnSecondRay": "D"
+		      "vertex": "T",
+		      "pointOnFirstRay": "R_top",
+		      "pointOnSecondRay": "U_trans"
 		    }
 		  ],
 		  "height": 360,
@@ -7703,54 +7336,54 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "x": 15,
 		      "y": 120,
-		      "id": "L1",
+		      "id": "L_top",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 345,
 		      "y": 120,
-		      "id": "R1",
+		      "id": "R_top",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 15,
 		      "y": 240,
-		      "id": "L2",
+		      "id": "L_bot",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 345,
 		      "y": 240,
-		      "id": "R2",
+		      "id": "R_bot",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 137,
-		      "y": 21,
-		      "id": "U",
+		      "x": 137.295,
+		      "y": 20.622,
+		      "id": "U_trans",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 223,
-		      "y": 339,
-		      "id": "D",
+		      "x": 222.705,
+		      "y": 339.378,
+		      "id": "D_trans",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 164,
+		      "x": 163.925,
 		      "y": 120,
 		      "id": "T",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 196,
+		      "x": 196.079,
 		      "y": 240,
 		      "id": "B",
 		      "label": " ",
@@ -7775,40 +7408,40 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe6b59dab2b12e70a
-	// Question: Find an angle measure with parallel lines and a transversal
+	// Question: Find the angle formed by a transversal
 	// Widget key: image_1
-	test("angle-diagram - [xe6b59dab2b12e70a] Find an angle measure with parallel lines and a transversal", async () => {
+	test("angle-diagram - [xe6b59dab2b12e70a] Find the angle formed by a transversal", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L1_end",
-		      "from": "L1_start"
+		      "to": "V1",
+		      "from": "A"
 		    },
 		    {
-		      "to": "L2_end",
-		      "from": "L2_start"
+		      "to": "B",
+		      "from": "V1"
 		    },
 		    {
-		      "to": "T_end",
-		      "from": "T_start"
+		      "to": "V2",
+		      "from": "C"
 		    },
 		    {
-		      "to": "L1_end",
-		      "from": "leftVertex"
+		      "to": "D",
+		      "from": "V2"
 		    },
 		    {
-		      "to": "T_end",
-		      "from": "leftVertex"
+		      "to": "V1",
+		      "from": "E"
 		    },
 		    {
-		      "to": "L2_start",
-		      "from": "rightVertex"
+		      "to": "V2",
+		      "from": "V1"
 		    },
 		    {
-		      "to": "T_start",
-		      "from": "rightVertex"
+		      "to": "F",
+		      "from": "V2"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -7818,2047 +7451,10 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#6495ed",
 		      "label": "124°",
-		      "radius": 24,
-		      "vertex": "leftVertex",
-		      "pointOnFirstRay": "L1_start",
-		      "pointOnSecondRay": "T_end"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x",
-		      "radius": 24,
-		      "vertex": "rightVertex",
-		      "pointOnFirstRay": "L2_start",
-		      "pointOnSecondRay": "T_start"
-		    }
-		  ],
-		  "height": 336,
-		  "points": [
-		    {
-		      "x": 20.901,
-		      "y": 93.754,
-		      "id": "L1_start",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 254.246,
-		      "y": 327.099,
-		      "id": "L1_end",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 105.754,
-		      "y": 8.901,
-		      "id": "L2_start",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 339.099,
-		      "y": 242.246,
-		      "id": "L2_end",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 18.032,
-		      "y": 199.483,
-		      "id": "T_start",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 341.968,
-		      "y": 136.517,
-		      "id": "T_end",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 108.95,
-		      "y": 181.803,
-		      "id": "leftVertex",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 251,
-		      "y": 154.147,
-		      "id": "rightVertex",
-		      "label": null,
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd3715e9dde40aa65
-	// Question: Find the angle using parallel lines and a transversal
-	// Widget key: image_1
-	test("angle-diagram - [xd3715e9dde40aa65] Find the angle using parallel lines and a transversal", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "D",
-		      "from": "C"
-		    },
-		    {
-		      "to": "F",
-		      "from": "E"
-		    },
-		    {
-		      "to": "A",
-		      "from": "U"
-		    },
-		    {
-		      "to": "F",
-		      "from": "U"
-		    },
-		    {
-		      "to": "C",
-		      "from": "L"
-		    },
-		    {
-		      "to": "F",
-		      "from": "L"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 360,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "56°",
-		      "radius": 24,
-		      "vertex": "U",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "F"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x",
-		      "radius": 24,
-		      "vertex": "L",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "C"
-		    }
-		  ],
-		  "height": 240,
-		  "points": [
-		    {
-		      "x": 310,
-		      "y": 10,
-		      "id": "A",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 20,
-		      "y": 120,
-		      "id": "B",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 350,
-		      "y": 120,
-		      "id": "C",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 60,
-		      "y": 230,
-		      "id": "D",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 40,
-		      "y": 30,
-		      "id": "E",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 320,
-		      "y": 210,
-		      "id": "F",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 120,
-		      "y": 80,
-		      "id": "U",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 260,
-		      "y": 170,
-		      "id": "L",
-		      "label": null,
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa3f7803a3d8b37a7
-	// Question: Find x with parallel lines and a transversal
-	// Widget key: image_1
-	test("angle-diagram - [xa3f7803a3d8b37a7] Find x with parallel lines and a transversal", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "LP_bottom",
-		      "from": "LP_top"
-		    },
-		    {
-		      "to": "RP_bottom",
-		      "from": "RP_top"
-		    },
-		    {
-		      "to": "T_bottom",
-		      "from": "T_top"
-		    },
-		    {
-		      "to": "LP_top",
-		      "from": "L"
-		    },
-		    {
-		      "to": "T_bottom",
-		      "from": "L"
-		    },
-		    {
-		      "to": "RP_bottom",
-		      "from": "R"
-		    },
-		    {
-		      "to": "T_top",
-		      "from": "R"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 276,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x",
-		      "radius": 24,
-		      "vertex": "L",
-		      "pointOnFirstRay": "LP_top",
-		      "pointOnSecondRay": "T_bottom"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "122°",
-		      "radius": 24,
-		      "vertex": "R",
-		      "pointOnFirstRay": "RP_bottom",
-		      "pointOnSecondRay": "T_top"
-		    }
-		  ],
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 145.71,
-		      "y": 4.599,
-		      "id": "LP_top",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 19.424,
-		      "y": 309.479,
-		      "id": "LP_bottom",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 256.576,
-		      "y": 50.52,
-		      "id": "RP_top",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 130.29,
-		      "y": 355.402,
-		      "id": "RP_bottom",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 42.184,
-		      "y": 45.67,
-		      "id": "T_top",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 233.816,
-		      "y": 314.33,
-		      "id": "T_bottom",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 96.9,
-		      "y": 122.44,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 179.1,
-		      "y": 237.57,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb13767aece97ee03
-	// Question: Find x using corresponding angles
-	// Widget key: image_1
-	test("angle-diagram - [xb13767aece97ee03] Find x using corresponding angles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "topLeft",
-		      "from": "topIntersection"
-		    },
-		    {
-		      "to": "topRight",
-		      "from": "topIntersection"
-		    },
-		    {
-		      "to": "botLeft",
-		      "from": "bottomIntersection"
-		    },
-		    {
-		      "to": "botRight",
-		      "from": "bottomIntersection"
-		    },
-		    {
-		      "to": "transBottom",
-		      "from": "transTop"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 342,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#28AE7B",
-		      "label": "x",
-		      "radius": 24,
-		      "vertex": "topIntersection",
-		      "pointOnFirstRay": "topRight",
-		      "pointOnSecondRay": "transTop"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#6495ED",
-		      "label": "93°",
-		      "radius": 24,
-		      "vertex": "bottomIntersection",
-		      "pointOnFirstRay": "botRight",
-		      "pointOnSecondRay": "transTop"
-		    }
-		  ],
-		  "height": 336,
-		  "points": [
-		    {
-		      "x": 2.901,
-		      "y": 242.246,
-		      "id": "topLeft",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 236.246,
-		      "y": 8.901,
-		      "id": "topRight",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 87.754,
-		      "y": 327.099,
-		      "id": "botLeft",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 321.099,
-		      "y": 93.754,
-		      "id": "botRight",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 39.381,
-		      "y": 57.593,
-		      "id": "transTop",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 284.62,
-		      "y": 278.407,
-		      "id": "transBottom",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 117.342,
-		      "y": 128.587,
-		      "id": "topIntersection",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 207.223,
-		      "y": 208.217,
-		      "id": "bottomIntersection",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xfac1f41c4d33feaa
-	// Question: Find the angle formed by a transversal with parallel lines
-	// Widget key: image_1
-	test("angle-diagram - [xfac1f41c4d33feaa] Find the angle formed by a transversal with parallel lines", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "B1",
-		      "from": "A1"
-		    },
-		    {
-		      "to": "B2",
-		      "from": "A2"
-		    },
-		    {
-		      "to": "T2",
-		      "from": "T1"
-		    },
-		    {
-		      "to": "A1",
-		      "from": "L"
-		    },
-		    {
-		      "to": "T1",
-		      "from": "L"
-		    },
-		    {
-		      "to": "A2",
-		      "from": "R"
-		    },
-		    {
-		      "to": "T2",
-		      "from": "R"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 312,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x°",
-		      "radius": 24,
-		      "vertex": "L",
-		      "pointOnFirstRay": "T1",
-		      "pointOnSecondRay": "A1"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "81°",
-		      "radius": 24,
-		      "vertex": "R",
-		      "pointOnFirstRay": "B2",
-		      "pointOnSecondRay": "T2"
-		    }
-		  ],
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 163.71,
-		      "y": 4.599,
-		      "id": "A1",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 37.424,
-		      "y": 309.479,
-		      "id": "B1",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 274.576,
-		      "y": 50.52,
-		      "id": "A2",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 148.29,
-		      "y": 355.402,
-		      "id": "B2",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 15.314,
-		      "y": 93.788,
-		      "id": "T1",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 296.686,
-		      "y": 266.212,
-		      "id": "T2",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 104.12,
-		      "y": 147.6,
-		      "id": "L",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 207.84,
-		      "y": 211.92,
-		      "id": "R",
-		      "label": null,
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3dda43dd251b3546
-	// Question: Find the angle formed by parallel lines and a transversal
-	// Widget key: image_1
-	test("angle-diagram - [x3dda43dd251b3546] Find the angle formed by parallel lines and a transversal", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "topVertex",
-		      "from": "topLeft"
-		    },
-		    {
-		      "to": "topRight",
-		      "from": "topVertex"
-		    },
-		    {
-		      "to": "bottomVertex",
-		      "from": "bottomLeft"
-		    },
-		    {
-		      "to": "bottomRight",
-		      "from": "bottomVertex"
-		    },
-		    {
-		      "to": "topVertex",
-		      "from": "transTop"
-		    },
-		    {
-		      "to": "bottomVertex",
-		      "from": "topVertex"
-		    },
-		    {
-		      "to": "transBottom",
-		      "from": "bottomVertex"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 348,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "106°",
-		      "radius": 24,
-		      "vertex": "topVertex",
-		      "pointOnFirstRay": "topRight",
-		      "pointOnSecondRay": "transBottom"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x",
-		      "radius": 24,
-		      "vertex": "bottomVertex",
-		      "pointOnFirstRay": "bottomRight",
-		      "pointOnSecondRay": "transTop"
-		    }
-		  ],
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 184.695,
-		      "id": "topLeft",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 297.479,
-		      "y": 61.425,
-		      "id": "topRight",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 38.521,
-		      "y": 298.576,
-		      "id": "bottomLeft",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 343.401,
-		      "y": 172.29,
-		      "id": "bottomRight",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 149.321,
-		      "y": 16.06,
-		      "id": "transTop",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 186.679,
-		      "y": 343.939,
-		      "id": "transBottom",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 160.924,
-		      "y": 117.988,
-		      "id": "topVertex",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 175.107,
-		      "y": 242,
-		      "id": "bottomVertex",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf670bfdaddf45590
-	// Question: Find x using parallel lines and a transversal
-	// Widget key: image_1
-	test("angle-diagram - [xf670bfdaddf45590] Find x using parallel lines and a transversal", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "V_left",
-		      "from": "P1"
-		    },
-		    {
-		      "to": "P2",
-		      "from": "V_left"
-		    },
-		    {
-		      "to": "V_right",
-		      "from": "Q1"
-		    },
-		    {
-		      "to": "Q2",
-		      "from": "V_right"
-		    },
-		    {
-		      "to": "V_left",
-		      "from": "T1"
-		    },
-		    {
-		      "to": "V_right",
-		      "from": "V_left"
-		    },
-		    {
-		      "to": "T2",
-		      "from": "V_right"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 360,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x°",
-		      "radius": 24,
-		      "vertex": "V_left",
-		      "pointOnFirstRay": "P1",
-		      "pointOnSecondRay": "V_right"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "48°",
-		      "radius": 24,
-		      "vertex": "V_right",
-		      "pointOnFirstRay": "Q1",
-		      "pointOnSecondRay": "V_left"
-		    }
-		  ],
-		  "height": 240,
-		  "points": [
-		    {
-		      "x": 4.599,
-		      "y": 112.29,
-		      "id": "P1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 309.479,
-		      "y": 238.576,
-		      "id": "P2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 50.52,
-		      "y": 1.424,
-		      "id": "Q1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 355.402,
-		      "y": 127.71,
-		      "id": "Q2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 31.073,
-		      "y": 191.034,
-		      "id": "T1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 328.927,
-		      "y": 48.966,
-		      "id": "T2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 107.13,
-		      "y": 154.76,
-		      "id": "V_left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 252.87,
-		      "y": 85.26,
-		      "id": "V_right",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1aeff2d3c837a981
-	// Question: Find the measure of x with a transversal
-	// Widget key: image_1
-	test("angle-diagram - [x1aeff2d3c837a981] Find the measure of x with a transversal", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "I_top",
-		      "from": "L1L"
-		    },
-		    {
-		      "to": "L1R",
-		      "from": "I_top"
-		    },
-		    {
-		      "to": "I_bot",
-		      "from": "L2L"
-		    },
-		    {
-		      "to": "L2R",
-		      "from": "I_bot"
-		    },
-		    {
-		      "to": "I_top",
-		      "from": "T1"
-		    },
-		    {
-		      "to": "I_bot",
-		      "from": "I_top"
-		    },
-		    {
-		      "to": "T2",
-		      "from": "I_bot"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 360,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "I_bot",
-		      "pointOnFirstRay": "T1",
-		      "pointOnSecondRay": "L2R"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "I_top",
-		      "pointOnFirstRay": "L1R",
-		      "pointOnSecondRay": "T1"
-		    }
-		  ],
-		  "height": 240,
-		  "points": [
-		    {
-		      "x": 15,
-		      "y": 60,
-		      "id": "L1L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 345,
-		      "y": 60,
-		      "id": "L1R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 15,
-		      "y": 180,
-		      "id": "L2L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 345,
-		      "y": 180,
-		      "id": "L2R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 294.619,
-		      "y": 1.309,
-		      "id": "T1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 65.381,
-		      "y": 238.691,
-		      "id": "T2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 238,
-		      "y": 60,
-		      "id": "I_top",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 122,
-		      "y": 180,
-		      "id": "I_bot",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x756f83b352e087c6
-	// Question: Find the angle measure in a parallel-lines diagram
-	// Widget key: image_1
-	test("angle-diagram - [x756f83b352e087c6] Find the angle measure in a parallel-lines diagram", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "L1_top",
-		      "from": "P_left"
-		    },
-		    {
-		      "to": "L1_bottom",
-		      "from": "P_left"
-		    },
-		    {
-		      "to": "L2_top",
-		      "from": "P_right"
-		    },
-		    {
-		      "to": "L2_bottom",
-		      "from": "P_right"
-		    },
-		    {
-		      "to": "P_right",
-		      "from": "P_left"
-		    },
-		    {
-		      "to": "T_left",
-		      "from": "P_left"
-		    },
-		    {
-		      "to": "T_right",
-		      "from": "P_right"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 336,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x",
-		      "radius": 24,
-		      "vertex": "P_left",
-		      "pointOnFirstRay": "L1_top",
-		      "pointOnSecondRay": "T_right"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "85°",
-		      "radius": 24,
-		      "vertex": "P_right",
-		      "pointOnFirstRay": "L2_bottom",
-		      "pointOnSecondRay": "T_left"
-		    }
-		  ],
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 49.425,
-		      "y": 50.52,
-		      "id": "L1_top",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 175.71,
-		      "y": 355.402,
-		      "id": "L1_bottom",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 160.29,
-		      "y": 4.599,
-		      "id": "L2_top",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 286.576,
-		      "y": 309.479,
-		      "id": "L2_bottom",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 10.637,
-		      "y": 229.616,
-		      "id": "T_left",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 325.363,
-		      "y": 130.384,
-		      "id": "T_right",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 110.6,
-		      "y": 198.1,
-		      "id": "P_left",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 225.5,
-		      "y": 161.9,
-		      "id": "P_right",
-		      "label": null,
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xaa96da03f8a96d44
-	// Question: Find the angle formed by a transversal with parallel lines
-	// Widget key: image_1
-	test("angle-diagram - [xaa96da03f8a96d44] Find the angle formed by a transversal with parallel lines", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "V_left",
-		      "from": "L1_left"
-		    },
-		    {
-		      "to": "L1_right",
-		      "from": "V_left"
-		    },
-		    {
-		      "to": "V_right",
-		      "from": "L2_left"
-		    },
-		    {
-		      "to": "L2_right",
-		      "from": "V_right"
-		    },
-		    {
-		      "to": "V_left",
-		      "from": "T_bottom"
-		    },
-		    {
-		      "to": "V_right",
-		      "from": "V_left"
-		    },
-		    {
-		      "to": "T_top",
-		      "from": "V_right"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 348,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "103°",
-		      "radius": 24,
-		      "vertex": "V_left",
-		      "pointOnFirstRay": "L1_right",
-		      "pointOnSecondRay": "T_bottom"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x",
-		      "radius": 24,
-		      "vertex": "V_right",
-		      "pointOnFirstRay": "L2_right",
-		      "pointOnSecondRay": "T_top"
-		    }
-		  ],
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": -7.401,
-		      "y": 148.29,
-		      "id": "L1_left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 297.479,
-		      "y": 274.576,
-		      "id": "L1_right",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 38.52,
-		      "y": 37.425,
-		      "id": "L2_left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 343.402,
-		      "y": 163.71,
-		      "id": "L2_right",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 72.184,
-		      "y": 290.329,
-		      "id": "T_bottom",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 263.816,
-		      "y": 21.671,
-		      "id": "T_top",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 131.6,
-		      "y": 206,
-		      "id": "V_left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 204.3,
-		      "y": 105.5,
-		      "id": "V_right",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe808b20137974cb7
-	// Question: Find an angle measure with parallel lines and a transversal
-	// Widget key: image_1
-	test("angle-diagram - [xe808b20137974cb7] Find an angle measure with parallel lines and a transversal", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "I1",
-		      "from": "L1_A"
-		    },
-		    {
-		      "to": "L1_B",
-		      "from": "I1"
-		    },
-		    {
-		      "to": "I2",
-		      "from": "L2_A"
-		    },
-		    {
-		      "to": "L2_B",
-		      "from": "I2"
-		    },
-		    {
-		      "to": "I1",
-		      "from": "T_A"
-		    },
-		    {
-		      "to": "I2",
-		      "from": "I1"
-		    },
-		    {
-		      "to": "T_B",
-		      "from": "I2"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 330,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "I1",
-		      "pointOnFirstRay": "T_B",
-		      "pointOnSecondRay": "L1_B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "107°",
-		      "radius": 24,
-		      "vertex": "I2",
-		      "pointOnFirstRay": "T_A",
-		      "pointOnSecondRay": "L2_A"
-		    }
-		  ],
-		  "height": 336,
-		  "points": [
-		    {
-		      "x": 8.901,
-		      "y": 93.754,
-		      "id": "L1_A",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 112.69,
-		      "y": 197.54,
-		      "id": "I1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 242.246,
-		      "y": 327.099,
-		      "id": "L1_B",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 93.754,
-		      "y": 8.901,
-		      "id": "L2_A",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 223.44,
-		      "y": 138.59,
-		      "id": "I2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 327.099,
-		      "y": 242.246,
-		      "id": "L2_B",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 22.314,
-		      "y": 245.463,
-		      "id": "T_A",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 313.686,
-		      "y": 90.537,
-		      "id": "T_B",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe2162c3338a43a06
-	// Question: Find the angle measure with a transversal
-	// Widget key: image_1
-	test("angle-diagram - [xe2162c3338a43a06] Find the angle measure with a transversal", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "V_left",
-		      "from": "L1a"
-		    },
-		    {
-		      "to": "L1b",
-		      "from": "V_left"
-		    },
-		    {
-		      "to": "V_right",
-		      "from": "L2a"
-		    },
-		    {
-		      "to": "L2b",
-		      "from": "V_right"
-		    },
-		    {
-		      "to": "V_left",
-		      "from": "T1"
-		    },
-		    {
-		      "to": "V_right",
-		      "from": "V_left"
-		    },
-		    {
-		      "to": "T2",
-		      "from": "V_right"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 360,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "x",
-		      "radius": 24,
-		      "vertex": "V_left",
-		      "pointOnFirstRay": "L1a",
-		      "pointOnSecondRay": "T2"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "138°",
-		      "radius": 24,
-		      "vertex": "V_right",
-		      "pointOnFirstRay": "L2b",
-		      "pointOnSecondRay": "T1"
-		    }
-		  ],
-		  "height": 252,
-		  "points": [
-		    {
-		      "x": 4.599,
-		      "y": 124.29,
-		      "id": "L1a",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 309.479,
-		      "y": 250.576,
-		      "id": "L1b",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 50.52,
-		      "y": 13.425,
-		      "id": "L2a",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 355.402,
-		      "y": 139.71,
-		      "id": "L2b",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 24.464,
-		      "y": 187.078,
-		      "id": "T1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 335.536,
-		      "y": 76.922,
-		      "id": "T2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 95.5,
-		      "y": 161.966,
-		      "id": "V_left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 264.477,
-		      "y": 101.984,
-		      "id": "V_right",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xfb4bbea788011ac6
-	// Question: Find an angle measure with parallel lines and a transversal
-	// Widget key: image_1
-	test("angle-diagram - [xfb4bbea788011ac6] Find an angle measure with parallel lines and a transversal", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "U2",
-		      "from": "U1"
-		    },
-		    {
-		      "to": "L2",
-		      "from": "L1"
-		    },
-		    {
-		      "to": "I_top",
-		      "from": "T1"
-		    },
-		    {
-		      "to": "I_bottom",
-		      "from": "I_top"
-		    },
-		    {
-		      "to": "T2",
-		      "from": "I_bottom"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 360,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "I_top",
-		      "pointOnFirstRay": "U2",
-		      "pointOnSecondRay": "T2"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "I_bottom",
-		      "pointOnFirstRay": "L1",
-		      "pointOnSecondRay": "T1"
-		    }
-		  ],
-		  "height": 336,
-		  "points": [
-		    {
-		      "x": 309.479,
-		      "y": 49.425,
-		      "id": "U1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 4.599,
-		      "y": 175.71,
-		      "id": "U2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 355.401,
-		      "y": 160.29,
-		      "id": "L1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 50.521,
-		      "y": 286.576,
-		      "id": "L2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 155.611,
-		      "y": 4.812,
-		      "id": "T1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 204.389,
-		      "y": 331.188,
-		      "id": "T2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 170.881,
-		      "y": 106.834,
-		      "id": "I_top",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 189.151,
-		      "y": 229.153,
-		      "id": "I_bottom",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xfc6c8c2a2c7c1947
-	// Question: Find the measure of x with parallel lines
-	// Widget key: image_1
-	test("angle-diagram - [xfc6c8c2a2c7c1947] Find the measure of x with parallel lines", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "V_lower",
-		      "from": "P_lower_left"
-		    },
-		    {
-		      "to": "P_lower_right",
-		      "from": "V_lower"
-		    },
-		    {
-		      "to": "V_upper",
-		      "from": "P_upper_left"
-		    },
-		    {
-		      "to": "P_upper_right",
-		      "from": "V_upper"
-		    },
-		    {
-		      "to": "V_lower",
-		      "from": "P_trans_left"
-		    },
-		    {
-		      "to": "V_upper",
-		      "from": "V_lower"
-		    },
-		    {
-		      "to": "P_trans_right",
-		      "from": "V_upper"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 330,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "V_upper",
-		      "pointOnFirstRay": "P_upper_right",
-		      "pointOnSecondRay": "P_trans_right"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "V_lower",
-		      "pointOnFirstRay": "P_lower_left",
-		      "pointOnSecondRay": "P_trans_left"
-		    }
-		  ],
-		  "height": 348,
-		  "points": [
-		    {
-		      "x": 2.901,
-		      "y": 105.754,
-		      "id": "P_lower_left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 236.246,
-		      "y": 339.099,
-		      "id": "P_lower_right",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 87.754,
-		      "y": 20.901,
-		      "id": "P_upper_left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 321.099,
-		      "y": 254.246,
-		      "id": "P_upper_right",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 47.381,
-		      "y": 298.691,
-		      "id": "P_trans_left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 276.62,
-		      "y": 61.309,
-		      "id": "P_trans_right",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 204.033,
-		      "y": 137.033,
-		      "id": "V_upper",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 120.806,
-		      "y": 223.659,
-		      "id": "V_lower",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x94d9bb14bc89f97d
-	// Question: Find x using parallel lines and a transversal
-	// Widget key: image_1
-	test("angle-diagram - [x94d9bb14bc89f97d] Find x using parallel lines and a transversal", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "I1",
-		      "from": "P1a"
-		    },
-		    {
-		      "to": "P1b",
-		      "from": "I1"
-		    },
-		    {
-		      "to": "I1",
-		      "from": "P1b"
-		    },
-		    {
-		      "to": "P1a",
-		      "from": "I1"
-		    },
-		    {
-		      "to": "I2",
-		      "from": "P2a"
-		    },
-		    {
-		      "to": "P2b",
-		      "from": "I2"
-		    },
-		    {
-		      "to": "I2",
-		      "from": "P2b"
-		    },
-		    {
-		      "to": "P2a",
-		      "from": "I2"
-		    },
-		    {
-		      "to": "I1",
-		      "from": "T_a"
-		    },
-		    {
-		      "to": "I2",
-		      "from": "I1"
-		    },
-		    {
-		      "to": "T_b",
-		      "from": "I2"
-		    },
-		    {
-		      "to": "I2",
-		      "from": "T_b"
-		    },
-		    {
-		      "to": "I1",
-		      "from": "I2"
-		    },
-		    {
-		      "to": "T_a",
-		      "from": "I1"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 336,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "I1",
-		      "pointOnFirstRay": "P1b",
-		      "pointOnSecondRay": "T_a"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "I2",
-		      "pointOnFirstRay": "P2a",
-		      "pointOnSecondRay": "T_b"
-		    }
-		  ],
-		  "height": 336,
-		  "points": [
-		    {
-		      "x": 8.901,
-		      "y": 93.754,
-		      "id": "P1a",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 242.246,
-		      "y": 327.099,
-		      "id": "P1b",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 93.754,
-		      "y": 8.901,
-		      "id": "P2a",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 327.099,
-		      "y": 242.246,
-		      "id": "P2b",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 55.47,
-		      "y": 288.673,
-		      "id": "T_a",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 280.53,
-		      "y": 47.327,
-		      "id": "T_b",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 126.62,
-		      "y": 211.47,
-		      "id": "I1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 208.87,
-		      "y": 124.02,
-		      "id": "I2",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x49e70438dd9898ce
-	// Question: Find the angle formed by a transversal
-	// Widget key: image_1
-	test("angle-diagram - [x49e70438dd9898ce] Find the angle formed by a transversal", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "V1",
-		      "from": "L1A"
-		    },
-		    {
-		      "to": "L1B",
-		      "from": "V1"
-		    },
-		    {
-		      "to": "V2",
-		      "from": "L2A"
-		    },
-		    {
-		      "to": "L2B",
-		      "from": "V2"
-		    },
-		    {
-		      "to": "V1",
-		      "from": "T1"
-		    },
-		    {
-		      "to": "V2",
-		      "from": "V1"
-		    },
-		    {
-		      "to": "T2",
-		      "from": "V2"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 336,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "80°",
-		      "radius": 24,
+		      "radius": 26,
 		      "vertex": "V1",
-		      "pointOnFirstRay": "T1",
-		      "pointOnSecondRay": "L1B"
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "E"
 		    },
 		    {
 		      "type": "arc",
@@ -9866,64 +7462,64 @@ describe("angleDiagram widget tests", () => {
 		      "label": "x°",
 		      "radius": 24,
 		      "vertex": "V2",
-		      "pointOnFirstRay": "L2A",
-		      "pointOnSecondRay": "V1"
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "E"
 		    }
 		  ],
 		  "height": 336,
 		  "points": [
 		    {
-		      "x": 242.246,
-		      "y": 8.901,
-		      "id": "L1A",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 8.901,
-		      "y": 242.246,
-		      "id": "L1B",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 327.099,
+		      "x": 20.901,
 		      "y": 93.754,
-		      "id": "L2A",
-		      "label": " ",
+		      "id": "A",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 93.754,
+		      "x": 254.246,
 		      "y": 327.099,
-		      "id": "L2B",
-		      "label": " ",
+		      "id": "B",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 32.84,
-		      "y": 73.36,
-		      "id": "T1",
-		      "label": " ",
+		      "x": 105.754,
+		      "y": 8.901,
+		      "id": "C",
+		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 303.16,
-		      "y": 262.64,
-		      "id": "T2",
-		      "label": " ",
+		      "x": 339.099,
+		      "y": 242.246,
+		      "id": "D",
+		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 118.1,
-		      "y": 133,
+		      "x": 18.032,
+		      "y": 199.483,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 341.968,
+		      "y": 136.517,
+		      "id": "F",
+		      "label": "F",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 108.89,
+		      "y": 181.74,
 		      "id": "V1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 217.9,
-		      "y": 203.7,
+		      "x": 251,
+		      "y": 154.15,
 		      "id": "V2",
 		      "label": " ",
 		      "shape": "circle"
@@ -9946,73 +7542,315 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x31da49d473c4cc62
-	// Question: Find the angle measure with parallel lines and a transversal
+	// Extracted from question: xd3715e9dde40aa65
+	// Question: Find the angle measure with parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [x31da49d473c4cc62] Find the angle measure with parallel lines and a transversal", async () => {
+	test("angle-diagram - [xd3715e9dde40aa65] Find the angle measure with parallel lines", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "A2",
+		      "from": "A1"
+		    },
+		    {
+		      "to": "B2",
+		      "from": "B1"
+		    },
+		    {
+		      "to": "C2",
+		      "from": "C1"
+		    },
+		    {
+		      "to": "A2",
+		      "from": "V1"
+		    },
+		    {
+		      "to": "C2",
+		      "from": "V1"
+		    },
+		    {
+		      "to": "B2",
+		      "from": "V2"
+		    },
+		    {
+		      "to": "C2",
+		      "from": "V2"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 420,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "56°",
+		      "radius": 24,
+		      "vertex": "V1",
+		      "pointOnFirstRay": "A2",
+		      "pointOnSecondRay": "C2"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 24,
+		      "vertex": "V2",
+		      "pointOnFirstRay": "B2",
+		      "pointOnSecondRay": "C2"
+		    }
+		  ],
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 64.599,
+		      "y": 187.71,
+		      "id": "A1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 369.479,
+		      "y": 61.4245,
+		      "id": "A2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 110.521,
+		      "y": 298.576,
+		      "id": "B1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 415.401,
+		      "y": 172.29,
+		      "id": "B2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 102.409,
+		      "y": 88.9304,
+		      "id": "C1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 377.591,
+		      "y": 271.07,
+		      "id": "C2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 179.661,
+		      "y": 140.061,
+		      "id": "V1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300.7,
+		      "y": 220.898,
+		      "id": "V2",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa3f7803a3d8b37a7
+	// Question: Find x with a transversal across parallel lines
+	// Widget key: image_1
+	test("angle-diagram - [xa3f7803a3d8b37a7] Find x with a transversal across parallel lines", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "I_left",
+		      "from": "L1_top"
+		    },
+		    {
+		      "to": "L1_bottom",
+		      "from": "I_left"
+		    },
+		    {
+		      "to": "I_right",
+		      "from": "L2_top"
+		    },
+		    {
+		      "to": "L2_bottom",
+		      "from": "I_right"
+		    },
+		    {
+		      "to": "I_left",
+		      "from": "T_start"
+		    },
+		    {
+		      "to": "I_right",
+		      "from": "I_left"
+		    },
+		    {
+		      "to": "T_end",
+		      "from": "I_right"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 420,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x°",
+		      "radius": 30,
+		      "vertex": "I_left",
+		      "pointOnFirstRay": "L1_top",
+		      "pointOnSecondRay": "I_right"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "122°",
+		      "radius": 30,
+		      "vertex": "I_right",
+		      "pointOnFirstRay": "L2_bottom",
+		      "pointOnSecondRay": "I_left"
+		    }
+		  ],
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 150,
+		      "y": 10,
+		      "id": "L1_top",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 30,
+		      "y": 320,
+		      "id": "L1_bottom",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 260,
+		      "y": 50,
+		      "id": "L2_top",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 140,
+		      "y": 350,
+		      "id": "L2_bottom",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 40,
+		      "y": 40,
+		      "id": "T_start",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 330,
+		      "y": 320,
+		      "id": "T_end",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 112,
+		      "y": 109,
+		      "id": "I_left",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 202,
+		      "y": 196,
+		      "id": "I_right",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb13767aece97ee03
+	// Question: Find the angle measure using corresponding angles
+	// Widget key: image_1
+	test("angle-diagram - [xb13767aece97ee03] Find the angle measure using corresponding angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
 		      "to": "V_top",
-		      "from": "T_left"
+		      "from": "L1_A"
 		    },
 		    {
-		      "to": "T_right",
-		      "from": "V_top"
-		    },
-		    {
-		      "to": "V_top",
-		      "from": "T_right"
-		    },
-		    {
-		      "to": "T_left",
+		      "to": "L1_B",
 		      "from": "V_top"
 		    },
 		    {
 		      "to": "V_bottom",
-		      "from": "B_left"
+		      "from": "L2_A"
 		    },
 		    {
-		      "to": "B_right",
-		      "from": "V_bottom"
-		    },
-		    {
-		      "to": "V_bottom",
-		      "from": "B_right"
-		    },
-		    {
-		      "to": "B_left",
+		      "to": "L2_B",
 		      "from": "V_bottom"
 		    },
 		    {
 		      "to": "V_top",
-		      "from": "Transversal_top"
+		      "from": "T_A"
 		    },
 		    {
 		      "to": "V_bottom",
 		      "from": "V_top"
 		    },
 		    {
-		      "to": "Transversal_bottom",
+		      "to": "T_B",
 		      "from": "V_bottom"
-		    },
-		    {
-		      "to": "V_bottom",
-		      "from": "Transversal_bottom"
-		    },
-		    {
-		      "to": "V_top",
-		      "from": "V_bottom"
-		    },
-		    {
-		      "to": "Transversal_top",
-		      "from": "V_top"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 348,
+		  "width": 342,
 		  "angles": [
 		    {
 		      "type": "arc",
@@ -10020,74 +7858,1889 @@ describe("angleDiagram widget tests", () => {
 		      "label": "x",
 		      "radius": 24,
 		      "vertex": "V_top",
-		      "pointOnFirstRay": "Transversal_top",
+		      "pointOnFirstRay": "T_A",
+		      "pointOnSecondRay": "L1_A"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "93°",
+		      "radius": 24,
+		      "vertex": "V_bottom",
+		      "pointOnFirstRay": "T_A",
+		      "pointOnSecondRay": "L2_A"
+		    }
+		  ],
+		  "height": 336,
+		  "points": [
+		    {
+		      "x": 236.246,
+		      "y": 8.901,
+		      "id": "L1_A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 2.901,
+		      "y": 242.246,
+		      "id": "L1_B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 321.099,
+		      "y": 93.754,
+		      "id": "L2_A",
+		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 87.754,
+		      "y": 327.099,
+		      "id": "L2_B",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 39.381,
+		      "y": 57.593,
+		      "id": "T_A",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 284.62,
+		      "y": 278.407,
+		      "id": "T_B",
+		      "label": "F",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 117.355,
+		      "y": 127.792,
+		      "id": "V_top",
+		      "label": "P",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 206.627,
+		      "y": 208.226,
+		      "id": "V_bottom",
+		      "label": "Q",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfac1f41c4d33feaa
+	// Question: Find an angle using parallel lines
+	// Widget key: image_1
+	test("angle-diagram - [xfac1f41c4d33feaa] Find an angle using parallel lines", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "L",
+		      "from": "A1"
+		    },
+		    {
+		      "to": "A2",
+		      "from": "L"
+		    },
+		    {
+		      "to": "R",
+		      "from": "B1"
+		    },
+		    {
+		      "to": "B2",
+		      "from": "R"
+		    },
+		    {
+		      "to": "L",
+		      "from": "T1"
+		    },
+		    {
+		      "to": "R",
+		      "from": "L"
+		    },
+		    {
+		      "to": "T2",
+		      "from": "R"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 312,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 24,
+		      "vertex": "L",
+		      "pointOnFirstRay": "A1",
+		      "pointOnSecondRay": "T1"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "81°",
+		      "radius": 24,
+		      "vertex": "R",
+		      "pointOnFirstRay": "T2",
+		      "pointOnSecondRay": "B2"
+		    }
+		  ],
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 163.71,
+		      "y": 4.599,
+		      "id": "A1",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 37.424,
+		      "y": 309.479,
+		      "id": "A2",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 274.576,
+		      "y": 50.52,
+		      "id": "B1",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 148.29,
+		      "y": 355.402,
+		      "id": "B2",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 15.314,
+		      "y": 93.788,
+		      "id": "T1",
+		      "label": "T",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 296.686,
+		      "y": 266.212,
+		      "id": "T2",
+		      "label": "T",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 104.24,
+		      "y": 148.29,
+		      "id": "L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 208.28,
+		      "y": 212.18,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3dda43dd251b3546
+	// Question: Find the angle formed by a transversal of parallel lines
+	// Widget key: image_1
+	test("angle-diagram - [x3dda43dd251b3546] Find the angle formed by a transversal of parallel lines", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "TR",
+		      "from": "TL"
+		    },
+		    {
+		      "to": "BR",
+		      "from": "BL"
+		    },
+		    {
+		      "to": "TB",
+		      "from": "TT"
+		    },
+		    {
+		      "to": "TR",
+		      "from": "T"
+		    },
+		    {
+		      "to": "TL",
+		      "from": "T"
+		    },
+		    {
+		      "to": "BR",
+		      "from": "B"
+		    },
+		    {
+		      "to": "BL",
+		      "from": "B"
+		    },
+		    {
+		      "to": "TB",
+		      "from": "T"
+		    },
+		    {
+		      "to": "TT",
+		      "from": "B"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 348,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "106°",
+		      "radius": 26,
+		      "vertex": "T",
+		      "pointOnFirstRay": "TR",
+		      "pointOnSecondRay": "TB"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 26,
+		      "vertex": "B",
+		      "pointOnFirstRay": "BR",
+		      "pointOnSecondRay": "TT"
+		    }
+		  ],
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 10,
+		      "y": 181.1,
+		      "id": "TL",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 320,
+		      "y": 52.5,
+		      "id": "TR",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 10,
+		      "y": 310.4,
+		      "id": "BL",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 330,
+		      "y": 177.9,
+		      "id": "BR",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 148.6,
+		      "y": 10,
+		      "id": "TT",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 187.4,
+		      "y": 350,
+		      "id": "TB",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 161,
+		      "y": 118.4,
+		      "id": "T",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 175.1,
+		      "y": 242,
+		      "id": "B",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf670bfdaddf45590
+	// Question: Find an angle formed by a transversal and parallel lines
+	// Widget key: image_1
+	test("angle-diagram - [xf670bfdaddf45590] Find an angle formed by a transversal and parallel lines", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "L1",
+		      "from": "V_top"
+		    },
+		    {
+		      "to": "R1",
+		      "from": "V_top"
+		    },
+		    {
+		      "to": "L2",
+		      "from": "V_bottom"
+		    },
+		    {
+		      "to": "R2",
+		      "from": "V_bottom"
+		    },
+		    {
+		      "to": "T_top",
+		      "from": "T_bottom"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 360,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 28,
+		      "vertex": "V_bottom",
+		      "pointOnFirstRay": "L2",
+		      "pointOnSecondRay": "T_top"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "48°",
+		      "radius": 26,
+		      "vertex": "V_top",
+		      "pointOnFirstRay": "T_bottom",
+		      "pointOnSecondRay": "L1"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 20,
+		      "y": 26.25,
+		      "id": "L1",
+		      "label": "L1",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 340,
+		      "y": 86.25,
+		      "id": "R1",
+		      "label": "R1",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 20,
+		      "y": 121.875,
+		      "id": "L2",
+		      "label": "L2",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 340,
+		      "y": 181.875,
+		      "id": "R2",
+		      "label": "R2",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 264,
+		      "y": 72,
+		      "id": "V_top",
+		      "label": "V₁",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 138,
+		      "y": 144,
+		      "id": "V_bottom",
+		      "label": "V₂",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 320,
+		      "y": 40,
+		      "id": "T_top",
+		      "label": "T₁",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 40,
+		      "y": 200,
+		      "id": "T_bottom",
+		      "label": "T₂",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1aeff2d3c837a981
+	// Question: Find the value of x with parallel lines and a transversal
+	// Widget key: image_1
+	test("angle-diagram - [x1aeff2d3c837a981] Find the value of x with parallel lines and a transversal", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "top_right",
+		      "from": "vertex_top"
+		    },
+		    {
+		      "to": "top_left",
+		      "from": "vertex_top"
+		    },
+		    {
+		      "to": "bottom_right",
+		      "from": "vertex_bottom"
+		    },
+		    {
+		      "to": "bottom_left",
+		      "from": "vertex_bottom"
+		    },
+		    {
+		      "to": "vertex_top",
+		      "from": "transversal_top"
+		    },
+		    {
+		      "to": "vertex_bottom",
+		      "from": "vertex_top"
+		    },
+		    {
+		      "to": "transversal_bottom",
+		      "from": "vertex_bottom"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 420,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x°",
+		      "radius": 36,
+		      "vertex": "vertex_top",
+		      "pointOnFirstRay": "top_right",
+		      "pointOnSecondRay": "transversal_bottom"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "46°",
+		      "radius": 28,
+		      "vertex": "vertex_bottom",
+		      "pointOnFirstRay": "bottom_right",
+		      "pointOnSecondRay": "transversal_top"
+		    }
+		  ],
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 60,
+		      "y": 120,
+		      "id": "top_left",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 360,
+		      "y": 120,
+		      "id": "top_right",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 60,
+		      "y": 240,
+		      "id": "bottom_left",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 360,
+		      "y": 240,
+		      "id": "bottom_right",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 360,
+		      "y": 60,
+		      "id": "transversal_top",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 120,
+		      "y": 300,
+		      "id": "transversal_bottom",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300,
+		      "y": 120,
+		      "id": "vertex_top",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 180,
+		      "y": 240,
+		      "id": "vertex_bottom",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x756f83b352e087c6
+	// Question: Find an angle measure with parallel lines and a transversal
+	// Widget key: image_1
+	test("angle-diagram - [x756f83b352e087c6] Find an angle measure with parallel lines and a transversal", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "L_bottom",
+		      "from": "L_top"
+		    },
+		    {
+		      "to": "R_bottom",
+		      "from": "R_top"
+		    },
+		    {
+		      "to": "T_right",
+		      "from": "T_left"
+		    },
+		    {
+		      "to": "L_top",
+		      "from": "V_left"
+		    },
+		    {
+		      "to": "L_bottom",
+		      "from": "V_left"
+		    },
+		    {
+		      "to": "T_left",
+		      "from": "V_left"
+		    },
+		    {
+		      "to": "T_right",
+		      "from": "V_left"
+		    },
+		    {
+		      "to": "R_top",
+		      "from": "V_right"
+		    },
+		    {
+		      "to": "R_bottom",
+		      "from": "V_right"
+		    },
+		    {
+		      "to": "T_left",
+		      "from": "V_right"
+		    },
+		    {
+		      "to": "T_right",
+		      "from": "V_right"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 336,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 24,
+		      "vertex": "V_left",
+		      "pointOnFirstRay": "L_top",
 		      "pointOnSecondRay": "T_left"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#6495ed",
-		      "label": "136°",
+		      "label": "85°",
 		      "radius": 24,
-		      "vertex": "V_bottom",
-		      "pointOnFirstRay": "V_top",
-		      "pointOnSecondRay": "B_left"
+		      "vertex": "V_right",
+		      "pointOnFirstRay": "R_bottom",
+		      "pointOnSecondRay": "T_right"
 		    }
 		  ],
-		  "height": 240,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 3,
-		      "y": 60,
+		      "x": 49.425,
+		      "y": 50.521,
+		      "id": "L_top",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 175.71,
+		      "y": 355.402,
+		      "id": "L_bottom",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 160.29,
+		      "y": 4.599,
+		      "id": "R_top",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 286.576,
+		      "y": 309.479,
+		      "id": "R_bottom",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 10.637,
+		      "y": 229.616,
 		      "id": "T_left",
-		      "label": " ",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 333,
-		      "y": 60,
+		      "x": 325.363,
+		      "y": 130.384,
 		      "id": "T_right",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 110.68,
+		      "y": 199.4,
+		      "id": "V_left",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 224.93,
+		      "y": 161.5,
+		      "id": "V_right",
+		      "label": null,
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xaa96da03f8a96d44
+	// Question: Find the angle formed by parallel lines and a transversal
+	// Widget key: image_1
+	test("angle-diagram - [xaa96da03f8a96d44] Find the angle formed by parallel lines and a transversal", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "LP_right",
+		      "from": "LP_left"
+		    },
+		    {
+		      "to": "LP_left",
+		      "from": "LP_right"
+		    },
+		    {
+		      "to": "UP_right",
+		      "from": "UP_left"
+		    },
+		    {
+		      "to": "UP_left",
+		      "from": "UP_right"
+		    },
+		    {
+		      "to": "T_top",
+		      "from": "T_bottom"
+		    },
+		    {
+		      "to": "T_bottom",
+		      "from": "T_top"
+		    },
+		    {
+		      "to": "LP_right",
+		      "from": "L"
+		    },
+		    {
+		      "to": "T_bottom",
+		      "from": "L"
+		    },
+		    {
+		      "to": "UP_right",
+		      "from": "R"
+		    },
+		    {
+		      "to": "T_top",
+		      "from": "R"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 348,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "103°",
+		      "radius": 26,
+		      "vertex": "L",
+		      "pointOnFirstRay": "LP_right",
+		      "pointOnSecondRay": "T_bottom"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 24,
+		      "vertex": "R",
+		      "pointOnFirstRay": "UP_right",
+		      "pointOnSecondRay": "T_top"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 150,
+		      "id": "LP_left",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 3,
-		      "y": 180,
-		      "id": "B_left",
+		      "x": 340,
+		      "y": 275,
+		      "id": "LP_right",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 333,
-		      "y": 180,
-		      "id": "B_right",
+		      "x": 39,
+		      "y": 37,
+		      "id": "UP_left",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 230.192,
-		      "y": 60,
-		      "id": "V_top",
+		      "x": 343,
+		      "y": 164,
+		      "id": "UP_right",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 105.808,
-		      "y": 180,
-		      "id": "V_bottom",
+		      "x": 72,
+		      "y": 290,
+		      "id": "T_bottom",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 286.691,
-		      "y": 5.381,
-		      "id": "Transversal_top",
+		      "x": 264,
+		      "y": 22,
+		      "id": "T_top",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 49.309,
-		      "y": 234.62,
-		      "id": "Transversal_bottom",
+		      "x": 137,
+		      "y": 200,
+		      "id": "L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 204,
+		      "y": 106,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe808b20137974cb7
+	// Question: Find x using parallel lines and a transversal
+	// Widget key: image_1
+	test("angle-diagram - [xe808b20137974cb7] Find x using parallel lines and a transversal", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "P",
+		      "from": "A"
+		    },
+		    {
+		      "to": "B",
+		      "from": "P"
+		    },
+		    {
+		      "to": "Q",
+		      "from": "C"
+		    },
+		    {
+		      "to": "D",
+		      "from": "Q"
+		    },
+		    {
+		      "to": "P",
+		      "from": "E"
+		    },
+		    {
+		      "to": "Q",
+		      "from": "P"
+		    },
+		    {
+		      "to": "F",
+		      "from": "Q"
+		    },
+		    {
+		      "to": "F",
+		      "from": "P"
+		    },
+		    {
+		      "to": "E",
+		      "from": "Q"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 330,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 24,
+		      "vertex": "P",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "F"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "107°",
+		      "radius": 24,
+		      "vertex": "Q",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "D"
+		    }
+		  ],
+		  "height": 336,
+		  "points": [
+		    {
+		      "x": 8.901,
+		      "y": 93.754,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 242.246,
+		      "y": 327.099,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 93.754,
+		      "y": 8.901,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 327.099,
+		      "y": 242.246,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 22.314,
+		      "y": 245.463,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 313.686,
+		      "y": 90.537,
+		      "id": "F",
+		      "label": "F",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 112.66,
+		      "y": 197.51,
+		      "id": "P",
+		      "label": "P",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 223.48,
+		      "y": 138.63,
+		      "id": "Q",
+		      "label": "Q",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe2162c3338a43a06
+	// Question: Find the angle measure with parallel lines and a transversal
+	// Widget key: image_1
+	test("angle-diagram - [xe2162c3338a43a06] Find the angle measure with parallel lines and a transversal", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "VL",
+		      "from": "A1"
+		    },
+		    {
+		      "to": "A2",
+		      "from": "VL"
+		    },
+		    {
+		      "to": "VR",
+		      "from": "B1"
+		    },
+		    {
+		      "to": "B2",
+		      "from": "VR"
+		    },
+		    {
+		      "to": "VL",
+		      "from": "T1"
+		    },
+		    {
+		      "to": "VR",
+		      "from": "VL"
+		    },
+		    {
+		      "to": "T2",
+		      "from": "VR"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 360,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x°",
+		      "radius": 26,
+		      "vertex": "VL",
+		      "pointOnFirstRay": "A2",
+		      "pointOnSecondRay": "T1"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "138°",
+		      "radius": 26,
+		      "vertex": "VR",
+		      "pointOnFirstRay": "T2",
+		      "pointOnSecondRay": "B1"
+		    }
+		  ],
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 4.6,
+		      "y": 124.29,
+		      "id": "A1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 309.48,
+		      "y": 250.58,
+		      "id": "A2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 50.52,
+		      "y": 13.43,
+		      "id": "B1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 355.4,
+		      "y": 139.71,
+		      "id": "B2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 24.46,
+		      "y": 187.08,
+		      "id": "T1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 335.54,
+		      "y": 76.92,
+		      "id": "T2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 95.53,
+		      "y": 161.96,
+		      "id": "VL",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 264.59,
+		      "y": 101.63,
+		      "id": "VR",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfb4bbea788011ac6
+	// Question: Find the angle formed by a transversal and parallel lines
+	// Widget key: image_1
+	test("angle-diagram - [xfb4bbea788011ac6] Find the angle formed by a transversal and parallel lines", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "topIntersection",
+		      "from": "upperLeft"
+		    },
+		    {
+		      "to": "upperRight",
+		      "from": "topIntersection"
+		    },
+		    {
+		      "to": "bottomIntersection",
+		      "from": "lowerLeft"
+		    },
+		    {
+		      "to": "lowerRight",
+		      "from": "bottomIntersection"
+		    },
+		    {
+		      "to": "topIntersection",
+		      "from": "transTop"
+		    },
+		    {
+		      "to": "bottomIntersection",
+		      "from": "topIntersection"
+		    },
+		    {
+		      "to": "transBottom",
+		      "from": "bottomIntersection"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 360,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x°",
+		      "radius": 24,
+		      "vertex": "topIntersection",
+		      "pointOnFirstRay": "upperLeft",
+		      "pointOnSecondRay": "transBottom"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "76°",
+		      "radius": 24,
+		      "vertex": "bottomIntersection",
+		      "pointOnFirstRay": "transTop",
+		      "pointOnSecondRay": "lowerRight"
+		    }
+		  ],
+		  "height": 336,
+		  "points": [
+		    {
+		      "x": 309.479,
+		      "y": 49.425,
+		      "id": "upperRight",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 4.599,
+		      "y": 175.71,
+		      "id": "upperLeft",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 355.401,
+		      "y": 160.29,
+		      "id": "lowerRight",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 50.521,
+		      "y": 286.576,
+		      "id": "lowerLeft",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 155.611,
+		      "y": 4.812,
+		      "id": "transTop",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 204.389,
+		      "y": 331.188,
+		      "id": "transBottom",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 171.46,
+		      "y": 106.79,
+		      "id": "topIntersection",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 188.74,
+		      "y": 229.12,
+		      "id": "bottomIntersection",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfc6c8c2a2c7c1947
+	// Question: Find an angle with parallel lines and a transversal
+	// Widget key: image_1
+	test("angle-diagram - [xfc6c8c2a2c7c1947] Find an angle with parallel lines and a transversal", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "A1",
+		      "from": "R"
+		    },
+		    {
+		      "to": "A2",
+		      "from": "R"
+		    },
+		    {
+		      "to": "B1",
+		      "from": "L"
+		    },
+		    {
+		      "to": "B2",
+		      "from": "L"
+		    },
+		    {
+		      "to": "L",
+		      "from": "E"
+		    },
+		    {
+		      "to": "R",
+		      "from": "L"
+		    },
+		    {
+		      "to": "F",
+		      "from": "R"
+		    },
+		    {
+		      "to": "E",
+		      "from": "L"
+		    },
+		    {
+		      "to": "L",
+		      "from": "R"
+		    },
+		    {
+		      "to": "R",
+		      "from": "F"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 330,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": " ",
+		      "radius": 24,
+		      "vertex": "R",
+		      "pointOnFirstRay": "A1",
+		      "pointOnSecondRay": "F"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": " ",
+		      "radius": 24,
+		      "vertex": "L",
+		      "pointOnFirstRay": "B1",
+		      "pointOnSecondRay": "E"
+		    }
+		  ],
+		  "height": 348,
+		  "points": [
+		    {
+		      "x": 90,
+		      "y": 20,
+		      "id": "A1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 320,
+		      "y": 250,
+		      "id": "A2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 10,
+		      "y": 110,
+		      "id": "B1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 240,
+		      "y": 340,
+		      "id": "B2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 30,
+		      "y": 300,
+		      "id": "E",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300,
+		      "y": 40,
+		      "id": "F",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 116.65,
+		      "y": 216.65,
+		      "id": "L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 203.23,
+		      "y": 133.23,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x94d9bb14bc89f97d
+	// Question: Find an angle with parallel lines and a transversal
+	// Widget key: image_1
+	test("angle-diagram - [x94d9bb14bc89f97d] Find an angle with parallel lines and a transversal", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "Vleft",
+		      "from": "LA1"
+		    },
+		    {
+		      "to": "LA2",
+		      "from": "Vleft"
+		    },
+		    {
+		      "to": "Vright",
+		      "from": "LB1"
+		    },
+		    {
+		      "to": "LB2",
+		      "from": "Vright"
+		    },
+		    {
+		      "to": "Vleft",
+		      "from": "T1"
+		    },
+		    {
+		      "to": "Vright",
+		      "from": "Vleft"
+		    },
+		    {
+		      "to": "T2",
+		      "from": "Vright"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 336,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "92°",
+		      "radius": 24,
+		      "vertex": "Vleft",
+		      "pointOnFirstRay": "LA1",
+		      "pointOnSecondRay": "T1"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 24,
+		      "vertex": "Vright",
+		      "pointOnFirstRay": "LB1",
+		      "pointOnSecondRay": "T2"
+		    }
+		  ],
+		  "height": 336,
+		  "points": [
+		    {
+		      "x": 8.901,
+		      "y": 93.754,
+		      "id": "LA1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 242.246,
+		      "y": 327.099,
+		      "id": "LA2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 93.754,
+		      "y": 8.901,
+		      "id": "LB1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 327.099,
+		      "y": 242.246,
+		      "id": "LB2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 55.47,
+		      "y": 288.673,
+		      "id": "T1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 280.53,
+		      "y": 47.327,
+		      "id": "T2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 127,
+		      "y": 211.853,
+		      "id": "Vleft",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 208.96,
+		      "y": 124.107,
+		      "id": "Vright",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x49e70438dd9898ce
+	// Question: Find the angle formed by a transversal with parallel lines
+	// Widget key: image_1
+	test("angle-diagram - [x49e70438dd9898ce] Find the angle formed by a transversal with parallel lines", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "I1",
+		      "from": "P1"
+		    },
+		    {
+		      "to": "P2",
+		      "from": "I1"
+		    },
+		    {
+		      "to": "I2",
+		      "from": "Q1"
+		    },
+		    {
+		      "to": "Q2",
+		      "from": "I2"
+		    },
+		    {
+		      "to": "I1",
+		      "from": "R1"
+		    },
+		    {
+		      "to": "I2",
+		      "from": "I1"
+		    },
+		    {
+		      "to": "R2",
+		      "from": "I2"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 336,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "80°",
+		      "radius": 24,
+		      "vertex": "I1",
+		      "pointOnFirstRay": "P2",
+		      "pointOnSecondRay": "R1"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 24,
+		      "vertex": "I2",
+		      "pointOnFirstRay": "Q1",
+		      "pointOnSecondRay": "R2"
+		    }
+		  ],
+		  "height": 336,
+		  "points": [
+		    {
+		      "x": 242.246,
+		      "y": 8.901,
+		      "id": "P1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 8.901,
+		      "y": 242.246,
+		      "id": "P2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 327.099,
+		      "y": 93.754,
+		      "id": "Q1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 93.754,
+		      "y": 327.099,
+		      "id": "Q2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 32.84,
+		      "y": 73.36,
+		      "id": "R1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 303.16,
+		      "y": 262.64,
+		      "id": "R2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 118.078,
+		      "y": 133.069,
+		      "id": "I1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 217.898,
+		      "y": 202.955,
+		      "id": "I2",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x31da49d473c4cc62
+	// Question: Find the value of x using corresponding angles
+	// Widget key: image_1
+	test("angle-diagram - [x31da49d473c4cc62] Find the value of x using corresponding angles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "B",
+		      "from": "A"
+		    },
+		    {
+		      "to": "A",
+		      "from": "B"
+		    },
+		    {
+		      "to": "D",
+		      "from": "C"
+		    },
+		    {
+		      "to": "C",
+		      "from": "D"
+		    },
+		    {
+		      "to": "F",
+		      "from": "E"
+		    },
+		    {
+		      "to": "E",
+		      "from": "F"
+		    },
+		    {
+		      "to": "A",
+		      "from": "T"
+		    },
+		    {
+		      "to": "E",
+		      "from": "T"
+		    },
+		    {
+		      "to": "C",
+		      "from": "U"
+		    },
+		    {
+		      "to": "E",
+		      "from": "U"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 420,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "x",
+		      "radius": 32,
+		      "vertex": "T",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "E"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "136°",
+		      "radius": 32,
+		      "vertex": "U",
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "E"
+		    }
+		  ],
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 60,
+		      "y": 100,
+		      "id": "A",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 360,
+		      "y": 100,
+		      "id": "B",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 60,
+		      "y": 260,
+		      "id": "C",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 360,
+		      "y": 260,
+		      "id": "D",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 320,
+		      "y": 40,
+		      "id": "E",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 100,
+		      "y": 320,
+		      "id": "F",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 272.857,
+		      "y": 100,
+		      "id": "T",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 147.143,
+		      "y": 260,
+		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -10119,35 +9772,35 @@ describe("angleDiagram widget tests", () => {
 		  "rays": [
 		    {
 		      "to": "V1",
-		      "from": "L1_top"
+		      "from": "L1a"
 		    },
 		    {
-		      "to": "L1_bottom",
+		      "to": "L1b",
 		      "from": "V1"
 		    },
 		    {
 		      "to": "V2",
-		      "from": "L2_top"
+		      "from": "L2a"
 		    },
 		    {
-		      "to": "L2_bottom",
+		      "to": "L2b",
 		      "from": "V2"
 		    },
 		    {
 		      "to": "V1",
-		      "from": "T_top"
+		      "from": "T1"
 		    },
 		    {
 		      "to": "V2",
 		      "from": "V1"
 		    },
 		    {
-		      "to": "T_bottom",
+		      "to": "T2",
 		      "from": "V2"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 240,
+		  "width": 420,
 		  "angles": [
 		    {
 		      "type": "arc",
@@ -10155,74 +9808,74 @@ describe("angleDiagram widget tests", () => {
 		      "label": "125°",
 		      "radius": 24,
 		      "vertex": "V1",
-		      "pointOnFirstRay": "L1_bottom",
-		      "pointOnSecondRay": "T_top"
+		      "pointOnFirstRay": "L1b",
+		      "pointOnSecondRay": "T1"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#28ae7b",
-		      "label": "x",
+		      "label": "x°",
 		      "radius": 24,
 		      "vertex": "V2",
-		      "pointOnFirstRay": "T_bottom",
-		      "pointOnSecondRay": "L2_bottom"
+		      "pointOnFirstRay": "T2",
+		      "pointOnSecondRay": "L2b"
 		    }
 		  ],
 		  "height": 360,
 		  "points": [
 		    {
-		      "x": 127.71,
+		      "x": 247.71,
 		      "y": 4.599,
-		      "id": "L1_top",
+		      "id": "L1a",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 1.424,
-		      "y": 309.479,
-		      "id": "L1_bottom",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 238.576,
-		      "y": 50.52,
-		      "id": "L2_top",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 112.29,
-		      "y": 355.402,
-		      "id": "L2_bottom",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 31.346,
-		      "y": 40.84,
-		      "id": "T_top",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 208.654,
-		      "y": 319.16,
-		      "id": "T_bottom",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 80.64,
-		      "y": 118.22,
+		      "x": 200.655,
+		      "y": 118.242,
 		      "id": "V1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 159.47,
-		      "y": 242.18,
+		      "x": 121.424,
+		      "y": 309.479,
+		      "id": "L1b",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 358.576,
+		      "y": 50.521,
+		      "id": "L2a",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 279.345,
+		      "y": 241.759,
 		      "id": "V2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 232.29,
+		      "y": 355.401,
+		      "id": "L2b",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 151.346,
+		      "y": 40.8404,
+		      "id": "T1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 328.654,
+		      "y": 319.16,
+		      "id": "T2",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -10245,44 +9898,40 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x838e426d9487b28a
-	// Question: Find the value of x with parallel lines and a transversal
+	// Question: Find an angle formed by a transversal of parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [x838e426d9487b28a] Find the value of x with parallel lines and a transversal", async () => {
+	test("angle-diagram - [x838e426d9487b28a] Find an angle formed by a transversal of parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "Lint",
-		      "from": "Ltop"
+		      "to": "V_left",
+		      "from": "L_top"
 		    },
 		    {
-		      "to": "Lbottom",
-		      "from": "Lint"
+		      "to": "L_bottom",
+		      "from": "V_left"
 		    },
 		    {
-		      "to": "Rint",
-		      "from": "Rtop"
+		      "to": "V_right",
+		      "from": "R_top"
 		    },
 		    {
-		      "to": "Rbottom",
-		      "from": "Rint"
+		      "to": "R_bottom",
+		      "from": "V_right"
 		    },
 		    {
-		      "to": "Lint",
-		      "from": "Tleft"
+		      "to": "V_left",
+		      "from": "T_left"
 		    },
 		    {
-		      "to": "Tright",
-		      "from": "Lint"
+		      "to": "V_right",
+		      "from": "V_left"
 		    },
 		    {
-		      "to": "Rint",
-		      "from": "Tleft"
-		    },
-		    {
-		      "to": "Tright",
-		      "from": "Rint"
+		      "to": "T_right",
+		      "from": "V_right"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -10291,20 +9940,20 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#6495ed",
-		      "label": " ",
+		      "label": "129°",
 		      "radius": 24,
-		      "vertex": "Lint",
-		      "pointOnFirstRay": "Lbottom",
-		      "pointOnSecondRay": "Tright"
+		      "vertex": "V_left",
+		      "pointOnFirstRay": "L_bottom",
+		      "pointOnSecondRay": "V_right"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#28ae7b",
-		      "label": " ",
+		      "label": "x",
 		      "radius": 24,
-		      "vertex": "Rint",
-		      "pointOnFirstRay": "Rtop",
-		      "pointOnSecondRay": "Tleft"
+		      "vertex": "V_right",
+		      "pointOnFirstRay": "R_top",
+		      "pointOnSecondRay": "V_left"
 		    }
 		  ],
 		  "height": 360,
@@ -10312,56 +9961,56 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "x": 90,
 		      "y": 15,
-		      "id": "Ltop",
+		      "id": "L_top",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 90,
 		      "y": 345,
-		      "id": "Lbottom",
+		      "id": "L_bottom",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 210,
 		      "y": 15,
-		      "id": "Rtop",
+		      "id": "R_top",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 210,
 		      "y": 345,
-		      "id": "Rbottom",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 21.77,
-		      "y": 283.838,
-		      "id": "Tleft",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 278.23,
-		      "y": 76.162,
-		      "id": "Tright",
+		      "id": "R_bottom",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 90,
 		      "y": 228.587,
-		      "id": "Lint",
+		      "id": "V_left",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 210,
 		      "y": 131.413,
-		      "id": "Rint",
+		      "id": "V_right",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 21.77,
+		      "y": 283.838,
+		      "id": "T_left",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 278.23,
+		      "y": 76.162,
+		      "id": "T_right",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -10384,40 +10033,68 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x548395f1c4ca12c3
-	// Question: Find the measure of a corresponding angle
+	// Question: Find x using corresponding angles
 	// Widget key: image_1
-	test("angle-diagram - [x548395f1c4ca12c3] Find the measure of a corresponding angle", async () => {
+	test("angle-diagram - [x548395f1c4ca12c3] Find x using corresponding angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "I_top",
-		      "from": "T_left"
+		      "to": "v_top",
+		      "from": "top_left"
 		    },
 		    {
-		      "to": "T_right",
-		      "from": "I_top"
+		      "to": "top_left",
+		      "from": "v_top"
 		    },
 		    {
-		      "to": "I_bottom",
-		      "from": "B_left"
+		      "to": "top_right",
+		      "from": "v_top"
 		    },
 		    {
-		      "to": "B_right",
-		      "from": "I_bottom"
+		      "to": "v_top",
+		      "from": "top_right"
 		    },
 		    {
-		      "to": "I_top",
-		      "from": "U"
+		      "to": "v_bottom",
+		      "from": "bottom_left"
 		    },
 		    {
-		      "to": "I_bottom",
-		      "from": "I_top"
+		      "to": "bottom_left",
+		      "from": "v_bottom"
 		    },
 		    {
-		      "to": "D",
-		      "from": "I_bottom"
+		      "to": "bottom_right",
+		      "from": "v_bottom"
+		    },
+		    {
+		      "to": "v_bottom",
+		      "from": "bottom_right"
+		    },
+		    {
+		      "to": "v_top",
+		      "from": "upper_ext"
+		    },
+		    {
+		      "to": "upper_ext",
+		      "from": "v_top"
+		    },
+		    {
+		      "to": "v_bottom",
+		      "from": "v_top"
+		    },
+		    {
+		      "to": "v_top",
+		      "from": "v_bottom"
+		    },
+		    {
+		      "to": "lower_ext",
+		      "from": "v_bottom"
+		    },
+		    {
+		      "to": "v_bottom",
+		      "from": "lower_ext"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -10428,76 +10105,76 @@ describe("angleDiagram widget tests", () => {
 		      "color": "#28ae7b",
 		      "label": "x",
 		      "radius": 24,
-		      "vertex": "I_top",
-		      "pointOnFirstRay": "T_right",
-		      "pointOnSecondRay": "U"
+		      "vertex": "v_top",
+		      "pointOnFirstRay": "top_right",
+		      "pointOnSecondRay": "upper_ext"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#6495ed",
 		      "label": "50°",
 		      "radius": 24,
-		      "vertex": "I_bottom",
-		      "pointOnFirstRay": "B_right",
-		      "pointOnSecondRay": "U"
+		      "vertex": "v_bottom",
+		      "pointOnFirstRay": "bottom_right",
+		      "pointOnSecondRay": "upper_ext"
 		    }
 		  ],
-		  "height": 264,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 15,
 		      "y": 72,
-		      "id": "T_left",
-		      "label": " ",
+		      "id": "top_left",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 345,
 		      "y": 72,
-		      "id": "T_right",
-		      "label": " ",
+		      "id": "top_right",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 15,
 		      "y": 192,
-		      "id": "B_left",
-		      "label": " ",
+		      "id": "bottom_left",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 345,
 		      "y": 192,
-		      "id": "B_right",
-		      "label": " ",
+		      "id": "bottom_right",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 286.06,
 		      "y": 5.603,
-		      "id": "U",
-		      "label": " ",
+		      "id": "upper_ext",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 73.94,
 		      "y": 258.397,
-		      "id": "D",
-		      "label": " ",
+		      "id": "lower_ext",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 230.346,
 		      "y": 72,
-		      "id": "I_top",
-		      "label": " ",
+		      "id": "v_top",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 129.654,
 		      "y": 192,
-		      "id": "I_bottom",
-		      "label": " ",
+		      "id": "v_bottom",
+		      "label": null,
 		      "shape": "circle"
 		    }
 		  ]
@@ -10519,40 +10196,32 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa18dddedf6b91d55
-	// Question: Find the angle formed by a transversal of parallel lines
+	// Question: Find the angle measure using parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [xa18dddedf6b91d55] Find the angle formed by a transversal of parallel lines", async () => {
+	test("angle-diagram - [xa18dddedf6b91d55] Find the angle measure using parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "B",
-		      "from": "L1_left"
-		    },
-		    {
-		      "to": "L1_right",
-		      "from": "B"
-		    },
-		    {
-		      "to": "T_int",
-		      "from": "L2_left"
-		    },
-		    {
-		      "to": "L2_right",
-		      "from": "T_int"
-		    },
-		    {
-		      "to": "T_int",
-		      "from": "T_top"
+		      "to": "A",
+		      "from": "L"
 		    },
 		    {
 		      "to": "B",
-		      "from": "T_int"
+		      "from": "L"
 		    },
 		    {
-		      "to": "T_bottom",
-		      "from": "B"
+		      "to": "C",
+		      "from": "R"
+		    },
+		    {
+		      "to": "D",
+		      "from": "R"
+		    },
+		    {
+		      "to": "E",
+		      "from": "F"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -10562,77 +10231,77 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#6495ed",
 		      "label": "149°",
-		      "radius": 24,
-		      "vertex": "B",
-		      "pointOnFirstRay": "L1_left",
-		      "pointOnSecondRay": "T_bottom"
+		      "radius": 34,
+		      "vertex": "L",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "F"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#28ae7b",
-		      "label": "x",
-		      "radius": 24,
-		      "vertex": "T_int",
-		      "pointOnFirstRay": "L2_left",
-		      "pointOnSecondRay": "T_top"
+		      "label": "x°",
+		      "radius": 28,
+		      "vertex": "R",
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "F"
 		    }
 		  ],
 		  "height": 348,
 		  "points": [
 		    {
-		      "x": 2.901,
-		      "y": 105.754,
-		      "id": "L1_left",
-		      "label": "L",
+		      "x": 125,
+		      "y": 220,
+		      "id": "L",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 236.246,
-		      "y": 339.099,
-		      "id": "L1_right",
-		      "label": "L",
+		      "x": 15,
+		      "y": 110,
+		      "id": "A",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 87.754,
-		      "y": 20.901,
-		      "id": "L2_left",
-		      "label": "L",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 321.099,
-		      "y": 254.246,
-		      "id": "L2_right",
-		      "label": "L",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 122.083,
-		      "y": 19.901,
-		      "id": "T_top",
-		      "label": "T",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 201.917,
-		      "y": 340.099,
-		      "id": "T_bottom",
-		      "label": "T",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 190.183,
-		      "y": 293.036,
+		      "x": 235,
+		      "y": 330,
 		      "id": "B",
-		      "label": "I",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 133.818,
-		      "y": 66.965,
-		      "id": "T_int",
-		      "label": "I",
+		      "x": 145,
+		      "y": 300,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 45,
+		      "y": 200,
+		      "id": "C",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 195,
+		      "y": 350,
+		      "id": "D",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 75,
+		      "y": 20,
+		      "id": "F",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 157,
+		      "y": 348,
+		      "id": "E",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -10654,120 +10323,120 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0b11e95bdab3f1f4
-	// Question: Find x using corresponding angles with parallel lines
+	// Question: Find the angle measure with parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [x0b11e95bdab3f1f4] Find x using corresponding angles with parallel lines", async () => {
+	test("angle-diagram - [x0b11e95bdab3f1f4] Find the angle measure with parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "H1R",
-		      "from": "H1L"
+		      "to": "A2",
+		      "from": "A1"
 		    },
 		    {
-		      "to": "H2R",
-		      "from": "H2L"
+		      "to": "B2",
+		      "from": "B1"
 		    },
 		    {
-		      "to": "TBottom",
-		      "from": "TTop"
+		      "to": "D2",
+		      "from": "D1"
 		    },
 		    {
-		      "to": "H1L",
-		      "from": "VTop"
+		      "to": "A1",
+		      "from": "T"
 		    },
 		    {
-		      "to": "TTop",
-		      "from": "VTop"
+		      "to": "D1",
+		      "from": "T"
 		    },
 		    {
-		      "to": "H2L",
-		      "from": "VBottom"
+		      "to": "B1",
+		      "from": "U"
 		    },
 		    {
-		      "to": "TTop",
-		      "from": "VBottom"
+		      "to": "D1",
+		      "from": "U"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 348,
+		  "width": 420,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#28ae7b",
 		      "label": "x",
 		      "radius": 24,
-		      "vertex": "VTop",
-		      "pointOnFirstRay": "H1L",
-		      "pointOnSecondRay": "TTop"
+		      "vertex": "T",
+		      "pointOnFirstRay": "A1",
+		      "pointOnSecondRay": "D1"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#6495ed",
 		      "label": "34°",
 		      "radius": 24,
-		      "vertex": "VBottom",
-		      "pointOnFirstRay": "H2L",
-		      "pointOnSecondRay": "TTop"
+		      "vertex": "U",
+		      "pointOnFirstRay": "B1",
+		      "pointOnSecondRay": "D1"
 		    }
 		  ],
-		  "height": 204,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 3,
-		      "y": 42,
-		      "id": "H1L",
-		      "label": " ",
+		      "x": 75,
+		      "y": 120,
+		      "id": "A1",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 333,
-		      "y": 42,
-		      "id": "H1R",
-		      "label": " ",
+		      "x": 405,
+		      "y": 120,
+		      "id": "A2",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 3,
-		      "y": 162,
-		      "id": "H2L",
-		      "label": " ",
+		      "x": 75,
+		      "y": 240,
+		      "id": "B1",
+		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 333,
-		      "y": 162,
-		      "id": "H2R",
-		      "label": " ",
+		      "x": 405,
+		      "y": 240,
+		      "id": "B2",
+		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 31.209,
-		      "y": 9.733,
-		      "id": "TTop",
-		      "label": " ",
+		      "x": 103.209,
+		      "y": 87.7332,
+		      "id": "D1",
+		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 304.79,
-		      "y": 194.267,
-		      "id": "TBottom",
-		      "label": " ",
+		      "x": 376.791,
+		      "y": 272.267,
+		      "id": "D2",
+		      "label": "F",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 79.045,
-		      "y": 42,
-		      "id": "VTop",
-		      "label": " ",
+		      "x": 127.046,
+		      "y": 120,
+		      "id": "T",
+		      "label": "G",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 256.954,
-		      "y": 162,
-		      "id": "VBottom",
-		      "label": " ",
+		      "x": 304.954,
+		      "y": 240,
+		      "id": "U",
+		      "label": "H",
 		      "shape": "circle"
 		    }
 		  ]
@@ -10789,40 +10458,40 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x990af93fa6f24178
-	// Question: Find the value of x using corresponding angles
+	// Question: Find the value of x with parallel lines and a transversal
 	// Widget key: image_1
-	test("angle-diagram - [x990af93fa6f24178] Find the value of x using corresponding angles", async () => {
+	test("angle-diagram - [x990af93fa6f24178] Find the value of x with parallel lines and a transversal", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "U",
-		      "from": "A1"
+		      "to": "TL",
+		      "from": "T"
 		    },
 		    {
-		      "to": "A2",
+		      "to": "TR",
+		      "from": "T"
+		    },
+		    {
+		      "to": "BL",
+		      "from": "B"
+		    },
+		    {
+		      "to": "BR",
+		      "from": "B"
+		    },
+		    {
+		      "to": "T",
 		      "from": "U"
 		    },
 		    {
-		      "to": "L",
-		      "from": "B1"
+		      "to": "B",
+		      "from": "T"
 		    },
 		    {
-		      "to": "B2",
-		      "from": "L"
-		    },
-		    {
-		      "to": "L",
-		      "from": "C1"
-		    },
-		    {
-		      "to": "U",
-		      "from": "L"
-		    },
-		    {
-		      "to": "C2",
-		      "from": "U"
+		      "to": "D",
+		      "from": "B"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -10832,76 +10501,76 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#28ae7b",
 		      "label": "x",
-		      "radius": 24,
-		      "vertex": "U",
-		      "pointOnFirstRay": "A1",
-		      "pointOnSecondRay": "C2"
+		      "radius": 36,
+		      "vertex": "T",
+		      "pointOnFirstRay": "TL",
+		      "pointOnSecondRay": "U"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#6495ed",
 		      "label": "132°",
-		      "radius": 24,
-		      "vertex": "L",
-		      "pointOnFirstRay": "B1",
-		      "pointOnSecondRay": "C2"
+		      "radius": 36,
+		      "vertex": "B",
+		      "pointOnFirstRay": "BL",
+		      "pointOnSecondRay": "T"
 		    }
 		  ],
-		  "height": 240,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 50.52,
-		      "y": 1.4245,
-		      "id": "A1",
+		      "x": 60,
+		      "y": 120,
+		      "id": "TL",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 355.402,
-		      "y": 127.71,
-		      "id": "A2",
+		      "x": 330,
+		      "y": 120,
+		      "id": "TR",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 4.599,
-		      "y": 112.29,
-		      "id": "B1",
+		      "x": 40,
+		      "y": 260,
+		      "id": "BL",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 309.479,
-		      "y": 238.576,
-		      "id": "B2",
+		      "x": 320,
+		      "y": 260,
+		      "id": "BR",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 31.073,
-		      "y": 191.034,
-		      "id": "C1",
+		      "x": 200,
+		      "y": 120,
+		      "id": "T",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 328.927,
-		      "y": 48.966,
-		      "id": "C2",
+		      "x": 180,
+		      "y": 260,
+		      "id": "B",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 253.4,
-		      "y": 86,
+		      "x": 100,
+		      "y": 40,
 		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 107.6,
-		      "y": 154.7,
-		      "id": "L",
+		      "x": 300,
+		      "y": 320,
+		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -10924,40 +10593,40 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5602983628fe349f
-	// Question: Find the angle measure using corresponding angles
+	// Question: Find the angle measure in a parallel-lines diagram
 	// Widget key: image_1
-	test("angle-diagram - [x5602983628fe349f] Find the angle measure using corresponding angles", async () => {
+	test("angle-diagram - [x5602983628fe349f] Find the angle measure in a parallel-lines diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "Pleft",
-		      "from": "L1a"
+		      "to": "P",
+		      "from": "A"
 		    },
 		    {
-		      "to": "L1b",
-		      "from": "Pleft"
+		      "to": "B",
+		      "from": "P"
 		    },
 		    {
-		      "to": "Pright",
-		      "from": "L2a"
+		      "to": "Q",
+		      "from": "C"
 		    },
 		    {
-		      "to": "L2b",
-		      "from": "Pright"
+		      "to": "D",
+		      "from": "Q"
 		    },
 		    {
-		      "to": "Pleft",
-		      "from": "T1"
+		      "to": "P",
+		      "from": "E"
 		    },
 		    {
-		      "to": "Pright",
-		      "from": "Pleft"
+		      "to": "Q",
+		      "from": "P"
 		    },
 		    {
-		      "to": "T2",
-		      "from": "Pright"
+		      "to": "F",
+		      "from": "Q"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -10966,20 +10635,20 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#28ae7b",
-		      "label": "x°",
+		      "label": "x",
 		      "radius": 24,
-		      "vertex": "Pleft",
-		      "pointOnFirstRay": "L1a",
-		      "pointOnSecondRay": "T1"
+		      "vertex": "P",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "F"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#6495ed",
 		      "label": "53°",
 		      "radius": 24,
-		      "vertex": "Pright",
-		      "pointOnFirstRay": "L2b",
-		      "pointOnSecondRay": "T2"
+		      "vertex": "Q",
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "F"
 		    }
 		  ],
 		  "height": 336,
@@ -10987,57 +10656,57 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "x": 8.901,
 		      "y": 93.754,
-		      "id": "L1a",
-		      "label": " ",
+		      "id": "A",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 242.246,
 		      "y": 327.099,
-		      "id": "L1b",
-		      "label": " ",
+		      "id": "B",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 93.754,
 		      "y": 8.901,
-		      "id": "L2a",
-		      "label": " ",
+		      "id": "C",
+		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 327.099,
 		      "y": 242.246,
-		      "id": "L2b",
-		      "label": " ",
+		      "id": "D",
+		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 4.606,
 		      "y": 190.964,
-		      "id": "T1",
-		      "label": " ",
+		      "id": "E",
+		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 331.394,
 		      "y": 145.036,
-		      "id": "T2",
-		      "label": " ",
+		      "id": "F",
+		      "label": "F",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 93.63,
-		      "y": 178.48,
-		      "id": "Pleft",
-		      "label": " ",
+		      "x": 93.607,
+		      "y": 178.46,
+		      "id": "P",
+		      "label": "P",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 242.36,
-		      "y": 157.51,
-		      "id": "Pright",
-		      "label": " ",
+		      "x": 242.408,
+		      "y": 157.555,
+		      "id": "Q",
+		      "label": "Q",
 		      "shape": "circle"
 		    }
 		  ]
@@ -11059,52 +10728,40 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2114fea86dbf76b2
-	// Question: Find the angle measure with parallel lines
+	// Question: Find an angle formed by a transversal and parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [x2114fea86dbf76b2] Find the angle measure with parallel lines", async () => {
+	test("angle-diagram - [x2114fea86dbf76b2] Find an angle formed by a transversal and parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L_bottom",
-		      "from": "L_top"
+		      "to": "P_left",
+		      "from": "L1_top"
 		    },
 		    {
-		      "to": "L_top",
-		      "from": "L_bottom"
+		      "to": "L1_bottom",
+		      "from": "P_left"
 		    },
 		    {
-		      "to": "R_bottom",
-		      "from": "R_top"
+		      "to": "P_right",
+		      "from": "L2_top"
 		    },
 		    {
-		      "to": "R_top",
-		      "from": "R_bottom"
+		      "to": "L2_bottom",
+		      "from": "P_right"
 		    },
 		    {
-		      "to": "T_right",
+		      "to": "P_left",
 		      "from": "T_left"
 		    },
 		    {
-		      "to": "T_left",
-		      "from": "T_right"
-		    },
-		    {
-		      "to": "L_top",
-		      "from": "L_int"
-		    },
-		    {
-		      "to": "R_bottom",
-		      "from": "R_int"
-		    },
-		    {
-		      "to": "T_left",
-		      "from": "R_int"
+		      "to": "P_right",
+		      "from": "P_left"
 		    },
 		    {
 		      "to": "T_right",
-		      "from": "L_int"
+		      "from": "P_right"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -11115,27 +10772,18 @@ describe("angleDiagram widget tests", () => {
 		      "color": "#6495ed",
 		      "label": "114°",
 		      "radius": 24,
-		      "vertex": "R_int",
-		      "pointOnFirstRay": "R_bottom",
-		      "pointOnSecondRay": "T_left"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#000000",
-		      "label": "x",
-		      "radius": 24,
-		      "vertex": "L_int",
-		      "pointOnFirstRay": "L_bottom",
-		      "pointOnSecondRay": "T_right"
+		      "vertex": "P_right",
+		      "pointOnFirstRay": "L2_bottom",
+		      "pointOnSecondRay": "P_left"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#28ae7b",
-		      "label": " ",
+		      "label": "x",
 		      "radius": 24,
-		      "vertex": "L_int",
-		      "pointOnFirstRay": "L_top",
-		      "pointOnSecondRay": "T_right"
+		      "vertex": "P_left",
+		      "pointOnFirstRay": "L1_bottom",
+		      "pointOnSecondRay": "P_right"
 		    }
 		  ],
 		  "height": 360,
@@ -11143,28 +10791,28 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "x": 102,
 		      "y": 15,
-		      "id": "L_top",
+		      "id": "L1_top",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 102,
 		      "y": 345,
-		      "id": "L_bottom",
+		      "id": "L1_bottom",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 222,
 		      "y": 15,
-		      "id": "R_top",
+		      "id": "L2_top",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 222,
 		      "y": 345,
-		      "id": "R_bottom",
+		      "id": "L2_bottom",
 		      "label": " ",
 		      "shape": "circle"
 		    },
@@ -11184,15 +10832,15 @@ describe("angleDiagram widget tests", () => {
 		    },
 		    {
 		      "x": 102,
-		      "y": 153.288,
-		      "id": "L_int",
+		      "y": 177.286,
+		      "id": "P_left",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 222,
-		      "y": 206.668,
-		      "id": "R_int",
+		      "y": 230.714,
+		      "id": "P_right",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -11214,256 +10862,133 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x0e5904ef0e0c16af
-	// Question: Find the measure of an angle using alternate exterior angles
+	// Extracted from question: x9ecca267ad7f4b76
+	// Question: Find the measure of angle B
 	// Widget key: image_1
-	test("angle-diagram - [x0e5904ef0e0c16af] Find the measure of an angle using alternate exterior angles", async () => {
+	test("angle-diagram - [x9ecca267ad7f4b76] Find the measure of angle B", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "A_vertex",
-		      "from": "L_top"
+		      "to": "A2",
+		      "from": "A1"
 		    },
 		    {
-		      "to": "L_bot",
-		      "from": "A_vertex"
+		      "to": "A1",
+		      "from": "A2"
 		    },
 		    {
-		      "to": "B_vertex",
-		      "from": "R_top"
+		      "to": "B2",
+		      "from": "B1"
 		    },
 		    {
-		      "to": "R_bot",
-		      "from": "B_vertex"
+		      "to": "B1",
+		      "from": "B2"
 		    },
 		    {
-		      "to": "A_vertex",
-		      "from": "T_left"
+		      "to": "T2",
+		      "from": "T1"
 		    },
 		    {
-		      "to": "B_vertex",
-		      "from": "A_vertex"
+		      "to": "T1",
+		      "from": "T2"
 		    },
 		    {
-		      "to": "T_right",
-		      "from": "B_vertex"
+		      "to": "A2",
+		      "from": "Vt"
+		    },
+		    {
+		      "to": "T2",
+		      "from": "Vt"
+		    },
+		    {
+		      "to": "B1",
+		      "from": "Vb"
+		    },
+		    {
+		      "to": "T1",
+		      "from": "Vb"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 220,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "A",
-		      "radius": 20,
-		      "vertex": "A_vertex",
-		      "pointOnFirstRay": "L_bot",
-		      "pointOnSecondRay": "T_left"
+		      "radius": 28,
+		      "vertex": "Vt",
+		      "pointOnFirstRay": "A2",
+		      "pointOnSecondRay": "T2"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
-		      "radius": 20,
-		      "vertex": "B_vertex",
-		      "pointOnFirstRay": "R_top",
-		      "pointOnSecondRay": "T_right"
+		      "radius": 28,
+		      "vertex": "Vb",
+		      "pointOnFirstRay": "B1",
+		      "pointOnSecondRay": "T1"
 		    }
 		  ],
-		  "height": 300,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 47.5,
-		      "y": 0,
-		      "id": "L_top",
-		      "label": " ",
+		      "x": 40,
+		      "y": 80,
+		      "id": "A1",
+		      "label": "A1",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 47.5,
-		      "y": 300,
-		      "id": "L_bot",
-		      "label": " ",
+		      "x": 360,
+		      "y": 80,
+		      "id": "A2",
+		      "label": "A2",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 172.5,
-		      "y": 0,
-		      "id": "R_top",
-		      "label": " ",
+		      "x": 40,
+		      "y": 240,
+		      "id": "B1",
+		      "label": "B1",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 172.5,
-		      "y": 300,
-		      "id": "R_bot",
-		      "label": " ",
+		      "x": 360,
+		      "y": 240,
+		      "id": "B2",
+		      "label": "B2",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 3.934,
-		      "y": 256.066,
-		      "id": "T_left",
-		      "label": " ",
+		      "x": 140,
+		      "y": 20,
+		      "id": "T1",
+		      "label": "T1",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 216.066,
-		      "y": 43.934,
-		      "id": "T_right",
-		      "label": " ",
+		      "x": 320,
+		      "y": 320,
+		      "id": "T2",
+		      "label": "T2",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 47.5,
-		      "y": 212.5,
-		      "id": "A_vertex",
-		      "label": " ",
+		      "x": 176,
+		      "y": 80,
+		      "id": "Vt",
+		      "label": "Vt",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 172.5,
-		      "y": 87.5,
-		      "id": "B_vertex",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd568f313b07f9479
-	// Question: Find the measure of an angle using corresponding angles
-	// Widget key: image_1
-	test("angle-diagram - [xd568f313b07f9479] Find the measure of an angle using corresponding angles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "vertex_B",
-		      "from": "L1_top"
-		    },
-		    {
-		      "to": "L1_bottom",
-		      "from": "vertex_B"
-		    },
-		    {
-		      "to": "vertex_A",
-		      "from": "L2_top"
-		    },
-		    {
-		      "to": "L2_bottom",
-		      "from": "vertex_A"
-		    },
-		    {
-		      "to": "vertex_B",
-		      "from": "T_topLeft"
-		    },
-		    {
-		      "to": "vertex_A",
-		      "from": "vertex_B"
-		    },
-		    {
-		      "to": "T_bottomRight",
-		      "from": "vertex_A"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 310,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "A",
-		      "radius": 20,
-		      "vertex": "vertex_A",
-		      "pointOnFirstRay": "L2_top",
-		      "pointOnSecondRay": "T_topLeft"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "B",
-		      "radius": 20,
-		      "vertex": "vertex_B",
-		      "pointOnFirstRay": "L1_top",
-		      "pointOnSecondRay": "T_topLeft"
-		    }
-		  ],
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 216.872,
-		      "y": -0.26,
-		      "id": "L1_top",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 4.74,
-		      "y": 211.872,
-		      "id": "L1_bottom",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 305.26,
-		      "y": 88.128,
-		      "id": "L2_top",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 93.128,
-		      "y": 300.26,
-		      "id": "L2_bottom",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 68.963,
-		      "y": 27.127,
-		      "id": "T_topLeft",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 241.036,
-		      "y": 272.873,
-		      "id": "T_bottomRight",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 118.598,
-		      "y": 98.014,
-		      "id": "vertex_B",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 191.401,
-		      "y": 201.987,
-		      "id": "vertex_A",
-		      "label": null,
+		      "x": 272,
+		      "y": 240,
+		      "id": "Vb",
+		      "label": "Vb",
 		      "shape": "circle"
 		    }
 		  ]
@@ -11493,36 +11018,32 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "T_L",
-		      "from": "I_top"
+		      "to": "topIntersection",
+		      "from": "topLeftEnd"
 		    },
 		    {
-		      "to": "T_R",
-		      "from": "I_top"
+		      "to": "topRightEnd",
+		      "from": "topIntersection"
 		    },
 		    {
-		      "to": "B_L",
-		      "from": "I_bottom"
+		      "to": "bottomIntersection",
+		      "from": "bottomLeftEnd"
 		    },
 		    {
-		      "to": "B_R",
-		      "from": "I_bottom"
+		      "to": "bottomRightEnd",
+		      "from": "bottomIntersection"
 		    },
 		    {
-		      "to": "D_up",
-		      "from": "D_low"
+		      "to": "bottomIntersection",
+		      "from": "transversalStart"
 		    },
 		    {
-		      "to": "D_up",
-		      "from": "I_top"
+		      "to": "topIntersection",
+		      "from": "bottomIntersection"
 		    },
 		    {
-		      "to": "D_low",
-		      "from": "I_bottom"
-		    },
-		    {
-		      "to": "I_top",
-		      "from": "I_bottom"
+		      "to": "transversalEnd",
+		      "from": "topIntersection"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -11532,76 +11053,76 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "A",
-		      "radius": 20,
-		      "vertex": "I_top",
-		      "pointOnFirstRay": "T_L",
-		      "pointOnSecondRay": "D_up"
+		      "radius": 28,
+		      "vertex": "topIntersection",
+		      "pointOnFirstRay": "topLeftEnd",
+		      "pointOnSecondRay": "transversalEnd"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
-		      "radius": 20,
-		      "vertex": "I_bottom",
-		      "pointOnFirstRay": "B_L",
-		      "pointOnSecondRay": "I_top"
+		      "radius": 28,
+		      "vertex": "bottomIntersection",
+		      "pointOnFirstRay": "bottomLeftEnd",
+		      "pointOnSecondRay": "transversalEnd"
 		    }
 		  ],
-		  "height": 280,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 10,
-		      "y": 77.5,
-		      "id": "T_L",
+		      "x": 20,
+		      "y": 90,
+		      "id": "topLeftEnd",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300,
+		      "y": 90,
+		      "id": "topRightEnd",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 310,
-		      "y": 77.5,
-		      "id": "T_R",
+		      "x": 20,
+		      "y": 230,
+		      "id": "bottomLeftEnd",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300,
+		      "y": 230,
+		      "id": "bottomRightEnd",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 10,
-		      "y": 202.5,
-		      "id": "B_L",
+		      "x": 90,
+		      "y": 310,
+		      "id": "transversalStart",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 310,
-		      "y": 202.5,
-		      "id": "B_R",
+		      "x": 230,
+		      "y": 10,
+		      "id": "transversalEnd",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 98.99,
-		      "y": 277.032,
-		      "id": "D_low",
+		      "x": 192.667,
+		      "y": 90,
+		      "id": "topIntersection",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 221.01,
-		      "y": 2.968,
-		      "id": "D_up",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 187.905,
-		      "y": 77.5,
-		      "id": "I_top",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 132.09,
-		      "y": 202.5,
-		      "id": "I_bottom",
+		      "x": 127.333,
+		      "y": 230,
+		      "id": "bottomIntersection",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -11623,165 +11144,412 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd1453e7a095ed1a4
-	// Question: Solve for x and find the measure of an angle
+	// Extracted from question: x0e5904ef0e0c16af
+	// Question: Find an angle measure using alternate exterior angles
 	// Widget key: image_1
-	test("angle-diagram - [xd1453e7a095ed1a4] Solve for x and find the measure of an angle", async () => {
+	test("angle-diagram - [x0e5904ef0e0c16af] Find an angle measure using alternate exterior angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "I_top",
-		      "from": "TL1"
+		      "to": "L_bottom",
+		      "from": "L_top"
 		    },
 		    {
-		      "to": "TL1",
-		      "from": "I_top"
+		      "to": "L_top",
+		      "from": "L_bottom"
 		    },
 		    {
-		      "to": "TL2",
-		      "from": "I_top"
+		      "to": "R_bottom",
+		      "from": "R_top"
 		    },
 		    {
-		      "to": "I_top",
-		      "from": "TL2"
+		      "to": "R_top",
+		      "from": "R_bottom"
 		    },
 		    {
-		      "to": "I_bottom",
-		      "from": "BL1"
+		      "to": "P_left",
+		      "from": "T_left"
 		    },
 		    {
-		      "to": "BL1",
-		      "from": "I_bottom"
+		      "to": "T_left",
+		      "from": "P_left"
 		    },
 		    {
-		      "to": "BL2",
-		      "from": "I_bottom"
+		      "to": "P_right",
+		      "from": "P_left"
 		    },
 		    {
-		      "to": "I_bottom",
-		      "from": "BL2"
+		      "to": "P_left",
+		      "from": "P_right"
 		    },
 		    {
-		      "to": "TR2",
-		      "from": "TR1"
+		      "to": "T_right",
+		      "from": "P_right"
 		    },
 		    {
-		      "to": "TR1",
-		      "from": "TR2"
+		      "to": "P_right",
+		      "from": "T_right"
 		    },
 		    {
-		      "to": "TR1",
-		      "from": "I_top"
+		      "to": "L_top",
+		      "from": "P_left"
 		    },
 		    {
-		      "to": "I_top",
-		      "from": "TR1"
+		      "to": "L_bottom",
+		      "from": "P_left"
 		    },
 		    {
-		      "to": "TR2",
-		      "from": "I_bottom"
+		      "to": "R_top",
+		      "from": "P_right"
 		    },
 		    {
-		      "to": "I_bottom",
-		      "from": "TR2"
-		    },
-		    {
-		      "to": "TR1",
-		      "from": "I_bottom"
-		    },
-		    {
-		      "to": "I_bottom",
-		      "from": "TR1"
-		    },
-		    {
-		      "to": "I_bottom",
-		      "from": "I_top"
-		    },
-		    {
-		      "to": "I_top",
-		      "from": "I_bottom"
+		      "to": "R_bottom",
+		      "from": "P_right"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 330,
+		  "width": 360,
 		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "B",
-		      "radius": 24,
-		      "vertex": "I_top",
-		      "pointOnFirstRay": "TL1",
-		      "pointOnSecondRay": "TR1"
-		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "A",
-		      "radius": 24,
-		      "vertex": "I_bottom",
-		      "pointOnFirstRay": "BL1",
-		      "pointOnSecondRay": "TR1"
+		      "radius": 22,
+		      "vertex": "P_left",
+		      "pointOnFirstRay": "T_left",
+		      "pointOnSecondRay": "L_bottom"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "B",
+		      "radius": 22,
+		      "vertex": "P_right",
+		      "pointOnFirstRay": "T_right",
+		      "pointOnSecondRay": "R_top"
 		    }
 		  ],
-		  "height": 250,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 279.664,
-		      "y": 9.855,
-		      "id": "TL1",
+		      "x": 70,
+		      "y": 20,
+		      "id": "L_top",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 2.5,
-		      "y": 124.66,
-		      "id": "TL2",
+		      "x": 70,
+		      "y": 280,
+		      "id": "L_bottom",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 327.5,
-		      "y": 125.34,
-		      "id": "BL1",
+		      "x": 290,
+		      "y": 20,
+		      "id": "R_top",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 50.336,
-		      "y": 240.145,
-		      "id": "BL2",
+		      "x": 290,
+		      "y": 280,
+		      "id": "R_bottom",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 29.612,
-		      "y": 60.423,
-		      "id": "TR1",
+		      "x": 20,
+		      "y": 260,
+		      "id": "T_left",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 300.388,
-		      "y": 189.577,
-		      "id": "TR2",
+		      "x": 340,
+		      "y": 40,
+		      "id": "T_right",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 89.12,
-		      "y": 88.83,
-		      "id": "I_top",
+		      "x": 70,
+		      "y": 226,
+		      "id": "P_left",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 240.6,
-		      "y": 160.99,
-		      "id": "I_bottom",
+		      "x": 290,
+		      "y": 74,
+		      "id": "P_right",
 		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa17f37ebe9809544
+	// Question: Find the measure of an angle using parallel lines
+	// Widget key: image_1
+	test("angle-diagram - [xa17f37ebe9809544] Find the measure of an angle using parallel lines", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "L",
+		      "from": "T1"
+		    },
+		    {
+		      "to": "T2",
+		      "from": "L"
+		    },
+		    {
+		      "to": "B2",
+		      "from": "B1"
+		    },
+		    {
+		      "to": "L",
+		      "from": "X1"
+		    },
+		    {
+		      "to": "X2",
+		      "from": "L"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 320,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "A",
+		      "radius": 28,
+		      "vertex": "L",
+		      "pointOnFirstRay": "T1",
+		      "pointOnSecondRay": "X2"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "B",
+		      "radius": 28,
+		      "vertex": "L",
+		      "pointOnFirstRay": "T2",
+		      "pointOnSecondRay": "X2"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 20,
+		      "y": 110,
+		      "id": "T1",
+		      "label": "T1",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300,
+		      "y": 30,
+		      "id": "T2",
+		      "label": "T2",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 20,
+		      "y": 230,
+		      "id": "B1",
+		      "label": "B1",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300,
+		      "y": 150,
+		      "id": "B2",
+		      "label": "B2",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 100,
+		      "y": 87,
+		      "id": "L",
+		      "label": "L",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 30,
+		      "y": 70,
+		      "id": "X1",
+		      "label": "X1",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 310,
+		      "y": 140,
+		      "id": "X2",
+		      "label": "X2",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd568f313b07f9479
+	// Question: Find an angle measure using corresponding angles
+	// Widget key: image_1
+	test("angle-diagram - [xd568f313b07f9479] Find an angle measure using corresponding angles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "P1",
+		      "from": "V_left"
+		    },
+		    {
+		      "to": "P2",
+		      "from": "V_left"
+		    },
+		    {
+		      "to": "P3",
+		      "from": "V_right"
+		    },
+		    {
+		      "to": "P4",
+		      "from": "V_right"
+		    },
+		    {
+		      "to": "V_right",
+		      "from": "V_left"
+		    },
+		    {
+		      "to": "P5",
+		      "from": "V_left"
+		    },
+		    {
+		      "to": "P6",
+		      "from": "V_right"
+		    },
+		    {
+		      "to": "P5",
+		      "from": "V_right"
+		    },
+		    {
+		      "to": "P6",
+		      "from": "V_left"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 310,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "A",
+		      "radius": 20,
+		      "vertex": "V_right",
+		      "pointOnFirstRay": "P3",
+		      "pointOnSecondRay": "P5"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "B",
+		      "radius": 20,
+		      "vertex": "V_left",
+		      "pointOnFirstRay": "P1",
+		      "pointOnSecondRay": "P5"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 216.872,
+		      "y": 0,
+		      "id": "P1",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 4.74,
+		      "y": 211.872,
+		      "id": "P2",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 305.26,
+		      "y": 88.128,
+		      "id": "P3",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 93.128,
+		      "y": 300.26,
+		      "id": "P4",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 68.963,
+		      "y": 27.127,
+		      "id": "P5",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 241.036,
+		      "y": 272.873,
+		      "id": "P6",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 118.616,
+		      "y": 97.969,
+		      "id": "V_left",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 191.383,
+		      "y": 202.031,
+		      "id": "V_right",
+		      "label": null,
 		      "shape": "circle"
 		    }
 		  ]
@@ -11811,103 +11579,123 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
-		      "from": "DL_bottom"
+		      "to": "L2",
+		      "from": "L1"
 		    },
 		    {
-		      "to": "DL_top",
-		      "from": "L"
+		      "to": "L1",
+		      "from": "L2"
 		    },
 		    {
-		      "to": "R",
-		      "from": "DR_bottom"
+		      "to": "R2",
+		      "from": "R1"
 		    },
 		    {
-		      "to": "DR_top",
-		      "from": "R"
+		      "to": "R1",
+		      "from": "R2"
 		    },
 		    {
-		      "to": "T_right",
-		      "from": "T_left"
+		      "to": "T2",
+		      "from": "T1"
+		    },
+		    {
+		      "to": "T1",
+		      "from": "T2"
+		    },
+		    {
+		      "to": "L1",
+		      "from": "A"
+		    },
+		    {
+		      "to": "T2",
+		      "from": "A"
+		    },
+		    {
+		      "to": "R1",
+		      "from": "B"
+		    },
+		    {
+		      "to": "T2",
+		      "from": "B"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 256,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "A",
-		      "radius": 16,
-		      "vertex": "L",
-		      "pointOnFirstRay": "DL_top",
-		      "pointOnSecondRay": "T_right"
+		      "radius": 28,
+		      "vertex": "A",
+		      "pointOnFirstRay": "L1",
+		      "pointOnSecondRay": "T2"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
-		      "radius": 16,
-		      "vertex": "R",
-		      "pointOnFirstRay": "DR_top",
-		      "pointOnSecondRay": "T_right"
+		      "radius": 28,
+		      "vertex": "B",
+		      "pointOnFirstRay": "R1",
+		      "pointOnSecondRay": "T2"
 		    }
 		  ],
-		  "height": 240,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 177.497,
-		      "y": 0,
-		      "id": "DL_top",
+		      "x": 50,
+		      "y": 40,
+		      "id": "L1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 7.792,
-		      "y": 169.497,
-		      "id": "DL_bottom",
+		      "x": 200,
+		      "y": 300,
+		      "id": "L2",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 248.208,
-		      "y": 70.502,
-		      "id": "DR_top",
+		      "x": 250,
+		      "y": 10,
+		      "id": "R1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 78.502,
-		      "y": 240.208,
-		      "id": "DR_bottom",
+		      "x": 380,
+		      "y": 260,
+		      "id": "R2",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 9.168,
-		      "y": 136.701,
-		      "id": "T_left",
+		      "x": 20,
+		      "y": 200,
+		      "id": "T1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 246.832,
-		      "y": 103.299,
-		      "id": "T_right",
+		      "x": 380,
+		      "y": 140,
+		      "id": "T2",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 45.75,
-		      "y": 131.54,
-		      "id": "L",
+		      "x": 132,
+		      "y": 181,
+		      "id": "A",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 210.29,
-		      "y": 108.42,
-		      "id": "R",
+		      "x": 323,
+		      "y": 150,
+		      "id": "B",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -11929,25 +11717,25 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9ecca267ad7f4b76
-	// Question: Find an angle measure using alternate interior angles
+	// Extracted from question: xd1453e7a095ed1a4
+	// Question: Find the measure of an angle using alternate interior angles
 	// Widget key: image_1
-	test("angle-diagram - [x9ecca267ad7f4b76] Find an angle measure using alternate interior angles", async () => {
+	test("angle-diagram - [xd1453e7a095ed1a4] Find the measure of an angle using alternate interior angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "I_top",
-		      "from": "T_left"
+		      "to": "T_left",
+		      "from": "I_top"
 		    },
 		    {
 		      "to": "T_right",
 		      "from": "I_top"
 		    },
 		    {
-		      "to": "I_bottom",
-		      "from": "B_left"
+		      "to": "B_left",
+		      "from": "I_bottom"
 		    },
 		    {
 		      "to": "B_right",
@@ -11955,95 +11743,95 @@ describe("angleDiagram widget tests", () => {
 		    },
 		    {
 		      "to": "I_top",
-		      "from": "X_top"
+		      "from": "S_left"
 		    },
 		    {
 		      "to": "I_bottom",
 		      "from": "I_top"
 		    },
 		    {
-		      "to": "X_bottom",
+		      "to": "S_right",
 		      "from": "I_bottom"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 320,
+		  "width": 330,
 		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "A",
-		      "radius": 22,
-		      "vertex": "I_top",
-		      "pointOnFirstRay": "X_bottom",
-		      "pointOnSecondRay": "T_right"
-		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
-		      "radius": 22,
+		      "radius": 24,
+		      "vertex": "I_top",
+		      "pointOnFirstRay": "S_right",
+		      "pointOnSecondRay": "T_right"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "A",
+		      "radius": 24,
 		      "vertex": "I_bottom",
-		      "pointOnFirstRay": "X_top",
+		      "pointOnFirstRay": "S_left",
 		      "pointOnSecondRay": "B_left"
 		    }
 		  ],
-		  "height": 250,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 274.664,
-		      "y": 9.855,
-		      "id": "T_right",
-		      "label": ": null",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": -2.5,
-		      "y": 124.66,
+		      "x": 20,
+		      "y": 120,
 		      "id": "T_left",
-		      "label": ": null",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 322.5,
-		      "y": 125.34,
-		      "id": "B_right",
-		      "label": ": null",
+		      "x": 300,
+		      "y": 40,
+		      "id": "T_right",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 45.336,
-		      "y": 240.145,
+		      "x": 50,
+		      "y": 240,
 		      "id": "B_left",
-		      "label": ": null",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 251.314,
-		      "y": 5.997,
-		      "id": "X_top",
-		      "label": ": null",
+		      "x": 330,
+		      "y": 160,
+		      "id": "B_right",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 68.686,
-		      "y": 244.003,
-		      "id": "X_bottom",
-		      "label": ": null",
+		      "x": 40,
+		      "y": 80,
+		      "id": "S_left",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 236.095,
-		      "y": 25.831,
+		      "x": 310,
+		      "y": 210,
+		      "id": "S_right",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 84.7,
+		      "y": 101.5,
 		      "id": "I_top",
-		      "label": ": null",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 83.909,
-		      "y": 224.335,
+		      "x": 252.3,
+		      "y": 182.2,
 		      "id": "I_bottom",
-		      "label": ": null",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -12073,32 +11861,36 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "T",
-		      "from": "top_left_end"
-		    },
-		    {
-		      "to": "top_right_end",
+		      "to": "L1L",
 		      "from": "T"
 		    },
 		    {
-		      "to": "U",
-		      "from": "bottom_left_end"
-		    },
-		    {
-		      "to": "bottom_right_end",
-		      "from": "U"
-		    },
-		    {
-		      "to": "T",
-		      "from": "trans_up"
-		    },
-		    {
-		      "to": "U",
+		      "to": "L1R",
 		      "from": "T"
 		    },
 		    {
-		      "to": "trans_down",
-		      "from": "U"
+		      "to": "L2L",
+		      "from": "B"
+		    },
+		    {
+		      "to": "L2R",
+		      "from": "B"
+		    },
+		    {
+		      "to": "T1",
+		      "from": "T"
+		    },
+		    {
+		      "to": "T2",
+		      "from": "T"
+		    },
+		    {
+		      "to": "T1",
+		      "from": "B"
+		    },
+		    {
+		      "to": "T2",
+		      "from": "B"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -12110,74 +11902,74 @@ describe("angleDiagram widget tests", () => {
 		      "label": "A",
 		      "radius": 20,
 		      "vertex": "T",
-		      "pointOnFirstRay": "top_left_end",
-		      "pointOnSecondRay": "U"
+		      "pointOnFirstRay": "L1L",
+		      "pointOnSecondRay": "T2"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
 		      "radius": 20,
-		      "vertex": "U",
-		      "pointOnFirstRay": "bottom_right_end",
-		      "pointOnSecondRay": "T"
+		      "vertex": "B",
+		      "pointOnFirstRay": "L2R",
+		      "pointOnSecondRay": "T1"
 		    }
 		  ],
-		  "height": 250,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 106.24,
-		      "y": 62.5,
-		      "id": "T",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 193.8,
-		      "y": 187.5,
-		      "id": "U",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 0,
 		      "y": 62.5,
-		      "id": "top_left_end",
+		      "id": "L1L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 300,
 		      "y": 62.5,
-		      "id": "top_right_end",
+		      "id": "L1R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 0,
 		      "y": 187.5,
-		      "id": "bottom_left_end",
+		      "id": "L2L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 300,
 		      "y": 187.5,
-		      "id": "bottom_right_end",
+		      "id": "L2R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 63.964,
 		      "y": 2.127,
-		      "id": "trans_up",
+		      "id": "T1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 236.036,
 		      "y": 247.873,
-		      "id": "trans_down",
+		      "id": "T2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 106.15,
+		      "y": 62.5,
+		      "id": "T",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 193.85,
+		      "y": 187.5,
+		      "id": "B",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -12200,32 +11992,68 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x833c60d66f358573
-	// Question: Find an angle measure using parallel lines
+	// Question: Find an angle measure in a parallel-lines diagram
 	// Widget key: image_1
-	test("angle-diagram - [x833c60d66f358573] Find an angle measure using parallel lines", async () => {
+	test("angle-diagram - [x833c60d66f358573] Find an angle measure in a parallel-lines diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L1B",
-		      "from": "L1A"
+		      "to": "I1",
+		      "from": "L1U"
+		    },
+		    {
+		      "to": "L1U",
+		      "from": "I1"
+		    },
+		    {
+		      "to": "L1L",
+		      "from": "I1"
+		    },
+		    {
+		      "to": "I1",
+		      "from": "L1L"
+		    },
+		    {
+		      "to": "I2",
+		      "from": "L2R"
+		    },
+		    {
+		      "to": "L2R",
+		      "from": "I2"
 		    },
 		    {
 		      "to": "L2B",
-		      "from": "L2A"
+		      "from": "I2"
 		    },
 		    {
-		      "to": "TRight",
-		      "from": "TLeft"
+		      "to": "I2",
+		      "from": "L2B"
 		    },
 		    {
-		      "to": "L1A",
-		      "from": "IL"
+		      "to": "I1",
+		      "from": "TTop"
 		    },
 		    {
-		      "to": "IR",
-		      "from": "IL"
+		      "to": "TTop",
+		      "from": "I1"
+		    },
+		    {
+		      "to": "I2",
+		      "from": "I1"
+		    },
+		    {
+		      "to": "I1",
+		      "from": "I2"
+		    },
+		    {
+		      "to": "TBottom",
+		      "from": "I2"
+		    },
+		    {
+		      "to": "I2",
+		      "from": "TBottom"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -12235,77 +12063,77 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "A",
-		      "radius": 28,
-		      "vertex": "IL",
-		      "pointOnFirstRay": "L1A",
-		      "pointOnSecondRay": "IR"
+		      "radius": 20,
+		      "vertex": "I1",
+		      "pointOnFirstRay": "L1U",
+		      "pointOnSecondRay": "I2"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
-		      "radius": 28,
-		      "vertex": "IR",
-		      "pointOnFirstRay": "L2A",
-		      "pointOnSecondRay": "IL"
+		      "radius": 20,
+		      "vertex": "I2",
+		      "pointOnFirstRay": "TTop",
+		      "pointOnSecondRay": "L2R"
 		    }
 		  ],
 		  "height": 300,
 		  "points": [
 		    {
-		      "x": 212,
+		      "x": 211.612,
 		      "y": 0,
-		      "id": "L1A",
+		      "id": "L1U",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 0,
-		      "y": 212,
-		      "id": "L1B",
-		      "label": " ",
+		      "y": 211.612,
+		      "id": "L1L",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 300,
-		      "y": 88,
-		      "id": "L2A",
-		      "label": " ",
+		      "y": 88.128,
+		      "id": "L2R",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 88,
+		      "x": 88.128,
 		      "y": 300,
 		      "id": "L2B",
-		      "label": " ",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 90,
-		      "y": 4.667,
-		      "id": "TLeft",
-		      "label": " ",
+		      "x": 86.607,
+		      "y": 14.054,
+		      "id": "TTop",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 240,
-		      "y": 294.667,
-		      "id": "TRight",
-		      "label": " ",
+		      "x": 213.393,
+		      "y": 285.946,
+		      "id": "TBottom",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 130,
-		      "y": 82,
-		      "id": "IL",
-		      "label": " ",
+		      "x": 121.99,
+		      "y": 89.62,
+		      "id": "I1",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 190,
-		      "y": 198,
-		      "id": "IR",
-		      "label": " ",
+		      "x": 178.2,
+		      "y": 210.188,
+		      "id": "I2",
+		      "label": "B",
 		      "shape": "circle"
 		    }
 		  ]
@@ -12327,9 +12155,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x08d08894fe41bccd
-	// Question: Solve for x and find ∠A with parallel lines
+	// Question: Find the measure of angle A from expressions on parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [x08d08894fe41bccd] Solve for x and find ∠A with parallel lines", async () => {
+	test("angle-diagram - [x08d08894fe41bccd] Find the measure of angle A from expressions on parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12339,28 +12167,56 @@ describe("angleDiagram widget tests", () => {
 		      "from": "L_top"
 		    },
 		    {
+		      "to": "L_top",
+		      "from": "P_left"
+		    },
+		    {
 		      "to": "L_bottom",
 		      "from": "P_left"
+		    },
+		    {
+		      "to": "P_left",
+		      "from": "L_bottom"
 		    },
 		    {
 		      "to": "P_right",
 		      "from": "R_top"
 		    },
 		    {
+		      "to": "R_top",
+		      "from": "P_right"
+		    },
+		    {
 		      "to": "R_bottom",
 		      "from": "P_right"
 		    },
 		    {
+		      "to": "P_right",
+		      "from": "R_bottom"
+		    },
+		    {
 		      "to": "P_left",
-		      "from": "T_left"
+		      "from": "T1"
+		    },
+		    {
+		      "to": "T1",
+		      "from": "P_left"
 		    },
 		    {
 		      "to": "P_right",
 		      "from": "P_left"
 		    },
 		    {
-		      "to": "T_right",
+		      "to": "P_left",
 		      "from": "P_right"
+		    },
+		    {
+		      "to": "T2",
+		      "from": "P_right"
+		    },
+		    {
+		      "to": "P_right",
+		      "from": "T2"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -12368,78 +12224,78 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "A",
-		      "radius": 22,
-		      "vertex": "P_right",
-		      "pointOnFirstRay": "R_top",
-		      "pointOnSecondRay": "T_left"
+		      "color": "#1fab54",
+		      "label": "B",
+		      "radius": 24,
+		      "vertex": "P_left",
+		      "pointOnFirstRay": "L_top",
+		      "pointOnSecondRay": "P_right"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "B",
-		      "radius": 22,
-		      "vertex": "P_left",
-		      "pointOnFirstRay": "L_top",
-		      "pointOnSecondRay": "T_right"
+		      "color": "#11accd",
+		      "label": "A",
+		      "radius": 24,
+		      "vertex": "P_right",
+		      "pointOnFirstRay": "R_top",
+		      "pointOnSecondRay": "P_left"
 		    }
 		  ],
 		  "height": 300,
 		  "points": [
 		    {
 		      "x": 87.5,
-		      "y": 0,
+		      "y": 30,
 		      "id": "L_top",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 87.5,
-		      "y": 300,
+		      "y": 270,
 		      "id": "L_bottom",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 212.5,
-		      "y": 0,
+		      "y": 30,
 		      "id": "R_top",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 212.5,
-		      "y": 300,
+		      "y": 270,
 		      "id": "R_bottom",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 0.8,
-		      "y": 134.3,
-		      "id": "T_left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 299.2,
-		      "y": 165.7,
-		      "id": "T_right",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 87.5,
-		      "y": 143.4,
+		      "y": 143,
 		      "id": "P_left",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 212.5,
-		      "y": 156.6,
+		      "y": 156,
 		      "id": "P_right",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 0,
+		      "y": 134,
+		      "id": "T1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300,
+		      "y": 165,
+		      "id": "T2",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -12462,40 +12318,40 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9b98affd67b50e7b
-	// Question: Find x and the measure of an angle (alternate exterior angles)
+	// Question: Find the measure of an angle using alternate exterior angles
 	// Widget key: image_1
-	test("angle-diagram - [x9b98affd67b50e7b] Find x and the measure of an angle (alternate exterior angles)", async () => {
+	test("angle-diagram - [x9b98affd67b50e7b] Find the measure of an angle using alternate exterior angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "V_A",
-		      "from": "L1_TR"
+		      "to": "L1_p1",
+		      "from": "I_top"
 		    },
 		    {
-		      "to": "L1_BL",
-		      "from": "V_A"
+		      "to": "L1_p2",
+		      "from": "I_top"
 		    },
 		    {
-		      "to": "V_B",
-		      "from": "L2_TR"
+		      "to": "L2_p1",
+		      "from": "I_bottom"
 		    },
 		    {
-		      "to": "L2_BL",
-		      "from": "V_B"
+		      "to": "L2_p2",
+		      "from": "I_bottom"
 		    },
 		    {
-		      "to": "V_A",
-		      "from": "T_top"
+		      "to": "I_top",
+		      "from": "T_p1"
 		    },
 		    {
-		      "to": "V_B",
-		      "from": "V_A"
+		      "to": "I_bottom",
+		      "from": "I_top"
 		    },
 		    {
-		      "to": "T_bottom",
-		      "from": "V_B"
+		      "to": "T_p2",
+		      "from": "I_bottom"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -12505,19 +12361,19 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "A",
-		      "radius": 24,
-		      "vertex": "V_A",
-		      "pointOnFirstRay": "T_top",
-		      "pointOnSecondRay": "L1_TR"
+		      "radius": 20,
+		      "vertex": "I_top",
+		      "pointOnFirstRay": "L1_p1",
+		      "pointOnSecondRay": "T_p1"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
-		      "radius": 24,
-		      "vertex": "V_B",
-		      "pointOnFirstRay": "L2_TR",
-		      "pointOnSecondRay": "T_bottom"
+		      "radius": 20,
+		      "vertex": "I_bottom",
+		      "pointOnFirstRay": "L2_p2",
+		      "pointOnSecondRay": "T_p2"
 		    }
 		  ],
 		  "height": 300,
@@ -12525,56 +12381,56 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "x": 221.872,
 		      "y": 0,
-		      "id": "L1_TR",
-		      "label": " ",
+		      "id": "L1_p1",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 9.74,
 		      "y": 211.872,
-		      "id": "L1_BL",
-		      "label": " ",
+		      "id": "L1_p2",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 310.26,
 		      "y": 88.128,
-		      "id": "L2_TR",
-		      "label": " ",
+		      "id": "L2_p1",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 98.128,
-		      "y": 300.26,
-		      "id": "L2_BL",
-		      "label": " ",
+		      "y": 300,
+		      "id": "L2_p2",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 183.465,
 		      "y": 1.847,
-		      "id": "T_top",
-		      "label": " ",
+		      "id": "T_p1",
+		      "label": "T",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 136.535,
 		      "y": 298.153,
-		      "id": "T_bottom",
+		      "id": "T_p2",
+		      "label": "T",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 176.64,
+		      "y": 44.95,
+		      "id": "I_top",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 176.7,
-		      "y": 44.9,
-		      "id": "V_A",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 143.4,
-		      "y": 255,
-		      "id": "V_B",
+		      "x": 143.48,
+		      "y": 254.35,
+		      "id": "I_bottom",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -12597,140 +12453,111 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x93721300023588fb
-	// Question: Solve for x and find the measure of angle B
+	// Question: Find an angle measure using alternate interior angles
 	// Widget key: image_1
-	test("angle-diagram - [x93721300023588fb] Solve for x and find the measure of angle B", async () => {
+	test("angle-diagram - [x93721300023588fb] Find an angle measure using alternate interior angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L1_bottom",
-		      "from": "L1_top"
+		      "to": "L_top",
+		      "from": "L"
 		    },
 		    {
-		      "to": "R1_bottom",
-		      "from": "R1_top"
+		      "to": "L_bottom",
+		      "from": "L"
 		    },
 		    {
-		      "to": "T_right",
-		      "from": "T_left"
+		      "to": "R_top",
+		      "from": "R"
 		    },
 		    {
-		      "to": "V1_vertical_up",
-		      "from": "V1"
+		      "to": "R_bottom",
+		      "from": "R"
 		    },
 		    {
-		      "to": "P_TR",
-		      "from": "V1"
-		    },
-		    {
-		      "to": "V2_vertical_down",
-		      "from": "V2"
-		    },
-		    {
-		      "to": "P_TR",
-		      "from": "V2"
+		      "to": "P_right",
+		      "from": "P_left"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 200,
+		  "width": 300,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "A",
-		      "radius": 20,
-		      "vertex": "V1",
-		      "pointOnFirstRay": "V1_vertical_up",
-		      "pointOnSecondRay": "P_TR"
+		      "radius": 30,
+		      "vertex": "L",
+		      "pointOnFirstRay": "L_top",
+		      "pointOnSecondRay": "P_right"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
-		      "radius": 20,
-		      "vertex": "V2",
-		      "pointOnFirstRay": "P_TR",
-		      "pointOnSecondRay": "V2_vertical_down"
+		      "radius": 30,
+		      "vertex": "R",
+		      "pointOnFirstRay": "R_bottom",
+		      "pointOnSecondRay": "P_left"
 		    }
 		  ],
-		  "height": 300,
+		  "height": 450,
 		  "points": [
 		    {
-		      "x": 37.5,
+		      "x": 56.25,
 		      "y": 0,
-		      "id": "L1_top",
-		      "label": " ",
+		      "id": "L_top",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 37.5,
-		      "y": 300,
-		      "id": "L1_bottom",
-		      "label": " ",
+		      "x": 56.25,
+		      "y": 450,
+		      "id": "L_bottom",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 162.5,
+		      "x": 243.75,
 		      "y": 0,
-		      "id": "R1_top",
-		      "label": " ",
+		      "id": "R_top",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 162.5,
-		      "y": 300,
-		      "id": "R1_bottom",
-		      "label": " ",
+		      "x": 243.75,
+		      "y": 450,
+		      "id": "R_bottom",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 56.25,
+		      "y": 309.45,
+		      "id": "L",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 243.75,
+		      "y": 140.53,
+		      "id": "R",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 0,
-		      "y": 240.04,
-		      "id": "T_left",
+		      "y": 360.07,
+		      "id": "P_left",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 200,
-		      "y": 59.97,
-		      "id": "T_right",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 37.5,
-		      "y": 206.28,
-		      "id": "V1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 162.5,
-		      "y": 93.83,
-		      "id": "V2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 37.5,
-		      "y": 150,
-		      "id": "V1_vertical_up",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 100,
-		      "y": 150,
-		      "id": "P_TR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 162.5,
-		      "y": 150,
-		      "id": "V2_vertical_down",
+		      "x": 300,
+		      "y": 89.87,
+		      "id": "P_right",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -12761,32 +12588,32 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "VA",
-		      "from": "P1"
+		      "to": "V1",
+		      "from": "L1_top"
 		    },
 		    {
-		      "to": "P2",
-		      "from": "VA"
+		      "to": "L1_left",
+		      "from": "V1"
 		    },
 		    {
-		      "to": "VB",
-		      "from": "Q1"
+		      "to": "V2",
+		      "from": "L2_right"
 		    },
 		    {
-		      "to": "Q2",
-		      "from": "VB"
+		      "to": "L2_bottom",
+		      "from": "V2"
 		    },
 		    {
-		      "to": "VA",
-		      "from": "T1"
+		      "to": "V1",
+		      "from": "T_top"
 		    },
 		    {
-		      "to": "VB",
-		      "from": "VA"
+		      "to": "V2",
+		      "from": "V1"
 		    },
 		    {
-		      "to": "T2",
-		      "from": "VB"
+		      "to": "T_bottom",
+		      "from": "V2"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -12796,77 +12623,77 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "A",
-		      "radius": 24,
-		      "vertex": "VA",
-		      "pointOnFirstRay": "P2",
-		      "pointOnSecondRay": "T1"
+		      "radius": 20,
+		      "vertex": "V1",
+		      "pointOnFirstRay": "L1_top",
+		      "pointOnSecondRay": "V2"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
-		      "radius": 24,
-		      "vertex": "VB",
-		      "pointOnFirstRay": "Q1",
-		      "pointOnSecondRay": "T1"
+		      "radius": 20,
+		      "vertex": "V2",
+		      "pointOnFirstRay": "V1",
+		      "pointOnSecondRay": "L2_bottom"
 		    }
 		  ],
 		  "height": 300,
 		  "points": [
 		    {
-		      "x": 9.74,
-		      "y": 211.872,
-		      "id": "P1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 221.872,
 		      "y": 0,
-		      "id": "P2",
-		      "label": " ",
+		      "id": "L1_top",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 98.128,
-		      "y": 300,
-		      "id": "Q1",
-		      "label": " ",
+		      "x": 9.74,
+		      "y": 211.872,
+		      "id": "L1_left",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 310.26,
 		      "y": 88.128,
-		      "id": "Q2",
-		      "label": " ",
+		      "id": "L2_right",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 98.128,
+		      "y": 300,
+		      "id": "L2_bottom",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 96.607,
 		      "y": 14.054,
-		      "id": "T1",
-		      "label": " ",
+		      "id": "T_top",
+		      "label": "T",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 223.393,
 		      "y": 285.946,
-		      "id": "T2",
-		      "label": " ",
+		      "id": "T_bottom",
+		      "label": "T",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 132,
-		      "y": 90,
-		      "id": "VA",
-		      "label": " ",
+		      "x": 131.918,
+		      "y": 89.694,
+		      "id": "V1",
+		      "label": "V",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 188,
-		      "y": 210,
-		      "id": "VB",
-		      "label": " ",
+		      "x": 188.246,
+		      "y": 210.142,
+		      "id": "V2",
+		      "label": "V",
 		      "shape": "circle"
 		    }
 		  ]
@@ -12888,40 +12715,40 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x39e46aa87c1b0597
-	// Question: Solve for x and find the measure of an angle in a parallel-lines diagram
+	// Question: Solve for x and find the measure of ∠A
 	// Widget key: image_1
-	test("angle-diagram - [x39e46aa87c1b0597] Solve for x and find the measure of an angle in a parallel-lines diagram", async () => {
+	test("angle-diagram - [x39e46aa87c1b0597] Solve for x and find the measure of ∠A", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L1_start",
-		      "from": "L_intersect"
+		      "to": "I_upper",
+		      "from": "U_left"
 		    },
 		    {
-		      "to": "L1_end",
-		      "from": "L_intersect"
+		      "to": "U_right",
+		      "from": "I_upper"
 		    },
 		    {
-		      "to": "L2_start",
-		      "from": "R_intersect"
+		      "to": "I_lower",
+		      "from": "L_left"
 		    },
 		    {
-		      "to": "L2_end",
-		      "from": "R_intersect"
+		      "to": "L_right",
+		      "from": "I_lower"
 		    },
 		    {
-		      "to": "L_intersect",
-		      "from": "T_start"
+		      "to": "I_upper",
+		      "from": "T_top"
 		    },
 		    {
-		      "to": "R_intersect",
-		      "from": "L_intersect"
+		      "to": "I_lower",
+		      "from": "I_upper"
 		    },
 		    {
-		      "to": "T_end",
-		      "from": "R_intersect"
+		      "to": "T_bottom",
+		      "from": "I_lower"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -12931,76 +12758,76 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "A",
-		      "radius": 24,
-		      "vertex": "R_intersect",
-		      "pointOnFirstRay": "T_start",
-		      "pointOnSecondRay": "L2_start"
+		      "radius": 28,
+		      "vertex": "I_lower",
+		      "pointOnFirstRay": "I_upper",
+		      "pointOnSecondRay": "L_right"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
-		      "radius": 24,
-		      "vertex": "L_intersect",
-		      "pointOnFirstRay": "L1_end",
-		      "pointOnSecondRay": "T_start"
+		      "radius": 26,
+		      "vertex": "I_upper",
+		      "pointOnFirstRay": "U_left",
+		      "pointOnSecondRay": "I_lower"
 		    }
 		  ],
-		  "height": 250,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 274.664,
-		      "y": 9.855,
-		      "id": "L1_start",
+		      "x": 30,
+		      "y": 130,
+		      "id": "U_left",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": -2.5,
-		      "y": 124.66,
-		      "id": "L1_end",
+		      "x": 290,
+		      "y": 50,
+		      "id": "U_right",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 322.5,
-		      "y": 125.34,
-		      "id": "L2_start",
+		      "x": 50,
+		      "y": 250,
+		      "id": "L_left",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 45.336,
-		      "y": 240.145,
-		      "id": "L2_end",
+		      "x": 310,
+		      "y": 170,
+		      "id": "L_right",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 64.588,
-		      "y": 9.256,
-		      "id": "T_start",
+		      "x": 60,
+		      "y": 20,
+		      "id": "T_top",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 255.412,
-		      "y": 240.744,
-		      "id": "T_end",
+		      "x": 270,
+		      "y": 300,
+		      "id": "T_bottom",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 118.4,
-		      "y": 74.6,
-		      "id": "L_intersect",
+		      "x": 110,
+		      "y": 90,
+		      "id": "I_upper",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 201.6,
-		      "y": 175.5,
-		      "id": "R_intersect",
+		      "x": 190,
+		      "y": 170,
+		      "id": "I_lower",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -13023,120 +12850,148 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8d38247844d64913
-	// Question: Solve for x and find the measure of an angle
+	// Question: Find the measure of angle A
 	// Widget key: image_1
-	test("angle-diagram - [x8d38247844d64913] Solve for x and find the measure of an angle", async () => {
+	test("angle-diagram - [x8d38247844d64913] Find the measure of angle A", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
-		      "from": "T1"
+		      "to": "V_B",
+		      "from": "L1_left"
 		    },
 		    {
-		      "to": "T2",
-		      "from": "L"
+		      "to": "L1_left",
+		      "from": "V_B"
 		    },
 		    {
-		      "to": "R",
-		      "from": "B1"
+		      "to": "L1_right",
+		      "from": "V_B"
 		    },
 		    {
-		      "to": "B2",
-		      "from": "R"
+		      "to": "V_B",
+		      "from": "L1_right"
 		    },
 		    {
-		      "to": "L",
-		      "from": "X1"
+		      "to": "V_A",
+		      "from": "L2_left"
 		    },
 		    {
-		      "to": "R",
-		      "from": "L"
+		      "to": "L2_left",
+		      "from": "V_A"
 		    },
 		    {
-		      "to": "X2",
-		      "from": "R"
+		      "to": "L2_right",
+		      "from": "V_A"
+		    },
+		    {
+		      "to": "V_A",
+		      "from": "L2_right"
+		    },
+		    {
+		      "to": "V_B",
+		      "from": "T_left"
+		    },
+		    {
+		      "to": "T_left",
+		      "from": "V_B"
+		    },
+		    {
+		      "to": "V_A",
+		      "from": "V_B"
+		    },
+		    {
+		      "to": "V_B",
+		      "from": "V_A"
+		    },
+		    {
+		      "to": "T_right",
+		      "from": "V_A"
+		    },
+		    {
+		      "to": "V_A",
+		      "from": "T_right"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 280,
+		  "width": 420,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
-		      "radius": 16,
-		      "vertex": "L",
-		      "pointOnFirstRay": "T2",
-		      "pointOnSecondRay": "X1"
+		      "radius": 28,
+		      "vertex": "V_B",
+		      "pointOnFirstRay": "T_left",
+		      "pointOnSecondRay": "L1_right"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "A",
-		      "radius": 16,
-		      "vertex": "R",
-		      "pointOnFirstRay": "X1",
-		      "pointOnSecondRay": "B1"
+		      "radius": 28,
+		      "vertex": "V_A",
+		      "pointOnFirstRay": "V_B",
+		      "pointOnSecondRay": "L2_right"
 		    }
 		  ],
-		  "height": 200,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 231.731,
-		      "y": 7.884,
-		      "id": "T1",
-		      "label": " ",
+		      "x": 15.002,
+		      "y": 149.592,
+		      "id": "L1_left",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 10.001,
-		      "y": 99.728,
-		      "id": "T2",
-		      "label": " ",
+		      "x": 347.597,
+		      "y": 11.826,
+		      "id": "L1_right",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 270,
-		      "y": 100.272,
-		      "id": "B1",
-		      "label": " ",
+		      "x": 72.404,
+		      "y": 288.174,
+		      "id": "L2_left",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 48.269,
-		      "y": 192.116,
-		      "id": "B2",
-		      "label": " ",
+		      "x": 405,
+		      "y": 150.408,
+		      "id": "L2_right",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 21.027,
-		      "y": 84.337,
-		      "id": "X1",
-		      "label": " ",
+		      "x": 31.541,
+		      "y": 126.506,
+		      "id": "T_left",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 258.973,
-		      "y": 115.663,
-		      "id": "X2",
-		      "label": " ",
+		      "x": 388.46,
+		      "y": 173.495,
+		      "id": "T_right",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 40.8,
-		      "y": 87.81,
-		      "id": "L",
-		      "label": " ",
+		      "x": 61.23,
+		      "y": 130.41,
+		      "id": "V_B",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 239.14,
-		      "y": 113.04,
-		      "id": "R",
-		      "label": " ",
+		      "x": 358.92,
+		      "y": 169.61,
+		      "id": "V_A",
+		      "label": null,
 		      "shape": "circle"
 		    }
 		  ]
@@ -13158,120 +13013,148 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa2e338a8a3dcd380
-	// Question: Solve for x and find the measure of angle B
+	// Question: Solve for x and find the measure of an angle
 	// Widget key: image_1
-	test("angle-diagram - [xa2e338a8a3dcd380] Solve for x and find the measure of angle B", async () => {
+	test("angle-diagram - [xa2e338a8a3dcd380] Solve for x and find the measure of an angle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L_int",
+		      "to": "L",
 		      "from": "L_top"
 		    },
 		    {
 		      "to": "L_bottom",
-		      "from": "L_int"
+		      "from": "L"
 		    },
 		    {
-		      "to": "R_int",
+		      "to": "L",
+		      "from": "L_bottom"
+		    },
+		    {
+		      "to": "L_top",
+		      "from": "L"
+		    },
+		    {
+		      "to": "R",
 		      "from": "R_top"
 		    },
 		    {
 		      "to": "R_bottom",
-		      "from": "R_int"
+		      "from": "R"
 		    },
 		    {
-		      "to": "L_int",
-		      "from": "P1"
+		      "to": "R",
+		      "from": "R_bottom"
 		    },
 		    {
-		      "to": "R_int",
-		      "from": "L_int"
+		      "to": "R_top",
+		      "from": "R"
 		    },
 		    {
-		      "to": "P2",
-		      "from": "R_int"
+		      "to": "L",
+		      "from": "T_start"
+		    },
+		    {
+		      "to": "R",
+		      "from": "L"
+		    },
+		    {
+		      "to": "T_end",
+		      "from": "R"
+		    },
+		    {
+		      "to": "T_start",
+		      "from": "L"
+		    },
+		    {
+		      "to": "L",
+		      "from": "R"
+		    },
+		    {
+		      "to": "R",
+		      "from": "T_end"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 200,
+		  "width": 300,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "A",
-		      "radius": 22,
-		      "vertex": "L_int",
+		      "radius": 30,
+		      "vertex": "L",
 		      "pointOnFirstRay": "L_bottom",
-		      "pointOnSecondRay": "P1"
+		      "pointOnSecondRay": "T_start"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
-		      "radius": 22,
-		      "vertex": "R_int",
+		      "radius": 30,
+		      "vertex": "R",
 		      "pointOnFirstRay": "R_bottom",
-		      "pointOnSecondRay": "P1"
+		      "pointOnSecondRay": "L"
 		    }
 		  ],
-		  "height": 300,
+		  "height": 450,
 		  "points": [
 		    {
-		      "x": 37.5,
+		      "x": 56.25,
 		      "y": 0,
 		      "id": "L_top",
-		      "label": " ",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 37.5,
-		      "y": 224.46,
-		      "id": "L_int",
-		      "label": " ",
+		      "x": 56.25,
+		      "y": 336.71,
+		      "id": "L",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 37.5,
-		      "y": 300,
+		      "x": 56.25,
+		      "y": 450,
 		      "id": "L_bottom",
-		      "label": " ",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 162.5,
+		      "x": 243.75,
 		      "y": 0,
 		      "id": "R_top",
-		      "label": " ",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 162.5,
-		      "y": 75.52,
-		      "id": "R_int",
-		      "label": " ",
+		      "x": 243.75,
+		      "y": 112.62,
+		      "id": "R",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 162.5,
-		      "y": 300,
+		      "x": 243.75,
+		      "y": 450,
 		      "id": "R_bottom",
-		      "label": " ",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 3.582,
-		      "y": 264.907,
-		      "id": "P1",
-		      "label": " ",
+		      "x": 5.37,
+		      "y": 397.36,
+		      "id": "T_start",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 196.418,
-		      "y": 35.093,
-		      "id": "P2",
-		      "label": " ",
+		      "x": 294.63,
+		      "y": 52.64,
+		      "id": "T_end",
+		      "label": "B",
 		      "shape": "circle"
 		    }
 		  ]
@@ -13301,32 +13184,32 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "intersect_top",
-		      "from": "top_left"
+		      "to": "Xtop",
+		      "from": "T1"
 		    },
 		    {
-		      "to": "top_right",
-		      "from": "intersect_top"
+		      "to": "T2",
+		      "from": "Xtop"
 		    },
 		    {
-		      "to": "intersect_bottom",
-		      "from": "bottom_left"
+		      "to": "Xbot",
+		      "from": "B1"
 		    },
 		    {
-		      "to": "bottom_right",
-		      "from": "intersect_bottom"
+		      "to": "B2",
+		      "from": "Xbot"
 		    },
 		    {
-		      "to": "intersect_top",
-		      "from": "transversal_top"
+		      "to": "Xtop",
+		      "from": "TrL"
 		    },
 		    {
-		      "to": "intersect_bottom",
-		      "from": "intersect_top"
+		      "to": "Xbot",
+		      "from": "Xtop"
 		    },
 		    {
-		      "to": "transversal_bottom",
-		      "from": "intersect_bottom"
+		      "to": "TrR",
+		      "from": "Xbot"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -13336,76 +13219,76 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
-		      "radius": 20,
-		      "vertex": "intersect_top",
-		      "pointOnFirstRay": "top_left",
-		      "pointOnSecondRay": "transversal_bottom"
+		      "radius": 24,
+		      "vertex": "Xtop",
+		      "pointOnFirstRay": "T1",
+		      "pointOnSecondRay": "TrR"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "A",
-		      "radius": 20,
-		      "vertex": "intersect_bottom",
-		      "pointOnFirstRay": "bottom_right",
-		      "pointOnSecondRay": "transversal_top"
+		      "radius": 24,
+		      "vertex": "Xbot",
+		      "pointOnFirstRay": "B2",
+		      "pointOnSecondRay": "TrL"
 		    }
 		  ],
-		  "height": 250,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 0,
 		      "y": 121.6,
-		      "id": "top_left",
+		      "id": "T1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 269.664,
 		      "y": 9.855,
-		      "id": "top_right",
+		      "id": "T2",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 40.336,
 		      "y": 240.145,
-		      "id": "bottom_left",
+		      "id": "B1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 310,
-		      "y": 128.446,
-		      "id": "bottom_right",
+		      "x": 317.5,
+		      "y": 125.34,
+		      "id": "B2",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 27.104,
 		      "y": 46.625,
-		      "id": "transversal_top",
+		      "id": "TrL",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 282.896,
 		      "y": 203.375,
-		      "id": "transversal_bottom",
+		      "id": "TrR",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 89.17,
-		      "y": 84.68,
-		      "id": "intersect_top",
+		      "x": 89.19,
+		      "y": 84.67,
+		      "id": "Xtop",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 220.94,
-		      "y": 165.52,
-		      "id": "intersect_bottom",
+		      "x": 220.82,
+		      "y": 165.37,
+		      "id": "Xbot",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -13428,120 +13311,120 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xaf090d34b6931448
-	// Question: Find an angle measure using alternate exterior angles
+	// Question: Solve for x and find the measure of angle A
 	// Widget key: image_1
-	test("angle-diagram - [xaf090d34b6931448] Find an angle measure using alternate exterior angles", async () => {
+	test("angle-diagram - [xaf090d34b6931448] Solve for x and find the measure of angle A", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "V_top",
-		      "from": "T1"
+		      "to": "U",
+		      "from": "UL"
 		    },
 		    {
-		      "to": "T2",
-		      "from": "V_top"
+		      "to": "UR",
+		      "from": "U"
 		    },
 		    {
-		      "to": "V_bottom",
-		      "from": "B1"
+		      "to": "L",
+		      "from": "LL"
 		    },
 		    {
-		      "to": "B2",
-		      "from": "V_bottom"
+		      "to": "LR",
+		      "from": "L"
 		    },
 		    {
-		      "to": "V_top",
-		      "from": "P1"
+		      "to": "U",
+		      "from": "Ttop"
 		    },
 		    {
-		      "to": "V_bottom",
-		      "from": "V_top"
+		      "to": "L",
+		      "from": "U"
 		    },
 		    {
-		      "to": "P2",
-		      "from": "V_bottom"
+		      "to": "Tbottom",
+		      "from": "L"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 330,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "A",
-		      "radius": 20,
-		      "vertex": "V_top",
-		      "pointOnFirstRay": "T1",
-		      "pointOnSecondRay": "V_bottom"
+		      "radius": 28,
+		      "vertex": "U",
+		      "pointOnFirstRay": "UL",
+		      "pointOnSecondRay": "Ttop"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
-		      "radius": 20,
-		      "vertex": "V_bottom",
-		      "pointOnFirstRay": "B2",
-		      "pointOnSecondRay": "V_top"
+		      "radius": 28,
+		      "vertex": "L",
+		      "pointOnFirstRay": "LR",
+		      "pointOnSecondRay": "Tbottom"
 		    }
 		  ],
-		  "height": 280,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 279.664,
-		      "y": 24.855,
-		      "id": "T1",
-		      "label": " ",
+		      "x": 80,
+		      "y": 100,
+		      "id": "UL",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 2.5,
-		      "y": 139.66,
-		      "id": "T2",
-		      "label": " ",
+		      "x": 200,
+		      "y": 130,
+		      "id": "U",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 327.5,
-		      "y": 140.34,
-		      "id": "B1",
-		      "label": " ",
+		      "x": 320,
+		      "y": 160,
+		      "id": "UR",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 50.336,
-		      "y": 255.145,
-		      "id": "B2",
-		      "label": " ",
+		      "x": 140,
+		      "y": 190,
+		      "id": "LL",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 252.105,
-		      "y": 17.883,
-		      "id": "P1",
-		      "label": " ",
+		      "x": 260,
+		      "y": 220,
+		      "id": "L",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 77.895,
-		      "y": 262.117,
-		      "id": "P2",
-		      "label": " ",
+		      "x": 380,
+		      "y": 250,
+		      "id": "LR",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 233.53,
-		      "y": 43.97,
-		      "id": "V_top",
-		      "label": " ",
+		      "x": 140,
+		      "y": 40,
+		      "id": "Ttop",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 96.47,
-		      "y": 236.03,
-		      "id": "V_bottom",
-		      "label": " ",
+		      "x": 320,
+		      "y": 310,
+		      "id": "Tbottom",
+		      "label": null,
 		      "shape": "circle"
 		    }
 		  ]
@@ -13563,39 +13446,39 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xec1766ed9f1a3185
-	// Question: Find the measure of ∠B using alternate exterior angles
+	// Question: Find an angle measure using alternate exterior angles
 	// Widget key: image_1
-	test("angle-diagram - [xec1766ed9f1a3185] Find the measure of ∠B using alternate exterior angles", async () => {
+	test("angle-diagram - [xec1766ed9f1a3185] Find an angle measure using alternate exterior angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
 		      "to": "V_top",
-		      "from": "T_left"
+		      "from": "top_left"
 		    },
 		    {
-		      "to": "T_right",
+		      "to": "top_right",
 		      "from": "V_top"
 		    },
 		    {
 		      "to": "V_bottom",
-		      "from": "B_left"
+		      "from": "bottom_left"
 		    },
 		    {
-		      "to": "B_right",
+		      "to": "bottom_right",
 		      "from": "V_bottom"
 		    },
 		    {
 		      "to": "V_top",
-		      "from": "Diag_top"
+		      "from": "trans_top"
 		    },
 		    {
 		      "to": "V_bottom",
 		      "from": "V_top"
 		    },
 		    {
-		      "to": "Diag_bottom",
+		      "to": "trans_bottom",
 		      "from": "V_bottom"
 		    }
 		  ],
@@ -13608,8 +13491,8 @@ describe("angleDiagram widget tests", () => {
 		      "label": "A",
 		      "radius": 20,
 		      "vertex": "V_top",
-		      "pointOnFirstRay": "T_right",
-		      "pointOnSecondRay": "Diag_bottom"
+		      "pointOnFirstRay": "top_right",
+		      "pointOnSecondRay": "trans_top"
 		    },
 		    {
 		      "type": "arc",
@@ -13617,8 +13500,8 @@ describe("angleDiagram widget tests", () => {
 		      "label": "B",
 		      "radius": 20,
 		      "vertex": "V_bottom",
-		      "pointOnFirstRay": "B_left",
-		      "pointOnSecondRay": "Diag_top"
+		      "pointOnFirstRay": "bottom_left",
+		      "pointOnSecondRay": "trans_bottom"
 		    }
 		  ],
 		  "height": 300,
@@ -13626,28 +13509,49 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "x": 10,
 		      "y": 87.5,
-		      "id": "T_left",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 139.692,
-		      "y": 87.5,
-		      "id": "V_top",
+		      "id": "top_left",
 		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 310,
 		      "y": 87.5,
-		      "id": "T_right",
+		      "id": "top_right",
 		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 10,
 		      "y": 212.5,
-		      "id": "B_left",
+		      "id": "bottom_left",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 310,
+		      "y": 212.5,
+		      "id": "bottom_right",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 113.647,
+		      "y": 7.342,
+		      "id": "trans_top",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 206.353,
+		      "y": 292.658,
+		      "id": "trans_bottom",
+		      "label": null,
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 139.693,
+		      "y": 87.5,
+		      "id": "V_top",
 		      "label": null,
 		      "shape": "circle"
 		    },
@@ -13655,27 +13559,6 @@ describe("angleDiagram widget tests", () => {
 		      "x": 180.307,
 		      "y": 212.5,
 		      "id": "V_bottom",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 310,
-		      "y": 212.5,
-		      "id": "B_right",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 113.647,
-		      "y": 7.342,
-		      "id": "Diag_top",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 206.353,
-		      "y": 292.658,
-		      "id": "Diag_bottom",
 		      "label": null,
 		      "shape": "circle"
 		    }
@@ -13698,32 +13581,40 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb759cb23de6eab82
-	// Question: Solve for x and find the measure of angle B
+	// Question: Find the measure of an angle with parallel lines
 	// Widget key: image_1
-	test("angle-diagram - [xb759cb23de6eab82] Solve for x and find the measure of angle B", async () => {
+	test("angle-diagram - [xb759cb23de6eab82] Find the measure of an angle with parallel lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "V",
-		      "from": "L1a"
+		      "to": "V1",
+		      "from": "P1L"
 		    },
 		    {
-		      "to": "L1b",
-		      "from": "V"
+		      "to": "P1R",
+		      "from": "V1"
 		    },
 		    {
-		      "to": "V",
+		      "to": "V2",
+		      "from": "P2L"
+		    },
+		    {
+		      "to": "P2R",
+		      "from": "V2"
+		    },
+		    {
+		      "to": "V1",
 		      "from": "T1"
 		    },
 		    {
-		      "to": "T2",
-		      "from": "V"
+		      "to": "V2",
+		      "from": "V1"
 		    },
 		    {
-		      "to": "L2b",
-		      "from": "L2a"
+		      "to": "T2",
+		      "from": "V2"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -13734,68 +13625,75 @@ describe("angleDiagram widget tests", () => {
 		      "color": "#11accd",
 		      "label": "A",
 		      "radius": 28,
-		      "vertex": "V",
-		      "pointOnFirstRay": "T1",
-		      "pointOnSecondRay": "L1b"
+		      "vertex": "V1",
+		      "pointOnFirstRay": "P1L",
+		      "pointOnSecondRay": "T1"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
 		      "radius": 34,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L1b",
-		      "pointOnSecondRay": "T2"
+		      "vertex": "V1",
+		      "pointOnFirstRay": "V2",
+		      "pointOnSecondRay": "P1L"
 		    }
 		  ],
 		  "height": 300,
 		  "points": [
 		    {
-		      "x": 40,
-		      "y": 100,
-		      "id": "L1a",
+		      "x": 30,
+		      "y": 201.43,
+		      "id": "P1L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 110,
-		      "y": 180,
-		      "id": "V",
+		      "x": 100,
+		      "y": 131.43,
+		      "id": "V1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 180,
-		      "y": 260,
-		      "id": "L1b",
+		      "x": 170,
+		      "y": 61.43,
+		      "id": "P1R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 146,
+		      "y": 247,
+		      "id": "P2L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 216,
+		      "y": 177,
+		      "id": "V2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 286,
+		      "y": 107,
+		      "id": "P2R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 20,
-		      "y": 210,
+		      "y": 100,
 		      "id": "T1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 290,
-		      "y": 120,
-		      "id": "T2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 230,
-		      "y": 10,
-		      "id": "L2a",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 300,
-		      "y": 90,
-		      "id": "L2b",
+		      "y": 210,
+		      "id": "T2",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -13818,40 +13716,40 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7329a7c997cf0ce3
-	// Question: Find the measure of angle B
+	// Question: Solve for x and find the measure of angle B
 	// Widget key: image_1
-	test("angle-diagram - [x7329a7c997cf0ce3] Find the measure of angle B", async () => {
+	test("angle-diagram - [x7329a7c997cf0ce3] Solve for x and find the measure of angle B", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "T",
-		      "from": "T_left"
+		      "to": "topLeft",
+		      "from": "topInt"
 		    },
 		    {
-		      "to": "T_right",
-		      "from": "T"
+		      "to": "topRight",
+		      "from": "topInt"
 		    },
 		    {
-		      "to": "B",
-		      "from": "B_left"
+		      "to": "botLeft",
+		      "from": "botInt"
 		    },
 		    {
-		      "to": "B_right",
-		      "from": "B"
+		      "to": "botRight",
+		      "from": "botInt"
 		    },
 		    {
-		      "to": "T",
-		      "from": "D_top"
+		      "to": "downExt",
+		      "from": "upExt"
 		    },
 		    {
-		      "to": "B",
-		      "from": "T"
+		      "to": "downExt",
+		      "from": "topInt"
 		    },
 		    {
-		      "to": "D_bottom",
-		      "from": "B"
+		      "to": "upExt",
+		      "from": "botInt"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -13862,314 +13760,76 @@ describe("angleDiagram widget tests", () => {
 		      "color": "#11accd",
 		      "label": "A",
 		      "radius": 20,
-		      "vertex": "T",
-		      "pointOnFirstRay": "T_left",
-		      "pointOnSecondRay": "D_bottom"
+		      "vertex": "topInt",
+		      "pointOnFirstRay": "topLeft",
+		      "pointOnSecondRay": "downExt"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "B",
 		      "radius": 20,
-		      "vertex": "B",
-		      "pointOnFirstRay": "D_top",
-		      "pointOnSecondRay": "B_left"
+		      "vertex": "botInt",
+		      "pointOnFirstRay": "botLeft",
+		      "pointOnSecondRay": "upExt"
 		    }
 		  ],
-		  "height": 280,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 10,
+		      "x": 40,
 		      "y": 77.5,
-		      "id": "T_left",
+		      "id": "topLeft",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 310,
 		      "y": 77.5,
-		      "id": "T_right",
+		      "id": "topRight",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 10,
+		      "x": 40,
 		      "y": 202.5,
-		      "id": "B_left",
+		      "id": "botLeft",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 310,
 		      "y": 202.5,
-		      "id": "B_right",
+		      "id": "botRight",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 132.173,
+		      "x": 132.15,
 		      "y": 77.5,
-		      "id": "T",
+		      "id": "topInt",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 187.827,
+		      "x": 187.81,
 		      "y": 202.5,
-		      "id": "B",
+		      "id": "botInt",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 98.99,
 		      "y": 2.968,
-		      "id": "D_top",
+		      "id": "upExt",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 221.01,
 		      "y": 277.032,
-		      "id": "D_bottom",
+		      "id": "downExt",
 		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa17f37ebe9809544
-	// Question: Solve for x and find the measure of angle A
-	// Widget key: image_1
-	test("angle-diagram - [xa17f37ebe9809544] Solve for x and find the measure of angle A", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "I_left",
-		      "from": "P_L1_left"
-		    },
-		    {
-		      "to": "P_L1_rightTop",
-		      "from": "I_left"
-		    },
-		    {
-		      "to": "I_left",
-		      "from": "P_T_left"
-		    },
-		    {
-		      "to": "P_T_right",
-		      "from": "I_left"
-		    },
-		    {
-		      "to": "I_right",
-		      "from": "P_L2_leftBottom"
-		    },
-		    {
-		      "to": "P_L2_rightMid",
-		      "from": "I_right"
-		    },
-		    {
-		      "to": "I_right",
-		      "from": "P_T_left"
-		    },
-		    {
-		      "to": "P_T_right",
-		      "from": "I_right"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 320,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "A",
-		      "radius": 20,
-		      "vertex": "I_right",
-		      "pointOnFirstRay": "P_L2_leftBottom",
-		      "pointOnSecondRay": "P_T_left"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "B",
-		      "radius": 20,
-		      "vertex": "I_left",
-		      "pointOnFirstRay": "P_L1_rightTop",
-		      "pointOnSecondRay": "P_T_right"
-		    }
-		  ],
-		  "height": 250,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 125,
-		      "id": "P_L1_left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 275,
-		      "y": 10,
-		      "id": "P_L1_rightTop",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 45,
-		      "y": 240,
-		      "id": "P_L2_leftBottom",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 322,
-		      "y": 125,
-		      "id": "P_L2_rightMid",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 11,
-		      "y": 105,
-		      "id": "P_T_left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 309,
-		      "y": 145,
-		      "id": "P_T_right",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 56,
-		      "y": 113,
-		      "id": "I_left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 266,
-		      "y": 146,
-		      "id": "I_right",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xfe9a026bd7b907a0
-	// Question: Find the measure of x
-	// Widget key: image_1
-	test("angle-diagram - [xfe9a026bd7b907a0] Find the measure of x", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "P",
-		      "from": "Q"
-		    },
-		    {
-		      "to": "R",
-		      "from": "Q"
-		    },
-		    {
-		      "to": "S",
-		      "from": "Q"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 168,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "36°",
-		      "radius": 28,
-		      "vertex": "Q",
-		      "pointOnFirstRay": "P",
-		      "pointOnSecondRay": "R"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#ff8800",
-		      "label": "x°",
-		      "radius": 42,
-		      "vertex": "Q",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "S"
-		    },
-		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": "right angle",
-		      "vertex": "Q",
-		      "pointOnFirstRay": "P",
-		      "pointOnSecondRay": "S"
-		    }
-		  ],
-		  "height": 198,
-		  "points": [
-		    {
-		      "x": 18,
-		      "y": 138,
-		      "id": "Q",
-		      "label": "Q",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 59.042,
-		      "y": 25.237,
-		      "id": "P",
-		      "label": "P",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 117.485,
-		      "y": 70.897,
-		      "id": "R",
-		      "label": "R",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 130.763,
-		      "y": 179.042,
-		      "id": "S",
-		      "label": "S",
 		      "shape": "circle"
 		    }
 		  ]
@@ -14191,9 +13851,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4f65f366c3ef254a
-	// Question: Measure of angle x
+	// Question: Measure of an angle from a diagram
 	// Widget key: image_1
-	test("angle-diagram - [x4f65f366c3ef254a] Measure of angle x", async () => {
+	test("angle-diagram - [x4f65f366c3ef254a] Measure of an angle from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -14212,53 +13872,53 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 288,
+		  "width": 384,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#0066CC",
+		      "color": "#CC0000",
 		      "label": "106°",
-		      "radius": 36,
+		      "radius": 56,
 		      "vertex": "X",
 		      "pointOnFirstRay": "Y",
 		      "pointOnSecondRay": "Z"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#00AA00",
+		      "color": "#0066CC",
 		      "label": "x°",
-		      "radius": 28,
+		      "radius": 42,
 		      "vertex": "X",
 		      "pointOnFirstRay": "Y",
 		      "pointOnSecondRay": "W"
 		    }
 		  ],
-		  "height": 186,
+		  "height": 448,
 		  "points": [
 		    {
-		      "x": 31.237,
-		      "y": 167.042,
-		      "id": "W",
-		      "label": "W",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 144,
-		      "y": 126,
+		      "x": 192,
+		      "y": 336,
 		      "id": "X",
 		      "label": "X",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 73.466,
-		      "y": 28.918,
+		      "x": 41.649,
+		      "y": 445.445,
+		      "id": "W",
+		      "label": "W",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 97.955,
+		      "y": 51.409,
 		      "id": "Y",
 		      "label": "Y",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 256.763,
-		      "y": 84.958,
+		      "x": 342.351,
+		      "y": 151.036,
 		      "id": "Z",
 		      "label": "Z",
 		      "shape": "circle"
@@ -14282,9 +13942,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x61c8b090cab03b39
-	// Question: Find the measure of an angle from a right angle
+	// Question: Find the measure of an angle
 	// Widget key: image_1
-	test("angle-diagram - [x61c8b090cab03b39] Find the measure of an angle from a right angle", async () => {
+	test("angle-diagram - [x61c8b090cab03b39] Find the measure of an angle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -14303,7 +13963,7 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 216,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "right",
@@ -14317,47 +13977,47 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "53°",
-		      "radius": 34,
+		      "radius": 44,
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#CC6600",
+		      "color": "#CC0000",
 		      "label": "x°",
-		      "radius": 48,
+		      "radius": 58,
 		      "vertex": "O",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 162,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 102,
-		      "y": 138,
-		      "id": "O",
-		      "label": "O",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 24.865,
-		      "y": 46.075,
+		      "x": 50,
+		      "y": 96,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 128.994,
-		      "y": 21.076,
+		      "x": 190,
+		      "y": 256,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 240,
+		      "y": 40,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 193.925,
-		      "y": 60.865,
+		      "x": 350,
+		      "y": 116,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
@@ -14381,9 +14041,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa53432b0115b2059
-	// Question: Measure of an angle
+	// Question: Find the measure of angle x
 	// Widget key: image_1
-	test("angle-diagram - [xa53432b0115b2059] Measure of an angle", async () => {
+	test("angle-diagram - [xa53432b0115b2059] Find the measure of angle x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -14402,7 +14062,7 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 180,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "right",
@@ -14416,49 +14076,148 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "41°",
-		      "radius": 36,
+		      "radius": 44,
 		      "vertex": "O",
 		      "pointOnFirstRay": "X",
 		      "pointOnSecondRay": "Y"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#CC6600",
+		      "color": "#CC0000",
 		      "label": "x°",
-		      "radius": 50,
+		      "radius": 60,
 		      "vertex": "O",
 		      "pointOnFirstRay": "Y",
 		      "pointOnSecondRay": "Z"
 		    }
 		  ],
-		  "height": 162,
+		  "height": 324,
 		  "points": [
 		    {
-		      "x": 30,
-		      "y": 138,
+		      "x": 60,
+		      "y": 276,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 30,
-		      "y": 18,
+		      "x": 60,
+		      "y": 36,
 		      "id": "X",
 		      "label": "X",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 138,
+		      "x": 300,
+		      "y": 276,
 		      "id": "Z",
 		      "label": "Z",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 108.727,
-		      "y": 47.435,
+		      "x": 217.454,
+		      "y": 94.87,
 		      "id": "Y",
 		      "label": "Y",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfe9a026bd7b907a0
+	// Question: Find the measure of angle x
+	// Widget key: image_1
+	test("angle-diagram - [xfe9a026bd7b907a0] Find the measure of angle x", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "P",
+		      "from": "Q"
+		    },
+		    {
+		      "to": "R",
+		      "from": "Q"
+		    },
+		    {
+		      "to": "S",
+		      "from": "Q"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 336,
+		  "angles": [
+		    {
+		      "type": "right",
+		      "color": "#000000",
+		      "label": "right angle",
+		      "vertex": "Q",
+		      "pointOnFirstRay": "P",
+		      "pointOnSecondRay": "S"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#0066CC",
+		      "label": "36°",
+		      "radius": 52,
+		      "vertex": "Q",
+		      "pointOnFirstRay": "P",
+		      "pointOnSecondRay": "R"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#CC0000",
+		      "label": "x°",
+		      "radius": 64,
+		      "vertex": "Q",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "S"
+		    }
+		  ],
+		  "height": 396,
+		  "points": [
+		    {
+		      "x": 36,
+		      "y": 276,
+		      "id": "Q",
+		      "label": "Q",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 118.084,
+		      "y": 50.474,
+		      "id": "P",
+		      "label": "P",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 234.97,
+		      "y": 141.794,
+		      "id": "R",
+		      "label": "R",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 261.526,
+		      "y": 358.084,
+		      "id": "S",
+		      "label": "S",
 		      "shape": "circle"
 		    }
 		  ]
@@ -14501,53 +14260,53 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 228,
+		  "width": 342,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "x°",
-		      "radius": 34,
+		      "radius": 55,
 		      "vertex": "O",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "M"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#CC0000",
+		      "color": "#00AA00",
 		      "label": "66°",
-		      "radius": 26,
+		      "radius": 35,
 		      "vertex": "O",
 		      "pointOnFirstRay": "M",
 		      "pointOnSecondRay": "N"
 		    }
 		  ],
-		  "height": 216,
+		  "height": 324,
 		  "points": [
 		    {
-		      "x": 30.865,
-		      "y": 16.075,
-		      "id": "L",
-		      "label": "L",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 108,
-		      "y": 108,
+		      "x": 162,
+		      "y": 162,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 185.135,
-		      "y": 199.925,
+		      "x": 46.2975,
+		      "y": 24.1125,
+		      "id": "L",
+		      "label": "L",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 277.7025,
+		      "y": 299.8875,
 		      "id": "N",
 		      "label": "N",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 223.351,
-		      "y": 74.924,
+		      "x": 335.0265,
+		      "y": 112.386,
 		      "id": "M",
 		      "label": "M",
 		      "shape": "circle"
@@ -14571,9 +14330,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbf9642136f74d4ad
-	// Question: Find the measure of an angle from a right angle
+	// Question: Find the measure of an angle (complementary angles)
 	// Widget key: image_1
-	test("angle-diagram - [xbf9642136f74d4ad] Find the measure of an angle from a right angle", async () => {
+	test("angle-diagram - [xbf9642136f74d4ad] Find the measure of an angle (complementary angles)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -14592,12 +14351,12 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 180,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "right",
 		      "color": "#000000",
-		      "label": "90°",
+		      "label": "right angle",
 		      "vertex": "O",
 		      "pointOnFirstRay": "X",
 		      "pointOnSecondRay": "Z"
@@ -14606,7 +14365,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "29°",
-		      "radius": 34,
+		      "radius": 40,
 		      "vertex": "O",
 		      "pointOnFirstRay": "X",
 		      "pointOnSecondRay": "Y"
@@ -14615,38 +14374,38 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#CC0000",
 		      "label": "x°",
-		      "radius": 48,
+		      "radius": 55,
 		      "vertex": "O",
 		      "pointOnFirstRay": "Y",
 		      "pointOnSecondRay": "Z"
 		    }
 		  ],
-		  "height": 162,
+		  "height": 324,
 		  "points": [
 		    {
-		      "x": 30,
-		      "y": 138,
-		      "id": "O",
-		      "label": "O",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 30,
-		      "y": 18,
+		      "x": 60,
+		      "y": 36,
 		      "id": "X",
 		      "label": "X",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 138,
+		      "x": 60,
+		      "y": 276,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300,
+		      "y": 276,
 		      "id": "Z",
 		      "label": "Z",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 88.177,
-		      "y": 33.046,
+		      "x": 176.354,
+		      "y": 66.092,
 		      "id": "Y",
 		      "label": "Y",
 		      "shape": "circle"
@@ -14670,9 +14429,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc69fa0ae63da45e0
-	// Question: Find the measure of angle x
+	// Question: Find the measure of an angle from a linear pair
 	// Widget key: image_1
-	test("angle-diagram - [xc69fa0ae63da45e0] Find the measure of angle x", async () => {
+	test("angle-diagram - [xc69fa0ae63da45e0] Find the measure of an angle from a linear pair", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -14691,53 +14450,53 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 288,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "x°",
-		      "radius": 28,
+		      "radius": 40,
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#CC3300",
+		      "color": "#CC6600",
 		      "label": "149°",
-		      "radius": 44,
+		      "radius": 55,
 		      "vertex": "O",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 24,
-		      "y": 126,
+		      "x": 60,
+		      "y": 210,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 144,
-		      "y": 126,
+		      "x": 180,
+		      "y": 210,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 264,
-		      "y": 126,
+		      "x": 300,
+		      "y": 210,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 41.14,
-		      "y": 64.195,
+		      "x": 110,
+		      "y": 120,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
@@ -14782,53 +14541,53 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 288,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "x°",
-		      "radius": 42,
+		      "radius": 40,
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#00AA00",
+		      "color": "#FF6600",
 		      "label": "35°",
-		      "radius": 28,
+		      "radius": 60,
 		      "vertex": "O",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 24,
-		      "y": 126,
+		      "x": 40,
+		      "y": 180,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 144,
-		      "y": 126,
+		      "x": 180,
+		      "y": 180,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 264,
-		      "y": 126,
+		      "x": 320,
+		      "y": 180,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 242.298,
-		      "y": 57.17,
+		      "x": 280,
+		      "y": 110,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
@@ -14864,62 +14623,62 @@ describe("angleDiagram widget tests", () => {
 		      "from": "X"
 		    },
 		    {
-		      "to": "Z",
+		      "to": "Y",
 		      "from": "X"
 		    },
 		    {
-		      "to": "Y",
+		      "to": "Z",
 		      "from": "X"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 288,
+		  "width": 465,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "97°",
-		      "radius": 36,
+		      "radius": 45,
 		      "vertex": "X",
 		      "pointOnFirstRay": "Y",
 		      "pointOnSecondRay": "Z"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#FF9933",
+		      "color": "#CC0000",
 		      "label": "x°",
-		      "radius": 48,
+		      "radius": 60,
 		      "vertex": "X",
 		      "pointOnFirstRay": "Y",
 		      "pointOnSecondRay": "W"
 		    }
 		  ],
-		  "height": 186,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 144,
-		      "y": 126,
+		      "x": 232.25806451612902,
+		      "y": 203.22580645161287,
 		      "id": "X",
 		      "label": "X",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 31.237,
-		      "y": 167.042,
+		      "x": 50.38225806451613,
+		      "y": 269.4225806451613,
 		      "id": "W",
 		      "label": "W",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 89.521,
-		      "y": 19.08,
+		      "x": 144.38870967741937,
+		      "y": 30.774193548387096,
 		      "id": "Y",
 		      "label": "Y",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 256.763,
-		      "y": 84.958,
+		      "x": 414.1338709677419,
+		      "y": 137.0290322580645,
 		      "id": "Z",
 		      "label": "Z",
 		      "shape": "circle"
@@ -14943,9 +14702,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe47a1f860988f05a
-	// Question: Find the measure of an angle from a diagram
+	// Question: Find the measure of angle x
 	// Widget key: image_1
-	test("angle-diagram - [xe47a1f860988f05a] Find the measure of an angle from a diagram", async () => {
+	test("angle-diagram - [xe47a1f860988f05a] Find the measure of angle x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -14964,12 +14723,12 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 180,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "right",
 		      "color": "#000000",
-		      "label": "right angle",
+		      "label": "90°",
 		      "vertex": "O",
 		      "pointOnFirstRay": "X",
 		      "pointOnSecondRay": "Z"
@@ -14978,47 +14737,47 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "32°",
-		      "radius": 34,
+		      "radius": 52,
 		      "vertex": "O",
 		      "pointOnFirstRay": "X",
 		      "pointOnSecondRay": "Y"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#CC0000",
+		      "color": "#00AA00",
 		      "label": "x°",
-		      "radius": 46,
+		      "radius": 36,
 		      "vertex": "O",
 		      "pointOnFirstRay": "Y",
 		      "pointOnSecondRay": "Z"
 		    }
 		  ],
-		  "height": 162,
+		  "height": 324,
 		  "points": [
 		    {
-		      "x": 30,
-		      "y": 18,
-		      "id": "X",
-		      "label": "X",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 30,
-		      "y": 138,
+		      "x": 60,
+		      "y": 276,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 138,
+		      "x": 300,
+		      "y": 276,
+		      "id": "X",
+		      "label": "X",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 60,
+		      "y": 36,
 		      "id": "Z",
 		      "label": "Z",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 93.59,
-		      "y": 36.234,
+		      "x": 187.18,
+		      "y": 72.468,
 		      "id": "Y",
 		      "label": "Y",
 		      "shape": "circle"
@@ -15042,9 +14801,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf160750b6260b0ac
-	// Question: Find the measure of angle x
+	// Question: Find the measure of an angle
 	// Widget key: image_1
-	test("angle-diagram - [xf160750b6260b0ac] Find the measure of angle x", async () => {
+	test("angle-diagram - [xf160750b6260b0ac] Find the measure of an angle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15063,7 +14822,7 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 216,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "right",
@@ -15077,47 +14836,47 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "73°",
-		      "radius": 34,
+		      "radius": 55,
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#CC0000",
+		      "color": "#00AA00",
 		      "label": "x°",
-		      "radius": 48,
+		      "radius": 35,
 		      "vertex": "O",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 162,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 24.865,
-		      "y": 46.075,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 102,
-		      "y": 138,
+		      "x": 188.889,
+		      "y": 255.556,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 167.357,
-		      "y": 37.36,
+		      "x": 46.046,
+		      "y": 85.324,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 309.92,
+		      "y": 69.185,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 193.925,
-		      "y": 60.865,
+		      "x": 359.12,
+		      "y": 112.713,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
@@ -15141,9 +14900,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa0c001f04b174133
-	// Question: Find the measure of angle x
+	// Question: Find the measure of angle x (supplementary angles)
 	// Widget key: image_1
-	test("angle-diagram - [xa0c001f04b174133] Find the measure of angle x", async () => {
+	test("angle-diagram - [xa0c001f04b174133] Find the measure of angle x (supplementary angles)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15162,53 +14921,53 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 228,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "x°",
-		      "radius": 32,
+		      "radius": 48,
 		      "vertex": "O",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "M"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#00AA00",
+		      "color": "#CC0000",
 		      "label": "41°",
-		      "radius": 48,
+		      "radius": 32,
 		      "vertex": "O",
 		      "pointOnFirstRay": "M",
 		      "pointOnSecondRay": "N"
 		    }
 		  ],
-		  "height": 216,
+		  "height": 379,
 		  "points": [
 		    {
-		      "x": 108,
-		      "y": 108,
+		      "x": 189.474,
+		      "y": 189.474,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 30.865,
-		      "y": 16.075,
+		      "x": 54.149,
+		      "y": 28.202,
 		      "id": "L",
 		      "label": "L",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 226.523,
-		      "y": 126.772,
+		      "x": 397.409,
+		      "y": 222.407,
 		      "id": "M",
 		      "label": "M",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 185.135,
-		      "y": 199.925,
+		      "x": 324.798,
+		      "y": 350.746,
 		      "id": "N",
 		      "label": "N",
 		      "shape": "circle"
@@ -15232,9 +14991,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4314cbeb0c425bbf
-	// Question: Find the measure of an angle from a right angle
+	// Question: Find the measure of angle x
 	// Widget key: image_1
-	test("angle-diagram - [x4314cbeb0c425bbf] Find the measure of an angle from a right angle", async () => {
+	test("angle-diagram - [x4314cbeb0c425bbf] Find the measure of angle x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15253,12 +15012,12 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 216,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "right",
 		      "color": "#000000",
-		      "label": "right angle",
+		      "label": null,
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "C"
@@ -15267,49 +15026,49 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "62°",
-		      "radius": 32,
+		      "radius": 46,
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#FF9900",
+		      "color": "#00AA00",
 		      "label": "x°",
-		      "radius": 48,
+		      "radius": 62,
 		      "vertex": "O",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 162,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 24.865,
-		      "y": 46.075,
+		      "x": 41.442,
+		      "y": 76.792,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 146.953,
-		      "y": 26.738,
+		      "x": 170,
+		      "y": 230,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 244.922,
+		      "y": 44.563,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 193.925,
-		      "y": 60.865,
+		      "x": 323.208,
+		      "y": 101.442,
 		      "id": "C",
 		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 102,
-		      "y": 138,
-		      "id": "O",
-		      "label": "O",
 		      "shape": "circle"
 		    }
 		  ]
@@ -15331,9 +15090,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf67280e8d5b11b35
-	// Question: Find the measure of ∠x
+	// Question: Find the measure of angle x
 	// Widget key: image_1
-	test("angle-diagram - [xf67280e8d5b11b35] Find the measure of ∠x", async () => {
+	test("angle-diagram - [xf67280e8d5b11b35] Find the measure of angle x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15352,13 +15111,13 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 288,
+		  "width": 384,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "x°",
-		      "radius": 36,
+		      "radius": 46,
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "B"
@@ -15367,38 +15126,38 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#CC0000",
 		      "label": "128°",
-		      "radius": 52,
+		      "radius": 62,
 		      "vertex": "O",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 24,
-		      "y": 126,
+		      "x": 32,
+		      "y": 168,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 144,
-		      "y": 126,
+		      "x": 192,
+		      "y": 168,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 264,
-		      "y": 126,
+		      "x": 352,
+		      "y": 168,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 70.12,
-		      "y": 31.439,
+		      "x": 93.49,
+		      "y": 41.92,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
@@ -15422,9 +15181,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa9143648aaa9da49
-	// Question: Find the measure of an angle from complementary angles
+	// Question: Find the measure of an angle from a right-angle diagram
 	// Widget key: image_1
-	test("angle-diagram - [xa9143648aaa9da49] Find the measure of an angle from complementary angles", async () => {
+	test("angle-diagram - [xa9143648aaa9da49] Find the measure of an angle from a right-angle diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15443,7 +15202,7 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 168,
+		  "width": 336,
 		  "angles": [
 		    {
 		      "type": "right",
@@ -15457,7 +15216,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "57°",
-		      "radius": 50,
+		      "radius": 44,
 		      "vertex": "Q",
 		      "pointOnFirstRay": "P",
 		      "pointOnSecondRay": "R"
@@ -15466,38 +15225,38 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#CC0000",
 		      "label": "x°",
-		      "radius": 38,
+		      "radius": 60,
 		      "vertex": "Q",
 		      "pointOnFirstRay": "R",
 		      "pointOnSecondRay": "S"
 		    }
 		  ],
-		  "height": 198,
+		  "height": 396,
 		  "points": [
 		    {
-		      "x": 18,
-		      "y": 138,
+		      "x": 36,
+		      "y": 276,
 		      "id": "Q",
 		      "label": "Q",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 59.042,
-		      "y": 25.237,
+		      "x": 118.084,
+		      "y": 50.474,
 		      "id": "P",
 		      "label": "P",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 134.924,
-		      "y": 111.006,
+		      "x": 269.848,
+		      "y": 222.012,
 		      "id": "R",
 		      "label": "R",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 130.763,
-		      "y": 179.042,
+		      "x": 261.526,
+		      "y": 358.084,
 		      "id": "S",
 		      "label": "S",
 		      "shape": "circle"
@@ -15521,16 +15280,16 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9c3e78752b513f2b
-	// Question: Find the measure of angle x
+	// Question: Find x from supplementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x9c3e78752b513f2b] Find the measure of angle x", async () => {
+	test("angle-diagram - [x9c3e78752b513f2b] Find x from supplementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "A",
-		      "from": "O"
+		      "to": "O",
+		      "from": "A"
 		    },
 		    {
 		      "to": "C",
@@ -15542,13 +15301,13 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 288,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "x°",
-		      "radius": 28,
+		      "radius": 40,
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "B"
@@ -15557,40 +15316,40 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#CC0000",
 		      "label": "156°",
-		      "radius": 44,
+		      "radius": 55,
 		      "vertex": "O",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 24,
-		      "y": 126,
+		      "x": 40,
+		      "y": 200,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 144,
-		      "y": 126,
+		      "x": 180,
+		      "y": 200,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 264,
-		      "y": 126,
-		      "id": "C",
-		      "label": "C",
+		      "x": 100,
+		      "y": 120,
+		      "id": "B",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 34.374,
-		      "y": 77.192,
-		      "id": "B",
-		      "label": "B",
+		      "x": 320,
+		      "y": 200,
+		      "id": "C",
+		      "label": "C",
 		      "shape": "circle"
 		    }
 		  ]
@@ -15633,7 +15392,7 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 168,
+		  "width": 336,
 		  "angles": [
 		    {
 		      "type": "right",
@@ -15647,47 +15406,47 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "48°",
-		      "radius": 36,
+		      "radius": 44,
 		      "vertex": "Q",
 		      "pointOnFirstRay": "P",
 		      "pointOnSecondRay": "R"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#CC0000",
+		      "color": "#CC5500",
 		      "label": "x°",
-		      "radius": 54,
+		      "radius": 36,
 		      "vertex": "Q",
 		      "pointOnFirstRay": "R",
 		      "pointOnSecondRay": "S"
 		    }
 		  ],
-		  "height": 198,
+		  "height": 396,
 		  "points": [
 		    {
-		      "x": 18,
-		      "y": 138,
+		      "x": 36,
+		      "y": 276,
 		      "id": "Q",
 		      "label": "Q",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 59.042,
-		      "y": 25.237,
+		      "x": 118.084,
+		      "y": 50.474,
 		      "id": "P",
 		      "label": "P",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 129.262,
-		      "y": 93.047,
+		      "x": 258.524,
+		      "y": 186.094,
 		      "id": "R",
 		      "label": "R",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 130.763,
-		      "y": 179.042,
+		      "x": 261.526,
+		      "y": 358.084,
 		      "id": "S",
 		      "label": "S",
 		      "shape": "circle"
@@ -15711,9 +15470,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4ac623406421cb1a
-	// Question: Find the measure of angle x
+	// Question: Find the measure of an angle using complementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x4ac623406421cb1a] Find the measure of angle x", async () => {
+	test("angle-diagram - [x4ac623406421cb1a] Find the measure of an angle using complementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15732,7 +15491,7 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 168,
+		  "width": 336,
 		  "angles": [
 		    {
 		      "type": "right",
@@ -15746,7 +15505,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "76°",
-		      "radius": 28,
+		      "radius": 50,
 		      "vertex": "Q",
 		      "pointOnFirstRay": "P",
 		      "pointOnSecondRay": "R"
@@ -15755,38 +15514,38 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#00AA00",
 		      "label": "x°",
-		      "radius": 40,
+		      "radius": 70,
 		      "vertex": "Q",
 		      "pointOnFirstRay": "R",
 		      "pointOnSecondRay": "S"
 		    }
 		  ],
-		  "height": 198,
+		  "height": 396,
 		  "points": [
 		    {
-		      "x": 59.042,
-		      "y": 25.237,
+		      "x": 118.084,
+		      "y": 50.474,
 		      "id": "P",
 		      "label": "P",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 18,
-		      "y": 138,
+		      "x": 36,
+		      "y": 276,
 		      "id": "Q",
 		      "label": "Q",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 137.343,
-		      "y": 150.543,
+		      "x": 274.686,
+		      "y": 301.086,
 		      "id": "R",
 		      "label": "R",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 130.763,
-		      "y": 179.042,
+		      "x": 261.526,
+		      "y": 358.084,
 		      "id": "S",
 		      "label": "S",
 		      "shape": "circle"
@@ -15810,9 +15569,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1b413bd8a8a0fb92
-	// Question: Measure of angle x
+	// Question: Measure of an angle from a diagram
 	// Widget key: image_1
-	test("angle-diagram - [x1b413bd8a8a0fb92] Measure of angle x", async () => {
+	test("angle-diagram - [x1b413bd8a8a0fb92] Measure of an angle from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15831,53 +15590,53 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 228,
+		  "width": 456,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "133°",
-		      "radius": 52,
+		      "radius": 54,
 		      "vertex": "O",
 		      "pointOnFirstRay": "M",
 		      "pointOnSecondRay": "N"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#FF8C00",
+		      "color": "#00AA00",
 		      "label": "x°",
 		      "radius": 36,
 		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "M"
+		      "pointOnFirstRay": "M",
+		      "pointOnSecondRay": "L"
 		    }
 		  ],
-		  "height": 216,
+		  "height": 432,
 		  "points": [
 		    {
-		      "x": 108,
-		      "y": 108,
+		      "x": 216,
+		      "y": 216,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 30.865,
-		      "y": 16.075,
+		      "x": 61.73,
+		      "y": 32.15,
 		      "id": "L",
 		      "label": "L",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 122.624,
-		      "y": -11.106,
+		      "x": 245.248,
+		      "y": -22.212,
 		      "id": "M",
 		      "label": "M",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 185.135,
-		      "y": 199.925,
+		      "x": 370.27,
+		      "y": 399.85,
 		      "id": "N",
 		      "label": "N",
 		      "shape": "circle"
@@ -15901,9 +15660,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xad5844a41e52b772
-	// Question: Find the measure of angle x
+	// Question: Find the measure of an angle
 	// Widget key: image_1
-	test("angle-diagram - [xad5844a41e52b772] Find the measure of angle x", async () => {
+	test("angle-diagram - [xad5844a41e52b772] Find the measure of an angle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15913,22 +15672,22 @@ describe("angleDiagram widget tests", () => {
 		      "from": "X"
 		    },
 		    {
-		      "to": "Y",
+		      "to": "Z",
 		      "from": "X"
 		    },
 		    {
-		      "to": "Z",
+		      "to": "Y",
 		      "from": "X"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 288,
+		  "width": 480,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#0066CC",
 		      "label": "x°",
-		      "radius": 52,
+		      "radius": 42,
 		      "vertex": "X",
 		      "pointOnFirstRay": "W",
 		      "pointOnSecondRay": "Y"
@@ -15937,38 +15696,38 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#00AA00",
 		      "label": "48°",
-		      "radius": 35,
+		      "radius": 56,
 		      "vertex": "X",
 		      "pointOnFirstRay": "Y",
 		      "pointOnSecondRay": "Z"
 		    }
 		  ],
-		  "height": 186,
+		  "height": 310,
 		  "points": [
 		    {
-		      "x": 31.237,
-		      "y": 167.042,
-		      "id": "W",
-		      "label": "W",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 144,
-		      "y": 126,
+		      "x": 240,
+		      "y": 210,
 		      "id": "X",
 		      "label": "X",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 188.953,
-		      "y": 14.738,
+		      "x": 52.062,
+		      "y": 278.403,
+		      "id": "W",
+		      "label": "W",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 314.922,
+		      "y": 24.563,
 		      "id": "Y",
 		      "label": "Y",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 256.763,
-		      "y": 84.958,
+		      "x": 427.938,
+		      "y": 141.597,
 		      "id": "Z",
 		      "label": "Z",
 		      "shape": "circle"
@@ -15992,9 +15751,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe1a537f4bba60b51
-	// Question: Find m∠BOC from adjacent angles
+	// Question: Find a missing angle measure from a sum of angles
 	// Widget key: image_1
-	test("angle-diagram - [xe1a537f4bba60b51] Find m∠BOC from adjacent angles", async () => {
+	test("angle-diagram - [xe1a537f4bba60b51] Find a missing angle measure from a sum of angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -16013,22 +15772,22 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 262.9962619188837,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#6495ED",
-		      "label": null,
-		      "radius": 40,
+		      "color": "#6495ed",
+		      "label": " ",
+		      "radius": 61,
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#28AE7B",
-		      "label": null,
-		      "radius": 40,
+		      "color": "#28ae7b",
+		      "label": " ",
+		      "radius": 61,
 		      "vertex": "O",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
@@ -16036,39 +15795,39 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#800080",
-		      "label": null,
-		      "radius": 48,
+		      "label": " ",
+		      "radius": 73,
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 260,
+		  "height": 395.5,
 		  "points": [
 		    {
-		      "x": 42.99626191888373,
-		      "y": 220,
+		      "x": 65.397,
+		      "y": 334.62,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 24.181138530706136,
-		      "y": 40.986058833710786,
+		      "x": 36.78,
+		      "y": 62.34,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 170.27548253246232,
-		      "y": 92.72077938642144,
+		      "x": 258.989,
+		      "y": 141.028,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 222.9962619188837,
-		      "y": 220,
+		      "x": 339.177,
+		      "y": 334.62,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
@@ -16091,86 +15850,86 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xfdc298eb04b7f70e
-	// Question: Find an angle measure from adjacent angles
+	// Extracted from question: x97803d5d79b595f8
+	// Question: Find the measure of an angle from adjacent angles
 	// Widget key: image_1
-	test("angle-diagram - [xfdc298eb04b7f70e] Find an angle measure from adjacent angles", async () => {
+	test("angle-diagram - [x97803d5d79b595f8] Find the measure of an angle from adjacent angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
 		      "to": "A",
-		      "from": "O"
-		    },
-		    {
-		      "to": "B",
-		      "from": "O"
+		      "from": "B"
 		    },
 		    {
 		      "to": "C",
-		      "from": "O"
+		      "from": "B"
+		    },
+		    {
+		      "to": "D",
+		      "from": "B"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 308,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": " ",
-		      "radius": 40,
-		      "vertex": "O",
+		      "color": "#6495ED",
+		      "label": "∠ABC",
+		      "radius": 32,
+		      "vertex": "B",
 		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "B"
+		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#28ae7b",
-		      "label": " ",
+		      "label": "∠CBD",
 		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
+		      "vertex": "B",
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "D"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#800080",
-		      "label": " ",
+		      "label": "∠ABD",
 		      "radius": 48,
-		      "vertex": "O",
+		      "vertex": "B",
 		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "C"
+		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 260,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 32.3606797749979,
-		      "y": 48.809827066872344,
+		      "x": 33.1,
+		      "y": 50,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 87.98373876248843,
-		      "y": 220,
-		      "id": "O",
-		      "label": "O",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 155.41292557735258,
-		      "y": 53.106906177978246,
+		      "x": 58.9,
+		      "y": 270.8,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 267.98373876248843,
-		      "y": 220,
+		      "x": 170.8,
+		      "y": 73,
 		      "id": "C",
 		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 305.9,
+		      "y": 270.8,
+		      "id": "D",
+		      "label": "D",
 		      "shape": "circle"
 		    }
 		  ]
@@ -16243,20 +16002,20 @@ describe("angleDiagram widget tests", () => {
 		      "pointOnSecondRay": "N"
 		    }
 		  ],
-		  "height": 223.4918616050267,
+		  "height": 300,
 		  "points": [
-		    {
-		      "x": 240,
-		      "y": 183.4918616050267,
-		      "id": "O",
-		      "label": "O",
-		      "shape": "circle"
-		    },
 		    {
 		      "x": 60,
 		      "y": 183.4918616050267,
 		      "id": "L",
 		      "label": "L",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 240,
+		      "y": 183.4918616050267,
+		      "id": "O",
+		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
@@ -16271,249 +16030,6 @@ describe("angleDiagram widget tests", () => {
 		      "y": 49.72579301909576,
 		      "id": "M",
 		      "label": "M",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xeb4a57cd6002e689
-	// Question: Find the measure of angle AOB
-	// Widget key: image_1
-	test("angle-diagram - [xeb4a57cd6002e689] Find the measure of angle AOB", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "A",
-		      "from": "O"
-		    },
-		    {
-		      "to": "C",
-		      "from": "O"
-		    },
-		    {
-		      "to": "B",
-		      "from": "O"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 460,
-		  "angles": [],
-		  "height": 204.333,
-		  "points": [
-		    {
-		      "x": 60,
-		      "y": 164.333,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 240,
-		      "y": 164.333,
-		      "id": "O",
-		      "label": "O",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 420,
-		      "y": 164.333,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 375.848,
-		      "y": 46.242,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x08d2f3e3654cdcbd
-	// Question: Find the measure of angle MON
-	// Widget key: image_1
-	test("angle-diagram - [x08d2f3e3654cdcbd] Find the measure of angle MON", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "L",
-		      "from": "O"
-		    },
-		    {
-		      "to": "N",
-		      "from": "O"
-		    },
-		    {
-		      "to": "M",
-		      "from": "O"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 260,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": " ",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "M",
-		      "pointOnSecondRay": "L"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": " ",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "N",
-		      "pointOnSecondRay": "M"
-		    },
-		    {
-		      "type": "right",
-		      "color": "#800080",
-		      "label": " ",
-		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "N"
-		    }
-		  ],
-		  "height": 260,
-		  "points": [
-		    {
-		      "x": 40,
-		      "y": 220,
-		      "id": "O",
-		      "label": "O",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 40,
-		      "y": 40,
-		      "id": "L",
-		      "label": "L",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 220,
-		      "y": 220,
-		      "id": "N",
-		      "label": "N",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 138.0350263027049,
-		      "y": 69.03929776982369,
-		      "id": "M",
-		      "label": "M",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5bae234b290c9fc6
-	// Question: Find the measure of an angle from a straight angle
-	// Widget key: image_1
-	test("angle-diagram - [x5bae234b290c9fc6] Find the measure of an angle from a straight angle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "D",
-		      "from": "B"
-		    },
-		    {
-		      "to": "C",
-		      "from": "B"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 460,
-		  "angles": [],
-		  "height": 189.31275550434407,
-		  "points": [
-		    {
-		      "x": 60,
-		      "y": 149.31275550434407,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 240,
-		      "y": 149.31275550434407,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 94.37694101250948,
-		      "y": 43.5114100916989,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 420,
-		      "y": 149.3127555043441,
-		      "id": "D",
-		      "label": "D",
 		      "shape": "circle"
 		    }
 		  ]
@@ -16558,7 +16074,7 @@ describe("angleDiagram widget tests", () => {
 		  "type": "angleDiagram",
 		  "width": 460,
 		  "angles": [],
-		  "height": 260,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 60,
@@ -16606,6 +16122,368 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: xeb4a57cd6002e689
+	// Question: Find an angle measure from a straight angle
+	// Widget key: image_1
+	test("angle-diagram - [xeb4a57cd6002e689] Find an angle measure from a straight angle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "A",
+		      "from": "O"
+		    },
+		    {
+		      "to": "C",
+		      "from": "O"
+		    },
+		    {
+		      "to": "B",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 460,
+		  "angles": [],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 60,
+		      "y": 164.33298637791154,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 240,
+		      "y": 164.33298637791157,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 420,
+		      "y": 164.33298637791157,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 375.847724440099,
+		      "y": 46.24236115962029,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x08d2f3e3654cdcbd
+	// Question: Find the measure of an angle with perpendicular rays
+	// Widget key: image_1
+	test("angle-diagram - [x08d2f3e3654cdcbd] Find the measure of an angle with perpendicular rays", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "L",
+		      "from": "O"
+		    },
+		    {
+		      "to": "N",
+		      "from": "O"
+		    },
+		    {
+		      "to": "M",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 300,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "∠LOM",
+		      "radius": 46,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "M"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "∠MON",
+		      "radius": 46,
+		      "vertex": "O",
+		      "pointOnFirstRay": "M",
+		      "pointOnSecondRay": "N"
+		    },
+		    {
+		      "type": "right",
+		      "color": "#800080",
+		      "label": "right angle",
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "N"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 46.154,
+		      "y": 253.846,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 46.154,
+		      "y": 46.154,
+		      "id": "L",
+		      "label": "L",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 253.846,
+		      "y": 253.846,
+		      "id": "N",
+		      "label": "N",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 159.271,
+		      "y": 79.654,
+		      "id": "M",
+		      "label": "M",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5bae234b290c9fc6
+	// Question: Find the measure of an angle from a straight angle relationship
+	// Widget key: image_1
+	test("angle-diagram - [x5bae234b290c9fc6] Find the measure of an angle from a straight angle relationship", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "A",
+		      "from": "B"
+		    },
+		    {
+		      "to": "D",
+		      "from": "B"
+		    },
+		    {
+		      "to": "C",
+		      "from": "B"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 460,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "∠ABC",
+		      "radius": 40,
+		      "vertex": "B",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "∠CBD",
+		      "radius": 40,
+		      "vertex": "B",
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "D"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 60,
+		      "y": 149.313,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 240,
+		      "y": 149.313,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 420,
+		      "y": 149.313,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 94.3769410125,
+		      "y": 43.5114100917,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x897c5f5fffaf573c
+	// Question: Find the measure of angle MON
+	// Widget key: image_1
+	test("angle-diagram - [x897c5f5fffaf573c] Find the measure of angle MON", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "N",
+		      "from": "O"
+		    },
+		    {
+		      "to": "L",
+		      "from": "O"
+		    },
+		    {
+		      "to": "M",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 326,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "∠LOM",
+		      "radius": 40,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "M"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "∠MON",
+		      "radius": 40,
+		      "vertex": "O",
+		      "pointOnFirstRay": "M",
+		      "pointOnSecondRay": "N"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#800080",
+		      "label": "∠LON",
+		      "radius": 48,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "N"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 105.9608482676402,
+		      "y": 220,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 35.629245139570955,
+		      "y": 54.30912637856075,
+		      "id": "L",
+		      "label": "L",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 285.9608482676402,
+		      "y": 220,
+		      "id": "N",
+		      "label": "N",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 203.9958745703451,
+		      "y": 69.03929776982369,
+		      "id": "M",
+		      "label": "M",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: xf5c9afb23ccb0de4
 	// Question: Find an angle measure using angle addition
 	// Widget key: image_1
@@ -16628,13 +16506,13 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#6495ed",
-		      "label": null,
-		      "radius": 40,
+		      "label": "∠QPR",
+		      "radius": 45,
 		      "vertex": "P",
 		      "pointOnFirstRay": "Q",
 		      "pointOnSecondRay": "R"
@@ -16642,8 +16520,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#28ae7b",
-		      "label": null,
-		      "radius": 40,
+		      "label": "∠RPS",
+		      "radius": 55,
 		      "vertex": "P",
 		      "pointOnFirstRay": "R",
 		      "pointOnSecondRay": "S"
@@ -16651,39 +16529,39 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#800080",
-		      "label": null,
-		      "radius": 48,
+		      "label": "∠QPS",
+		      "radius": 65,
 		      "vertex": "P",
 		      "pointOnFirstRay": "Q",
 		      "pointOnSecondRay": "S"
 		    }
 		  ],
-		  "height": 260,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 40,
-		      "y": 220,
+		      "x": 61.5384615385,
+		      "y": 338.4615384615,
 		      "id": "P",
 		      "label": "P",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 220,
-		      "y": 220,
+		      "x": 338.4615384615,
+		      "y": 338.4615384615,
 		      "id": "S",
 		      "label": "S",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 46.2819094064502,
-		      "y": 40.10965113656276,
+		      "x": 71.9721683176,
+		      "y": 61.707155595,
 		      "id": "Q",
 		      "label": "Q",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 158.09062521829134,
-		      "y": 84.15227555990106,
+		      "x": 243.2163464904,
+		      "y": 129.4658087075,
 		      "id": "R",
 		      "label": "R",
 		      "shape": "circle"
@@ -16707,9 +16585,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbb0025f583b277ba
-	// Question: Find an angle measure from perpendicular angles
+	// Question: Find an angle measure using perpendicular rays
 	// Widget key: image_1
-	test("angle-diagram - [xbb0025f583b277ba] Find an angle measure from perpendicular angles", async () => {
+	test("angle-diagram - [xbb0025f583b277ba] Find an angle measure using perpendicular rays", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -16728,12 +16606,12 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#6495ed",
-		      "label": "∠AOB",
+		      "label": " ",
 		      "radius": 40,
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
@@ -16742,7 +16620,7 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#28ae7b",
-		      "label": "∠BOC",
+		      "label": " ",
 		      "radius": 40,
 		      "vertex": "O",
 		      "pointOnFirstRay": "B",
@@ -16751,13 +16629,13 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "right",
 		      "color": "#800080",
-		      "label": "right angle",
+		      "label": " ",
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 260,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 40,
@@ -16781,8 +16659,8 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 187.849,
-		      "y": 86.8765,
+		      "x": 173.76606858593095,
+		      "y": 99.55649085540551,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
@@ -16828,61 +16706,33 @@ describe("angleDiagram widget tests", () => {
 		  ],
 		  "type": "angleDiagram",
 		  "width": 304.3217750390021,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "∠QPR",
-		      "radius": 40,
-		      "vertex": "P",
-		      "pointOnFirstRay": "Q",
-		      "pointOnSecondRay": "R"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "∠RPS",
-		      "radius": 40,
-		      "vertex": "P",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "S"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#800080",
-		      "label": "∠QPS",
-		      "radius": 48,
-		      "vertex": "P",
-		      "pointOnFirstRay": "Q",
-		      "pointOnSecondRay": "S"
-		    }
-		  ],
-		  "height": 260,
+		  "angles": [],
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 84.32177503900206,
-		      "y": 220,
+		      "x": 84.3217750390021,
+		      "y": 253.84615384615384,
 		      "id": "P",
 		      "label": "P",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 31.69486818890946,
-		      "y": 47.8651439266536,
+		      "y": 55.987237189592,
 		      "id": "Q",
 		      "label": "Q",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 93.74224716273197,
-		      "y": 40.24668374417672,
+		      "y": 46.76674970870193,
 		      "id": "R",
 		      "label": "R",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 264.3217750390021,
-		      "y": 220,
+		      "y": 253.84615384615384,
 		      "id": "S",
 		      "label": "S",
 		      "shape": "circle"
@@ -16905,10 +16755,10 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x897c5f5fffaf573c
-	// Question: Find an angle measure from adjacent angles
+	// Extracted from question: x11a69db0dcebae4f
+	// Question: Find the measure of angle MON
 	// Widget key: image_1
-	test("angle-diagram - [x897c5f5fffaf573c] Find an angle measure from adjacent angles", async () => {
+	test("angle-diagram - [x11a69db0dcebae4f] Find the measure of angle MON", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -16927,33 +16777,61 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 325.9608482676402,
-		  "angles": [],
-		  "height": 260,
+		  "width": 300,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#28AE7B",
+		      "label": " ",
+		      "radius": 40,
+		      "vertex": "O",
+		      "pointOnFirstRay": "N",
+		      "pointOnSecondRay": "M"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#6495ED",
+		      "label": " ",
+		      "radius": 40,
+		      "vertex": "O",
+		      "pointOnFirstRay": "M",
+		      "pointOnSecondRay": "L"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#800080",
+		      "label": " ",
+		      "radius": 48,
+		      "vertex": "O",
+		      "pointOnFirstRay": "N",
+		      "pointOnSecondRay": "L"
+		    }
+		  ],
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 105.9608482676402,
+		      "x": 40,
 		      "y": 220,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 35.629245139570955,
-		      "y": 54.30912637856075,
+		      "x": 80.49118978189568,
+		      "y": 44.61338833865767,
 		      "id": "L",
 		      "label": "L",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 203.9958745703451,
-		      "y": 69.03929776982369,
+		      "x": 213.8666487320323,
+		      "y": 173.41257188154628,
 		      "id": "M",
 		      "label": "M",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 285.9608482676402,
+		      "x": 220,
 		      "y": 220,
 		      "id": "N",
 		      "label": "N",
@@ -16977,86 +16855,58 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x11a69db0dcebae4f
-	// Question: Find an angle measure from adjacent angles
+	// Extracted from question: xfdc298eb04b7f70e
+	// Question: Find an angle measure using angle addition
 	// Widget key: image_1
-	test("angle-diagram - [x11a69db0dcebae4f] Find an angle measure from adjacent angles", async () => {
+	test("angle-diagram - [xfdc298eb04b7f70e] Find an angle measure using angle addition", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
+		      "to": "A",
 		      "from": "O"
 		    },
 		    {
-		      "to": "M",
+		      "to": "B",
 		      "from": "O"
 		    },
 		    {
-		      "to": "N",
+		      "to": "C",
 		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#800080",
-		      "label": "∠LON",
-		      "radius": 48,
-		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "N"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "∠LOM",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "M"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "∠MON",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "M",
-		      "pointOnSecondRay": "N"
-		    }
-		  ],
-		  "height": 260,
+		  "width": 308,
+		  "angles": [],
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 40,
+		      "x": 87.98373876248843,
 		      "y": 220,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 80.49118978189568,
-		      "y": 44.61338833865767,
-		      "id": "L",
-		      "label": "L",
+		      "x": 32.3606797749979,
+		      "y": 48.809827066872344,
+		      "id": "A",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 220,
+		      "x": 155.41292557735258,
+		      "y": 53.106906177978246,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 267.98373876248843,
 		      "y": 220,
-		      "id": "N",
-		      "label": "N",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 213.8666487320323,
-		      "y": 173.41257188154628,
-		      "id": "M",
-		      "label": "M",
+		      "id": "C",
+		      "label": "C",
 		      "shape": "circle"
 		    }
 		  ]
@@ -17078,9 +16928,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xffcdd350d33a209a
-	// Question: Find an angle measure with perpendicular rays
+	// Question: Find the measure of an angle formed by perpendicular lines
 	// Widget key: image_1
-	test("angle-diagram - [xffcdd350d33a209a] Find an angle measure with perpendicular rays", async () => {
+	test("angle-diagram - [xffcdd350d33a209a] Find the measure of an angle formed by perpendicular lines", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -17099,28 +16949,18 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
+		  "width": 320,
 		  "angles": [
 		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "∠LOM",
-		      "radius": 40,
+		      "type": "right",
+		      "color": "#000000",
+		      "label": null,
 		      "vertex": "O",
 		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "M"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "∠MON",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "M",
 		      "pointOnSecondRay": "N"
 		    }
 		  ],
-		  "height": 260,
+		  "height": 320,
 		  "points": [
 		    {
 		      "x": 40,
@@ -17144,8 +16984,8 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 165.03850668261953,
-		      "y": 90.5188359390428,
+		      "x": 165.0385066826,
+		      "y": 90.518835939,
 		      "id": "M",
 		      "label": "M",
 		      "shape": "circle"
@@ -17168,110 +17008,10 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x97803d5d79b595f8
-	// Question: Find an angle measure using angle addition
-	// Widget key: image_1
-	test("angle-diagram - [x97803d5d79b595f8] Find an angle measure using angle addition", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "D",
-		      "from": "B"
-		    },
-		    {
-		      "to": "A",
-		      "from": "B"
-		    },
-		    {
-		      "to": "C",
-		      "from": "B"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 263,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "∠ABC",
-		      "radius": 40,
-		      "vertex": "B",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "∠CBD",
-		      "radius": 40,
-		      "vertex": "B",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "D"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#800080",
-		      "label": "∠ABD",
-		      "radius": 48,
-		      "vertex": "B",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "D"
-		    }
-		  ],
-		  "height": 260,
-		  "points": [
-		    {
-		      "x": 42.99626191888373,
-		      "y": 220,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 222.9962619188837,
-		      "y": 220,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 24.181138530706136,
-		      "y": 40.986058833710786,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 124.71455187200218,
-		      "y": 59.61882564609379,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xb929b06d9368a116
-	// Question: Find an angle measure from adjacent angles
+	// Question: Find an angle measure using adjacent angles
 	// Widget key: image_1
-	test("angle-diagram - [xb929b06d9368a116] Find an angle measure from adjacent angles", async () => {
+	test("angle-diagram - [xb929b06d9368a116] Find an angle measure using adjacent angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -17290,62 +17030,34 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 293.2228170319269,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "AOB",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "BOC",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#800080",
-		      "label": "AOC",
-		      "radius": 48,
-		      "vertex": "O",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "C"
-		    }
-		  ],
-		  "height": 260,
+		  "width": 400,
+		  "angles": [],
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 73.2228170319269,
-		      "y": 220,
+		      "x": 90,
+		      "y": 240,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 29.676875823986713,
-		      "y": 45.34676927032063,
+		      "x": 35,
+		      "y": 55,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 163.22281703192692,
-		      "y": 64.11542731880105,
+		      "x": 240,
+		      "y": 70,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 253.2228170319269,
-		      "y": 220,
+		      "x": 360,
+		      "y": 240,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
@@ -17369,9 +17081,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x51185452f9f3d505
-	// Question: Find the measure of angle QPR
+	// Question: Find an angle measure from perpendicular rays
 	// Widget key: image_1
-	test("angle-diagram - [x51185452f9f3d505] Find the measure of angle QPR", async () => {
+	test("angle-diagram - [x51185452f9f3d505] Find an angle measure from perpendicular rays", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -17390,9 +17102,9 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
+		  "width": 320,
 		  "angles": [],
-		  "height": 260,
+		  "height": 320,
 		  "points": [
 		    {
 		      "x": 40,
@@ -17416,110 +17128,10 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 155.7017697435771,
-		      "y": 82.11200023858396,
+		      "x": 155.702,
+		      "y": 82.112,
 		      "id": "R",
 		      "label": "R",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x13622eda56dac672
-	// Question: Find the measure of ∠ABC
-	// Widget key: image_1
-	test("angle-diagram - [x13622eda56dac672] Find the measure of ∠ABC", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "A",
-		      "from": "B"
-		    },
-		    {
-		      "to": "C",
-		      "from": "B"
-		    },
-		    {
-		      "to": "D",
-		      "from": "B"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 260,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "∠ABC",
-		      "radius": 40,
-		      "vertex": "B",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "∠CBD",
-		      "radius": 40,
-		      "vertex": "B",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "D"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#800080",
-		      "label": "∠ABD",
-		      "radius": 48,
-		      "vertex": "B",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "D"
-		    }
-		  ],
-		  "height": 260,
-		  "points": [
-		    {
-		      "x": 220,
-		      "y": 220,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 40,
-		      "y": 220,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 198.93056671460684,
-		      "y": 135.49511869853967,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 101.5636257986204,
-		      "y": 50.85532825853651,
-		      "id": "D",
-		      "label": "D",
 		      "shape": "circle"
 		    }
 		  ]
@@ -17541,9 +17153,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xedbe1fb4b2a09c59
-	// Question: Find an angle measure from given expressions
+	// Question: Find an angle measure using angle addition
 	// Widget key: image_1
-	test("angle-diagram - [xedbe1fb4b2a09c59] Find an angle measure from given expressions", async () => {
+	test("angle-diagram - [xedbe1fb4b2a09c59] Find an angle measure using angle addition", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -17562,62 +17174,62 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "∠RPS",
+		      "color": "#6495ED",
+		      "label": "QPR",
 		      "radius": 40,
 		      "vertex": "P",
-		      "pointOnFirstRay": "S",
+		      "pointOnFirstRay": "Q",
 		      "pointOnSecondRay": "R"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "∠QPR",
-		      "radius": 40,
+		      "color": "#28AE7B",
+		      "label": "RPS",
+		      "radius": 28,
 		      "vertex": "P",
 		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "Q"
+		      "pointOnSecondRay": "S"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#800080",
-		      "label": "∠QPS",
-		      "radius": 48,
+		      "label": "QPS",
+		      "radius": 56,
 		      "vertex": "P",
-		      "pointOnFirstRay": "S",
-		      "pointOnSecondRay": "Q"
+		      "pointOnFirstRay": "Q",
+		      "pointOnSecondRay": "S"
 		    }
 		  ],
-		  "height": 221,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 40,
-		      "y": 180.89781435621748,
+		      "x": 60,
+		      "y": 260,
 		      "id": "P",
 		      "label": "P",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 162.75970481124972,
-		      "y": 49.25414806476681,
+		      "x": 240,
+		      "y": 60,
 		      "id": "Q",
 		      "label": "Q",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 213.0271052688974,
-		      "y": 131.28309030915764,
+		      "x": 315,
+		      "y": 170,
 		      "id": "R",
 		      "label": "R",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 220,
-		      "y": 180.89781435621748,
+		      "x": 340,
+		      "y": 260,
 		      "id": "S",
 		      "label": "S",
 		      "shape": "circle"
@@ -17641,13 +17253,17 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9130aa247c7c7ceb
-	// Question: Find a missing angle measure using adjacent angles
+	// Question: Find an angle measure using adjacent angles
 	// Widget key: image_1
-	test("angle-diagram - [x9130aa247c7c7ceb] Find a missing angle measure using adjacent angles", async () => {
+	test("angle-diagram - [x9130aa247c7c7ceb] Find an angle measure using adjacent angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
+		    {
+		      "to": "D",
+		      "from": "B"
+		    },
 		    {
 		      "to": "A",
 		      "from": "B"
@@ -17655,14 +17271,10 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "to": "C",
 		      "from": "B"
-		    },
-		    {
-		      "to": "D",
-		      "from": "B"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
@@ -17692,15 +17304,8 @@ describe("angleDiagram widget tests", () => {
 		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 260,
+		  "height": 360,
 		  "points": [
-		    {
-		      "x": 49.4204721237,
-		      "y": 40.2466837442,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
 		    {
 		      "x": 40,
 		      "y": 220,
@@ -17709,8 +17314,15 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 101.5636257986,
-		      "y": 50.8553282585,
+		      "x": 49.420472123729915,
+		      "y": 40.24668374417672,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 101.5636257986204,
+		      "y": 50.85532825853651,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
@@ -17741,16 +17353,16 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x98c20fb92fcd6f4e
-	// Question: Find the measure of an angle from a straight angle
+	// Question: Find the measure of an angle on a straight line
 	// Widget key: image_1
-	test("angle-diagram - [x98c20fb92fcd6f4e] Find the measure of an angle from a straight angle", async () => {
+	test("angle-diagram - [x98c20fb92fcd6f4e] Find the measure of an angle on a straight line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
-		      "from": "O"
+		      "to": "O",
+		      "from": "L"
 		    },
 		    {
 		      "to": "N",
@@ -17763,52 +17375,33 @@ describe("angleDiagram widget tests", () => {
 		  ],
 		  "type": "angleDiagram",
 		  "width": 460,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "LOM",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "M"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "MON",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "M",
-		      "pointOnSecondRay": "N"
-		    }
-		  ],
-		  "height": 228.53,
+		  "angles": [],
+		  "height": 320,
 		  "points": [
 		    {
 		      "x": 60,
-		      "y": 188.53,
+		      "y": 260,
 		      "id": "L",
 		      "label": "L",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 240,
-		      "y": 188.53,
+		      "x": 230,
+		      "y": 260,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 420,
-		      "y": 188.53,
+		      "x": 400,
+		      "y": 260,
 		      "id": "N",
 		      "label": "N",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 124.29823025642293,
-		      "y": 50.64177772475914,
+		      "x": 124,
+		      "y": 90,
 		      "id": "M",
 		      "label": "M",
 		      "shape": "circle"
@@ -17832,9 +17425,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3c5606bed179c03c
-	// Question: Find the measure of an angle on a straight line
+	// Question: Find the measure of angle MON
 	// Widget key: image_1
-	test("angle-diagram - [x3c5606bed179c03c] Find the measure of an angle on a straight line", async () => {
+	test("angle-diagram - [x3c5606bed179c03c] Find the measure of angle MON", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -17854,40 +17447,21 @@ describe("angleDiagram widget tests", () => {
 		  ],
 		  "type": "angleDiagram",
 		  "width": 460,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "∠LOM",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "M"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "∠MON",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "M",
-		      "pointOnSecondRay": "N"
-		    }
-		  ],
-		  "height": 260,
+		  "angles": [],
+		  "height": 300,
 		  "points": [
-		    {
-		      "x": 60,
-		      "y": 220,
-		      "id": "L",
-		      "label": "L",
-		      "shape": "circle"
-		    },
 		    {
 		      "x": 240,
 		      "y": 220,
 		      "id": "O",
 		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 60,
+		      "y": 220,
+		      "id": "L",
+		      "label": "L",
 		      "shape": "circle"
 		    },
 		    {
@@ -17922,78 +17496,6 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7f1e421f9d183873
-	// Question: Find an angle measure using a straight angle
-	// Widget key: image_1
-	test("angle-diagram - [x7f1e421f9d183873] Find an angle measure using a straight angle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "O",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
-		      "from": "O"
-		    },
-		    {
-		      "to": "B",
-		      "from": "O"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 460,
-		  "angles": [],
-		  "height": 221,
-		  "points": [
-		    {
-		      "x": 60,
-		      "y": 180.898,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 240,
-		      "y": 180.898,
-		      "id": "O",
-		      "label": "O",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 420,
-		      "y": 180.898,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 362.76,
-		      "y": 49.254,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x64496a58d32d13e4
 	// Question: Find an angle measure from a straight angle
 	// Widget key: image_1
@@ -18007,8 +17509,16 @@ describe("angleDiagram widget tests", () => {
 		      "from": "A"
 		    },
 		    {
+		      "to": "A",
+		      "from": "B"
+		    },
+		    {
 		      "to": "D",
 		      "from": "B"
+		    },
+		    {
+		      "to": "B",
+		      "from": "D"
 		    },
 		    {
 		      "to": "C",
@@ -18037,34 +17547,34 @@ describe("angleDiagram widget tests", () => {
 		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 240.21344974357822,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 60,
-		      "y": 200.21344974357822,
+		      "y": 200.2134497436,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 240,
-		      "y": 200.21344974357822,
+		      "y": 200.2134497436,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 420,
-		      "y": 200.21344974357822,
-		      "id": "D",
-		      "label": "D",
+		      "x": 136.7562414568,
+		      "y": 52.7660817716,
+		      "id": "C",
+		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 136.75624145681175,
-		      "y": 52.766081771559676,
-		      "id": "C",
-		      "label": "C",
+		      "x": 420,
+		      "y": 200.2134497436,
+		      "id": "D",
+		      "label": "D",
 		      "shape": "circle"
 		    }
 		  ]
@@ -18086,16 +17596,16 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x598e805d8b33fe34
-	// Question: Find an angle measure from a straight angle
+	// Question: Find an angle measure on a straight line
 	// Widget key: image_1
-	test("angle-diagram - [x598e805d8b33fe34] Find an angle measure from a straight angle", async () => {
+	test("angle-diagram - [x598e805d8b33fe34] Find an angle measure on a straight line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "P",
-		      "from": "Q"
+		      "to": "Q",
+		      "from": "P"
 		    },
 		    {
 		      "to": "S",
@@ -18109,11 +17619,11 @@ describe("angleDiagram widget tests", () => {
 		  "type": "angleDiagram",
 		  "width": 460,
 		  "angles": [],
-		  "height": 146,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 60,
-		      "y": 105.9608482676403,
+		      "y": 105.96084826764029,
 		      "id": "Q",
 		      "label": "Q",
 		      "shape": "circle"
@@ -18157,110 +17667,10 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x5c35f5a3105525d6
-	// Question: Find an angle measure using angle addition
-	// Widget key: image_1
-	test("angle-diagram - [x5c35f5a3105525d6] Find an angle measure using angle addition", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "Q",
-		      "from": "P"
-		    },
-		    {
-		      "to": "R",
-		      "from": "P"
-		    },
-		    {
-		      "to": "S",
-		      "from": "P"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 260,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "∠QPR",
-		      "radius": 40,
-		      "vertex": "P",
-		      "pointOnFirstRay": "Q",
-		      "pointOnSecondRay": "R"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "∠RPS",
-		      "radius": 40,
-		      "vertex": "P",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "S"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#800080",
-		      "label": "∠QPS",
-		      "radius": 48,
-		      "vertex": "P",
-		      "pointOnFirstRay": "Q",
-		      "pointOnSecondRay": "S"
-		    }
-		  ],
-		  "height": 201.41327413103863,
-		  "points": [
-		    {
-		      "x": 40,
-		      "y": 161.41327413103863,
-		      "id": "P",
-		      "label": "P",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 177.88799976141604,
-		      "y": 45.71150438746155,
-		      "id": "Q",
-		      "label": "Q",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 213.8666487320323,
-		      "y": 114.82584601258489,
-		      "id": "R",
-		      "label": "R",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 220,
-		      "y": 161.41327413103863,
-		      "id": "S",
-		      "label": "S",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xc6bf0f0120880555
-	// Question: Find the measure of an angle on a straight line
+	// Question: Find an angle measure from a linear pair
 	// Widget key: image_1
-	test("angle-diagram - [xc6bf0f0120880555] Find the measure of an angle on a straight line", async () => {
+	test("angle-diagram - [xc6bf0f0120880555] Find an angle measure from a linear pair", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -18280,8 +17690,36 @@ describe("angleDiagram widget tests", () => {
 		  ],
 		  "type": "angleDiagram",
 		  "width": 460,
-		  "angles": [],
-		  "height": 156.441652293597,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#6495ed",
+		      "label": "∠LOM",
+		      "radius": 40,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "M"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#28ae7b",
+		      "label": "∠MON",
+		      "radius": 40,
+		      "vertex": "O",
+		      "pointOnFirstRay": "M",
+		      "pointOnSecondRay": "N"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#800080",
+		      "label": "∠LON",
+		      "radius": 48,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "N"
+		    }
+		  ],
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 60,
@@ -18330,16 +17768,16 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf96ad61a4d31e1a2
-	// Question: Find an angle measure from a linear pair
+	// Question: Find an angle measure from a straight angle
 	// Widget key: image_1
-	test("angle-diagram - [xf96ad61a4d31e1a2] Find an angle measure from a linear pair", async () => {
+	test("angle-diagram - [xf96ad61a4d31e1a2] Find an angle measure from a straight angle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "B",
-		      "from": "A"
+		      "to": "A",
+		      "from": "B"
 		    },
 		    {
 		      "to": "D",
@@ -18352,27 +17790,8 @@ describe("angleDiagram widget tests", () => {
 		  ],
 		  "type": "angleDiagram",
 		  "width": 460,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "∠ABC",
-		      "radius": 40,
-		      "vertex": "B",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "∠CBD",
-		      "radius": 40,
-		      "vertex": "B",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "D"
-		    }
-		  ],
-		  "height": 260,
+		  "angles": [],
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 60,
@@ -18421,9 +17840,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xabbc4d09324bcea1
-	// Question: Find an angle measure from a straight angle
+	// Question: Find the measure of angle MON
 	// Widget key: image_1
-	test("angle-diagram - [xabbc4d09324bcea1] Find an angle measure from a straight angle", async () => {
+	test("angle-diagram - [xabbc4d09324bcea1] Find the measure of angle MON", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -18443,27 +17862,8 @@ describe("angleDiagram widget tests", () => {
 		  ],
 		  "type": "angleDiagram",
 		  "width": 460,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "∠LOM",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "M"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "∠MON",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "M",
-		      "pointOnSecondRay": "N"
-		    }
-		  ],
-		  "height": 260,
+		  "angles": [],
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 60,
@@ -18533,36 +17933,9 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#6495ed",
-		      "label": "∠ABC",
-		      "radius": 40,
-		      "vertex": "B",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#28ae7b",
-		      "label": "∠CBD",
-		      "radius": 40,
-		      "vertex": "B",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "D"
-		    },
-		    {
-		      "type": "right",
-		      "color": "#800080",
-		      "label": "∠ABD",
-		      "vertex": "B",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "D"
-		    }
-		  ],
-		  "height": 260,
+		  "width": 300,
+		  "angles": [],
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 40,
@@ -18632,13 +18005,13 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#6495ed",
 		      "label": "∠AOB",
-		      "radius": 40,
+		      "radius": 36,
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "B"
@@ -18647,7 +18020,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#28ae7b",
 		      "label": "∠BOC",
-		      "radius": 40,
+		      "radius": 48,
 		      "vertex": "O",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
@@ -18661,7 +18034,7 @@ describe("angleDiagram widget tests", () => {
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 260,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 40,
@@ -18709,99 +18082,99 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xeedd609a72f40b27
-	// Question: Choose an equation to solve for x from the diagram
+	// Extracted from question: xdd4b33471181ec59
+	// Question: Choose an equation from a vertical-angles diagram
 	// Widget key: image_1
-	test("angle-diagram - [xeedd609a72f40b27] Choose an equation to solve for x from the diagram", async () => {
+	test("angle-diagram - [xdd4b33471181ec59] Choose an equation from a vertical-angles diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
+		      "to": "O",
+		      "from": "P1"
+		    },
+		    {
+		      "to": "P2",
+		      "from": "O"
+		    },
+		    {
+		      "to": "O",
+		      "from": "Q1"
+		    },
+		    {
+		      "to": "Q2",
 		      "from": "O"
 		    },
 		    {
 		      "to": "R",
 		      "from": "O"
-		    },
-		    {
-		      "to": "TL",
-		      "from": "O"
-		    },
-		    {
-		      "to": "BR",
-		      "from": "O"
-		    },
-		    {
-		      "to": "TR",
-		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "3x°",
-		      "radius": 40,
+		      "color": "#000000",
+		      "label": "110°",
+		      "radius": 46,
 		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "TL"
+		      "pointOnFirstRay": "Q1",
+		      "pointOnSecondRay": "P2"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "30°",
-		      "radius": 40,
+		      "color": "#000000",
+		      "label": "(10x + 10)°",
+		      "radius": 38,
 		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "BR"
+		      "pointOnFirstRay": "P1",
+		      "pointOnSecondRay": "Q2"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 75,
-		      "id": "O",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 30,
-		      "y": 75,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 270,
-		      "y": 75,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 100,
-		      "y": 25,
-		      "id": "TL",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 200,
-		      "y": 125,
-		      "id": "BR",
-		      "label": " ",
+		      "y": 150,
+		      "id": "O",
+		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 260,
-		      "y": 15,
-		      "id": "TR",
-		      "label": " ",
+		      "x": 60,
+		      "y": 260,
+		      "id": "P1",
+		      "label": "P1",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 340,
+		      "y": 40,
+		      "id": "P2",
+		      "label": "P2",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 60,
+		      "y": 40,
+		      "id": "Q1",
+		      "label": "Q1",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 340,
+		      "y": 260,
+		      "id": "Q2",
+		      "label": "Q2",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 380,
+		      "y": 120,
+		      "id": "R",
+		      "label": "R",
 		      "shape": "circle"
 		    }
 		  ]
@@ -18823,9 +18196,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd60db10ee601ff12
-	// Question: Choose the equation for supplementary angles
+	// Question: Choose an equation to solve for x from a diagram
 	// Widget key: image_1
-	test("angle-diagram - [xd60db10ee601ff12] Choose the equation for supplementary angles", async () => {
+	test("angle-diagram - [xd60db10ee601ff12] Choose an equation to solve for x from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -18848,13 +18221,13 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "4x°",
-		      "radius": 24,
+		      "radius": 34,
 		      "vertex": "O",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "U"
@@ -18863,46 +18236,278 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "5x°",
-		      "radius": 32,
+		      "radius": 46,
 		      "vertex": "O",
 		      "pointOnFirstRay": "U",
 		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 10,
-		      "y": 75,
+		      "x": 200,
+		      "y": 150,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 30,
+		      "y": 150,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 75,
-		      "id": "O",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 290,
-		      "y": 75,
+		      "x": 370,
+		      "y": 150,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 120,
-		      "y": 20,
+		      "x": 330,
+		      "y": 30,
 		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 180,
-		      "y": 130,
+		      "x": 70,
+		      "y": 270,
 		      "id": "D",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xafbcfc826303e3c1
+	// Question: Select an equation from a vertical-angles diagram
+	// Widget key: image_1
+	test("angle-diagram - [xafbcfc826303e3c1] Select an equation from a vertical-angles diagram", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "R",
+		      "from": "O"
+		    },
+		    {
+		      "to": "L",
+		      "from": "O"
+		    },
+		    {
+		      "to": "U",
+		      "from": "O"
+		    },
+		    {
+		      "to": "D",
+		      "from": "O"
+		    },
+		    {
+		      "to": "S",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 360,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "150°",
+		      "radius": 60,
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "U"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#e07d10",
+		      "label": "2x°",
+		      "radius": 50,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "S"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#ca337c",
+		      "label": "4x°",
+		      "radius": 40,
+		      "vertex": "O",
+		      "pointOnFirstRay": "S",
+		      "pointOnSecondRay": "D"
+		    }
+		  ],
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 180,
+		      "y": 180,
+		      "id": "O",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 340,
+		      "y": 180,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 20,
+		      "y": 180,
+		      "id": "L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 42,
+		      "y": 100,
+		      "id": "U",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 318,
+		      "y": 260,
+		      "id": "D",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 120,
+		      "y": 260,
+		      "id": "S",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x93390ec1a0da3140
+	// Question: Choose an equation from a diagram of complementary angles
+	// Widget key: image_1
+	test("angle-diagram - [x93390ec1a0da3140] Choose an equation from a diagram of complementary angles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "HL",
+		      "from": "O"
+		    },
+		    {
+		      "to": "R",
+		      "from": "O"
+		    },
+		    {
+		      "to": "U",
+		      "from": "O"
+		    },
+		    {
+		      "to": "S",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 400,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#e07d10",
+		      "label": "3x°",
+		      "radius": 40,
+		      "vertex": "O",
+		      "pointOnFirstRay": "HL",
+		      "pointOnSecondRay": "S"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "(8x - 20)°",
+		      "radius": 55,
+		      "vertex": "O",
+		      "pointOnFirstRay": "S",
+		      "pointOnSecondRay": "U"
+		    },
+		    {
+		      "type": "right",
+		      "color": "#000000",
+		      "label": " ",
+		      "vertex": "O",
+		      "pointOnFirstRay": "U",
+		      "pointOnSecondRay": "R"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 200,
+		      "y": 260,
+		      "id": "O",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 40,
+		      "y": 260,
+		      "id": "HL",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 360,
+		      "y": 260,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 200,
+		      "y": 100,
+		      "id": "U",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 120,
+		      "y": 160,
+		      "id": "S",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -18925,19 +18530,19 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe79afc315a1b6c68
-	// Question: Select an equation for complementary angles
+	// Question: Set up an equation from complementary angles
 	// Widget key: image_1
-	test("angle-diagram - [xe79afc315a1b6c68] Select an equation for complementary angles", async () => {
+	test("angle-diagram - [xe79afc315a1b6c68] Set up an equation from complementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "U",
+		      "to": "R",
 		      "from": "V"
 		    },
 		    {
-		      "to": "R",
+		      "to": "U",
 		      "from": "V"
 		    },
 		    {
@@ -18946,13 +18551,21 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 220,
+		  "width": 360,
 		  "angles": [
+		    {
+		      "type": "right",
+		      "color": "#000000",
+		      "label": " ",
+		      "vertex": "V",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "U"
+		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "5x°",
-		      "radius": 45.5,
+		      "radius": 35,
 		      "vertex": "V",
 		      "pointOnFirstRay": "R",
 		      "pointOnSecondRay": "D"
@@ -18961,46 +18574,38 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "(5x + 30)°",
-		      "radius": 62.5,
+		      "radius": 55,
 		      "vertex": "V",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "U"
-		    },
-		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": " ",
-		      "vertex": "V",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 220,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 10,
-		      "y": 210,
+		      "x": 60,
+		      "y": 300,
 		      "id": "V",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 10,
-		      "y": 10,
-		      "id": "U",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 210,
-		      "y": 210,
+		      "x": 340,
+		      "y": 300,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 183.205,
-		      "y": 110,
+		      "x": 60,
+		      "y": 60,
+		      "id": "U",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 320,
+		      "y": 200,
 		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
@@ -19023,10 +18628,112 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xdd4b33471181ec59
-	// Question: Choose an equation from a vertical-angles diagram
+	// Extracted from question: x090bccb87566b229
+	// Question: Select an equation to solve for x (vertical angles)
 	// Widget key: image_1
-	test("angle-diagram - [xdd4b33471181ec59] Choose an equation from a vertical-angles diagram", async () => {
+	test("angle-diagram - [x090bccb87566b229] Select an equation to solve for x (vertical angles)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "L",
+		      "from": "O"
+		    },
+		    {
+		      "to": "R",
+		      "from": "O"
+		    },
+		    {
+		      "to": "UR",
+		      "from": "O"
+		    },
+		    {
+		      "to": "LL",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 300,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "(x + 45)°",
+		      "radius": 50,
+		      "vertex": "O",
+		      "pointOnFirstRay": "UR",
+		      "pointOnSecondRay": "R"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#e07d10",
+		      "label": "60°",
+		      "radius": 50,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "LL"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 150,
+		      "y": 150,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 20,
+		      "y": 150,
+		      "id": "L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 280,
+		      "y": 150,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 240,
+		      "y": 40,
+		      "id": "UR",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 60,
+		      "y": 260,
+		      "id": "LL",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xeedd609a72f40b27
+	// Question: Select an equation from a vertical-angles diagram
+	// Widget key: image_1
+	test("angle-diagram - [xeedd609a72f40b27] Select an equation from a vertical-angles diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -19058,62 +18765,62 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "110°",
-		      "radius": 35,
+		      "label": "30°",
+		      "radius": 40,
 		      "vertex": "O",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
-		      "label": "(10x+10)°",
-		      "radius": 30,
+		      "label": "3x°",
+		      "radius": 40,
 		      "vertex": "O",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "B"
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 150,
-		      "y": 75,
+		      "y": 150,
 		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 240,
-		      "y": 40,
+		      "x": 40,
+		      "y": 150,
 		      "id": "A",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 60,
-		      "y": 110,
+		      "x": 260,
+		      "y": 150,
 		      "id": "B",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 60,
-		      "y": 40,
+		      "x": 250,
+		      "y": 60,
 		      "id": "C",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 240,
-		      "y": 110,
+		      "x": 50,
+		      "y": 240,
 		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 180,
-		      "y": 20,
+		      "x": 150,
+		      "y": 50,
 		      "id": "E",
 		      "label": " ",
 		      "shape": "circle"
@@ -19137,177 +18844,75 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5c032acce7cb8d91
-	// Question: Select an equation from a diagram of supplementary angles
+	// Question: Choose an equation from a straight-angle diagram
 	// Widget key: image_1
-	test("angle-diagram - [x5c032acce7cb8d91] Select an equation from a diagram of supplementary angles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "V",
-		      "from": "L"
-		    },
-		    {
-		      "to": "R",
-		      "from": "V"
-		    },
-		    {
-		      "to": "U",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 300,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "(3x + 12)°",
-		      "radius": 28,
-		      "vertex": "V",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "L"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x°",
-		      "radius": 45,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "U"
-		    }
-		  ],
-		  "height": 90,
-		  "points": [
-		    {
-		      "x": 20,
-		      "y": 75,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 150,
-		      "y": 75,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 280,
-		      "y": 75,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 220,
-		      "y": 20,
-		      "id": "U",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x090bccb87566b229
-	// Question: Equation from a vertical-angles diagram
-	// Widget key: image_1
-	test("angle-diagram - [x090bccb87566b229] Equation from a vertical-angles diagram", async () => {
+	test("angle-diagram - [x5c032acce7cb8d91] Choose an equation from a straight-angle diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
 		      "to": "L",
-		      "from": "O"
+		      "from": "V"
 		    },
 		    {
 		      "to": "R",
-		      "from": "O"
+		      "from": "V"
 		    },
 		    {
 		      "to": "U",
-		      "from": "O"
-		    },
-		    {
-		      "to": "D",
-		      "from": "O"
+		      "from": "V"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "(x + 45)°",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "R",
+		      "color": "#e07d10",
+		      "label": "(3x + 12)°",
+		      "radius": 55,
+		      "vertex": "V",
+		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "U"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "60°",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "D"
+		      "color": "#11accd",
+		      "label": "x°",
+		      "radius": 70,
+		      "vertex": "V",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "U"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 75,
-		      "id": "O",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 10,
-		      "y": 75,
+		      "x": 60,
+		      "y": 200,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 290,
-		      "y": 75,
+		      "x": 200,
+		      "y": 200,
+		      "id": "V",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 340,
+		      "y": 200,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 210,
-		      "y": 25,
+		      "x": 300,
+		      "y": 80,
 		      "id": "U",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 90,
-		      "y": 125,
-		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -19330,108 +18935,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0dca1a5d90759cd7
-	// Question: Select an equation for complementary angles
+	// Question: Equation for complementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x0dca1a5d90759cd7] Select an equation for complementary angles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "H",
-		      "from": "O"
-		    },
-		    {
-		      "to": "V",
-		      "from": "O"
-		    },
-		    {
-		      "to": "D",
-		      "from": "O"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 192,
-		  "angles": [
-		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": " ",
-		      "vertex": "O",
-		      "pointOnFirstRay": "H",
-		      "pointOnSecondRay": "V"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "5x°",
-		      "radius": 26.33,
-		      "vertex": "O",
-		      "pointOnFirstRay": "H",
-		      "pointOnSecondRay": "D"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "35°",
-		      "radius": 52.18,
-		      "vertex": "O",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "V"
-		    }
-		  ],
-		  "height": 192,
-		  "points": [
-		    {
-		      "x": 16,
-		      "y": 176,
-		      "id": "O",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 176,
-		      "y": 176,
-		      "id": "H",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 16,
-		      "y": 16,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 107.772,
-		      "y": 44.936,
-		      "id": "D",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x93390ec1a0da3140
-	// Question: Select the equation from a complementary-angles diagram
-	// Widget key: image_1
-	test("angle-diagram - [x93390ec1a0da3140] Select the equation from a complementary-angles diagram", async () => {
+	test("angle-diagram - [x0dca1a5d90759cd7] Equation for complementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -19441,37 +18947,33 @@ describe("angleDiagram widget tests", () => {
 		      "from": "V"
 		    },
 		    {
-		      "to": "L",
-		      "from": "V"
-		    },
-		    {
 		      "to": "U",
 		      "from": "V"
 		    },
 		    {
-		      "to": "D",
+		      "to": "S",
 		      "from": "V"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "3x°",
+		      "color": "#11accd",
+		      "label": "5x°",
 		      "radius": 40,
 		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "S"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "(8x-20)°",
-		      "radius": 52,
+		      "color": "#e07d10",
+		      "label": "35°",
+		      "radius": 70,
 		      "vertex": "V",
-		      "pointOnFirstRay": "D",
+		      "pointOnFirstRay": "S",
 		      "pointOnSecondRay": "U"
 		    },
 		    {
@@ -19479,44 +18981,37 @@ describe("angleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "label": " ",
 		      "vertex": "V",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "R"
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "U"
 		    }
 		  ],
-		  "height": 120,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 105,
+		      "x": 60,
+		      "y": 320,
 		      "id": "V",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 105,
+		      "x": 340,
+		      "y": 320,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 20,
-		      "y": 105,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 150,
-		      "y": 25,
+		      "x": 60,
+		      "y": 40,
 		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 85,
-		      "y": 60,
-		      "id": "D",
+		      "x": 186,
+		      "y": 140,
+		      "id": "S",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -19539,9 +19034,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xdfed46549ec75e86
-	// Question: Select an equation from a diagram with complementary angles
+	// Question: Select the equation from a complementary-angles diagram
 	// Widget key: image_1
-	test("angle-diagram - [xdfed46549ec75e86] Select an equation from a diagram with complementary angles", async () => {
+	test("angle-diagram - [xdfed46549ec75e86] Select the equation from a complementary-angles diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -19559,29 +19054,29 @@ describe("angleDiagram widget tests", () => {
 		      "from": "O"
 		    },
 		    {
-		      "to": "UL",
+		      "to": "S",
 		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "30°",
-		      "radius": 28,
+		      "radius": 45,
 		      "vertex": "O",
 		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "UL"
+		      "pointOnSecondRay": "S"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "2x°",
-		      "radius": 45,
+		      "radius": 65,
 		      "vertex": "O",
-		      "pointOnFirstRay": "UL",
+		      "pointOnFirstRay": "S",
 		      "pointOnSecondRay": "U"
 		    },
 		    {
@@ -19593,161 +19088,39 @@ describe("angleDiagram widget tests", () => {
 		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 120,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 105,
+		      "x": 180,
+		      "y": 260,
 		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 20,
-		      "y": 105,
+		      "x": 40,
+		      "y": 260,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 105,
+		      "x": 320,
+		      "y": 260,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 20,
+		      "x": 180,
+		      "y": 80,
 		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 100,
-		      "y": 45,
-		      "id": "UL",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xafbcfc826303e3c1
-	// Question: Select an equation from a vertical angles diagram
-	// Widget key: image_1
-	test("angle-diagram - [xafbcfc826303e3c1] Select an equation from a vertical angles diagram", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "R",
-		      "from": "O"
-		    },
-		    {
-		      "to": "L",
-		      "from": "O"
-		    },
-		    {
-		      "to": "UL",
-		      "from": "O"
-		    },
-		    {
-		      "to": "DR",
-		      "from": "O"
-		    },
-		    {
-		      "to": "S",
-		      "from": "O"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 300,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "150°",
-		      "radius": 36,
-		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UL"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "2x°",
-		      "radius": 30,
-		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "S"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#ca337c",
-		      "label": "4x°",
-		      "radius": 24,
-		      "vertex": "O",
-		      "pointOnFirstRay": "S",
-		      "pointOnSecondRay": "DR"
-		    }
-		  ],
-		  "height": 150,
-		  "points": [
-		    {
-		      "x": 150,
-		      "y": 75,
-		      "id": "O",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 280,
-		      "y": 75,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 20,
-		      "y": 75,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 90,
-		      "y": 20,
-		      "id": "UL",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 210,
-		      "y": 130,
-		      "id": "DR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 110,
-		      "y": 110,
+		      "y": 170,
 		      "id": "S",
 		      "label": " ",
 		      "shape": "circle"
@@ -19771,43 +19144,43 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x81e7e93691a3565f
-	// Question: Choose an equation for complementary angles
+	// Question: Select an equation for complementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x81e7e93691a3565f] Choose an equation for complementary angles", async () => {
+	test("angle-diagram - [x81e7e93691a3565f] Select an equation for complementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "U",
-		      "from": "V"
+		      "to": "E",
+		      "from": "O"
 		    },
 		    {
-		      "to": "R",
-		      "from": "V"
+		      "to": "U",
+		      "from": "O"
 		    },
 		    {
 		      "to": "D",
-		      "from": "V"
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 200,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "right",
 		      "color": "#000000",
 		      "label": " ",
-		      "vertex": "V",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "R"
+		      "vertex": "O",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "U"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "7x°",
-		      "radius": 38,
-		      "vertex": "V",
+		      "radius": 56,
+		      "vertex": "O",
 		      "pointOnFirstRay": "U",
 		      "pointOnSecondRay": "D"
 		    },
@@ -19815,38 +19188,38 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "11x°",
-		      "radius": 26,
-		      "vertex": "V",
+		      "radius": 38,
+		      "vertex": "O",
 		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "R"
+		      "pointOnSecondRay": "E"
 		    }
 		  ],
-		  "height": 173.333,
+		  "height": 350,
 		  "points": [
 		    {
-		      "x": 80,
-		      "y": 150,
-		      "id": "V",
+		      "x": 150,
+		      "y": 280,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 360,
+		      "y": 280,
+		      "id": "E",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 80,
-		      "y": 70,
+		      "x": 150,
+		      "y": 80,
 		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 155,
-		      "y": 150,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 120,
-		      "y": 110,
+		      "x": 300,
+		      "y": 200,
 		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
@@ -19870,95 +19243,95 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa8e4440eddf7a3db
-	// Question: Set up an equation from a diagram with supplementary angles
+	// Question: Select an equation from a supplementary-angles diagram
 	// Widget key: image_1
-	test("angle-diagram - [xa8e4440eddf7a3db] Set up an equation from a diagram with supplementary angles", async () => {
+	test("angle-diagram - [xa8e4440eddf7a3db] Select an equation from a supplementary-angles diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
-		      "from": "V"
+		      "to": "V",
+		      "from": "L"
 		    },
 		    {
 		      "to": "R",
 		      "from": "V"
 		    },
 		    {
-		      "to": "UL",
+		      "to": "Uleft",
 		      "from": "V"
 		    },
 		    {
-		      "to": "UR",
+		      "to": "Uright",
 		      "from": "V"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "3x°",
-		      "radius": 42,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "UL"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#ca337c",
-		      "label": "80°",
 		      "radius": 50,
 		      "vertex": "V",
-		      "pointOnFirstRay": "UL",
-		      "pointOnSecondRay": "UR"
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "Uleft"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "2x°",
-		      "radius": 28,
+		      "label": "80°",
+		      "radius": 35,
 		      "vertex": "V",
-		      "pointOnFirstRay": "UR",
+		      "pointOnFirstRay": "Uleft",
+		      "pointOnSecondRay": "Uright"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#ca337c",
+		      "label": "2x°",
+		      "radius": 50,
+		      "vertex": "V",
+		      "pointOnFirstRay": "Uright",
 		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 90,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 10,
-		      "y": 75,
+		      "x": 40,
+		      "y": 180,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 75,
+		      "x": 200,
+		      "y": 180,
 		      "id": "V",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 290,
-		      "y": 75,
+		      "x": 360,
+		      "y": 180,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 110,
-		      "y": 10,
-		      "id": "UL",
+		      "x": 120,
+		      "y": 80,
+		      "id": "Uleft",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 235,
-		      "y": 10,
-		      "id": "UR",
+		      "x": 280,
+		      "y": 100,
+		      "id": "Uright",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -19981,28 +19354,28 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x60161dd80d08e890
-	// Question: Choose an equation from a diagram of vertical angles
+	// Question: Select an equation from a vertical-angles diagram
 	// Widget key: image_1
-	test("angle-diagram - [x60161dd80d08e890] Choose an equation from a diagram of vertical angles", async () => {
+	test("angle-diagram - [x60161dd80d08e890] Select an equation from a vertical-angles diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "V",
-		      "from": "L"
+		      "to": "L",
+		      "from": "O"
 		    },
 		    {
 		      "to": "R",
-		      "from": "V"
+		      "from": "O"
 		    },
 		    {
-		      "to": "V",
-		      "from": "U"
+		      "to": "U",
+		      "from": "O"
 		    },
 		    {
 		      "to": "D",
-		      "from": "V"
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -20010,57 +19383,57 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "(5x - 70)°",
-		      "radius": 40,
-		      "vertex": "V",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "L"
-		    },
-		    {
-		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "105°",
 		      "radius": 40,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "D"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "(5x - 70)°",
+		      "radius": 40,
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "U"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 10,
-		      "y": 75,
+		      "x": 150,
+		      "y": 150,
+		      "id": "O",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 30,
+		      "y": 150,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 290,
-		      "y": 75,
+		      "x": 270,
+		      "y": 150,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 130,
-		      "y": 10,
+		      "x": 110,
+		      "y": 50,
 		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 170,
-		      "y": 140,
+		      "x": 190,
+		      "y": 250,
 		      "id": "D",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 150,
-		      "y": 75,
-		      "id": "V",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -20083,9 +19456,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2da9ff28ccf1c254
-	// Question: Choose an equation from a diagram with vertical angles
+	// Question: Select an equation using vertical angles
 	// Widget key: image_1
-	test("angle-diagram - [x2da9ff28ccf1c254] Choose an equation from a diagram with vertical angles", async () => {
+	test("angle-diagram - [x2da9ff28ccf1c254] Select an equation using vertical angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -20099,93 +19472,82 @@ describe("angleDiagram widget tests", () => {
 		      "from": "O"
 		    },
 		    {
-		      "to": "NW",
+		      "to": "U",
 		      "from": "O"
 		    },
 		    {
-		      "to": "SE",
+		      "to": "D",
 		      "from": "O"
 		    },
 		    {
-		      "to": "NE",
-		      "from": "O"
-		    },
-		    {
-		      "to": "SW",
+		      "to": "Q",
 		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 320,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "60°",
-		      "radius": 38,
+		      "radius": 40,
 		      "vertex": "O",
-		      "pointOnFirstRay": "NW",
+		      "pointOnFirstRay": "U",
 		      "pointOnSecondRay": "L"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "(4x-20)°",
-		      "radius": 38,
+		      "label": "(4x - 20)°",
+		      "radius": 40,
 		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "SE"
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 75,
+		      "x": 160,
+		      "y": 160,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 30,
-		      "y": 75,
+		      "x": 40,
+		      "y": 160,
 		      "id": "L",
 		      "label": "L",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 270,
-		      "y": 75,
+		      "x": 280,
+		      "y": 160,
 		      "id": "R",
 		      "label": "R",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 90,
-		      "y": 30,
-		      "id": "NW",
-		      "label": "A",
+		      "x": 100,
+		      "y": 100,
+		      "id": "U",
+		      "label": "U",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 210,
-		      "y": 120,
-		      "id": "SE",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 210,
-		      "y": 30,
-		      "id": "NE",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 90,
-		      "y": 120,
-		      "id": "SW",
+		      "x": 220,
+		      "y": 220,
+		      "id": "D",
 		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 220,
+		      "y": 100,
+		      "id": "Q",
+		      "label": "Q",
 		      "shape": "circle"
 		    }
 		  ]
@@ -20207,87 +19569,87 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfe66ed9ddc92470c
-	// Question: Choose an equation from a vertical-angles diagram
+	// Question: Select the equation from vertical angles
 	// Widget key: image_1
-	test("angle-diagram - [xfe66ed9ddc92470c] Choose an equation from a vertical-angles diagram", async () => {
+	test("angle-diagram - [xfe66ed9ddc92470c] Select the equation from vertical angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
+		      "to": "O",
+		      "from": "W"
+		    },
+		    {
+		      "to": "E",
 		      "from": "O"
 		    },
 		    {
-		      "to": "R",
-		      "from": "O"
+		      "to": "O",
+		      "from": "NW"
 		    },
 		    {
-		      "to": "U",
-		      "from": "O"
-		    },
-		    {
-		      "to": "D",
+		      "to": "SE",
 		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
+		      "color": "#000000",
 		      "label": "150°",
-		      "radius": 38,
+		      "radius": 44,
 		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "U"
+		      "pointOnFirstRay": "W",
+		      "pointOnSecondRay": "NW"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#e07d10",
+		      "color": "#000000",
 		      "label": "10x°",
-		      "radius": 38,
+		      "radius": 44,
 		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "SE"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 75,
+		      "x": 180,
+		      "y": 180,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 20,
-		      "y": 75,
-		      "id": "L",
-		      "label": "L",
+		      "x": 40,
+		      "y": 180,
+		      "id": "W",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 75,
-		      "id": "R",
-		      "label": "R",
+		      "x": 320,
+		      "y": 180,
+		      "id": "E",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 80,
-		      "y": 20,
-		      "id": "U",
-		      "label": "U",
+		      "y": 80,
+		      "id": "NW",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 220,
-		      "y": 130,
-		      "id": "D",
-		      "label": "D",
+		      "x": 280,
+		      "y": 280,
+		      "id": "SE",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -20309,84 +19671,84 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe966f186633d9142
-	// Question: Select the equation from the angle diagram
+	// Question: Select an equation from a complementary-angle diagram
 	// Widget key: image_1
-	test("angle-diagram - [xe966f186633d9142] Select the equation from the angle diagram", async () => {
+	test("angle-diagram - [xe966f186633d9142] Select an equation from a complementary-angle diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "U",
+		      "to": "A",
 		      "from": "O"
 		    },
 		    {
-		      "to": "R",
+		      "to": "C",
 		      "from": "O"
 		    },
 		    {
-		      "to": "D",
+		      "to": "B",
 		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 200,
+		  "width": 400,
 		  "angles": [
-		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": " ",
-		      "vertex": "O",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "R"
-		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "x°",
-		      "radius": 36,
+		      "radius": 32,
 		      "vertex": "O",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "(4x - 85)°",
-		      "radius": 48,
+		      "radius": 46,
 		      "vertex": "O",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "R"
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "right",
+		      "color": "#000000",
+		      "label": "right angle",
+		      "vertex": "O",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 173,
+		  "height": 346.667,
 		  "points": [
 		    {
-		      "x": 90,
-		      "y": 140,
+		      "x": 200,
+		      "y": 280,
 		      "id": "O",
-		      "label": " ",
+		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 90,
-		      "y": 40,
-		      "id": "U",
-		      "label": " ",
+		      "x": 380,
+		      "y": 280,
+		      "id": "A",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 180,
-		      "y": 140,
-		      "id": "R",
-		      "label": " ",
+		      "x": 200,
+		      "y": 100,
+		      "id": "C",
+		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 140,
-		      "y": 90,
-		      "id": "D",
-		      "label": " ",
+		      "x": 330,
+		      "y": 160,
+		      "id": "B",
+		      "label": "B",
 		      "shape": "circle"
 		    }
 		  ]
@@ -20408,38 +19770,38 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2cbbd562dee7e485
-	// Question: Select an equation from a supplementary-angles diagram
+	// Question: Choose an equation from a supplementary angle diagram
 	// Widget key: image_1
-	test("angle-diagram - [x2cbbd562dee7e485] Select an equation from a supplementary-angles diagram", async () => {
+	test("angle-diagram - [x2cbbd562dee7e485] Choose an equation from a supplementary angle diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
 		      "to": "L",
-		      "from": "V"
+		      "from": "O"
 		    },
 		    {
 		      "to": "R",
-		      "from": "V"
+		      "from": "O"
 		    },
 		    {
 		      "to": "U",
-		      "from": "V"
+		      "from": "O"
 		    },
 		    {
 		      "to": "S",
-		      "from": "V"
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "right",
 		      "color": "#ca337c",
 		      "label": " ",
-		      "vertex": "V",
+		      "vertex": "O",
 		      "pointOnFirstRay": "R",
 		      "pointOnSecondRay": "U"
 		    },
@@ -20447,8 +19809,8 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "12x°",
-		      "radius": 50,
-		      "vertex": "V",
+		      "radius": 56,
+		      "vertex": "O",
 		      "pointOnFirstRay": "U",
 		      "pointOnSecondRay": "S"
 		    },
@@ -20456,45 +19818,45 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "6x°",
-		      "radius": 38,
-		      "vertex": "V",
+		      "radius": 40,
+		      "vertex": "O",
 		      "pointOnFirstRay": "S",
 		      "pointOnSecondRay": "L"
 		    }
 		  ],
-		  "height": 120,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 105,
-		      "id": "V",
-		      "label": " ",
+		      "x": 180,
+		      "y": 220,
+		      "id": "O",
+		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 20,
-		      "y": 105,
+		      "y": 220,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 105,
+		      "x": 340,
+		      "y": 220,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 25,
+		      "x": 180,
+		      "y": 60,
 		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 95,
-		      "y": 60,
+		      "x": 80,
+		      "y": 120,
 		      "id": "S",
 		      "label": " ",
 		      "shape": "circle"
@@ -20544,8 +19906,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
-		      "label": "13x°",
-		      "radius": 42,
+		      "label": "5x°",
+		      "radius": 40,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "U"
@@ -20553,39 +19915,39 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "5x°",
-		      "radius": 26,
+		      "label": "13x°",
+		      "radius": 60,
 		      "vertex": "V",
 		      "pointOnFirstRay": "U",
 		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 90,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 20,
-		      "y": 75,
+		      "x": 30,
+		      "y": 200,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 150,
-		      "y": 75,
+		      "y": 200,
 		      "id": "V",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 75,
+		      "x": 270,
+		      "y": 200,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 110,
-		      "y": 30,
+		      "x": 90,
+		      "y": 80,
 		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
@@ -20609,19 +19971,19 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xdc803c652eb806cc
-	// Question: Set up an equation from complementary angles
+	// Question: Choose an equation from a complementary-angles diagram
 	// Widget key: image_1
-	test("angle-diagram - [xdc803c652eb806cc] Set up an equation from complementary angles", async () => {
+	test("angle-diagram - [xdc803c652eb806cc] Choose an equation from a complementary-angles diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "V",
+		      "to": "R",
 		      "from": "O"
 		    },
 		    {
-		      "to": "H",
+		      "to": "U",
 		      "from": "O"
 		    },
 		    {
@@ -20630,61 +19992,61 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 220,
+		  "width": 360,
 		  "angles": [
-		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": " ",
-		      "vertex": "O",
-		      "pointOnFirstRay": "V",
-		      "pointOnSecondRay": "H"
-		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "x°",
 		      "radius": 40,
 		      "vertex": "O",
-		      "pointOnFirstRay": "H",
+		      "pointOnFirstRay": "R",
 		      "pointOnSecondRay": "D"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "(6x - 15)°",
-		      "radius": 55,
+		      "radius": 70,
 		      "vertex": "O",
 		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "V"
+		      "pointOnSecondRay": "U"
+		    },
+		    {
+		      "type": "right",
+		      "color": "#000000",
+		      "label": " ",
+		      "vertex": "O",
+		      "pointOnFirstRay": "U",
+		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 220,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 10,
-		      "y": 210,
+		      "x": 60,
+		      "y": 300,
 		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 10,
-		      "y": 10,
-		      "id": "V",
+		      "x": 330,
+		      "y": 300,
+		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 210,
-		      "y": 210,
-		      "id": "H",
+		      "x": 60,
+		      "y": 30,
+		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 61.764,
-		      "y": 16.815,
+		      "x": 140,
+		      "y": 60,
 		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
@@ -20708,86 +20070,86 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x53a978ff7c03c9b2
-	// Question: Choose an equation from a supplementary-angles diagram
+	// Question: Equation from a supplementary angles diagram
 	// Widget key: image_1
-	test("angle-diagram - [x53a978ff7c03c9b2] Choose an equation from a supplementary-angles diagram", async () => {
+	test("angle-diagram - [x53a978ff7c03c9b2] Equation from a supplementary angles diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
-		      "from": "V"
-		    },
-		    {
 		      "to": "R",
-		      "from": "V"
+		      "from": "O"
 		    },
 		    {
-		      "to": "U",
-		      "from": "V"
+		      "to": "L",
+		      "from": "O"
 		    },
 		    {
-		      "to": "D",
-		      "from": "V"
+		      "to": "Q",
+		      "from": "O"
+		    },
+		    {
+		      "to": "P",
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "65°",
-		      "radius": 40,
-		      "vertex": "V",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "R"
+		      "radius": 46,
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "Q"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "(2x + 15)°",
-		      "radius": 52,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "U"
+		      "radius": 36,
+		      "vertex": "O",
+		      "pointOnFirstRay": "Q",
+		      "pointOnSecondRay": "L"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 20,
-		      "y": 75,
-		      "id": "L",
+		      "x": 180,
+		      "y": 180,
+		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 75,
+		      "x": 320,
+		      "y": 180,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 220,
-		      "y": 20,
-		      "id": "U",
+		      "x": 40,
+		      "y": 180,
+		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 80,
-		      "y": 130,
-		      "id": "D",
+		      "x": 230.714,
+		      "y": 71.243,
+		      "id": "Q",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 75,
-		      "id": "V",
+		      "x": 129.286,
+		      "y": 288.757,
+		      "id": "P",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -20809,47 +20171,168 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x85b1af568c1e6a17
-	// Question: Determine angles of rotation about a point
+	// Extracted from question: x0f909223c9cac4e5
+	// Question: Determine the rotation angle from two points
 	// Widget key: image_1
-	test("angle-diagram - [x85b1af568c1e6a17] Determine angles of rotation about a point", async () => {
+	test("angle-diagram - [x0f909223c9cac4e5] Determine the rotation angle from two points", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
 		      "to": "A",
-		      "from": "Q"
+		      "from": "P"
 		    },
 		    {
-		      "to": "A_prime",
-		      "from": "Q"
+		      "to": "Aprime",
+		      "from": "P"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 325,
+		  "width": 400,
 		  "angles": [],
-		  "height": 156.25,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 43.75,
-		      "id": "Q",
-		      "label": "Q",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 243.75,
-		      "y": 81.25,
+		      "x": 270,
+		      "y": 105,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 112.5,
-		      "y": 137.5,
-		      "id": "A_prime",
-		      "label": "A′",
+		      "x": 130,
+		      "y": 195,
+		      "id": "Aprime",
+		      "label": "A'",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 200,
+		      "y": 150,
+		      "id": "P",
+		      "label": "P",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5fba55199de6486c
+	// Question: Find the angle measure from complementary angles
+	// Widget key: image_1
+	test("angle-diagram - [x5fba55199de6486c] Find the angle measure from complementary angles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "R",
+		      "from": "O"
+		    },
+		    {
+		      "to": "L",
+		      "from": "O"
+		    },
+		    {
+		      "to": "U",
+		      "from": "O"
+		    },
+		    {
+		      "to": "C",
+		      "from": "O"
+		    },
+		    {
+		      "to": "S",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 300,
+		  "angles": [
+		    {
+		      "type": "right",
+		      "color": "#000000",
+		      "label": " ",
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "U"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "x",
+		      "radius": 35,
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#e07d10",
+		      "label": "30°",
+		      "radius": 48,
+		      "vertex": "O",
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "U"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 150,
+		      "y": 150,
+		      "id": "O",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 260,
+		      "y": 150,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 40,
+		      "y": 150,
+		      "id": "L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 150,
+		      "y": 40,
+		      "id": "U",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 230,
+		      "y": 65,
+		      "id": "C",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 70,
+		      "y": 235,
+		      "id": "S",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -20871,9 +20354,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9ad8b218f4534c41
-	// Question: Find the value of x from the diagram
+	// Question: Find x from complementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x9ad8b218f4534c41] Find the value of x from the diagram", async () => {
+	test("angle-diagram - [x9ad8b218f4534c41] Find x from complementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -20892,11 +20375,11 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "right",
-		      "color": "#1fab54",
+		      "color": "#11accd",
 		      "label": "90°",
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
@@ -20904,49 +20387,49 @@ describe("angleDiagram widget tests", () => {
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "x°",
-		      "radius": 35,
+		      "color": "#1fab54",
+		      "label": "28°",
+		      "radius": 34,
 		      "vertex": "O",
-		      "pointOnFirstRay": "A",
+		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "28°",
-		      "radius": 50,
+		      "color": "#e07d10",
+		      "label": "x",
+		      "radius": 52,
 		      "vertex": "O",
 		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "B"
+		      "pointOnSecondRay": "A"
 		    }
 		  ],
-		  "height": 188,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 95,
+		      "x": 180,
+		      "y": 180,
 		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 95,
+		      "x": 180,
+		      "y": 40,
 		      "id": "A",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 20,
+		      "x": 320,
+		      "y": 180,
 		      "id": "B",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 235,
-		      "y": 40,
+		      "x": 285.954,
+		      "y": 123.664,
 		      "id": "C",
 		      "label": " ",
 		      "shape": "circle"
@@ -20970,183 +20453,91 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2232b970a0c317e9
-	// Question: Find the value of x in a right angle
+	// Question: Find the measure of a complementary angle
 	// Widget key: image_1
-	test("angle-diagram - [x2232b970a0c317e9] Find the value of x in a right angle", async () => {
+	test("angle-diagram - [x2232b970a0c317e9] Find the measure of a complementary angle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "TL",
-		      "from": "TR"
+		      "to": "B",
+		      "from": "A"
 		    },
 		    {
-		      "to": "BR",
-		      "from": "TR"
+		      "to": "C",
+		      "from": "B"
 		    },
 		    {
-		      "to": "BL",
-		      "from": "TR"
+		      "to": "D",
+		      "from": "C"
+		    },
+		    {
+		      "to": "A",
+		      "from": "D"
+		    },
+		    {
+		      "to": "D",
+		      "from": "B"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 200,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "45°",
-		      "radius": 30,
-		      "vertex": "TR",
-		      "pointOnFirstRay": "TL",
-		      "pointOnSecondRay": "BL"
+		      "radius": 48,
+		      "vertex": "B",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "D"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "x°",
-		      "radius": 44,
-		      "vertex": "TR",
-		      "pointOnFirstRay": "BL",
-		      "pointOnSecondRay": "BR"
+		      "radius": 64,
+		      "vertex": "B",
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "right",
-		      "color": "#000000",
-		      "label": " ",
-		      "vertex": "TR",
-		      "pointOnFirstRay": "TL",
-		      "pointOnSecondRay": "BR"
-		    }
-		  ],
-		  "height": 200,
-		  "points": [
-		    {
-		      "x": 14.286,
-		      "y": 14.286,
-		      "id": "TL",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 185.714,
-		      "y": 14.286,
-		      "id": "TR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 185.714,
-		      "y": 185.714,
-		      "id": "BR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 14.286,
-		      "y": 185.714,
-		      "id": "BL",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5fba55199de6486c
-	// Question: Find x using complementary angles
-	// Widget key: image_1
-	test("angle-diagram - [x5fba55199de6486c] Find x using complementary angles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "P20",
-		      "from": "O"
-		    },
-		    {
-		      "to": "P80",
-		      "from": "O"
-		    },
-		    {
-		      "to": "P110",
-		      "from": "O"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 300,
-		  "angles": [
-		    {
-		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 42,
-		      "vertex": "O",
-		      "pointOnFirstRay": "P110",
-		      "pointOnSecondRay": "P80"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": " ",
-		      "radius": 28,
-		      "vertex": "O",
-		      "pointOnFirstRay": "P80",
-		      "pointOnSecondRay": "P20"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 56,
-		      "vertex": "O",
-		      "pointOnFirstRay": "P20",
-		      "pointOnSecondRay": "P110"
+		      "label": "90°",
+		      "vertex": "A",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 188,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 112.5,
-		      "id": "O",
+		      "x": 40,
+		      "y": 40,
+		      "id": "A",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 262.78,
-		      "y": 71.46,
-		      "id": "P20",
+		      "x": 360,
+		      "y": 40,
+		      "id": "B",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 167.36,
-		      "y": 14.02,
-		      "id": "P80",
+		      "x": 360,
+		      "y": 360,
+		      "id": "C",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 119.22,
-		      "y": 27.93,
-		      "id": "P110",
+		      "x": 40,
+		      "y": 360,
+		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -21169,251 +20560,94 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf7aeea4589c183aa
-	// Question: Find x from an angle diagram
+	// Question: Find the missing angle measure
 	// Widget key: image_1
-	test("angle-diagram - [xf7aeea4589c183aa] Find x from an angle diagram", async () => {
+	test("angle-diagram - [xf7aeea4589c183aa] Find the missing angle measure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "R",
+		      "to": "A",
 		      "from": "O"
 		    },
 		    {
-		      "to": "L",
+		      "to": "C",
 		      "from": "O"
 		    },
 		    {
-		      "to": "U",
+		      "to": "B",
 		      "from": "O"
 		    },
 		    {
-		      "to": "S",
+		      "to": "D",
 		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "right",
 		      "color": "#000000",
 		      "label": " ",
 		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "U"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "25°",
-		      "radius": 34,
-		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "S"
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "x°",
-		      "radius": 50,
+		      "label": "25°",
+		      "radius": 46,
 		      "vertex": "O",
-		      "pointOnFirstRay": "S",
-		      "pointOnSecondRay": "U"
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "D"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#e07d10",
+		      "label": "x",
+		      "radius": 60,
+		      "vertex": "O",
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "B"
 		    }
 		  ],
-		  "height": 169,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 90,
+		      "x": 200,
+		      "y": 200,
 		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 90,
-		      "id": "R",
+		      "x": 340,
+		      "y": 200,
+		      "id": "A",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 20,
-		      "y": 90,
-		      "id": "L",
+		      "x": 60,
+		      "y": 200,
+		      "id": "C",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 20,
-		      "id": "U",
+		      "x": 200,
+		      "y": 60,
+		      "id": "B",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 260,
-		      "y": 55,
-		      "id": "S",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x33d0bb177a3a4add
-	// Question: Find x using supplementary angles
-	// Widget key: image_1
-	test("angle-diagram - [x33d0bb177a3a4add] Find x using supplementary angles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "RU",
-		      "from": "BR"
-		    },
-		    {
-		      "to": "T",
-		      "from": "RU"
-		    },
-		    {
-		      "to": "LU",
-		      "from": "T"
-		    },
-		    {
-		      "to": "BL",
-		      "from": "LU"
-		    },
-		    {
-		      "to": "BR",
-		      "from": "BL"
-		    },
-		    {
-		      "to": "I",
-		      "from": "LU"
-		    },
-		    {
-		      "to": "J",
-		      "from": "I"
-		    },
-		    {
-		      "to": "RU",
-		      "from": "J"
-		    },
-		    {
-		      "to": "I",
-		      "from": "T"
-		    },
-		    {
-		      "to": "BL",
-		      "from": "I"
-		    },
-		    {
-		      "to": "J",
-		      "from": "T"
-		    },
-		    {
-		      "to": "BR",
-		      "from": "J"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 260,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "100°",
-		      "radius": 24,
-		      "vertex": "I",
-		      "pointOnFirstRay": "LU",
-		      "pointOnSecondRay": "T"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "x",
-		      "radius": 18,
-		      "vertex": "I",
-		      "pointOnFirstRay": "RU",
-		      "pointOnSecondRay": "T"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": " ",
-		      "radius": 15,
-		      "vertex": "J",
-		      "pointOnFirstRay": "RU",
-		      "pointOnSecondRay": "T"
-		    }
-		  ],
-		  "height": 246,
-		  "points": [
-		    {
-		      "x": 130,
-		      "y": 7.435,
-		      "id": "T",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 13.434,
-		      "y": 92.125,
-		      "id": "LU",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 246.567,
-		      "y": 92.125,
-		      "id": "RU",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 57.958,
-		      "y": 229.157,
-		      "id": "BL",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 202.042,
-		      "y": 229.157,
-		      "id": "BR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 102.49,
-		      "y": 92.125,
-		      "id": "I",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 157.51,
-		      "y": 92.125,
-		      "id": "J",
+		      "x": 327,
+		      "y": 141,
+		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -21436,111 +20670,75 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbebcec0e09ee3d84
-	// Question: Find the value of x (supplementary angles)
+	// Question: Find the value of x from a diagram
 	// Widget key: image_1
-	test("angle-diagram - [xbebcec0e09ee3d84] Find the value of x (supplementary angles)", async () => {
+	test("angle-diagram - [xbebcec0e09ee3d84] Find the value of x from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
-		      "from": "B"
-		    },
-		    {
-		      "to": "D",
-		      "from": "C"
-		    },
-		    {
-		      "to": "A",
-		      "from": "D"
-		    },
-		    {
 		      "to": "O",
-		      "from": "A"
+		      "from": "L"
 		    },
 		    {
-		      "to": "C",
+		      "to": "R",
 		      "from": "O"
 		    },
 		    {
-		      "to": "O",
-		      "from": "B"
-		    },
-		    {
-		      "to": "D",
+		      "to": "U",
 		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "right",
 		      "color": "#11accd",
 		      "label": "90°",
 		      "vertex": "O",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "U"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "x",
-		      "radius": 28,
+		      "radius": 45,
 		      "vertex": "O",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "30°",
-		      "radius": 22,
-		      "vertex": "A",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "B"
+		      "pointOnFirstRay": "U",
+		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 159,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 7.229,
-		      "y": 151.807,
-		      "id": "A",
-		      "label": "A",
+		      "x": 60,
+		      "y": 200,
+		      "id": "L",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 115.699,
-		      "y": 7.229,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 296.386,
-		      "y": 7.229,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 187.952,
-		      "y": 151.807,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 151.8075,
-		      "y": 79.518,
+		      "x": 200,
+		      "y": 200,
 		      "id": "O",
-		      "label": "O",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 340,
+		      "y": 200,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 200,
+		      "y": 60,
+		      "id": "U",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -21562,35 +20760,35 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x94322e0c4a375bb4
-	// Question: Find the value of x from a linear pair
+	// Question: Find x from supplementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x94322e0c4a375bb4] Find the value of x from a linear pair", async () => {
+	test("angle-diagram - [x94322e0c4a375bb4] Find x from supplementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "O",
-		      "from": "L"
-		    },
-		    {
 		      "to": "R",
 		      "from": "O"
 		    },
 		    {
-		      "to": "U1",
+		      "to": "L",
 		      "from": "O"
 		    },
 		    {
-		      "to": "D1",
+		      "to": "S1",
 		      "from": "O"
 		    },
 		    {
-		      "to": "U2",
+		      "to": "S1b",
 		      "from": "O"
 		    },
 		    {
-		      "to": "D2",
+		      "to": "S2",
+		      "from": "O"
+		    },
+		    {
+		      "to": "S2b",
 		      "from": "O"
 		    }
 		  ],
@@ -21601,78 +20799,78 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "165°",
-		      "radius": 48,
+		      "radius": 45,
 		      "vertex": "O",
 		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "U1"
+		      "pointOnSecondRay": "S1"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "x°",
-		      "radius": 35,
+		      "radius": 25,
 		      "vertex": "O",
-		      "pointOnFirstRay": "U1",
-		      "pointOnSecondRay": "R"
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "S1"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "145°",
-		      "radius": 55,
+		      "radius": 35,
 		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "U2"
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "S2"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 20,
-		      "y": 80,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 150,
-		      "y": 80,
+		      "y": 150,
 		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 80,
+		      "x": 290,
+		      "y": 150,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 246.6,
-		      "y": 54.1,
-		      "id": "U1",
+		      "x": 10,
+		      "y": 150,
+		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 53.4,
-		      "y": 105.9,
-		      "id": "D1",
+		      "x": 260,
+		      "y": 90,
+		      "id": "S1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 68.1,
-		      "y": 22.6,
-		      "id": "U2",
+		      "x": 40,
+		      "y": 210,
+		      "id": "S1b",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 231.9,
-		      "y": 137.4,
-		      "id": "D2",
+		      "x": 270,
+		      "y": 60,
+		      "id": "S2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 30,
+		      "y": 240,
+		      "id": "S2b",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -21695,117 +20893,117 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xef4f087c99ab571a
-	// Question: Find the value of x from the diagram
+	// Question: Find x using vertical angles
 	// Widget key: image_1
-	test("angle-diagram - [xef4f087c99ab571a] Find the value of x from the diagram", async () => {
+	test("angle-diagram - [xef4f087c99ab571a] Find x using vertical angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
-		      "from": "O"
-		    },
-		    {
 		      "to": "R",
 		      "from": "O"
 		    },
 		    {
-		      "to": "UL1",
+		      "to": "L",
 		      "from": "O"
 		    },
 		    {
-		      "to": "DR1",
+		      "to": "U1",
 		      "from": "O"
 		    },
 		    {
-		      "to": "UR2",
+		      "to": "D1",
 		      "from": "O"
 		    },
 		    {
-		      "to": "DL2",
+		      "to": "U2",
+		      "from": "O"
+		    },
+		    {
+		      "to": "D2",
 		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "35°",
-		      "radius": 28,
+		      "radius": 42,
 		      "vertex": "O",
 		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR2"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "x°",
-		      "radius": 28,
-		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "DL2"
+		      "pointOnSecondRay": "D2"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "155°",
-		      "radius": 36,
+		      "radius": 58,
 		      "vertex": "O",
 		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UL1"
+		      "pointOnSecondRay": "U1"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "x°",
+		      "radius": 42,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "U2"
 		    }
 		  ],
-		  "height": 130,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 130,
-		      "y": 70,
+		      "x": 200,
+		      "y": 150,
 		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 10,
-		      "y": 70,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 250,
-		      "y": 70,
+		      "x": 360,
+		      "y": 150,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 70,
-		      "y": 35,
-		      "id": "UL1",
+		      "x": 40,
+		      "y": 150,
+		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 190,
-		      "y": 115,
-		      "id": "DR1",
+		      "x": 120,
+		      "y": 80,
+		      "id": "U1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 205,
-		      "y": 30,
-		      "id": "UR2",
+		      "x": 280,
+		      "y": 220,
+		      "id": "D1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 55,
-		      "y": 110,
-		      "id": "DL2",
+		      "x": 100,
+		      "y": 120,
+		      "id": "U2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 300,
+		      "y": 180,
+		      "id": "D2",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -21836,99 +21034,76 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "P110",
-		      "from": "V"
+		      "to": "R",
+		      "from": "O"
 		    },
 		    {
-		      "to": "P290",
-		      "from": "V"
+		      "to": "U",
+		      "from": "O"
 		    },
 		    {
-		      "to": "P20",
-		      "from": "V"
-		    },
-		    {
-		      "to": "P200",
-		      "from": "V"
-		    },
-		    {
-		      "to": "P80",
-		      "from": "V"
+		      "to": "C",
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
 		  "width": 300,
 		  "angles": [
 		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 26,
-		      "vertex": "V",
-		      "pointOnFirstRay": "P20",
-		      "pointOnSecondRay": "P110"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 40.5,
-		      "vertex": "V",
-		      "pointOnFirstRay": "P80",
-		      "pointOnSecondRay": "P110"
+		      "type": "right",
+		      "color": "#000000",
+		      "label": "90°",
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "U"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
-		      "label": " ",
-		      "radius": 17.5,
-		      "vertex": "V",
-		      "pointOnFirstRay": "P20",
-		      "pointOnSecondRay": "P80"
+		      "label": "26°",
+		      "radius": 38,
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "x",
+		      "radius": 52,
+		      "vertex": "O",
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "U"
 		    }
 		  ],
-		  "height": 188,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 150,
-		      "y": 75,
-		      "id": "V",
-		      "label": " ",
+		      "y": 150,
+		      "id": "O",
+		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 243.97,
-		      "y": 109.2,
-		      "id": "P20",
-		      "label": " ",
+		      "x": 270,
+		      "y": 150,
+		      "id": "R",
+		      "label": "R",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 56.03,
-		      "y": 40.8,
-		      "id": "P200",
-		      "label": " ",
+		      "x": 150,
+		      "y": 30,
+		      "id": "U",
+		      "label": "U",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 126.06,
-		      "y": 140.78,
-		      "id": "P110",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 173.94,
-		      "y": 9.22,
-		      "id": "P290",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 165.63,
-		      "y": 163.63,
-		      "id": "P80",
-		      "label": " ",
+		      "x": 240,
+		      "y": 106,
+		      "id": "C",
+		      "label": "C",
 		      "shape": "circle"
 		    }
 		  ]
@@ -21950,35 +21125,35 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa21d58abd6af5736
-	// Question: Find the value of x
+	// Question: Find the value of x using vertical angles
 	// Widget key: image_1
-	test("angle-diagram - [xa21d58abd6af5736] Find the value of x", async () => {
+	test("angle-diagram - [xa21d58abd6af5736] Find the value of x using vertical angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "H_right",
+		      "to": "A",
 		      "from": "O"
 		    },
 		    {
-		      "to": "H_left",
+		      "to": "B",
 		      "from": "O"
 		    },
 		    {
-		      "to": "A_upRight",
+		      "to": "C",
 		      "from": "O"
 		    },
 		    {
-		      "to": "A_downLeft",
+		      "to": "D",
 		      "from": "O"
 		    },
 		    {
-		      "to": "B_upLeft",
+		      "to": "E",
 		      "from": "O"
 		    },
 		    {
-		      "to": "B_downRight",
+		      "to": "F",
 		      "from": "O"
 		    }
 		  ],
@@ -21987,42 +21162,42 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "80°",
-		      "radius": 34,
-		      "vertex": "O",
-		      "pointOnFirstRay": "H_right",
-		      "pointOnSecondRay": "A_upRight"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "80°",
-		      "radius": 34,
-		      "vertex": "O",
-		      "pointOnFirstRay": "H_left",
-		      "pointOnSecondRay": "A_downLeft"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
+		      "color": "#000000",
 		      "label": "25°",
-		      "radius": 22,
+		      "radius": 36,
 		      "vertex": "O",
-		      "pointOnFirstRay": "H_right",
-		      "pointOnSecondRay": "B_downRight"
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "E"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#000000",
 		      "label": "x°",
-		      "radius": 22,
+		      "radius": 32,
 		      "vertex": "O",
-		      "pointOnFirstRay": "H_left",
-		      "pointOnSecondRay": "B_upLeft"
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "F"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#000000",
+		      "label": "80°",
+		      "radius": 28,
+		      "vertex": "O",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "A"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#000000",
+		      "label": "80°",
+		      "radius": 28,
+		      "vertex": "O",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "F"
 		    }
 		  ],
-		  "height": 165,
+		  "height": 465,
 		  "points": [
 		    {
 		      "x": 150,
@@ -22032,45 +21207,45 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
+		      "x": 10,
 		      "y": 90,
-		      "id": "H_right",
-		      "label": " ",
+		      "id": "A",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 20,
+		      "x": 290,
 		      "y": 90,
-		      "id": "H_left",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 170,
-		      "y": 15,
-		      "id": "A_upRight",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 130,
-		      "y": 160,
-		      "id": "A_downLeft",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 80,
-		      "y": 50,
-		      "id": "B_upLeft",
-		      "label": " ",
+		      "id": "B",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 230,
-		      "y": 130,
-		      "id": "B_downRight",
-		      "label": " ",
+		      "y": 30,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 70,
+		      "y": 150,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 70,
+		      "y": 30,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 230,
+		      "y": 150,
+		      "id": "F",
+		      "label": "F",
 		      "shape": "circle"
 		    }
 		  ]
@@ -22092,28 +21267,24 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x11930bcfb3eecae4
-	// Question: Find x using complementary angles
+	// Question: Find the value of x from the diagram
 	// Widget key: image_1
-	test("angle-diagram - [x11930bcfb3eecae4] Find x using complementary angles", async () => {
+	test("angle-diagram - [x11930bcfb3eecae4] Find the value of x from the diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "E",
-		      "from": "V"
+		      "to": "A",
+		      "from": "O"
 		    },
 		    {
-		      "to": "W",
-		      "from": "V"
+		      "to": "B",
+		      "from": "O"
 		    },
 		    {
-		      "to": "U",
-		      "from": "V"
-		    },
-		    {
-		      "to": "R",
-		      "from": "V"
+		      "to": "C",
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -22123,63 +21294,56 @@ describe("angleDiagram widget tests", () => {
 		      "type": "right",
 		      "color": "#1fab54",
 		      "label": " ",
-		      "vertex": "V",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "U"
+		      "vertex": "O",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "35°",
-		      "radius": 40,
-		      "vertex": "V",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "R"
+		      "radius": 46,
+		      "vertex": "O",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "x°",
-		      "radius": 26,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "U"
+		      "radius": 30,
+		      "vertex": "O",
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "B"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 150,
-		      "y": 75,
-		      "id": "V",
+		      "y": 150,
+		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 270,
-		      "y": 75,
-		      "id": "E",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 30,
-		      "y": 75,
-		      "id": "W",
+		      "x": 290,
+		      "y": 150,
+		      "id": "A",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 150,
-		      "y": 15,
-		      "id": "U",
+		      "y": 20,
+		      "id": "B",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 232,
-		      "y": 18,
-		      "id": "R",
+		      "x": 199.14,
+		      "y": 114.6,
+		      "id": "C",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -22202,128 +21366,128 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6367f5b96d5f9c82
-	// Question: Find the measure of x using vertical angles
+	// Question: Find the value of x
 	// Widget key: image_1
-	test("angle-diagram - [x6367f5b96d5f9c82] Find the measure of x using vertical angles", async () => {
+	test("angle-diagram - [x6367f5b96d5f9c82] Find the value of x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "Vupper",
+		      "to": "Ux",
 		      "from": "U1"
 		    },
 		    {
 		      "to": "U2",
-		      "from": "Vupper"
+		      "from": "Ux"
 		    },
 		    {
-		      "to": "Vlower",
+		      "to": "Lx",
 		      "from": "L1"
 		    },
 		    {
 		      "to": "L2",
-		      "from": "Vlower"
+		      "from": "Lx"
 		    },
 		    {
-		      "to": "Vlower",
-		      "from": "T1"
+		      "to": "Ux",
+		      "from": "T_top"
 		    },
 		    {
-		      "to": "Vupper",
-		      "from": "Vlower"
+		      "to": "Lx",
+		      "from": "Ux"
 		    },
 		    {
-		      "to": "T2",
-		      "from": "Vupper"
+		      "to": "T_bottom",
+		      "from": "Lx"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#1fab54",
+		      "color": "#e07d10",
 		      "label": "x°",
-		      "radius": 26,
-		      "vertex": "Vlower",
+		      "radius": 42,
+		      "vertex": "Lx",
 		      "pointOnFirstRay": "L1",
-		      "pointOnSecondRay": "T2"
+		      "pointOnSecondRay": "Ux"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "35°",
-		      "radius": 18,
-		      "vertex": "Vlower",
-		      "pointOnFirstRay": "L1",
-		      "pointOnSecondRay": "T1"
+		      "color": "#1fab54",
+		      "label": "145°",
+		      "radius": 36,
+		      "vertex": "Lx",
+		      "pointOnFirstRay": "T_bottom",
+		      "pointOnSecondRay": "L2"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "145°",
-		      "radius": 26,
-		      "vertex": "Vlower",
-		      "pointOnFirstRay": "L2",
-		      "pointOnSecondRay": "T1"
+		      "label": "35°",
+		      "radius": 24,
+		      "vertex": "Lx",
+		      "pointOnFirstRay": "L1",
+		      "pointOnSecondRay": "T_bottom"
 		    }
 		  ],
-		  "height": 130,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 20,
-		      "y": 40,
+		      "x": 40,
+		      "y": 100,
 		      "id": "U1",
-		      "label": " ",
+		      "label": "U1",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 240,
-		      "y": 40,
+		      "x": 360,
+		      "y": 100,
 		      "id": "U2",
-		      "label": " ",
+		      "label": "U2",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 20,
-		      "y": 90,
+		      "x": 40,
+		      "y": 220,
 		      "id": "L1",
-		      "label": " ",
+		      "label": "L1",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 240,
-		      "y": 90,
+		      "x": 360,
+		      "y": 220,
 		      "id": "L2",
+		      "label": "L2",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 330,
+		      "y": 60,
+		      "id": "T_top",
+		      "label": "T",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 90,
+		      "y": 260,
+		      "id": "T_bottom",
+		      "label": "T",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 282,
+		      "y": 100,
+		      "id": "Ux",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 80,
-		      "y": 120,
-		      "id": "T1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 220,
-		      "y": 10,
-		      "id": "T2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 118,
-		      "y": 90,
-		      "id": "Vlower",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 182,
-		      "y": 40,
-		      "id": "Vupper",
+		      "x": 138,
+		      "y": 220,
+		      "id": "Lx",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -22346,35 +21510,35 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x45211ace077e42cb
-	// Question: Find the value of x from a diagram of intersecting lines
+	// Question: Find x using supplementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x45211ace077e42cb] Find the value of x from a diagram of intersecting lines", async () => {
+	test("angle-diagram - [x45211ace077e42cb] Find x using supplementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "A",
+		      "to": "L",
 		      "from": "O"
 		    },
 		    {
-		      "to": "A2",
+		      "to": "R",
 		      "from": "O"
 		    },
 		    {
-		      "to": "B",
+		      "to": "U",
 		      "from": "O"
 		    },
 		    {
-		      "to": "B2",
+		      "to": "D",
 		      "from": "O"
 		    },
 		    {
-		      "to": "C",
+		      "to": "U1",
 		      "from": "O"
 		    },
 		    {
-		      "to": "C2",
+		      "to": "D1",
 		      "from": "O"
 		    }
 		  ],
@@ -22382,90 +21546,90 @@ describe("angleDiagram widget tests", () => {
 		  "width": 300,
 		  "angles": [
 		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": "90°",
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "125°",
+		      "radius": 46,
 		      "vertex": "O",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "A"
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "U1"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "35°",
-		      "radius": 26,
+		      "label": "X°",
+		      "radius": 38,
 		      "vertex": "O",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "C"
+		      "pointOnFirstRay": "U1",
+		      "pointOnSecondRay": "R"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
-		      "label": "x",
-		      "radius": 34,
+		      "label": "35°",
+		      "radius": 28,
 		      "vertex": "O",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "B2"
+		      "pointOnFirstRay": "U",
+		      "pointOnSecondRay": "U1"
 		    },
 		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "125°",
-		      "radius": 42,
+		      "type": "right",
+		      "color": "#000000",
+		      "label": "90°",
 		      "vertex": "O",
-		      "pointOnFirstRay": "B2",
-		      "pointOnSecondRay": "C2"
+		      "pointOnFirstRay": "U",
+		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 188,
+		  "height": 388,
 		  "points": [
 		    {
 		      "x": 150,
-		      "y": 75,
+		      "y": 94,
 		      "id": "O",
-		      "label": " ",
+		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 223.3,
-		      "y": 101.676,
-		      "id": "A",
-		      "label": " ",
+		      "x": 20,
+		      "y": 94,
+		      "id": "L",
+		      "label": "L",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 76.7,
-		      "y": 48.324,
-		      "id": "A2",
-		      "label": " ",
+		      "x": 280,
+		      "y": 94,
+		      "id": "R",
+		      "label": "R",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 123.324,
-		      "y": 148.3,
-		      "id": "B",
-		      "label": " ",
+		      "x": 150,
+		      "y": 10,
+		      "id": "U",
+		      "label": "U",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 176.676,
-		      "y": 1.7,
-		      "id": "B2",
-		      "label": " ",
+		      "x": 150,
+		      "y": 178,
+		      "id": "D",
+		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 226.814,
-		      "y": 61.45,
-		      "id": "C",
-		      "label": " ",
+		      "x": 213,
+		      "y": 4,
+		      "id": "U1",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 73.186,
-		      "y": 88.55,
-		      "id": "C2",
-		      "label": " ",
+		      "x": 87,
+		      "y": 184,
+		      "id": "D1",
+		      "label": "B",
 		      "shape": "circle"
 		    }
 		  ]
@@ -22487,40 +21651,40 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x22b447baa1664214
-	// Question: Find an angle measure using supplementary angles
+	// Question: Find x using supplementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x22b447baa1664214] Find an angle measure using supplementary angles", async () => {
+	test("angle-diagram - [x22b447baa1664214] Find x using supplementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "T1",
-		      "from": "Vt"
+		      "to": "U_vertex",
+		      "from": "U_left"
 		    },
 		    {
-		      "to": "T2",
-		      "from": "Vt"
+		      "to": "U_right",
+		      "from": "U_vertex"
 		    },
 		    {
-		      "to": "B1",
-		      "from": "Vb"
+		      "to": "L_vertex",
+		      "from": "L_left"
 		    },
 		    {
-		      "to": "B2",
-		      "from": "Vb"
+		      "to": "L_right",
+		      "from": "L_vertex"
 		    },
 		    {
-		      "to": "Vb",
-		      "from": "P1"
+		      "to": "U_vertex",
+		      "from": "T_top"
 		    },
 		    {
-		      "to": "Vt",
-		      "from": "Vb"
+		      "to": "L_vertex",
+		      "from": "U_vertex"
 		    },
 		    {
-		      "to": "P2",
-		      "from": "Vt"
+		      "to": "T_bottom",
+		      "from": "L_vertex"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -22530,86 +21694,86 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "33°",
-		      "radius": 26,
-		      "vertex": "Vt",
-		      "pointOnFirstRay": "T1",
-		      "pointOnSecondRay": "P2"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "x°",
-		      "radius": 18,
-		      "vertex": "Vb",
-		      "pointOnFirstRay": "B1",
-		      "pointOnSecondRay": "P1"
+		      "radius": 22,
+		      "vertex": "U_vertex",
+		      "pointOnFirstRay": "U_left",
+		      "pointOnSecondRay": "T_top"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "33°",
+		      "label": "x°",
 		      "radius": 28,
-		      "vertex": "Vb",
-		      "pointOnFirstRay": "P1",
-		      "pointOnSecondRay": "B2"
+		      "vertex": "L_vertex",
+		      "pointOnFirstRay": "T_top",
+		      "pointOnSecondRay": "L_left"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#e07d10",
+		      "label": "33°",
+		      "radius": 16,
+		      "vertex": "L_vertex",
+		      "pointOnFirstRay": "L_left",
+		      "pointOnSecondRay": "T_bottom"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 30,
-		      "y": 35,
-		      "id": "T1",
-		      "label": " ",
+		      "x": 40,
+		      "y": 110,
+		      "id": "U_left",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 199,
-		      "y": 35,
-		      "id": "Vt",
-		      "label": " ",
+		      "x": 189,
+		      "y": 110,
+		      "id": "U_vertex",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 270,
-		      "y": 35,
-		      "id": "T2",
-		      "label": " ",
+		      "x": 260,
+		      "y": 110,
+		      "id": "U_right",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 30,
-		      "y": 85,
-		      "id": "B1",
-		      "label": " ",
+		      "x": 40,
+		      "y": 200,
+		      "id": "L_left",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 117,
-		      "y": 85,
-		      "id": "Vb",
-		      "label": " ",
+		      "x": 112,
+		      "y": 200,
+		      "id": "L_vertex",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 270,
-		      "y": 85,
-		      "id": "B2",
-		      "label": " ",
+		      "x": 260,
+		      "y": 200,
+		      "id": "L_right",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 60,
-		      "y": 120,
-		      "id": "P1",
-		      "label": " ",
+		      "x": 220,
+		      "y": 60,
+		      "id": "T_top",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 240,
-		      "y": 10,
-		      "id": "P2",
-		      "label": " ",
+		      "x": 80,
+		      "y": 260,
+		      "id": "T_bottom",
+		      "label": null,
 		      "shape": "circle"
 		    }
 		  ]
@@ -22631,28 +21795,28 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x23081266a4ad336a
-	// Question: Find x from supplementary angles
+	// Question: Find the angle on a straight line
 	// Widget key: image_1
-	test("angle-diagram - [x23081266a4ad336a] Find x from supplementary angles", async () => {
+	test("angle-diagram - [x23081266a4ad336a] Find the angle on a straight line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "V",
-		      "from": "L"
+		      "to": "A",
+		      "from": "B"
 		    },
 		    {
-		      "to": "R",
-		      "from": "V"
+		      "to": "C",
+		      "from": "B"
 		    },
 		    {
-		      "to": "V",
-		      "from": "D"
+		      "to": "D",
+		      "from": "B"
 		    },
 		    {
-		      "to": "U",
-		      "from": "V"
+		      "to": "E",
+		      "from": "B"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -22662,55 +21826,55 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "35°",
-		      "radius": 24,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "U"
+		      "radius": 40,
+		      "vertex": "B",
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "D"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "x°",
-		      "radius": 36,
-		      "vertex": "V",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "L"
+		      "radius": 55,
+		      "vertex": "B",
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "A"
 		    }
 		  ],
-		  "height": 165,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 20,
-		      "y": 90,
-		      "id": "L",
+		      "x": 30,
+		      "y": 150,
+		      "id": "A",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 160,
-		      "y": 90,
-		      "id": "V",
+		      "x": 150,
+		      "y": 150,
+		      "id": "B",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 90,
-		      "id": "R",
+		      "x": 270,
+		      "y": 150,
+		      "id": "C",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 240,
-		      "y": 40,
-		      "id": "U",
+		      "y": 70,
+		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 80,
-		      "y": 140,
-		      "id": "D",
+		      "x": 60,
+		      "y": 230,
+		      "id": "E",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -22733,111 +21897,111 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x52b855fcdd40c187
-	// Question: Find x using vertical angles
+	// Question: Find the measure of a vertical angle
 	// Widget key: image_1
-	test("angle-diagram - [x52b855fcdd40c187] Find x using vertical angles", async () => {
+	test("angle-diagram - [x52b855fcdd40c187] Find the measure of a vertical angle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "B",
-		      "from": "A"
+		      "to": "TL",
+		      "from": "BL"
 		    },
 		    {
-		      "to": "C",
-		      "from": "B"
+		      "to": "TR",
+		      "from": "TL"
 		    },
 		    {
-		      "to": "D",
-		      "from": "C"
+		      "to": "BR",
+		      "from": "TR"
 		    },
 		    {
-		      "to": "A",
-		      "from": "D"
+		      "to": "BL",
+		      "from": "BR"
 		    },
 		    {
-		      "to": "E",
-		      "from": "A"
+		      "to": "TR",
+		      "from": "I"
 		    },
 		    {
-		      "to": "C",
-		      "from": "E"
+		      "to": "BL",
+		      "from": "I"
 		    },
 		    {
-		      "to": "E",
-		      "from": "B"
+		      "to": "TL",
+		      "from": "I"
 		    },
 		    {
-		      "to": "D",
-		      "from": "E"
+		      "to": "BR",
+		      "from": "I"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
+		  "width": 500,
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#1fab54",
+		      "color": "#e07d10",
 		      "label": "95°",
 		      "radius": 28,
-		      "vertex": "E",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "A"
+		      "vertex": "I",
+		      "pointOnFirstRay": "TL",
+		      "pointOnSecondRay": "TR"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#e07d10",
+		      "color": "#1fab54",
 		      "label": "x°",
-		      "radius": 36,
-		      "vertex": "E",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "D"
+		      "radius": 28,
+		      "vertex": "I",
+		      "pointOnFirstRay": "BL",
+		      "pointOnSecondRay": "BR"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "60°",
-		      "radius": 18,
-		      "vertex": "A",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "D"
+		      "radius": 26,
+		      "vertex": "BL",
+		      "pointOnFirstRay": "TL",
+		      "pointOnSecondRay": "BR"
 		    }
 		  ],
-		  "height": 145.476,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 6.19,
-		      "y": 139.286,
-		      "id": "A",
+		      "x": 11.903,
+		      "y": 287.277,
+		      "id": "BL",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 68.095,
-		      "y": 15.476,
-		      "id": "B",
+		      "x": 130.952,
+		      "y": 31.919,
+		      "id": "TL",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 253.81,
-		      "y": 15.476,
-		      "id": "C",
+		      "x": 488.481,
+		      "y": 31.919,
+		      "id": "TR",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 160.952,
-		      "y": 139.286,
-		      "id": "D",
+		      "x": 309.523,
+		      "y": 287.277,
+		      "id": "BR",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 118.77,
-		      "y": 83.04,
-		      "id": "E",
+		      "x": 251.04,
+		      "y": 159.332,
+		      "id": "I",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -22860,24 +22024,24 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x40415f39bb2d546d
-	// Question: Find the angle measure using vertical angles
+	// Question: Find the measure of a vertical angle
 	// Widget key: image_1
-	test("angle-diagram - [x40415f39bb2d546d] Find the angle measure using vertical angles", async () => {
+	test("angle-diagram - [x40415f39bb2d546d] Find the measure of a vertical angle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "A",
-		      "from": "O"
-		    },
-		    {
-		      "to": "C",
-		      "from": "O"
+		      "to": "O",
+		      "from": "A"
 		    },
 		    {
 		      "to": "B",
 		      "from": "O"
+		    },
+		    {
+		      "to": "O",
+		      "from": "C"
 		    },
 		    {
 		      "to": "D",
@@ -22885,62 +22049,62 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 380,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "100°",
-		      "radius": 36,
+		      "radius": 42,
 		      "vertex": "O",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "D"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "x°",
-		      "radius": 36,
+		      "label": "x",
+		      "radius": 55,
 		      "vertex": "O",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 240,
+		  "height": 340,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 120,
-		      "id": "O",
-		      "label": "O",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 60,
-		      "y": 40,
+		      "x": 59,
+		      "y": 118.7,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 240,
-		      "y": 200,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 240,
-		      "y": 50,
+		      "x": 340.96,
+		      "y": 221.3,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 60,
-		      "y": 190,
+		      "x": 226.04,
+		      "y": 22.28,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 173.96,
+		      "y": 317.72,
 		      "id": "D",
 		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 200,
+		      "y": 170,
+		      "id": "O",
+		      "label": "O",
 		      "shape": "circle"
 		    }
 		  ]
@@ -22962,9 +22126,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2fe7fbda706fd023
-	// Question: Find a missing angle using complementary angles
+	// Question: Find an angle measure from complementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x2fe7fbda706fd023] Find a missing angle using complementary angles", async () => {
+	test("angle-diagram - [x2fe7fbda706fd023] Find an angle measure from complementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -22978,11 +22142,11 @@ describe("angleDiagram widget tests", () => {
 		      "from": "O"
 		    },
 		    {
-		      "to": "C",
+		      "to": "E",
 		      "from": "O"
 		    },
 		    {
-		      "to": "D",
+		      "to": "C",
 		      "from": "O"
 		    }
 		  ],
@@ -22990,67 +22154,77 @@ describe("angleDiagram widget tests", () => {
 		  "width": 300,
 		  "angles": [
 		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": "90°",
+		      "type": "arc",
+		      "color": "#e07d10",
+		      "label": "120°",
+		      "radius": 60,
 		      "vertex": "O",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "x°",
-		      "radius": 42,
+		      "label": "90°",
+		      "radius": 50,
 		      "vertex": "O",
 		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "D"
+		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "32°",
-		      "radius": 56,
+		      "radius": 40,
 		      "vertex": "O",
-		      "pointOnFirstRay": "D",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "E"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#9467bd",
+		      "label": "x°",
+		      "radius": 30,
+		      "vertex": "O",
+		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 188,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 150,
-		      "y": 112.5,
+		      "y": 150,
 		      "id": "O",
-		      "label": "O",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 56,
-		      "y": 146,
+		      "x": 250,
+		      "y": 150,
 		      "id": "A",
-		      "label": "A",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 244,
-		      "y": 78,
+		      "x": 100,
+		      "y": 63.4,
 		      "id": "B",
-		      "label": "B",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 116,
-		      "y": 18,
+		      "x": 61.7,
+		      "y": 103.1,
+		      "id": "E",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 63.4,
+		      "y": 200,
 		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 168.7,
-		      "y": 24,
-		      "id": "D",
-		      "label": "D",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -23072,76 +22246,76 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd64389f913ec1194
-	// Question: Find x from supplementary angles
+	// Question: Find x using supplementary angles
 	// Widget key: image_1
-	test("angle-diagram - [xd64389f913ec1194] Find x from supplementary angles", async () => {
+	test("angle-diagram - [xd64389f913ec1194] Find x using supplementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "R",
+		      "to": "A",
 		      "from": "V"
 		    },
 		    {
-		      "to": "L",
+		      "to": "B",
 		      "from": "V"
 		    },
 		    {
-		      "to": "U",
+		      "to": "C",
 		      "from": "V"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 30,
+		      "label": "120°",
+		      "radius": 48,
 		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "U"
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "120°",
-		      "radius": 50,
+		      "label": "x",
+		      "radius": 64,
 		      "vertex": "V",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "L"
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "A"
 		    }
 		  ],
-		  "height": 188,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 112.5,
+		      "x": 180,
+		      "y": 180,
 		      "id": "V",
-		      "label": " ",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 112.5,
-		      "id": "R",
-		      "label": " ",
+		      "x": 40,
+		      "y": 180,
+		      "id": "A",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 20,
-		      "y": 112.5,
-		      "id": "L",
-		      "label": " ",
+		      "x": 320,
+		      "y": 180,
+		      "id": "B",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 200,
-		      "y": 26,
-		      "id": "U",
-		      "label": " ",
+		      "x": 120,
+		      "y": 76,
+		      "id": "C",
+		      "label": null,
 		      "shape": "circle"
 		    }
 		  ]
@@ -23163,106 +22337,440 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1127ab8163666d20
-	// Question: Find x using vertical angles
+	// Question: Find x from vertical angles
 	// Widget key: image_1
-	test("angle-diagram - [x1127ab8163666d20] Find x using vertical angles", async () => {
+	test("angle-diagram - [x1127ab8163666d20] Find x from vertical angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
 		      "to": "A",
-		      "from": "V"
-		    },
-		    {
-		      "to": "B",
-		      "from": "V"
+		      "from": "O"
 		    },
 		    {
 		      "to": "C",
-		      "from": "V"
+		      "from": "O"
+		    },
+		    {
+		      "to": "B",
+		      "from": "O"
 		    },
 		    {
 		      "to": "D",
-		      "from": "V"
+		      "from": "O"
 		    },
 		    {
 		      "to": "E",
-		      "from": "V"
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
+		  "width": 320,
 		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 32,
-		      "vertex": "V",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "B"
-		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "100°",
-		      "radius": 28,
-		      "vertex": "V",
+		      "radius": 45,
+		      "vertex": "O",
 		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "D"
+		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
+		      "label": "x",
+		      "radius": 45,
+		      "vertex": "O",
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "D"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
 		      "label": "45°",
-		      "radius": 20,
-		      "vertex": "V",
+		      "radius": 30,
+		      "vertex": "O",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "E"
 		    }
 		  ],
-		  "height": 163,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 130,
-		      "y": 65,
-		      "id": "V",
+		      "x": 160,
+		      "y": 160,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 60,
+		      "y": 40,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 260,
+		      "y": 280,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 280,
+		      "y": 100,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 20,
+		      "y": 220,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 280,
+		      "y": 200,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6f9d83ed4e103cdc
+	// Question: Solve for x in a complementary angle diagram
+	// Widget key: image_1
+	test("angle-diagram - [x6f9d83ed4e103cdc] Solve for x in a complementary angle diagram", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "A",
+		      "from": "O"
+		    },
+		    {
+		      "to": "C",
+		      "from": "O"
+		    },
+		    {
+		      "to": "B",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 360,
+		  "angles": [
+		    {
+		      "type": "right",
+		      "color": "#000000",
+		      "label": " ",
+		      "vertex": "O",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "x°",
+		      "radius": 35,
+		      "vertex": "O",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "B"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#ca337c",
+		      "label": "(3x + 10)°",
+		      "radius": 52,
+		      "vertex": "O",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 160,
+		      "y": 180,
+		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 70,
-		      "y": 120,
+		      "x": 231,
+		      "y": 251,
 		      "id": "A",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 190,
-		      "y": 10,
-		      "id": "B",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 30,
-		      "y": 30,
+		      "x": 89,
+		      "y": 251,
 		      "id": "C",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 230,
-		      "y": 100,
-		      "id": "D",
+		      "x": 160,
+		      "y": 280,
+		      "id": "B",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3694a14ee7681a08
+	// Question: Solve for x in a vertical-angles diagram
+	// Widget key: image_1
+	test("angle-diagram - [x3694a14ee7681a08] Solve for x in a vertical-angles diagram", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "A",
+		      "from": "O"
+		    },
+		    {
+		      "to": "A2",
+		      "from": "O"
+		    },
+		    {
+		      "to": "B",
+		      "from": "O"
+		    },
+		    {
+		      "to": "B2",
+		      "from": "O"
+		    },
+		    {
+		      "to": "S",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 360,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "110°",
+		      "radius": 48,
+		      "vertex": "O",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "B2"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#e07d10",
+		      "label": "(8x+30)°",
+		      "radius": 48,
+		      "vertex": "O",
+		      "pointOnFirstRay": "A2",
+		      "pointOnSecondRay": "B"
+		    }
+		  ],
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 180,
+		      "y": 180,
+		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 210,
-		      "y": 50,
-		      "id": "E",
+		      "x": 276.6,
+		      "y": 154.1,
+		      "id": "A",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 83.4,
+		      "y": 205.9,
+		      "id": "A2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 188.7,
+		      "y": 80.4,
+		      "id": "B",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 188.7,
+		      "y": 279.6,
+		      "id": "B2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 244.3,
+		      "y": 103.4,
+		      "id": "S",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0fa24f1172960b3d
+	// Question: Solve for x using vertical angles
+	// Widget key: image_1
+	test("angle-diagram - [x0fa24f1172960b3d] Solve for x using vertical angles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "L",
+		      "from": "V"
+		    },
+		    {
+		      "to": "R",
+		      "from": "V"
+		    },
+		    {
+		      "to": "UR",
+		      "from": "V"
+		    },
+		    {
+		      "to": "DL",
+		      "from": "V"
+		    },
+		    {
+		      "to": "DR",
+		      "from": "V"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 300,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "150°",
+		      "radius": 60,
+		      "vertex": "V",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "UR"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "50°",
+		      "radius": 48,
+		      "vertex": "V",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "DR"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#e07d10",
+		      "label": "2x°",
+		      "radius": 36,
+		      "vertex": "V",
+		      "pointOnFirstRay": "DR",
+		      "pointOnSecondRay": "DL"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 150,
+		      "y": 150,
+		      "id": "V",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 30,
+		      "y": 150,
+		      "id": "L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 270,
+		      "y": 150,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 230,
+		      "y": 80,
+		      "id": "UR",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 70,
+		      "y": 220,
+		      "id": "DL",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 220,
+		      "y": 220,
+		      "id": "DR",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -23285,103 +22793,103 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4e8adbf646194b21
-	// Question: Solve for x from complementary angles
+	// Question: Solve for x with complementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x4e8adbf646194b21] Solve for x from complementary angles", async () => {
+	test("angle-diagram - [x4e8adbf646194b21] Solve for x with complementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "A",
+		      "to": "U",
 		      "from": "V"
 		    },
 		    {
-		      "to": "B",
+		      "to": "R",
 		      "from": "V"
 		    },
 		    {
-		      "to": "C",
+		      "to": "S1",
 		      "from": "V"
 		    },
 		    {
-		      "to": "D",
+		      "to": "S2",
 		      "from": "V"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 240,
+		  "width": 360,
 		  "angles": [
-		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": " ",
-		      "vertex": "V",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "B"
-		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "x°",
-		      "radius": 64,
+		      "radius": 50,
 		      "vertex": "V",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "A"
+		      "pointOnFirstRay": "U",
+		      "pointOnSecondRay": "S1"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#ca337c",
 		      "label": "2x°",
-		      "radius": 50,
+		      "radius": 42,
 		      "vertex": "V",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "C"
+		      "pointOnFirstRay": "S1",
+		      "pointOnSecondRay": "S2"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#f1be32",
+		      "color": "#F1B400",
 		      "label": "(x + 10)°",
-		      "radius": 40,
+		      "radius": 34,
 		      "vertex": "V",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "S2",
+		      "pointOnSecondRay": "R"
+		    },
+		    {
+		      "type": "right",
+		      "color": "#000000",
+		      "label": " ",
+		      "vertex": "V",
+		      "pointOnFirstRay": "U",
+		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 240,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 20,
-		      "y": 220,
+		      "x": 30,
+		      "y": 330,
 		      "id": "V",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 20,
-		      "y": 20,
-		      "id": "A",
+		      "x": 30,
+		      "y": 30,
+		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 220,
-		      "y": 220,
-		      "id": "B",
+		      "x": 330,
+		      "y": 330,
+		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 88.404,
-		      "y": 32.061,
-		      "id": "C",
+		      "x": 132.606,
+		      "y": 48.092,
+		      "id": "S1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 193.205,
-		      "y": 120,
-		      "id": "D",
+		      "x": 289.808,
+		      "y": 180,
+		      "id": "S2",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -23412,401 +22920,75 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "U",
-		      "from": "V"
+		      "to": "V",
+		      "from": "O"
 		    },
 		    {
-		      "to": "R",
-		      "from": "V"
+		      "to": "H",
+		      "from": "O"
 		    },
 		    {
 		      "to": "S",
-		      "from": "V"
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 220,
+		  "width": 400,
 		  "angles": [
+		    {
+		      "type": "right",
+		      "color": "#000000",
+		      "label": " ",
+		      "vertex": "O",
+		      "pointOnFirstRay": "V",
+		      "pointOnSecondRay": "H"
+		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "(x+42)°",
 		      "radius": 55,
-		      "vertex": "V",
-		      "pointOnFirstRay": "U",
+		      "vertex": "O",
+		      "pointOnFirstRay": "V",
 		      "pointOnSecondRay": "S"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#ca337c",
 		      "label": "3x°",
-		      "radius": 34,
-		      "vertex": "V",
-		      "pointOnFirstRay": "S",
-		      "pointOnSecondRay": "R"
-		    },
-		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": " ",
-		      "vertex": "V",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "R"
-		    }
-		  ],
-		  "height": 220,
-		  "points": [
-		    {
-		      "x": 10,
-		      "y": 210,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 10,
-		      "y": 10,
-		      "id": "U",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 210,
-		      "y": 210,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 171.803,
-		      "y": 92.443,
-		      "id": "S",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0fa24f1172960b3d
-	// Question: Solve for x from a vertical-angles diagram
-	// Widget key: image_1
-	test("angle-diagram - [x0fa24f1172960b3d] Solve for x from a vertical-angles diagram", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "L",
-		      "from": "V"
-		    },
-		    {
-		      "to": "R",
-		      "from": "V"
-		    },
-		    {
-		      "to": "UL",
-		      "from": "V"
-		    },
-		    {
-		      "to": "DR",
-		      "from": "V"
-		    },
-		    {
-		      "to": "S",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 300,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "150°",
-		      "radius": 40,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "DR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "50°",
-		      "radius": 46,
-		      "vertex": "V",
-		      "pointOnFirstRay": "UL",
-		      "pointOnSecondRay": "S"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "2x°",
-		      "radius": 34,
-		      "vertex": "V",
-		      "pointOnFirstRay": "S",
-		      "pointOnSecondRay": "R"
-		    }
-		  ],
-		  "height": 150,
-		  "points": [
-		    {
-		      "x": 150,
-		      "y": 75,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 30,
-		      "y": 75,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 270,
-		      "y": 75,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 90,
-		      "y": 20,
-		      "id": "UL",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 210,
-		      "y": 130,
-		      "id": "DR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 210,
-		      "y": 40,
-		      "id": "S",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3694a14ee7681a08
-	// Question: Solve for x using vertical angles
-	// Widget key: image_1
-	test("angle-diagram - [x3694a14ee7681a08] Solve for x using vertical angles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "A",
-		      "from": "O"
-		    },
-		    {
-		      "to": "C",
-		      "from": "O"
-		    },
-		    {
-		      "to": "B",
-		      "from": "O"
-		    },
-		    {
-		      "to": "D",
-		      "from": "O"
-		    },
-		    {
-		      "to": "E",
-		      "from": "O"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 300,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "110°",
-		      "radius": 28,
+		      "radius": 35,
 		      "vertex": "O",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "(8x+30)°",
-		      "radius": 36,
-		      "vertex": "O",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "S",
+		      "pointOnSecondRay": "H"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 75,
+		      "x": 18.182,
+		      "y": 381.818,
 		      "id": "O",
-		      "label": "O",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 90,
-		      "y": 25,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 210,
-		      "y": 125,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 220,
-		      "y": 35,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 80,
-		      "y": 115,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 280,
-		      "y": 75,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6f9d83ed4e103cdc
-	// Question: Solve for x in a right-angle diagram
-	// Widget key: image_1
-	test("angle-diagram - [x6f9d83ed4e103cdc] Solve for x in a right-angle diagram", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "R1",
-		      "from": "V"
-		    },
-		    {
-		      "to": "R2",
-		      "from": "V"
-		    },
-		    {
-		      "to": "D",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 300,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x°",
-		      "radius": 26,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R1",
-		      "pointOnSecondRay": "D"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#ca337c",
-		      "label": "(3x + 10)°",
-		      "radius": 36,
-		      "vertex": "V",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "R2"
-		    }
-		  ],
-		  "height": 142,
-		  "points": [
-		    {
-		      "x": 60,
-		      "y": 120,
+		      "x": 18.182,
+		      "y": 18.182,
 		      "id": "V",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 95,
-		      "y": 85,
-		      "id": "R1",
+		      "x": 381.818,
+		      "y": 381.818,
+		      "id": "H",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 80,
-		      "y": 140,
-		      "id": "R2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 90,
-		      "y": 120,
-		      "id": "D",
+		      "x": 312.367,
+		      "y": 168.079,
+		      "id": "S",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -23829,9 +23011,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x067ecc37fab18853
-	// Question: Solve for x from a supplementary angle diagram
+	// Question: Solve for x using supplementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x067ecc37fab18853] Solve for x from a supplementary angle diagram", async () => {
+	test("angle-diagram - [x067ecc37fab18853] Solve for x using supplementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -23841,26 +23023,26 @@ describe("angleDiagram widget tests", () => {
 		      "from": "V"
 		    },
 		    {
+		      "to": "R",
+		      "from": "V"
+		    },
+		    {
 		      "to": "U1",
 		      "from": "V"
 		    },
 		    {
 		      "to": "U2",
 		      "from": "V"
-		    },
-		    {
-		      "to": "R",
-		      "from": "V"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "3x°",
-		      "radius": 32,
+		      "radius": 50,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "U1"
@@ -23869,7 +23051,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#ca337c",
 		      "label": "80°",
-		      "radius": 24,
+		      "radius": 32,
 		      "vertex": "V",
 		      "pointOnFirstRay": "U1",
 		      "pointOnSecondRay": "U2"
@@ -23878,45 +23060,45 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "2x°",
-		      "radius": 30,
+		      "radius": 48,
 		      "vertex": "V",
 		      "pointOnFirstRay": "U2",
 		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 90,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 75,
+		      "x": 200,
+		      "y": 200,
 		      "id": "V",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 10,
-		      "y": 75,
+		      "x": 50,
+		      "y": 200,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 290,
-		      "y": 75,
+		      "x": 350,
+		      "y": 200,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 128,
-		      "y": 36,
+		      "x": 120,
+		      "y": 120,
 		      "id": "U1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 185,
-		      "y": 46,
+		      "x": 280,
+		      "y": 140,
 		      "id": "U2",
 		      "label": " ",
 		      "shape": "circle"
@@ -23939,132 +23121,17 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xff994223bfdebf49
-	// Question: Solve for x in a supplementary-angle diagram
-	// Widget key: image_1
-	test("angle-diagram - [xff994223bfdebf49] Solve for x in a supplementary-angle diagram", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "L",
-		      "from": "O"
-		    },
-		    {
-		      "to": "R",
-		      "from": "O"
-		    },
-		    {
-		      "to": "D1",
-		      "from": "O"
-		    },
-		    {
-		      "to": "D2",
-		      "from": "O"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 300,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "3x°",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "D1"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#ca337c",
-		      "label": "100°",
-		      "radius": 55,
-		      "vertex": "O",
-		      "pointOnFirstRay": "D1",
-		      "pointOnSecondRay": "D2"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "x°",
-		      "radius": 30,
-		      "vertex": "O",
-		      "pointOnFirstRay": "D2",
-		      "pointOnSecondRay": "R"
-		    }
-		  ],
-		  "height": 90,
-		  "points": [
-		    {
-		      "x": 30,
-		      "y": 15,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 150,
-		      "y": 15,
-		      "id": "O",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 270,
-		      "y": 15,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 105,
-		      "y": 60,
-		      "id": "D1",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 195,
-		      "y": 60,
-		      "id": "D2",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x0ee16cc4fbef2453
-	// Question: Solve for x in a straight-angle diagram
+	// Question: Solve for x from a straight angle diagram
 	// Widget key: image_1
-	test("angle-diagram - [x0ee16cc4fbef2453] Solve for x in a straight-angle diagram", async () => {
+	test("angle-diagram - [x0ee16cc4fbef2453] Solve for x from a straight angle diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "V",
-		      "from": "BL"
-		    },
-		    {
-		      "to": "BR",
-		      "from": "V"
+		      "to": "RB",
+		      "from": "LB"
 		    },
 		    {
 		      "to": "L",
@@ -24086,16 +23153,16 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "40°",
-		      "radius": 25,
+		      "radius": 68.232,
 		      "vertex": "V",
-		      "pointOnFirstRay": "BL",
+		      "pointOnFirstRay": "LB",
 		      "pointOnSecondRay": "L"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#ca337c",
 		      "label": "(2x + 30)°",
-		      "radius": 38,
+		      "radius": 103.128,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "R"
@@ -24104,47 +23171,47 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "40°",
-		      "radius": 25,
+		      "radius": 68.232,
 		      "vertex": "V",
 		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "BR"
+		      "pointOnSecondRay": "RB"
 		    }
 		  ],
-		  "height": 110,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 3.659,
-		      "y": 91.463,
-		      "id": "BL",
-		      "label": " ",
+		      "y": 249.877,
+		      "id": "LB",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 150,
-		      "y": 91.463,
+		      "y": 249.877,
 		      "id": "V",
-		      "label": " ",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 296.34,
-		      "y": 91.463,
-		      "id": "BR",
-		      "label": " ",
+		      "y": 249.877,
+		      "id": "RB",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 58.537,
-		      "y": 9.147,
+		      "y": 24.99,
 		      "id": "L",
-		      "label": " ",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 241.463,
-		      "y": 9.147,
+		      "y": 24.99,
 		      "id": "R",
-		      "label": " ",
+		      "label": null,
 		      "shape": "circle"
 		    }
 		  ]
@@ -24166,95 +23233,95 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0623a0e8a44c7053
-	// Question: Solve for x from a straight-angle diagram
+	// Question: Solve for x in a straight-angle diagram
 	// Widget key: image_1
-	test("angle-diagram - [x0623a0e8a44c7053] Solve for x from a straight-angle diagram", async () => {
+	test("angle-diagram - [x0623a0e8a44c7053] Solve for x in a straight-angle diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
-		      "from": "V"
+		      "to": "E",
+		      "from": "O"
 		    },
 		    {
-		      "to": "R",
-		      "from": "V"
+		      "to": "W",
+		      "from": "O"
 		    },
 		    {
-		      "to": "U",
-		      "from": "V"
+		      "to": "N",
+		      "from": "O"
 		    },
 		    {
-		      "to": "S",
-		      "from": "V"
+		      "to": "UL",
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "5x°",
-		      "radius": 28,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "S"
+		      "radius": 40,
+		      "vertex": "O",
+		      "pointOnFirstRay": "W",
+		      "pointOnSecondRay": "UL"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#ca337c",
 		      "label": "(x + 54)°",
-		      "radius": 44,
-		      "vertex": "V",
-		      "pointOnFirstRay": "S",
-		      "pointOnSecondRay": "U"
+		      "radius": 55,
+		      "vertex": "O",
+		      "pointOnFirstRay": "UL",
+		      "pointOnSecondRay": "N"
 		    },
 		    {
 		      "type": "right",
 		      "color": "#e07d10",
-		      "label": " ",
-		      "vertex": "V",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "R"
+		      "label": null,
+		      "vertex": "O",
+		      "pointOnFirstRay": "N",
+		      "pointOnSecondRay": "E"
 		    }
 		  ],
-		  "height": 120,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 10,
-		      "y": 105,
-		      "id": "L",
-		      "label": " ",
+		      "x": 200,
+		      "y": 220,
+		      "id": "O",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 105,
-		      "id": "V",
-		      "label": " ",
+		      "x": 360,
+		      "y": 220,
+		      "id": "E",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 290,
-		      "y": 105,
-		      "id": "R",
-		      "label": " ",
+		      "x": 40,
+		      "y": 220,
+		      "id": "W",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 20,
-		      "id": "U",
-		      "label": " ",
+		      "x": 200,
+		      "y": 80,
+		      "id": "N",
+		      "label": null,
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 100,
-		      "y": 50,
-		      "id": "S",
-		      "label": " ",
+		      "x": 120,
+		      "y": 130,
+		      "id": "UL",
+		      "label": null,
 		      "shape": "circle"
 		    }
 		  ]
@@ -24276,24 +23343,24 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xff1270fcd8bb5d15
-	// Question: Solve for x using vertical angles
+	// Question: Solve for x in a vertical angles diagram
 	// Widget key: image_1
-	test("angle-diagram - [xff1270fcd8bb5d15] Solve for x using vertical angles", async () => {
+	test("angle-diagram - [xff1270fcd8bb5d15] Solve for x in a vertical angles diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "O",
-		      "from": "A"
+		      "to": "A",
+		      "from": "O"
 		    },
 		    {
 		      "to": "B",
 		      "from": "O"
 		    },
 		    {
-		      "to": "O",
-		      "from": "C"
+		      "to": "C",
+		      "from": "O"
 		    },
 		    {
 		      "to": "D",
@@ -24307,56 +23374,56 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "60°",
-		      "radius": 28,
+		      "radius": 34,
 		      "vertex": "O",
 		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "D"
+		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "(x+40)°",
-		      "radius": 28,
+		      "radius": 34,
 		      "vertex": "O",
 		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "C"
+		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 450,
 		  "points": [
 		    {
-		      "x": 10,
-		      "y": 75,
-		      "id": "A",
-		      "label": "/A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 290,
-		      "y": 75,
-		      "id": "B",
-		      "label": "/B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 100,
-		      "y": 20,
-		      "id": "C",
-		      "label": "/C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 200,
-		      "y": 130,
-		      "id": "D",
-		      "label": "/D",
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 150,
-		      "y": 75,
+		      "y": 225,
 		      "id": "O",
-		      "label": "/O",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 30,
+		      "y": 225,
+		      "id": "A",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 270,
+		      "y": 225,
+		      "id": "B",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 235,
+		      "y": 145,
+		      "id": "C",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 65,
+		      "y": 305,
+		      "id": "D",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -24386,23 +23453,23 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "A",
+		      "to": "O",
+		      "from": "L"
+		    },
+		    {
+		      "to": "R",
 		      "from": "O"
 		    },
 		    {
-		      "to": "C",
+		      "to": "O",
+		      "from": "LL"
+		    },
+		    {
+		      "to": "UR",
 		      "from": "O"
 		    },
 		    {
-		      "to": "B",
-		      "from": "O"
-		    },
-		    {
-		      "to": "D",
-		      "from": "O"
-		    },
-		    {
-		      "to": "E",
+		      "to": "TR",
 		      "from": "O"
 		    }
 		  ],
@@ -24413,80 +23480,62 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "60°",
-		      "radius": 38,
+		      "radius": 42,
 		      "vertex": "O",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "B"
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "UR"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "(x+45)°",
-		      "radius": 38,
+		      "radius": 42,
 		      "vertex": "O",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "D"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#ca337c",
-		      "label": " ",
-		      "radius": 20,
-		      "vertex": "O",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "E"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#ca337c",
-		      "label": " ",
-		      "radius": 23,
-		      "vertex": "O",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "C"
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "LL"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 150,
-		      "y": 75,
+		      "y": 150,
 		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 120,
-		      "y": 35,
-		      "id": "A",
+		      "x": 30,
+		      "y": 150,
+		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 180,
-		      "y": 115,
-		      "id": "C",
+		      "x": 270,
+		      "y": 150,
+		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 180,
-		      "y": 35,
-		      "id": "B",
+		      "x": 250,
+		      "y": 90,
+		      "id": "UR",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 120,
-		      "y": 115,
-		      "id": "D",
+		      "x": 50,
+		      "y": 210,
+		      "id": "LL",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 240,
-		      "y": 75,
-		      "id": "E",
+		      "y": 120,
+		      "id": "TR",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -24509,83 +23558,83 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2a1737616a666d2b
-	// Question: Solve for x from complementary angles
+	// Question: Solve for x in a complementary angle diagram
 	// Widget key: image_1
-	test("angle-diagram - [x2a1737616a666d2b] Solve for x from complementary angles", async () => {
+	test("angle-diagram - [x2a1737616a666d2b] Solve for x in a complementary angle diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "U",
+		      "to": "V",
 		      "from": "O"
 		    },
 		    {
-		      "to": "R",
+		      "to": "H",
 		      "from": "O"
 		    },
 		    {
-		      "to": "C",
+		      "to": "D",
 		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 192,
+		  "width": 384,
 		  "angles": [
 		    {
 		      "type": "right",
 		      "color": "#000000",
 		      "label": " ",
 		      "vertex": "O",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "R"
+		      "pointOnFirstRay": "V",
+		      "pointOnSecondRay": "H"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#ca337c",
 		      "label": "50°",
-		      "radius": 28,
+		      "radius": 56,
 		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "C"
+		      "pointOnFirstRay": "H",
+		      "pointOnSecondRay": "D"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "8x°",
-		      "radius": 50,
+		      "radius": 60,
 		      "vertex": "O",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "U"
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "V"
 		    }
 		  ],
-		  "height": 192,
+		  "height": 384,
 		  "points": [
 		    {
-		      "x": 16,
-		      "y": 176,
+		      "x": 32,
+		      "y": 352,
 		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 32,
+		      "y": 32,
+		      "id": "V",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 16,
-		      "y": 16,
-		      "id": "U",
+		      "x": 352,
+		      "y": 352,
+		      "id": "H",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 176,
-		      "y": 176,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 118.846,
-		      "y": 53.433,
-		      "id": "C",
+		      "x": 237.692,
+		      "y": 106.866,
+		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -24608,27 +23657,27 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8342bf1b6fa52c38
-	// Question: Solve for x in a vertical-angle diagram
+	// Question: Solve for x using vertical angles
 	// Widget key: image_1
-	test("angle-diagram - [x8342bf1b6fa52c38] Solve for x in a vertical-angle diagram", async () => {
+	test("angle-diagram - [x8342bf1b6fa52c38] Solve for x using vertical angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "A",
+		      "to": "NW",
 		      "from": "O"
 		    },
 		    {
-		      "to": "C",
+		      "to": "SE",
 		      "from": "O"
 		    },
 		    {
-		      "to": "B",
+		      "to": "NE",
 		      "from": "O"
 		    },
 		    {
-		      "to": "D",
+		      "to": "SW",
 		      "from": "O"
 		    }
 		  ],
@@ -24637,56 +23686,56 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
+		      "color": "#e07d10",
 		      "label": "3x°",
-		      "radius": 36,
+		      "radius": 50,
 		      "vertex": "O",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
+		      "pointOnFirstRay": "NW",
+		      "pointOnSecondRay": "NE"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#e07d10",
+		      "color": "#11accd",
 		      "label": "120°",
-		      "radius": 48,
+		      "radius": 50,
 		      "vertex": "O",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "SW",
+		      "pointOnSecondRay": "SE"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 30,
-		      "y": 140,
-		      "id": "A",
+		      "x": 60,
+		      "y": 60,
+		      "id": "NW",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 30,
-		      "y": 10,
-		      "id": "B",
+		      "x": 240,
+		      "y": 60,
+		      "id": "NE",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 270,
-		      "y": 10,
-		      "id": "C",
+		      "x": 60,
+		      "y": 240,
+		      "id": "SW",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 270,
-		      "y": 140,
-		      "id": "D",
+		      "x": 240,
+		      "y": 240,
+		      "id": "SE",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 150,
-		      "y": 75,
+		      "y": 150,
 		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
@@ -24710,23 +23759,23 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbcbbb142d2dedf8c
-	// Question: Solve for x in a vertical-angles diagram
+	// Question: Solve for x in an angle diagram
 	// Widget key: image_1
-	test("angle-diagram - [xbcbbb142d2dedf8c] Solve for x in a vertical-angles diagram", async () => {
+	test("angle-diagram - [xbcbbb142d2dedf8c] Solve for x in an angle diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
+		      "to": "A",
 		      "from": "O"
 		    },
 		    {
-		      "to": "R",
+		      "to": "B",
 		      "from": "O"
 		    },
 		    {
-		      "to": "U",
+		      "to": "C",
 		      "from": "O"
 		    },
 		    {
@@ -24734,82 +23783,82 @@ describe("angleDiagram widget tests", () => {
 		      "from": "O"
 		    },
 		    {
-		      "to": "M",
+		      "to": "E",
 		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 360,
 		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "45°",
-		      "radius": 32,
-		      "vertex": "O",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "M"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": "15°",
-		      "radius": 40,
-		      "vertex": "O",
-		      "pointOnFirstRay": "M",
-		      "pointOnSecondRay": "U"
-		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "4x°",
-		      "radius": 32,
+		      "radius": 42,
 		      "vertex": "O",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#ca337c",
+		      "label": "45°",
+		      "radius": 28,
+		      "vertex": "O",
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "E"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#ca337c",
+		      "label": "15°",
+		      "radius": 40,
+		      "vertex": "O",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "B"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 75,
+		      "x": 180,
+		      "y": 180,
 		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 20,
-		      "y": 75,
-		      "id": "L",
+		      "x": 300,
+		      "y": 80,
+		      "id": "A",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 75,
-		      "id": "R",
+		      "x": 60,
+		      "y": 300,
+		      "id": "B",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 230,
-		      "y": 20,
-		      "id": "U",
+		      "x": 300,
+		      "y": 300,
+		      "id": "C",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 70,
-		      "y": 130,
+		      "x": 60,
+		      "y": 60,
 		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 255,
-		      "y": 50,
-		      "id": "M",
+		      "x": 100,
+		      "y": 220,
+		      "id": "E",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -24832,28 +23881,28 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xca5079552ad51c37
-	// Question: Solve for x from a supplementary angles diagram
+	// Question: Solve for x in a supplementary angles diagram
 	// Widget key: image_1
-	test("angle-diagram - [xca5079552ad51c37] Solve for x from a supplementary angles diagram", async () => {
+	test("angle-diagram - [xca5079552ad51c37] Solve for x in a supplementary angles diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
-		      "from": "O"
+		      "to": "V",
+		      "from": "L"
 		    },
 		    {
 		      "to": "R",
-		      "from": "O"
+		      "from": "V"
 		    },
 		    {
-		      "to": "U1",
-		      "from": "O"
+		      "to": "U",
+		      "from": "V"
 		    },
 		    {
-		      "to": "U2",
-		      "from": "O"
+		      "to": "W",
+		      "from": "V"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -24861,66 +23910,66 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#0066CC",
-		      "label": "(x+12)°",
-		      "radius": 46,
-		      "vertex": "O",
+		      "color": "#11accd",
+		      "label": "(x + 12)°",
+		      "radius": 60,
+		      "vertex": "V",
 		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "U1"
+		      "pointOnSecondRay": "U"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#CA337C",
+		      "color": "#8B0000",
 		      "label": "100°",
-		      "radius": 38,
-		      "vertex": "O",
-		      "pointOnFirstRay": "U1",
-		      "pointOnSecondRay": "U2"
+		      "radius": 45,
+		      "vertex": "V",
+		      "pointOnFirstRay": "U",
+		      "pointOnSecondRay": "W"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#E07D10",
+		      "color": "#e2b007",
 		      "label": "x°",
-		      "radius": 30,
-		      "vertex": "O",
-		      "pointOnFirstRay": "U2",
+		      "radius": 70,
+		      "vertex": "V",
+		      "pointOnFirstRay": "W",
 		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 180,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 105,
-		      "id": "O",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 30,
-		      "y": 105,
+		      "y": 180,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
+		      "x": 150,
+		      "y": 180,
+		      "id": "V",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
 		      "x": 270,
-		      "y": 105,
+		      "y": 180,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 85,
-		      "y": 55,
-		      "id": "U1",
+		      "x": 110,
+		      "y": 90,
+		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 220,
-		      "y": 70,
-		      "id": "U2",
+		      "x": 210,
+		      "y": 120,
+		      "id": "W",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -24943,87 +23992,87 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd0487a9cab1c6750
-	// Question: Solve for x in a vertical-angles diagram
+	// Question: Solve for x in the diagram below
 	// Widget key: image_1
-	test("angle-diagram - [xd0487a9cab1c6750] Solve for x in a vertical-angles diagram", async () => {
+	test("angle-diagram - [xd0487a9cab1c6750] Solve for x in the diagram below", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "V",
-		      "from": "L"
-		    },
-		    {
-		      "to": "R",
-		      "from": "V"
-		    },
-		    {
-		      "to": "V",
-		      "from": "T"
+		      "to": "A",
+		      "from": "O"
 		    },
 		    {
 		      "to": "B",
-		      "from": "V"
+		      "from": "O"
+		    },
+		    {
+		      "to": "C",
+		      "from": "O"
+		    },
+		    {
+		      "to": "D",
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "150°",
-		      "radius": 38,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "T"
+		      "radius": 55,
+		      "vertex": "O",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
-		      "label": "(4x + 50)°",
-		      "radius": 38,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "B"
+		      "label": "(4x+50)°",
+		      "radius": 70,
+		      "vertex": "O",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 20,
-		      "y": 75,
-		      "id": "L",
-		      "label": "L",
+		      "x": 200,
+		      "y": 150,
+		      "id": "O",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 75,
-		      "id": "V",
-		      "label": "V",
+		      "x": 360,
+		      "y": 150,
+		      "id": "A",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 75,
-		      "id": "R",
-		      "label": "R",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 35,
-		      "y": 5,
-		      "id": "T",
-		      "label": "T",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 265,
-		      "y": 145,
+		      "x": 40,
+		      "y": 150,
 		      "id": "B",
-		      "label": "B",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 79,
+		      "y": 220,
+		      "id": "C",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 321,
+		      "y": 80,
+		      "id": "D",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -25045,93 +24094,101 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x186f3687a23298ff
-	// Question: Solve for x from a straight-line angle diagram
+	// Question: Solve for x from a straight-angle diagram
 	// Widget key: image_1
-	test("angle-diagram - [x186f3687a23298ff] Solve for x from a straight-line angle diagram", async () => {
+	test("angle-diagram - [x186f3687a23298ff] Solve for x from a straight-angle diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
+		      "to": "O",
+		      "from": "L"
+		    },
+		    {
 		      "to": "L",
-		      "from": "V"
+		      "from": "O"
 		    },
 		    {
 		      "to": "R",
-		      "from": "V"
+		      "from": "O"
+		    },
+		    {
+		      "to": "O",
+		      "from": "R"
 		    },
 		    {
 		      "to": "U",
-		      "from": "V"
+		      "from": "O"
 		    },
 		    {
 		      "to": "S",
-		      "from": "V"
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "20°",
-		      "radius": 40,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "S"
+		      "radius": 45,
+		      "vertex": "O",
+		      "pointOnFirstRay": "S",
+		      "pointOnSecondRay": "L"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#ca337c",
 		      "label": "(6x - 2)°",
-		      "radius": 52,
-		      "vertex": "V",
-		      "pointOnFirstRay": "S",
-		      "pointOnSecondRay": "U"
+		      "radius": 60,
+		      "vertex": "O",
+		      "pointOnFirstRay": "U",
+		      "pointOnSecondRay": "S"
 		    },
 		    {
 		      "type": "right",
 		      "color": "#e07d10",
 		      "label": " ",
-		      "vertex": "V",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "R"
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "U"
 		    }
 		  ],
-		  "height": 120,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 105,
-		      "id": "V",
+		      "x": 200,
+		      "y": 220,
+		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 20,
-		      "y": 105,
+		      "x": 50,
+		      "y": 220,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 290,
-		      "y": 105,
+		      "x": 350,
+		      "y": 220,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 20,
+		      "x": 200,
+		      "y": 80,
 		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 90,
-		      "y": 85,
+		      "x": 110,
+		      "y": 190,
 		      "id": "S",
 		      "label": " ",
 		      "shape": "circle"
@@ -25155,9 +24212,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1feff67ee58ec049
-	// Question: Solve for x in a supplementary-angle diagram
+	// Question: Solve for x using supplementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x1feff67ee58ec049] Solve for x in a supplementary-angle diagram", async () => {
+	test("angle-diagram - [x1feff67ee58ec049] Solve for x using supplementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -25171,16 +24228,16 @@ describe("angleDiagram widget tests", () => {
 		      "from": "V"
 		    },
 		    {
-		      "to": "TL",
+		      "to": "UL",
 		      "from": "V"
 		    },
 		    {
-		      "to": "TR",
+		      "to": "UR",
 		      "from": "V"
 		    },
 		    {
-		      "to": "TR",
-		      "from": "TL"
+		      "to": "UR",
+		      "from": "UL"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -25190,64 +24247,64 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "x°",
-		      "radius": 25,
+		      "radius": 30,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "TL"
+		      "pointOnSecondRay": "UL"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#ca337c",
 		      "label": "100°",
-		      "radius": 30,
+		      "radius": 45,
 		      "vertex": "V",
-		      "pointOnFirstRay": "TL",
-		      "pointOnSecondRay": "TR"
+		      "pointOnFirstRay": "UL",
+		      "pointOnSecondRay": "UR"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "x°",
-		      "radius": 25,
+		      "radius": 30,
 		      "vertex": "V",
-		      "pointOnFirstRay": "TR",
+		      "pointOnFirstRay": "UR",
 		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 110,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 3.659,
-		      "y": 91.463,
+		      "x": 20,
+		      "y": 220,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 150,
-		      "y": 91.463,
+		      "y": 220,
 		      "id": "V",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 296.34,
-		      "y": 91.463,
+		      "x": 280,
+		      "y": 220,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 58.537,
-		      "y": 9.146,
-		      "id": "TL",
+		      "x": 60,
+		      "y": 60,
+		      "id": "UL",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 241.463,
-		      "y": 9.147,
-		      "id": "TR",
+		      "x": 240,
+		      "y": 60,
+		      "id": "UR",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -25270,24 +24327,24 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3684f45e098a1baa
-	// Question: Solve for x in an angle diagram
+	// Question: Solve for x from a complementary angle diagram
 	// Widget key: image_1
-	test("angle-diagram - [x3684f45e098a1baa] Solve for x in an angle diagram", async () => {
+	test("angle-diagram - [x3684f45e098a1baa] Solve for x from a complementary angle diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "A",
-		      "from": "V"
+		      "to": "R240",
+		      "from": "O"
 		    },
 		    {
-		      "to": "C",
-		      "from": "V"
+		      "to": "R275",
+		      "from": "O"
 		    },
 		    {
-		      "to": "B",
-		      "from": "V"
+		      "to": "R330",
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -25296,58 +24353,58 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "right",
 		      "color": "#000000",
-		      "label": null,
-		      "vertex": "V",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "C"
+		      "label": " ",
+		      "vertex": "O",
+		      "pointOnFirstRay": "R240",
+		      "pointOnSecondRay": "R330"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "35°",
-		      "radius": 28,
-		      "vertex": "V",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "B"
+		      "radius": 40,
+		      "vertex": "O",
+		      "pointOnFirstRay": "R240",
+		      "pointOnSecondRay": "R275"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#ca337c",
 		      "label": "5x°",
-		      "radius": 40,
-		      "vertex": "V",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
+		      "radius": 55,
+		      "vertex": "O",
+		      "pointOnFirstRay": "R275",
+		      "pointOnSecondRay": "R330"
 		    }
 		  ],
-		  "height": 142,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 80,
-		      "y": 110,
-		      "id": "V",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 40,
-		      "y": 80,
-		      "id": "A",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 110,
-		      "y": 70,
-		      "id": "C",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
 		      "x": 70,
-		      "y": 40,
-		      "id": "B",
-		      "label": null,
+		      "y": 260,
+		      "id": "O",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 0,
+		      "y": 138.8,
+		      "id": "R240",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 82.2,
+		      "y": 120.5,
+		      "id": "R275",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 191.2,
+		      "y": 190,
+		      "id": "R330",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -25369,28 +24426,28 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbcb1e2f9e599028d
-	// Question: Solve for x using supplementary angles
+	// Question: Solve for x in a supplementary angle pair
 	// Widget key: image_1
-	test("angle-diagram - [xbcb1e2f9e599028d] Solve for x using supplementary angles", async () => {
+	test("angle-diagram - [xbcb1e2f9e599028d] Solve for x in a supplementary angle pair", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
-		      "from": "V"
+		      "to": "H1",
+		      "from": "O"
 		    },
 		    {
-		      "to": "R",
-		      "from": "V"
+		      "to": "H2",
+		      "from": "O"
 		    },
 		    {
-		      "to": "U",
-		      "from": "V"
+		      "to": "S1",
+		      "from": "O"
 		    },
 		    {
-		      "to": "D",
-		      "from": "V"
+		      "to": "S2",
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -25400,55 +24457,55 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "3x°",
-		      "radius": 24,
-		      "vertex": "V",
-		      "pointOnFirstRay": "U",
-		      "pointOnSecondRay": "L"
+		      "radius": 50,
+		      "vertex": "O",
+		      "pointOnFirstRay": "H1",
+		      "pointOnSecondRay": "S2"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "75°",
-		      "radius": 34,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "U"
+		      "radius": 65,
+		      "vertex": "O",
+		      "pointOnFirstRay": "S2",
+		      "pointOnSecondRay": "H2"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 150,
-		      "y": 75,
-		      "id": "V",
+		      "y": 150,
+		      "id": "O",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 20,
-		      "y": 75,
-		      "id": "L",
+		      "x": 10,
+		      "y": 150,
+		      "id": "H1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 75,
-		      "id": "R",
+		      "x": 290,
+		      "y": 150,
+		      "id": "H2",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 180,
-		      "y": 20,
-		      "id": "U",
+		      "x": 60,
+		      "y": 290,
+		      "id": "S1",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 120,
-		      "y": 130,
-		      "id": "D",
+		      "x": 240,
+		      "y": 10,
+		      "id": "S2",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -25471,9 +24528,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6628c290394ae2a2
-	// Question: Solve for x in a supplementary angle diagram
+	// Question: Solve for x using supplementary angles
 	// Widget key: image_1
-	test("angle-diagram - [x6628c290394ae2a2] Solve for x in a supplementary angle diagram", async () => {
+	test("angle-diagram - [x6628c290394ae2a2] Solve for x using supplementary angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -25498,7 +24555,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "(2x + 45)°",
-		      "radius": 22,
+		      "radius": 48,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "U"
@@ -25507,38 +24564,38 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#e07d10",
 		      "label": "x°",
-		      "radius": 42,
+		      "radius": 58,
 		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "U"
+		      "pointOnFirstRay": "U",
+		      "pointOnSecondRay": "R"
 		    }
 		  ],
-		  "height": 90,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 10,
-		      "y": 75,
+		      "x": 30,
+		      "y": 200,
 		      "id": "L",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 150,
-		      "y": 75,
+		      "y": 200,
 		      "id": "V",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 290,
-		      "y": 75,
+		      "x": 270,
+		      "y": 200,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 220,
-		      "y": 15,
+		      "x": 240,
+		      "y": 80,
 		      "id": "U",
 		      "label": " ",
 		      "shape": "circle"
@@ -25570,11 +24627,7 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
+		      "to": "E",
 		      "from": "A"
 		    },
 		    {
@@ -25582,7 +24635,11 @@ describe("angleDiagram widget tests", () => {
 		      "from": "A"
 		    },
 		    {
-		      "to": "E",
+		      "to": "C",
+		      "from": "A"
+		    },
+		    {
+		      "to": "B",
 		      "from": "A"
 		    }
 		  ],
@@ -25591,47 +24648,47 @@ describe("angleDiagram widget tests", () => {
 		  "angles": [
 		    {
 		      "type": "arc",
-		      "color": "#1fab54",
+		      "color": "#0d923f",
 		      "label": " ",
-		      "radius": 45,
+		      "radius": 42,
 		      "vertex": "A",
 		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 210,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 150,
-		      "y": 180,
+		      "y": 257.14,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 262.763,
-		      "y": 138.958,
+		      "x": 262.76,
+		      "y": 198.51,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 200.714,
-		      "y": 71.243,
+		      "x": 200.71,
+		      "y": 101.78,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 118.942,
-		      "y": 64.089,
+		      "x": 118.94,
+		      "y": 91.56,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 31.823,
-		      "y": 159.162,
+		      "x": 31.82,
+		      "y": 227.37,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
@@ -25680,51 +24737,51 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 200,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": " ",
-		      "radius": 32,
+		      "radius": 56,
 		      "vertex": "A",
 		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 171.429,
+		  "height": 343,
 		  "points": [
 		    {
-		      "x": 114.286,
-		      "y": 85.714,
+		      "x": 228.572,
+		      "y": 171.428,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 77.555,
-		      "y": 41.94,
+		      "x": 155.11,
+		      "y": 83.88,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 167.982,
-		      "y": 105.258,
+		      "x": 335.964,
+		      "y": 210.516,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 77.555,
-		      "y": 129.488,
+		      "x": 155.11,
+		      "y": 258.976,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 58.011,
-		      "y": 95.637,
+		      "x": 116.022,
+		      "y": 191.274,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
@@ -25747,522 +24804,10 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xea44162d408c823f
-	// Question: Identify an equivalent angle name
-	// Widget key: image_1
-	test("angle-diagram - [xea44162d408c823f] Identify an equivalent angle name (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "A",
-		      "from": "P"
-		    },
-		    {
-		      "to": "B",
-		      "from": "P"
-		    },
-		    {
-		      "to": "F",
-		      "from": "P"
-		    },
-		    {
-		      "to": "G",
-		      "from": "P"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 265,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": " ",
-		      "radius": 40,
-		      "vertex": "P",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "F"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "P",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 31,
-		      "vertex": "P",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 44,
-		      "vertex": "P",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "G"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 52,
-		      "vertex": "P",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "G"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 60,
-		      "vertex": "P",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "G"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 18,
-		      "vertex": "P",
-		      "pointOnFirstRay": "G",
-		      "pointOnSecondRay": "A"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "P",
-		      "pointOnFirstRay": "G",
-		      "pointOnSecondRay": "A"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 30,
-		      "vertex": "P",
-		      "pointOnFirstRay": "G",
-		      "pointOnSecondRay": "A"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 36,
-		      "vertex": "P",
-		      "pointOnFirstRay": "G",
-		      "pointOnSecondRay": "A"
-		    }
-		  ],
-		  "height": 146,
-		  "points": [
-		    {
-		      "x": 53,
-		      "y": 79.5,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 212,
-		      "y": 79.5,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 132.5,
-		      "y": 79.5,
-		      "id": "P",
-		      "label": "P",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 197.623,
-		      "y": 33.901,
-		      "id": "F",
-		      "label": "F",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 67.377,
-		      "y": 125.099,
-		      "id": "G",
-		      "label": "G",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xea44162d408c823f
-	// Question: Identify an equivalent angle name
-	// Widget key: choice_a_angle
-	test("angle-diagram - [xea44162d408c823f] Identify an equivalent angle name (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "A",
-		      "from": "P"
-		    },
-		    {
-		      "to": "F",
-		      "from": "P"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 100,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": " ",
-		      "radius": 25,
-		      "vertex": "P",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "F"
-		    }
-		  ],
-		  "height": 100,
-		  "points": [
-		    {
-		      "x": 50,
-		      "y": 50,
-		      "id": "P",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 15,
-		      "y": 50,
-		      "id": "A",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 75,
-		      "y": 25,
-		      "id": "F",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xea44162d408c823f
-	// Question: Identify an equivalent angle name
-	// Widget key: choice_b_angle
-	test("angle-diagram - [xea44162d408c823f] Identify an equivalent angle name (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "B",
-		      "from": "P"
-		    },
-		    {
-		      "to": "F",
-		      "from": "P"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 100,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 20,
-		      "vertex": "P",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 28,
-		      "vertex": "P",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "B"
-		    }
-		  ],
-		  "height": 100,
-		  "points": [
-		    {
-		      "x": 50,
-		      "y": 50,
-		      "id": "P",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 85,
-		      "y": 50,
-		      "id": "B",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 75,
-		      "y": 25,
-		      "id": "F",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xea44162d408c823f
-	// Question: Identify an equivalent angle name
-	// Widget key: choice_c_angle
-	test("angle-diagram - [xea44162d408c823f] Identify an equivalent angle name (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "B",
-		      "from": "P"
-		    },
-		    {
-		      "to": "G",
-		      "from": "P"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 100,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 18,
-		      "vertex": "P",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "G"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 26,
-		      "vertex": "P",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "G"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 34,
-		      "vertex": "P",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "G"
-		    }
-		  ],
-		  "height": 100,
-		  "points": [
-		    {
-		      "x": 50,
-		      "y": 50,
-		      "id": "P",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 85,
-		      "y": 50,
-		      "id": "B",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 25,
-		      "y": 75,
-		      "id": "G",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xea44162d408c823f
-	// Question: Identify an equivalent angle name
-	// Widget key: choice_d_angle
-	test("angle-diagram - [xea44162d408c823f] Identify an equivalent angle name (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "G",
-		      "from": "P"
-		    },
-		    {
-		      "to": "A",
-		      "from": "P"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 100,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 14,
-		      "vertex": "P",
-		      "pointOnFirstRay": "G",
-		      "pointOnSecondRay": "A"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 20,
-		      "vertex": "P",
-		      "pointOnFirstRay": "G",
-		      "pointOnSecondRay": "A"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 26,
-		      "vertex": "P",
-		      "pointOnFirstRay": "G",
-		      "pointOnSecondRay": "A"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 32,
-		      "vertex": "P",
-		      "pointOnFirstRay": "G",
-		      "pointOnSecondRay": "A"
-		    }
-		  ],
-		  "height": 100,
-		  "points": [
-		    {
-		      "x": 50,
-		      "y": 50,
-		      "id": "P",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 25,
-		      "y": 75,
-		      "id": "G",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 15,
-		      "y": 50,
-		      "id": "A",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x4af26ceb8a76243f
-	// Question: Identify an angle equivalent to ∠DAC
-	// Widget key: image_1
-	test("angle-diagram - [x4af26ceb8a76243f] Identify an angle equivalent to ∠DAC (1)", async () => {
+	// Question: Identify the same angle as ∠DAC
+	// Widget key: choice_a_angle
+	test("angle-diagram - [x4af26ceb8a76243f] Identify the same angle as ∠DAC (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -26274,22 +24819,10 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "to": "D",
 		      "from": "A"
-		    },
-		    {
-		      "to": "F",
-		      "from": "A"
-		    },
-		    {
-		      "to": "E",
-		      "from": "A"
-		    },
-		    {
-		      "to": "B",
-		      "from": "A"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 265,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
@@ -26299,200 +24832,27 @@ describe("angleDiagram widget tests", () => {
 		      "vertex": "A",
 		      "pointOnFirstRay": "C",
 		      "pointOnSecondRay": "D"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 36,
-		      "vertex": "A",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "F"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 41,
-		      "vertex": "A",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "F"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 32,
-		      "vertex": "A",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "E"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 37,
-		      "vertex": "A",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "E"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 42,
-		      "vertex": "A",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "E"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 28,
-		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 33,
-		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 38,
-		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 43,
-		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "B"
 		    }
 		  ],
-		  "height": 149.063,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 132.5,
-		      "y": 115.938,
+		      "x": 180,
+		      "y": 250,
 		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 231.875,
-		      "y": 115.938,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 33.125,
-		      "y": 115.937,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 68.623,
-		      "y": 39.812,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 225.882,
-		      "y": 81.949,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 182.188,
-		      "y": 29.876,
-		      "id": "F",
-		      "label": "F",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4af26ceb8a76243f
-	// Question: Identify an angle equivalent to ∠DAC
-	// Widget key: choice_a_angle
-	test("angle-diagram - [x4af26ceb8a76243f] Identify an angle equivalent to ∠DAC (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "C",
-		      "from": "A"
-		    },
-		    {
-		      "to": "D",
-		      "from": "A"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 125,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
 		      "label": " ",
-		      "radius": 22,
-		      "vertex": "A",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "D"
-		    }
-		  ],
-		  "height": 112.5,
-		  "points": [
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 40,
+		      "y": 250,
+		      "id": "C",
+		      "label": " ",
+		      "shape": "circle"
+		    },
 		    {
 		      "x": 100,
-		      "y": 87.5,
-		      "id": "A",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 25,
-		      "y": 87.5,
-		      "id": "C",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 51.791,
-		      "y": 30.047,
+		      "y": 130,
 		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
@@ -26516,9 +24876,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4af26ceb8a76243f
-	// Question: Identify an angle equivalent to ∠DAC
+	// Question: Identify the same angle as ∠DAC
 	// Widget key: choice_b_angle
-	test("angle-diagram - [x4af26ceb8a76243f] Identify an angle equivalent to ∠DAC (3)", async () => {
+	test("angle-diagram - [x4af26ceb8a76243f] Identify the same angle as ∠DAC (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -26533,46 +24893,37 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 125,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": " ",
-		      "radius": 20,
-		      "vertex": "A",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "F"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 24,
+		      "radius": 40,
 		      "vertex": "A",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "F"
 		    }
 		  ],
-		  "height": 112.5,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 100,
-		      "y": 87.5,
+		      "x": 180,
+		      "y": 250,
 		      "id": "A",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 51.791,
-		      "y": 30.047,
+		      "x": 100,
+		      "y": 130,
 		      "id": "D",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 115,
-		      "y": 30,
+		      "x": 240,
+		      "y": 130,
 		      "id": "F",
 		      "label": " ",
 		      "shape": "circle"
@@ -26596,9 +24947,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4af26ceb8a76243f
-	// Question: Identify an angle equivalent to ∠DAC
+	// Question: Identify the same angle as ∠DAC
 	// Widget key: choice_c_angle
-	test("angle-diagram - [x4af26ceb8a76243f] Identify an angle equivalent to ∠DAC (4)", async () => {
+	test("angle-diagram - [x4af26ceb8a76243f] Identify the same angle as ∠DAC (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -26613,55 +24964,37 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 125,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": " ",
-		      "radius": 18,
-		      "vertex": "A",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "E"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 22,
-		      "vertex": "A",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "E"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 26,
+		      "radius": 40,
 		      "vertex": "A",
 		      "pointOnFirstRay": "F",
 		      "pointOnSecondRay": "E"
 		    }
 		  ],
-		  "height": 112.5,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 100,
-		      "y": 87.5,
+		      "x": 180,
+		      "y": 250,
 		      "id": "A",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 115,
-		      "y": 30,
+		      "x": 240,
+		      "y": 130,
 		      "id": "F",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 120,
-		      "y": 70,
+		      "x": 300,
+		      "y": 200,
 		      "id": "E",
 		      "label": " ",
 		      "shape": "circle"
@@ -26685,9 +25018,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4af26ceb8a76243f
-	// Question: Identify an angle equivalent to ∠DAC
+	// Question: Identify the same angle as ∠DAC
 	// Widget key: choice_d_angle
-	test("angle-diagram - [x4af26ceb8a76243f] Identify an angle equivalent to ∠DAC (5)", async () => {
+	test("angle-diagram - [x4af26ceb8a76243f] Identify the same angle as ∠DAC (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -26702,713 +25035,38 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 125,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
 		      "label": " ",
-		      "radius": 16,
-		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 20,
-		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 28,
+		      "radius": 40,
 		      "vertex": "A",
 		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "B"
 		    }
 		  ],
-		  "height": 112.5,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 100,
-		      "y": 87.5,
+		      "x": 180,
+		      "y": 250,
 		      "id": "A",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 120,
-		      "y": 70,
+		      "x": 300,
+		      "y": 200,
 		      "id": "E",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 125,
-		      "y": 87.5,
+		      "x": 320,
+		      "y": 250,
 		      "id": "B",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1913127152c0666e
-	// Question: Identify an angle equivalent to ∠DOF
-	// Widget key: image_1
-	test("angle-diagram - [x1913127152c0666e] Identify an angle equivalent to ∠DOF (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "A",
-		      "from": "O"
-		    },
-		    {
-		      "to": "B",
-		      "from": "O"
-		    },
-		    {
-		      "to": "C",
-		      "from": "O"
-		    },
-		    {
-		      "to": "D",
-		      "from": "O"
-		    },
-		    {
-		      "to": "E",
-		      "from": "O"
-		    },
-		    {
-		      "to": "F",
-		      "from": "O"
-		    },
-		    {
-		      "to": "G",
-		      "from": "O"
-		    },
-		    {
-		      "to": "H",
-		      "from": "O"
-		    },
-		    {
-		      "to": "I",
-		      "from": "O"
-		    },
-		    {
-		      "to": "J",
-		      "from": "O"
-		    },
-		    {
-		      "to": "K",
-		      "from": "O"
-		    },
-		    {
-		      "to": "L",
-		      "from": "O"
-		    },
-		    {
-		      "to": "C",
-		      "from": "B"
-		    },
-		    {
-		      "to": "D",
-		      "from": "C"
-		    },
-		    {
-		      "to": "E",
-		      "from": "D"
-		    },
-		    {
-		      "to": "F",
-		      "from": "E"
-		    },
-		    {
-		      "to": "G",
-		      "from": "F"
-		    },
-		    {
-		      "to": "H",
-		      "from": "G"
-		    },
-		    {
-		      "to": "I",
-		      "from": "H"
-		    },
-		    {
-		      "to": "J",
-		      "from": "I"
-		    },
-		    {
-		      "to": "K",
-		      "from": "J"
-		    },
-		    {
-		      "to": "L",
-		      "from": "K"
-		    },
-		    {
-		      "to": "A",
-		      "from": "L"
-		    },
-		    {
-		      "to": "B",
-		      "from": "A"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 245,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": " ",
-		      "radius": 22,
-		      "vertex": "O",
-		      "pointOnFirstRay": "J",
-		      "pointOnSecondRay": "L"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 26,
-		      "vertex": "O",
-		      "pointOnFirstRay": "J",
-		      "pointOnSecondRay": "H"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 30,
-		      "vertex": "O",
-		      "pointOnFirstRay": "J",
-		      "pointOnSecondRay": "H"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 26,
-		      "vertex": "O",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "F"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 30,
-		      "vertex": "O",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "F"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 34,
-		      "vertex": "O",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "F"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 20,
-		      "vertex": "O",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "O",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 28,
-		      "vertex": "O",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 32,
-		      "vertex": "O",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "B"
-		    }
-		  ],
-		  "height": 265,
-		  "points": [
-		    {
-		      "x": 122.308,
-		      "y": 132.5,
-		      "id": "O",
-		      "label": "O",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 30.509,
-		      "y": 79.5,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 91.731,
-		      "y": 79.539,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 122.308,
-		      "y": 26.5,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 152.885,
-		      "y": 79.539,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 214.106,
-		      "y": 79.5,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 183.462,
-		      "y": 132.5,
-		      "id": "F",
-		      "label": "F",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 214.106,
-		      "y": 185.5,
-		      "id": "G",
-		      "label": "G",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 152.885,
-		      "y": 185.461,
-		      "id": "H",
-		      "label": "H",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 122.308,
-		      "y": 238.5,
-		      "id": "I",
-		      "label": "I",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 91.731,
-		      "y": 185.461,
-		      "id": "J",
-		      "label": "J",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 30.509,
-		      "y": 185.5,
-		      "id": "K",
-		      "label": "K",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 61.154,
-		      "y": 132.5,
-		      "id": "L",
-		      "label": "L",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1913127152c0666e
-	// Question: Identify an angle equivalent to ∠DOF
-	// Widget key: choice_a_angle
-	test("angle-diagram - [x1913127152c0666e] Identify an angle equivalent to ∠DOF (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "L",
-		      "from": "V"
-		    },
-		    {
-		      "to": "DL",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 165,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": " ",
-		      "radius": 16,
-		      "vertex": "V",
-		      "pointOnFirstRay": "DL",
-		      "pointOnSecondRay": "L"
-		    }
-		  ],
-		  "height": 94,
-		  "points": [
-		    {
-		      "x": 141,
-		      "y": 47,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 20,
-		      "y": 47,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 80,
-		      "y": 90,
-		      "id": "DL",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1913127152c0666e
-	// Question: Identify an angle equivalent to ∠DOF
-	// Widget key: choice_b_angle
-	test("angle-diagram - [x1913127152c0666e] Identify an angle equivalent to ∠DOF (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "DL",
-		      "from": "V"
-		    },
-		    {
-		      "to": "DR",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 165,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 18,
-		      "vertex": "V",
-		      "pointOnFirstRay": "DL",
-		      "pointOnSecondRay": "DR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 22,
-		      "vertex": "V",
-		      "pointOnFirstRay": "DL",
-		      "pointOnSecondRay": "DR"
-		    }
-		  ],
-		  "height": 94,
-		  "points": [
-		    {
-		      "x": 82.5,
-		      "y": 20,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 20,
-		      "y": 80,
-		      "id": "DL",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 145,
-		      "y": 80,
-		      "id": "DR",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1913127152c0666e
-	// Question: Identify an angle equivalent to ∠DOF
-	// Widget key: choice_c_angle
-	test("angle-diagram - [x1913127152c0666e] Identify an angle equivalent to ∠DOF (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "R",
-		      "from": "V"
-		    },
-		    {
-		      "to": "UR",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 165,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 20,
-		      "vertex": "V",
-		      "pointOnFirstRay": "UR",
-		      "pointOnSecondRay": "R"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 24,
-		      "vertex": "V",
-		      "pointOnFirstRay": "UR",
-		      "pointOnSecondRay": "R"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 28,
-		      "vertex": "V",
-		      "pointOnFirstRay": "UR",
-		      "pointOnSecondRay": "R"
-		    }
-		  ],
-		  "height": 94,
-		  "points": [
-		    {
-		      "x": 23.571,
-		      "y": 82.5,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 94.286,
-		      "y": 82.5,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 58.929,
-		      "y": 21.26,
-		      "id": "UR",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1913127152c0666e
-	// Question: Identify an angle equivalent to ∠DOF
-	// Widget key: choice_d_angle
-	test("angle-diagram - [x1913127152c0666e] Identify an angle equivalent to ∠DOF (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "UL",
-		      "from": "V"
-		    },
-		    {
-		      "to": "UR",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 165,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 14,
-		      "vertex": "V",
-		      "pointOnFirstRay": "UL",
-		      "pointOnSecondRay": "UR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 18,
-		      "vertex": "V",
-		      "pointOnFirstRay": "UL",
-		      "pointOnSecondRay": "UR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 22,
-		      "vertex": "V",
-		      "pointOnFirstRay": "UL",
-		      "pointOnSecondRay": "UR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 26,
-		      "vertex": "V",
-		      "pointOnFirstRay": "UL",
-		      "pointOnSecondRay": "UR"
-		    }
-		  ],
-		  "height": 94,
-		  "points": [
-		    {
-		      "x": 82.5,
-		      "y": 74,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 20,
-		      "y": 20,
-		      "id": "UL",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 145,
-		      "y": 20,
-		      "id": "UR",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -27452,44 +25110,44 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 250,
+		  "width": 375,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#7854ab",
 		      "label": " ",
-		      "radius": 40,
+		      "radius": 45,
 		      "vertex": "A",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 200,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 50,
-		      "y": 50,
+		      "x": 75,
+		      "y": 75,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 67.365,
-		      "y": 148.481,
+		      "x": 101.0475,
+		      "y": 222.7215,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 197.721,
-		      "y": 76.047,
+		      "x": 296.5815,
+		      "y": 114.0705,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 199.429,
-		      "y": 36.927,
+		      "x": 299.1435,
+		      "y": 55.3905,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
@@ -27513,13 +25171,17 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfdb19823bd9c15bf
-	// Question: Identify the named angle from the diagram
+	// Question: Identify the diagram representing the same angle as ∠CPB
 	// Widget key: image_1
-	test("angle-diagram - [xfdb19823bd9c15bf] Identify the named angle from the diagram (1)", async () => {
+	test("angle-diagram - [xfdb19823bd9c15bf] Identify the diagram representing the same angle as ∠CPB (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
+		    {
+		      "to": "P",
+		      "from": "A"
+		    },
 		    {
 		      "to": "A",
 		      "from": "P"
@@ -27527,6 +25189,14 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "to": "B",
 		      "from": "P"
+		    },
+		    {
+		      "to": "P",
+		      "from": "B"
+		    },
+		    {
+		      "to": "P",
+		      "from": "C"
 		    },
 		    {
 		      "to": "C",
@@ -27537,39 +25207,52 @@ describe("angleDiagram widget tests", () => {
 		      "from": "P"
 		    },
 		    {
+		      "to": "P",
+		      "from": "D"
+		    },
+		    {
 		      "to": "E",
 		      "from": "D"
 		    },
 		    {
-		      "to": "P",
-		      "from": "D"
+		      "to": "D",
+		      "from": "E"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 265,
+		  "width": 420,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
-		      "label": null,
-		      "radius": 30,
+		      "label": " ",
+		      "radius": 18,
 		      "vertex": "P",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#11accd",
-		      "label": null,
-		      "radius": 22,
-		      "vertex": "P",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
+		      "color": "#1fab54",
+		      "label": " ",
+		      "radius": 18,
+		      "vertex": "D",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "P"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "radius": 24,
+		      "vertex": "D",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "P"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": null,
+		      "label": " ",
 		      "radius": 26,
 		      "vertex": "P",
 		      "pointOnFirstRay": "B",
@@ -27578,8 +25261,17 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": null,
-		      "radius": 30,
+		      "label": " ",
+		      "radius": 32,
+		      "vertex": "P",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": " ",
+		      "radius": 38,
 		      "vertex": "P",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
@@ -27587,8 +25279,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 16,
+		      "label": " ",
+		      "radius": 42,
 		      "vertex": "P",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "B"
@@ -27596,8 +25288,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 20,
+		      "label": " ",
+		      "radius": 48,
 		      "vertex": "P",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "B"
@@ -27605,8 +25297,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 24,
+		      "label": " ",
+		      "radius": 54,
 		      "vertex": "P",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "B"
@@ -27614,71 +25306,53 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 28,
+		      "label": " ",
+		      "radius": 60,
 		      "vertex": "P",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": null,
-		      "radius": 16,
-		      "vertex": "D",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "P"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": null,
-		      "radius": 20,
-		      "vertex": "D",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "P"
 		    }
 		  ],
-		  "height": 146,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 53,
-		      "y": 79.5,
+		      "x": 80,
+		      "y": 180,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 132.5,
-		      "y": 79.5,
-		      "id": "P",
-		      "label": "P",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 212,
-		      "y": 79.5,
+		      "x": 340,
+		      "y": 180,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 67.377,
-		      "y": 125.099,
+		      "x": 210,
+		      "y": 180,
+		      "id": "P",
+		      "label": "P",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 120,
+		      "y": 260,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 197.623,
-		      "y": 33.901,
+		      "x": 270,
+		      "y": 100,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 67.377,
-		      "y": 33.901,
+		      "x": 340,
+		      "y": 100,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
@@ -27702,9 +25376,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfdb19823bd9c15bf
-	// Question: Identify the named angle from the diagram
-	// Widget key: choice_a_visual
-	test("angle-diagram - [xfdb19823bd9c15bf] Identify the named angle from the diagram (2)", async () => {
+	// Question: Identify the diagram representing the same angle as ∠CPB
+	// Widget key: choice_a_angle
+	test("angle-diagram - [xfdb19823bd9c15bf] Identify the diagram representing the same angle as ∠CPB (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -27719,39 +25393,39 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 185,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
-		      "label": null,
-		      "radius": 16,
+		      "label": " ",
+		      "radius": 28,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "DL"
 		    }
 		  ],
-		  "height": 62,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 95,
-		      "y": 18,
+		      "x": 180,
+		      "y": 150,
 		      "id": "V",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 25,
-		      "y": 18,
+		      "x": 60,
+		      "y": 150,
 		      "id": "L",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 55,
-		      "y": 50,
+		      "x": 110,
+		      "y": 220,
 		      "id": "DL",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -27773,9 +25447,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfdb19823bd9c15bf
-	// Question: Identify the named angle from the diagram
-	// Widget key: choice_b_visual
-	test("angle-diagram - [xfdb19823bd9c15bf] Identify the named angle from the diagram (3)", async () => {
+	// Question: Identify the diagram representing the same angle as ∠CPB
+	// Widget key: choice_b_angle
+	test("angle-diagram - [xfdb19823bd9c15bf] Identify the diagram representing the same angle as ∠CPB (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -27790,13 +25464,13 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 185,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": null,
-		      "radius": 14,
+		      "label": " ",
+		      "radius": 22,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "DL"
@@ -27804,34 +25478,34 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": null,
-		      "radius": 18,
+		      "label": " ",
+		      "radius": 28,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "DL"
 		    }
 		  ],
-		  "height": 62,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 95,
-		      "y": 18,
+		      "x": 180,
+		      "y": 150,
 		      "id": "V",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 25,
-		      "y": 18,
+		      "x": 60,
+		      "y": 150,
 		      "id": "L",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 55,
-		      "y": 50,
+		      "x": 110,
+		      "y": 220,
 		      "id": "DL",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -27853,9 +25527,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfdb19823bd9c15bf
-	// Question: Identify the named angle from the diagram
-	// Widget key: choice_c_visual
-	test("angle-diagram - [xfdb19823bd9c15bf] Identify the named angle from the diagram (4)", async () => {
+	// Question: Identify the diagram representing the same angle as ∠CPB
+	// Widget key: choice_c_angle
+	test("angle-diagram - [xfdb19823bd9c15bf] Identify the diagram representing the same angle as ∠CPB (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -27870,534 +25544,13 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 185,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": null,
-		      "radius": 10,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "DL"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": null,
-		      "radius": 14,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "DL"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": null,
-		      "radius": 18,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "DL"
-		    }
-		  ],
-		  "height": 62,
-		  "points": [
-		    {
-		      "x": 82.222,
-		      "y": 10.278,
-		      "id": "V",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 143.889,
-		      "y": 10.278,
-		      "id": "R",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 31.708,
-		      "y": 45.648,
-		      "id": "DL",
-		      "label": null,
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xfdb19823bd9c15bf
-	// Question: Identify the named angle from the diagram
-	// Widget key: choice_d_visual
-	test("angle-diagram - [xfdb19823bd9c15bf] Identify the named angle from the diagram (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "R",
-		      "from": "V"
-		    },
-		    {
-		      "to": "UR",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 185,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 10,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 14,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 18,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 22,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR"
-		    }
-		  ],
-		  "height": 62,
-		  "points": [
-		    {
-		      "x": 95,
-		      "y": 40,
-		      "id": "V",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 160,
-		      "y": 40,
-		      "id": "R",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 140,
-		      "y": 10,
-		      "id": "UR",
-		      "label": null,
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5203f0a80fc526c4
-	// Question: Identify the same angle as ∠GPB
-	// Widget key: image_1
-	test("angle-diagram - [x5203f0a80fc526c4] Identify the same angle as ∠GPB (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "A",
-		      "from": "P"
-		    },
-		    {
-		      "to": "F",
-		      "from": "P"
-		    },
-		    {
-		      "to": "B",
-		      "from": "P"
-		    },
-		    {
-		      "to": "G",
-		      "from": "P"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 265,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": " ",
-		      "radius": 42,
-		      "vertex": "P",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "F"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 22,
-		      "vertex": "P",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 26,
-		      "vertex": "P",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 30,
-		      "vertex": "P",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "G"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 34,
-		      "vertex": "P",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "G"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 38,
-		      "vertex": "P",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "G"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
 		      "label": " ",
 		      "radius": 18,
-		      "vertex": "P",
-		      "pointOnFirstRay": "G",
-		      "pointOnSecondRay": "A"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 22,
-		      "vertex": "P",
-		      "pointOnFirstRay": "G",
-		      "pointOnSecondRay": "A"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 26,
-		      "vertex": "P",
-		      "pointOnFirstRay": "G",
-		      "pointOnSecondRay": "A"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 30,
-		      "vertex": "P",
-		      "pointOnFirstRay": "G",
-		      "pointOnSecondRay": "A"
-		    }
-		  ],
-		  "height": 146,
-		  "points": [
-		    {
-		      "x": 132.5,
-		      "y": 79.5,
-		      "id": "P",
-		      "label": "P",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 53,
-		      "y": 79.5,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 212,
-		      "y": 79.5,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 197.623,
-		      "y": 33.901,
-		      "id": "F",
-		      "label": "F",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 67.377,
-		      "y": 125.099,
-		      "id": "G",
-		      "label": "G",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5203f0a80fc526c4
-	// Question: Identify the same angle as ∠GPB
-	// Widget key: choice_a_visual
-	test("angle-diagram - [x5203f0a80fc526c4] Identify the same angle as ∠GPB (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "L",
-		      "from": "V"
-		    },
-		    {
-		      "to": "UR",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 150,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#e07d10",
-		      "label": " ",
-		      "radius": 18,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "UR"
-		    }
-		  ],
-		  "height": 58,
-		  "points": [
-		    {
-		      "x": 66.667,
-		      "y": 16.667,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 16.667,
-		      "y": 16.667,
-		      "id": "L",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 116.667,
-		      "y": 6,
-		      "id": "UR",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5203f0a80fc526c4
-	// Question: Identify the same angle as ∠GPB
-	// Widget key: choice_b_visual
-	test("angle-diagram - [x5203f0a80fc526c4] Identify the same angle as ∠GPB (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "UR",
-		      "from": "V"
-		    },
-		    {
-		      "to": "R",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 150,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 14,
-		      "vertex": "V",
-		      "pointOnFirstRay": "UR",
-		      "pointOnSecondRay": "R"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 18,
-		      "vertex": "V",
-		      "pointOnFirstRay": "UR",
-		      "pointOnSecondRay": "R"
-		    }
-		  ],
-		  "height": 58,
-		  "points": [
-		    {
-		      "x": 66.667,
-		      "y": 16.667,
-		      "id": "V",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 116.667,
-		      "y": 6,
-		      "id": "UR",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 116.667,
-		      "y": 16.667,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5203f0a80fc526c4
-	// Question: Identify the same angle as ∠GPB
-	// Widget key: choice_c_visual
-	test("angle-diagram - [x5203f0a80fc526c4] Identify the same angle as ∠GPB (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "R",
-		      "from": "V"
-		    },
-		    {
-		      "to": "DL",
-		      "from": "V"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 150,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 16,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "DL"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 20,
 		      "vertex": "V",
 		      "pointOnFirstRay": "R",
 		      "pointOnSecondRay": "DL"
@@ -28410,27 +25563,36 @@ describe("angleDiagram widget tests", () => {
 		      "vertex": "V",
 		      "pointOnFirstRay": "R",
 		      "pointOnSecondRay": "DL"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": " ",
+		      "radius": 30,
+		      "vertex": "V",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "DL"
 		    }
 		  ],
-		  "height": 58,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 66.667,
-		      "y": 16.667,
+		      "x": 180,
+		      "y": 150,
 		      "id": "V",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 116.667,
-		      "y": 16.667,
+		      "x": 300,
+		      "y": 150,
 		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 25.709,
-		      "y": 45.345,
+		      "x": 110,
+		      "y": 220,
 		      "id": "DL",
 		      "label": " ",
 		      "shape": "circle"
@@ -28453,52 +25615,34 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x5203f0a80fc526c4
-	// Question: Identify the same angle as ∠GPB
-	// Widget key: choice_d_visual
-	test("angle-diagram - [x5203f0a80fc526c4] Identify the same angle as ∠GPB (5)", async () => {
+	// Extracted from question: xfdb19823bd9c15bf
+	// Question: Identify the diagram representing the same angle as ∠CPB
+	// Widget key: choice_d_angle
+	test("angle-diagram - [xfdb19823bd9c15bf] Identify the diagram representing the same angle as ∠CPB (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "DL",
+		      "to": "R",
 		      "from": "V"
 		    },
 		    {
-		      "to": "L",
+		      "to": "UR",
 		      "from": "V"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 150,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
 		      "label": " ",
-		      "radius": 12,
+		      "radius": 18,
 		      "vertex": "V",
-		      "pointOnFirstRay": "DL",
-		      "pointOnSecondRay": "L"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 16,
-		      "vertex": "V",
-		      "pointOnFirstRay": "DL",
-		      "pointOnSecondRay": "L"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "radius": 20,
-		      "vertex": "V",
-		      "pointOnFirstRay": "DL",
-		      "pointOnSecondRay": "L"
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "UR"
 		    },
 		    {
 		      "type": "arc",
@@ -28506,30 +25650,48 @@ describe("angleDiagram widget tests", () => {
 		      "label": " ",
 		      "radius": 24,
 		      "vertex": "V",
-		      "pointOnFirstRay": "DL",
-		      "pointOnSecondRay": "L"
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "UR"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#aa87ff",
+		      "label": " ",
+		      "radius": 30,
+		      "vertex": "V",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "UR"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#aa87ff",
+		      "label": " ",
+		      "radius": 36,
+		      "vertex": "V",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "UR"
 		    }
 		  ],
-		  "height": 58,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 66.667,
-		      "y": 16.667,
+		      "x": 180,
+		      "y": 150,
 		      "id": "V",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 25.709,
-		      "y": 45.345,
-		      "id": "DL",
+		      "x": 300,
+		      "y": 150,
+		      "id": "R",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 16.667,
-		      "y": 16.667,
-		      "id": "L",
+		      "x": 250,
+		      "y": 80,
+		      "id": "UR",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -28577,51 +25739,51 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": " ",
-		      "radius": 50,
+		      "radius": 48,
 		      "vertex": "A",
 		      "pointOnFirstRay": "C",
 		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 37.5,
+		      "x": 200,
+		      "y": 90,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 163.024,
-		      "y": 111.361,
+		      "x": 230,
+		      "y": 220,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 255.715,
-		      "y": 75.977,
+		      "x": 300,
+		      "y": 160,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 262.072,
-		      "y": 27.695,
+		      "x": 320,
+		      "y": 70,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 37.928,
-		      "y": 47.305,
+		      "x": 80,
+		      "y": 110,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
@@ -28686,7 +25848,7 @@ describe("angleDiagram widget tests", () => {
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 225,
+		  "height": 425,
 		  "points": [
 		    {
 		      "x": 150,
@@ -28757,11 +25919,19 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "B",
+		      "to": "P",
 		      "from": "A"
 		    },
 		    {
 		      "to": "A",
+		      "from": "P"
+		    },
+		    {
+		      "to": "B",
+		      "from": "P"
+		    },
+		    {
+		      "to": "P",
 		      "from": "B"
 		    },
 		    {
@@ -28773,36 +25943,12 @@ describe("angleDiagram widget tests", () => {
 		      "from": "D"
 		    },
 		    {
-		      "to": "D",
+		      "to": "P",
 		      "from": "C"
 		    },
 		    {
 		      "to": "C",
-		      "from": "D"
-		    },
-		    {
-		      "to": "A",
 		      "from": "P"
-		    },
-		    {
-		      "to": "P",
-		      "from": "A"
-		    },
-		    {
-		      "to": "B",
-		      "from": "P"
-		    },
-		    {
-		      "to": "P",
-		      "from": "B"
-		    },
-		    {
-		      "to": "C",
-		      "from": "P"
-		    },
-		    {
-		      "to": "P",
-		      "from": "C"
 		    },
 		    {
 		      "to": "D",
@@ -28814,13 +25960,13 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 265,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
-		      "label": null,
-		      "radius": 22,
+		      "label": " ",
+		      "radius": 24,
 		      "vertex": "P",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "C"
@@ -28828,8 +25974,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": null,
-		      "radius": 18,
+		      "label": " ",
+		      "radius": 20,
 		      "vertex": "D",
 		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "P"
@@ -28837,8 +25983,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": null,
-		      "radius": 24,
+		      "label": " ",
+		      "radius": 28,
 		      "vertex": "D",
 		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "P"
@@ -28846,25 +25992,7 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": null,
-		      "radius": 18,
-		      "vertex": "P",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": null,
-		      "radius": 24,
-		      "vertex": "P",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": null,
+		      "label": " ",
 		      "radius": 30,
 		      "vertex": "P",
 		      "pointOnFirstRay": "B",
@@ -28872,17 +26000,26 @@ describe("angleDiagram widget tests", () => {
 		    },
 		    {
 		      "type": "arc",
-		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 12,
+		      "color": "#11accd",
+		      "label": " ",
+		      "radius": 38,
 		      "vertex": "P",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "B"
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": " ",
+		      "radius": 46,
+		      "vertex": "P",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
+		      "label": " ",
 		      "radius": 18,
 		      "vertex": "P",
 		      "pointOnFirstRay": "D",
@@ -28891,8 +26028,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 24,
+		      "label": " ",
+		      "radius": 26,
 		      "vertex": "P",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "B"
@@ -28900,55 +26037,64 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 30,
+		      "label": " ",
+		      "radius": 34,
+		      "vertex": "P",
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "B"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#aa87ff",
+		      "label": " ",
+		      "radius": 42,
 		      "vertex": "P",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "B"
 		    }
 		  ],
-		  "height": 146,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 53,
-		      "y": 79.5,
+		      "x": 60,
+		      "y": 180,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 212,
-		      "y": 79.5,
+		      "x": 200,
+		      "y": 180,
+		      "id": "P",
+		      "label": "P",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 340,
+		      "y": 180,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 67.377,
-		      "y": 33.901,
+		      "x": 100,
+		      "y": 80,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 197.623,
-		      "y": 33.901,
+		      "x": 300,
+		      "y": 80,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 67.377,
-		      "y": 125.099,
+		      "x": 100,
+		      "y": 260,
 		      "id": "C",
 		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 132.5,
-		      "y": 79.5,
-		      "id": "P",
-		      "label": "P",
 		      "shape": "circle"
 		    }
 		  ]
@@ -28971,55 +26117,55 @@ describe("angleDiagram widget tests", () => {
 
 	// Extracted from question: xe0ee8a3981ef7520
 	// Question: Identify the same angle as ∠EDC
-	// Widget key: angle_choice_a
+	// Widget key: choice_a_angle
 	test("angle-diagram - [xe0ee8a3981ef7520] Identify the same angle as ∠EDC (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
-		      "from": "V"
+		      "to": "left",
+		      "from": "v"
 		    },
 		    {
-		      "to": "DL",
-		      "from": "V"
+		      "to": "downLeft",
+		      "from": "v"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 185,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
-		      "label": null,
-		      "radius": 18,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "DL"
+		      "label": " ",
+		      "radius": 28,
+		      "vertex": "v",
+		      "pointOnFirstRay": "left",
+		      "pointOnSecondRay": "downLeft"
 		    }
 		  ],
-		  "height": 93,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 137.963,
-		      "y": 14.417,
-		      "id": "V",
-		      "label": null,
+		      "x": 240,
+		      "y": 180,
+		      "id": "v",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 47.037,
-		      "y": 14.417,
-		      "id": "L",
-		      "label": null,
+		      "x": 120,
+		      "y": 180,
+		      "id": "left",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 47.037,
-		      "y": 78.083,
-		      "id": "DL",
-		      "label": null,
+		      "x": 180,
+		      "y": 240,
+		      "id": "downLeft",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -29042,64 +26188,64 @@ describe("angleDiagram widget tests", () => {
 
 	// Extracted from question: xe0ee8a3981ef7520
 	// Question: Identify the same angle as ∠EDC
-	// Widget key: angle_choice_b
+	// Widget key: choice_b_angle
 	test("angle-diagram - [xe0ee8a3981ef7520] Identify the same angle as ∠EDC (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "L",
-		      "from": "V"
+		      "to": "left",
+		      "from": "v"
 		    },
 		    {
-		      "to": "DL",
-		      "from": "V"
+		      "to": "downLeft",
+		      "from": "v"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 185,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": null,
-		      "radius": 18,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "DL"
+		      "label": " ",
+		      "radius": 24,
+		      "vertex": "v",
+		      "pointOnFirstRay": "left",
+		      "pointOnSecondRay": "downLeft"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": null,
-		      "radius": 24,
-		      "vertex": "V",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "DL"
+		      "label": " ",
+		      "radius": 32,
+		      "vertex": "v",
+		      "pointOnFirstRay": "left",
+		      "pointOnSecondRay": "downLeft"
 		    }
 		  ],
-		  "height": 93,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 137.963,
-		      "y": 14.417,
-		      "id": "V",
-		      "label": null,
+		      "x": 240,
+		      "y": 180,
+		      "id": "v",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 47.037,
-		      "y": 14.417,
-		      "id": "L",
-		      "label": null,
+		      "x": 120,
+		      "y": 180,
+		      "id": "left",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 47.037,
-		      "y": 78.083,
-		      "id": "DL",
-		      "label": null,
+		      "x": 180,
+		      "y": 240,
+		      "id": "downLeft",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -29122,73 +26268,73 @@ describe("angleDiagram widget tests", () => {
 
 	// Extracted from question: xe0ee8a3981ef7520
 	// Question: Identify the same angle as ∠EDC
-	// Widget key: angle_choice_c
+	// Widget key: choice_c_angle
 	test("angle-diagram - [xe0ee8a3981ef7520] Identify the same angle as ∠EDC (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "R",
-		      "from": "V"
+		      "to": "right",
+		      "from": "v"
 		    },
 		    {
-		      "to": "DL",
-		      "from": "V"
+		      "to": "downLeft",
+		      "from": "v"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 185,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": null,
-		      "radius": 16,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "DL"
+		      "label": " ",
+		      "radius": 24,
+		      "vertex": "v",
+		      "pointOnFirstRay": "right",
+		      "pointOnSecondRay": "downLeft"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": null,
-		      "radius": 22,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "DL"
+		      "label": " ",
+		      "radius": 32,
+		      "vertex": "v",
+		      "pointOnFirstRay": "right",
+		      "pointOnSecondRay": "downLeft"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": null,
-		      "radius": 28,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "DL"
+		      "label": " ",
+		      "radius": 40,
+		      "vertex": "v",
+		      "pointOnFirstRay": "right",
+		      "pointOnSecondRay": "downLeft"
 		    }
 		  ],
-		  "height": 93,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 95,
-		      "y": 20,
-		      "id": "V",
-		      "label": null,
+		      "x": 180,
+		      "y": 180,
+		      "id": "v",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 175,
-		      "y": 20,
-		      "id": "R",
-		      "label": null,
+		      "x": 300,
+		      "y": 180,
+		      "id": "right",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 40,
-		      "y": 80,
-		      "id": "DL",
-		      "label": null,
+		      "x": 120,
+		      "y": 240,
+		      "id": "downLeft",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -29211,82 +26357,82 @@ describe("angleDiagram widget tests", () => {
 
 	// Extracted from question: xe0ee8a3981ef7520
 	// Question: Identify the same angle as ∠EDC
-	// Widget key: angle_choice_d
+	// Widget key: choice_d_angle
 	test("angle-diagram - [xe0ee8a3981ef7520] Identify the same angle as ∠EDC (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "R",
-		      "from": "V"
+		      "to": "right",
+		      "from": "v"
 		    },
 		    {
-		      "to": "UR",
-		      "from": "V"
+		      "to": "upRight",
+		      "from": "v"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 185,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 12,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR"
+		      "label": " ",
+		      "radius": 20,
+		      "vertex": "v",
+		      "pointOnFirstRay": "upRight",
+		      "pointOnSecondRay": "right"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 18,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR"
+		      "label": " ",
+		      "radius": 28,
+		      "vertex": "v",
+		      "pointOnFirstRay": "upRight",
+		      "pointOnSecondRay": "right"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 24,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR"
+		      "label": " ",
+		      "radius": 36,
+		      "vertex": "v",
+		      "pointOnFirstRay": "upRight",
+		      "pointOnSecondRay": "right"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 30,
-		      "vertex": "V",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR"
+		      "label": " ",
+		      "radius": 44,
+		      "vertex": "v",
+		      "pointOnFirstRay": "upRight",
+		      "pointOnSecondRay": "right"
 		    }
 		  ],
-		  "height": 93,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 60,
-		      "y": 70,
-		      "id": "V",
-		      "label": null,
+		      "x": 140,
+		      "y": 200,
+		      "id": "v",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 160,
-		      "y": 70,
-		      "id": "R",
-		      "label": null,
+		      "x": 260,
+		      "y": 200,
+		      "id": "right",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 160,
-		      "y": 20,
-		      "id": "UR",
-		      "label": null,
+		      "x": 220,
+		      "y": 120,
+		      "id": "upRight",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -29308,9 +26454,104 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8c4468ea2edae114
-	// Question: Identify the same angle as ∠DEF
-	// Widget key: choice_a_angle
-	test("angle-diagram - [x8c4468ea2edae114] Identify the same angle as ∠DEF (2)", async () => {
+	// Question: Identify an angle from a diagram
+	// Widget key: image_1
+	test("angle-diagram - [x8c4468ea2edae114] Identify an angle from a diagram (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "D",
+		      "from": "O"
+		    },
+		    {
+		      "to": "E",
+		      "from": "D"
+		    },
+		    {
+		      "to": "F",
+		      "from": "E"
+		    },
+		    {
+		      "to": "O",
+		      "from": "F"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 400,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "radius": 24,
+		      "vertex": "E",
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "F"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "radius": 30,
+		      "vertex": "E",
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "F"
+		    }
+		  ],
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 200,
+		      "y": 200,
+		      "id": "O",
+		      "label": "O",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 220,
+		      "y": 180,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 260,
+		      "y": 180,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 240,
+		      "y": 220,
+		      "id": "F",
+		      "label": "F",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8c4468ea2edae114
+	// Question: Identify an angle from a diagram
+	// Widget key: angle_choice_a
+	test("angle-diagram - [x8c4468ea2edae114] Identify an angle from a diagram (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -29325,39 +26566,39 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 244.615,
+		  "width": 320,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#e07d10",
-		      "label": null,
-		      "radius": 22,
+		      "label": " ",
+		      "radius": 28,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "DR"
 		    }
 		  ],
-		  "height": 265,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 91.731,
-		      "y": 79.539,
-		      "id": "V",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 30.509,
-		      "y": 79.5,
+		      "x": 80,
+		      "y": 160,
 		      "id": "L",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 122.308,
-		      "y": 132.5,
+		      "x": 160,
+		      "y": 160,
+		      "id": "V",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 240,
+		      "y": 240,
 		      "id": "DR",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -29379,9 +26620,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8c4468ea2edae114
-	// Question: Identify the same angle as ∠DEF
-	// Widget key: choice_b_angle
-	test("angle-diagram - [x8c4468ea2edae114] Identify the same angle as ∠DEF (3)", async () => {
+	// Question: Identify an angle from a diagram
+	// Widget key: angle_choice_b
+	test("angle-diagram - [x8c4468ea2edae114] Identify an angle from a diagram (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -29396,13 +26637,13 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 244.615,
+		  "width": 320,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": null,
-		      "radius": 28,
+		      "label": " ",
+		      "radius": 22,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "DL"
@@ -29410,34 +26651,34 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": null,
-		      "radius": 32,
+		      "label": " ",
+		      "radius": 28,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "DL"
 		    }
 		  ],
-		  "height": 265,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 90.985,
-		      "y": 20.455,
-		      "id": "V",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 22.727,
-		      "y": 20.498,
+		      "x": 80,
+		      "y": 160,
 		      "id": "L",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 56.818,
-		      "y": 79.545,
+		      "x": 160,
+		      "y": 160,
+		      "id": "V",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 120,
+		      "y": 240,
 		      "id": "DL",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -29459,9 +26700,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8c4468ea2edae114
-	// Question: Identify the same angle as ∠DEF
-	// Widget key: choice_c_angle
-	test("angle-diagram - [x8c4468ea2edae114] Identify the same angle as ∠DEF (4)", async () => {
+	// Question: Identify an angle from a diagram
+	// Widget key: angle_choice_c
+	test("angle-diagram - [x8c4468ea2edae114] Identify an angle from a diagram (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -29476,13 +26717,13 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 244.615,
+		  "width": 320,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": null,
-		      "radius": 21.375,
+		      "label": " ",
+		      "radius": 20,
 		      "vertex": "V",
 		      "pointOnFirstRay": "UL",
 		      "pointOnSecondRay": "UR"
@@ -29490,8 +26731,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": null,
-		      "radius": 24.375,
+		      "label": " ",
+		      "radius": 26,
 		      "vertex": "V",
 		      "pointOnFirstRay": "UL",
 		      "pointOnSecondRay": "UR"
@@ -29499,34 +26740,34 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": null,
-		      "radius": 27.375,
+		      "label": " ",
+		      "radius": 32,
 		      "vertex": "V",
 		      "pointOnFirstRay": "UL",
 		      "pointOnSecondRay": "UR"
 		    }
 		  ],
-		  "height": 265,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 122.308,
-		      "y": 132.5,
-		      "id": "V",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 91.731,
-		      "y": 79.539,
+		      "x": 100,
+		      "y": 160,
 		      "id": "UL",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 152.885,
-		      "y": 79.539,
+		      "x": 160,
+		      "y": 240,
+		      "id": "V",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 220,
+		      "y": 160,
 		      "id": "UR",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -29548,9 +26789,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8c4468ea2edae114
-	// Question: Identify the same angle as ∠DEF
-	// Widget key: choice_d_angle
-	test("angle-diagram - [x8c4468ea2edae114] Identify the same angle as ∠DEF (5)", async () => {
+	// Question: Identify an angle from a diagram
+	// Widget key: angle_choice_d
+	test("angle-diagram - [x8c4468ea2edae114] Identify an angle from a diagram (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -29565,13 +26806,13 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 244.615,
+		  "width": 320,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 22.021,
+		      "label": " ",
+		      "radius": 18,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "DR"
@@ -29579,8 +26820,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 25.021,
+		      "label": " ",
+		      "radius": 24,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "DR"
@@ -29588,8 +26829,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 28.021,
+		      "label": " ",
+		      "radius": 30,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "DR"
@@ -29597,34 +26838,34 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#aa87ff",
-		      "label": null,
-		      "radius": 31.021,
+		      "label": " ",
+		      "radius": 36,
 		      "vertex": "V",
 		      "pointOnFirstRay": "L",
 		      "pointOnSecondRay": "DR"
 		    }
 		  ],
-		  "height": 265,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 183.462,
-		      "y": 132.5,
-		      "id": "V",
-		      "label": null,
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 122.308,
-		      "y": 132.5,
+		      "x": 80,
+		      "y": 160,
 		      "id": "L",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 214.106,
-		      "y": 185.5,
+		      "x": 160,
+		      "y": 160,
+		      "id": "V",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 240,
+		      "y": 240,
 		      "id": "DR",
-		      "label": null,
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -29654,11 +26895,7 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
+		      "to": "E",
 		      "from": "A"
 		    },
 		    {
@@ -29666,7 +26903,11 @@ describe("angleDiagram widget tests", () => {
 		      "from": "A"
 		    },
 		    {
-		      "to": "E",
+		      "to": "C",
+		      "from": "A"
+		    },
+		    {
+		      "to": "B",
 		      "from": "A"
 		    }
 		  ],
@@ -29676,14 +26917,14 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": null,
+		      "label": " ",
 		      "radius": 42,
 		      "vertex": "A",
 		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 210,
+		  "height": 310,
 		  "points": [
 		    {
 		      "x": 150,
@@ -29739,19 +26980,15 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x73921aa4f13b91ff
-	// Question: Name the marked angle
+	// Question: Name a marked angle
 	// Widget key: image_1
-	test("angle-diagram - [x73921aa4f13b91ff] Name the marked angle", async () => {
+	test("angle-diagram - [x73921aa4f13b91ff] Name a marked angle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
+		      "to": "E",
 		      "from": "A"
 		    },
 		    {
@@ -29759,7 +26996,11 @@ describe("angleDiagram widget tests", () => {
 		      "from": "A"
 		    },
 		    {
-		      "to": "E",
+		      "to": "C",
+		      "from": "A"
+		    },
+		    {
+		      "to": "B",
 		      "from": "A"
 		    }
 		  ],
@@ -29770,45 +27011,45 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#7854ab",
 		      "label": " ",
-		      "radius": 32,
+		      "radius": 45,
 		      "vertex": "A",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "B"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": 150,
-		      "y": 37.5,
+		      "y": 80,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 163.024,
-		      "y": 111.361,
+		      "x": 175,
+		      "y": 230,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 255.715,
-		      "y": 75.977,
+		      "x": 250,
+		      "y": 160,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 262.072,
-		      "y": 27.695,
+		      "x": 260,
+		      "y": 40,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 37.928,
-		      "y": 47.305,
+		      "x": 40,
+		      "y": 110,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
@@ -29861,58 +27102,58 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": null,
 		      "radius": 50,
 		      "vertex": "A",
 		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "F"
 		    }
 		  ],
-		  "height": 225,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 112.5,
+		      "x": 200,
+		      "y": 150,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 81.484,
-		      "y": 143.005,
+		      "x": 108.645,
+		      "y": 190.673,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 194.084,
-		      "y": 173.176,
+		      "x": 258.779,
+		      "y": 230.901,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 209.101,
-		      "y": 66.325,
+		      "x": 278.801,
+		      "y": 88.433,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 78.671,
-		      "y": 89.324,
+		      "x": 104.895,
+		      "y": 119.099,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 37.5,
+		      "x": 200,
+		      "y": 50,
 		      "id": "F",
 		      "label": "F",
 		      "shape": "circle"
@@ -29935,10 +27176,10 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x972a1f343e5ade21
-	// Question: Classify the relationship between two angles
+	// Extracted from question: x67d6e0d31788d73b
+	// Question: Identify the relationship between two angles
 	// Widget key: image_1
-	test("angle-diagram - [x972a1f343e5ade21] Classify the relationship between two angles", async () => {
+	test("angle-diagram - [x67d6e0d31788d73b] Identify the relationship between two angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -29948,7 +27189,7 @@ describe("angleDiagram widget tests", () => {
 		      "from": "A"
 		    },
 		    {
-		      "to": "C",
+		      "to": "D",
 		      "from": "A"
 		    },
 		    {
@@ -29956,399 +27197,75 @@ describe("angleDiagram widget tests", () => {
 		      "from": "A"
 		    },
 		    {
-		      "to": "D",
+		      "to": "C",
 		      "from": "A"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "right",
-		      "color": "#1fab54",
-		      "label": "N",
+		      "color": "#000000",
+		      "label": "right angle",
 		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "B"
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "E"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "M",
-		      "radius": 28,
+		      "label": "x",
+		      "radius": 35,
 		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "E"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "y",
+		      "radius": 50,
+		      "vertex": "A",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 188,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 110,
+		      "x": 200,
+		      "y": 120,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 70,
-		      "y": 150,
+		      "x": 120,
+		      "y": 60,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 230,
-		      "y": 70,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 100,
-		      "y": 40,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 180,
+		      "x": 320,
 		      "y": 180,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x35bae9da7a313d40
-	// Question: Determine the angle relationship from a diagram
-	// Widget key: image_1
-	test("angle-diagram - [x35bae9da7a313d40] Determine the angle relationship from a diagram", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "A",
-		      "from": "E"
 		    },
 		    {
-		      "to": "P",
-		      "from": "A"
-		    },
-		    {
-		      "to": "B",
-		      "from": "P"
-		    },
-		    {
-		      "to": "D",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
-		      "from": "D"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 300,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "m",
-		      "radius": 28,
-		      "vertex": "A",
-		      "pointOnFirstRay": "E",
-		      "pointOnSecondRay": "D"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "n",
-		      "radius": 34,
-		      "vertex": "A",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "P"
-		    }
-		  ],
-		  "height": 150,
-		  "points": [
-		    {
-		      "x": 40.909,
-		      "y": 81.818,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 81.818,
-		      "y": 81.818,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 163.636,
-		      "y": 81.818,
-		      "id": "P",
-		      "label": "P",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 245.455,
-		      "y": 81.818,
+		      "x": 200,
+		      "y": 260,
 		      "id": "B",
 		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 230.658,
-		      "y": 34.889,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 96.615,
-		      "y": 128.747,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbb827635dd2cbc73
-	// Question: Identify the relationship between marked angles
-	// Widget key: image_1
-	test("angle-diagram - [xbb827635dd2cbc73] Identify the relationship between marked angles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "X",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
-		      "from": "X"
-		    },
-		    {
-		      "to": "X",
-		      "from": "B"
-		    },
-		    {
-		      "to": "D",
-		      "from": "X"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 240,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "b",
-		      "radius": 26,
-		      "vertex": "X",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "a",
-		      "radius": 26,
-		      "vertex": "X",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "D"
-		    }
-		  ],
-		  "height": 144,
-		  "points": [
-		    {
-		      "x": 20,
-		      "y": 132,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 144,
-		      "y": 12,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 236,
-		      "y": 12,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 176,
-		      "y": 132,
-		      "id": "D",
-		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 160,
-		      "y": 60,
-		      "id": "X",
-		      "label": "X",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x47e6c2a6284e18f6
-	// Question: Identify the relationship between two angles
-	// Widget key: image_1
-	test("angle-diagram - [x47e6c2a6284e18f6] Identify the relationship between two angles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "B",
-		      "from": "C"
-		    },
-		    {
-		      "to": "A",
-		      "from": "B"
-		    },
-		    {
-		      "to": "D",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
-		      "from": "D"
-		    },
-		    {
-		      "to": "X",
-		      "from": "D"
-		    },
-		    {
-		      "to": "B",
-		      "from": "X"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 300,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "M",
-		      "radius": 28,
-		      "vertex": "D",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "X"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "N",
-		      "radius": 40,
-		      "vertex": "D",
-		      "pointOnFirstRay": "X",
-		      "pointOnSecondRay": "A"
-		    },
-		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": "90°",
-		      "vertex": "D",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "A"
-		    }
-		  ],
-		  "height": 272.727,
-		  "points": [
-		    {
-		      "x": 68.182,
-		      "y": 54.545,
+		      "y": 190,
 		      "id": "C",
 		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 231.818,
-		      "y": 54.545,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 231.818,
-		      "y": 218.182,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 68.182,
-		      "y": 218.182,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 150,
-		      "y": 136.364,
-		      "id": "X",
-		      "label": "X",
 		      "shape": "circle"
 		    }
 		  ]
@@ -30370,20 +27287,40 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7c12ee79384f3ce6
-	// Question: Identify the relationship between two angles
+	// Question: Identify the relationship between two angles forming a straight line
 	// Widget key: image_1
-	test("angle-diagram - [x7c12ee79384f3ce6] Identify the relationship between two angles", async () => {
+	test("angle-diagram - [x7c12ee79384f3ce6] Identify the relationship between two angles forming a straight line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
+		      "to": "D",
+		      "from": "E"
+		    },
+		    {
+		      "to": "E",
+		      "from": "D"
+		    },
+		    {
 		      "to": "P",
 		      "from": "A"
 		    },
 		    {
+		      "to": "A",
+		      "from": "P"
+		    },
+		    {
 		      "to": "B",
 		      "from": "P"
+		    },
+		    {
+		      "to": "P",
+		      "from": "B"
+		    },
+		    {
+		      "to": "P",
+		      "from": "D"
 		    },
 		    {
 		      "to": "D",
@@ -30391,11 +27328,120 @@ describe("angleDiagram widget tests", () => {
 		    },
 		    {
 		      "to": "C",
-		      "from": "D"
+		      "from": "P"
+		    },
+		    {
+		      "to": "P",
+		      "from": "C"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 300,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "m",
+		      "radius": 40,
+		      "vertex": "P",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "D"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "n",
+		      "radius": 28,
+		      "vertex": "P",
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "B"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 96.615,
+		      "y": 69.778,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 230.658,
+		      "y": 69.778,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 81.818,
+		      "y": 163.636,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 245.455,
+		      "y": 163.636,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 163.636,
+		      "y": 163.636,
+		      "id": "P",
+		      "label": "P",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 96.615,
+		      "y": 257.494,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x35bae9da7a313d40
+	// Question: Identify the relationship between two angles
+	// Widget key: image_1
+	test("angle-diagram - [x35bae9da7a313d40] Identify the relationship between two angles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "A",
+		      "from": "E"
+		    },
+		    {
+		      "to": "B",
+		      "from": "A"
 		    },
 		    {
 		      "to": "D",
-		      "from": "E"
+		      "from": "A"
+		    },
+		    {
+		      "to": "P",
+		      "from": "A"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -30406,22 +27452,29 @@ describe("angleDiagram widget tests", () => {
 		      "color": "#11accd",
 		      "label": "m",
 		      "radius": 28,
-		      "vertex": "P",
-		      "pointOnFirstRay": "A",
+		      "vertex": "A",
+		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "D"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "n",
-		      "radius": 20,
-		      "vertex": "P",
+		      "radius": 38,
+		      "vertex": "A",
 		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "B"
+		      "pointOnSecondRay": "P"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 450,
 		  "points": [
+		    {
+		      "x": 40.909,
+		      "y": 81.818,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
 		    {
 		      "x": 81.818,
 		      "y": 81.818,
@@ -30437,31 +27490,220 @@ describe("angleDiagram widget tests", () => {
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 163.636,
-		      "y": 81.818,
-		      "id": "P",
-		      "label": "P",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 230.658,
-		      "y": 34.889,
+		      "x": 190,
+		      "y": 40,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 96.615,
-		      "y": 34.889,
+		      "x": 163.636,
+		      "y": 81.818,
+		      "id": "P",
+		      "label": "P",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x972a1f343e5ade21
+	// Question: Identify the relationship between two angles
+	// Widget key: image_1
+	test("angle-diagram - [x972a1f343e5ade21] Identify the relationship between two angles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "A",
+		      "from": "E"
+		    },
+		    {
+		      "to": "C",
+		      "from": "A"
+		    },
+		    {
+		      "to": "B",
+		      "from": "A"
+		    },
+		    {
+		      "to": "D",
+		      "from": "A"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 360,
+		  "angles": [
+		    {
+		      "type": "right",
+		      "color": "#1fab54",
+		      "label": "n",
+		      "vertex": "A",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "B"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "m",
+		      "radius": 34,
+		      "vertex": "A",
+		      "pointOnFirstRay": "E",
+		      "pointOnSecondRay": "D"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 180,
+		      "y": 180,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 48,
+		      "y": 132,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 96.615,
-		      "y": 128.747,
+		      "x": 312,
+		      "y": 228,
 		      "id": "C",
 		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 218,
+		      "y": 77,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 120,
+		      "y": 200,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbb827635dd2cbc73
+	// Question: Identify the angle relationship
+	// Widget key: image_1
+	test("angle-diagram - [xbb827635dd2cbc73] Identify the angle relationship", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "P1",
+		      "from": "O"
+		    },
+		    {
+		      "to": "P2",
+		      "from": "O"
+		    },
+		    {
+		      "to": "P3",
+		      "from": "O"
+		    },
+		    {
+		      "to": "P4",
+		      "from": "O"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 300,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "a",
+		      "radius": 24,
+		      "vertex": "O",
+		      "pointOnFirstRay": "P1",
+		      "pointOnSecondRay": "P2"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "b",
+		      "radius": 24,
+		      "vertex": "O",
+		      "pointOnFirstRay": "P4",
+		      "pointOnSecondRay": "P3"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 150,
+		      "y": 150,
+		      "id": "O",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 140,
+		      "y": 250,
+		      "id": "P1",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 160,
+		      "y": 250,
+		      "id": "P2",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 160,
+		      "y": 50,
+		      "id": "P3",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 140,
+		      "y": 50,
+		      "id": "P4",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -30491,16 +27733,16 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "A",
-		      "from": "X"
+		      "to": "X",
+		      "from": "A"
 		    },
 		    {
 		      "to": "C",
 		      "from": "X"
 		    },
 		    {
-		      "to": "B",
-		      "from": "X"
+		      "to": "X",
+		      "from": "B"
 		    },
 		    {
 		      "to": "D",
@@ -30512,13 +27754,21 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 260,
+		  "width": 360,
 		  "angles": [
+		    {
+		      "type": "right",
+		      "color": "#000000",
+		      "label": "right angle",
+		      "vertex": "X",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "B"
+		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "M",
-		      "radius": 28,
+		      "label": "m",
+		      "radius": 36,
 		      "vertex": "X",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "Y"
@@ -30526,61 +27776,53 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "N",
-		      "radius": 28,
+		      "label": "n",
+		      "radius": 26,
 		      "vertex": "X",
 		      "pointOnFirstRay": "Y",
 		      "pointOnSecondRay": "B"
-		    },
-		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": " ",
-		      "vertex": "X",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "B"
 		    }
 		  ],
-		  "height": 162.5,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 130,
-		      "y": 97.5,
-		      "id": "X",
-		      "label": "X",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 38.38,
-		      "y": 64.153,
+		      "x": 67.24,
+		      "y": 118.96,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 221.62,
-		      "y": 130.847,
+		      "x": 292.76,
+		      "y": 201.04,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 152.231,
-		      "y": 36.42,
+		      "x": 180,
+		      "y": 160,
+		      "id": "X",
+		      "label": "X",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 210.78,
+		      "y": 75.43,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 113.327,
-		      "y": 143.31,
+		      "x": 149.22,
+		      "y": 244.57,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 121.535,
-		      "y": 49.491,
+		      "x": 154.64,
+		      "y": 105.62,
 		      "id": "Y",
 		      "label": "Y",
 		      "shape": "circle"
@@ -30604,46 +27846,46 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xac8dea473bf77b4b
-	// Question: Identify the relationship between two angles
+	// Question: Identify the relationship between two angles on a straight line
 	// Widget key: image_1
-	test("angle-diagram - [xac8dea473bf77b4b] Identify the relationship between two angles", async () => {
+	test("angle-diagram - [xac8dea473bf77b4b] Identify the relationship between two angles on a straight line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "X",
-		      "from": "A"
+		      "to": "A",
+		      "from": "X"
 		    },
 		    {
 		      "to": "C",
 		      "from": "X"
 		    },
 		    {
-		      "to": "X",
-		      "from": "E"
-		    },
-		    {
-		      "to": "Y",
+		      "to": "B",
 		      "from": "X"
-		    },
-		    {
-		      "to": "X",
-		      "from": "B"
 		    },
 		    {
 		      "to": "D",
 		      "from": "X"
+		    },
+		    {
+		      "to": "E",
+		      "from": "X"
+		    },
+		    {
+		      "to": "Y",
+		      "from": "X"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "m",
-		      "radius": 26,
+		      "radius": 40,
 		      "vertex": "X",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "E"
@@ -30652,7 +27894,7 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "n",
-		      "radius": 18,
+		      "radius": 30,
 		      "vertex": "X",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "Y"
@@ -30666,53 +27908,53 @@ describe("angleDiagram widget tests", () => {
 		      "pointOnSecondRay": "D"
 		    }
 		  ],
-		  "height": 188,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 140,
-		      "y": 20,
+		      "x": 60,
+		      "y": 200,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 160,
-		      "y": 130,
+		      "x": 340,
+		      "y": 200,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 60,
-		      "y": 70,
+		      "x": 200,
+		      "y": 60,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 200,
+		      "y": 340,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 80,
+		      "y": 320,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 260,
+		      "x": 320,
 		      "y": 80,
 		      "id": "Y",
 		      "label": "Y",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 95,
-		      "y": 85,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 205,
-		      "y": 65,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 150,
-		      "y": 75,
+		      "x": 200,
+		      "y": 200,
 		      "id": "X",
 		      "label": "X",
 		      "shape": "circle"
@@ -30744,211 +27986,79 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "R",
-		      "from": "X"
-		    },
-		    {
 		      "to": "L",
-		      "from": "X"
+		      "from": "O"
 		    },
 		    {
-		      "to": "U1",
-		      "from": "X"
+		      "to": "R",
+		      "from": "O"
 		    },
 		    {
-		      "to": "D1",
-		      "from": "X"
-		    },
-		    {
-		      "to": "U2",
-		      "from": "X"
-		    },
-		    {
-		      "to": "D2",
-		      "from": "X"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 250,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "a",
-		      "radius": 24,
-		      "vertex": "X",
-		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "D1"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "b",
-		      "radius": 24,
-		      "vertex": "X",
-		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "U1"
-		    }
-		  ],
-		  "height": 125,
-		  "points": [
-		    {
-		      "x": 136,
-		      "y": 68,
-		      "id": "X",
-		      "label": "X",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 30,
-		      "y": 68,
-		      "id": "L",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 220,
-		      "y": 68,
-		      "id": "R",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 80,
-		      "y": 20,
-		      "id": "U1",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 200,
-		      "y": 110,
-		      "id": "D1",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 235,
-		      "y": 15,
-		      "id": "U2",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 20,
-		      "y": 100,
-		      "id": "D2",
-		      "label": "F",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x67d6e0d31788d73b
-	// Question: Identify the relationship between two angles
-	// Widget key: image_1
-	test("angle-diagram - [x67d6e0d31788d73b] Identify the relationship between two angles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "A",
-		      "from": "E"
+		      "to": "U",
+		      "from": "O"
 		    },
 		    {
 		      "to": "D",
-		      "from": "A"
-		    },
-		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
-		      "from": "A"
+		      "from": "O"
 		    }
 		  ],
 		  "type": "angleDiagram",
 		  "width": 400,
 		  "angles": [
 		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": "90°",
-		      "vertex": "A",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "E"
-		    },
-		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "X",
-		      "radius": 26,
-		      "vertex": "A",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "E"
+		      "label": "∠a",
+		      "radius": 36,
+		      "vertex": "O",
+		      "pointOnFirstRay": "L",
+		      "pointOnSecondRay": "D"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "Y",
+		      "label": "∠b",
 		      "radius": 36,
-		      "vertex": "A",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
+		      "vertex": "O",
+		      "pointOnFirstRay": "R",
+		      "pointOnSecondRay": "U"
 		    }
 		  ],
-		  "height": 200,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 50,
-		      "y": 63,
-		      "id": "E",
-		      "label": "E",
+		      "x": 40,
+		      "y": 150,
+		      "id": "L",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 360,
+		      "y": 150,
+		      "id": "R",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 320,
+		      "y": 60,
+		      "id": "U",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 80,
+		      "y": 240,
+		      "id": "D",
+		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 200,
-		      "y": 50,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 350,
-		      "y": 40,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 208,
 		      "y": 150,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 186,
-		      "y": 74,
-		      "id": "C",
-		      "label": "C",
+		      "id": "O",
+		      "label": " ",
 		      "shape": "circle"
 		    }
 		  ]
@@ -31003,13 +28113,21 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
+		    {
+		      "type": "right",
+		      "color": "#000000",
+		      "label": "right angle",
+		      "vertex": "X",
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
+		    },
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "M",
-		      "radius": 28,
+		      "radius": 40,
 		      "vertex": "X",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "Y"
@@ -31018,67 +28136,59 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "N",
-		      "radius": 38,
+		      "radius": 55,
 		      "vertex": "X",
 		      "pointOnFirstRay": "Y",
 		      "pointOnSecondRay": "C"
-		    },
-		    {
-		      "type": "right",
-		      "color": "#000000",
-		      "label": "90°",
-		      "vertex": "X",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 188,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 50,
-		      "y": 94,
+		      "x": 70,
+		      "y": 150,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 260,
-		      "y": 94,
+		      "x": 330,
+		      "y": 150,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 20,
+		      "x": 200,
+		      "y": 50,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 170,
+		      "x": 200,
+		      "y": 250,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 80,
-		      "y": 48,
+		      "x": 135,
+		      "y": 215,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 220,
-		      "y": 140,
+		      "x": 265,
+		      "y": 85,
 		      "id": "Y",
 		      "label": "Y",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 94,
+		      "x": 200,
+		      "y": 150,
 		      "id": "X",
 		      "label": "X",
 		      "shape": "circle"
@@ -31101,33 +28211,29 @@ describe("angleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9b61e786d9ebb251
-	// Question: Identify the relationship between two angles on a line
+	// Extracted from question: x5d3635cafb31cb73
+	// Question: Identify the relationship between two angles
 	// Widget key: image_1
-	test("angle-diagram - [x9b61e786d9ebb251] Identify the relationship between two angles on a line", async () => {
+	test("angle-diagram - [x5d3635cafb31cb73] Identify the relationship between two angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "C",
-		      "from": "E"
+		      "to": "H_left",
+		      "from": "V"
 		    },
 		    {
-		      "to": "E",
-		      "from": "C"
+		      "to": "H_right",
+		      "from": "V"
 		    },
 		    {
-		      "to": "F",
-		      "from": "D"
+		      "to": "U_left",
+		      "from": "V"
 		    },
 		    {
-		      "to": "D",
-		      "from": "F"
-		    },
-		    {
-		      "to": "B",
-		      "from": "A"
+		      "to": "D_right",
+		      "from": "V"
 		    }
 		  ],
 		  "type": "angleDiagram",
@@ -31136,64 +28242,175 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "M",
-		      "radius": 28,
-		      "vertex": "A",
-		      "pointOnFirstRay": "E",
+		      "label": "a",
+		      "radius": 40,
+		      "vertex": "V",
+		      "pointOnFirstRay": "H_right",
+		      "pointOnSecondRay": "U_left"
+		    },
+		    {
+		      "type": "arc",
+		      "color": "#1fab54",
+		      "label": "b",
+		      "radius": 40,
+		      "vertex": "V",
+		      "pointOnFirstRay": "H_left",
+		      "pointOnSecondRay": "D_right"
+		    }
+		  ],
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 150,
+		      "y": 150,
+		      "id": "V",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 40,
+		      "y": 150,
+		      "id": "H_left",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 260,
+		      "y": 150,
+		      "id": "H_right",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 80,
+		      "y": 80,
+		      "id": "U_left",
+		      "label": " ",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 220,
+		      "y": 220,
+		      "id": "D_right",
+		      "label": " ",
+		      "shape": "circle"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for angleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x47e6c2a6284e18f6
+	// Question: Identify the relationship between two angles
+	// Widget key: image_1
+	test("angle-diagram - [x47e6c2a6284e18f6] Identify the relationship between two angles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "rays": [
+		    {
+		      "to": "B",
+		      "from": "C"
+		    },
+		    {
+		      "to": "A",
+		      "from": "B"
+		    },
+		    {
+		      "to": "D",
+		      "from": "A"
+		    },
+		    {
+		      "to": "C",
+		      "from": "D"
+		    },
+		    {
+		      "to": "X",
+		      "from": "B"
+		    },
+		    {
+		      "to": "D",
+		      "from": "X"
+		    }
+		  ],
+		  "type": "angleDiagram",
+		  "width": 300,
+		  "angles": [
+		    {
+		      "type": "arc",
+		      "color": "#11accd",
+		      "label": "m",
+		      "radius": 32,
+		      "vertex": "D",
+		      "pointOnFirstRay": "C",
 		      "pointOnSecondRay": "B"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "N",
-		      "radius": 22,
-		      "vertex": "A",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "C"
+		      "label": "n",
+		      "radius": 48,
+		      "vertex": "D",
+		      "pointOnFirstRay": "A",
+		      "pointOnSecondRay": "B"
+		    },
+		    {
+		      "type": "right",
+		      "color": "#000000",
+		      "label": "right angle",
+		      "vertex": "D",
+		      "pointOnFirstRay": "C",
+		      "pointOnSecondRay": "A"
 		    }
 		  ],
-		  "height": 187.5,
+		  "height": 303,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 112.5,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 44.285,
-		      "y": 74.023,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 255.715,
-		      "y": 150.977,
+		      "x": 68.182,
+		      "y": 54.545,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 136.976,
-		      "y": 38.639,
+		      "x": 231.818,
+		      "y": 54.545,
+		      "id": "B",
+		      "label": "B",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 231.818,
+		      "y": 218.182,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 68.182,
+		      "y": 218.182,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 159.768,
-		      "y": 167.895,
-		      "id": "F",
-		      "label": "F",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 187.5,
-		      "y": 47.548,
-		      "id": "B",
-		      "label": "B",
+		      "x": 150,
+		      "y": 136.364,
+		      "id": "X",
+		      "label": "X",
 		      "shape": "circle"
 		    }
 		  ]
@@ -31215,15 +28432,19 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3789cb03f3708515
-	// Question: Identify the relationship between two angles
+	// Question: Relationship between ∠x and ∠y
 	// Widget key: image_1
-	test("angle-diagram - [x3789cb03f3708515] Identify the relationship between two angles", async () => {
+	test("angle-diagram - [x3789cb03f3708515] Relationship between ∠x and ∠y", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "rays": [
 		    {
-		      "to": "E",
+		      "to": "B",
+		      "from": "A"
+		    },
+		    {
+		      "to": "C",
 		      "from": "A"
 		    },
 		    {
@@ -31231,11 +28452,7 @@ describe("angleDiagram widget tests", () => {
 		      "from": "A"
 		    },
 		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
+		      "to": "E",
 		      "from": "A"
 		    }
 		  ],
@@ -31245,7 +28462,7 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "right",
 		      "color": "#000000",
-		      "label": "90°",
+		      "label": null,
 		      "vertex": "A",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "D"
@@ -31253,8 +28470,8 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "y",
-		      "radius": 26,
+		      "label": null,
+		      "radius": 28,
 		      "vertex": "A",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
@@ -31262,48 +28479,48 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "x",
-		      "radius": 36,
+		      "label": null,
+		      "radius": 44,
 		      "vertex": "A",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 200,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 200,
-		      "y": 100,
+		      "y": 50,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 60,
-		      "y": 100,
-		      "id": "E",
-		      "label": "E",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 340,
-		      "y": 100,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 200,
-		      "y": 170,
+		      "x": 208.716,
+		      "y": 149.619,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 280,
-		      "y": 160,
+		      "x": 349.429,
+		      "y": 36.927,
 		      "id": "C",
 		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 340.954,
+		      "y": 101.303,
+		      "id": "D",
+		      "label": "D",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 50.571,
+		      "y": 63.073,
+		      "id": "E",
+		      "label": "E",
 		      "shape": "circle"
 		    }
 		  ]
@@ -31337,16 +28554,28 @@ describe("angleDiagram widget tests", () => {
 		      "from": "E"
 		    },
 		    {
+		      "to": "E",
+		      "from": "B"
+		    },
+		    {
+		      "to": "A",
+		      "from": "D"
+		    },
+		    {
 		      "to": "D",
 		      "from": "A"
 		    },
 		    {
-		      "to": "D",
-		      "from": "P"
-		    },
-		    {
 		      "to": "C",
 		      "from": "D"
+		    },
+		    {
+		      "to": "D",
+		      "from": "C"
+		    },
+		    {
+		      "to": "P",
+		      "from": "A"
 		    },
 		    {
 		      "to": "B",
@@ -31354,67 +28583,67 @@ describe("angleDiagram widget tests", () => {
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "M",
-		      "radius": 28,
+		      "label": "m",
+		      "radius": 40,
 		      "vertex": "A",
-		      "pointOnFirstRay": "B",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "P"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "N",
-		      "radius": 22,
+		      "label": "n",
+		      "radius": 35,
 		      "vertex": "P",
 		      "pointOnFirstRay": "D",
 		      "pointOnSecondRay": "B"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 37.5,
-		      "y": 112.5,
+		      "x": 50,
+		      "y": 150,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 96,
-		      "y": 112.5,
-		      "id": "P",
-		      "label": "P",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 150,
-		      "y": 112.5,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 262.5,
-		      "y": 112.5,
+		      "x": 350,
+		      "y": 150,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 37.5,
+		      "x": 200,
+		      "y": 150,
+		      "id": "A",
+		      "label": "A",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 241,
+		      "y": 150,
+		      "id": "P",
+		      "label": "P",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 140,
+		      "y": 60,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 168.9,
-		      "y": 11.25,
+		      "x": 320,
+		      "y": 220,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
@@ -31438,9 +28667,9 @@ describe("angleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0313c307de8d9b3e
-	// Question: Identify the angle relationship
+	// Question: Identify the relationship between two angles
 	// Widget key: image_1
-	test("angle-diagram - [x0313c307de8d9b3e] Identify the angle relationship", async () => {
+	test("angle-diagram - [x0313c307de8d9b3e] Identify the relationship between two angles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -31454,11 +28683,19 @@ describe("angleDiagram widget tests", () => {
 		      "from": "X"
 		    },
 		    {
-		      "to": "X",
+		      "to": "B",
+		      "from": "E"
+		    },
+		    {
+		      "to": "F",
 		      "from": "B"
 		    },
 		    {
-		      "to": "D",
+		      "to": "X",
+		      "from": "D"
+		    },
+		    {
+		      "to": "B",
 		      "from": "X"
 		    }
 		  ],
@@ -31468,57 +28705,71 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": " ",
-		      "radius": 22,
+		      "label": "∠a",
+		      "radius": 28,
 		      "vertex": "X",
-		      "pointOnFirstRay": "C",
-		      "pointOnSecondRay": "B"
+		      "pointOnFirstRay": "B",
+		      "pointOnSecondRay": "C"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": " ",
-		      "radius": 22,
+		      "label": "∠b",
+		      "radius": 28,
 		      "vertex": "X",
-		      "pointOnFirstRay": "A",
-		      "pointOnSecondRay": "D"
+		      "pointOnFirstRay": "D",
+		      "pointOnSecondRay": "A"
 		    }
 		  ],
-		  "height": 200,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 30,
-		      "y": 110,
+		      "x": 80,
+		      "y": 200,
 		      "id": "A",
-		      "label": " ",
+		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 210,
-		      "y": 110,
+		      "x": 220,
+		      "y": 200,
 		      "id": "X",
-		      "label": " ",
+		      "label": "X",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 360,
+		      "y": 200,
+		      "id": "C",
+		      "label": "C",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 60,
+		      "y": 100,
+		      "id": "E",
+		      "label": "E",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 260,
+		      "y": 100,
+		      "id": "B",
+		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
 		      "x": 380,
-		      "y": 110,
-		      "id": "C",
-		      "label": " ",
+		      "y": 100,
+		      "id": "F",
+		      "label": "F",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 330,
-		      "y": 40,
-		      "id": "B",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 90,
-		      "y": 180,
+		      "x": 188,
+		      "y": 280,
 		      "id": "D",
-		      "label": " ",
+		      "label": "D",
 		      "shape": "circle"
 		    }
 		  ]
@@ -31556,19 +28807,19 @@ describe("angleDiagram widget tests", () => {
 		      "from": "O"
 		    },
 		    {
-		      "to": "UR1",
+		      "to": "UR",
 		      "from": "O"
 		    },
 		    {
-		      "to": "DL1",
+		      "to": "DL",
 		      "from": "O"
 		    },
 		    {
-		      "to": "UL2",
+		      "to": "UL",
 		      "from": "O"
 		    },
 		    {
-		      "to": "DR2",
+		      "to": "DR",
 		      "from": "O"
 		    }
 		  ],
@@ -31579,69 +28830,69 @@ describe("angleDiagram widget tests", () => {
 		      "type": "arc",
 		      "color": "#11accd",
 		      "label": "a",
-		      "radius": 34,
+		      "radius": 40,
 		      "vertex": "O",
 		      "pointOnFirstRay": "R",
-		      "pointOnSecondRay": "UR1"
+		      "pointOnSecondRay": "UR"
 		    },
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
 		      "label": "b",
-		      "radius": 34,
+		      "radius": 40,
 		      "vertex": "O",
 		      "pointOnFirstRay": "L",
-		      "pointOnSecondRay": "DL1"
+		      "pointOnSecondRay": "DL"
 		    }
 		  ],
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 200,
-		      "y": 120,
+		      "y": 200,
 		      "id": "O",
 		      "label": "O",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 360,
-		      "y": 120,
-		      "id": "R",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 40,
-		      "y": 120,
+		      "x": 60,
+		      "y": 200,
 		      "id": "L",
+		      "label": "L",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 340,
+		      "y": 200,
+		      "id": "R",
+		      "label": "R",
+		      "shape": "circle"
+		    },
+		    {
+		      "x": 80,
+		      "y": 80,
+		      "id": "UL",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 300,
-		      "y": 60,
-		      "id": "UR1",
+		      "x": 320,
+		      "y": 80,
+		      "id": "UR",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 100,
-		      "y": 180,
-		      "id": "DL1",
+		      "x": 80,
+		      "y": 320,
+		      "id": "DL",
 		      "label": " ",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 100,
-		      "y": 60,
-		      "id": "UL2",
-		      "label": " ",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 300,
-		      "y": 180,
-		      "id": "DR2",
+		      "x": 320,
+		      "y": 320,
+		      "id": "DR",
 		      "label": " ",
 		      "shape": "circle"
 		    }
@@ -31672,11 +28923,19 @@ describe("angleDiagram widget tests", () => {
 		const input = {
 		  "rays": [
 		    {
-		      "to": "E",
-		      "from": "A"
+		      "to": "A",
+		      "from": "E"
 		    },
 		    {
 		      "to": "D",
+		      "from": "A"
+		    },
+		    {
+		      "to": "A",
+		      "from": "D"
+		    },
+		    {
+		      "to": "E",
 		      "from": "A"
 		    },
 		    {
@@ -31684,18 +28943,26 @@ describe("angleDiagram widget tests", () => {
 		      "from": "A"
 		    },
 		    {
+		      "to": "A",
+		      "from": "B"
+		    },
+		    {
 		      "to": "C",
 		      "from": "A"
+		    },
+		    {
+		      "to": "A",
+		      "from": "C"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 360,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "M",
-		      "radius": 18,
+		      "label": "m",
+		      "radius": 32,
 		      "vertex": "A",
 		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "B"
@@ -31703,161 +28970,48 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "N",
-		      "radius": 26,
+		      "label": "n",
+		      "radius": 44,
 		      "vertex": "A",
 		      "pointOnFirstRay": "B",
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 150,
-		      "y": 37.5,
+		      "x": 180,
+		      "y": 180,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 37.928,
-		      "y": 47.305,
+		      "x": 120,
+		      "y": 120,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 262.072,
-		      "y": 27.695,
+		      "x": 240,
+		      "y": 240,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 255.715,
-		      "y": 75.977,
+		      "x": 240,
+		      "y": 120,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 163.024,
-		      "y": 111.361,
+		      "x": 300,
+		      "y": 160,
 		      "id": "C",
 		      "label": "C",
-		      "shape": "circle"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for angleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe3b0e7d1466cd895
-	// Question: Identify the relationship between two angles
-	// Widget key: image_1
-	test("angle-diagram - [xe3b0e7d1466cd895] Identify the relationship between two angles", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "rays": [
-		    {
-		      "to": "F",
-		      "from": "A"
-		    },
-		    {
-		      "to": "D",
-		      "from": "A"
-		    },
-		    {
-		      "to": "C",
-		      "from": "A"
-		    },
-		    {
-		      "to": "B",
-		      "from": "A"
-		    },
-		    {
-		      "to": "E",
-		      "from": "A"
-		    }
-		  ],
-		  "type": "angleDiagram",
-		  "width": 300,
-		  "angles": [
-		    {
-		      "type": "arc",
-		      "color": "#11accd",
-		      "label": "m",
-		      "radius": 22,
-		      "vertex": "A",
-		      "pointOnFirstRay": "F",
-		      "pointOnSecondRay": "D"
-		    },
-		    {
-		      "type": "arc",
-		      "color": "#1fab54",
-		      "label": "n",
-		      "radius": 28,
-		      "vertex": "A",
-		      "pointOnFirstRay": "D",
-		      "pointOnSecondRay": "C"
-		    }
-		  ],
-		  "height": 225,
-		  "points": [
-		    {
-		      "x": 150,
-		      "y": 112.5,
-		      "id": "A",
-		      "label": "A",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 150,
-		      "y": 37.5,
-		      "id": "F",
-		      "label": "F",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 221.329,
-		      "y": 89.324,
-		      "id": "D",
-		      "label": "D",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 194.084,
-		      "y": 173.176,
-		      "id": "C",
-		      "label": "C",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 105.916,
-		      "y": 173.176,
-		      "id": "B",
-		      "label": "B",
-		      "shape": "circle"
-		    },
-		    {
-		      "x": 78.671,
-		      "y": 89.324,
-		      "id": "E",
-		      "label": "E",
 		      "shape": "circle"
 		    }
 		  ]
@@ -31903,26 +29057,30 @@ describe("angleDiagram widget tests", () => {
 		      "from": "D"
 		    },
 		    {
-		      "to": "C",
+		      "to": "E",
 		      "from": "A"
 		    },
 		    {
-		      "to": "D",
-		      "from": "B"
+		      "to": "C",
+		      "from": "E"
 		    },
 		    {
 		      "to": "E",
-		      "from": "D"
+		      "from": "B"
+		    },
+		    {
+		      "to": "D",
+		      "from": "E"
 		    }
 		  ],
 		  "type": "angleDiagram",
-		  "width": 300,
+		  "width": 400,
 		  "angles": [
 		    {
 		      "type": "arc",
 		      "color": "#11accd",
-		      "label": "m",
-		      "radius": 18,
+		      "label": "∠ADE",
+		      "radius": 28,
 		      "vertex": "D",
 		      "pointOnFirstRay": "A",
 		      "pointOnSecondRay": "E"
@@ -31930,46 +29088,46 @@ describe("angleDiagram widget tests", () => {
 		    {
 		      "type": "arc",
 		      "color": "#1fab54",
-		      "label": "n",
-		      "radius": 22,
+		      "label": "∠EDC",
+		      "radius": 38,
 		      "vertex": "D",
 		      "pointOnFirstRay": "E",
 		      "pointOnSecondRay": "C"
 		    }
 		  ],
-		  "height": 150,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 50,
-		      "y": 125,
+		      "x": 40,
+		      "y": 230,
 		      "id": "A",
 		      "label": "A",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 125,
-		      "y": 25,
+		      "x": 100,
+		      "y": 60,
 		      "id": "B",
 		      "label": "B",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 250,
-		      "y": 25,
+		      "x": 340,
+		      "y": 60,
 		      "id": "C",
 		      "label": "C",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 175,
-		      "y": 125,
+		      "x": 280,
+		      "y": 230,
 		      "id": "D",
 		      "label": "D",
 		      "shape": "circle"
 		    },
 		    {
-		      "x": 150,
-		      "y": 75,
+		      "x": 190,
+		      "y": 145,
 		      "id": "E",
 		      "label": "E",
 		      "shape": "circle"

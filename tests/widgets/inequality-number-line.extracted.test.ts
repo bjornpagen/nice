@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.942Z
+// Generated on: 2025-09-18T05:17:02.130Z
 // Widget Type: inequalityNumberLine
 // Source: Real questions from database
 //
@@ -26,23 +26,23 @@ import * as logger from "@superbuilders/slog"
 
 describe("inequalityNumberLine widget tests", () => {
 	// Extracted from question: x58ec9209e7056649
-	// Question: Graph an inequality on a number line
+	// Question: Select the graph for the inequality x ≥ 3
 	// Widget key: nl_choice_a
-	test("inequality-number-line - [x58ec9209e7056649] Graph an inequality on a number line (1)", async () => {
+	test("inequality-number-line - [x58ec9209e7056649] Select the graph for the inequality x ≥ 3 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 5,
 		  "min": -5,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
+		  "width": 460,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#29ABCA",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -71,23 +71,23 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x58ec9209e7056649
-	// Question: Graph an inequality on a number line
+	// Question: Select the graph for the inequality x ≥ 3
 	// Widget key: nl_choice_b
-	test("inequality-number-line - [x58ec9209e7056649] Graph an inequality on a number line (2)", async () => {
+	test("inequality-number-line - [x58ec9209e7056649] Select the graph for the inequality x ≥ 3 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 5,
 		  "min": -5,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
+		  "width": 460,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#29ABCA",
 		      "start": {
 		        "at": {
 		          "type": "closed",
@@ -116,17 +116,17 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x58ec9209e7056649
-	// Question: Graph an inequality on a number line
+	// Question: Select the graph for the inequality x ≥ 3
 	// Widget key: nl_choice_c
-	test("inequality-number-line - [x58ec9209e7056649] Graph an inequality on a number line (3)", async () => {
+	test("inequality-number-line - [x58ec9209e7056649] Select the graph for the inequality x ≥ 3 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 5,
 		  "min": -5,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
+		  "width": 460,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -136,7 +136,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#29ABCA",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -161,433 +161,388 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5ef4c932569f7123
-	// Question: Graph an inequality on a number line
+	// Question: Graph x ≥ -5 on a number line
 	// Widget key: number_line_choice_a
-	test("inequality-number-line - [x5ef4c932569f7123] Graph an inequality on a number line (1)", async () => {
+	test("inequality-number-line - [x5ef4c932569f7123] Graph x ≥ -5 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 5,
 		  "min": -5,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
+		  "width": 420,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
-		      },
-		      "color": "#11ACCD66",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -5
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5ef4c932569f7123
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_b
-	test("inequality-number-line - [x5ef4c932569f7123] Graph an inequality on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11ACCD66",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": -5
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5ef4c932569f7123
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_c
-	test("inequality-number-line - [x5ef4c932569f7123] Graph an inequality on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11ACCD66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc48306c8ede05f66
-	// Question: Graph the inequality x ≤ 3
-	// Widget key: number_line_choice_a
-	test("inequality-number-line - [xc48306c8ede05f66] Graph the inequality x ≤ 3 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc48306c8ede05f66
-	// Question: Graph the inequality x ≤ 3
-	// Widget key: number_line_choice_b
-	test("inequality-number-line - [xc48306c8ede05f66] Graph the inequality x ≤ 3 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc48306c8ede05f66
-	// Question: Graph the inequality x ≤ 3
-	// Widget key: number_line_choice_c
-	test("inequality-number-line - [xc48306c8ede05f66] Graph the inequality x ≤ 3 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x93f8cb0ca90b7a13
-	// Question: Graph the inequality x ≥ −2 on a number line
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [x93f8cb0ca90b7a13] Graph the inequality x ≥ −2 on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x93f8cb0ca90b7a13
-	// Question: Graph the inequality x ≥ −2 on a number line
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [x93f8cb0ca90b7a13] Graph the inequality x ≥ −2 on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x93f8cb0ca90b7a13
-	// Question: Graph the inequality x ≥ −2 on a number line
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [x93f8cb0ca90b7a13] Graph the inequality x ≥ −2 on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7470e9413e6afac0
-	// Question: Select the number-line graph for x ≤ 0
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [x7470e9413e6afac0] Select the number-line graph for x ≤ 0 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
-		        },
-		        "type": "bounded"
 		      },
 		      "color": "#11ACCD80",
 		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": -5
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5ef4c932569f7123
+	// Question: Graph x ≥ -5 on a number line
+	// Widget key: number_line_choice_b
+	test("inequality-number-line - [x5ef4c932569f7123] Graph x ≥ -5 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 420,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#F18F0180",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -5
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5ef4c932569f7123
+	// Question: Graph x ≥ -5 on a number line
+	// Widget key: number_line_choice_c
+	test("inequality-number-line - [x5ef4c932569f7123] Graph x ≥ -5 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 420,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -5
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#FF414180",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc48306c8ede05f66
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [xc48306c8ede05f66] Graph an inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc48306c8ede05f66
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [xc48306c8ede05f66] Graph an inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc48306c8ede05f66
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [xc48306c8ede05f66] Graph an inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x93f8cb0ca90b7a13
+	// Question: Select the graph of x ≥ -2
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x93f8cb0ca90b7a13] Select the graph of x ≥ -2 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": -2
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x93f8cb0ca90b7a13
+	// Question: Select the graph of x ≥ -2
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x93f8cb0ca90b7a13] Select the graph of x ≥ -2 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -2
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x93f8cb0ca90b7a13
+	// Question: Select the graph of x ≥ -2
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x93f8cb0ca90b7a13] Select the graph of x ≥ -2 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -2
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
 		        "type": "unbounded"
 		      }
 		    }
@@ -611,9 +566,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x7470e9413e6afac0
-	// Question: Select the number-line graph for x ≤ 0
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [x7470e9413e6afac0] Select the number-line graph for x ≤ 0 (2)", async () => {
+	// Question: Graph the inequality x ≤ 0
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x7470e9413e6afac0] Graph the inequality x ≤ 0 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -621,17 +576,17 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 100,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "at": {
-		          "type": "open",
+		          "type": "closed",
 		          "value": 0
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#F18D9E80",
+		      "color": "#29abca",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -656,99 +611,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x7470e9413e6afac0
-	// Question: Select the number-line graph for x ≤ 0
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [x7470e9413e6afac0] Select the number-line graph for x ≤ 0 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#94D37E80",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc9cafd38b2b8f4ec
-	// Question: Graph x > 0
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [xc9cafd38b2b8f4ec] Graph x > 0 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc9cafd38b2b8f4ec
-	// Question: Graph x > 0
+	// Question: Graph the inequality x ≤ 0
 	// Widget key: nl_choice_b
-	test("inequality-number-line - [xc9cafd38b2b8f4ec] Graph x > 0 (2)", async () => {
+	test("inequality-number-line - [x7470e9413e6afac0] Graph the inequality x ≤ 0 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -756,7 +621,52 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 100,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7470e9413e6afac0
+	// Question: Graph the inequality x ≤ 0
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x7470e9413e6afac0] Graph the inequality x ≤ 0 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -766,7 +676,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#11accd",
+		      "color": "#29abca",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -791,9 +701,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc9cafd38b2b8f4ec
-	// Question: Graph x > 0
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [xc9cafd38b2b8f4ec] Graph x > 0 (3)", async () => {
+	// Question: Select the graph of x > 0 on a number line
+	// Widget key: choice_a_numberline
+	test("inequality-number-line - [xc9cafd38b2b8f4ec] Select the graph of x > 0 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -801,17 +711,152 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 100,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#11accd",
+		      "color": "#4287F54D",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc9cafd38b2b8f4ec
+	// Question: Select the graph of x > 0 on a number line
+	// Widget key: choice_b_numberline
+	test("inequality-number-line - [xc9cafd38b2b8f4ec] Select the graph of x > 0 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#4287F54D",
 		      "start": {
 		        "at": {
 		          "type": "closed",
 		          "value": 0
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc9cafd38b2b8f4ec
+	// Question: Select the graph of x > 0 on a number line
+	// Widget key: choice_c_numberline
+	test("inequality-number-line - [xc9cafd38b2b8f4ec] Select the graph of x > 0 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd12fe26936db3997
+	// Question: Graph x ≥ −1 on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [xd12fe26936db3997] Graph x ≥ −1 on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": -1
 		        },
 		        "type": "bounded"
 		      }
@@ -836,9 +881,639 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xd12fe26936db3997
+	// Question: Graph x ≥ −1 on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [xd12fe26936db3997] Graph x ≥ −1 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -1
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd12fe26936db3997
+	// Question: Graph x ≥ −1 on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [xd12fe26936db3997] Graph x ≥ −1 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -1
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8130da70da0c4b1d
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x8130da70da0c4b1d] Graph an inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA80",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 2
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8130da70da0c4b1d
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x8130da70da0c4b1d] Graph an inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA80",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 2
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8130da70da0c4b1d
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x8130da70da0c4b1d] Graph an inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 2
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29ABCA80",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5a50ef47021aeb97
+	// Question: Graph the inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x5a50ef47021aeb97] Graph the inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 5
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29ABCA80",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5a50ef47021aeb97
+	// Question: Graph the inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x5a50ef47021aeb97] Graph the inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA80",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 5
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5a50ef47021aeb97
+	// Question: Graph the inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x5a50ef47021aeb97] Graph the inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 5
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29ABCA80",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xec68f5e8aa43a26f
+	// Question: Graph the inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [xec68f5e8aa43a26f] Graph the inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xec68f5e8aa43a26f
+	// Question: Graph the inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [xec68f5e8aa43a26f] Graph the inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xec68f5e8aa43a26f
+	// Question: Graph the inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [xec68f5e8aa43a26f] Graph the inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7af81be6b2c580c8
+	// Question: Graph the inequality x < 1
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x7af81be6b2c580c8] Graph the inequality x < 1 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd80",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7af81be6b2c580c8
+	// Question: Graph the inequality x < 1
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x7af81be6b2c580c8] Graph the inequality x < 1 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd80",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7af81be6b2c580c8
+	// Question: Graph the inequality x < 1
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x7af81be6b2c580c8] Graph the inequality x < 1 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd80",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x178910c33e6dc9e8
 	// Question: Graph an inequality on a number line
 	// Widget key: graph_choice_a
-	test("inequality-number-line - [xd12fe26936db3997] Graph an inequality on a number line (1)", async () => {
+	test("inequality-number-line - [x178910c33e6dc9e8] Graph an inequality on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -846,17 +1521,17 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#29ABCA80",
+		      "color": "#11accd66",
 		      "start": {
 		        "at": {
 		          "type": "open",
-		          "value": -1
+		          "value": -4
 		        },
 		        "type": "bounded"
 		      }
@@ -880,10 +1555,10 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd12fe26936db3997
+	// Extracted from question: x178910c33e6dc9e8
 	// Question: Graph an inequality on a number line
 	// Widget key: graph_choice_b
-	test("inequality-number-line - [xd12fe26936db3997] Graph an inequality on a number line (2)", async () => {
+	test("inequality-number-line - [x178910c33e6dc9e8] Graph an inequality on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -891,17 +1566,17 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#29ABCA80",
+		      "color": "#ff990066",
 		      "start": {
 		        "at": {
 		          "type": "closed",
-		          "value": -1
+		          "value": -4
 		        },
 		        "type": "bounded"
 		      }
@@ -925,10 +1600,10 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd12fe26936db3997
+	// Extracted from question: x178910c33e6dc9e8
 	// Question: Graph an inequality on a number line
 	// Widget key: graph_choice_c
-	test("inequality-number-line - [xd12fe26936db3997] Graph an inequality on a number line (3)", async () => {
+	test("inequality-number-line - [x178910c33e6dc9e8] Graph an inequality on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -936,682 +1611,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -1
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8130da70da0c4b1d
-	// Question: Select the graph of x > 2
-	// Widget key: number_line_choice_a
-	test("inequality-number-line - [x8130da70da0c4b1d] Select the graph of x > 2 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8130da70da0c4b1d
-	// Question: Select the graph of x > 2
-	// Widget key: number_line_choice_b
-	test("inequality-number-line - [x8130da70da0c4b1d] Select the graph of x > 2 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8130da70da0c4b1d
-	// Question: Select the graph of x > 2
-	// Widget key: number_line_choice_c
-	test("inequality-number-line - [x8130da70da0c4b1d] Select the graph of x > 2 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5a50ef47021aeb97
-	// Question: Graph the inequality x ≤ 5
-	// Widget key: graph_choice_a
-	test("inequality-number-line - [x5a50ef47021aeb97] Graph the inequality x ≤ 5 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5a50ef47021aeb97
-	// Question: Graph the inequality x ≤ 5
-	// Widget key: graph_choice_b
-	test("inequality-number-line - [x5a50ef47021aeb97] Graph the inequality x ≤ 5 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#F95C3C80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5a50ef47021aeb97
-	// Question: Graph the inequality x ≤ 5
-	// Widget key: graph_choice_c
-	test("inequality-number-line - [x5a50ef47021aeb97] Graph the inequality x ≤ 5 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#6C5CE780",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 5
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xec68f5e8aa43a26f
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [xec68f5e8aa43a26f] Graph an inequality on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xec68f5e8aa43a26f
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [xec68f5e8aa43a26f] Graph an inequality on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xec68f5e8aa43a26f
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [xec68f5e8aa43a26f] Graph an inequality on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7af81be6b2c580c8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_a
-	test("inequality-number-line - [x7af81be6b2c580c8] Graph an inequality on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 1
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7af81be6b2c580c8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_b
-	test("inequality-number-line - [x7af81be6b2c580c8] Graph an inequality on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 1
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7af81be6b2c580c8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_c
-	test("inequality-number-line - [x7af81be6b2c580c8] Graph an inequality on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 1
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x178910c33e6dc9e8
-	// Question: Graph the inequality x > -4
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [x178910c33e6dc9e8] Graph the inequality x > -4 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x178910c33e6dc9e8
-	// Question: Graph the inequality x > -4
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [x178910c33e6dc9e8] Graph the inequality x > -4 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": -4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x178910c33e6dc9e8
-	// Question: Graph the inequality x > -4
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [x178910c33e6dc9e8] Graph the inequality x > -4 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -1621,7 +1621,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#29ABCA66",
+		      "color": "#6e1e7866",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -1656,17 +1656,17 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "at": {
-		          "type": "closed",
+		          "type": "open",
 		          "value": 4
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#11accd66",
+		      "color": "#29abca",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -1701,17 +1701,17 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "at": {
-		          "type": "open",
+		          "type": "closed",
 		          "value": 4
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#11accd66",
+		      "color": "#29abca",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -1746,13 +1746,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#11accd66",
+		      "color": "#29abca",
 		      "start": {
 		        "at": {
 		          "type": "closed",
@@ -1782,7 +1782,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x787445ab2addddd5
 	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_a
+	// Widget key: nl_choice_a
 	test("inequality-number-line - [x787445ab2addddd5] Graph an inequality on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -1791,13 +1791,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#11accd80",
+		      "color": "#29abca66",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -1827,7 +1827,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x787445ab2addddd5
 	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_b
+	// Widget key: nl_choice_b
 	test("inequality-number-line - [x787445ab2addddd5] Graph an inequality on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -1836,13 +1836,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#11accd80",
+		      "color": "#29abca66",
 		      "start": {
 		        "at": {
 		          "type": "closed",
@@ -1872,7 +1872,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x787445ab2addddd5
 	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_c
+	// Widget key: nl_choice_c
 	test("inequality-number-line - [x787445ab2addddd5] Graph an inequality on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -1881,13 +1881,2218 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "at": {
 		          "type": "open",
 		          "value": -3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x94239005dd3f6fa5
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x94239005dd3f6fa5] Graph an inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x94239005dd3f6fa5
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x94239005dd3f6fa5] Graph an inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#e84d4d66",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x94239005dd3f6fa5
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x94239005dd3f6fa5] Graph an inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#f1b80e66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x33c3d54a857f94f5
+	// Question: Graph x < 5 on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x33c3d54a857f94f5] Graph x < 5 on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 5
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x33c3d54a857f94f5
+	// Question: Graph x < 5 on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x33c3d54a857f94f5] Graph x < 5 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 5
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x33c3d54a857f94f5
+	// Question: Graph x < 5 on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x33c3d54a857f94f5] Graph x < 5 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 5
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7bbf4be816fe4862
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x7bbf4be816fe4862] Graph an inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -1
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7bbf4be816fe4862
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x7bbf4be816fe4862] Graph an inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": -1
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7bbf4be816fe4862
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x7bbf4be816fe4862] Graph an inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": -1
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x149ac6b8cc835dc8
+	// Question: Graph x < -4 on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x149ac6b8cc835dc8] Graph x < -4 on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": -4
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x149ac6b8cc835dc8
+	// Question: Graph x < -4 on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x149ac6b8cc835dc8] Graph x < -4 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -4
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x149ac6b8cc835dc8
+	// Question: Graph x < -4 on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x149ac6b8cc835dc8] Graph x < -4 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca66",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -4
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x154446a20bf0a4c4
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x154446a20bf0a4c4] Graph an inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd80",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x154446a20bf0a4c4
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x154446a20bf0a4c4] Graph an inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#ff000080",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x154446a20bf0a4c4
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x154446a20bf0a4c4] Graph an inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#ffa50080",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x732432d770853cc9
+	// Question: Graph the inequality x < -2 on a number line
+	// Widget key: number_line_choice_a
+	test("inequality-number-line - [x732432d770853cc9] Graph the inequality x < -2 on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": -2
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x732432d770853cc9
+	// Question: Graph the inequality x < -2 on a number line
+	// Widget key: number_line_choice_b
+	test("inequality-number-line - [x732432d770853cc9] Graph the inequality x < -2 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -2
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x732432d770853cc9
+	// Question: Graph the inequality x < -2 on a number line
+	// Widget key: number_line_choice_c
+	test("inequality-number-line - [x732432d770853cc9] Graph the inequality x < -2 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -2
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x58ec9209e7056649
+	// Question: Select the graph for the inequality x ≥ 3
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x58ec9209e7056649] Select the graph for the inequality x ≥ 3 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x58ec9209e7056649
+	// Question: Select the graph for the inequality x ≥ 3
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x58ec9209e7056649] Select the graph for the inequality x ≥ 3 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x58ec9209e7056649
+	// Question: Select the graph for the inequality x ≥ 3
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x58ec9209e7056649] Select the graph for the inequality x ≥ 3 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5ef4c932569f7123
+	// Question: Graph x ≥ -5 on a number line
+	// Widget key: number_line_choice_a
+	test("inequality-number-line - [x5ef4c932569f7123] Graph x ≥ -5 on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 420,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11ACCD80",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": -5
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5ef4c932569f7123
+	// Question: Graph x ≥ -5 on a number line
+	// Widget key: number_line_choice_b
+	test("inequality-number-line - [x5ef4c932569f7123] Graph x ≥ -5 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 420,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#F18F0180",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -5
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5ef4c932569f7123
+	// Question: Graph x ≥ -5 on a number line
+	// Widget key: number_line_choice_c
+	test("inequality-number-line - [x5ef4c932569f7123] Graph x ≥ -5 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 420,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -5
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#FF414180",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc48306c8ede05f66
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [xc48306c8ede05f66] Graph an inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc48306c8ede05f66
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [xc48306c8ede05f66] Graph an inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc48306c8ede05f66
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [xc48306c8ede05f66] Graph an inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x93f8cb0ca90b7a13
+	// Question: Select the graph of x ≥ -2
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x93f8cb0ca90b7a13] Select the graph of x ≥ -2 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": -2
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x93f8cb0ca90b7a13
+	// Question: Select the graph of x ≥ -2
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x93f8cb0ca90b7a13] Select the graph of x ≥ -2 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -2
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x93f8cb0ca90b7a13
+	// Question: Select the graph of x ≥ -2
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x93f8cb0ca90b7a13] Select the graph of x ≥ -2 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -2
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7470e9413e6afac0
+	// Question: Graph the inequality x ≤ 0
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x7470e9413e6afac0] Graph the inequality x ≤ 0 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7470e9413e6afac0
+	// Question: Graph the inequality x ≤ 0
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x7470e9413e6afac0] Graph the inequality x ≤ 0 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7470e9413e6afac0
+	// Question: Graph the inequality x ≤ 0
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x7470e9413e6afac0] Graph the inequality x ≤ 0 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc9cafd38b2b8f4ec
+	// Question: Select the graph of x > 0 on a number line
+	// Widget key: choice_a_numberline
+	test("inequality-number-line - [xc9cafd38b2b8f4ec] Select the graph of x > 0 on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc9cafd38b2b8f4ec
+	// Question: Select the graph of x > 0 on a number line
+	// Widget key: choice_b_numberline
+	test("inequality-number-line - [xc9cafd38b2b8f4ec] Select the graph of x > 0 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc9cafd38b2b8f4ec
+	// Question: Select the graph of x > 0 on a number line
+	// Widget key: choice_c_numberline
+	test("inequality-number-line - [xc9cafd38b2b8f4ec] Select the graph of x > 0 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd12fe26936db3997
+	// Question: Graph x ≥ −1 on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [xd12fe26936db3997] Graph x ≥ −1 on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": -1
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd12fe26936db3997
+	// Question: Graph x ≥ −1 on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [xd12fe26936db3997] Graph x ≥ −1 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -1
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd12fe26936db3997
+	// Question: Graph x ≥ −1 on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [xd12fe26936db3997] Graph x ≥ −1 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -1
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8130da70da0c4b1d
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x8130da70da0c4b1d] Graph an inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA80",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 2
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8130da70da0c4b1d
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x8130da70da0c4b1d] Graph an inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA80",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 2
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8130da70da0c4b1d
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x8130da70da0c4b1d] Graph an inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 2
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29ABCA80",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5a50ef47021aeb97
+	// Question: Graph the inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x5a50ef47021aeb97] Graph the inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 5
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29ABCA80",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5a50ef47021aeb97
+	// Question: Graph the inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x5a50ef47021aeb97] Graph the inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA80",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 5
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5a50ef47021aeb97
+	// Question: Graph the inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x5a50ef47021aeb97] Graph the inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 5
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29ABCA80",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xec68f5e8aa43a26f
+	// Question: Graph the inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [xec68f5e8aa43a26f] Graph the inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xec68f5e8aa43a26f
+	// Question: Graph the inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [xec68f5e8aa43a26f] Graph the inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xec68f5e8aa43a26f
+	// Question: Graph the inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [xec68f5e8aa43a26f] Graph the inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7af81be6b2c580c8
+	// Question: Graph the inequality x < 1
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x7af81be6b2c580c8] Graph the inequality x < 1 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 1
 		        },
 		        "type": "bounded"
 		      },
@@ -1915,10 +4120,10 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x94239005dd3f6fa5
-	// Question: Graph the inequality x > 1 on a number line
-	// Widget key: choice_a_number_line
-	test("inequality-number-line - [x94239005dd3f6fa5] Graph the inequality x > 1 on a number line (1)", async () => {
+	// Extracted from question: x7af81be6b2c580c8
+	// Question: Graph the inequality x < 1
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x7af81be6b2c580c8] Graph the inequality x < 1 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1926,13 +4131,58 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd80",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7af81be6b2c580c8
+	// Question: Graph the inequality x < 1
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x7af81be6b2c580c8] Graph the inequality x < 1 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#29ABCA80",
+		      "color": "#11accd80",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -1960,1616 +4210,10 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x94239005dd3f6fa5
-	// Question: Graph the inequality x > 1 on a number line
-	// Widget key: choice_b_number_line
-	test("inequality-number-line - [x94239005dd3f6fa5] Graph the inequality x > 1 on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA80",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 1
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x94239005dd3f6fa5
-	// Question: Graph the inequality x > 1 on a number line
-	// Widget key: choice_c_number_line
-	test("inequality-number-line - [x94239005dd3f6fa5] Graph the inequality x > 1 on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 1
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x33c3d54a857f94f5
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [x33c3d54a857f94f5] Graph an inequality on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x33c3d54a857f94f5
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [x33c3d54a857f94f5] Graph an inequality on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x33c3d54a857f94f5
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [x33c3d54a857f94f5] Graph an inequality on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd66",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 5
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7bbf4be816fe4862
-	// Question: Select the number-line graph of x ≤ −1
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [x7bbf4be816fe4862] Select the number-line graph of x ≤ −1 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -1
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7bbf4be816fe4862
-	// Question: Select the number-line graph of x ≤ −1
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [x7bbf4be816fe4862] Select the number-line graph of x ≤ −1 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": -1
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7bbf4be816fe4862
-	// Question: Select the number-line graph of x ≤ −1
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [x7bbf4be816fe4862] Select the number-line graph of x ≤ −1 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -1
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x149ac6b8cc835dc8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_a
-	test("inequality-number-line - [x149ac6b8cc835dc8] Graph an inequality on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -4
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x149ac6b8cc835dc8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_b
-	test("inequality-number-line - [x149ac6b8cc835dc8] Graph an inequality on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -4
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x149ac6b8cc835dc8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_c
-	test("inequality-number-line - [x149ac6b8cc835dc8] Graph an inequality on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd66",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x149ac6b8cc835dc8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_stimulus
-	test("inequality-number-line - [x149ac6b8cc835dc8] Graph an inequality on a number line (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 100,
-		  "ranges": [],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x154446a20bf0a4c4
-	// Question: Graph the inequality x ≥ 0 on a number line
-	// Widget key: number_line_choice_a
-	test("inequality-number-line - [x154446a20bf0a4c4] Graph the inequality x ≥ 0 on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x154446a20bf0a4c4
-	// Question: Graph the inequality x ≥ 0 on a number line
-	// Widget key: number_line_choice_b
-	test("inequality-number-line - [x154446a20bf0a4c4] Graph the inequality x ≥ 0 on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x154446a20bf0a4c4
-	// Question: Graph the inequality x ≥ 0 on a number line
-	// Widget key: number_line_choice_c
-	test("inequality-number-line - [x154446a20bf0a4c4] Graph the inequality x ≥ 0 on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x732432d770853cc9
-	// Question: Graph the inequality x < -2
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [x732432d770853cc9] Graph the inequality x < -2 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11ACCD80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x732432d770853cc9
-	// Question: Graph the inequality x < -2
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [x732432d770853cc9] Graph the inequality x < -2 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11ACCD80",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x732432d770853cc9
-	// Question: Graph the inequality x < -2
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [x732432d770853cc9] Graph the inequality x < -2 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11ACCD80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x58ec9209e7056649
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [x58ec9209e7056649] Graph an inequality on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x58ec9209e7056649
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [x58ec9209e7056649] Graph an inequality on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x58ec9209e7056649
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [x58ec9209e7056649] Graph an inequality on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5ef4c932569f7123
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_a
-	test("inequality-number-line - [x5ef4c932569f7123] Graph an inequality on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11ACCD66",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -5
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5ef4c932569f7123
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_b
-	test("inequality-number-line - [x5ef4c932569f7123] Graph an inequality on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11ACCD66",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": -5
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5ef4c932569f7123
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_c
-	test("inequality-number-line - [x5ef4c932569f7123] Graph an inequality on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11ACCD66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc48306c8ede05f66
-	// Question: Graph the inequality x ≤ 3
-	// Widget key: number_line_choice_a
-	test("inequality-number-line - [xc48306c8ede05f66] Graph the inequality x ≤ 3 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc48306c8ede05f66
-	// Question: Graph the inequality x ≤ 3
-	// Widget key: number_line_choice_b
-	test("inequality-number-line - [xc48306c8ede05f66] Graph the inequality x ≤ 3 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc48306c8ede05f66
-	// Question: Graph the inequality x ≤ 3
-	// Widget key: number_line_choice_c
-	test("inequality-number-line - [xc48306c8ede05f66] Graph the inequality x ≤ 3 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x93f8cb0ca90b7a13
-	// Question: Graph the inequality x ≥ −2 on a number line
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [x93f8cb0ca90b7a13] Graph the inequality x ≥ −2 on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x93f8cb0ca90b7a13
-	// Question: Graph the inequality x ≥ −2 on a number line
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [x93f8cb0ca90b7a13] Graph the inequality x ≥ −2 on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x93f8cb0ca90b7a13
-	// Question: Graph the inequality x ≥ −2 on a number line
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [x93f8cb0ca90b7a13] Graph the inequality x ≥ −2 on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7470e9413e6afac0
-	// Question: Select the number-line graph for x ≤ 0
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [x7470e9413e6afac0] Select the number-line graph for x ≤ 0 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11ACCD80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7470e9413e6afac0
-	// Question: Select the number-line graph for x ≤ 0
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [x7470e9413e6afac0] Select the number-line graph for x ≤ 0 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#F18D9E80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7470e9413e6afac0
-	// Question: Select the number-line graph for x ≤ 0
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [x7470e9413e6afac0] Select the number-line graph for x ≤ 0 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#94D37E80",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc9cafd38b2b8f4ec
-	// Question: Graph x > 0
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [xc9cafd38b2b8f4ec] Graph x > 0 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc9cafd38b2b8f4ec
-	// Question: Graph x > 0
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [xc9cafd38b2b8f4ec] Graph x > 0 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc9cafd38b2b8f4ec
-	// Question: Graph x > 0
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [xc9cafd38b2b8f4ec] Graph x > 0 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd12fe26936db3997
+	// Extracted from question: x178910c33e6dc9e8
 	// Question: Graph an inequality on a number line
 	// Widget key: graph_choice_a
-	test("inequality-number-line - [xd12fe26936db3997] Graph an inequality on a number line (1)", async () => {
+	test("inequality-number-line - [x178910c33e6dc9e8] Graph an inequality on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3577,17 +4221,17 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#29ABCA80",
+		      "color": "#11accd66",
 		      "start": {
 		        "at": {
 		          "type": "open",
-		          "value": -1
+		          "value": -4
 		        },
 		        "type": "bounded"
 		      }
@@ -3611,10 +4255,10 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd12fe26936db3997
+	// Extracted from question: x178910c33e6dc9e8
 	// Question: Graph an inequality on a number line
 	// Widget key: graph_choice_b
-	test("inequality-number-line - [xd12fe26936db3997] Graph an inequality on a number line (2)", async () => {
+	test("inequality-number-line - [x178910c33e6dc9e8] Graph an inequality on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3622,17 +4266,17 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#29ABCA80",
+		      "color": "#ff990066",
 		      "start": {
 		        "at": {
 		          "type": "closed",
-		          "value": -1
+		          "value": -4
 		        },
 		        "type": "bounded"
 		      }
@@ -3656,10 +4300,10 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd12fe26936db3997
+	// Extracted from question: x178910c33e6dc9e8
 	// Question: Graph an inequality on a number line
 	// Widget key: graph_choice_c
-	test("inequality-number-line - [xd12fe26936db3997] Graph an inequality on a number line (3)", async () => {
+	test("inequality-number-line - [x178910c33e6dc9e8] Graph an inequality on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3667,682 +4311,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -1
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8130da70da0c4b1d
-	// Question: Select the graph of x > 2
-	// Widget key: number_line_choice_a
-	test("inequality-number-line - [x8130da70da0c4b1d] Select the graph of x > 2 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8130da70da0c4b1d
-	// Question: Select the graph of x > 2
-	// Widget key: number_line_choice_b
-	test("inequality-number-line - [x8130da70da0c4b1d] Select the graph of x > 2 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8130da70da0c4b1d
-	// Question: Select the graph of x > 2
-	// Widget key: number_line_choice_c
-	test("inequality-number-line - [x8130da70da0c4b1d] Select the graph of x > 2 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5a50ef47021aeb97
-	// Question: Graph the inequality x ≤ 5
-	// Widget key: graph_choice_a
-	test("inequality-number-line - [x5a50ef47021aeb97] Graph the inequality x ≤ 5 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5a50ef47021aeb97
-	// Question: Graph the inequality x ≤ 5
-	// Widget key: graph_choice_b
-	test("inequality-number-line - [x5a50ef47021aeb97] Graph the inequality x ≤ 5 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#F95C3C80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5a50ef47021aeb97
-	// Question: Graph the inequality x ≤ 5
-	// Widget key: graph_choice_c
-	test("inequality-number-line - [x5a50ef47021aeb97] Graph the inequality x ≤ 5 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#6C5CE780",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 5
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xec68f5e8aa43a26f
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [xec68f5e8aa43a26f] Graph an inequality on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xec68f5e8aa43a26f
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [xec68f5e8aa43a26f] Graph an inequality on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xec68f5e8aa43a26f
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [xec68f5e8aa43a26f] Graph an inequality on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7af81be6b2c580c8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_a
-	test("inequality-number-line - [x7af81be6b2c580c8] Graph an inequality on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 1
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7af81be6b2c580c8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_b
-	test("inequality-number-line - [x7af81be6b2c580c8] Graph an inequality on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 1
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7af81be6b2c580c8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_c
-	test("inequality-number-line - [x7af81be6b2c580c8] Graph an inequality on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 1
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x178910c33e6dc9e8
-	// Question: Graph the inequality x > -4
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [x178910c33e6dc9e8] Graph the inequality x > -4 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x178910c33e6dc9e8
-	// Question: Graph the inequality x > -4
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [x178910c33e6dc9e8] Graph the inequality x > -4 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": -4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x178910c33e6dc9e8
-	// Question: Graph the inequality x > -4
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [x178910c33e6dc9e8] Graph the inequality x > -4 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -4352,7 +4321,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#29ABCA66",
+		      "color": "#6e1e7866",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -4387,17 +4356,17 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "at": {
-		          "type": "closed",
+		          "type": "open",
 		          "value": 4
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#11accd66",
+		      "color": "#29abca",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -4432,17 +4401,17 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "at": {
-		          "type": "open",
+		          "type": "closed",
 		          "value": 4
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#11accd66",
+		      "color": "#29abca",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -4477,13 +4446,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#11accd66",
+		      "color": "#29abca",
 		      "start": {
 		        "at": {
 		          "type": "closed",
@@ -4513,7 +4482,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x787445ab2addddd5
 	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_a
+	// Widget key: nl_choice_a
 	test("inequality-number-line - [x787445ab2addddd5] Graph an inequality on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -4522,13 +4491,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#11accd80",
+		      "color": "#29abca66",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -4558,7 +4527,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x787445ab2addddd5
 	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_b
+	// Widget key: nl_choice_b
 	test("inequality-number-line - [x787445ab2addddd5] Graph an inequality on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -4567,13 +4536,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#11accd80",
+		      "color": "#29abca66",
 		      "start": {
 		        "at": {
 		          "type": "closed",
@@ -4603,7 +4572,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x787445ab2addddd5
 	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_c
+	// Widget key: nl_choice_c
 	test("inequality-number-line - [x787445ab2addddd5] Graph an inequality on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -4612,7 +4581,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -4621,9 +4590,684 @@ describe("inequalityNumberLine widget tests", () => {
 		          "value": -3
 		        },
 		        "type": "bounded"
+		      },
+		      "color": "#29abca66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x94239005dd3f6fa5
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x94239005dd3f6fa5] Graph an inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x94239005dd3f6fa5
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x94239005dd3f6fa5] Graph an inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#e84d4d66",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x94239005dd3f6fa5
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x94239005dd3f6fa5] Graph an inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#f1b80e66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x33c3d54a857f94f5
+	// Question: Graph x < 5 on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x33c3d54a857f94f5] Graph x < 5 on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 5
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x33c3d54a857f94f5
+	// Question: Graph x < 5 on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x33c3d54a857f94f5] Graph x < 5 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 5
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x33c3d54a857f94f5
+	// Question: Graph x < 5 on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x33c3d54a857f94f5] Graph x < 5 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 5
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7bbf4be816fe4862
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x7bbf4be816fe4862] Graph an inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -1
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7bbf4be816fe4862
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x7bbf4be816fe4862] Graph an inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": -1
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7bbf4be816fe4862
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x7bbf4be816fe4862] Graph an inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": -1
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x149ac6b8cc835dc8
+	// Question: Graph x < -4 on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x149ac6b8cc835dc8] Graph x < -4 on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": -4
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x149ac6b8cc835dc8
+	// Question: Graph x < -4 on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x149ac6b8cc835dc8] Graph x < -4 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -4
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x149ac6b8cc835dc8
+	// Question: Graph x < -4 on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x149ac6b8cc835dc8] Graph x < -4 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca66",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -4
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x154446a20bf0a4c4
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x154446a20bf0a4c4] Graph an inequality on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
 		      },
 		      "color": "#11accd80",
 		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x154446a20bf0a4c4
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x154446a20bf0a4c4] Graph an inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#ff000080",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x154446a20bf0a4c4
+	// Question: Graph an inequality on a number line
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x154446a20bf0a4c4] Graph an inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#ffa50080",
+		      "start": {
 		        "type": "unbounded"
 		      }
 		    }
@@ -4646,30 +5290,165 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x94239005dd3f6fa5
-	// Question: Graph the inequality x > 1 on a number line
+	// Extracted from question: x732432d770853cc9
+	// Question: Graph the inequality x < -2 on a number line
+	// Widget key: number_line_choice_a
+	test("inequality-number-line - [x732432d770853cc9] Graph the inequality x < -2 on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": -2
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x732432d770853cc9
+	// Question: Graph the inequality x < -2 on a number line
+	// Widget key: number_line_choice_b
+	test("inequality-number-line - [x732432d770853cc9] Graph the inequality x < -2 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -2
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x732432d770853cc9
+	// Question: Graph the inequality x < -2 on a number line
+	// Widget key: number_line_choice_c
+	test("inequality-number-line - [x732432d770853cc9] Graph the inequality x < -2 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd66",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -2
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd7cb48d7
+	// Question: Select the graph for an inequality on a number line
 	// Widget key: choice_a_number_line
-	test("inequality-number-line - [x94239005dd3f6fa5] Graph the inequality x > 1 on a number line (1)", async () => {
+	test("inequality-number-line - [xd7cb48d7] Select the graph for an inequality on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 5,
+		  "max": 10,
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA80",
-		      "start": {
 		        "at": {
-		          "type": "open",
-		          "value": 1
+		          "type": "closed",
+		          "value": 3
 		        },
 		        "type": "bounded"
+		      },
+		      "color": "#3B82F6",
+		      "start": {
+		        "type": "unbounded"
 		      }
 		    }
 		  ],
@@ -4691,28 +5470,28 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x94239005dd3f6fa5
-	// Question: Graph the inequality x > 1 on a number line
+	// Extracted from question: xd7cb48d7
+	// Question: Select the graph for an inequality on a number line
 	// Widget key: choice_b_number_line
-	test("inequality-number-line - [x94239005dd3f6fa5] Graph the inequality x > 1 on a number line (2)", async () => {
+	test("inequality-number-line - [xd7cb48d7] Select the graph for an inequality on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 5,
+		  "max": 10,
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#29ABCA80",
+		      "color": "#10B981",
 		      "start": {
 		        "at": {
 		          "type": "closed",
-		          "value": 1
+		          "value": 3
 		        },
 		        "type": "bounded"
 		      }
@@ -4736,769 +5515,18 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x94239005dd3f6fa5
-	// Question: Graph the inequality x > 1 on a number line
+	// Extracted from question: xd7cb48d7
+	// Question: Select the graph for an inequality on a number line
 	// Widget key: choice_c_number_line
-	test("inequality-number-line - [x94239005dd3f6fa5] Graph the inequality x > 1 on a number line (3)", async () => {
+	test("inequality-number-line - [xd7cb48d7] Select the graph for an inequality on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 5,
+		  "max": 10,
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 1
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x33c3d54a857f94f5
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [x33c3d54a857f94f5] Graph an inequality on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x33c3d54a857f94f5
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [x33c3d54a857f94f5] Graph an inequality on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x33c3d54a857f94f5
-	// Question: Graph an inequality on a number line
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [x33c3d54a857f94f5] Graph an inequality on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd66",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 5
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7bbf4be816fe4862
-	// Question: Select the number-line graph of x ≤ −1
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [x7bbf4be816fe4862] Select the number-line graph of x ≤ −1 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -1
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7bbf4be816fe4862
-	// Question: Select the number-line graph of x ≤ −1
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [x7bbf4be816fe4862] Select the number-line graph of x ≤ −1 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": -1
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7bbf4be816fe4862
-	// Question: Select the number-line graph of x ≤ −1
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [x7bbf4be816fe4862] Select the number-line graph of x ≤ −1 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -1
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x149ac6b8cc835dc8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_a
-	test("inequality-number-line - [x149ac6b8cc835dc8] Graph an inequality on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -4
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x149ac6b8cc835dc8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_b
-	test("inequality-number-line - [x149ac6b8cc835dc8] Graph an inequality on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -4
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x149ac6b8cc835dc8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_choice_c
-	test("inequality-number-line - [x149ac6b8cc835dc8] Graph an inequality on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 100,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd66",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x149ac6b8cc835dc8
-	// Question: Graph an inequality on a number line
-	// Widget key: number_line_stimulus
-	test("inequality-number-line - [x149ac6b8cc835dc8] Graph an inequality on a number line (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 100,
-		  "ranges": [],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x154446a20bf0a4c4
-	// Question: Graph the inequality x ≥ 0 on a number line
-	// Widget key: number_line_choice_a
-	test("inequality-number-line - [x154446a20bf0a4c4] Graph the inequality x ≥ 0 on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x154446a20bf0a4c4
-	// Question: Graph the inequality x ≥ 0 on a number line
-	// Widget key: number_line_choice_b
-	test("inequality-number-line - [x154446a20bf0a4c4] Graph the inequality x ≥ 0 on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x154446a20bf0a4c4
-	// Question: Graph the inequality x ≥ 0 on a number line
-	// Widget key: number_line_choice_c
-	test("inequality-number-line - [x154446a20bf0a4c4] Graph the inequality x ≥ 0 on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29ABCA66",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x732432d770853cc9
-	// Question: Graph the inequality x < -2
-	// Widget key: nl_choice_a
-	test("inequality-number-line - [x732432d770853cc9] Graph the inequality x < -2 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11ACCD80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x732432d770853cc9
-	// Question: Graph the inequality x < -2
-	// Widget key: nl_choice_b
-	test("inequality-number-line - [x732432d770853cc9] Graph the inequality x < -2 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11ACCD80",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x732432d770853cc9
-	// Question: Graph the inequality x < -2
-	// Widget key: nl_choice_c
-	test("inequality-number-line - [x732432d770853cc9] Graph the inequality x < -2 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11ACCD80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x23cce493
-	// Question: Select the graph for the inequality's solution set
-	// Widget key: choice_a_nl
-	test("inequality-number-line - [x23cce493] Select the graph for the inequality's solution set (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -10,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -5508,7 +5536,97 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#4A90E2",
+		      "color": "#EF4444",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd7cb48d7
+	// Question: Select the graph for an inequality on a number line
+	// Widget key: choice_d_number_line
+	test("inequality-number-line - [xd7cb48d7] Select the graph for an inequality on a number line (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#F59E0B",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x23cce493
+	// Question: Select the graph that represents an inequality's solution set
+	// Widget key: choice_a_visual
+	test("inequality-number-line - [x23cce493] Select the graph that represents an inequality's solution set (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -10,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#1E90FF",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -5533,9 +5651,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x23cce493
-	// Question: Select the graph for the inequality's solution set
-	// Widget key: choice_b_nl
-	test("inequality-number-line - [x23cce493] Select the graph for the inequality's solution set (2)", async () => {
+	// Question: Select the graph that represents an inequality's solution set
+	// Widget key: choice_b_visual
+	test("inequality-number-line - [x23cce493] Select the graph that represents an inequality's solution set (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5543,13 +5661,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#2ECC71",
+		      "color": "#2E8B57",
 		      "start": {
 		        "at": {
 		          "type": "closed",
@@ -5578,9 +5696,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x23cce493
-	// Question: Select the graph for the inequality's solution set
-	// Widget key: choice_c_nl
-	test("inequality-number-line - [x23cce493] Select the graph for the inequality's solution set (3)", async () => {
+	// Question: Select the graph that represents an inequality's solution set
+	// Widget key: choice_c_visual
+	test("inequality-number-line - [x23cce493] Select the graph that represents an inequality's solution set (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5588,7 +5706,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -10,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -5598,7 +5716,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#FF2D55",
+		      "color": "#FF00FF",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -5623,9 +5741,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x23cce493
-	// Question: Select the graph for the inequality's solution set
-	// Widget key: choice_d_nl
-	test("inequality-number-line - [x23cce493] Select the graph for the inequality's solution set (4)", async () => {
+	// Question: Select the graph that represents an inequality's solution set
+	// Widget key: choice_d_visual
+	test("inequality-number-line - [x23cce493] Select the graph that represents an inequality's solution set (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5633,13 +5751,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#E74C3C",
+		      "color": "#FF0000",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -5668,432 +5786,27 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf67293869dd13e1a
-	// Question: Choose the graph of the inequality solution set
-	// Widget key: choice_a_number_line
-	test("inequality-number-line - [xf67293869dd13e1a] Choose the graph of the inequality solution set (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#4A90E2",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf67293869dd13e1a
-	// Question: Choose the graph of the inequality solution set
-	// Widget key: choice_b_number_line
-	test("inequality-number-line - [xf67293869dd13e1a] Choose the graph of the inequality solution set (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#2ECC71",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf67293869dd13e1a
-	// Question: Choose the graph of the inequality solution set
-	// Widget key: choice_c_number_line
-	test("inequality-number-line - [xf67293869dd13e1a] Choose the graph of the inequality solution set (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#FF33CC",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf67293869dd13e1a
-	// Question: Choose the graph of the inequality solution set
-	// Widget key: choice_d_number_line
-	test("inequality-number-line - [xf67293869dd13e1a] Choose the graph of the inequality solution set (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#D0021B",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd7cb48d7
-	// Question: Select the graph that represents 9 − 4d ≥ −3
-	// Widget key: choice_a_number_line
-	test("inequality-number-line - [xd7cb48d7] Select the graph that represents 9 − 4d ≥ −3 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#3B82F64D",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd7cb48d7
-	// Question: Select the graph that represents 9 − 4d ≥ −3
-	// Widget key: choice_b_number_line
-	test("inequality-number-line - [xd7cb48d7] Select the graph that represents 9 − 4d ≥ −3 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#10B9814D",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd7cb48d7
-	// Question: Select the graph that represents 9 − 4d ≥ −3
-	// Widget key: choice_c_number_line
-	test("inequality-number-line - [xd7cb48d7] Select the graph that represents 9 − 4d ≥ −3 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#EF44444D",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd7cb48d7
-	// Question: Select the graph that represents 9 − 4d ≥ −3
-	// Widget key: choice_d_number_line
-	test("inequality-number-line - [xd7cb48d7] Select the graph that represents 9 − 4d ≥ −3 (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#EC48994D",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -3
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xed764ffffd6dd150
-	// Question: Select the graph of the solution set for an inequality
+	// Question: Select the graph for 12b − 15 > 21
 	// Widget key: choice_a_graph
-	test("inequality-number-line - [xed764ffffd6dd150] Select the graph of the solution set for an inequality (1)", async () => {
+	test("inequality-number-line - [xf67293869dd13e1a] Select the graph for 12b − 15 > 21 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 3,
-		  "min": -12,
+		  "max": 10,
+		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#11ACCD",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -8
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xed764ffffd6dd150
-	// Question: Select the graph of the solution set for an inequality
-	// Widget key: choice_b_graph
-	test("inequality-number-line - [xed764ffffd6dd150] Select the graph of the solution set for an inequality (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 3,
-		  "min": -12,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#4C8BF5",
+		      "color": "#4C78A8",
 		      "start": {
 		        "at": {
 		          "type": "closed",
-		          "value": -8
+		          "value": 3
 		        },
 		        "type": "bounded"
 		      }
@@ -6117,10 +5830,145 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xed764ffffd6dd150
-	// Question: Select the graph of the solution set for an inequality
+	// Extracted from question: xf67293869dd13e1a
+	// Question: Select the graph for 12b − 15 > 21
+	// Widget key: choice_b_graph
+	test("inequality-number-line - [xf67293869dd13e1a] Select the graph for 12b − 15 > 21 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#2CA02C",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf67293869dd13e1a
+	// Question: Select the graph for 12b − 15 > 21
 	// Widget key: choice_c_graph
-	test("inequality-number-line - [xed764ffffd6dd150] Select the graph of the solution set for an inequality (3)", async () => {
+	test("inequality-number-line - [xf67293869dd13e1a] Select the graph for 12b − 15 > 21 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#E377C2",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf67293869dd13e1a
+	// Question: Select the graph for 12b − 15 > 21
+	// Widget key: choice_d_graph
+	test("inequality-number-line - [xf67293869dd13e1a] Select the graph for 12b − 15 > 21 (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#D62728",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xed764ffffd6dd150
+	// Question: Identify the graph of a linear inequality on a number line
+	// Widget key: choice_a_number_line
+	test("inequality-number-line - [xed764ffffd6dd150] Identify the graph of a linear inequality on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6128,7 +5976,97 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -12,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#3B82F6",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -8
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xed764ffffd6dd150
+	// Question: Identify the graph of a linear inequality on a number line
+	// Widget key: choice_b_number_line
+	test("inequality-number-line - [xed764ffffd6dd150] Identify the graph of a linear inequality on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 3,
+		  "min": -12,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#10B981",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": -8
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xed764ffffd6dd150
+	// Question: Identify the graph of a linear inequality on a number line
+	// Widget key: choice_c_number_line
+	test("inequality-number-line - [xed764ffffd6dd150] Identify the graph of a linear inequality on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 3,
+		  "min": -12,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -6138,7 +6076,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#2CB457",
+		      "color": "#EC4899",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -6163,9 +6101,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xed764ffffd6dd150
-	// Question: Select the graph of the solution set for an inequality
-	// Widget key: choice_d_graph
-	test("inequality-number-line - [xed764ffffd6dd150] Select the graph of the solution set for an inequality (4)", async () => {
+	// Question: Identify the graph of a linear inequality on a number line
+	// Widget key: choice_d_number_line
+	test("inequality-number-line - [xed764ffffd6dd150] Identify the graph of a linear inequality on a number line (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6173,7 +6111,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -12,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -6183,7 +6121,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#FF3B8D",
+		      "color": "#EF4444",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -6208,54 +6146,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x01c0841067970ad1
-	// Question: Select the graph of the inequality's solution set
+	// Question: Select the graph that represents the solution set of an inequality
 	// Widget key: choice_a_graph
-	test("inequality-number-line - [x01c0841067970ad1] Select the graph of the inequality's solution set (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -10,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#4E79A7",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": -6
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x01c0841067970ad1
-	// Question: Select the graph of the inequality's solution set
-	// Widget key: choice_b_graph
-	test("inequality-number-line - [x01c0841067970ad1] Select the graph of the inequality's solution set (2)", async () => {
+	test("inequality-number-line - [x01c0841067970ad1] Select the graph that represents the solution set of an inequality (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6263,7 +6156,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -6273,7 +6166,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#11ACCD",
+		      "color": "#2E8B57",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -6298,9 +6191,54 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x01c0841067970ad1
-	// Question: Select the graph of the inequality's solution set
+	// Question: Select the graph that represents the solution set of an inequality
+	// Widget key: choice_b_graph
+	test("inequality-number-line - [x01c0841067970ad1] Select the graph that represents the solution set of an inequality (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 6
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#CC0000",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x01c0841067970ad1
+	// Question: Select the graph that represents the solution set of an inequality
 	// Widget key: choice_c_graph
-	test("inequality-number-line - [x01c0841067970ad1] Select the graph of the inequality's solution set (3)", async () => {
+	test("inequality-number-line - [x01c0841067970ad1] Select the graph that represents the solution set of an inequality (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6308,7 +6246,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -10,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -6343,23 +6281,203 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x01c0841067970ad1
-	// Question: Select the graph of the inequality's solution set
+	// Question: Select the graph that represents the solution set of an inequality
 	// Widget key: choice_d_graph
-	test("inequality-number-line - [x01c0841067970ad1] Select the graph of the inequality's solution set (4)", async () => {
+	test("inequality-number-line - [x01c0841067970ad1] Select the graph that represents the solution set of an inequality (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 10,
-		  "min": -5,
+		  "max": 5,
+		  "min": -10,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#6495ED",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": -6
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x941292dd
+	// Question: Choose the graph that represents the solution set of an inequality
+	// Widget key: choice_a_graph
+	test("inequality-number-line - [x941292dd] Choose the graph that represents the solution set of an inequality (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 3,
+		  "min": -12,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -9
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#4C78A8",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x941292dd
+	// Question: Choose the graph that represents the solution set of an inequality
+	// Widget key: choice_b_graph
+	test("inequality-number-line - [x941292dd] Choose the graph that represents the solution set of an inequality (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 3,
+		  "min": -12,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#2CA02C",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -9
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x941292dd
+	// Question: Choose the graph that represents the solution set of an inequality
+	// Widget key: choice_c_graph
+	test("inequality-number-line - [x941292dd] Choose the graph that represents the solution set of an inequality (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 3,
+		  "min": -12,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "at": {
 		          "type": "open",
-		          "value": 6
+		          "value": -9
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#FF1493",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x941292dd
+	// Question: Choose the graph that represents the solution set of an inequality
+	// Widget key: choice_d_graph
+	test("inequality-number-line - [x941292dd] Choose the graph that represents the solution set of an inequality (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 3,
+		  "min": -12,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": -2
 		        },
 		        "type": "bounded"
 		      },
@@ -6387,28 +6505,253 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x941292dd
-	// Question: Select the graph of the solution set for 5a + 18 < -27
-	// Widget key: choice_a_graph
-	test("inequality-number-line - [x941292dd] Select the graph of the solution set for 5a + 18 < -27 (1)", async () => {
+	// Extracted from question: xa1b5b867
+	// Question: Select the graph that represents a linear inequality
+	// Widget key: graph_choice_a
+	test("inequality-number-line - [xa1b5b867] Select the graph that represents a linear inequality (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 3,
-		  "min": -12,
+		  "max": 5,
+		  "min": -10,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": -8
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#4DA3FF",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa1b5b867
+	// Question: Select the graph that represents a linear inequality
+	// Widget key: graph_choice_b
+	test("inequality-number-line - [xa1b5b867] Select the graph that represents a linear inequality (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 8
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#20BF6B",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa1b5b867
+	// Question: Select the graph that represents a linear inequality
+	// Widget key: graph_choice_c
+	test("inequality-number-line - [xa1b5b867] Select the graph that represents a linear inequality (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#FF00AA",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 8
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa1b5b867
+	// Question: Select the graph that represents a linear inequality
+	// Widget key: graph_choice_d
+	test("inequality-number-line - [xa1b5b867] Select the graph that represents a linear inequality (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -10,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#E74C3C",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -8
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x491969af0942f7d5
+	// Question: Select the graph for a linear inequality
+	// Widget key: choice_a_numberline
+	test("inequality-number-line - [x491969af0942f7d5] Select the graph for a linear inequality (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#D32F2F",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 4
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x491969af0942f7d5
+	// Question: Select the graph for a linear inequality
+	// Widget key: choice_b_numberline
+	test("inequality-number-line - [x491969af0942f7d5] Select the graph for a linear inequality (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "at": {
 		          "type": "closed",
-		          "value": -9
+		          "value": 4
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#4A90E2",
+		      "color": "#2E7D32",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -6432,30 +6775,165 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x941292dd
-	// Question: Select the graph of the solution set for 5a + 18 < -27
+	// Extracted from question: x491969af0942f7d5
+	// Question: Select the graph for a linear inequality
+	// Widget key: choice_c_numberline
+	test("inequality-number-line - [x491969af0942f7d5] Select the graph for a linear inequality (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 4
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#C2185B",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x491969af0942f7d5
+	// Question: Select the graph for a linear inequality
+	// Widget key: choice_d_numberline
+	test("inequality-number-line - [x491969af0942f7d5] Select the graph for a linear inequality (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#1976D2",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 4
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe26e0f14
+	// Question: Select the graph that represents the inequality solution
+	// Widget key: choice_a_graph
+	test("inequality-number-line - [xe26e0f14] Select the graph that represents the inequality solution (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#D62728",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 4
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe26e0f14
+	// Question: Select the graph that represents the inequality solution
 	// Widget key: choice_b_graph
-	test("inequality-number-line - [x941292dd] Select the graph of the solution set for 5a + 18 < -27 (2)", async () => {
+	test("inequality-number-line - [xe26e0f14] Select the graph that represents the inequality solution (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 3,
-		  "min": -12,
+		  "max": 10,
+		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#2ECC71",
-		      "start": {
 		        "at": {
-		          "type": "open",
-		          "value": -9
+		          "type": "closed",
+		          "value": 4
 		        },
 		        "type": "bounded"
+		      },
+		      "color": "#28AE7B",
+		      "start": {
+		        "type": "unbounded"
 		      }
 		    }
 		  ],
@@ -6477,28 +6955,28 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x941292dd
-	// Question: Select the graph of the solution set for 5a + 18 < -27
+	// Extracted from question: xe26e0f14
+	// Question: Select the graph that represents the inequality solution
 	// Widget key: choice_c_graph
-	test("inequality-number-line - [x941292dd] Select the graph of the solution set for 5a + 18 < -27 (3)", async () => {
+	test("inequality-number-line - [xe26e0f14] Select the graph that represents the inequality solution (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 3,
-		  "min": -12,
+		  "max": 10,
+		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "at": {
 		          "type": "open",
-		          "value": -9
+		          "value": 4
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#FF2DAA",
+		      "color": "#E377C2",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -6522,18 +7000,153 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x941292dd
-	// Question: Select the graph of the solution set for 5a + 18 < -27
+	// Extracted from question: xe26e0f14
+	// Question: Select the graph that represents the inequality solution
 	// Widget key: choice_d_graph
-	test("inequality-number-line - [x941292dd] Select the graph of the solution set for 5a + 18 < -27 (4)", async () => {
+	test("inequality-number-line - [xe26e0f14] Select the graph that represents the inequality solution (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 3,
-		  "min": -12,
+		  "max": 10,
+		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#1F77B4",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 4
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe6ce0ba1a0c0daa5
+	// Question: Choose the graph of x > -2
+	// Widget key: choice_a_number_line
+	test("inequality-number-line - [xe6ce0ba1a0c0daa5] Choose the graph of x > -2 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 400,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#7854ab",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 2
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe6ce0ba1a0c0daa5
+	// Question: Choose the graph of x > -2
+	// Widget key: choice_b_number_line
+	test("inequality-number-line - [xe6ce0ba1a0c0daa5] Choose the graph of x > -2 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 400,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#7854ab",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -2
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe6ce0ba1a0c0daa5
+	// Question: Choose the graph of x > -2
+	// Widget key: choice_d_number_line
+	test("inequality-number-line - [xe6ce0ba1a0c0daa5] Choose the graph of x > -2 (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 400,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -6543,727 +7156,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#E74C3C",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa1b5b867
-	// Question: Select the graph of an inequality solution set
-	// Widget key: choice_a_graph
-	test("inequality-number-line - [xa1b5b867] Select the graph of an inequality solution set (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -10,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -8
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#00000000",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa1b5b867
-	// Question: Select the graph of an inequality solution set
-	// Widget key: choice_b_graph
-	test("inequality-number-line - [xa1b5b867] Select the graph of an inequality solution set (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 8
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#00000000",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa1b5b867
-	// Question: Select the graph of an inequality solution set
-	// Widget key: choice_c_graph
-	test("inequality-number-line - [xa1b5b867] Select the graph of an inequality solution set (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#00000000",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 8
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa1b5b867
-	// Question: Select the graph of an inequality solution set
-	// Widget key: choice_d_graph
-	test("inequality-number-line - [xa1b5b867] Select the graph of an inequality solution set (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -10,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#00000000",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -8
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x491969af0942f7d5
-	// Question: Identify the graph of a linear inequality
-	// Widget key: choice_a_number_line
-	test("inequality-number-line - [x491969af0942f7d5] Identify the graph of a linear inequality (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#4A90E2",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x491969af0942f7d5
-	// Question: Identify the graph of a linear inequality
-	// Widget key: choice_b_number_line
-	test("inequality-number-line - [x491969af0942f7d5] Identify the graph of a linear inequality (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#2ECC71",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x491969af0942f7d5
-	// Question: Identify the graph of a linear inequality
-	// Widget key: choice_c_number_line
-	test("inequality-number-line - [x491969af0942f7d5] Identify the graph of a linear inequality (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#FF33CC",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x491969af0942f7d5
-	// Question: Identify the graph of a linear inequality
-	// Widget key: choice_d_number_line
-	test("inequality-number-line - [x491969af0942f7d5] Identify the graph of a linear inequality (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#E74C3C",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe26e0f14
-	// Question: Choose the graph that represents the solution set
-	// Widget key: choice_a_graph
-	test("inequality-number-line - [xe26e0f14] Choose the graph that represents the solution set (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#000000",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe26e0f14
-	// Question: Choose the graph that represents the solution set
-	// Widget key: choice_b_graph
-	test("inequality-number-line - [xe26e0f14] Choose the graph that represents the solution set (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#000000",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe26e0f14
-	// Question: Choose the graph that represents the solution set
-	// Widget key: choice_c_graph
-	test("inequality-number-line - [xe26e0f14] Choose the graph that represents the solution set (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#000000",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe26e0f14
-	// Question: Choose the graph that represents the solution set
-	// Widget key: choice_d_graph
-	test("inequality-number-line - [xe26e0f14] Choose the graph that represents the solution set (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 80,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#000000",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf329f86aa4c05206
-	// Question: Choose the graph of the inequality -3 > x
-	// Widget key: choice_a_graph
-	test("inequality-number-line - [xf329f86aa4c05206] Choose the graph of the inequality -3 > x (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf329f86aa4c05206
-	// Question: Choose the graph of the inequality -3 > x
-	// Widget key: choice_b_graph
-	test("inequality-number-line - [xf329f86aa4c05206] Choose the graph of the inequality -3 > x (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -3
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf329f86aa4c05206
-	// Question: Choose the graph of the inequality -3 > x
-	// Widget key: choice_c_graph
-	test("inequality-number-line - [xf329f86aa4c05206] Choose the graph of the inequality -3 > x (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf329f86aa4c05206
-	// Question: Choose the graph of the inequality -3 > x
-	// Widget key: choice_d_graph
-	test("inequality-number-line - [xf329f86aa4c05206] Choose the graph of the inequality -3 > x (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#4287F54D",
+		      "color": "#7854ab",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -7288,9 +7181,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x3b765e8b65de4317
-	// Question: Choose the inequality that matches the number-line graph
+	// Question: Match an inequality to a number-line graph
 	// Widget key: image_1
-	test("inequality-number-line - [x3b765e8b65de4317] Choose the inequality that matches the number-line graph (1)", async () => {
+	test("inequality-number-line - [x3b765e8b65de4317] Match an inequality to a number-line graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7298,148 +7191,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -9,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "at": {
 		          "type": "open",
 		          "value": -6
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3b765e8b65de4317
-	// Question: Choose the inequality that matches the number-line graph
-	// Widget key: choice_a_visual
-	test("inequality-number-line - [x3b765e8b65de4317] Choose the inequality that matches the number-line graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 1,
-		  "min": -9,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -6
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3b765e8b65de4317
-	// Question: Choose the inequality that matches the number-line graph
-	// Widget key: choice_c_visual
-	test("inequality-number-line - [x3b765e8b65de4317] Choose the inequality that matches the number-line graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 1,
-		  "min": -9,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -5
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3b765e8b65de4317
-	// Question: Choose the inequality that matches the number-line graph
-	// Widget key: choice_d_visual
-	test("inequality-number-line - [x3b765e8b65de4317] Choose the inequality that matches the number-line graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 1,
-		  "min": -9,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -5
 		        },
 		        "type": "bounded"
 		      },
@@ -7478,7 +7236,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 48,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -7523,7 +7281,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 48,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -7568,7 +7326,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 48,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -7613,7 +7371,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 48,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -7658,7 +7416,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -9,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -7693,9 +7451,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x4bbf24717593bd38
-	// Question: Identify an inequality from a number line graph
+	// Question: Identify an inequality from a number-line graph
 	// Widget key: image_1
-	test("inequality-number-line - [x4bbf24717593bd38] Identify an inequality from a number line graph", async () => {
+	test("inequality-number-line - [x4bbf24717593bd38] Identify an inequality from a number-line graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7703,7 +7461,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -7737,10 +7495,10 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x81b7b8d0d9d5d130
+	// Extracted from question: x4bbf24717593bd38
 	// Question: Identify an inequality from a number-line graph
-	// Widget key: image_1
-	test("inequality-number-line - [x81b7b8d0d9d5d130] Identify an inequality from a number-line graph (1)", async () => {
+	// Widget key: choice_a_visual
+	test("inequality-number-line - [x4bbf24717593bd38] Identify an inequality from a number-line graph (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7748,7 +7506,97 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4bbf24717593bd38
+	// Question: Identify an inequality from a number-line graph
+	// Widget key: choice_b_visual
+	test("inequality-number-line - [x4bbf24717593bd38] Identify an inequality from a number-line graph (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 2
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4bbf24717593bd38
+	// Question: Identify an inequality from a number-line graph
+	// Widget key: choice_d_visual
+	test("inequality-number-line - [x4bbf24717593bd38] Identify an inequality from a number-line graph (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -7782,10 +7630,190 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x81b7b8d0d9d5d130
-	// Question: Identify an inequality from a number-line graph
+	// Extracted from question: xf329f86aa4c05206
+	// Question: Choose the graph of the inequality -3 > x
+	// Widget key: choice_a_graph
+	test("inequality-number-line - [xf329f86aa4c05206] Choose the graph of the inequality -3 > x (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 400,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf329f86aa4c05206
+	// Question: Choose the graph of the inequality -3 > x
 	// Widget key: choice_b_graph
-	test("inequality-number-line - [x81b7b8d0d9d5d130] Identify an inequality from a number-line graph (2)", async () => {
+	test("inequality-number-line - [xf329f86aa4c05206] Choose the graph of the inequality -3 > x (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 400,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf329f86aa4c05206
+	// Question: Choose the graph of the inequality -3 > x
+	// Widget key: choice_c_graph
+	test("inequality-number-line - [xf329f86aa4c05206] Choose the graph of the inequality -3 > x (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 400,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf329f86aa4c05206
+	// Question: Choose the graph of the inequality -3 > x
+	// Widget key: choice_d_graph
+	test("inequality-number-line - [xf329f86aa4c05206] Choose the graph of the inequality -3 > x (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 400,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": -3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#4287F54D",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x81b7b8d0d9d5d130
+	// Question: Choose the inequality that matches the graph
+	// Widget key: image_1
+	test("inequality-number-line - [x81b7b8d0d9d5d130] Choose the inequality that matches the graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7793,13 +7821,58 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 4
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd80",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x81b7b8d0d9d5d130
+	// Question: Choose the inequality that matches the graph
+	// Widget key: choice_b_visual
+	test("inequality-number-line - [x81b7b8d0d9d5d130] Choose the inequality that matches the graph (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#11accd",
+		      "color": "#11accd80",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -7828,9 +7901,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x81b7b8d0d9d5d130
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_c_graph
-	test("inequality-number-line - [x81b7b8d0d9d5d130] Identify an inequality from a number-line graph (3)", async () => {
+	// Question: Choose the inequality that matches the graph
+	// Widget key: choice_c_visual
+	test("inequality-number-line - [x81b7b8d0d9d5d130] Choose the inequality that matches the graph (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7838,7 +7911,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -7848,7 +7921,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#11accd",
+		      "color": "#11accd80",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -7873,9 +7946,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x81b7b8d0d9d5d130
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_d_graph
-	test("inequality-number-line - [x81b7b8d0d9d5d130] Identify an inequality from a number-line graph (4)", async () => {
+	// Question: Choose the inequality that matches the graph
+	// Widget key: choice_d_visual
+	test("inequality-number-line - [x81b7b8d0d9d5d130] Choose the inequality that matches the graph (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7883,13 +7956,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#11accd",
+		      "color": "#11accd80",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -7918,9 +7991,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe6564ee186a5ed75
-	// Question: Choose the graph of the inequality x < 7
+	// Question: Choose the graph of x < 7
 	// Widget key: choice_a_graph
-	test("inequality-number-line - [xe6564ee186a5ed75] Choose the graph of the inequality x < 7 (1)", async () => {
+	test("inequality-number-line - [xe6564ee186a5ed75] Choose the graph of x < 7 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7928,7 +8001,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -1,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 48,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -7938,7 +8011,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#7854ab",
+		      "color": "#7854AB80",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -7963,9 +8036,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe6564ee186a5ed75
-	// Question: Choose the graph of the inequality x < 7
+	// Question: Choose the graph of x < 7
 	// Widget key: choice_b_graph
-	test("inequality-number-line - [xe6564ee186a5ed75] Choose the graph of the inequality x < 7 (2)", async () => {
+	test("inequality-number-line - [xe6564ee186a5ed75] Choose the graph of x < 7 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7973,7 +8046,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -1,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 48,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -7983,7 +8056,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#7854ab",
+		      "color": "#7854AB80",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -8008,9 +8081,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe6564ee186a5ed75
-	// Question: Choose the graph of the inequality x < 7
+	// Question: Choose the graph of x < 7
 	// Widget key: choice_c_graph
-	test("inequality-number-line - [xe6564ee186a5ed75] Choose the graph of the inequality x < 7 (3)", async () => {
+	test("inequality-number-line - [xe6564ee186a5ed75] Choose the graph of x < 7 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8018,7 +8091,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -1,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 48,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -8028,7 +8101,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#7854ab",
+		      "color": "#7854AB80",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -8053,9 +8126,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe6564ee186a5ed75
-	// Question: Choose the graph of the inequality x < 7
+	// Question: Choose the graph of x < 7
 	// Widget key: choice_d_graph
-	test("inequality-number-line - [xe6564ee186a5ed75] Choose the graph of the inequality x < 7 (4)", async () => {
+	test("inequality-number-line - [xe6564ee186a5ed75] Choose the graph of x < 7 (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8063,7 +8136,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -1,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 48,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -8073,142 +8146,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#7854ab",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe6ce0ba1a0c0daa5
-	// Question: Choose the graph of x > -2
-	// Widget key: choice_a_graph
-	test("inequality-number-line - [xe6ce0ba1a0c0daa5] Choose the graph of x > -2 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 360,
-		  "height": 48,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#7854AB",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe6ce0ba1a0c0daa5
-	// Question: Choose the graph of x > -2
-	// Widget key: choice_b_graph
-	test("inequality-number-line - [xe6ce0ba1a0c0daa5] Choose the graph of x > -2 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 360,
-		  "height": 48,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#7854AB",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe6ce0ba1a0c0daa5
-	// Question: Choose the graph of x > -2
-	// Widget key: choice_d_graph
-	test("inequality-number-line - [xe6ce0ba1a0c0daa5] Choose the graph of x > -2 (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 360,
-		  "height": 48,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#7854AB",
+		      "color": "#7854AB80",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -8234,7 +8172,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x0ea6ddf2623b5753
 	// Question: Choose the graph of x > -4
-	// Widget key: choice_a_nl
+	// Widget key: choice_a_numberline
 	test("inequality-number-line - [x0ea6ddf2623b5753] Choose the graph of x > -4 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -8242,8 +8180,8 @@ describe("inequalityNumberLine widget tests", () => {
 		  "max": 5,
 		  "min": -5,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -8253,7 +8191,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#4287F580",
+		      "color": "#11accd66",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -8279,7 +8217,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x0ea6ddf2623b5753
 	// Question: Choose the graph of x > -4
-	// Widget key: choice_c_nl
+	// Widget key: choice_c_numberline
 	test("inequality-number-line - [x0ea6ddf2623b5753] Choose the graph of x > -4 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -8287,8 +8225,8 @@ describe("inequalityNumberLine widget tests", () => {
 		  "max": 5,
 		  "min": -5,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -8298,7 +8236,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#4287F580",
+		      "color": "#11accd66",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -8324,7 +8262,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x0ea6ddf2623b5753
 	// Question: Choose the graph of x > -4
-	// Widget key: choice_d_nl
+	// Widget key: choice_d_numberline
 	test("inequality-number-line - [x0ea6ddf2623b5753] Choose the graph of x > -4 (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -8332,14 +8270,14 @@ describe("inequalityNumberLine widget tests", () => {
 		  "max": 5,
 		  "min": -5,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#4287F580",
+		      "color": "#11accd66",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -8368,9 +8306,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xac4daf3ec3b769cb
-	// Question: Choose the inequality that matches the number line
+	// Question: Identify an inequality from a number-line graph
 	// Widget key: image_1
-	test("inequality-number-line - [xac4daf3ec3b769cb] Choose the inequality that matches the number line (1)", async () => {
+	test("inequality-number-line - [xac4daf3ec3b769cb] Identify an inequality from a number-line graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8378,7 +8316,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -8389,96 +8327,6 @@ describe("inequalityNumberLine widget tests", () => {
 		        "at": {
 		          "type": "open",
 		          "value": 2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xac4daf3ec3b769cb
-	// Question: Choose the inequality that matches the number line
-	// Widget key: choice_a_visual
-	test("inequality-number-line - [xac4daf3ec3b769cb] Choose the inequality that matches the number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xac4daf3ec3b769cb
-	// Question: Choose the inequality that matches the number line
-	// Widget key: choice_c_visual
-	test("inequality-number-line - [xac4daf3ec3b769cb] Choose the inequality that matches the number line (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": -5
 		        },
 		        "type": "bounded"
 		      }
@@ -8503,9 +8351,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x139df1be864d99ef
-	// Question: Choose the inequality that represents the graph
+	// Question: Choose the inequality that matches the number line graph
 	// Widget key: image_1
-	test("inequality-number-line - [x139df1be864d99ef] Choose the inequality that represents the graph", async () => {
+	test("inequality-number-line - [x139df1be864d99ef] Choose the inequality that matches the number line graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8513,7 +8361,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -8548,9 +8396,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5c5000061a808edf
-	// Question: Choose the inequality that represents the graph
+	// Question: Identify an inequality from a number line
 	// Widget key: image_1
-	test("inequality-number-line - [x5c5000061a808edf] Choose the inequality that represents the graph (1)", async () => {
+	test("inequality-number-line - [x5c5000061a808edf] Identify an inequality from a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8558,7 +8406,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -8593,9 +8441,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5c5000061a808edf
-	// Question: Choose the inequality that represents the graph
+	// Question: Identify an inequality from a number line
 	// Widget key: choice_b_visual
-	test("inequality-number-line - [x5c5000061a808edf] Choose the inequality that represents the graph (2)", async () => {
+	test("inequality-number-line - [x5c5000061a808edf] Identify an inequality from a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8603,7 +8451,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -8638,9 +8486,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5c5000061a808edf
-	// Question: Choose the inequality that represents the graph
+	// Question: Identify an inequality from a number line
 	// Widget key: choice_c_visual
-	test("inequality-number-line - [x5c5000061a808edf] Choose the inequality that represents the graph (3)", async () => {
+	test("inequality-number-line - [x5c5000061a808edf] Identify an inequality from a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8648,7 +8496,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -8683,9 +8531,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5c5000061a808edf
-	// Question: Choose the inequality that represents the graph
+	// Question: Identify an inequality from a number line
 	// Widget key: choice_d_visual
-	test("inequality-number-line - [x5c5000061a808edf] Choose the inequality that represents the graph (4)", async () => {
+	test("inequality-number-line - [x5c5000061a808edf] Identify an inequality from a number line (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8693,7 +8541,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -1,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -8728,9 +8576,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xfa0a483560f82a8e
-	// Question: Identify an inequality from a number-line graph
+	// Question: Choose the inequality that represents the graph
 	// Widget key: image_1
-	test("inequality-number-line - [xfa0a483560f82a8e] Identify an inequality from a number-line graph", async () => {
+	test("inequality-number-line - [xfa0a483560f82a8e] Choose the inequality that represents the graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8738,7 +8586,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -9,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -8774,7 +8622,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x43fd7d94d1049daf
 	// Question: Choose the graph of the inequality 5 < x
-	// Widget key: choice_a_graph
+	// Widget key: choice_a_number_line
 	test("inequality-number-line - [x43fd7d94d1049daf] Choose the graph of the inequality 5 < x (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -8783,13 +8631,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -3,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 48,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#7854ab66",
+		      "color": "#7854AB",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -8819,7 +8667,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x43fd7d94d1049daf
 	// Question: Choose the graph of the inequality 5 < x
-	// Widget key: choice_b_graph
+	// Widget key: choice_b_number_line
 	test("inequality-number-line - [x43fd7d94d1049daf] Choose the graph of the inequality 5 < x (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -8828,7 +8676,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -3,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 48,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -8838,7 +8686,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#7854ab66",
+		      "color": "#7854AB",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -8864,7 +8712,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x43fd7d94d1049daf
 	// Question: Choose the graph of the inequality 5 < x
-	// Widget key: choice_c_graph
+	// Widget key: choice_c_number_line
 	test("inequality-number-line - [x43fd7d94d1049daf] Choose the graph of the inequality 5 < x (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -8873,13 +8721,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -3,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 48,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#7854ab66",
+		      "color": "#7854AB",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -8909,7 +8757,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x43fd7d94d1049daf
 	// Question: Choose the graph of the inequality 5 < x
-	// Widget key: choice_d_graph
+	// Widget key: choice_d_number_line
 	test("inequality-number-line - [x43fd7d94d1049daf] Choose the graph of the inequality 5 < x (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -8918,7 +8766,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -3,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 48,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -8928,7 +8776,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#7854ab66",
+		      "color": "#7854AB",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -8953,9 +8801,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0e14c3dd69960a1d
-	// Question: Choose the graph of the inequality -1 > x
-	// Widget key: choice_a_graph
-	test("inequality-number-line - [x0e14c3dd69960a1d] Choose the graph of the inequality -1 > x (1)", async () => {
+	// Question: Choose the graph of -1 > x
+	// Widget key: choice_a_numberline
+	test("inequality-number-line - [x0e14c3dd69960a1d] Choose the graph of -1 > x (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8963,13 +8811,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 80,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#11accd",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -8998,9 +8846,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0e14c3dd69960a1d
-	// Question: Choose the graph of the inequality -1 > x
-	// Widget key: choice_b_graph
-	test("inequality-number-line - [x0e14c3dd69960a1d] Choose the graph of the inequality -1 > x (2)", async () => {
+	// Question: Choose the graph of -1 > x
+	// Widget key: choice_b_numberline
+	test("inequality-number-line - [x0e14c3dd69960a1d] Choose the graph of -1 > x (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9008,13 +8856,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 80,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#11accd",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -9043,9 +8891,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0e14c3dd69960a1d
-	// Question: Choose the graph of the inequality -1 > x
-	// Widget key: choice_c_graph
-	test("inequality-number-line - [x0e14c3dd69960a1d] Choose the graph of the inequality -1 > x (3)", async () => {
+	// Question: Choose the graph of -1 > x
+	// Widget key: choice_c_numberline
+	test("inequality-number-line - [x0e14c3dd69960a1d] Choose the graph of -1 > x (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9053,7 +8901,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 80,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -9063,7 +8911,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#11accd",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -9088,9 +8936,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0e14c3dd69960a1d
-	// Question: Choose the graph of the inequality -1 > x
-	// Widget key: choice_d_graph
-	test("inequality-number-line - [x0e14c3dd69960a1d] Choose the graph of the inequality -1 > x (4)", async () => {
+	// Question: Choose the graph of -1 > x
+	// Widget key: choice_d_numberline
+	test("inequality-number-line - [x0e14c3dd69960a1d] Choose the graph of -1 > x (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9098,7 +8946,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 360,
-		  "height": 80,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -9108,7 +8956,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#11accd",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -9133,23 +8981,23 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x23a8d3f0f1cb6f3b
-	// Question: Choose the graph of 6 > x
-	// Widget key: choice_a_graph
-	test("inequality-number-line - [x23a8d3f0f1cb6f3b] Choose the graph of 6 > x (1)", async () => {
+	// Question: Choose the graph of the inequality 6 > x
+	// Widget key: choice_a_nl
+	test("inequality-number-line - [x23a8d3f0f1cb6f3b] Choose the graph of the inequality 6 > x (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 9,
 		  "min": -1,
 		  "type": "inequalityNumberLine",
-		  "width": 360,
-		  "height": 48,
+		  "width": 400,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#7854ab",
+		      "color": "#7854AB80",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -9178,17 +9026,17 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x23a8d3f0f1cb6f3b
-	// Question: Choose the graph of 6 > x
-	// Widget key: choice_b_graph
-	test("inequality-number-line - [x23a8d3f0f1cb6f3b] Choose the graph of 6 > x (2)", async () => {
+	// Question: Choose the graph of the inequality 6 > x
+	// Widget key: choice_b_nl
+	test("inequality-number-line - [x23a8d3f0f1cb6f3b] Choose the graph of the inequality 6 > x (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 9,
 		  "min": -1,
 		  "type": "inequalityNumberLine",
-		  "width": 360,
-		  "height": 48,
+		  "width": 400,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -9198,7 +9046,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#7854ab",
+		      "color": "#7854AB80",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -9223,17 +9071,17 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x23a8d3f0f1cb6f3b
-	// Question: Choose the graph of 6 > x
-	// Widget key: choice_c_graph
-	test("inequality-number-line - [x23a8d3f0f1cb6f3b] Choose the graph of 6 > x (3)", async () => {
+	// Question: Choose the graph of the inequality 6 > x
+	// Widget key: choice_c_nl
+	test("inequality-number-line - [x23a8d3f0f1cb6f3b] Choose the graph of the inequality 6 > x (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 9,
 		  "min": -1,
 		  "type": "inequalityNumberLine",
-		  "width": 360,
-		  "height": 48,
+		  "width": 400,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -9243,7 +9091,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#7854ab",
+		      "color": "#7854AB80",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -9268,17 +9116,17 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x23a8d3f0f1cb6f3b
-	// Question: Choose the graph of 6 > x
-	// Widget key: choice_d_graph
-	test("inequality-number-line - [x23a8d3f0f1cb6f3b] Choose the graph of 6 > x (4)", async () => {
+	// Question: Choose the graph of the inequality 6 > x
+	// Widget key: choice_d_nl
+	test("inequality-number-line - [x23a8d3f0f1cb6f3b] Choose the graph of the inequality 6 > x (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 9,
 		  "min": -1,
 		  "type": "inequalityNumberLine",
-		  "width": 360,
-		  "height": 48,
+		  "width": 400,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -9288,7 +9136,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#7854ab",
+		      "color": "#7854AB80",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -9313,9 +9161,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x10106859a7a53c23
-	// Question: Choose the inequality represented by the graph
+	// Question: Choose the inequality that represents the graph
 	// Widget key: image_1
-	test("inequality-number-line - [x10106859a7a53c23] Choose the inequality represented by the graph", async () => {
+	test("inequality-number-line - [x10106859a7a53c23] Choose the inequality that represents the graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9323,7 +9171,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -9333,9 +9181,144 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#29abca",
+		      "color": "#29ABCA",
 		      "start": {
 		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x10106859a7a53c23
+	// Question: Choose the inequality that represents the graph
+	// Widget key: choice_a_visual
+	test("inequality-number-line - [x10106859a7a53c23] Choose the inequality that represents the graph (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x10106859a7a53c23
+	// Question: Choose the inequality that represents the graph
+	// Widget key: choice_c_visual
+	test("inequality-number-line - [x10106859a7a53c23] Choose the inequality that represents the graph (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x10106859a7a53c23
+	// Question: Choose the inequality that represents the graph
+	// Widget key: choice_d_visual
+	test("inequality-number-line - [x10106859a7a53c23] Choose the inequality that represents the graph (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 1
+		        },
+		        "type": "bounded"
 		      }
 		    }
 		  ],
@@ -9358,9 +9341,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xece2cb8aeb81fb3e
-	// Question: Identify an inequality from a number-line graph
+	// Question: Choose the inequality that matches the graph
 	// Widget key: image_1
-	test("inequality-number-line - [xece2cb8aeb81fb3e] Identify an inequality from a number-line graph", async () => {
+	test("inequality-number-line - [xece2cb8aeb81fb3e] Choose the inequality that matches the graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9368,7 +9351,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -9381,186 +9364,6 @@ describe("inequalityNumberLine widget tests", () => {
 		      "color": "#29abca",
 		      "start": {
 		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x581c2c1aba2c1894
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: image_1
-	test("inequality-number-line - [x581c2c1aba2c1894] Identify an inequality from a number-line graph (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x581c2c1aba2c1894
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_a_visual
-	test("inequality-number-line - [x581c2c1aba2c1894] Identify an inequality from a number-line graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x581c2c1aba2c1894
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_b_visual
-	test("inequality-number-line - [x581c2c1aba2c1894] Identify an inequality from a number-line graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x581c2c1aba2c1894
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_c_visual
-	test("inequality-number-line - [x581c2c1aba2c1894] Identify an inequality from a number-line graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 3
-		        },
-		        "type": "bounded"
 		      }
 		    }
 		  ],
@@ -9593,7 +9396,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -9628,9 +9431,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xecf287982e61a26d
-	// Question: Identify an inequality from a number-line graph
+	// Question: Choose the inequality represented by the number line
 	// Widget key: image_1
-	test("inequality-number-line - [xecf287982e61a26d] Identify an inequality from a number-line graph", async () => {
+	test("inequality-number-line - [xecf287982e61a26d] Choose the inequality represented by the number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9638,12 +9441,57 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "at": {
 		          "type": "open",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4e1d9b6ab74b86c2
+	// Question: Choose the inequality represented by the number-line graph
+	// Widget key: image_1
+	test("inequality-number-line - [x4e1d9b6ab74b86c2] Choose the inequality represented by the number-line graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
 		          "value": 0
 		        },
 		        "type": "bounded"
@@ -9683,7 +9531,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -9717,10 +9565,10 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x6f4b476483794106
-	// Question: Choose the inequality that matches the number line
+	// Extracted from question: x581c2c1aba2c1894
+	// Question: Choose the inequality that matches the graph
 	// Widget key: image_1
-	test("inequality-number-line - [x6f4b476483794106] Choose the inequality that matches the number line", async () => {
+	test("inequality-number-line - [x581c2c1aba2c1894] Choose the inequality that matches the graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9728,7 +9576,187 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x581c2c1aba2c1894
+	// Question: Choose the inequality that matches the graph
+	// Widget key: choice_a_numberline
+	test("inequality-number-line - [x581c2c1aba2c1894] Choose the inequality that matches the graph (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x581c2c1aba2c1894
+	// Question: Choose the inequality that matches the graph
+	// Widget key: choice_b_numberline
+	test("inequality-number-line - [x581c2c1aba2c1894] Choose the inequality that matches the graph (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x581c2c1aba2c1894
+	// Question: Choose the inequality that matches the graph
+	// Widget key: choice_c_numberline
+	test("inequality-number-line - [x581c2c1aba2c1894] Choose the inequality that matches the graph (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6f4b476483794106
+	// Question: Choose the inequality represented by the number-line graph
+	// Widget key: image_1
+	test("inequality-number-line - [x6f4b476483794106] Choose the inequality represented by the number-line graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -9763,9 +9791,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0e197546025a0d4a
-	// Question: Identify an inequality from a number-line graph
+	// Question: Select the inequality that matches the number-line graph
 	// Widget key: image_1
-	test("inequality-number-line - [x0e197546025a0d4a] Identify an inequality from a number-line graph (1)", async () => {
+	test("inequality-number-line - [x0e197546025a0d4a] Select the inequality that matches the number-line graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9773,7 +9801,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -9783,7 +9811,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#29ABCA",
+		      "color": "#29abca",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -9808,9 +9836,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0e197546025a0d4a
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_a_image
-	test("inequality-number-line - [x0e197546025a0d4a] Identify an inequality from a number-line graph (2)", async () => {
+	// Question: Select the inequality that matches the number-line graph
+	// Widget key: choice_a_visual
+	test("inequality-number-line - [x0e197546025a0d4a] Select the inequality that matches the number-line graph (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9818,7 +9846,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -9828,7 +9856,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#29ABCA",
+		      "color": "#29abca",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -9853,9 +9881,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0e197546025a0d4a
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_c_image
-	test("inequality-number-line - [x0e197546025a0d4a] Identify an inequality from a number-line graph (3)", async () => {
+	// Question: Select the inequality that matches the number-line graph
+	// Widget key: choice_b_visual
+	test("inequality-number-line - [x0e197546025a0d4a] Select the inequality that matches the number-line graph (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9863,13 +9891,58 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -4
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0e197546025a0d4a
+	// Question: Select the inequality that matches the number-line graph
+	// Widget key: choice_c_visual
+	test("inequality-number-line - [x0e197546025a0d4a] Select the inequality that matches the number-line graph (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#29ABCA",
+		      "color": "#29abca",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -9898,9 +9971,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0e197546025a0d4a
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_d_image
-	test("inequality-number-line - [x0e197546025a0d4a] Identify an inequality from a number-line graph (4)", async () => {
+	// Question: Select the inequality that matches the number-line graph
+	// Widget key: choice_d_visual
+	test("inequality-number-line - [x0e197546025a0d4a] Select the inequality that matches the number-line graph (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9908,197 +9981,17 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#29ABCA",
+		      "color": "#29abca",
 		      "start": {
 		        "at": {
 		          "type": "closed",
 		          "value": -4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4e1d9b6ab74b86c2
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: image_1
-	test("inequality-number-line - [x4e1d9b6ab74b86c2] Identify an inequality from a number-line graph (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4e1d9b6ab74b86c2
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_a_nl
-	test("inequality-number-line - [x4e1d9b6ab74b86c2] Identify an inequality from a number-line graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4e1d9b6ab74b86c2
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_c_nl
-	test("inequality-number-line - [x4e1d9b6ab74b86c2] Identify an inequality from a number-line graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29abca80",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4e1d9b6ab74b86c2
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_d_nl
-	test("inequality-number-line - [x4e1d9b6ab74b86c2] Identify an inequality from a number-line graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29abca80",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
 		        },
 		        "type": "bounded"
 		      }
@@ -10133,7 +10026,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10168,9 +10061,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x56a1c7f1059f80a3
-	// Question: Identify an inequality from a number line
+	// Question: Identify an inequality from a number-line graph
 	// Widget key: image_1
-	test("inequality-number-line - [x56a1c7f1059f80a3] Identify an inequality from a number line", async () => {
+	test("inequality-number-line - [x56a1c7f1059f80a3] Identify an inequality from a number-line graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10178,7 +10071,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10214,7 +10107,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x9b1664e34d681ebd
 	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_a_number_line
+	// Widget key: choice_a_graph
 	test("inequality-number-line - [x9b1664e34d681ebd] Identify an inequality from a number-line graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -10223,7 +10116,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10233,7 +10126,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#11accd",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -10259,7 +10152,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x9b1664e34d681ebd
 	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_b_number_line
+	// Widget key: choice_b_graph
 	test("inequality-number-line - [x9b1664e34d681ebd] Identify an inequality from a number-line graph (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -10268,7 +10161,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10278,7 +10171,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#11accd",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -10304,7 +10197,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x9b1664e34d681ebd
 	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_d_number_line
+	// Widget key: choice_d_graph
 	test("inequality-number-line - [x9b1664e34d681ebd] Identify an inequality from a number-line graph (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -10313,13 +10206,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#11accd",
 		      "start": {
 		        "at": {
 		          "type": "closed",
@@ -10349,7 +10242,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x9b1664e34d681ebd
 	// Question: Identify an inequality from a number-line graph
-	// Widget key: stimulus_number_line
+	// Widget key: inequality_widget
 	test("inequality-number-line - [x9b1664e34d681ebd] Identify an inequality from a number-line graph (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -10358,13 +10251,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#11accd",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -10393,9 +10286,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbe07c6e040c037ef
-	// Question: Choose the inequality from a number-line graph
+	// Question: Choose the inequality that matches the number-line graph
 	// Widget key: image_1
-	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality from a number-line graph (1)", async () => {
+	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality that matches the number-line graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10403,7 +10296,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10438,9 +10331,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbe07c6e040c037ef
-	// Question: Choose the inequality from a number-line graph
+	// Question: Choose the inequality that matches the number-line graph
 	// Widget key: choice_a_visual
-	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality from a number-line graph (2)", async () => {
+	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality that matches the number-line graph (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10448,7 +10341,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10483,9 +10376,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbe07c6e040c037ef
-	// Question: Choose the inequality from a number-line graph
+	// Question: Choose the inequality that matches the number-line graph
 	// Widget key: choice_b_visual
-	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality from a number-line graph (3)", async () => {
+	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality that matches the number-line graph (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10493,7 +10386,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10528,9 +10421,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbe07c6e040c037ef
-	// Question: Choose the inequality from a number-line graph
+	// Question: Choose the inequality that matches the number-line graph
 	// Widget key: choice_d_visual
-	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality from a number-line graph (4)", async () => {
+	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality that matches the number-line graph (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10538,7 +10431,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10575,7 +10468,7 @@ describe("inequalityNumberLine widget tests", () => {
 	// Extracted from question: xe969544a429a3b61
 	// Question: Identify an inequality from a number-line graph
 	// Widget key: image_1
-	test("inequality-number-line - [xe969544a429a3b61] Identify an inequality from a number-line graph (1)", async () => {
+	test("inequality-number-line - [xe969544a429a3b61] Identify an inequality from a number-line graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10583,7 +10476,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10593,141 +10486,6 @@ describe("inequalityNumberLine widget tests", () => {
 		      "start": {
 		        "at": {
 		          "type": "open",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe969544a429a3b61
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_a_visual
-	test("inequality-number-line - [xe969544a429a3b61] Identify an inequality from a number-line graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe969544a429a3b61
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_b_visual
-	test("inequality-number-line - [xe969544a429a3b61] Identify an inequality from a number-line graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe969544a429a3b61
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_d_visual
-	test("inequality-number-line - [xe969544a429a3b61] Identify an inequality from a number-line graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "at": {
-		          "type": "closed",
 		          "value": 4
 		        },
 		        "type": "bounded"
@@ -10753,9 +10511,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xea5cbb67dfc6b1da
-	// Question: Identify an inequality from a number-line graph
+	// Question: Choose the inequality that matches the number line
 	// Widget key: image_1
-	test("inequality-number-line - [xea5cbb67dfc6b1da] Identify an inequality from a number-line graph", async () => {
+	test("inequality-number-line - [xea5cbb67dfc6b1da] Choose the inequality that matches the number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10763,7 +10521,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10773,7 +10531,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#29abca",
+		      "color": "#29ABCA",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -10808,7 +10566,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10843,9 +10601,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc1df064f30796edc
-	// Question: Choose the inequality that represents the graph
+	// Question: Select the inequality represented by the graph
 	// Widget key: image_1
-	test("inequality-number-line - [xc1df064f30796edc] Choose the inequality that represents the graph", async () => {
+	test("inequality-number-line - [xc1df064f30796edc] Select the inequality represented by the graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10853,7 +10611,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10887,6 +10645,141 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: xc1df064f30796edc
+	// Question: Select the inequality represented by the graph
+	// Widget key: choice_a_visual
+	test("inequality-number-line - [xc1df064f30796edc] Select the inequality represented by the graph (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": -3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc1df064f30796edc
+	// Question: Select the inequality represented by the graph
+	// Widget key: choice_c_visual
+	test("inequality-number-line - [xc1df064f30796edc] Select the inequality represented by the graph (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc1df064f30796edc
+	// Question: Select the inequality represented by the graph
+	// Widget key: choice_d_visual
+	test("inequality-number-line - [xc1df064f30796edc] Select the inequality represented by the graph (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": -3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: x57b85ba0b3c58ec1
 	// Question: Identify an inequality from a number-line graph
 	// Widget key: image_1
@@ -10898,7 +10791,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10933,9 +10826,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb9ee5e5d1733d8cb
-	// Question: Identify an inequality from a number-line graph
+	// Question: Choose the inequality represented by the graph
 	// Widget key: image_1
-	test("inequality-number-line - [xb9ee5e5d1733d8cb] Identify an inequality from a number-line graph (1)", async () => {
+	test("inequality-number-line - [xb9ee5e5d1733d8cb] Choose the inequality represented by the graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10943,7 +10836,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -10953,141 +10846,6 @@ describe("inequalityNumberLine widget tests", () => {
 		      "start": {
 		        "at": {
 		          "type": "open",
-		          "value": -5
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb9ee5e5d1733d8cb
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_a_visual
-	test("inequality-number-line - [xb9ee5e5d1733d8cb] Identify an inequality from a number-line graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb9ee5e5d1733d8cb
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_b_visual
-	test("inequality-number-line - [xb9ee5e5d1733d8cb] Identify an inequality from a number-line graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb9ee5e5d1733d8cb
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_d_visual
-	test("inequality-number-line - [xb9ee5e5d1733d8cb] Identify an inequality from a number-line graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "closed",
 		          "value": -5
 		        },
 		        "type": "bounded"
@@ -11113,9 +10871,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe3ffda4262cba1e9
-	// Question: Choose the inequality that represents the number-line graph
+	// Question: Choose the inequality that matches the number-line graph
 	// Widget key: image_1
-	test("inequality-number-line - [xe3ffda4262cba1e9] Choose the inequality that represents the number-line graph (1)", async () => {
+	test("inequality-number-line - [xe3ffda4262cba1e9] Choose the inequality that matches the number-line graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11123,7 +10881,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -11133,141 +10891,6 @@ describe("inequalityNumberLine widget tests", () => {
 		      "start": {
 		        "at": {
 		          "type": "closed",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe3ffda4262cba1e9
-	// Question: Choose the inequality that represents the number-line graph
-	// Widget key: choice_a_nl
-	test("inequality-number-line - [xe3ffda4262cba1e9] Choose the inequality that represents the number-line graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe3ffda4262cba1e9
-	// Question: Choose the inequality that represents the number-line graph
-	// Widget key: choice_b_nl
-	test("inequality-number-line - [xe3ffda4262cba1e9] Choose the inequality that represents the number-line graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe3ffda4262cba1e9
-	// Question: Choose the inequality that represents the number-line graph
-	// Widget key: choice_c_nl
-	test("inequality-number-line - [xe3ffda4262cba1e9] Choose the inequality that represents the number-line graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "at": {
-		          "type": "open",
 		          "value": -2
 		        },
 		        "type": "bounded"
@@ -11293,9 +10916,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x10106859a7a53c23
-	// Question: Choose the inequality represented by the graph
+	// Question: Choose the inequality that represents the graph
 	// Widget key: image_1
-	test("inequality-number-line - [x10106859a7a53c23] Choose the inequality represented by the graph", async () => {
+	test("inequality-number-line - [x10106859a7a53c23] Choose the inequality that represents the graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11303,7 +10926,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -11313,9 +10936,144 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#29abca",
+		      "color": "#29ABCA",
 		      "start": {
 		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x10106859a7a53c23
+	// Question: Choose the inequality that represents the graph
+	// Widget key: choice_a_visual
+	test("inequality-number-line - [x10106859a7a53c23] Choose the inequality that represents the graph (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x10106859a7a53c23
+	// Question: Choose the inequality that represents the graph
+	// Widget key: choice_c_visual
+	test("inequality-number-line - [x10106859a7a53c23] Choose the inequality that represents the graph (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 1
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x10106859a7a53c23
+	// Question: Choose the inequality that represents the graph
+	// Widget key: choice_d_visual
+	test("inequality-number-line - [x10106859a7a53c23] Choose the inequality that represents the graph (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29ABCA",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 1
+		        },
+		        "type": "bounded"
 		      }
 		    }
 		  ],
@@ -11338,9 +11096,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xece2cb8aeb81fb3e
-	// Question: Identify an inequality from a number-line graph
+	// Question: Choose the inequality that matches the graph
 	// Widget key: image_1
-	test("inequality-number-line - [xece2cb8aeb81fb3e] Identify an inequality from a number-line graph", async () => {
+	test("inequality-number-line - [xece2cb8aeb81fb3e] Choose the inequality that matches the graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11348,7 +11106,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -11361,186 +11119,6 @@ describe("inequalityNumberLine widget tests", () => {
 		      "color": "#29abca",
 		      "start": {
 		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x581c2c1aba2c1894
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: image_1
-	test("inequality-number-line - [x581c2c1aba2c1894] Identify an inequality from a number-line graph (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x581c2c1aba2c1894
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_a_visual
-	test("inequality-number-line - [x581c2c1aba2c1894] Identify an inequality from a number-line graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x581c2c1aba2c1894
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_b_visual
-	test("inequality-number-line - [x581c2c1aba2c1894] Identify an inequality from a number-line graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 3
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x581c2c1aba2c1894
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_c_visual
-	test("inequality-number-line - [x581c2c1aba2c1894] Identify an inequality from a number-line graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 3
-		        },
-		        "type": "bounded"
 		      }
 		    }
 		  ],
@@ -11573,7 +11151,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -11608,9 +11186,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xecf287982e61a26d
-	// Question: Identify an inequality from a number-line graph
+	// Question: Choose the inequality represented by the number line
 	// Widget key: image_1
-	test("inequality-number-line - [xecf287982e61a26d] Identify an inequality from a number-line graph", async () => {
+	test("inequality-number-line - [xecf287982e61a26d] Choose the inequality represented by the number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11618,12 +11196,57 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "at": {
 		          "type": "open",
+		          "value": 0
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4e1d9b6ab74b86c2
+	// Question: Choose the inequality represented by the number-line graph
+	// Widget key: image_1
+	test("inequality-number-line - [x4e1d9b6ab74b86c2] Choose the inequality represented by the number-line graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
 		          "value": 0
 		        },
 		        "type": "bounded"
@@ -11663,7 +11286,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -11697,10 +11320,10 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x6f4b476483794106
-	// Question: Choose the inequality that matches the number line
+	// Extracted from question: x581c2c1aba2c1894
+	// Question: Choose the inequality that matches the graph
 	// Widget key: image_1
-	test("inequality-number-line - [x6f4b476483794106] Choose the inequality that matches the number line", async () => {
+	test("inequality-number-line - [x581c2c1aba2c1894] Choose the inequality that matches the graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11708,7 +11331,187 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x581c2c1aba2c1894
+	// Question: Choose the inequality that matches the graph
+	// Widget key: choice_a_numberline
+	test("inequality-number-line - [x581c2c1aba2c1894] Choose the inequality that matches the graph (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x581c2c1aba2c1894
+	// Question: Choose the inequality that matches the graph
+	// Widget key: choice_b_numberline
+	test("inequality-number-line - [x581c2c1aba2c1894] Choose the inequality that matches the graph (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x581c2c1aba2c1894
+	// Question: Choose the inequality that matches the graph
+	// Widget key: choice_c_numberline
+	test("inequality-number-line - [x581c2c1aba2c1894] Choose the inequality that matches the graph (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6f4b476483794106
+	// Question: Choose the inequality represented by the number-line graph
+	// Widget key: image_1
+	test("inequality-number-line - [x6f4b476483794106] Choose the inequality represented by the number-line graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -11743,9 +11546,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0e197546025a0d4a
-	// Question: Identify an inequality from a number-line graph
+	// Question: Select the inequality that matches the number-line graph
 	// Widget key: image_1
-	test("inequality-number-line - [x0e197546025a0d4a] Identify an inequality from a number-line graph (1)", async () => {
+	test("inequality-number-line - [x0e197546025a0d4a] Select the inequality that matches the number-line graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11753,7 +11556,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -11763,7 +11566,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#29ABCA",
+		      "color": "#29abca",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -11788,9 +11591,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0e197546025a0d4a
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_a_image
-	test("inequality-number-line - [x0e197546025a0d4a] Identify an inequality from a number-line graph (2)", async () => {
+	// Question: Select the inequality that matches the number-line graph
+	// Widget key: choice_a_visual
+	test("inequality-number-line - [x0e197546025a0d4a] Select the inequality that matches the number-line graph (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11798,7 +11601,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -11808,7 +11611,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#29ABCA",
+		      "color": "#29abca",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -11833,9 +11636,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0e197546025a0d4a
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_c_image
-	test("inequality-number-line - [x0e197546025a0d4a] Identify an inequality from a number-line graph (3)", async () => {
+	// Question: Select the inequality that matches the number-line graph
+	// Widget key: choice_b_visual
+	test("inequality-number-line - [x0e197546025a0d4a] Select the inequality that matches the number-line graph (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11843,13 +11646,58 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": -4
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0e197546025a0d4a
+	// Question: Select the inequality that matches the number-line graph
+	// Widget key: choice_c_visual
+	test("inequality-number-line - [x0e197546025a0d4a] Select the inequality that matches the number-line graph (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#29ABCA",
+		      "color": "#29abca",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -11878,9 +11726,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0e197546025a0d4a
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_d_image
-	test("inequality-number-line - [x0e197546025a0d4a] Identify an inequality from a number-line graph (4)", async () => {
+	// Question: Select the inequality that matches the number-line graph
+	// Widget key: choice_d_visual
+	test("inequality-number-line - [x0e197546025a0d4a] Select the inequality that matches the number-line graph (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11888,197 +11736,17 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#29ABCA",
+		      "color": "#29abca",
 		      "start": {
 		        "at": {
 		          "type": "closed",
 		          "value": -4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4e1d9b6ab74b86c2
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: image_1
-	test("inequality-number-line - [x4e1d9b6ab74b86c2] Identify an inequality from a number-line graph (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4e1d9b6ab74b86c2
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_a_nl
-	test("inequality-number-line - [x4e1d9b6ab74b86c2] Identify an inequality from a number-line graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca80",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4e1d9b6ab74b86c2
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_c_nl
-	test("inequality-number-line - [x4e1d9b6ab74b86c2] Identify an inequality from a number-line graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29abca80",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 0
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4e1d9b6ab74b86c2
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_d_nl
-	test("inequality-number-line - [x4e1d9b6ab74b86c2] Identify an inequality from a number-line graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29abca80",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 0
 		        },
 		        "type": "bounded"
 		      }
@@ -12113,7 +11781,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12148,9 +11816,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x56a1c7f1059f80a3
-	// Question: Identify an inequality from a number line
+	// Question: Identify an inequality from a number-line graph
 	// Widget key: image_1
-	test("inequality-number-line - [x56a1c7f1059f80a3] Identify an inequality from a number line", async () => {
+	test("inequality-number-line - [x56a1c7f1059f80a3] Identify an inequality from a number-line graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12158,7 +11826,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12194,7 +11862,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x9b1664e34d681ebd
 	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_a_number_line
+	// Widget key: choice_a_graph
 	test("inequality-number-line - [x9b1664e34d681ebd] Identify an inequality from a number-line graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -12203,7 +11871,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12213,7 +11881,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#11accd",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -12239,7 +11907,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x9b1664e34d681ebd
 	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_b_number_line
+	// Widget key: choice_b_graph
 	test("inequality-number-line - [x9b1664e34d681ebd] Identify an inequality from a number-line graph (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -12248,7 +11916,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12258,7 +11926,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#11accd",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -12284,7 +11952,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x9b1664e34d681ebd
 	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_d_number_line
+	// Widget key: choice_d_graph
 	test("inequality-number-line - [x9b1664e34d681ebd] Identify an inequality from a number-line graph (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -12293,13 +11961,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#11accd",
 		      "start": {
 		        "at": {
 		          "type": "closed",
@@ -12329,7 +11997,7 @@ describe("inequalityNumberLine widget tests", () => {
 
 	// Extracted from question: x9b1664e34d681ebd
 	// Question: Identify an inequality from a number-line graph
-	// Widget key: stimulus_number_line
+	// Widget key: inequality_widget
 	test("inequality-number-line - [x9b1664e34d681ebd] Identify an inequality from a number-line graph (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -12338,13 +12006,13 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#4287F54D",
+		      "color": "#11accd",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -12373,9 +12041,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbe07c6e040c037ef
-	// Question: Choose the inequality from a number-line graph
+	// Question: Choose the inequality that matches the number-line graph
 	// Widget key: image_1
-	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality from a number-line graph (1)", async () => {
+	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality that matches the number-line graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12383,7 +12051,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12418,9 +12086,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbe07c6e040c037ef
-	// Question: Choose the inequality from a number-line graph
+	// Question: Choose the inequality that matches the number-line graph
 	// Widget key: choice_a_visual
-	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality from a number-line graph (2)", async () => {
+	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality that matches the number-line graph (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12428,7 +12096,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12463,9 +12131,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbe07c6e040c037ef
-	// Question: Choose the inequality from a number-line graph
+	// Question: Choose the inequality that matches the number-line graph
 	// Widget key: choice_b_visual
-	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality from a number-line graph (3)", async () => {
+	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality that matches the number-line graph (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12473,7 +12141,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12508,9 +12176,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbe07c6e040c037ef
-	// Question: Choose the inequality from a number-line graph
+	// Question: Choose the inequality that matches the number-line graph
 	// Widget key: choice_d_visual
-	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality from a number-line graph (4)", async () => {
+	test("inequality-number-line - [xbe07c6e040c037ef] Choose the inequality that matches the number-line graph (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12518,7 +12186,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12555,7 +12223,7 @@ describe("inequalityNumberLine widget tests", () => {
 	// Extracted from question: xe969544a429a3b61
 	// Question: Identify an inequality from a number-line graph
 	// Widget key: image_1
-	test("inequality-number-line - [xe969544a429a3b61] Identify an inequality from a number-line graph (1)", async () => {
+	test("inequality-number-line - [xe969544a429a3b61] Identify an inequality from a number-line graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12563,7 +12231,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12573,141 +12241,6 @@ describe("inequalityNumberLine widget tests", () => {
 		      "start": {
 		        "at": {
 		          "type": "open",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe969544a429a3b61
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_a_visual
-	test("inequality-number-line - [xe969544a429a3b61] Identify an inequality from a number-line graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe969544a429a3b61
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_b_visual
-	test("inequality-number-line - [xe969544a429a3b61] Identify an inequality from a number-line graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 4
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe969544a429a3b61
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_d_visual
-	test("inequality-number-line - [xe969544a429a3b61] Identify an inequality from a number-line graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "at": {
-		          "type": "closed",
 		          "value": 4
 		        },
 		        "type": "bounded"
@@ -12733,9 +12266,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xea5cbb67dfc6b1da
-	// Question: Identify an inequality from a number-line graph
+	// Question: Choose the inequality that matches the number line
 	// Widget key: image_1
-	test("inequality-number-line - [xea5cbb67dfc6b1da] Identify an inequality from a number-line graph", async () => {
+	test("inequality-number-line - [xea5cbb67dfc6b1da] Choose the inequality that matches the number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12743,7 +12276,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12753,7 +12286,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#29abca",
+		      "color": "#29ABCA",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -12788,7 +12321,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12823,9 +12356,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc1df064f30796edc
-	// Question: Choose the inequality that represents the graph
+	// Question: Select the inequality represented by the graph
 	// Widget key: image_1
-	test("inequality-number-line - [xc1df064f30796edc] Choose the inequality that represents the graph", async () => {
+	test("inequality-number-line - [xc1df064f30796edc] Select the inequality represented by the graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12833,7 +12366,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12867,6 +12400,141 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: xc1df064f30796edc
+	// Question: Select the inequality represented by the graph
+	// Widget key: choice_a_visual
+	test("inequality-number-line - [xc1df064f30796edc] Select the inequality represented by the graph (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": -3
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc1df064f30796edc
+	// Question: Select the inequality represented by the graph
+	// Widget key: choice_c_visual
+	test("inequality-number-line - [xc1df064f30796edc] Select the inequality represented by the graph (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": -3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc1df064f30796edc
+	// Question: Select the inequality represented by the graph
+	// Widget key: choice_d_visual
+	test("inequality-number-line - [xc1df064f30796edc] Select the inequality represented by the graph (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "inequalityNumberLine",
+		  "width": 460,
+		  "height": 300,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#29abca",
+		      "start": {
+		        "at": {
+		          "type": "closed",
+		          "value": -3
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 1
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: x57b85ba0b3c58ec1
 	// Question: Identify an inequality from a number-line graph
 	// Widget key: image_1
@@ -12878,7 +12546,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12913,9 +12581,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb9ee5e5d1733d8cb
-	// Question: Identify an inequality from a number-line graph
+	// Question: Choose the inequality represented by the graph
 	// Widget key: image_1
-	test("inequality-number-line - [xb9ee5e5d1733d8cb] Identify an inequality from a number-line graph (1)", async () => {
+	test("inequality-number-line - [xb9ee5e5d1733d8cb] Choose the inequality represented by the graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12923,7 +12591,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -12933,141 +12601,6 @@ describe("inequalityNumberLine widget tests", () => {
 		      "start": {
 		        "at": {
 		          "type": "open",
-		          "value": -5
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb9ee5e5d1733d8cb
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_a_visual
-	test("inequality-number-line - [xb9ee5e5d1733d8cb] Identify an inequality from a number-line graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb9ee5e5d1733d8cb
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_b_visual
-	test("inequality-number-line - [xb9ee5e5d1733d8cb] Identify an inequality from a number-line graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -5
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb9ee5e5d1733d8cb
-	// Question: Identify an inequality from a number-line graph
-	// Widget key: choice_d_visual
-	test("inequality-number-line - [xb9ee5e5d1733d8cb] Identify an inequality from a number-line graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#11accd",
-		      "start": {
-		        "at": {
-		          "type": "closed",
 		          "value": -5
 		        },
 		        "type": "bounded"
@@ -13093,9 +12626,9 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe3ffda4262cba1e9
-	// Question: Choose the inequality that represents the number-line graph
+	// Question: Choose the inequality that matches the number-line graph
 	// Widget key: image_1
-	test("inequality-number-line - [xe3ffda4262cba1e9] Choose the inequality that represents the number-line graph (1)", async () => {
+	test("inequality-number-line - [xe3ffda4262cba1e9] Choose the inequality that matches the number-line graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13103,7 +12636,7 @@ describe("inequalityNumberLine widget tests", () => {
 		  "min": -5,
 		  "type": "inequalityNumberLine",
 		  "width": 460,
-		  "height": 64,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -13113,141 +12646,6 @@ describe("inequalityNumberLine widget tests", () => {
 		      "start": {
 		        "at": {
 		          "type": "closed",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe3ffda4262cba1e9
-	// Question: Choose the inequality that represents the number-line graph
-	// Widget key: choice_a_nl
-	test("inequality-number-line - [xe3ffda4262cba1e9] Choose the inequality that represents the number-line graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "open",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe3ffda4262cba1e9
-	// Question: Choose the inequality that represents the number-line graph
-	// Widget key: choice_b_nl
-	test("inequality-number-line - [xe3ffda4262cba1e9] Choose the inequality that represents the number-line graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": -2
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 1
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe3ffda4262cba1e9
-	// Question: Choose the inequality that represents the number-line graph
-	// Widget key: choice_c_nl
-	test("inequality-number-line - [xe3ffda4262cba1e9] Choose the inequality that represents the number-line graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "inequalityNumberLine",
-		  "width": 460,
-		  "height": 64,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#29abca",
-		      "start": {
-		        "at": {
-		          "type": "open",
 		          "value": -2
 		        },
 		        "type": "bounded"
@@ -13273,168 +12671,33 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x4be54724d7880b77
-	// Question: Write an inequality and select its graph
-	// Widget key: graph_choice_a
-	test("inequality-number-line - [x4be54724d7880b77] Write an inequality and select its graph (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 364,
-		  "min": 350,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "at": {
-		          "type": "open",
-		          "value": 358
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 2
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4be54724d7880b77
-	// Question: Write an inequality and select its graph
-	// Widget key: graph_choice_b
-	test("inequality-number-line - [x4be54724d7880b77] Write an inequality and select its graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 364,
-		  "min": 350,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "at": {
-		          "type": "closed",
-		          "value": 358
-		        },
-		        "type": "bounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 2
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4be54724d7880b77
-	// Question: Write an inequality and select its graph
-	// Widget key: graph_choice_c
-	test("inequality-number-line - [x4be54724d7880b77] Write an inequality and select its graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 364,
-		  "min": 350,
-		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
-		  "ranges": [
-		    {
-		      "end": {
-		        "at": {
-		          "type": "closed",
-		          "value": 358
-		        },
-		        "type": "bounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "type": "unbounded"
-		      }
-		    }
-		  ],
-		  "tickInterval": 2
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for inequalityNumberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd1141a3299350223
-	// Question: Write an inequality for skipped days and graph the solution
+	// Question: Write an inequality and graph its solution set (Khan on Seven)
 	// Widget key: nl_choice_a
-	test("inequality-number-line - [xd1141a3299350223] Write an inequality for skipped days and graph the solution (1)", async () => {
+	test("inequality-number-line - [x4be54724d7880b77] Write an inequality and graph its solution set (Khan on Seven) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 50,
-		  "min": 10,
+		  "max": 364,
+		  "min": 350,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 100,
+		  "width": 400,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
-		        "type": "unbounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
 		        "at": {
 		          "type": "closed",
-		          "value": 15
+		          "value": 358
 		        },
 		        "type": "bounded"
+		      },
+		      "color": "#11accd",
+		      "start": {
+		        "type": "unbounded"
 		      }
 		    }
 		  ],
-		  "tickInterval": 5
+		  "tickInterval": 2
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -13452,34 +12715,34 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd1141a3299350223
-	// Question: Write an inequality for skipped days and graph the solution
+	// Extracted from question: x4be54724d7880b77
+	// Question: Write an inequality and graph its solution set (Khan on Seven)
 	// Widget key: nl_choice_b
-	test("inequality-number-line - [xd1141a3299350223] Write an inequality for skipped days and graph the solution (2)", async () => {
+	test("inequality-number-line - [x4be54724d7880b77] Write an inequality and graph its solution set (Khan on Seven) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 50,
-		  "min": 10,
+		  "max": 364,
+		  "min": 350,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 100,
+		  "width": 400,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd",
+		      "start": {
 		        "at": {
 		          "type": "closed",
-		          "value": 15
+		          "value": 358
 		        },
 		        "type": "bounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "type": "unbounded"
 		      }
 		    }
 		  ],
-		  "tickInterval": 5
+		  "tickInterval": 2
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -13497,34 +12760,34 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd1141a3299350223
-	// Question: Write an inequality for skipped days and graph the solution
+	// Extracted from question: x4be54724d7880b77
+	// Question: Write an inequality and graph its solution set (Khan on Seven)
 	// Widget key: nl_choice_c
-	test("inequality-number-line - [xd1141a3299350223] Write an inequality for skipped days and graph the solution (3)", async () => {
+	test("inequality-number-line - [x4be54724d7880b77] Write an inequality and graph its solution set (Khan on Seven) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 50,
-		  "min": 10,
+		  "max": 364,
+		  "min": 350,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 100,
+		  "width": 400,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#11accd",
+		      "start": {
 		        "at": {
 		          "type": "open",
-		          "value": 15
+		          "value": 358
 		        },
 		        "type": "bounded"
-		      },
-		      "color": "#4287F54D",
-		      "start": {
-		        "type": "unbounded"
 		      }
 		    }
 		  ],
-		  "tickInterval": 5
+		  "tickInterval": 2
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -13542,34 +12805,34 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x500b6911
+	// Extracted from question: xd1141a3299350223
 	// Question: Write an inequality and select its graph
 	// Widget key: graph_choice_a
-	test("inequality-number-line - [x500b6911] Write an inequality and select its graph (1)", async () => {
+	test("inequality-number-line - [xd1141a3299350223] Write an inequality and select its graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 10,
-		  "min": 5,
+		  "max": 50,
+		  "min": 10,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
+		  "width": 440,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#11accd88",
+		      "color": "#11accd",
 		      "start": {
 		        "at": {
-		          "type": "open",
-		          "value": 8.75
+		          "type": "closed",
+		          "value": 15
 		        },
 		        "type": "bounded"
 		      }
 		    }
 		  ],
-		  "tickInterval": 0.5
+		  "tickInterval": 5
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -13587,24 +12850,114 @@ describe("inequalityNumberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x500b6911
+	// Extracted from question: xd1141a3299350223
 	// Question: Write an inequality and select its graph
 	// Widget key: graph_choice_b
-	test("inequality-number-line - [x500b6911] Write an inequality and select its graph (2)", async () => {
+	test("inequality-number-line - [xd1141a3299350223] Write an inequality and select its graph (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 50,
+		  "min": 10,
+		  "type": "inequalityNumberLine",
+		  "width": 440,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "closed",
+		          "value": 15
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 5
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd1141a3299350223
+	// Question: Write an inequality and select its graph
+	// Widget key: graph_choice_c
+	test("inequality-number-line - [xd1141a3299350223] Write an inequality and select its graph (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 50,
+		  "min": 10,
+		  "type": "inequalityNumberLine",
+		  "width": 440,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "at": {
+		          "type": "open",
+		          "value": 15
+		        },
+		        "type": "bounded"
+		      },
+		      "color": "#11accd",
+		      "start": {
+		        "type": "unbounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 5
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x500b6911
+	// Question: Write an inequality and graph its solution
+	// Widget key: graph_choice_a
+	test("inequality-number-line - [x500b6911] Write an inequality and graph its solution (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": 5,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
+		  "width": 440,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#11accd88",
+		      "color": "#4A90E2AA",
 		      "start": {
 		        "at": {
 		          "type": "closed",
@@ -13633,17 +12986,62 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x500b6911
-	// Question: Write an inequality and select its graph
-	// Widget key: graph_choice_c
-	test("inequality-number-line - [x500b6911] Write an inequality and select its graph (3)", async () => {
+	// Question: Write an inequality and graph its solution
+	// Widget key: graph_choice_b
+	test("inequality-number-line - [x500b6911] Write an inequality and graph its solution (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": 5,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
+		  "width": 440,
+		  "height": 320,
+		  "ranges": [
+		    {
+		      "end": {
+		        "type": "unbounded"
+		      },
+		      "color": "#4A90E2AA",
+		      "start": {
+		        "at": {
+		          "type": "open",
+		          "value": 8.75
+		        },
+		        "type": "bounded"
+		      }
+		    }
+		  ],
+		  "tickInterval": 0.5
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for inequalityNumberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x500b6911
+	// Question: Write an inequality and graph its solution
+	// Widget key: graph_choice_c
+	test("inequality-number-line - [x500b6911] Write an inequality and graph its solution (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": 5,
+		  "type": "inequalityNumberLine",
+		  "width": 440,
+		  "height": 320,
 		  "ranges": [
 		    {
 		      "end": {
@@ -13653,7 +13051,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#11accd88",
+		      "color": "#4A90E2AA",
 		      "start": {
 		        "type": "unbounded"
 		      }
@@ -13678,23 +13076,23 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x27b9b699
-	// Question: Write an inequality and graph its solution
-	// Widget key: numberline_choice_a
-	test("inequality-number-line - [x27b9b699] Write an inequality and graph its solution (1)", async () => {
+	// Question: Write an inequality and select its number line graph
+	// Widget key: nl_choice_a
+	test("inequality-number-line - [x27b9b699] Write an inequality and select its number line graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": 0,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#3B82F680",
+		      "color": "#11accd66",
 		      "start": {
 		        "at": {
 		          "type": "open",
@@ -13723,23 +13121,23 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x27b9b699
-	// Question: Write an inequality and graph its solution
-	// Widget key: numberline_choice_b
-	test("inequality-number-line - [x27b9b699] Write an inequality and graph its solution (2)", async () => {
+	// Question: Write an inequality and select its number line graph
+	// Widget key: nl_choice_b
+	test("inequality-number-line - [x27b9b699] Write an inequality and select its number line graph (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": 0,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
 		        "type": "unbounded"
 		      },
-		      "color": "#3B82F680",
+		      "color": "#11accd66",
 		      "start": {
 		        "at": {
 		          "type": "closed",
@@ -13768,17 +13166,17 @@ describe("inequalityNumberLine widget tests", () => {
 	})
 
 	// Extracted from question: x27b9b699
-	// Question: Write an inequality and graph its solution
-	// Widget key: numberline_choice_c
-	test("inequality-number-line - [x27b9b699] Write an inequality and graph its solution (3)", async () => {
+	// Question: Write an inequality and select its number line graph
+	// Widget key: nl_choice_c
+	test("inequality-number-line - [x27b9b699] Write an inequality and select its number line graph (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": 0,
 		  "type": "inequalityNumberLine",
-		  "width": 600,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "ranges": [
 		    {
 		      "end": {
@@ -13788,7 +13186,7 @@ describe("inequalityNumberLine widget tests", () => {
 		        },
 		        "type": "bounded"
 		      },
-		      "color": "#3B82F680",
+		      "color": "#11accd66",
 		      "start": {
 		        "type": "unbounded"
 		      }

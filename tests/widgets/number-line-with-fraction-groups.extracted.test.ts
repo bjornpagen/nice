@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.970Z
+// Generated on: 2025-09-18T05:17:02.168Z
 // Widget Type: numberLineWithFractionGroups
 // Source: Real questions from database
 //
@@ -26,9 +26,9 @@ import * as logger from "@superbuilders/slog"
 
 describe("numberLineWithFractionGroups widget tests", () => {
 	// Extracted from question: xf50dfb2fa3c68d44
-	// Question: Using a number line to divide by a fraction
+	// Question: Divide by a fraction using a number line
 	// Widget key: image_1
-	test("number-line-with-fraction-groups - [xf50dfb2fa3c68d44] Using a number line to divide by a fraction", async () => {
+	test("number-line-with-fraction-groups - [xf50dfb2fa3c68d44] Divide by a fraction using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -44,7 +44,7 @@ describe("numberLineWithFractionGroups widget tests", () => {
 		    "upperBound": 9
 		  },
 		  "width": 320,
-		  "height": 198
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -63,9 +63,9 @@ describe("numberLineWithFractionGroups widget tests", () => {
 	})
 
 	// Extracted from question: x065198b739c010f5
-	// Question: Divide a whole number by a fraction on a number line
+	// Question: Groups of ninths and division by a fraction
 	// Widget key: image_1
-	test("number-line-with-fraction-groups - [x065198b739c010f5] Divide a whole number by a fraction on a number line", async () => {
+	test("number-line-with-fraction-groups - [x065198b739c010f5] Groups of ninths and division by a fraction", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -81,7 +81,7 @@ describe("numberLineWithFractionGroups widget tests", () => {
 		    "upperBound": 19
 		  },
 		  "width": 320,
-		  "height": 198
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -100,9 +100,9 @@ describe("numberLineWithFractionGroups widget tests", () => {
 	})
 
 	// Extracted from question: x254489d08703d240
-	// Question: Divide by a fraction using a number line
+	// Question: Dividing by a fraction using a number line
 	// Widget key: image_1
-	test("number-line-with-fraction-groups - [x254489d08703d240] Divide by a fraction using a number line", async () => {
+	test("number-line-with-fraction-groups - [x254489d08703d240] Dividing by a fraction using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -118,7 +118,7 @@ describe("numberLineWithFractionGroups widget tests", () => {
 		    "upperBound": 8
 		  },
 		  "width": 320,
-		  "height": 198
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -137,9 +137,9 @@ describe("numberLineWithFractionGroups widget tests", () => {
 	})
 
 	// Extracted from question: xfc9c5456807151a7
-	// Question: Groups of five-sixths and division by a fraction
+	// Question: Groups of 5/6 on a number line and division by a fraction
 	// Widget key: image_1
-	test("number-line-with-fraction-groups - [xfc9c5456807151a7] Groups of five-sixths and division by a fraction", async () => {
+	test("number-line-with-fraction-groups - [xfc9c5456807151a7] Groups of 5/6 on a number line and division by a fraction", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -155,7 +155,7 @@ describe("numberLineWithFractionGroups widget tests", () => {
 		    "upperBound": 9
 		  },
 		  "width": 320,
-		  "height": 198
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -174,9 +174,9 @@ describe("numberLineWithFractionGroups widget tests", () => {
 	})
 
 	// Extracted from question: x335aafe44cff510e
-	// Question: Divide a whole number by a fraction using a number line
+	// Question: Divide by a fraction using a number line
 	// Widget key: image_1
-	test("number-line-with-fraction-groups - [x335aafe44cff510e] Divide a whole number by a fraction using a number line", async () => {
+	test("number-line-with-fraction-groups - [x335aafe44cff510e] Divide by a fraction using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -187,12 +187,12 @@ describe("numberLineWithFractionGroups widget tests", () => {
 		  },
 		  "type": "numberLineWithFractionGroups",
 		  "boxes": {
-		    "fillTo": 4,
+		    "fillTo": 3,
 		    "lowerBound": 0,
-		    "upperBound": 5
+		    "upperBound": 7
 		  },
-		  "width": 320,
-		  "height": 198
+		  "width": 400,
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -211,9 +211,9 @@ describe("numberLineWithFractionGroups widget tests", () => {
 	})
 
 	// Extracted from question: x6ffa975af3623efb
-	// Question: Divide by a Fraction Using a Number Line
+	// Question: Divide a whole number by a fraction using a number line
 	// Widget key: image_1
-	test("number-line-with-fraction-groups - [x6ffa975af3623efb] Divide by a Fraction Using a Number Line", async () => {
+	test("number-line-with-fraction-groups - [x6ffa975af3623efb] Divide a whole number by a fraction using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -229,7 +229,44 @@ describe("numberLineWithFractionGroups widget tests", () => {
 		    "upperBound": 7
 		  },
 		  "width": 320,
-		  "height": 198
+		  "height": 320
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLineWithFractionGroups", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0d630ea8001a909f
+	// Question: Dividing by a fraction with a number line
+	// Widget key: image_1
+	test("number-line-with-fraction-groups - [x0d630ea8001a909f] Dividing by a fraction with a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "lowerBound": 0,
+		    "upperBound": 5,
+		    "denominator": 3
+		  },
+		  "type": "numberLineWithFractionGroups",
+		  "boxes": {
+		    "fillTo": 3,
+		    "lowerBound": 0,
+		    "upperBound": 4
+		  },
+		  "width": 320,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -248,9 +285,9 @@ describe("numberLineWithFractionGroups widget tests", () => {
 	})
 
 	// Extracted from question: x1cd3ad9db7c87f7d
-	// Question: Count groups of one-fifth and evaluate a division expression
+	// Question: Groups of fifths on a number line
 	// Widget key: image_1
-	test("number-line-with-fraction-groups - [x1cd3ad9db7c87f7d] Count groups of one-fifth and evaluate a division expression", async () => {
+	test("number-line-with-fraction-groups - [x1cd3ad9db7c87f7d] Groups of fifths on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -266,7 +303,7 @@ describe("numberLineWithFractionGroups widget tests", () => {
 		    "upperBound": 23
 		  },
 		  "width": 320,
-		  "height": 198
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -285,9 +322,9 @@ describe("numberLineWithFractionGroups widget tests", () => {
 	})
 
 	// Extracted from question: x65d44702eaf77e76
-	// Question: Counting groups of fourths and dividing by a fraction
+	// Question: Use a number line to count groups and divide by a fraction
 	// Widget key: image_1
-	test("number-line-with-fraction-groups - [x65d44702eaf77e76] Counting groups of fourths and dividing by a fraction", async () => {
+	test("number-line-with-fraction-groups - [x65d44702eaf77e76] Use a number line to count groups and divide by a fraction", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -298,12 +335,49 @@ describe("numberLineWithFractionGroups widget tests", () => {
 		  },
 		  "type": "numberLineWithFractionGroups",
 		  "boxes": {
-		    "fillTo": 4,
+		    "fillTo": 28,
 		    "lowerBound": 0,
 		    "upperBound": 29
 		  },
+		  "width": 400,
+		  "height": 320
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLineWithFractionGroups", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x78692243f47f4860
+	// Question: Divide a whole number by a fraction using a number line
+	// Widget key: image_1
+	test("number-line-with-fraction-groups - [x78692243f47f4860] Divide a whole number by a fraction using a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "lowerBound": 0,
+		    "upperBound": 10,
+		    "denominator": 2
+		  },
+		  "type": "numberLineWithFractionGroups",
+		  "boxes": {
+		    "fillTo": 0,
+		    "lowerBound": 0,
+		    "upperBound": 8
+		  },
 		  "width": 320,
-		  "height": 198
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -322,9 +396,9 @@ describe("numberLineWithFractionGroups widget tests", () => {
 	})
 
 	// Extracted from question: xc0d0c715069d9fca
-	// Question: Use a number line to count groups and evaluate a quotient
+	// Question: Use a number line to divide by a fraction
 	// Widget key: image_1
-	test("number-line-with-fraction-groups - [xc0d0c715069d9fca] Use a number line to count groups and evaluate a quotient", async () => {
+	test("number-line-with-fraction-groups - [xc0d0c715069d9fca] Use a number line to divide by a fraction", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -340,7 +414,7 @@ describe("numberLineWithFractionGroups widget tests", () => {
 		    "upperBound": 17
 		  },
 		  "width": 320,
-		  "height": 198
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -359,9 +433,9 @@ describe("numberLineWithFractionGroups widget tests", () => {
 	})
 
 	// Extracted from question: x0a2ef246f7964e60
-	// Question: Use a number line to divide by a fraction
+	// Question: Divide a whole number by a fraction using a number line
 	// Widget key: image_1
-	test("number-line-with-fraction-groups - [x0a2ef246f7964e60] Use a number line to divide by a fraction", async () => {
+	test("number-line-with-fraction-groups - [x0a2ef246f7964e60] Divide a whole number by a fraction using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -376,8 +450,8 @@ describe("numberLineWithFractionGroups widget tests", () => {
 		    "lowerBound": 0,
 		    "upperBound": 24
 		  },
-		  "width": 320,
-		  "height": 198
+		  "width": 400,
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -396,9 +470,9 @@ describe("numberLineWithFractionGroups widget tests", () => {
 	})
 
 	// Extracted from question: x7c0f1e5f5ce44bca
-	// Question: Count groups of one-third and evaluate a division by a fraction
+	// Question: Groups of thirds and dividing by a fraction using a number line
 	// Widget key: image_1
-	test("number-line-with-fraction-groups - [x7c0f1e5f5ce44bca] Count groups of one-third and evaluate a division by a fraction", async () => {
+	test("number-line-with-fraction-groups - [x7c0f1e5f5ce44bca] Groups of thirds and dividing by a fraction using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -414,7 +488,7 @@ describe("numberLineWithFractionGroups widget tests", () => {
 		    "upperBound": 27
 		  },
 		  "width": 320,
-		  "height": 198
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -433,9 +507,9 @@ describe("numberLineWithFractionGroups widget tests", () => {
 	})
 
 	// Extracted from question: xd738550114d58b1f
-	// Question: Use a number line to divide by a fraction
+	// Question: Groups of fourths on a number line and division by a fraction
 	// Widget key: image_1
-	test("number-line-with-fraction-groups - [xd738550114d58b1f] Use a number line to divide by a fraction", async () => {
+	test("number-line-with-fraction-groups - [xd738550114d58b1f] Groups of fourths on a number line and division by a fraction", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -451,7 +525,7 @@ describe("numberLineWithFractionGroups widget tests", () => {
 		    "upperBound": 24
 		  },
 		  "width": 320,
-		  "height": 198
+		  "height": 320
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -470,9 +544,9 @@ describe("numberLineWithFractionGroups widget tests", () => {
 	})
 
 	// Extracted from question: xd796bd737c42d49d
-	// Question: Groups of fifths and a division with a fraction
+	// Question: Dividing by a fraction using a number line
 	// Widget key: image_1
-	test("number-line-with-fraction-groups - [xd796bd737c42d49d] Groups of fifths and a division with a fraction", async () => {
+	test("number-line-with-fraction-groups - [xd796bd737c42d49d] Dividing by a fraction using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -488,7 +562,7 @@ describe("numberLineWithFractionGroups widget tests", () => {
 		    "upperBound": 27
 		  },
 		  "width": 320,
-		  "height": 198
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)

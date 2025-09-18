@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.950Z
+// Generated on: 2025-09-18T05:17:02.142Z
 // Widget Type: numberLine
 // Source: Real questions from database
 //
@@ -26,17 +26,19 @@ import * as logger from "@superbuilders/slog"
 
 describe("numberLine widget tests", () => {
 	// Extracted from question: xb3704fceda59f25f
-	// Question: Locate a point on a vertical number line
+	// Question: Locate the marked point on a vertical number line
 	// Widget key: image_2
-	test("number-line - [xb3704fceda59f25f] Locate a point on a vertical number line", async () => {
+	test("number-line - [xb3704fceda59f25f] Locate the marked point on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
-		  "width": 77,
-		  "height": 240,
+		  "model": null,
+		  "width": 320,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -80,8 +82,10 @@ describe("numberLine widget tests", () => {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -125,14 +129,16 @@ describe("numberLine widget tests", () => {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 2
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -161,17 +167,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xec222d3628f91694
-	// Question: Move the dot to 6 on the number line
+	// Question: Identify 6 on the number line
 	// Widget key: number_line_choice_a
-	test("number-line - [xec222d3628f91694] Move the dot to 6 on the number line (1)", async () => {
+	test("number-line - [xec222d3628f91694] Identify 6 on the number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -180,11 +188,57 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#1066CC",
+		      "type": "mathml",
+		      "color": "#11accd",
 		      "style": "dot",
-		      "value": 6,
+		      "mathml": "<mrow></mrow>",
+		      "position": -6
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xec222d3628f91694
+	// Question: Identify 6 on the number line
+	// Widget key: number_line_choice_b
+	test("number-line - [xec222d3628f91694] Identify 6 on the number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 15,
+		  "min": -15,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 3
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "mathml": "<mrow></mrow>",
 		      "position": 6
 		    }
 		  ],
@@ -207,63 +261,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xec222d3628f91694
-	// Question: Move the dot to 6 on the number line
-	// Widget key: number_line_choice_b
-	test("number-line - [xec222d3628f91694] Move the dot to 6 on the number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 15,
-		  "min": -15,
-		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 3
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#1066CC",
-		      "style": "dot",
-		      "value": 3,
-		      "position": 3
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xec222d3628f91694
-	// Question: Move the dot to 6 on the number line
+	// Question: Identify 6 on the number line
 	// Widget key: number_line_choice_c
-	test("number-line - [xec222d3628f91694] Move the dot to 6 on the number line (3)", async () => {
+	test("number-line - [xec222d3628f91694] Identify 6 on the number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -272,11 +282,10 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#1066CC",
+		      "type": "mathml",
+		      "color": "#11accd",
 		      "style": "dot",
-		      "value": 9,
+		      "mathml": "<mrow></mrow>",
 		      "position": 9
 		    }
 		  ],
@@ -308,8 +317,10 @@ describe("numberLine widget tests", () => {
 		  "max": 25,
 		  "min": -25,
 		  "type": "numberLine",
-		  "width": 77,
-		  "height": 240,
+		  "model": null,
+		  "width": 350,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -344,17 +355,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc004713f8a564a33
-	// Question: Locate the question mark on the number line
+	// Question: Locate the point on a vertical number line
 	// Widget key: image_2
-	test("number-line - [xc004713f8a564a33] Locate the question mark on the number line", async () => {
+	test("number-line - [xc004713f8a564a33] Locate the point on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 20,
 		  "min": -20,
 		  "type": "numberLine",
-		  "width": 77,
-		  "height": 240,
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -364,7 +377,7 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#0c7f99",
+		      "color": "#29abca",
 		      "style": "dot",
 		      "mathml": "<mo>?</mo>",
 		      "position": -16
@@ -389,17 +402,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x49b3274645e4b5aa
-	// Question: Locate 12 on the number line
-	// Widget key: number_line_choice_a
-	test("number-line - [x49b3274645e4b5aa] Locate 12 on the number line (1)", async () => {
+	// Question: Identify 12 on a number line
+	// Widget key: nl_choice_a
+	test("number-line - [x49b3274645e4b5aa] Identify 12 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 20,
 		  "min": -20,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 440,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -408,10 +423,11 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
-		      "type": "mathml",
+		      "sign": "+",
+		      "type": "whole",
 		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<mtext></mtext>",
+		      "value": 12,
 		      "position": 12
 		    }
 		  ],
@@ -434,17 +450,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x49b3274645e4b5aa
-	// Question: Locate 12 on the number line
-	// Widget key: number_line_choice_b
-	test("number-line - [x49b3274645e4b5aa] Locate 12 on the number line (2)", async () => {
+	// Question: Identify 12 on a number line
+	// Widget key: nl_choice_b
+	test("number-line - [x49b3274645e4b5aa] Identify 12 on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 20,
 		  "min": -20,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 440,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -453,10 +471,11 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
-		      "type": "mathml",
+		      "sign": "+",
+		      "type": "whole",
 		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<mtext></mtext>",
+		      "value": 8,
 		      "position": 8
 		    }
 		  ],
@@ -479,17 +498,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x49b3274645e4b5aa
-	// Question: Locate 12 on the number line
-	// Widget key: number_line_choice_c
-	test("number-line - [x49b3274645e4b5aa] Locate 12 on the number line (3)", async () => {
+	// Question: Identify 12 on a number line
+	// Widget key: nl_choice_c
+	test("number-line - [x49b3274645e4b5aa] Identify 12 on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 20,
 		  "min": -20,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 440,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -498,10 +519,11 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
-		      "type": "mathml",
+		      "sign": "+",
+		      "type": "whole",
 		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<mtext></mtext>",
+		      "value": 16,
 		      "position": 16
 		    }
 		  ],
@@ -524,17 +546,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5570936c8b2bac50
-	// Question: Locate 12 on a number line
+	// Question: Select the number line with a dot at 12
 	// Widget key: nl_choice_a
-	test("number-line - [x5570936c8b2bac50] Locate 12 on a number line (1)", async () => {
+	test("number-line - [x5570936c8b2bac50] Select the number line with a dot at 12 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 480,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -545,7 +569,7 @@ describe("numberLine widget tests", () => {
 		    {
 		      "sign": "+",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "value": 12,
 		      "position": 12
@@ -570,17 +594,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5570936c8b2bac50
-	// Question: Locate 12 on a number line
+	// Question: Select the number line with a dot at 12
 	// Widget key: nl_choice_b
-	test("number-line - [x5570936c8b2bac50] Locate 12 on a number line (2)", async () => {
+	test("number-line - [x5570936c8b2bac50] Select the number line with a dot at 12 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 480,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -591,7 +617,7 @@ describe("numberLine widget tests", () => {
 		    {
 		      "sign": "+",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "value": 9,
 		      "position": 9
@@ -616,17 +642,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5570936c8b2bac50
-	// Question: Locate 12 on a number line
+	// Question: Select the number line with a dot at 12
 	// Widget key: nl_choice_c
-	test("number-line - [x5570936c8b2bac50] Locate 12 on a number line (3)", async () => {
+	test("number-line - [x5570936c8b2bac50] Select the number line with a dot at 12 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 480,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -635,248 +663,156 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
-		      "sign": "-",
-		      "type": "whole",
-		      "color": "#0066CC",
-		      "style": "dot",
-		      "value": 12,
-		      "position": -12
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2418635b616c6379
-	// Question: Identify −8 on a number line
-	// Widget key: number_line_choice_a
-	test("number-line - [x2418635b616c6379] Identify −8 on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 20,
-		  "min": -20,
-		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 4
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#0066CC",
-		      "style": "dot",
-		      "mathml": "<mrow></mrow>",
-		      "position": -12
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2418635b616c6379
-	// Question: Identify −8 on a number line
-	// Widget key: number_line_choice_b
-	test("number-line - [x2418635b616c6379] Identify −8 on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 20,
-		  "min": -20,
-		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 4
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#0066CC",
-		      "style": "dot",
-		      "mathml": "<mrow></mrow>",
-		      "position": -8
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2418635b616c6379
-	// Question: Identify −8 on a number line
-	// Widget key: number_line_choice_c
-	test("number-line - [x2418635b616c6379] Identify −8 on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 20,
-		  "min": -20,
-		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 4
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#0066CC",
-		      "style": "dot",
-		      "mathml": "<mrow></mrow>",
-		      "position": 8
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6e0f8f4f89d5d1f9
-	// Question: Select the number line with a dot at 8
-	// Widget key: number_line_choice_a
-	test("number-line - [x6e0f8f4f89d5d1f9] Select the number line with a dot at 8 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -10,
-		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 2
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
 		      "sign": "+",
 		      "type": "whole",
-		      "color": "#0066CC",
-		      "style": "dot",
-		      "value": 8,
-		      "position": 8
-		    }
-		  ],
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6e0f8f4f89d5d1f9
-	// Question: Select the number line with a dot at 8
-	// Widget key: number_line_choice_b
-	test("number-line - [x6e0f8f4f89d5d1f9] Select the number line with a dot at 8 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -10,
-		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 2
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "value": 6,
 		      "position": 6
 		    }
 		  ],
-		  "secondaryTickInterval": {
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2418635b616c6379
+	// Question: Select the point at −8 on a number line
+	// Widget key: nl_choice_a
+	test("number-line - [x2418635b616c6379] Select the point at −8 on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 20,
+		  "min": -20,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 1
-		  }
+		    "interval": 4
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "mathml": "<mrow></mrow>",
+		      "position": -12
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2418635b616c6379
+	// Question: Select the point at −8 on a number line
+	// Widget key: nl_choice_b
+	test("number-line - [x2418635b616c6379] Select the point at −8 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 20,
+		  "min": -20,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 4
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "mathml": "<mrow></mrow>",
+		      "position": -8
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2418635b616c6379
+	// Question: Select the point at −8 on a number line
+	// Widget key: nl_choice_c
+	test("number-line - [x2418635b616c6379] Select the point at −8 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 20,
+		  "min": -20,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 4
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "mathml": "<mrow></mrow>",
+		      "position": 8
+		    }
+		  ],
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -895,17 +831,115 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x6e0f8f4f89d5d1f9
-	// Question: Select the number line with a dot at 8
-	// Widget key: number_line_choice_c
-	test("number-line - [x6e0f8f4f89d5d1f9] Select the number line with a dot at 8 (3)", async () => {
+	// Question: Identify 8 on a number line
+	// Widget key: number_line_choice_a
+	test("number-line - [x6e0f8f4f89d5d1f9] Identify 8 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 2
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "value": 8,
+		      "position": 8
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6e0f8f4f89d5d1f9
+	// Question: Identify 8 on a number line
+	// Widget key: number_line_choice_b
+	test("number-line - [x6e0f8f4f89d5d1f9] Identify 8 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -10,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 2
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "value": 6,
+		      "position": 6
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6e0f8f4f89d5d1f9
+	// Question: Identify 8 on a number line
+	// Widget key: number_line_choice_c
+	test("number-line - [x6e0f8f4f89d5d1f9] Identify 8 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -10,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -916,16 +950,13 @@ describe("numberLine widget tests", () => {
 		    {
 		      "sign": "-",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "value": 8,
 		      "position": -8
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -953,8 +984,10 @@ describe("numberLine widget tests", () => {
 		  "max": 20,
 		  "min": -20,
 		  "type": "numberLine",
-		  "width": 200,
-		  "height": 480,
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -964,7 +997,7 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#0c7f99",
+		      "color": "#29abca",
 		      "style": "dot",
 		      "mathml": "<mo>?</mo>",
 		      "position": -12
@@ -989,17 +1022,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbe60cd481ef15a99
-	// Question: Identify a point on a number line
+	// Question: Locate a point on a number line
 	// Widget key: image_2
-	test("number-line - [xbe60cd481ef15a99] Identify a point on a number line", async () => {
+	test("number-line - [xbe60cd481ef15a99] Locate a point on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 20,
 		  "min": -20,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -1034,17 +1069,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x07b6fc89523b9a35
-	// Question: Locate the question mark on a vertical number line
+	// Question: Locate the point on the number line
 	// Widget key: image_2
-	test("number-line - [x07b6fc89523b9a35] Locate the question mark on a vertical number line", async () => {
+	test("number-line - [x07b6fc89523b9a35] Locate the point on the number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
-		  "width": 77,
-		  "height": 240,
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -1079,23 +1116,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5ac3d3b0638e144a
-	// Question: Locate a point on a number line
+	// Question: Find the location of a point on a vertical number line
 	// Widget key: image_2
-	test("number-line - [x5ac3d3b0638e144a] Locate a point on a number line", async () => {
+	test("number-line - [x5ac3d3b0638e144a] Find the location of a point on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
-		  "width": 77,
-		  "height": 240,
+		  "model": null,
+		  "width": 380,
+		  "height": 420,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 2
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -1124,28 +1163,30 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf6648e945f6e48f6
-	// Question: Locate −7 on a number line
+	// Question: Locate -7 on a number line
 	// Widget key: number_line_choice_a
-	test("number-line - [xf6648e945f6e48f6] Locate −7 on a number line (1)", async () => {
+	test("number-line - [xf6648e945f6e48f6] Locate -7 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 35,
 		  "min": -35,
 		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 7
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "sign": "-",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#333333",
 		      "style": "dot",
 		      "value": 7,
 		      "position": -7
@@ -1170,28 +1211,30 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf6648e945f6e48f6
-	// Question: Locate −7 on a number line
+	// Question: Locate -7 on a number line
 	// Widget key: number_line_choice_b
-	test("number-line - [xf6648e945f6e48f6] Locate −7 on a number line (2)", async () => {
+	test("number-line - [xf6648e945f6e48f6] Locate -7 on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 35,
 		  "min": -35,
 		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 7
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "sign": "+",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#333333",
 		      "style": "dot",
 		      "value": 7,
 		      "position": 7
@@ -1216,28 +1259,30 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf6648e945f6e48f6
-	// Question: Locate −7 on a number line
+	// Question: Locate -7 on a number line
 	// Widget key: number_line_choice_c
-	test("number-line - [xf6648e945f6e48f6] Locate −7 on a number line (3)", async () => {
+	test("number-line - [xf6648e945f6e48f6] Locate -7 on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 35,
 		  "min": -35,
 		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 7
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "sign": "-",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#333333",
 		      "style": "dot",
 		      "value": 14,
 		      "position": -14
@@ -1262,17 +1307,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x98647957d1ad2fc1
-	// Question: Identify the location of a point on a number line
+	// Question: Locate a point on a number line
 	// Widget key: image_2
-	test("number-line - [x98647957d1ad2fc1] Identify the location of a point on a number line", async () => {
+	test("number-line - [x98647957d1ad2fc1] Locate a point on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 25,
 		  "min": -25,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -1282,9 +1329,9 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#29abca",
+		      "color": "#0c7f99",
 		      "style": "dot",
-		      "mathml": "<mtext>?</mtext>",
+		      "mathml": "<mo>?</mo>",
 		      "position": -15
 		    }
 		  ],
@@ -1316,14 +1363,16 @@ describe("numberLine widget tests", () => {
 		  "max": 30,
 		  "min": -30,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 480,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 6
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -1352,17 +1401,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5a611e4cc4eed8d6
-	// Question: Identify the location of a point on a vertical number line
+	// Question: Locate a point on a vertical number line
 	// Widget key: image_2
-	test("number-line - [x5a611e4cc4eed8d6] Identify the location of a point on a vertical number line", async () => {
+	test("number-line - [x5a611e4cc4eed8d6] Locate a point on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 30,
 		  "min": -30,
 		  "type": "numberLine",
-		  "width": 77,
-		  "height": 240,
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -1397,17 +1448,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xacb997c47313a606
-	// Question: Locate a point on a vertical number line
+	// Question: Locate the point on a vertical number line
 	// Widget key: image_2
-	test("number-line - [xacb997c47313a606] Locate a point on a vertical number line", async () => {
+	test("number-line - [xacb997c47313a606] Locate the point on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 30,
 		  "min": -30,
 		  "type": "numberLine",
-		  "width": 76.8,
-		  "height": 240,
+		  "model": null,
+		  "width": 360,
+		  "height": 420,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -1442,17 +1495,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xcf9144cd5aaae605
-	// Question: Find the point on a vertical number line
+	// Question: Locate a point on a vertical number line
 	// Widget key: image_2
-	test("number-line - [xcf9144cd5aaae605] Find the point on a vertical number line", async () => {
+	test("number-line - [xcf9144cd5aaae605] Locate a point on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
-		  "width": 77,
-		  "height": 240,
+		  "model": null,
+		  "width": 320,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -1462,7 +1517,7 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#29abca",
+		      "color": "#0c7f99",
 		      "style": "dot",
 		      "mathml": "<mo>?</mo>",
 		      "position": -6
@@ -1487,24 +1542,35 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0fceb27557e12bb2
-	// Question: Identify the point at 10 on a number line
-	// Widget key: number_line_base
-	test("number-line - [x0fceb27557e12bb2] Identify the point at 10 on a number line (1)", async () => {
+	// Question: Locate 10 on a number line
+	// Widget key: number_line_choice_a
+	test("number-line - [x0fceb27557e12bb2] Locate 10 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 25,
 		  "min": -25,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 440,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 5
 		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": null,
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "value": 5,
+		      "position": 5
+		    }
+		  ],
 		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
@@ -1524,29 +1590,32 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0fceb27557e12bb2
-	// Question: Identify the point at 10 on a number line
-	// Widget key: number_line_choice_a
-	test("number-line - [x0fceb27557e12bb2] Identify the point at 10 on a number line (2)", async () => {
+	// Question: Locate 10 on a number line
+	// Widget key: number_line_choice_b
+	test("number-line - [x0fceb27557e12bb2] Locate 10 on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 25,
 		  "min": -25,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 440,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 5
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
-		      "type": "mathml",
-		      "color": "#0066CC",
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<mtext></mtext>",
+		      "value": 10,
 		      "position": 10
 		    }
 		  ],
@@ -1569,29 +1638,32 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0fceb27557e12bb2
-	// Question: Identify the point at 10 on a number line
-	// Widget key: number_line_choice_b
-	test("number-line - [x0fceb27557e12bb2] Identify the point at 10 on a number line (3)", async () => {
+	// Question: Locate 10 on a number line
+	// Widget key: number_line_choice_c
+	test("number-line - [x0fceb27557e12bb2] Locate 10 on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 25,
 		  "min": -25,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 440,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 5
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
-		      "type": "mathml",
-		      "color": "#0066CC",
+		      "sign": "-",
+		      "type": "whole",
+		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<mtext></mtext>",
+		      "value": 10,
 		      "position": -10
 		    }
 		  ],
@@ -1613,69 +1685,26 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x0fceb27557e12bb2
-	// Question: Identify the point at 10 on a number line
-	// Widget key: number_line_choice_c
-	test("number-line - [x0fceb27557e12bb2] Identify the point at 10 on a number line (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 25,
-		  "min": -25,
-		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 5
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#0066CC",
-		      "style": "dot",
-		      "mathml": "<mtext></mtext>",
-		      "position": 15
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x0009c4c3efb4c38d
-	// Question: Where is the question mark on the number line?
+	// Question: Locate a point on a vertical number line
 	// Widget key: image_2
-	test("number-line - [x0009c4c3efb4c38d] Where is the question mark on the number line?", async () => {
+	test("number-line - [x0009c4c3efb4c38d] Locate a point on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 35,
 		  "min": -35,
 		  "type": "numberLine",
-		  "width": 77,
-		  "height": 240,
+		  "model": null,
+		  "width": 340,
+		  "height": 420,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 7
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -1704,23 +1733,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc45824ff7ae607c9
-	// Question: Locate a point on a number line
+	// Question: Locate the point on the number line
 	// Widget key: image_2
-	test("number-line - [xc45824ff7ae607c9] Locate a point on a number line", async () => {
+	test("number-line - [xc45824ff7ae607c9] Locate the point on the number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 40,
 		  "min": -40,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 8
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -1758,25 +1789,30 @@ describe("numberLine widget tests", () => {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 2
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "sign": "-",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "value": 6,
 		      "position": -6
 		    }
 		  ],
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1804,25 +1840,30 @@ describe("numberLine widget tests", () => {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 2
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "sign": "-",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "value": 4,
 		      "position": -4
 		    }
 		  ],
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1850,25 +1891,30 @@ describe("numberLine widget tests", () => {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 2
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "sign": "+",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "value": 6,
 		      "position": 6
 		    }
 		  ],
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1896,8 +1942,10 @@ describe("numberLine widget tests", () => {
 		  "max": 25,
 		  "min": -25,
 		  "type": "numberLine",
-		  "width": 77,
-		  "height": 240,
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -1907,7 +1955,7 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#29abca",
+		      "color": "#0c7f99",
 		      "style": "dot",
 		      "mathml": "<mo>?</mo>",
 		      "position": -10
@@ -1941,14 +1989,16 @@ describe("numberLine widget tests", () => {
 		  "max": 35,
 		  "min": -35,
 		  "type": "numberLine",
-		  "width": 77,
-		  "height": 240,
+		  "model": null,
+		  "width": 360,
+		  "height": 420,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 7
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -1977,17 +2027,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x801e7a13b9af1d75
-	// Question: Identify a point on a number line
+	// Question: Identify the marked point on a number line
 	// Widget key: image_1
-	test("number-line - [x801e7a13b9af1d75] Identify a point on a number line", async () => {
+	test("number-line - [x801e7a13b9af1d75] Identify the marked point on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -1996,13 +2048,11 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
-		      "sign": "-",
-		      "type": "fraction",
+		      "type": "mathml",
 		      "color": "#11accd",
 		      "style": "dot",
-		      "position": -0.875,
-		      "numerator": 7,
-		      "denominator": 8
+		      "mathml": "<mtext></mtext>",
+		      "position": -0.875
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -2036,8 +2086,10 @@ describe("numberLine widget tests", () => {
 		  "max": 5,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2096,17 +2148,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xd7741eb9316d7cf8
-	// Question: Identify a point at -1 3/4 on a number line
+	// Question: Identify a point on a number line at −1 3/4
 	// Widget key: image_1
-	test("number-line - [xd7741eb9316d7cf8] Identify a point at -1 3/4 on a number line", async () => {
+	test("number-line - [xd7741eb9316d7cf8] Identify a point on a number line at −1 3/4", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2165,17 +2219,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x3913551001193e80
-	// Question: Identify the marked point on a number line
+	// Question: Identify the point on the number line
 	// Widget key: image_1
-	test("number-line - [x3913551001193e80] Identify the marked point on a number line", async () => {
+	test("number-line - [x3913551001193e80] Identify the point on the number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2187,8 +2243,8 @@ describe("numberLine widget tests", () => {
 		      "type": "mathml",
 		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<!-- no label -->",
-		      "position": -1.1666666666666667
+		      "mathml": "<!-- intentionally blank label to avoid revealing the answer -->",
+		      "position": -1.1666666667
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -2213,17 +2269,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf3451ee9a41cff2b
-	// Question: Identify a point at −1 1/3 on a number line
+	// Question: Locate a mixed number on a vertical number line
 	// Widget key: image_1
-	test("number-line - [xf3451ee9a41cff2b] Identify a point at −1 1/3 on a number line", async () => {
+	test("number-line - [xf3451ee9a41cff2b] Locate a mixed number on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
-		  "width": 220,
-		  "height": 500,
+		  "model": null,
+		  "width": 360,
+		  "height": 480,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2236,28 +2294,28 @@ describe("numberLine widget tests", () => {
 		      "color": "#a75a05",
 		      "style": "dot",
 		      "mathml": "<mi>A</mi>",
-		      "position": 1.3333333333
+		      "position": 1.3333333333333
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#9e034e",
 		      "style": "dot",
 		      "mathml": "<mi>B</mi>",
-		      "position": 0.6666666667
+		      "position": 0.6666666666667
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#543b78",
 		      "style": "dot",
 		      "mathml": "<mi>C</mi>",
-		      "position": -0.6666666667
+		      "position": -0.6666666666667
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#208170",
 		      "style": "dot",
 		      "mathml": "<mi>D</mi>",
-		      "position": -1.3333333333
+		      "position": -1.3333333333333
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -2291,24 +2349,27 @@ describe("numberLine widget tests", () => {
 		  "max": 1,
 		  "min": -1,
 		  "type": "numberLine",
-		  "width": 80,
-		  "height": 325,
-		  "orientation": "vertical",
-		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 3
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
+		  "model": null,
+		  "width": 400,
+		  "height": 400,
+		  "segments": [
 		    {
-		      "type": "mathml",
+		      "end": -0.6633333333,
 		      "color": "#11accd",
-		      "style": "dot",
-		      "mathml": "<mrow></mrow>",
-		      "position": -0.6666666666666666
+		      "start": -0.67
 		    }
 		  ],
-		  "secondaryTickInterval": null
+		  "orientation": "vertical",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": null,
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 3
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2327,17 +2388,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x20f54014b426ee0b
-	// Question: Locate a point at −5/8 on a number line
+	// Question: Identify a point on a number line
 	// Widget key: image_1
-	test("number-line - [x20f54014b426ee0b] Locate a point at −5/8 on a number line", async () => {
+	test("number-line - [x20f54014b426ee0b] Identify a point on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2396,17 +2459,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xfad84ed676e52ee6
-	// Question: Identify a point at −1/6 on a vertical number line
+	// Question: Locate −1/6 on a vertical number line
 	// Widget key: image_1
-	test("number-line - [xfad84ed676e52ee6] Identify a point at −1/6 on a vertical number line", async () => {
+	test("number-line - [xfad84ed676e52ee6] Locate −1/6 on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -2,
 		  "type": "numberLine",
-		  "width": 80,
+		  "model": null,
+		  "width": 300,
 		  "height": 325,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2416,17 +2481,10 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#208170",
+		      "color": "#a75a05",
 		      "style": "dot",
-		      "mathml": "<mi>D</mi>",
-		      "position": -1.1666666667
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#543b78",
-		      "style": "dot",
-		      "mathml": "<mi>C</mi>",
-		      "position": -0.1666666667
+		      "mathml": "<mi>A</mi>",
+		      "position": 0.8333333333
 		    },
 		    {
 		      "type": "mathml",
@@ -2437,10 +2495,17 @@ describe("numberLine widget tests", () => {
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#a75a05",
+		      "color": "#543b78",
 		      "style": "dot",
-		      "mathml": "<mi>A</mi>",
-		      "position": 0.8333333333
+		      "mathml": "<mi>C</mi>",
+		      "position": -0.1666666667
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#208170",
+		      "style": "dot",
+		      "mathml": "<mi>D</mi>",
+		      "position": -1.1666666667
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -2474,8 +2539,10 @@ describe("numberLine widget tests", () => {
 		  "max": 1,
 		  "min": -4,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 100,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2522,8 +2589,10 @@ describe("numberLine widget tests", () => {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
-		  "width": 80,
-		  "height": 325,
+		  "model": null,
+		  "width": 300,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2561,17 +2630,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x7b7f2a8fdad7a6ff
-	// Question: Locate a point at −1 3/8 on a vertical number line
+	// Question: Identify a point on a vertical number line
 	// Widget key: image_1
-	test("number-line - [x7b7f2a8fdad7a6ff] Locate a point at −1 3/8 on a vertical number line", async () => {
+	test("number-line - [x7b7f2a8fdad7a6ff] Identify a point on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -2,
 		  "type": "numberLine",
-		  "width": 80,
-		  "height": 325,
+		  "model": null,
+		  "width": 400,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2630,17 +2701,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x7143c04d7dd02c60
-	// Question: Identify the point on a vertical number line
+	// Question: Identify a point on a vertical number line
 	// Widget key: image_1
-	test("number-line - [x7143c04d7dd02c60] Identify the point on a vertical number line", async () => {
+	test("number-line - [x7143c04d7dd02c60] Identify a point on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
-		  "width": 80,
-		  "height": 325,
+		  "model": null,
+		  "width": 300,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2652,7 +2725,7 @@ describe("numberLine widget tests", () => {
 		      "type": "mathml",
 		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<mtext></mtext>",
+		      "mathml": "<!---->",
 		      "position": -1.25
 		    }
 		  ],
@@ -2678,17 +2751,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8e87fe951d093335
-	// Question: Determine truth values from a number line
+	// Question: Determine true or false from a number line
 	// Widget key: image_1
-	test("number-line - [x8e87fe951d093335] Determine truth values from a number line", async () => {
+	test("number-line - [x8e87fe951d093335] Determine true or false from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 5,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2698,14 +2773,14 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>a</mi>",
 		      "position": 0
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#ff00af",
+		      "color": "#FF00AF",
 		      "style": "dot",
 		      "mathml": "<mi>b</mi>",
 		      "position": 3
@@ -2730,17 +2805,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xefd9b9156491a4fa
-	// Question: Determine truth of statements from a number line
+	// Question: Classify expressions as true or false using a number line
 	// Widget key: image_1
-	test("number-line - [xefd9b9156491a4fa] Determine truth of statements from a number line", async () => {
+	test("number-line - [xefd9b9156491a4fa] Classify expressions as true or false using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 380,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2750,14 +2827,14 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>a</mi>",
 		      "position": -1
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#FF00AF",
+		      "color": "#ff00af",
 		      "style": "dot",
 		      "mathml": "<mi>b</mi>",
 		      "position": 3.5
@@ -2782,17 +2859,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x089a4f0a8b2040ce
-	// Question: Classify expressions as true or false using a number line
+	// Question: Determine truth values from a number line
 	// Widget key: image_1
-	test("number-line - [x089a4f0a8b2040ce] Classify expressions as true or false using a number line", async () => {
+	test("number-line - [x089a4f0a8b2040ce] Determine truth values from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2840,15 +2919,17 @@ describe("numberLine widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 10,
-		  "min": -10,
+		  "max": 5,
+		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 5
+		    "interval": 10
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
@@ -2857,7 +2938,7 @@ describe("numberLine widget tests", () => {
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>a</mi>",
-		      "position": -5
+		      "position": -2
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -2882,23 +2963,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xad56e1ee6f2d38db
-	// Question: Classify expressions as true or false using a number line
+	// Question: Determine true or false from a number line
 	// Widget key: image_1
-	test("number-line - [xad56e1ee6f2d38db] Classify expressions as true or false using a number line", async () => {
+	test("number-line - [xad56e1ee6f2d38db] Determine true or false from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 5,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 5
+		    "interval": 1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -2934,17 +3017,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x843497a4f244d2cd
-	// Question: Determine truth values from a number line
+	// Question: Classify expressions as true or false using a number line
 	// Widget key: image_1
-	test("number-line - [x843497a4f244d2cd] Determine truth values from a number line", async () => {
+	test("number-line - [x843497a4f244d2cd] Classify expressions as true or false using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 5,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2954,10 +3039,10 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>a</mi>",
-		      "position": 2.5
+		      "position": 2
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -2979,17 +3064,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc66c297db9110ac2
-	// Question: Determine truth values from a number line
-	// Widget key: image_1
-	test("number-line - [xc66c297db9110ac2] Determine truth values from a number line", async () => {
+	// Question: Determine truth values from a number line (absolute value)
+	// Widget key: number_line_image
+	test("number-line - [xc66c297db9110ac2] Determine truth values from a number line (absolute value)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -2999,17 +3086,75 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#11accd",
+		      "color": "#1f77b4",
 		      "style": "dot",
 		      "mathml": "<mi>a</mi>",
-		      "position": -4
+		      "position": -3
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#ff00af",
+		      "color": "#e377c2",
 		      "style": "dot",
 		      "mathml": "<mi>b</mi>",
-		      "position": -2
+		      "position": 2
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2fa6108b95444f8e
+	// Question: Compare two rational numbers on a number line
+	// Widget key: image_1
+	test("number-line - [x2fa6108b95444f8e] Compare two rational numbers on a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 3,
+		  "min": -6,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 320,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "sign": "-",
+		      "type": "fraction",
+		      "color": "#ca337c",
+		      "style": "dot",
+		      "position": -4.666666667,
+		      "numerator": 14,
+		      "denominator": 3
+		    },
+		    {
+		      "sign": "+",
+		      "type": "fraction",
+		      "color": "#7854ab",
+		      "style": "dot",
+		      "position": 1.714285714,
+		      "numerator": 12,
+		      "denominator": 7
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -3040,8 +3185,10 @@ describe("numberLine widget tests", () => {
 		  "max": 2,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 320,
-		  "height": 90,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3054,7 +3201,7 @@ describe("numberLine widget tests", () => {
 		      "type": "fraction",
 		      "color": "#7854ab",
 		      "style": "dot",
-		      "position": -0.6666666666666666,
+		      "position": -0.6666666667,
 		      "numerator": 2,
 		      "denominator": 3
 		    },
@@ -3086,74 +3233,20 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2fa6108b95444f8e
-	// Question: Compare fractions on a number line
-	// Widget key: image_1
-	test("number-line - [x2fa6108b95444f8e] Compare fractions on a number line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 3,
-		  "min": -6,
-		  "type": "numberLine",
-		  "width": 320,
-		  "height": 90,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "sign": "+",
-		      "type": "fraction",
-		      "color": "#7854ab",
-		      "style": "dot",
-		      "position": 1.7142857142857142,
-		      "numerator": 12,
-		      "denominator": 7
-		    },
-		    {
-		      "sign": "-",
-		      "type": "fraction",
-		      "color": "#ca337c",
-		      "style": "dot",
-		      "position": -4.666666666666667,
-		      "numerator": 14,
-		      "denominator": 3
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x17a4b145738ad7fb
-	// Question: Compare decimals on a vertical number line
+	// Question: Compare numbers on a vertical number line
 	// Widget key: image_1
-	test("number-line - [x17a4b145738ad7fb] Compare decimals on a vertical number line", async () => {
+	test("number-line - [x17a4b145738ad7fb] Compare numbers on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -6,
 		  "type": "numberLine",
-		  "width": 100,
-		  "height": 325,
+		  "model": null,
+		  "width": 300,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3204,8 +3297,10 @@ describe("numberLine widget tests", () => {
 		  "max": 2,
 		  "min": -6,
 		  "type": "numberLine",
-		  "width": 100,
+		  "model": null,
+		  "width": 300,
 		  "height": 325,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3218,7 +3313,7 @@ describe("numberLine widget tests", () => {
 		      "type": "fraction",
 		      "color": "#7854ab",
 		      "style": "dot",
-		      "position": 0.1666667,
+		      "position": 0.1666666667,
 		      "numerator": 1,
 		      "denominator": 6
 		    },
@@ -3252,17 +3347,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x43717a1e6c056612
-	// Question: Compare numbers on a horizontal number line
+	// Question: Compare negative decimals on a number line
 	// Widget key: image_1
-	test("number-line - [x43717a1e6c056612] Compare numbers on a horizontal number line", async () => {
+	test("number-line - [x43717a1e6c056612] Compare negative decimals on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -7,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 320,
-		  "height": 90,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3304,17 +3401,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xfdede3ef5b94f114
-	// Question: Compare negative decimals on a vertical number line
+	// Question: Compare decimals on a vertical number line
 	// Widget key: image_1
-	test("number-line - [xfdede3ef5b94f114] Compare negative decimals on a vertical number line", async () => {
+	test("number-line - [xfdede3ef5b94f114] Compare decimals on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -7,
 		  "type": "numberLine",
-		  "width": 100,
-		  "height": 325,
+		  "model": null,
+		  "width": 300,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3365,8 +3464,10 @@ describe("numberLine widget tests", () => {
 		  "max": 2,
 		  "min": -8,
 		  "type": "numberLine",
-		  "width": 100,
-		  "height": 325,
+		  "model": null,
+		  "width": 350,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3408,17 +3509,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x89dccd41cb5265aa
-	// Question: Compare rational numbers on a vertical number line
+	// Question: Compare fractions on a vertical number line
 	// Widget key: image_1
-	test("number-line - [x89dccd41cb5265aa] Compare rational numbers on a vertical number line", async () => {
+	test("number-line - [x89dccd41cb5265aa] Compare fractions on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -8,
 		  "type": "numberLine",
-		  "width": 100,
-		  "height": 325,
+		  "model": null,
+		  "width": 350,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3464,17 +3567,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x926e7a33353efa1d
-	// Question: Compare numbers on a horizontal number line
+	// Question: Compare decimals on a horizontal number line
 	// Widget key: image_1
-	test("number-line - [x926e7a33353efa1d] Compare numbers on a horizontal number line", async () => {
+	test("number-line - [x926e7a33353efa1d] Compare decimals on a horizontal number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
 		  "min": -3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 320,
-		  "height": 90,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3516,17 +3621,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xd3d944e40c0bc157
-	// Question: Compare numbers on a horizontal number line
+	// Question: Compare numbers on a number line
 	// Widget key: image_1
-	test("number-line - [xd3d944e40c0bc157] Compare numbers on a horizontal number line", async () => {
+	test("number-line - [xd3d944e40c0bc157] Compare numbers on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 320,
-		  "height": 90,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3583,8 +3690,10 @@ describe("numberLine widget tests", () => {
 		  "max": 5,
 		  "min": -5,
 		  "type": "numberLine",
-		  "width": 100,
+		  "model": null,
+		  "width": 300,
 		  "height": 325,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3632,17 +3741,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x9b4a71e56bdb9bec
-	// Question: Compare decimals on a vertical number line
+	// Question: Compare numbers on a vertical number line
 	// Widget key: image_1
-	test("number-line - [x9b4a71e56bdb9bec] Compare decimals on a vertical number line", async () => {
+	test("number-line - [x9b4a71e56bdb9bec] Compare numbers on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
-		  "width": 100,
-		  "height": 325,
+		  "model": null,
+		  "width": 320,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3693,8 +3804,10 @@ describe("numberLine widget tests", () => {
 		  "max": 1,
 		  "min": -9,
 		  "type": "numberLine",
-		  "width": 320,
-		  "height": 90,
+		  "model": null,
+		  "width": 400,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3717,7 +3830,10 @@ describe("numberLine widget tests", () => {
 		      "position": -3.3
 		    }
 		  ],
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 10
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3745,8 +3861,10 @@ describe("numberLine widget tests", () => {
 		  "max": 1,
 		  "min": -7,
 		  "type": "numberLine",
-		  "width": 320,
-		  "height": 90,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3770,7 +3888,7 @@ describe("numberLine widget tests", () => {
 		      "color": "#ca337c",
 		      "style": "dot",
 		      "whole": 4,
-		      "position": -4.111111,
+		      "position": -4.1111111111,
 		      "numerator": 1,
 		      "denominator": 9
 		    }
@@ -3794,17 +3912,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0b02571c9974b1ac
-	// Question: Compare numbers on a horizontal number line
+	// Question: Compare decimals on a number line
 	// Widget key: image_1
-	test("number-line - [x0b02571c9974b1ac] Compare numbers on a horizontal number line", async () => {
+	test("number-line - [x0b02571c9974b1ac] Compare decimals on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -4,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 320,
-		  "height": 90,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3855,8 +3975,10 @@ describe("numberLine widget tests", () => {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
-		  "width": 100,
-		  "height": 325,
+		  "model": null,
+		  "width": 320,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3869,7 +3991,7 @@ describe("numberLine widget tests", () => {
 		      "type": "fraction",
 		      "color": "#7854ab",
 		      "style": "dot",
-		      "position": -2.3333333333,
+		      "position": -2.3333333333333335,
 		      "numerator": 7,
 		      "denominator": 3
 		    },
@@ -3901,22 +4023,295 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xdbfaa778348e2ec0
-	// Question: Locate the blue dot on the number line
+	// Extracted from question: x3f9fabfbe3ac2cbc
+	// Question: Identify the point at -0.095 on a number line
 	// Widget key: image_1
-	test("number-line - [xdbfaa778348e2ec0] Locate the blue dot on the number line", async () => {
+	test("number-line - [x3f9fabfbe3ac2cbc] Identify the point at -0.095 on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0,
+		  "min": -0.2,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 0.1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#e1a158",
+		      "style": "dot",
+		      "mathml": "<mi>A</mi>",
+		      "position": -0.175
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#fc6255",
+		      "style": "dot",
+		      "mathml": "<mi>B</mi>",
+		      "position": -0.155
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#9a72ac",
+		      "style": "dot",
+		      "mathml": "<mi>C</mi>",
+		      "position": -0.095
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#55c1a7",
+		      "style": "dot",
+		      "mathml": "<mi>D</mi>",
+		      "position": -0.055
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 0.01
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3f9fabfbe3ac2cbc
+	// Question: Identify the point at -0.095 on a number line
+	// Widget key: choice_a_line
+	test("number-line - [x3f9fabfbe3ac2cbc] Identify the point at -0.095 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0,
+		  "min": -0.2,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 0.1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#e1a158",
+		      "style": "dot",
+		      "mathml": "<mi>A</mi>",
+		      "position": -0.175
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 0.01
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3f9fabfbe3ac2cbc
+	// Question: Identify the point at -0.095 on a number line
+	// Widget key: choice_b_line
+	test("number-line - [x3f9fabfbe3ac2cbc] Identify the point at -0.095 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0,
+		  "min": -0.2,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 0.1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#fc6255",
+		      "style": "dot",
+		      "mathml": "<mi>B</mi>",
+		      "position": -0.155
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 0.01
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3f9fabfbe3ac2cbc
+	// Question: Identify the point at -0.095 on a number line
+	// Widget key: choice_c_line
+	test("number-line - [x3f9fabfbe3ac2cbc] Identify the point at -0.095 on a number line (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0,
+		  "min": -0.2,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 0.1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#9a72ac",
+		      "style": "dot",
+		      "mathml": "<mi>C</mi>",
+		      "position": -0.095
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 0.01
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3f9fabfbe3ac2cbc
+	// Question: Identify the point at -0.095 on a number line
+	// Widget key: choice_d_line
+	test("number-line - [x3f9fabfbe3ac2cbc] Identify the point at -0.095 on a number line (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0,
+		  "min": -0.2,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 0.1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#55c1a7",
+		      "style": "dot",
+		      "mathml": "<mi>D</mi>",
+		      "position": -0.055
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 0.01
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xdbfaa778348e2ec0
+	// Question: Locate a point on a vertical number line
+	// Widget key: image_1
+	test("number-line - [xdbfaa778348e2ec0] Locate a point on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.54,
 		  "min": -0.66,
 		  "type": "numberLine",
-		  "width": 86.4,
-		  "height": 240,
+		  "model": null,
+		  "width": 360,
+		  "height": 420,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 0.01
+		    "type": "fraction",
+		    "denominator": 100
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
@@ -3947,17 +4342,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x29aea29b0fa53f17
-	// Question: Identify a point on a number line
+	// Question: Identify a point at −5.85 on a number line
 	// Widget key: image_1
-	test("number-line - [x29aea29b0fa53f17] Identify a point on a number line", async () => {
+	test("number-line - [x29aea29b0fa53f17] Identify a point at −5.85 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -4,
 		  "min": -6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -3967,28 +4364,28 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#E0B400",
+		      "color": "#f1c40f",
 		      "style": "dot",
 		      "mathml": "<mi>A</mi>",
 		      "position": -5.85
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#D62728",
+		      "color": "#e74c3c",
 		      "style": "dot",
 		      "mathml": "<mi>B</mi>",
 		      "position": -5.55
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#9467BD",
+		      "color": "#9b59b6",
 		      "style": "dot",
 		      "mathml": "<mi>C</mi>",
 		      "position": -5
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#17BECF",
+		      "color": "#1abc9c",
 		      "style": "dot",
 		      "mathml": "<mi>D</mi>",
 		      "position": -4.35
@@ -3996,7 +4393,207 @@ describe("numberLine widget tests", () => {
 		  ],
 		  "secondaryTickInterval": {
 		    "type": "fraction",
-		    "denominator": 10
+		    "denominator": 20
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x29aea29b0fa53f17
+	// Question: Identify a point at −5.85 on a number line
+	// Widget key: choice_a_visual
+	test("number-line - [x29aea29b0fa53f17] Identify a point at −5.85 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": -4,
+		  "min": -6,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#f1c40f",
+		      "style": "dot",
+		      "mathml": "<mi>A</mi>",
+		      "position": -5.85
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 20
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x29aea29b0fa53f17
+	// Question: Identify a point at −5.85 on a number line
+	// Widget key: choice_b_visual
+	test("number-line - [x29aea29b0fa53f17] Identify a point at −5.85 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": -4,
+		  "min": -6,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#e74c3c",
+		      "style": "dot",
+		      "mathml": "<mi>B</mi>",
+		      "position": -5.55
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 20
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x29aea29b0fa53f17
+	// Question: Identify a point at −5.85 on a number line
+	// Widget key: choice_c_visual
+	test("number-line - [x29aea29b0fa53f17] Identify a point at −5.85 on a number line (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": -4,
+		  "min": -6,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#9b59b6",
+		      "style": "dot",
+		      "mathml": "<mi>C</mi>",
+		      "position": -5
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 20
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x29aea29b0fa53f17
+	// Question: Identify a point at −5.85 on a number line
+	// Widget key: choice_d_visual
+	test("number-line - [x29aea29b0fa53f17] Identify a point at −5.85 on a number line (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": -4,
+		  "min": -6,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#1abc9c",
+		      "style": "dot",
+		      "mathml": "<mi>D</mi>",
+		      "position": -4.35
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 20
 		  }
 		} as unknown as WidgetInput
 
@@ -4016,17 +4613,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xd517f5fb6cdfc91a
-	// Question: Locate a point on a vertical number line
+	// Question: Locate the blue dot on a number line
 	// Widget key: image_1
-	test("number-line - [xd517f5fb6cdfc91a] Locate a point on a vertical number line", async () => {
+	test("number-line - [xd517f5fb6cdfc91a] Locate the blue dot on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -6.9,
 		  "min": -8.1,
 		  "type": "numberLine",
-		  "width": 86.4,
-		  "height": 240,
+		  "model": null,
+		  "width": 350,
+		  "height": 450,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -4061,23 +4660,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x1efaaf1d882f1a6a
-	// Question: Locate the blue dot on a number line
+	// Question: Locate a point on a vertical number line
 	// Widget key: image_1
-	test("number-line - [x1efaaf1d882f1a6a] Locate the blue dot on a number line", async () => {
+	test("number-line - [x1efaaf1d882f1a6a] Locate a point on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -10.4,
 		  "min": -11.6,
 		  "type": "numberLine",
-		  "width": 86.4,
-		  "height": 240,
+		  "model": null,
+		  "width": 320,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
+		    "type": "whole",
+		    "interval": 0.1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -4105,18 +4706,67 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x14e9f1fac8768ced
-	// Question: Locate a point on a number line
+	// Extracted from question: x2c21184e2764adc1
+	// Question: Locate a point on a vertical number line
 	// Widget key: image_1
-	test("number-line - [x14e9f1fac8768ced] Locate a point on a number line", async () => {
+	test("number-line - [x2c21184e2764adc1] Locate a point on a vertical number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": -1.04,
+		  "min": -1.14,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
+		  "orientation": "vertical",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 0.01
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#29abca",
+		      "style": "dot",
+		      "mathml": "<mo>?</mo>",
+		      "position": -1.13
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x14e9f1fac8768ced
+	// Question: Locate a point on a vertical number line
+	// Widget key: image_1
+	test("number-line - [x14e9f1fac8768ced] Locate a point on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -1.9,
 		  "min": -3.1,
 		  "type": "numberLine",
-		  "width": 86,
-		  "height": 240,
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -4151,495 +4801,59 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x60b42de6a30dbff3
-	// Question: Identify a point on a number line
-	// Widget key: choice_a_image
-	test("number-line - [x60b42de6a30dbff3] Identify a point on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": -7,
-		  "min": -9,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#DAA520",
-		      "style": "dot",
-		      "mathml": "<mi>A</mi>",
-		      "position": -8.75
-		    }
-		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x60b42de6a30dbff3
-	// Question: Identify a point on a number line
-	// Widget key: choice_b_image
-	test("number-line - [x60b42de6a30dbff3] Identify a point on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": -7,
-		  "min": -9,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#CC0000",
-		      "style": "dot",
-		      "mathml": "<mi>B</mi>",
-		      "position": -8.65
-		    }
-		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x60b42de6a30dbff3
-	// Question: Identify a point on a number line
-	// Widget key: choice_c_image
-	test("number-line - [x60b42de6a30dbff3] Identify a point on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": -7,
-		  "min": -9,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#8E44AD",
-		      "style": "dot",
-		      "mathml": "<mi>C</mi>",
-		      "position": -7.55
-		    }
-		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x60b42de6a30dbff3
-	// Question: Identify a point on a number line
-	// Widget key: choice_d_image
-	test("number-line - [x60b42de6a30dbff3] Identify a point on a number line (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": -7,
-		  "min": -9,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#11ACCD",
-		      "style": "dot",
-		      "mathml": "<mi>D</mi>",
-		      "position": -7.15
-		    }
-		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x60b42de6a30dbff3
-	// Question: Identify a point on a number line
-	// Widget key: number_line_image
-	test("number-line - [x60b42de6a30dbff3] Identify a point on a number line (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": -7,
-		  "min": -9,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#DAA520",
-		      "style": "dot",
-		      "mathml": "<mi>A</mi>",
-		      "position": -8.75
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#CC0000",
-		      "style": "dot",
-		      "mathml": "<mi>B</mi>",
-		      "position": -8.65
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#8E44AD",
-		      "style": "dot",
-		      "mathml": "<mi>C</mi>",
-		      "position": -7.55
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#11ACCD",
-		      "style": "dot",
-		      "mathml": "<mi>D</mi>",
-		      "position": -7.15
-		    }
-		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3f9fabfbe3ac2cbc
-	// Question: Identify a point at -0.095 on a number line
+	// Question: Identify the point at −8.65 on a number line
 	// Widget key: image_1
-	test("number-line - [x3f9fabfbe3ac2cbc] Identify a point at -0.095 on a number line (1)", async () => {
+	test("number-line - [x60b42de6a30dbff3] Identify the point at −8.65 on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 0,
-		  "min": -0.2,
+		  "max": -7,
+		  "min": -9,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 0.01
+		    "interval": 1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#e1a158",
+		      "color": "#DAA520",
 		      "style": "dot",
 		      "mathml": "<mi>A</mi>",
-		      "position": -0.175
+		      "position": -8.75
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#fc6255",
+		      "color": "#E74C3C",
 		      "style": "dot",
 		      "mathml": "<mi>B</mi>",
-		      "position": -0.155
+		      "position": -8.65
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#9a72ac",
+		      "color": "#9B59B6",
 		      "style": "dot",
 		      "mathml": "<mi>C</mi>",
-		      "position": -0.095
+		      "position": -7.55
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#55c1a7",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "mathml": "<mi>D</mi>",
-		      "position": -0.055
+		      "position": -7.15
 		    }
 		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3f9fabfbe3ac2cbc
-	// Question: Identify a point at -0.095 on a number line
-	// Widget key: choice_a_image
-	test("number-line - [x3f9fabfbe3ac2cbc] Identify a point at -0.095 on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 0,
-		  "min": -0.2,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 0.01
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#e1a158",
-		      "style": "dot",
-		      "mathml": "<mi>A</mi>",
-		      "position": -0.175
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3f9fabfbe3ac2cbc
-	// Question: Identify a point at -0.095 on a number line
-	// Widget key: choice_b_image
-	test("number-line - [x3f9fabfbe3ac2cbc] Identify a point at -0.095 on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 0,
-		  "min": -0.2,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 0.01
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#fc6255",
-		      "style": "dot",
-		      "mathml": "<mi>B</mi>",
-		      "position": -0.155
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3f9fabfbe3ac2cbc
-	// Question: Identify a point at -0.095 on a number line
-	// Widget key: choice_c_image
-	test("number-line - [x3f9fabfbe3ac2cbc] Identify a point at -0.095 on a number line (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 0,
-		  "min": -0.2,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 0.01
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#9a72ac",
-		      "style": "dot",
-		      "mathml": "<mi>C</mi>",
-		      "position": -0.095
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3f9fabfbe3ac2cbc
-	// Question: Identify a point at -0.095 on a number line
-	// Widget key: choice_d_image
-	test("number-line - [x3f9fabfbe3ac2cbc] Identify a point at -0.095 on a number line (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 0,
-		  "min": -0.2,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 0.01
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#55c1a7",
-		      "style": "dot",
-		      "mathml": "<mi>D</mi>",
-		      "position": -0.055
-		    }
-		  ],
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 10
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4658,17 +4872,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5823476d1dc18d37
-	// Question: Identify a point on a number line
+	// Question: Identify the point at −3.35 on a number line
 	// Widget key: choice_a_visual
-	test("number-line - [x5823476d1dc18d37] Identify a point on a number line (1)", async () => {
+	test("number-line - [x5823476d1dc18d37] Identify the point at −3.35 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -2,
 		  "min": -4,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -4685,8 +4901,8 @@ describe("numberLine widget tests", () => {
 		    }
 		  ],
 		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 0.1
+		    "type": "fraction",
+		    "denominator": 10
 		  }
 		} as unknown as WidgetInput
 
@@ -4706,17 +4922,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5823476d1dc18d37
-	// Question: Identify a point on a number line
+	// Question: Identify the point at −3.35 on a number line
 	// Widget key: choice_b_visual
-	test("number-line - [x5823476d1dc18d37] Identify a point on a number line (2)", async () => {
+	test("number-line - [x5823476d1dc18d37] Identify the point at −3.35 on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -2,
 		  "min": -4,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -4726,15 +4944,15 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#CC0000",
+		      "color": "#E74C3C",
 		      "style": "dot",
 		      "mathml": "<mi>B</mi>",
 		      "position": -3.35
 		    }
 		  ],
 		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 0.1
+		    "type": "fraction",
+		    "denominator": 10
 		  }
 		} as unknown as WidgetInput
 
@@ -4754,17 +4972,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5823476d1dc18d37
-	// Question: Identify a point on a number line
+	// Question: Identify the point at −3.35 on a number line
 	// Widget key: choice_c_visual
-	test("number-line - [x5823476d1dc18d37] Identify a point on a number line (3)", async () => {
+	test("number-line - [x5823476d1dc18d37] Identify the point at −3.35 on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -2,
 		  "min": -4,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -4781,8 +5001,8 @@ describe("numberLine widget tests", () => {
 		    }
 		  ],
 		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 0.1
+		    "type": "fraction",
+		    "denominator": 10
 		  }
 		} as unknown as WidgetInput
 
@@ -4802,17 +5022,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5823476d1dc18d37
-	// Question: Identify a point on a number line
+	// Question: Identify the point at −3.35 on a number line
 	// Widget key: choice_d_visual
-	test("number-line - [x5823476d1dc18d37] Identify a point on a number line (4)", async () => {
+	test("number-line - [x5823476d1dc18d37] Identify the point at −3.35 on a number line (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -2,
 		  "min": -4,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -4822,15 +5044,15 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#11ACCD",
+		      "color": "#1ABC9C",
 		      "style": "dot",
 		      "mathml": "<mi>D</mi>",
 		      "position": -2.2
 		    }
 		  ],
 		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 0.1
+		    "type": "fraction",
+		    "denominator": 10
 		  }
 		} as unknown as WidgetInput
 
@@ -4850,17 +5072,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5823476d1dc18d37
-	// Question: Identify a point on a number line
+	// Question: Identify the point at −3.35 on a number line
 	// Widget key: number_line_image
-	test("number-line - [x5823476d1dc18d37] Identify a point on a number line (5)", async () => {
+	test("number-line - [x5823476d1dc18d37] Identify the point at −3.35 on a number line (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -2,
 		  "min": -4,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -4877,7 +5101,7 @@ describe("numberLine widget tests", () => {
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#CC0000",
+		      "color": "#E74C3C",
 		      "style": "dot",
 		      "mathml": "<mi>B</mi>",
 		      "position": -3.35
@@ -4891,15 +5115,15 @@ describe("numberLine widget tests", () => {
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#11ACCD",
+		      "color": "#1ABC9C",
 		      "style": "dot",
 		      "mathml": "<mi>D</mi>",
 		      "position": -2.2
 		    }
 		  ],
 		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 0.1
+		    "type": "fraction",
+		    "denominator": 10
 		  }
 		} as unknown as WidgetInput
 
@@ -4919,17 +5143,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x9df6ca1b23a494bb
-	// Question: Locate a point on a vertical number line
+	// Question: Locate the point on a vertical number line
 	// Widget key: image_1
-	test("number-line - [x9df6ca1b23a494bb] Locate a point on a vertical number line", async () => {
+	test("number-line - [x9df6ca1b23a494bb] Locate the point on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -4.4,
 		  "min": -5.6,
 		  "type": "numberLine",
-		  "width": 86,
-		  "height": 240,
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -4964,23 +5190,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbef9886a4ca6a4b2
-	// Question: Identify a point on a number line
+	// Question: Identify a point at -8.95 on a number line
 	// Widget key: image_1
-	test("number-line - [xbef9886a4ca6a4b2] Identify a point on a number line (1)", async () => {
+	test("number-line - [xbef9886a4ca6a4b2] Identify a point at -8.95 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -7,
 		  "min": -9,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
+		    "type": "fraction",
+		    "denominator": 10
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -5011,10 +5239,7 @@ describe("numberLine widget tests", () => {
 		      "position": -7.75
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5033,23 +5258,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbef9886a4ca6a4b2
-	// Question: Identify a point on a number line
+	// Question: Identify a point at -8.95 on a number line
 	// Widget key: choice_a_image
-	test("number-line - [xbef9886a4ca6a4b2] Identify a point on a number line (2)", async () => {
+	test("number-line - [xbef9886a4ca6a4b2] Identify a point at -8.95 on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -7,
 		  "min": -9,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
+		    "type": "fraction",
+		    "denominator": 10
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -5059,10 +5286,7 @@ describe("numberLine widget tests", () => {
 		      "position": -8.95
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5081,23 +5305,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbef9886a4ca6a4b2
-	// Question: Identify a point on a number line
+	// Question: Identify a point at -8.95 on a number line
 	// Widget key: choice_b_image
-	test("number-line - [xbef9886a4ca6a4b2] Identify a point on a number line (3)", async () => {
+	test("number-line - [xbef9886a4ca6a4b2] Identify a point at -8.95 on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -7,
 		  "min": -9,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
+		    "type": "fraction",
+		    "denominator": 10
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -5107,10 +5333,7 @@ describe("numberLine widget tests", () => {
 		      "position": -8.45
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5129,23 +5352,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbef9886a4ca6a4b2
-	// Question: Identify a point on a number line
+	// Question: Identify a point at -8.95 on a number line
 	// Widget key: choice_c_image
-	test("number-line - [xbef9886a4ca6a4b2] Identify a point on a number line (4)", async () => {
+	test("number-line - [xbef9886a4ca6a4b2] Identify a point at -8.95 on a number line (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -7,
 		  "min": -9,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
+		    "type": "fraction",
+		    "denominator": 10
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -5155,10 +5380,7 @@ describe("numberLine widget tests", () => {
 		      "position": -8.15
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5177,23 +5399,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbef9886a4ca6a4b2
-	// Question: Identify a point on a number line
+	// Question: Identify a point at -8.95 on a number line
 	// Widget key: choice_d_image
-	test("number-line - [xbef9886a4ca6a4b2] Identify a point on a number line (5)", async () => {
+	test("number-line - [xbef9886a4ca6a4b2] Identify a point at -8.95 on a number line (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -7,
 		  "min": -9,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
+		    "type": "fraction",
+		    "denominator": 10
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -5203,10 +5427,7 @@ describe("numberLine widget tests", () => {
 		      "position": -7.75
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5225,23 +5446,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc3ebd036c8e54375
-	// Question: Identify a point on a number line (negative decimal)
+	// Question: Identify a point on a number line
 	// Widget key: image_1
-	test("number-line - [xc3ebd036c8e54375] Identify a point on a number line (negative decimal) (1)", async () => {
+	test("number-line - [xc3ebd036c8e54375] Identify a point on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.4,
 		  "min": -0.6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 0.1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -5294,29 +5517,31 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc3ebd036c8e54375
-	// Question: Identify a point on a number line (negative decimal)
+	// Question: Identify a point on a number line
 	// Widget key: choice_a_visual
-	test("number-line - [xc3ebd036c8e54375] Identify a point on a number line (negative decimal) (2)", async () => {
+	test("number-line - [xc3ebd036c8e54375] Identify a point on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.4,
 		  "min": -0.6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 0.1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
 		      "color": "#e1a158",
 		      "style": "dot",
-		      "mathml": "<mi>A</mi>",
+		      "mathml": "<mo>-</mo><mn>0.585</mn>",
 		      "position": -0.585
 		    }
 		  ],
@@ -5342,29 +5567,31 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc3ebd036c8e54375
-	// Question: Identify a point on a number line (negative decimal)
+	// Question: Identify a point on a number line
 	// Widget key: choice_b_visual
-	test("number-line - [xc3ebd036c8e54375] Identify a point on a number line (negative decimal) (3)", async () => {
+	test("number-line - [xc3ebd036c8e54375] Identify a point on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.4,
 		  "min": -0.6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 0.1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
 		      "color": "#fc6255",
 		      "style": "dot",
-		      "mathml": "<mi>B</mi>",
+		      "mathml": "<mo>-</mo><mn>0.565</mn>",
 		      "position": -0.565
 		    }
 		  ],
@@ -5390,29 +5617,31 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc3ebd036c8e54375
-	// Question: Identify a point on a number line (negative decimal)
+	// Question: Identify a point on a number line
 	// Widget key: choice_c_visual
-	test("number-line - [xc3ebd036c8e54375] Identify a point on a number line (negative decimal) (4)", async () => {
+	test("number-line - [xc3ebd036c8e54375] Identify a point on a number line (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.4,
 		  "min": -0.6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 0.1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
 		      "color": "#9a72ac",
 		      "style": "dot",
-		      "mathml": "<mi>C</mi>",
+		      "mathml": "<mo>-</mo><mn>0.445</mn>",
 		      "position": -0.445
 		    }
 		  ],
@@ -5438,29 +5667,31 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc3ebd036c8e54375
-	// Question: Identify a point on a number line (negative decimal)
+	// Question: Identify a point on a number line
 	// Widget key: choice_d_visual
-	test("number-line - [xc3ebd036c8e54375] Identify a point on a number line (negative decimal) (5)", async () => {
+	test("number-line - [xc3ebd036c8e54375] Identify a point on a number line (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.4,
 		  "min": -0.6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 0.1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
 		      "color": "#55c1a7",
 		      "style": "dot",
-		      "mathml": "<mi>D</mi>",
+		      "mathml": "<mo>-</mo><mn>0.415</mn>",
 		      "position": -0.415
 		    }
 		  ],
@@ -5486,17 +5717,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x3084215479d28e9d
-	// Question: Locate −2.15 on a number line
-	// Widget key: image_1
-	test("number-line - [x3084215479d28e9d] Locate −2.15 on a number line", async () => {
+	// Question: Identify the point at -2.15 on a number line
+	// Widget key: stimulus_image
+	test("number-line - [x3084215479d28e9d] Identify the point at -2.15 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 0,
 		  "min": -3,
 		  "type": "numberLine",
-		  "width": 520,
-		  "height": 160,
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -5513,21 +5746,21 @@ describe("numberLine widget tests", () => {
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#D32F2F",
+		      "color": "#E74C3C",
 		      "style": "dot",
 		      "mathml": "<mi>B</mi>",
 		      "position": -1.85
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#8E44AD",
+		      "color": "#9B59B6",
 		      "style": "dot",
 		      "mathml": "<mi>C</mi>",
 		      "position": -1.45
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#11ACCD",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "mathml": "<mi>D</mi>",
 		      "position": -1.05
@@ -5535,7 +5768,207 @@ describe("numberLine widget tests", () => {
 		  ],
 		  "secondaryTickInterval": {
 		    "type": "fraction",
-		    "denominator": 20
+		    "denominator": 10
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3084215479d28e9d
+	// Question: Identify the point at -2.15 on a number line
+	// Widget key: choice_a_visual
+	test("number-line - [x3084215479d28e9d] Identify the point at -2.15 on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0,
+		  "min": -3,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#DAA520",
+		      "style": "dot",
+		      "mathml": "<mi>A</mi>",
+		      "position": -2.15
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 10
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3084215479d28e9d
+	// Question: Identify the point at -2.15 on a number line
+	// Widget key: choice_b_visual
+	test("number-line - [x3084215479d28e9d] Identify the point at -2.15 on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0,
+		  "min": -3,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#E74C3C",
+		      "style": "dot",
+		      "mathml": "<mi>B</mi>",
+		      "position": -1.85
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 10
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3084215479d28e9d
+	// Question: Identify the point at -2.15 on a number line
+	// Widget key: choice_c_visual
+	test("number-line - [x3084215479d28e9d] Identify the point at -2.15 on a number line (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0,
+		  "min": -3,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#9B59B6",
+		      "style": "dot",
+		      "mathml": "<mi>C</mi>",
+		      "position": -1.45
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 10
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3084215479d28e9d
+	// Question: Identify the point at -2.15 on a number line
+	// Widget key: choice_d_visual
+	test("number-line - [x3084215479d28e9d] Identify the point at -2.15 on a number line (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0,
+		  "min": -3,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "mathml": "<mi>D</mi>",
+		      "position": -1.05
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 10
 		  }
 		} as unknown as WidgetInput
 
@@ -5555,23 +5988,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xaf24a4f1eb7b57f3
-	// Question: Locate the blue dot on the number line
+	// Question: Locate the blue dot on a number line
 	// Widget key: image_1
-	test("number-line - [xaf24a4f1eb7b57f3] Locate the blue dot on the number line", async () => {
+	test("number-line - [xaf24a4f1eb7b57f3] Locate the blue dot on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -5.9,
 		  "min": -7.1,
 		  "type": "numberLine",
-		  "width": 86,
-		  "height": 240,
+		  "model": null,
+		  "width": 350,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
+		    "type": "whole",
+		    "interval": 0.5
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -5581,7 +6016,10 @@ describe("numberLine widget tests", () => {
 		      "position": -6.8
 		    }
 		  ],
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 10
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5600,23 +6038,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc5d9c30fb36fc4af
-	// Question: Locate a point on a vertical number line
+	// Question: Locate the blue dot on a vertical number line
 	// Widget key: image_1
-	test("number-line - [xc5d9c30fb36fc4af] Locate a point on a vertical number line", async () => {
+	test("number-line - [xc5d9c30fb36fc4af] Locate the blue dot on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -3.14,
 		  "min": -3.26,
 		  "type": "numberLine",
-		  "width": 86,
-		  "height": 240,
+		  "model": null,
+		  "width": 350,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 0.01
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -5645,279 +6085,259 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe224445baec45957
-	// Question: Identify a point on a number line
-	// Widget key: choice_a_visual
-	test("number-line - [xe224445baec45957] Identify a point on a number line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": -7,
-		  "min": -9,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#E5B700",
-		      "style": "dot",
-		      "mathml": "<mi>A</mi>",
-		      "position": -8.7
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe224445baec45957
-	// Question: Identify a point on a number line
-	// Widget key: choice_b_visual
-	test("number-line - [xe224445baec45957] Identify a point on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": -7,
-		  "min": -9,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#D62728",
-		      "style": "dot",
-		      "mathml": "<mi>B</mi>",
-		      "position": -8.25
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe224445baec45957
-	// Question: Identify a point on a number line
-	// Widget key: choice_c_visual
-	test("number-line - [xe224445baec45957] Identify a point on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": -7,
-		  "min": -9,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#6A3D9A",
-		      "style": "dot",
-		      "mathml": "<mi>C</mi>",
-		      "position": -7.75
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe224445baec45957
-	// Question: Identify a point on a number line
-	// Widget key: choice_d_visual
-	test("number-line - [xe224445baec45957] Identify a point on a number line (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": -7,
-		  "min": -9,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#17BECF",
-		      "style": "dot",
-		      "mathml": "<mi>D</mi>",
-		      "position": -7.55
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe224445baec45957
-	// Question: Identify a point on a number line
-	// Widget key: number_line_image
-	test("number-line - [xe224445baec45957] Identify a point on a number line (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": -7,
-		  "min": -9,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#E5B700",
-		      "style": "dot",
-		      "mathml": "<mi>A</mi>",
-		      "position": -8.7
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#D62728",
-		      "style": "dot",
-		      "mathml": "<mi>B</mi>",
-		      "position": -8.25
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#6A3D9A",
-		      "style": "dot",
-		      "mathml": "<mi>C</mi>",
-		      "position": -7.75
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#17BECF",
-		      "style": "dot",
-		      "mathml": "<mi>D</mi>",
-		      "position": -7.55
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2c21184e2764adc1
-	// Question: Locate a point on a vertical number line
+	// Question: Identify a point on a number line at −7.75
 	// Widget key: image_1
-	test("number-line - [x2c21184e2764adc1] Locate a point on a vertical number line", async () => {
+	test("number-line - [xe224445baec45957] Identify a point on a number line at −7.75 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": -1.04,
-		  "min": -1.14,
+		  "max": -7,
+		  "min": -9,
 		  "type": "numberLine",
-		  "width": 86.4,
-		  "height": 240,
-		  "orientation": "vertical",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 100
+		    "type": "whole",
+		    "interval": 1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#29abca",
+		      "color": "#DAA520",
 		      "style": "dot",
-		      "mathml": "<mo>?</mo>",
-		      "position": -1.13
+		      "mathml": "<mi>A</mi>",
+		      "position": -8.7
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#D62728",
+		      "style": "dot",
+		      "mathml": "<mi>B</mi>",
+		      "position": -8.25
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#800080",
+		      "style": "dot",
+		      "mathml": "<mi>C</mi>",
+		      "position": -7.75
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#008080",
+		      "style": "dot",
+		      "mathml": "<mi>D</mi>",
+		      "position": -7.55
 		    }
 		  ],
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 10
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe224445baec45957
+	// Question: Identify a point on a number line at −7.75
+	// Widget key: choice_a_image
+	test("number-line - [xe224445baec45957] Identify a point on a number line at −7.75 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": -7,
+		  "min": -9,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#DAA520",
+		      "style": "dot",
+		      "mathml": "<mi>A</mi>",
+		      "position": -8.7
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 10
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe224445baec45957
+	// Question: Identify a point on a number line at −7.75
+	// Widget key: choice_b_image
+	test("number-line - [xe224445baec45957] Identify a point on a number line at −7.75 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": -7,
+		  "min": -9,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#D62728",
+		      "style": "dot",
+		      "mathml": "<mi>B</mi>",
+		      "position": -8.25
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 10
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe224445baec45957
+	// Question: Identify a point on a number line at −7.75
+	// Widget key: choice_c_image
+	test("number-line - [xe224445baec45957] Identify a point on a number line at −7.75 (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": -7,
+		  "min": -9,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#800080",
+		      "style": "dot",
+		      "mathml": "<mi>C</mi>",
+		      "position": -7.75
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 10
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe224445baec45957
+	// Question: Identify a point on a number line at −7.75
+	// Widget key: choice_d_image
+	test("number-line - [xe224445baec45957] Identify a point on a number line at −7.75 (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": -7,
+		  "min": -9,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#008080",
+		      "style": "dot",
+		      "mathml": "<mi>D</mi>",
+		      "position": -7.55
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 10
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5936,23 +6356,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xae3d2ea11f397d71
-	// Question: Identify a point on a number line
+	// Question: Locate −0.135 on a number line
 	// Widget key: image_1
-	test("number-line - [xae3d2ea11f397d71] Identify a point on a number line (1)", async () => {
+	test("number-line - [xae3d2ea11f397d71] Locate −0.135 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.1,
 		  "min": -0.3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 0.01
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -6002,23 +6424,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xae3d2ea11f397d71
-	// Question: Identify a point on a number line
-	// Widget key: choice_a_visual
-	test("number-line - [xae3d2ea11f397d71] Identify a point on a number line (2)", async () => {
+	// Question: Locate −0.135 on a number line
+	// Widget key: choice_a_image
+	test("number-line - [xae3d2ea11f397d71] Locate −0.135 on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.1,
 		  "min": -0.3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 0.01
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -6047,23 +6471,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xae3d2ea11f397d71
-	// Question: Identify a point on a number line
-	// Widget key: choice_b_visual
-	test("number-line - [xae3d2ea11f397d71] Identify a point on a number line (3)", async () => {
+	// Question: Locate −0.135 on a number line
+	// Widget key: choice_b_image
+	test("number-line - [xae3d2ea11f397d71] Locate −0.135 on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.1,
 		  "min": -0.3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 0.01
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -6092,23 +6518,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xae3d2ea11f397d71
-	// Question: Identify a point on a number line
-	// Widget key: choice_c_visual
-	test("number-line - [xae3d2ea11f397d71] Identify a point on a number line (4)", async () => {
+	// Question: Locate −0.135 on a number line
+	// Widget key: choice_c_image
+	test("number-line - [xae3d2ea11f397d71] Locate −0.135 on a number line (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.1,
 		  "min": -0.3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 0.01
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -6137,23 +6565,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xae3d2ea11f397d71
-	// Question: Identify a point on a number line
-	// Widget key: choice_d_visual
-	test("number-line - [xae3d2ea11f397d71] Identify a point on a number line (5)", async () => {
+	// Question: Locate −0.135 on a number line
+	// Widget key: choice_d_image
+	test("number-line - [xae3d2ea11f397d71] Locate −0.135 on a number line (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.1,
 		  "min": -0.3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 0.01
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -6182,21 +6612,23 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xde6ccea133eaaffa
-	// Question: Identify a point on a number line
+	// Question: Identify the point at -0.905 on a number line
 	// Widget key: image_1
-	test("number-line - [xde6ccea133eaaffa] Identify a point on a number line (1)", async () => {
+	test("number-line - [xde6ccea133eaaffa] Identify the point at -0.905 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.8,
 		  "min": -1,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 100
+		    "type": "whole",
+		    "interval": 0.01
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
@@ -6248,21 +6680,23 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xde6ccea133eaaffa
-	// Question: Identify a point on a number line
-	// Widget key: choice_a_visual
-	test("number-line - [xde6ccea133eaaffa] Identify a point on a number line (2)", async () => {
+	// Question: Identify the point at -0.905 on a number line
+	// Widget key: choice_a_image
+	test("number-line - [xde6ccea133eaaffa] Identify the point at -0.905 on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.8,
 		  "min": -1,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 100
+		    "type": "whole",
+		    "interval": 0.01
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
@@ -6293,21 +6727,23 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xde6ccea133eaaffa
-	// Question: Identify a point on a number line
-	// Widget key: choice_b_visual
-	test("number-line - [xde6ccea133eaaffa] Identify a point on a number line (3)", async () => {
+	// Question: Identify the point at -0.905 on a number line
+	// Widget key: choice_b_image
+	test("number-line - [xde6ccea133eaaffa] Identify the point at -0.905 on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.8,
 		  "min": -1,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 100
+		    "type": "whole",
+		    "interval": 0.01
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
@@ -6338,21 +6774,23 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xde6ccea133eaaffa
-	// Question: Identify a point on a number line
-	// Widget key: choice_c_visual
-	test("number-line - [xde6ccea133eaaffa] Identify a point on a number line (4)", async () => {
+	// Question: Identify the point at -0.905 on a number line
+	// Widget key: choice_c_image
+	test("number-line - [xde6ccea133eaaffa] Identify the point at -0.905 on a number line (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.8,
 		  "min": -1,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 100
+		    "type": "whole",
+		    "interval": 0.01
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
@@ -6383,21 +6821,23 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xde6ccea133eaaffa
-	// Question: Identify a point on a number line
-	// Widget key: choice_d_visual
-	test("number-line - [xde6ccea133eaaffa] Identify a point on a number line (5)", async () => {
+	// Question: Identify the point at -0.905 on a number line
+	// Widget key: choice_d_image
+	test("number-line - [xde6ccea133eaaffa] Identify the point at -0.905 on a number line (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -0.8,
 		  "min": -1,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 100
+		    "type": "whole",
+		    "interval": 0.01
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
@@ -6410,6 +6850,63 @@ describe("numberLine widget tests", () => {
 		    }
 		  ],
 		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb2f973735c48cca9
+	// Question: Sign of a sum on a number line
+	// Widget key: image_1
+	test("number-line - [xb2f973735c48cca9] Sign of a sum on a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 11,
+		  "min": -7,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 5
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#6495ED",
+		      "style": "dot",
+		      "mathml": "<mi>B</mi>",
+		      "position": -7
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#6495ED",
+		      "style": "dot",
+		      "mathml": "<mi>A</mi>",
+		      "position": 7
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -6437,14 +6934,16 @@ describe("numberLine widget tests", () => {
 		  "max": 9,
 		  "min": -9,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 70,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -6489,14 +6988,16 @@ describe("numberLine widget tests", () => {
 		  "max": 9,
 		  "min": -9,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 90,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -6532,23 +7033,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb34bd9efe7f7b167
-	// Question: Sign of the sum on a number line
+	// Question: Determine the sign of B + A
 	// Widget key: image_1
-	test("number-line - [xb34bd9efe7f7b167] Sign of the sum on a number line", async () => {
+	test("number-line - [xb34bd9efe7f7b167] Determine the sign of B + A", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
-		  "width": 102,
-		  "height": 240,
+		  "model": null,
+		  "width": 340,
+		  "height": 440,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -6584,17 +7087,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb68760aaf6f3ffeb
-	// Question: Sign of a sum on a vertical number line
+	// Question: Determine the sign of B + A
 	// Widget key: image_1
-	test("number-line - [xb68760aaf6f3ffeb] Sign of a sum on a vertical number line", async () => {
+	test("number-line - [xb68760aaf6f3ffeb] Determine the sign of B + A", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 7,
-		  "min": -8,
+		  "max": 6,
+		  "min": -9,
 		  "type": "numberLine",
-		  "width": 104,
-		  "height": 240,
+		  "model": null,
+		  "width": 360,
+		  "height": 420,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -6636,17 +7141,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x2a21cc51e5afb7b3
-	// Question: Determine the sign of B + A from a number line
+	// Question: Determine the sign of a sum from a number line
 	// Widget key: image_1
-	test("number-line - [x2a21cc51e5afb7b3] Determine the sign of B + A from a number line", async () => {
+	test("number-line - [x2a21cc51e5afb7b3] Determine the sign of a sum from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 7,
 		  "min": -7,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 94,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -6656,17 +7163,17 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
-		      "style": "dot",
-		      "mathml": "<mi>A</mi>",
-		      "position": 5
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>B</mi>",
 		      "position": -3
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#6495ed",
+		      "style": "dot",
+		      "mathml": "<mi>A</mi>",
+		      "position": 5
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -6688,23 +7195,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xa2d63caf8b0024eb
-	// Question: Sign of a sum on a number line
+	// Question: Determine the sign of a sum on a number line
 	// Widget key: image_1
-	test("number-line - [xa2d63caf8b0024eb] Sign of a sum on a number line", async () => {
+	test("number-line - [xa2d63caf8b0024eb] Determine the sign of a sum on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 70,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -6740,17 +7249,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x6c3fca6f50a7886e
-	// Question: Sign of A + B on a vertical number line
+	// Question: Sign of the sum on a vertical number line
 	// Widget key: image_1
-	test("number-line - [x6c3fca6f50a7886e] Sign of A + B on a vertical number line", async () => {
+	test("number-line - [x6c3fca6f50a7886e] Sign of the sum on a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 0,
-		  "min": -15,
+		  "max": 4,
+		  "min": -11,
 		  "type": "numberLine",
-		  "width": 104,
-		  "height": 240,
+		  "model": null,
+		  "width": 340,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -6791,22 +7302,120 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x550561183fbc7144
-	// Question: Interpret −3 + (−5) on a number line
+	// Extracted from question: x56288d6c854e8a79
+	// Question: Sign of a sum on a number line
 	// Widget key: image_1
-	test("number-line - [x550561183fbc7144] Interpret −3 + (−5) on a number line", async () => {
+	test("number-line - [x56288d6c854e8a79] Sign of a sum on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 9,
-		  "min": -9,
+		  "max": 8,
+		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
+		  "width": 360,
+		  "height": 420,
+		  "segments": null,
+		  "orientation": "vertical",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 5
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#6495ed",
+		      "style": "dot",
+		      "mathml": "<mi>B</mi>",
+		      "position": -8
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#6495ed",
+		      "style": "dot",
+		      "mathml": "<mi>A</mi>",
+		      "position": 8
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x550561183fbc7144
+	// Question: Interpret the expression -3 + (-5) on a number line
+	// Widget key: image_1
+	test("number-line - [x550561183fbc7144] Interpret the expression -3 + (-5) on a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -10,
+		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 100
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": null,
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x67ac6202a9d4f087
+	// Question: Interpret an addition expression on a number line
+	// Widget key: image_1
+	test("number-line - [x67ac6202a9d4f087] Interpret an addition expression on a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -10,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
@@ -6838,45 +7447,10 @@ describe("numberLine widget tests", () => {
 		  "max": 0.5,
 		  "min": -0.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": null,
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x67ac6202a9d4f087
-	// Question: Interpret the expression 1 + 6
-	// Widget key: image_1
-	test("number-line - [x67ac6202a9d4f087] Interpret the expression 1 + 6", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 0.5,
-		  "min": -0.5,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -6909,15 +7483,17 @@ describe("numberLine widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 10,
-		  "min": -10,
+		  "max": 0.5,
+		  "min": -0.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 10
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
@@ -6946,48 +7522,13 @@ describe("numberLine widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 10,
-		  "min": -10,
+		  "max": 0.5,
+		  "min": -0.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 100
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": null,
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0e6bd1df203c7886
-	// Question: Interpret subtracting a negative on a number line
-	// Widget key: image_1
-	test("number-line - [x0e6bd1df203c7886] Interpret subtracting a negative on a number line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -10,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -7013,18 +7554,59 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7cc0baac5d140007
-	// Question: Interpret an addition with negative numbers on a number line
+	// Extracted from question: x0e6bd1df203c7886
+	// Question: Interpret −4 − (−7) on a number line
 	// Widget key: image_1
-	test("number-line - [x7cc0baac5d140007] Interpret an addition with negative numbers on a number line", async () => {
+	test("number-line - [x0e6bd1df203c7886] Interpret −4 − (−7) on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 0.5,
-		  "min": -0.5,
+		  "max": 5,
+		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 10
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": null,
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7cc0baac5d140007
+	// Question: Interpret -2 + (-7) on a number line
+	// Widget key: image_1
+	test("number-line - [x7cc0baac5d140007] Interpret -2 + (-7) on a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -10,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -7051,17 +7633,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xd973b123bab53a84
-	// Question: Interpretation of 9 + (−7) on a number line
+	// Question: Interpret 9 + (−7) on a number line
 	// Widget key: image_1
-	test("number-line - [xd973b123bab53a84] Interpretation of 9 + (−7) on a number line", async () => {
+	test("number-line - [xd973b123bab53a84] Interpret 9 + (−7) on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -7088,17 +7672,67 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x2436d2f7d2b2dc6d
-	// Question: Interpret the expression −2 − 7 on a number line
+	// Question: Interpret a subtraction expression on a number line
 	// Widget key: image_1
-	test("number-line - [x2436d2f7d2b2dc6d] Interpret the expression −2 − 7 on a number line", async () => {
+	test("number-line - [x2436d2f7d2b2dc6d] Interpret a subtraction expression on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#333333",
+		      "style": "dot",
+		      "value": 0,
+		      "position": 0
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x503e4bb8de69fa12
+	// Question: Interpret subtracting a negative on a number line
+	// Widget key: image_1
+	test("number-line - [x503e4bb8de69fa12] Interpret subtracting a negative on a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0.5,
+		  "min": -0.5,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -7124,55 +7758,20 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x503e4bb8de69fa12
-	// Question: Interpretation of subtracting a negative on a number line
-	// Widget key: image_1
-	test("number-line - [x503e4bb8de69fa12] Interpretation of subtracting a negative on a number line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 12,
-		  "min": -12,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 100
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": null,
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x3f9d8f1bc1edf16f
-	// Question: Interpret 3 + (−7) on a number line
+	// Question: Interpret 3 + (-7) on a number line
 	// Widget key: image_1
-	test("number-line - [x3f9d8f1bc1edf16f] Interpret 3 + (−7) on a number line", async () => {
+	test("number-line - [x3f9d8f1bc1edf16f] Interpret 3 + (-7) on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 10,
-		  "min": -10,
+		  "max": 0.5,
+		  "min": -0.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -7199,17 +7798,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x85e43baa483fc14d
-	// Question: Interpret 2 − (−5) on a number line
+	// Question: Interpret 2 - (-5) on a number line
 	// Widget key: image_1
-	test("number-line - [x85e43baa483fc14d] Interpret 2 − (−5) on a number line", async () => {
+	test("number-line - [x85e43baa483fc14d] Interpret 2 - (-5) on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 8,
-		  "min": -8,
+		  "max": 10,
+		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -7236,21 +7837,23 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc68972fee29782e4
-	// Question: True statements about 4 − (−4)
+	// Question: Select true statements about 4 − (−4)
 	// Widget key: image_1
-	test("number-line - [xc68972fee29782e4] True statements about 4 − (−4)", async () => {
+	test("number-line - [xc68972fee29782e4] Select true statements about 4 − (−4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 10,
-		  "min": -10,
+		  "max": 0.5,
+		  "min": -0.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 10
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
@@ -7273,17 +7876,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbd6be7269a700394
-	// Question: Interpret 3 − (−5) on a number line
+	// Question: Interpretation of 3 − (−5) on a number line
 	// Widget key: image_1
-	test("number-line - [xbd6be7269a700394] Interpret 3 − (−5) on a number line", async () => {
+	test("number-line - [xbd6be7269a700394] Interpretation of 3 − (−5) on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 0.5,
 		  "min": -0.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -7310,17 +7915,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x22654291a8e6cdba
-	// Question: Statements about −8 + 8
+	// Question: True statements about −8 + 8
 	// Widget key: image_1
-	test("number-line - [x22654291a8e6cdba] Statements about −8 + 8", async () => {
+	test("number-line - [x22654291a8e6cdba] True statements about −8 + 8", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 0.5,
-		  "min": -0.5,
+		  "max": 10,
+		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -7347,25 +7954,30 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc5b1a83429ca90fc
-	// Question: True statements about 5 + (-5)
+	// Question: True statements about 5 + (−5)
 	// Widget key: image_1
-	test("number-line - [xc5b1a83429ca90fc] True statements about 5 + (-5)", async () => {
+	test("number-line - [xc5b1a83429ca90fc] True statements about 5 + (−5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 0.5,
-		  "min": -0.5,
+		  "max": 10,
+		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 1
+		    "interval": 5
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -7384,21 +7996,23 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xaf3c2b6396663afc
-	// Question: True statements about -7 + 7
+	// Question: Identify true statements about -7 + 7
 	// Widget key: image_1
-	test("number-line - [xaf3c2b6396663afc] True statements about -7 + 7", async () => {
+	test("number-line - [xaf3c2b6396663afc] Identify true statements about -7 + 7", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 5
+		    "interval": 10
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
@@ -7421,21 +8035,23 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbebd2f72cd59eb7f
-	// Question: Interpret the expression −3 − 5 on a number line
+	// Question: Interpret an expression on a number line
 	// Widget key: image_1
-	test("number-line - [xbebd2f72cd59eb7f] Interpret the expression −3 − 5 on a number line", async () => {
+	test("number-line - [xbebd2f72cd59eb7f] Interpret an expression on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 10,
-		  "min": -10,
+		  "max": 1,
+		  "min": -1,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 1
+		    "interval": 2
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
@@ -7467,12 +8083,14 @@ describe("numberLine widget tests", () => {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 1
+		    "interval": 5
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
@@ -7495,21 +8113,23 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x45364903b6bb25c3
-	// Question: Interpret −4 + 13 on a number line
+	// Question: Interpret -4 + 13 on a number line
 	// Widget key: image_1
-	test("number-line - [x45364903b6bb25c3] Interpret −4 + 13 on a number line", async () => {
+	test("number-line - [x45364903b6bb25c3] Interpret -4 + 13 on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 10
+		    "interval": 1000
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
@@ -7532,17 +8152,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x804ff13c5e0a3b0d
-	// Question: Interpret the expression 3 − (−4)
+	// Question: Interpret 3 − (−4) on a number line
 	// Widget key: image_1
-	test("number-line - [x804ff13c5e0a3b0d] Interpret the expression 3 − (−4)", async () => {
+	test("number-line - [x804ff13c5e0a3b0d] Interpret 3 − (−4) on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 10,
-		  "min": -10,
+		  "max": 8,
+		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -7569,17 +8191,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xe88afd2e5e99c2eb
-	// Question: Interpret 2 − (−7) on a number line
+	// Question: Interpret the expression 2 − (−7) on a number line
 	// Widget key: image_1
-	test("number-line - [xe88afd2e5e99c2eb] Interpret 2 − (−7) on a number line", async () => {
+	test("number-line - [xe88afd2e5e99c2eb] Interpret the expression 2 − (−7) on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 0.5,
-		  "min": -0.5,
+		  "max": 10,
+		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -7606,17 +8230,58 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8817b46c17165809
-	// Question: True statements about -5 + (-5)
+	// Question: Select true statements about adding negative numbers
 	// Widget key: image_1
-	test("number-line - [x8817b46c17165809] True statements about -5 + (-5)", async () => {
+	test("number-line - [x8817b46c17165809] Select true statements about adding negative numbers", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 10,
-		  "min": -10,
+		  "max": 1,
+		  "min": -1,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 2
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": null,
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x68f5deef1c423e40
+	// Question: Identify true statements about the expression -9 + 9
+	// Widget key: image_1
+	test("number-line - [x68f5deef1c423e40] Identify true statements about the expression -9 + 9", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0.5,
+		  "min": -0.5,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -7642,62 +8307,24 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x68f5deef1c423e40
-	// Question: Identify true statements about −9 + 9
+	// Extracted from question: x428f83cf6fa27a30
+	// Question: True statements about 6 + (−6)
 	// Widget key: image_1
-	test("number-line - [x68f5deef1c423e40] Identify true statements about −9 + 9", async () => {
+	test("number-line - [x428f83cf6fa27a30] True statements about 6 + (−6)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 10,
-		  "min": -10,
+		  "max": 8,
+		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 10
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": null,
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x428f83cf6fa27a30
-	// Question: True statements about the expression 6 + (−6)
-	// Widget key: image_1
-	test("number-line - [x428f83cf6fa27a30] True statements about the expression 6 + (−6)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 0.5,
-		  "min": -0.5,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
@@ -7726,48 +8353,13 @@ describe("numberLine widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 0.5,
-		  "min": -0.5,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": null,
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd1c7929d24a2f00f
-	// Question: Interpret an expression with negatives on a number line
-	// Widget key: image_1
-	test("number-line - [xd1c7929d24a2f00f] Interpret an expression with negatives on a number line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -7793,22 +8385,63 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x458e3358458ed022
-	// Question: True statements about −8 + (−8)
+	// Extracted from question: xd1c7929d24a2f00f
+	// Question: Interpret a subtraction with negative numbers on a number line
 	// Widget key: image_1
-	test("number-line - [x458e3358458ed022] True statements about −8 + (−8)", async () => {
+	test("number-line - [xd1c7929d24a2f00f] Interpret a subtraction with negative numbers on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 0.5,
-		  "min": -0.5,
+		  "max": 10,
+		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": null,
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x458e3358458ed022
+	// Question: True statements about -8 + (-8)
+	// Widget key: image_1
+	test("number-line - [x458e3358458ed022] True statements about -8 + (-8)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 20,
+		  "min": -20,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 10
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
@@ -7831,25 +8464,30 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf97688185047bb0e
-	// Question: Interpret an expression on a number line
+	// Question: Interpret 6 − 13 on a number line
 	// Widget key: image_1
-	test("number-line - [xf97688185047bb0e] Interpret an expression on a number line", async () => {
+	test("number-line - [xf97688185047bb0e] Interpret 6 − 13 on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 10,
-		  "min": -10,
+		  "max": 15,
+		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 1
+		    "interval": 5
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -7868,21 +8506,23 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x6c115eefe7cc2360
-	// Question: True statements about 6 − (−6)
+	// Question: Statements about 6 − (−6)
 	// Widget key: image_1
-	test("number-line - [x6c115eefe7cc2360] True statements about 6 − (−6)", async () => {
+	test("number-line - [x6c115eefe7cc2360] Statements about 6 − (−6)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 12,
-		  "min": -12,
+		  "max": 10,
+		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 6
+		    "interval": 10
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
@@ -7905,201 +8545,26 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x873f699dbd384dfc
-	// Question: Statements about the expression 7 − (−7)
+	// Question: True statements about 7 − (−7)
 	// Widget key: image_1
-	test("number-line - [x873f699dbd384dfc] Statements about the expression 7 − (−7)", async () => {
+	test("number-line - [x873f699dbd384dfc] True statements about 7 − (−7)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 0.5,
-		  "min": -0.5,
+		  "max": 10,
+		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 1
+		    "interval": 10
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0f3ecfe564a3bf27
-	// Question: Match numbers to labels on a number line
-	// Widget key: image_1
-	test("number-line - [x0f3ecfe564a3bf27] Match numbers to labels on a number line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 0.6,
-		  "min": -0.2,
-		  "type": "numberLine",
-		  "width": 480,
-		  "height": 180,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 5
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#1F77B4",
-		      "style": "dot",
-		      "mathml": "<mi>A</mi>",
-		      "position": 0.17
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#D62728",
-		      "style": "dot",
-		      "mathml": "<mi>B</mi>",
-		      "position": 0.2222222222
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#2CA02C",
-		      "style": "dot",
-		      "mathml": "<mi>C</mi>",
-		      "position": 0.25
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8d464b86a33a632c
-	// Question: Label points on a number line
-	// Widget key: number_line_image
-	test("number-line - [x8d464b86a33a632c] Label points on a number line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": -1.5,
-		  "min": -3,
-		  "type": "numberLine",
-		  "width": 360,
-		  "height": 160,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 2
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#11accd",
-		      "style": "dot",
-		      "mathml": "<mi>a</mi>",
-		      "position": -2.9
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#ca337c",
-		      "style": "dot",
-		      "mathml": "<mi>b</mi>",
-		      "position": -2.625
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#1fab54",
-		      "style": "dot",
-		      "mathml": "<mi>c</mi>",
-		      "position": -2.3333333333
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcca9debe191d624b
-	// Question: Match the numbers to labels on a number line
-	// Widget key: image_1
-	test("number-line - [xcca9debe191d624b] Match the numbers to labels on a number line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 0.16666666666666666,
-		  "min": -0.5,
-		  "type": "numberLine",
-		  "width": 480,
-		  "height": 180,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 6
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#444444",
-		      "style": "dot",
-		      "mathml": "<mi>A</mi>",
-		      "position": -0.46
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#444444",
-		      "style": "dot",
-		      "mathml": "<mi>B</mi>",
-		      "position": -0.38
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#444444",
-		      "style": "dot",
-		      "mathml": "<mi>C</mi>",
-		      "position": -0.29
-		    }
-		  ],
 		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
@@ -8128,8 +8593,10 @@ describe("numberLine widget tests", () => {
 		  "max": 0.75,
 		  "min": -0.25,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 360,
-		  "height": 160,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -8177,6 +8644,250 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x0f3ecfe564a3bf27
+	// Question: Match numbers to labels on a number line
+	// Widget key: image_1
+	test("number-line - [x0f3ecfe564a3bf27] Match numbers to labels on a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0.6,
+		  "min": -0.2,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "denominator": 5
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#000000",
+		      "style": "dot",
+		      "mathml": "<mi>A</mi>",
+		      "position": 0.17
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#000000",
+		      "style": "dot",
+		      "mathml": "<mi>B</mi>",
+		      "position": 0.2222222222
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#000000",
+		      "style": "dot",
+		      "mathml": "<mi>C</mi>",
+		      "position": 0.25
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8d464b86a33a632c
+	// Question: Label points on a number line
+	// Widget key: number_line_image
+	test("number-line - [x8d464b86a33a632c] Label points on a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": -1.5,
+		  "min": -3,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "denominator": 2
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "mathml": "<mi>a</mi>",
+		      "position": -2.9
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#ca337c",
+		      "style": "dot",
+		      "mathml": "<mi>b</mi>",
+		      "position": -2.625
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#1fab54",
+		      "style": "dot",
+		      "mathml": "<mi>c</mi>",
+		      "position": -2.3333333333
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4773ef79075ee094
+	// Question: Match numbers to labels on a number line
+	// Widget key: image_1
+	test("number-line - [x4773ef79075ee094] Match numbers to labels on a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0.3333333333333333,
+		  "min": -0.6666666666666666,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "denominator": 3
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#000000",
+		      "style": "dot",
+		      "mathml": "<mi>A</mi>",
+		      "position": -0.42857142857142855
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#000000",
+		      "style": "dot",
+		      "mathml": "<mi>B</mi>",
+		      "position": -0.25
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#000000",
+		      "style": "dot",
+		      "mathml": "<mi>C</mi>",
+		      "position": -0.2
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcca9debe191d624b
+	// Question: Match numbers to labels on a number line
+	// Widget key: image_1
+	test("number-line - [xcca9debe191d624b] Match numbers to labels on a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 0.1666666667,
+		  "min": -0.5,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "denominator": 6
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#333333",
+		      "style": "dot",
+		      "mathml": "<mi>a</mi>",
+		      "position": -0.47
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#333333",
+		      "style": "dot",
+		      "mathml": "<mi>b</mi>",
+		      "position": -0.41
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#333333",
+		      "style": "dot",
+		      "mathml": "<mi>c</mi>",
+		      "position": -0.23
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: x0af75497ef49eb7f
 	// Question: Change in temperature from Wednesday to Thursday
 	// Widget key: image_1
@@ -8187,8 +8898,10 @@ describe("numberLine widget tests", () => {
 		  "max": 0,
 		  "min": -20,
 		  "type": "numberLine",
-		  "width": 240,
+		  "model": null,
+		  "width": 360,
 		  "height": 325,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -8260,12 +8973,14 @@ describe("numberLine widget tests", () => {
 		  "max": -40,
 		  "min": -50,
 		  "type": "numberLine",
-		  "width": 240,
+		  "model": null,
+		  "width": 300,
 		  "height": 325,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 5
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
@@ -8333,12 +9048,14 @@ describe("numberLine widget tests", () => {
 		  "max": -40,
 		  "min": -50,
 		  "type": "numberLine",
-		  "width": 240,
-		  "height": 325,
+		  "model": null,
+		  "width": 320,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 1
+		    "interval": 5
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
@@ -8406,48 +9123,50 @@ describe("numberLine widget tests", () => {
 		  "max": 0,
 		  "min": -20,
 		  "type": "numberLine",
-		  "width": 240,
+		  "model": null,
+		  "width": 300,
 		  "height": 325,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 5
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "mathml": "<mtext>Friday: negative 18 degrees Celsius</mtext>",
+		      "mathml": "<mtext>Friday:</mtext><mo>-</mo><mn>18</mn><mo>°</mo><mi>C</mi>",
 		      "position": -18
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "mathml": "<mtext>Wednesday: negative 13 degrees Celsius</mtext>",
+		      "mathml": "<mtext>Wednesday:</mtext><mo>-</mo><mn>13</mn><mo>°</mo><mi>C</mi>",
 		      "position": -13
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "mathml": "<mtext>Tuesday: negative 11 degrees Celsius</mtext>",
+		      "mathml": "<mtext>Tuesday:</mtext><mo>-</mo><mn>11</mn><mo>°</mo><mi>C</mi>",
 		      "position": -11
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "mathml": "<mtext>Thursday: negative 8 degrees Celsius</mtext>",
+		      "mathml": "<mtext>Thursday:</mtext><mo>-</mo><mn>8</mn><mo>°</mo><mi>C</mi>",
 		      "position": -8
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "mathml": "<mtext>Monday: negative 4 degrees Celsius</mtext>",
+		      "mathml": "<mtext>Monday:</mtext><mo>-</mo><mn>4</mn><mo>°</mo><mi>C</mi>",
 		      "position": -4
 		    }
 		  ],
@@ -8470,97 +9189,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x45dbfd7b60c55ec8
-	// Question: What will the penguin find after diving deeper?
+	// Question: Find what the penguin reaches by diving deeper
 	// Widget key: image_1
-	test("number-line - [x45dbfd7b60c55ec8] What will the penguin find after diving deeper?", async () => {
+	test("number-line - [x45dbfd7b60c55ec8] Find what the penguin reaches by diving deeper", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -90,
 		  "type": "numberLine",
-		  "width": 240,
+		  "model": null,
+		  "width": 300,
 		  "height": 325,
-		  "orientation": "vertical",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 10
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "mathml": "<mrow><mtext>krill: negative </mtext><mn>86</mn><mtext> meters</mtext></mrow>",
-		      "position": -86
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "mathml": "<mrow><mtext>adult penguin: negative </mtext><mn>59</mn><mtext> meters</mtext></mrow>",
-		      "position": -59
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "mathml": "<mrow><mtext>sardine: negative </mtext><mn>32</mn><mtext> meters</mtext></mrow>",
-		      "position": -32
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "mathml": "<mrow><mtext>anchovy: negative </mtext><mn>22</mn><mtext> meters</mtext></mrow>",
-		      "position": -22
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "mathml": "<mrow><mtext>surface of water: </mtext><mn>0</mn><mtext> meters</mtext></mrow>",
-		      "position": 0
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "mathml": "<mrow><mtext>penguin chick: </mtext><mn>5</mn><mtext> meters</mtext></mrow>",
-		      "position": 5
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2823d70029fc1298
-	// Question: Find an item on a vertical number line after moving up
-	// Widget key: image_1
-	test("number-line - [x2823d70029fc1298] Find an item on a vertical number line after moving up", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -90,
-		  "type": "numberLine",
-		  "width": 240,
-		  "height": 325,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -8629,18 +9270,198 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x0a03f1a2a926bffa
-	// Question: Match values to their meanings on a number line
+	// Extracted from question: x2823d70029fc1298
+	// Question: Identify what the penguin reaches after swimming upward
 	// Widget key: image_1
-	test("number-line - [x0a03f1a2a926bffa] Match values to their meanings on a number line", async () => {
+	test("number-line - [x2823d70029fc1298] Identify what the penguin reaches after swimming upward", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -90,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 300,
+		  "height": 325,
+		  "segments": null,
+		  "orientation": "vertical",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 10
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "mathml": "<mtext>krill: negative 86 meters</mtext>",
+		      "position": -86
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "mathml": "<mtext>adult penguin: negative 59 meters</mtext>",
+		      "position": -59
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "mathml": "<mtext>sardine: negative 32 meters</mtext>",
+		      "position": -32
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "mathml": "<mtext>anchovy: negative 22 meters</mtext>",
+		      "position": -22
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "mathml": "<mtext>surface of water: 0 meters</mtext>",
+		      "position": 0
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "mathml": "<mtext>penguin chick: 5 meters</mtext>",
+		      "position": 5
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbf3823e8389ce34a
+	// Question: Groups of 9/5 and division with fractions
+	// Widget key: image_1
+	test("number-line - [xbf3823e8389ce34a] Groups of 9/5 and division with fractions", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 2,
+		  "min": 0,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 320,
+		  "height": 398,
+		  "segments": [
+		    {
+		      "end": 1,
+		      "color": "#11accd",
+		      "start": 0
+		    }
+		  ],
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": null,
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 5
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfe3aa964c3345520
+	// Question: Average temperature on a number line (Ulaanbaatar)
+	// Widget key: image_1
+	test("number-line - [xfe3aa964c3345520] Average temperature on a number line (Ulaanbaatar)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 4,
+		  "min": -12,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 320,
+		  "height": 400,
+		  "segments": null,
+		  "orientation": "vertical",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 2
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "sign": "-",
+		      "type": "whole",
+		      "color": "#a75a05",
+		      "style": "dot",
+		      "value": 8,
+		      "position": -8
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0a03f1a2a926bffa
+	// Question: Match values to meanings for freezing points on a number line
+	// Widget key: image_1
+	test("number-line - [x0a03f1a2a926bffa] Match values to meanings for freezing points on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 20,
 		  "min": -100,
 		  "type": "numberLine",
-		  "width": 144,
-		  "height": 325,
+		  "model": null,
+		  "width": 350,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -8681,18 +9502,68 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3439ba4c308f386b
-	// Question: True statements about positions on a number line
+	// Extracted from question: x4bfd696981b7127c
+	// Question: Interpret a negative bill amount
 	// Widget key: image_1
-	test("number-line - [x3439ba4c308f386b] True statements about positions on a number line", async () => {
+	test("number-line - [x4bfd696981b7127c] Interpret a negative bill amount", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 400,
+		  "min": -400,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 380,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 100
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "sign": "-",
+		      "type": "whole",
+		      "color": "#a75a05",
+		      "style": "dot",
+		      "value": 250,
+		      "position": -250
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3439ba4c308f386b
+	// Question: Identify true statements from a number line
+	// Widget key: image_1
+	test("number-line - [x3439ba4c308f386b] Identify true statements from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 120,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -8734,17 +9605,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x663e2f4f73d9ee79
-	// Question: Interpret a positive temperature on a number line
+	// Question: Identify a true statement about Temuco's July average temperature
 	// Widget key: image_1
-	test("number-line - [x663e2f4f73d9ee79] Interpret a positive temperature on a number line", async () => {
+	test("number-line - [x663e2f4f73d9ee79] Identify a true statement about Temuco's July average temperature", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
-		  "width": 144,
-		  "height": 325,
+		  "model": null,
+		  "width": 320,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -8778,70 +9651,26 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4bfd696981b7127c
-	// Question: Interpret a negative bill amount and absolute value
-	// Widget key: image_1
-	test("number-line - [x4bfd696981b7127c] Interpret a negative bill amount and absolute value", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 400,
-		  "min": -400,
-		  "type": "numberLine",
-		  "width": 380,
-		  "height": 120,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 100
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "sign": "-",
-		      "type": "whole",
-		      "color": "#a75a05",
-		      "style": "dot",
-		      "value": 250,
-		      "position": -250
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x78e22152b5909760
-	// Question: Interpret a number line for a gas bill
+	// Question: Carrie’s gas bill on a number line
 	// Widget key: image_1
-	test("number-line - [x78e22152b5909760] Interpret a number line for a gas bill", async () => {
+	test("number-line - [x78e22152b5909760] Carrie’s gas bill on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 100,
 		  "min": -100,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 120,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 25
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -8869,84 +9698,40 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xfe3aa964c3345520
-	// Question: Average temperature in Ulaanbaatar (March) on a number line
-	// Widget key: image_1
-	test("number-line - [xfe3aa964c3345520] Average temperature in Ulaanbaatar (March) on a number line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 4,
-		  "min": -12,
-		  "type": "numberLine",
-		  "width": 200,
-		  "height": 500,
-		  "orientation": "vertical",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 2
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "sign": "-",
-		      "type": "whole",
-		      "color": "#a75a05",
-		      "style": "dot",
-		      "value": 8,
-		      "position": -8
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x8b9e8ddc0e6e073b
-	// Question: True statements about Lhasa's elevation
+	// Question: Elevation and absolute value: Lhasa
 	// Widget key: image_1
-	test("number-line - [x8b9e8ddc0e6e073b] True statements about Lhasa's elevation", async () => {
+	test("number-line - [x8b9e8ddc0e6e073b] Elevation and absolute value: Lhasa", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 4000,
 		  "min": -4000,
 		  "type": "numberLine",
-		  "width": 144,
-		  "height": 325,
+		  "model": null,
+		  "width": 350,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1000
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#000000",
-		      "style": "dot",
-		      "mathml": "<mtext>sea level</mtext>",
-		      "position": 0
-		    },
 		    {
 		      "type": "mathml",
 		      "color": "#a75a05",
 		      "style": "dot",
 		      "mathml": "<mtext>Lhasa</mtext>",
 		      "position": 3656
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#000000",
+		      "style": "dot",
+		      "mathml": "<mtext>sea level</mtext>",
+		      "position": 0
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -8968,17 +9753,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xfdbe9b42922b9edf
-	// Question: Match values to their meanings on a vertical number line
+	// Question: Match elevation values to their meanings
 	// Widget key: image_1
-	test("number-line - [xfdbe9b42922b9edf] Match values to their meanings on a vertical number line", async () => {
+	test("number-line - [xfdbe9b42922b9edf] Match elevation values to their meanings", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
-		  "width": 144,
-		  "height": 325,
+		  "model": null,
+		  "width": 300,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -9029,8 +9816,10 @@ describe("numberLine widget tests", () => {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 120,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -9040,17 +9829,17 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "mathml": "<mtext>hole</mtext>",
-		      "position": 0
-		    },
-		    {
-		      "type": "mathml",
 		      "color": "#a75a05",
 		      "style": "dot",
 		      "mathml": "<mtext>bean bag</mtext>",
 		      "position": -4
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "mathml": "<mtext>hole</mtext>",
+		      "position": 0
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -9072,23 +9861,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xffe2d25563b2334c
-	// Question: Match values to meanings: credit card balance on a number line
+	// Question: Match values to meanings on a credit card number line
 	// Widget key: image_1
-	test("number-line - [xffe2d25563b2334c] Match values to meanings: credit card balance on a number line", async () => {
+	test("number-line - [xffe2d25563b2334c] Match values to meanings on a credit card number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1000,
 		  "min": -200,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 120,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 200
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "sign": "+",
@@ -9118,37 +9909,39 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0ddc47203b87395f
-	// Question: Elevation of Lima: absolute value and position relative to sea level
+	// Question: Absolute value and elevation of Lima
 	// Widget key: image_1
-	test("number-line - [x0ddc47203b87395f] Elevation of Lima: absolute value and position relative to sea level", async () => {
+	test("number-line - [x0ddc47203b87395f] Absolute value and elevation of Lima", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 200,
 		  "min": -200,
 		  "type": "numberLine",
-		  "width": 144,
+		  "model": null,
+		  "width": 300,
 		  "height": 325,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 50
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#000000",
+		      "style": "dot",
+		      "mathml": "<mtext>sea level</mtext>",
+		      "position": 0
+		    },
 		    {
 		      "type": "mathml",
 		      "color": "#a75a05",
 		      "style": "dot",
 		      "mathml": "<mtext>Lima</mtext>",
 		      "position": 154
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#333333",
-		      "style": "dot",
-		      "mathml": "<mtext>sea level</mtext>",
-		      "position": 0
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -9170,17 +9963,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x3fbc546d5ef83967
-	// Question: Whose statement about the marble is true?
+	// Question: Whose statement is true about position and distance?
 	// Widget key: image_1
-	test("number-line - [x3fbc546d5ef83967] Whose statement about the marble is true?", async () => {
+	test("number-line - [x3fbc546d5ef83967] Whose statement is true about position and distance?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 5,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 120,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -9223,7 +10018,7 @@ describe("numberLine widget tests", () => {
 
 	// Extracted from question: xe6ce0ba1a0c0daa5
 	// Question: Choose the graph of x > -2
-	// Widget key: choice_c_graph
+	// Widget key: choice_c_number_line
 	test("number-line - [xe6ce0ba1a0c0daa5] Choose the graph of x > -2", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -9231,19 +10026,21 @@ describe("numberLine widget tests", () => {
 		  "max": 5,
 		  "min": -5,
 		  "type": "numberLine",
-		  "width": 360,
-		  "height": 48,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "sign": "-",
 		      "type": "whole",
-		      "color": "#7854AB",
+		      "color": "#7854ab",
 		      "style": "dot",
 		      "value": 2,
 		      "position": -2
@@ -9269,7 +10066,7 @@ describe("numberLine widget tests", () => {
 
 	// Extracted from question: x0ea6ddf2623b5753
 	// Question: Choose the graph of x > -4
-	// Widget key: choice_b_nl
+	// Widget key: choice_b_numberline
 	test("number-line - [x0ea6ddf2623b5753] Choose the graph of x > -4", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -9277,8 +10074,10 @@ describe("numberLine widget tests", () => {
 		  "max": 5,
 		  "min": -5,
 		  "type": "numberLine",
-		  "width": 600,
-		  "height": 150,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -9313,64 +10112,20 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xac4daf3ec3b769cb
-	// Question: Choose the inequality that matches the number line
-	// Widget key: choice_b_visual
-	test("number-line - [xac4daf3ec3b769cb] Choose the inequality that matches the number line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 150,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#29abca",
-		      "style": "dot",
-		      "value": 2,
-		      "position": 2
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6d35fcf1b7fa9959
-	// Question: Locate −C on a number line
-	// Widget key: number_line_choice_a
-	test("number-line - [x6d35fcf1b7fa9959] Locate −C on a number line (1)", async () => {
+	// Extracted from question: xf24d398f5541a761
+	// Question: Locate −F on a number line
+	// Widget key: nl_choice_a
+	test("number-line - [xf24d398f5541a761] Locate −F on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -9380,54 +10135,9 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#ffa500",
+		      "color": "#6495ed",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mi>C</mi>",
-		      "position": 0.5
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6d35fcf1b7fa9959
-	// Question: Locate −C on a number line
-	// Widget key: number_line_choice_b
-	test("number-line - [x6d35fcf1b7fa9959] Locate −C on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 2,
-		  "min": -2,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 2
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#ffa500",
-		      "style": "dot",
-		      "mathml": "<mo>-</mo><mi>C</mi>",
+		      "mathml": "<mi>F</mi>",
 		      "position": -0.5
 		    }
 		  ],
@@ -9449,18 +10159,20 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x6d35fcf1b7fa9959
-	// Question: Locate −C on a number line
-	// Widget key: number_line_choice_c
-	test("number-line - [x6d35fcf1b7fa9959] Locate −C on a number line (3)", async () => {
+	// Extracted from question: xf24d398f5541a761
+	// Question: Locate −F on a number line
+	// Widget key: nl_choice_b
+	test("number-line - [xf24d398f5541a761] Locate −F on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -9472,8 +10184,55 @@ describe("numberLine widget tests", () => {
 		      "type": "mathml",
 		      "color": "#ffa500",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mi>C</mi>",
-		      "position": -1.5
+		      "mathml": "<mo>-</mo><mi>F</mi>",
+		      "position": 0.5
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf24d398f5541a761
+	// Question: Locate −F on a number line
+	// Widget key: nl_choice_c
+	test("number-line - [xf24d398f5541a761] Locate −F on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 2,
+		  "min": -2,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "denominator": 2
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#ffa500",
+		      "style": "dot",
+		      "mathml": "<mo>-</mo><mi>F</mi>",
+		      "position": -0.5
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -9495,17 +10254,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x9bdd37009fb0e6e0
-	// Question: Value of -C on a number line
+	// Question: Find the value of -C on a number line
 	// Widget key: image_1
-	test("number-line - [x9bdd37009fb0e6e0] Value of -C on a number line", async () => {
+	test("number-line - [x9bdd37009fb0e6e0] Find the value of -C on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -9515,7 +10276,7 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#1f77b4",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "mathml": "<mi>C</mi>",
 		      "position": 0
@@ -9542,22 +10303,24 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x6260dd813b89d59e
-	// Question: Place −A on a number line
-	// Widget key: nl_choice_a
-	test("number-line - [x6260dd813b89d59e] Place −A on a number line (1)", async () => {
+	// Extracted from question: xa7a6286b688fd181
+	// Question: Opposite of the opposite on a number line
+	// Widget key: image_1
+	test("number-line - [xa7a6286b688fd181] Opposite of the opposite on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 2
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
@@ -9565,8 +10328,8 @@ describe("numberLine widget tests", () => {
 		      "type": "mathml",
 		      "color": "#6495ed",
 		      "style": "dot",
-		      "mathml": "<mi>A</mi>",
-		      "position": 3
+		      "mathml": "<mi>B</mi>",
+		      "position": -1
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -9587,115 +10350,20 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x6260dd813b89d59e
-	// Question: Place −A on a number line
-	// Widget key: nl_choice_b
-	test("number-line - [x6260dd813b89d59e] Place −A on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 8,
-		  "min": -8,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 2
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#ffa500",
-		      "style": "dot",
-		      "mathml": "<mo>-</mo><mi>A</mi>",
-		      "position": -3
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#6495ed",
-		      "style": "dot",
-		      "mathml": "<mi>A</mi>",
-		      "position": 3
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6260dd813b89d59e
-	// Question: Place −A on a number line
-	// Widget key: nl_choice_c
-	test("number-line - [x6260dd813b89d59e] Place −A on a number line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 8,
-		  "min": -8,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 2
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#ffa500",
-		      "style": "dot",
-		      "mathml": "<mo>-</mo><mi>A</mi>",
-		      "position": 3
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf24d398f5541a761
-	// Question: Locate the opposite of a number on a number line
-	// Widget key: nl_choice_a
-	test("number-line - [xf24d398f5541a761] Locate the opposite of a number on a number line (1)", async () => {
+	// Extracted from question: x6d35fcf1b7fa9959
+	// Question: Place −C on a number line
+	// Widget key: number_line_choice_a
+	test("number-line - [x6d35fcf1b7fa9959] Place −C on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -9705,9 +10373,9 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#ffa500",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mi>F</mi>",
+		      "mathml": "<mo>-</mo><mi>C</mi>",
 		      "position": 0.5
 		    }
 		  ],
@@ -9729,18 +10397,20 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xf24d398f5541a761
-	// Question: Locate the opposite of a number on a number line
-	// Widget key: nl_choice_b
-	test("number-line - [xf24d398f5541a761] Locate the opposite of a number on a number line (2)", async () => {
+	// Extracted from question: x6d35fcf1b7fa9959
+	// Question: Place −C on a number line
+	// Widget key: number_line_choice_b
+	test("number-line - [x6d35fcf1b7fa9959] Place −C on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -9750,9 +10420,9 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#ffa500",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mi>F</mi>",
+		      "mathml": "<mo>-</mo><mi>C</mi>",
 		      "position": -0.5
 		    }
 		  ],
@@ -9774,18 +10444,20 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xf24d398f5541a761
-	// Question: Locate the opposite of a number on a number line
-	// Widget key: nl_choice_c
-	test("number-line - [xf24d398f5541a761] Locate the opposite of a number on a number line (3)", async () => {
+	// Extracted from question: x6d35fcf1b7fa9959
+	// Question: Place −C on a number line
+	// Widget key: number_line_choice_c
+	test("number-line - [x6d35fcf1b7fa9959] Place −C on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -9795,10 +10467,10 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#ffa500",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mi>F</mi>",
-		      "position": 1.5
+		      "mathml": "<mo>-</mo><mi>C</mi>",
+		      "position": -1
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -9819,18 +10491,170 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x6260dd813b89d59e
+	// Question: Locate −A on a number line
+	// Widget key: number_line_choice_a
+	test("number-line - [x6260dd813b89d59e] Locate −A on a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 8,
+		  "min": -8,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 2
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#6495ed",
+		      "style": "dot",
+		      "mathml": "<mi>A</mi>",
+		      "position": 3
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6260dd813b89d59e
+	// Question: Locate −A on a number line
+	// Widget key: number_line_choice_b
+	test("number-line - [x6260dd813b89d59e] Locate −A on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 8,
+		  "min": -8,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 2
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#ffa500",
+		      "style": "dot",
+		      "mathml": "<mo>-</mo><mi>A</mi>",
+		      "position": -3
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6260dd813b89d59e
+	// Question: Locate −A on a number line
+	// Widget key: number_line_choice_c
+	test("number-line - [x6260dd813b89d59e] Locate −A on a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 8,
+		  "min": -8,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 2
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#ffa500",
+		      "style": "dot",
+		      "mathml": "<mo>-</mo><mi>A</mi>",
+		      "position": 3
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: xbaadddeb
-	// Question: Point representing -(-10) on a number line
+	// Question: Identify a point for a double negative on a number line
 	// Widget key: image_1
-	test("number-line - [xbaadddeb] Point representing -(-10) on a number line", async () => {
+	test("number-line - [xbaadddeb] Identify a point for a double negative on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -9893,17 +10717,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x57b35c359b98a3f4
-	// Question: Find −D on the number line
+	// Question: Find the value of -D on the number line
 	// Widget key: image_1
-	test("number-line - [x57b35c359b98a3f4] Find −D on the number line", async () => {
+	test("number-line - [x57b35c359b98a3f4] Find the value of -D on the number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -9938,17 +10764,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc527646af4c9351b
-	// Question: Find the opposite on a number line
+	// Question: Find the opposite of a point on a number line
 	// Widget key: image_1
-	test("number-line - [xc527646af4c9351b] Find the opposite on a number line", async () => {
+	test("number-line - [xc527646af4c9351b] Find the opposite of a point on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 0.6,
 		  "min": -0.6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -9958,7 +10786,7 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ed",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "mathml": "<mi>F</mi>",
 		      "position": -0.4
@@ -9983,36 +10811,35 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x4258e7f78f578111
-	// Question: Place the point for -(-B) on a number line
-	// Widget key: number_line_choice_a
-	test("number-line - [x4258e7f78f578111] Place the point for -(-B) on a number line (1)", async () => {
+	// Question: Select the location of -(-B) on a number line
+	// Widget key: nl_choice_a
+	test("number-line - [x4258e7f78f578111] Select the location of -(-B) on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 2
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#F39C12",
+		      "color": "#E67E22",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mrow><mo>(</mo><mo>-</mo><mi>B</mi><mo>)</mo></mrow>",
+		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>B</mi><mo>)</mo>",
 		      "position": 3
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -10031,21 +10858,23 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x4258e7f78f578111
-	// Question: Place the point for -(-B) on a number line
-	// Widget key: number_line_choice_b
-	test("number-line - [x4258e7f78f578111] Place the point for -(-B) on a number line (2)", async () => {
+	// Question: Select the location of -(-B) on a number line
+	// Widget key: nl_choice_b
+	test("number-line - [x4258e7f78f578111] Select the location of -(-B) on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 2
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
@@ -10053,14 +10882,11 @@ describe("numberLine widget tests", () => {
 		      "type": "mathml",
 		      "color": "#F39C12",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mrow><mo>(</mo><mo>-</mo><mi>B</mi><mo>)</mo></mrow>",
+		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>B</mi><mo>)</mo>",
 		      "position": -3
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -10079,36 +10905,35 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x4258e7f78f578111
-	// Question: Place the point for -(-B) on a number line
-	// Widget key: number_line_choice_c
-	test("number-line - [x4258e7f78f578111] Place the point for -(-B) on a number line (3)", async () => {
+	// Question: Select the location of -(-B) on a number line
+	// Widget key: nl_choice_c
+	test("number-line - [x4258e7f78f578111] Select the location of -(-B) on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 2
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#F39C12",
+		      "color": "#2ECC71",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mrow><mo>(</mo><mo>-</mo><mi>B</mi><mo>)</mo></mrow>",
+		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>B</mi><mo>)</mo>",
 		      "position": 0
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -10127,17 +10952,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf3d9cc00e32d464f
-	// Question: Find the opposite of a labeled point on a number line
+	// Question: Find the value of -A on a number line
 	// Widget key: image_1
-	test("number-line - [xf3d9cc00e32d464f] Find the opposite of a labeled point on a number line", async () => {
+	test("number-line - [xf3d9cc00e32d464f] Find the value of -A on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -10172,17 +10999,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb258023ca47a4510
-	// Question: Find the value of -(-D) from the number line
+	// Question: Evaluate -(-D) on a number line
 	// Widget key: image_1
-	test("number-line - [xb258023ca47a4510] Find the value of -(-D) from the number line", async () => {
+	test("number-line - [xb258023ca47a4510] Evaluate -(-D) on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -10217,21 +11046,73 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc1ac295ed6fa5fa1
-	// Question: Locate the opposite number on a number line
+	// Question: Identify the location of −A on a number line
 	// Widget key: nl_choice_a
-	test("number-line - [xc1ac295ed6fa5fa1] Locate the opposite number on a number line (1)", async () => {
+	test("number-line - [xc1ac295ed6fa5fa1] Identify the location of −A on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
+		    "interval": 2
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#E67E22",
+		      "style": "dot",
+		      "mathml": "<mo>-</mo><mi>A</mi>",
+		      "position": -2
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "whole",
 		    "interval": 1
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc1ac295ed6fa5fa1
+	// Question: Identify the location of −A on a number line
+	// Widget key: nl_choice_b
+	test("number-line - [xc1ac295ed6fa5fa1] Identify the location of −A on a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 8,
+		  "min": -8,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 2
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
@@ -10243,52 +11124,10 @@ describe("numberLine widget tests", () => {
 		      "position": 0
 		    }
 		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc1ac295ed6fa5fa1
-	// Question: Locate the opposite number on a number line
-	// Widget key: nl_choice_b
-	test("number-line - [xc1ac295ed6fa5fa1] Locate the opposite number on a number line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 8,
-		  "min": -8,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
+		  "secondaryTickInterval": {
 		    "type": "whole",
 		    "interval": 1
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#0066CC",
-		      "style": "dot",
-		      "mathml": "<mi>A</mi>",
-		      "position": 0
-		    }
-		  ],
-		  "secondaryTickInterval": null
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -10307,33 +11146,38 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xc1ac295ed6fa5fa1
-	// Question: Locate the opposite number on a number line
+	// Question: Identify the location of −A on a number line
 	// Widget key: nl_choice_c
-	test("number-line - [xc1ac295ed6fa5fa1] Locate the opposite number on a number line (3)", async () => {
+	test("number-line - [xc1ac295ed6fa5fa1] Identify the location of −A on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 1
+		    "interval": 2
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#8E44AD",
+		      "color": "#E67E22",
 		      "style": "dot",
 		      "mathml": "<mo>-</mo><mi>A</mi>",
-		      "position": 3
+		      "position": 2
 		    }
 		  ],
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -10352,17 +11196,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0a5a1f1a80352070
-	// Question: Locate −E on a number line
+	// Question: Identify −E on a number line
 	// Widget key: nl_choice_a
-	test("number-line - [x0a5a1f1a80352070] Locate −E on a number line (1)", async () => {
+	test("number-line - [x0a5a1f1a80352070] Identify −E on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -10372,7 +11218,7 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#E67E22",
+		      "color": "#F39C12",
 		      "style": "dot",
 		      "mathml": "<mo>-</mo><mi>E</mi>",
 		      "position": 2.5
@@ -10400,17 +11246,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0a5a1f1a80352070
-	// Question: Locate −E on a number line
+	// Question: Identify −E on a number line
 	// Widget key: nl_choice_b
-	test("number-line - [x0a5a1f1a80352070] Locate −E on a number line (2)", async () => {
+	test("number-line - [x0a5a1f1a80352070] Identify −E on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -10420,7 +11268,7 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#E67E22",
+		      "color": "#F39C12",
 		      "style": "dot",
 		      "mathml": "<mo>-</mo><mi>E</mi>",
 		      "position": -2.5
@@ -10448,17 +11296,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0a5a1f1a80352070
-	// Question: Locate −E on a number line
+	// Question: Identify −E on a number line
 	// Widget key: nl_choice_c
-	test("number-line - [x0a5a1f1a80352070] Locate −E on a number line (3)", async () => {
+	test("number-line - [x0a5a1f1a80352070] Identify −E on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -10468,10 +11318,10 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#E67E22",
+		      "color": "#F39C12",
 		      "style": "dot",
 		      "mathml": "<mo>-</mo><mi>E</mi>",
-		      "position": -3
+		      "position": -2
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -10495,18 +11345,62 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x0a5a1f1a80352070
+	// Question: Identify −E on a number line
+	// Widget key: number_line_initial
+	test("number-line - [x0a5a1f1a80352070] Identify −E on a number line (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 4,
+		  "min": -4,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": null,
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 2
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: xbccdde0de8c444be
-	// Question: Select the position of -(-B) on a number line
+	// Question: Locate −(−B) on a number line
 	// Widget key: number_line_choice_a
-	test("number-line - [xbccdde0de8c444be] Select the position of -(-B) on a number line (1)", async () => {
+	test("number-line - [xbccdde0de8c444be] Locate −(−B) on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -10518,7 +11412,7 @@ describe("numberLine widget tests", () => {
 		      "type": "mathml",
 		      "color": "#E67E22",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mrow><mo>(</mo><mo>-</mo><mi>B</mi><mo>)</mo></mrow>",
+		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>B</mi><mo>)</mo>",
 		      "position": 0
 		    }
 		  ],
@@ -10541,17 +11435,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbccdde0de8c444be
-	// Question: Select the position of -(-B) on a number line
+	// Question: Locate −(−B) on a number line
 	// Widget key: number_line_choice_b
-	test("number-line - [xbccdde0de8c444be] Select the position of -(-B) on a number line (2)", async () => {
+	test("number-line - [xbccdde0de8c444be] Locate −(−B) on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -10563,7 +11459,7 @@ describe("numberLine widget tests", () => {
 		      "type": "mathml",
 		      "color": "#E67E22",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mrow><mo>(</mo><mo>-</mo><mi>B</mi><mo>)</mo></mrow>",
+		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>B</mi><mo>)</mo>",
 		      "position": 1
 		    }
 		  ],
@@ -10586,17 +11482,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbccdde0de8c444be
-	// Question: Select the position of -(-B) on a number line
+	// Question: Locate −(−B) on a number line
 	// Widget key: number_line_choice_c
-	test("number-line - [xbccdde0de8c444be] Select the position of -(-B) on a number line (3)", async () => {
+	test("number-line - [xbccdde0de8c444be] Locate −(−B) on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -10608,7 +11506,7 @@ describe("numberLine widget tests", () => {
 		      "type": "mathml",
 		      "color": "#E67E22",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mrow><mo>(</mo><mo>-</mo><mi>B</mi><mo>)</mo></mrow>",
+		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>B</mi><mo>)</mo>",
 		      "position": -1
 		    }
 		  ],
@@ -10631,17 +11529,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5c584447c7fbea75
-	// Question: Find −E on the number line
+	// Question: Find the opposite of E on the number line
 	// Widget key: image_1
-	test("number-line - [x5c584447c7fbea75] Find −E on the number line", async () => {
+	test("number-line - [x5c584447c7fbea75] Find the opposite of E on the number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 0.6,
 		  "min": -0.6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -10678,15 +11578,17 @@ describe("numberLine widget tests", () => {
 	// Extracted from question: xf70235524a56eeb0
 	// Question: Locate -(-D) on a number line
 	// Widget key: number_line_choice_a
-	test("number-line - [xf70235524a56eeb0] Locate -(-D) on a number line (1)", async () => {
+	test("number-line - [xf70235524a56eeb0] Locate -(-D) on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -10696,9 +11598,9 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#E67E22",
+		      "color": "#f39c12",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>D</mi><mo>)</mo>",
+		      "mathml": "<mrow><mo>-</mo><mo>(</mo><mo>-</mo><mi>D</mi><mo>)</mo></mrow>",
 		      "position": -0.5
 		    }
 		  ],
@@ -10723,15 +11625,17 @@ describe("numberLine widget tests", () => {
 	// Extracted from question: xf70235524a56eeb0
 	// Question: Locate -(-D) on a number line
 	// Widget key: number_line_choice_b
-	test("number-line - [xf70235524a56eeb0] Locate -(-D) on a number line (2)", async () => {
+	test("number-line - [xf70235524a56eeb0] Locate -(-D) on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -10741,9 +11645,9 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#E67E22",
+		      "color": "#f39c12",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>D</mi><mo>)</mo>",
+		      "mathml": "<mrow><mo>-</mo><mo>(</mo><mo>-</mo><mi>D</mi><mo>)</mo></mrow>",
 		      "position": 0.5
 		    }
 		  ],
@@ -10768,15 +11672,17 @@ describe("numberLine widget tests", () => {
 	// Extracted from question: xf70235524a56eeb0
 	// Question: Locate -(-D) on a number line
 	// Widget key: number_line_choice_c
-	test("number-line - [xf70235524a56eeb0] Locate -(-D) on a number line (3)", async () => {
+	test("number-line - [xf70235524a56eeb0] Locate -(-D) on a number line (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -10786,10 +11692,10 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#E67E22",
+		      "color": "#f39c12",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>D</mi><mo>)</mo>",
-		      "position": 1
+		      "mathml": "<mrow><mo>-</mo><mo>(</mo><mo>-</mo><mi>D</mi><mo>)</mo></mrow>",
+		      "position": 0
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -10811,17 +11717,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xd2a3d7af
-	// Question: Identify the point representing -(-2) on a number line
+	// Question: Identify the point for -(-2) on a number line
 	// Widget key: image_1
-	test("number-line - [xd2a3d7af] Identify the point representing -(-2) on a number line", async () => {
+	test("number-line - [xd2a3d7af] Identify the point for -(-2) on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -10893,8 +11801,10 @@ describe("numberLine widget tests", () => {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 120,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -10903,11 +11813,13 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
-		      "type": "mathml",
-		      "color": "#E67E22",
+		      "sign": "+",
+		      "type": "fraction",
+		      "color": "#6495ed",
 		      "style": "dot",
-		      "mathml": "<mo>•</mo>",
-		      "position": -3.5
+		      "position": 3.5,
+		      "numerator": 7,
+		      "denominator": 2
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -10941,8 +11853,10 @@ describe("numberLine widget tests", () => {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 120,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -10951,11 +11865,13 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
-		      "type": "mathml",
-		      "color": "#E67E22",
+		      "sign": "-",
+		      "type": "fraction",
+		      "color": "#6495ed",
 		      "style": "dot",
-		      "mathml": "<mo>•</mo>",
-		      "position": 3.5
+		      "position": -3.5,
+		      "numerator": 7,
+		      "denominator": 2
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -10989,8 +11905,10 @@ describe("numberLine widget tests", () => {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 120,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -10999,11 +11917,12 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
-		      "type": "mathml",
-		      "color": "#E67E22",
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#6495ed",
 		      "style": "dot",
-		      "mathml": "<mo>•</mo>",
-		      "position": 2.5
+		      "value": 3,
+		      "position": 3
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -11028,17 +11947,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x48c1bee527871e57
-	// Question: Identify −D on the number line
-	// Widget key: choice_a_number_line
-	test("number-line - [x48c1bee527871e57] Identify −D on the number line (1)", async () => {
+	// Question: Locate the opposite on a number line
+	// Widget key: nl_choice_a
+	test("number-line - [x48c1bee527871e57] Locate the opposite on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -11048,9 +11969,9 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#ffa500",
+		      "color": "#6495ed",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mi>D</mi>",
+		      "mathml": "<mi>D</mi>",
 		      "position": -1.5
 		    }
 		  ],
@@ -11073,17 +11994,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x48c1bee527871e57
-	// Question: Identify −D on the number line
-	// Widget key: choice_b_number_line
-	test("number-line - [x48c1bee527871e57] Identify −D on the number line (2)", async () => {
+	// Question: Locate the opposite on a number line
+	// Widget key: nl_choice_b
+	test("number-line - [x48c1bee527871e57] Locate the opposite on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -11118,17 +12041,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x48c1bee527871e57
-	// Question: Identify −D on the number line
-	// Widget key: choice_c_number_line
-	test("number-line - [x48c1bee527871e57] Identify −D on the number line (3)", async () => {
+	// Question: Locate the opposite on a number line
+	// Widget key: nl_choice_c
+	test("number-line - [x48c1bee527871e57] Locate the opposite on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -11141,7 +12066,7 @@ describe("numberLine widget tests", () => {
 		      "color": "#ffa500",
 		      "style": "dot",
 		      "mathml": "<mo>-</mo><mi>D</mi>",
-		      "position": 0.5
+		      "position": -1.5
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -11163,17 +12088,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x71fd721566a5360d
-	// Question: Value of negative C on a number line
+	// Question: Find the opposite of a labeled point on a number line
 	// Widget key: image_1
-	test("number-line - [x71fd721566a5360d] Value of negative C on a number line", async () => {
+	test("number-line - [x71fd721566a5360d] Find the opposite of a labeled point on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -11208,36 +12135,35 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8fa3e41ee11413a6
-	// Question: Locate −(−A) on a number line
-	// Widget key: number_line_choice_a
-	test("number-line - [x8fa3e41ee11413a6] Locate −(−A) on a number line (1)", async () => {
+	// Question: Identify −(−A) on a number line
+	// Widget key: nl_choice_a
+	test("number-line - [x8fa3e41ee11413a6] Identify −(−A) on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 2
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#E67E22",
+		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>A</mi><mo>)</mo>",
+		      "mathml": "<mrow><mo>-</mo><mo>(</mo><mo>-</mo><mi>A</mi><mo>)</mo></mrow>",
 		      "position": 5
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -11256,36 +12182,35 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8fa3e41ee11413a6
-	// Question: Locate −(−A) on a number line
-	// Widget key: number_line_choice_b
-	test("number-line - [x8fa3e41ee11413a6] Locate −(−A) on a number line (2)", async () => {
+	// Question: Identify −(−A) on a number line
+	// Widget key: nl_choice_b
+	test("number-line - [x8fa3e41ee11413a6] Identify −(−A) on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 2
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#E67E22",
+		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>A</mi><mo>)</mo>",
+		      "mathml": "<mrow><mo>-</mo><mo>(</mo><mo>-</mo><mi>A</mi><mo>)</mo></mrow>",
 		      "position": -5
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -11304,36 +12229,35 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8fa3e41ee11413a6
-	// Question: Locate −(−A) on a number line
-	// Widget key: number_line_choice_c
-	test("number-line - [x8fa3e41ee11413a6] Locate −(−A) on a number line (3)", async () => {
+	// Question: Identify −(−A) on a number line
+	// Widget key: nl_choice_c
+	test("number-line - [x8fa3e41ee11413a6] Identify −(−A) on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 2
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#E67E22",
+		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>A</mi><mo>)</mo>",
+		      "mathml": "<mrow><mo>-</mo><mo>(</mo><mo>-</mo><mi>A</mi><mo>)</mo></mrow>",
 		      "position": 0
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -11352,17 +12276,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xa3c11a88943b406b
-	// Question: Locate -(-C) on a number line
+	// Question: Locate −(−C) on a number line
 	// Widget key: number_line_choice_a
-	test("number-line - [xa3c11a88943b406b] Locate -(-C) on a number line (1)", async () => {
+	test("number-line - [xa3c11a88943b406b] Locate −(−C) on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -11397,17 +12323,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xa3c11a88943b406b
-	// Question: Locate -(-C) on a number line
+	// Question: Locate −(−C) on a number line
 	// Widget key: number_line_choice_b
-	test("number-line - [xa3c11a88943b406b] Locate -(-C) on a number line (2)", async () => {
+	test("number-line - [xa3c11a88943b406b] Locate −(−C) on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -11442,17 +12370,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xa3c11a88943b406b
-	// Question: Locate -(-C) on a number line
+	// Question: Locate −(−C) on a number line
 	// Widget key: number_line_choice_c
-	test("number-line - [xa3c11a88943b406b] Locate -(-C) on a number line (3)", async () => {
+	test("number-line - [xa3c11a88943b406b] Locate −(−C) on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -11465,7 +12395,7 @@ describe("numberLine widget tests", () => {
 		      "color": "#E67E22",
 		      "style": "dot",
 		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>C</mi><mo>)</mo>",
-		      "position": 0.5
+		      "position": 0
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -11487,17 +12417,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8fb40438b7f86b03
-	// Question: Evaluate a double negative on a number line
+	// Question: Evaluate -(-A) on a number line
 	// Widget key: image_1
-	test("number-line - [x8fb40438b7f86b03] Evaluate a double negative on a number line", async () => {
+	test("number-line - [x8fb40438b7f86b03] Evaluate -(-A) on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 310,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -11531,18 +12463,67 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x86b2a3e066427391
-	// Question: Evaluate a double negative on a number line
+	// Extracted from question: x39165496dae143a7
+	// Question: Evaluate a double negative from a number line
 	// Widget key: image_1
-	test("number-line - [x86b2a3e066427391] Evaluate a double negative on a number line", async () => {
+	test("number-line - [x39165496dae143a7] Evaluate a double negative from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "denominator": 2
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#6495ed",
+		      "style": "dot",
+		      "mathml": "<mi>F</mi>",
+		      "position": -1.5
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x86b2a3e066427391
+	// Question: Evaluate -(-C) from a number line
+	// Widget key: image_1
+	test("number-line - [x86b2a3e066427391] Evaluate -(-C) from a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 2,
+		  "min": -2,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -11577,17 +12558,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x62c748d6
-	// Question: Identify the point representing -(-7) on a number line
+	// Question: Point representing -(-7) on a number line
 	// Widget key: image_1
-	test("number-line - [x62c748d6] Identify the point representing -(-7) on a number line", async () => {
+	test("number-line - [x62c748d6] Point representing -(-7) on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 7,
 		  "min": -7,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -11650,21 +12633,23 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xec3627429af7b5ea
-	// Question: Evaluate -(-E) from a number line
+	// Question: Evaluate a double negative on a number line
 	// Widget key: image_1
-	test("number-line - [xec3627429af7b5ea] Evaluate -(-E) from a number line", async () => {
+	test("number-line - [xec3627429af7b5ea] Evaluate a double negative on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 0.6,
 		  "min": -0.6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 500,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 0.2
+		    "type": "fraction",
+		    "denominator": 5
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
@@ -11704,8 +12689,10 @@ describe("numberLine widget tests", () => {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -11717,8 +12704,8 @@ describe("numberLine widget tests", () => {
 		      "type": "mathml",
 		      "color": "#E67E22",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mrow><mo>(</mo><mo>-</mo><mi>F</mi><mo>)</mo></mrow>",
-		      "position": -1.5
+		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>F</mi><mo>)</mo>",
+		      "position": 1.5
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -11749,8 +12736,10 @@ describe("numberLine widget tests", () => {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -11762,8 +12751,8 @@ describe("numberLine widget tests", () => {
 		      "type": "mathml",
 		      "color": "#E67E22",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mrow><mo>(</mo><mo>-</mo><mi>F</mi><mo>)</mo></mrow>",
-		      "position": 1.5
+		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>F</mi><mo>)</mo>",
+		      "position": -1.5
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -11794,8 +12783,10 @@ describe("numberLine widget tests", () => {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -11807,8 +12798,8 @@ describe("numberLine widget tests", () => {
 		      "type": "mathml",
 		      "color": "#E67E22",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mrow><mo>(</mo><mo>-</mo><mi>F</mi><mo>)</mo></mrow>",
-		      "position": -0.5
+		      "mathml": "<mo>-</mo><mo>(</mo><mo>-</mo><mi>F</mi><mo>)</mo>",
+		      "position": 0.5
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -11830,17 +12821,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x11099043
-	// Question: Identify the point representing the opposite of negative four
+	// Question: Identify -(-4) on a number line
 	// Widget key: image_1
-	test("number-line - [x11099043] Identify the point representing the opposite of negative four", async () => {
+	test("number-line - [x11099043] Identify -(-4) on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -11903,17 +12896,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xfee6aa630d739238
-	// Question: Find the value of −B on a number line
+	// Question: Find the value of −B on the number line
 	// Widget key: image_1
-	test("number-line - [xfee6aa630d739238] Find the value of −B on a number line", async () => {
+	test("number-line - [xfee6aa630d739238] Find the value of −B on the number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -11957,8 +12952,10 @@ describe("numberLine widget tests", () => {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -11996,17 +12993,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x00cfab218d22a88e
-	// Question: Select the location of −B on a number line
-	// Widget key: number_line_choice_a
-	test("number-line - [x00cfab218d22a88e] Select the location of −B on a number line (1)", async () => {
+	// Question: Identify −B on a number line
+	// Widget key: nl_choice_a
+	test("number-line - [x00cfab218d22a88e] Identify −B on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12015,11 +13014,10 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#E67E22",
+		      "type": "mathml",
+		      "color": "#ffa500",
 		      "style": "dot",
-		      "value": 5,
+		      "mathml": "<mo>-</mo><mi>B</mi>",
 		      "position": 5
 		    }
 		  ],
@@ -12045,17 +13043,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x00cfab218d22a88e
-	// Question: Select the location of −B on a number line
-	// Widget key: number_line_choice_b
-	test("number-line - [x00cfab218d22a88e] Select the location of −B on a number line (2)", async () => {
+	// Question: Identify −B on a number line
+	// Widget key: nl_choice_b
+	test("number-line - [x00cfab218d22a88e] Identify −B on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12064,11 +13064,10 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
-		      "sign": "-",
-		      "type": "whole",
-		      "color": "#E67E22",
+		      "type": "mathml",
+		      "color": "#ffa500",
 		      "style": "dot",
-		      "value": 5,
+		      "mathml": "<mo>-</mo><mi>B</mi>",
 		      "position": -5
 		    }
 		  ],
@@ -12094,17 +13093,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x00cfab218d22a88e
-	// Question: Select the location of −B on a number line
-	// Widget key: number_line_choice_c
-	test("number-line - [x00cfab218d22a88e] Select the location of −B on a number line (3)", async () => {
+	// Question: Identify −B on a number line
+	// Widget key: nl_choice_c
+	test("number-line - [x00cfab218d22a88e] Identify −B on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12113,12 +13114,11 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#E67E22",
+		      "type": "mathml",
+		      "color": "#ffa500",
 		      "style": "dot",
-		      "value": 6,
-		      "position": 6
+		      "mathml": "<mo>-</mo><mi>B</mi>",
+		      "position": 4
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -12143,17 +13143,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb6d191d1
-	// Question: Which point represents −(−5) on the number line?
+	// Question: Identify −(−5) on a number line
 	// Widget key: image_1
-	test("number-line - [xb6d191d1] Which point represents −(−5) on the number line?", async () => {
+	test("number-line - [xb6d191d1] Identify −(−5) on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12215,18 +13217,20 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x000308979d33050b
-	// Question: Match expressions to descriptions using a number line
+	// Extracted from question: x33814e542c5816f3
+	// Question: Complete an inequality from a number line
 	// Widget key: image_1
-	test("number-line - [x000308979d33050b] Match expressions to descriptions using a number line", async () => {
+	test("number-line - [x33814e542c5816f3] Complete an inequality from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 5,
-		  "min": -5,
+		  "max": 2,
+		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 180,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12236,17 +13240,10 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#11accd",
+		      "color": "#6495ED",
 		      "style": "dot",
-		      "mathml": "<mi>n</mi>",
-		      "position": -4
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#11accd",
-		      "style": "dot",
-		      "mathml": "<mi>q</mi>",
-		      "position": -1
+		      "mathml": "<mi>a</mi>",
+		      "position": -1.2
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -12268,17 +13265,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x50acca2c9e26425c
-	// Question: Identify which expression is negative
+	// Question: Identify a negative expression from a number line
 	// Widget key: image_1
-	test("number-line - [x50acca2c9e26425c] Identify which expression is negative", async () => {
+	test("number-line - [x50acca2c9e26425c] Identify a negative expression from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 69,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12320,23 +13319,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x2630a00bc0919ed9
-	// Question: Order expressions using a number line
+	// Question: Order expressions from a number line
 	// Widget key: image_1
-	test("number-line - [x2630a00bc0919ed9] Order expressions using a number line", async () => {
+	test("number-line - [x2630a00bc0919ed9] Order expressions from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 69,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -12379,17 +13380,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x2847e4fed7c1c79f
-	// Question: Identify a negative expression on a number line
+	// Question: Choose the negative expression from a number line
 	// Widget key: image_1
-	test("number-line - [x2847e4fed7c1c79f] Identify a negative expression on a number line", async () => {
+	test("number-line - [x2847e4fed7c1c79f] Choose the negative expression from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 1.2,
+		  "max": 1.3,
 		  "min": -1.8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 69,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12440,8 +13443,10 @@ describe("numberLine widget tests", () => {
 		  "max": 2.6,
 		  "min": -3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12482,24 +13487,80 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9762a96d6ed72ffb
-	// Question: Order expressions using a number line
+	// Extracted from question: x000308979d33050b
+	// Question: Match expressions to descriptions on a number line
 	// Widget key: image_1
-	test("number-line - [x9762a96d6ed72ffb] Order expressions using a number line", async () => {
+	test("number-line - [x000308979d33050b] Match expressions to descriptions on a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "mathml": "<mi>n</mi>",
+		      "position": -4
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "mathml": "<mi>q</mi>",
+		      "position": -1
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9762a96d6ed72ffb
+	// Question: Order expressions by value using a number line
+	// Widget key: image_1
+	test("number-line - [x9762a96d6ed72ffb] Order expressions by value using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 3
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -12537,63 +13598,20 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x33814e542c5816f3
-	// Question: Complete an inequality from a number line
-	// Widget key: image_1
-	test("number-line - [x33814e542c5816f3] Complete an inequality from a number line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 2,
-		  "min": -2,
-		  "type": "numberLine",
-		  "width": 460,
-		  "height": 69,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#6495ed",
-		      "style": "dot",
-		      "mathml": "<mi>a</mi>",
-		      "position": -1.2
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x0b7d83ae9dcba640
-	// Question: Order expressions using a vertical number line
+	// Question: Order expressions from a number line
 	// Widget key: image_1
-	test("number-line - [x0b7d83ae9dcba640] Order expressions using a vertical number line", async () => {
+	test("number-line - [x0b7d83ae9dcba640] Order expressions from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -1,
 		  "type": "numberLine",
-		  "width": 115,
-		  "height": 240,
+		  "model": null,
+		  "width": 350,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12613,14 +13631,14 @@ describe("numberLine widget tests", () => {
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>k</mi>",
-		      "position": 0.4
+		      "position": 0.3
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>l</mi>",
-		      "position": -0.25
+		      "position": -0.1
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -12645,17 +13663,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xd874b91d7e96e8e4
-	// Question: Order expressions on a vertical number line
+	// Question: Order expressions from least to greatest
 	// Widget key: image_1
-	test("number-line - [xd874b91d7e96e8e4] Order expressions on a vertical number line", async () => {
+	test("number-line - [xd874b91d7e96e8e4] Order expressions from least to greatest", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -1,
 		  "type": "numberLine",
-		  "width": 77,
-		  "height": 240,
+		  "model": null,
+		  "width": 350,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12700,17 +13720,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x9b7d923e5f168763
-	// Question: Match expressions with descriptions on a number line
+	// Question: Match expressions to descriptions on a number line
 	// Widget key: image_1
-	test("number-line - [x9b7d923e5f168763] Match expressions with descriptions on a number line", async () => {
+	test("number-line - [x9b7d923e5f168763] Match expressions to descriptions on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
-		  "width": 77,
-		  "height": 240,
+		  "model": null,
+		  "width": 350,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12761,8 +13783,10 @@ describe("numberLine widget tests", () => {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 70,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12772,14 +13796,14 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#11accd",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>r</mi>",
 		      "position": -1.6
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#11accd",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>s</mi>",
 		      "position": 2.6
@@ -12804,17 +13828,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x98cd49b5121e21de
-	// Question: Identify a negative expression from a number line
+	// Question: Which expression is negative?
 	// Widget key: image_1
-	test("number-line - [x98cd49b5121e21de] Identify a negative expression from a number line", async () => {
+	test("number-line - [x98cd49b5121e21de] Which expression is negative?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1.8,
-		  "min": -1,
+		  "min": -1.2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12856,17 +13882,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0ef6d2b4c68519d9
-	// Question: Complete an inequality using a dropdown
+	// Question: Complete an inequality by subtracting a negative
 	// Widget key: image_1
-	test("number-line - [x0ef6d2b4c68519d9] Complete an inequality using a dropdown", async () => {
+	test("number-line - [x0ef6d2b4c68519d9] Complete an inequality by subtracting a negative", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 4,
-		  "min": -4,
+		  "max": 3,
+		  "min": -3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12879,14 +13907,14 @@ describe("numberLine widget tests", () => {
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>a</mi>",
-		      "position": -3.3
+		      "position": -2.488
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>b</mi>",
-		      "position": 1.6
+		      "position": 1.196
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -12908,17 +13936,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x702a90a60fbd1dc3
-	// Question: Match expressions by value using a number line
+	// Question: Match expressions to descriptions on a number line
 	// Widget key: image_1
-	test("number-line - [x702a90a60fbd1dc3] Match expressions by value using a number line", async () => {
+	test("number-line - [x702a90a60fbd1dc3] Match expressions to descriptions on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -12931,7 +13961,7 @@ describe("numberLine widget tests", () => {
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>r</mi>",
-		      "position": -6
+		      "position": -6.1
 		    },
 		    {
 		      "type": "mathml",
@@ -12960,23 +13990,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xea0a8e5dd711d5b9
-	// Question: Order expressions using a number line
+	// Question: Order expressions from a number line
 	// Widget key: image_1
-	test("number-line - [xea0a8e5dd711d5b9] Order expressions using a number line", async () => {
+	test("number-line - [xea0a8e5dd711d5b9] Order expressions from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 5,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 69,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -13019,23 +14051,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb9bdb7b805d3221d
-	// Question: Match expressions to descriptions on a number line
+	// Question: Match expressions to descriptions using a number line
 	// Widget key: image_1
-	test("number-line - [xb9bdb7b805d3221d] Match expressions to descriptions on a number line", async () => {
+	test("number-line - [xb9bdb7b805d3221d] Match expressions to descriptions using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 69,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -13071,17 +14105,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5207f2836aa03b35
-	// Question: Complete an inequality using a number line
+	// Question: Compare expressions from a number line
 	// Widget key: image_1
-	test("number-line - [x5207f2836aa03b35] Complete an inequality using a number line", async () => {
+	test("number-line - [x5207f2836aa03b35] Compare expressions from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 1.8,
-		  "min": -1.8,
+		  "max": 1.5,
+		  "min": -1.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 69,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -13091,17 +14127,17 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>b</mi>",
 		      "position": -1.2
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>a</mi>",
-		      "position": 0.45
+		      "position": 0.5
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -13123,17 +14159,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb441fe35e6768bcd
-	// Question: Complete an inequality from a number line
+	// Question: Complete the inequality for a + b and a − b
 	// Widget key: image_1
-	test("number-line - [xb441fe35e6768bcd] Complete an inequality from a number line", async () => {
+	test("number-line - [xb441fe35e6768bcd] Complete the inequality for a + b and a − b", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -1,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 68.51,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -13145,15 +14183,15 @@ describe("numberLine widget tests", () => {
 		      "type": "mathml",
 		      "color": "#6495ed",
 		      "style": "dot",
-		      "mathml": "<mi>a</mi>",
-		      "position": 0.9
+		      "mathml": "<mi>b</mi>",
+		      "position": -0.4
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#6495ed",
 		      "style": "dot",
-		      "mathml": "<mi>b</mi>",
-		      "position": -0.4
+		      "mathml": "<mi>a</mi>",
+		      "position": 0.9
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -13184,8 +14222,10 @@ describe("numberLine widget tests", () => {
 		  "max": 8,
 		  "min": -4,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -13195,14 +14235,14 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>a</mi>",
-		      "position": 6.2
+		      "position": 6.3
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>b</mi>",
 		      "position": -3.7
@@ -13227,17 +14267,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb698e113e751422f
-	// Question: Complete the inequality using a dropdown
+	// Question: Complete an inequality with a dropdown
 	// Widget key: image_1
-	test("number-line - [xb698e113e751422f] Complete the inequality using a dropdown", async () => {
+	test("number-line - [xb698e113e751422f] Complete an inequality with a dropdown", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1.5,
 		  "min": -1.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 180,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -13271,18 +14313,74 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9122705c9e43fac7
-	// Question: Determine the sign of m to the 13th times n to the 5th
+	// Extracted from question: x18d8a36dc05bc413
+	// Question: Determine the sign of f³·(−g)³
 	// Widget key: image_1
-	test("number-line - [x9122705c9e43fac7] Determine the sign of m to the 13th times n to the 5th", async () => {
+	test("number-line - [x18d8a36dc05bc413] Determine the sign of f³·(−g)³", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 2.5,
-		  "min": -1.5,
+		  "max": 2,
+		  "min": 0,
 		  "type": "numberLine",
+		  "model": null,
+		  "width": 320,
+		  "height": 400,
+		  "segments": null,
+		  "orientation": "vertical",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#6495ed",
+		      "style": "dot",
+		      "mathml": "<mi>g</mi>",
+		      "position": 0.35
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#6495ed",
+		      "style": "dot",
+		      "mathml": "<mi>f</mi>",
+		      "position": 1.3
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9122705c9e43fac7
+	// Question: Sign of a product with odd exponents
+	// Widget key: image_1
+	test("number-line - [x9122705c9e43fac7] Sign of a product with odd exponents", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 2.8,
+		  "min": -1.2,
+		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -13295,7 +14393,7 @@ describe("numberLine widget tests", () => {
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>m</mi>",
-		      "position": -1.3
+		      "position": -1.1
 		    },
 		    {
 		      "type": "mathml",
@@ -13323,19 +14421,21 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x18d8a36dc05bc413
-	// Question: Determine the sign of a product of cubes
+	// Extracted from question: x9ed54989cf2d075f
+	// Question: Determine the sign of an expression
 	// Widget key: image_1
-	test("number-line - [x18d8a36dc05bc413] Determine the sign of a product of cubes", async () => {
+	test("number-line - [x9ed54989cf2d075f] Determine the sign of an expression", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 2,
-		  "min": 0,
+		  "max": 2.2,
+		  "min": -1.8,
 		  "type": "numberLine",
-		  "width": 125,
-		  "height": 240,
-		  "orientation": "vertical",
+		  "model": null,
+		  "width": 460,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
@@ -13346,15 +14446,15 @@ describe("numberLine widget tests", () => {
 		      "type": "mathml",
 		      "color": "#6495ed",
 		      "style": "dot",
-		      "mathml": "<mi>g</mi>",
-		      "position": 0.3
+		      "mathml": "<mi>m</mi>",
+		      "position": -1.5
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#6495ed",
 		      "style": "dot",
-		      "mathml": "<mi>f</mi>",
-		      "position": 1.8
+		      "mathml": "<mi>n</mi>",
+		      "position": 0.7
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -13385,8 +14485,10 @@ describe("numberLine widget tests", () => {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
-		  "width": 125,
-		  "height": 240,
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -13396,14 +14498,14 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>c</mi>",
 		      "position": -2
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>d</mi>",
 		      "position": 2
@@ -13427,19 +14529,21 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9ed54989cf2d075f
-	// Question: Determine the sign of an expression
+	// Extracted from question: x2ac97a878f373aac
+	// Question: Sign of a product with zero
 	// Widget key: image_1
-	test("number-line - [x9ed54989cf2d075f] Determine the sign of an expression", async () => {
+	test("number-line - [x2ac97a878f373aac] Sign of a product with zero", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 2.1,
-		  "min": -1.9,
+		  "max": 2,
+		  "min": -2,
 		  "type": "numberLine",
-		  "width": 460,
-		  "height": 69,
-		  "orientation": "horizontal",
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
+		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
@@ -13448,72 +14552,23 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
-		      "style": "dot",
-		      "mathml": "<mi>m</mi>",
-		      "position": -1.6
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#6495ED",
-		      "style": "dot",
-		      "mathml": "<mi>n</mi>",
-		      "position": 0.65
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2ac97a878f373aac
-	// Question: Determine the sign of an expression
-	// Widget key: image_1
-	test("number-line - [x2ac97a878f373aac] Determine the sign of an expression", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 2,
-		  "min": -2,
-		  "type": "numberLine",
-		  "width": 125,
-		  "height": 240,
-		  "orientation": "vertical",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>c</mi>",
 		      "position": -1.5
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>b</mi>",
 		      "position": 0.5
 		    }
 		  ],
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "denominator": 2
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -13532,17 +14587,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x06c9ebc30b95bc5c
-	// Question: Determine the sign of a product
+	// Question: Sign of a product from a number line
 	// Widget key: image_1
-	test("number-line - [x06c9ebc30b95bc5c] Determine the sign of a product", async () => {
+	test("number-line - [x06c9ebc30b95bc5c] Sign of a product from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -7,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 69,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -13552,17 +14609,17 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>a</mi>",
 		      "position": 0
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>b</mi>",
-		      "position": -5.75
+		      "position": -5.76
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -13584,41 +14641,26 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x63be039102b62a98
-	// Question: Select all correct inequalities
+	// Question: Choose all correct inequalities
 	// Widget key: image_1
-	test("number-line - [x63be039102b62a98] Select all correct inequalities", async () => {
+	test("number-line - [x63be039102b62a98] Choose all correct inequalities", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "sign": "-",
-		      "type": "whole",
-		      "color": "#ff00af",
-		      "style": "dot",
-		      "value": 5,
-		      "position": -5
-		    },
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#6495ed",
-		      "style": "dot",
-		      "value": 7,
-		      "position": 7
-		    }
-		  ],
+		  "showTickLabels": true,
+		  "highlightedPoints": null,
 		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
@@ -13647,8 +14689,10 @@ describe("numberLine widget tests", () => {
 		  "max": 1,
 		  "min": -1,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -13659,7 +14703,7 @@ describe("numberLine widget tests", () => {
 		    {
 		      "sign": "-",
 		      "type": "fraction",
-		      "color": "#0066CC",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "position": -0.75,
 		      "numerator": 3,
@@ -13668,7 +14712,7 @@ describe("numberLine widget tests", () => {
 		    {
 		      "sign": "+",
 		      "type": "fraction",
-		      "color": "#E67E22",
+		      "color": "#ff00af",
 		      "style": "dot",
 		      "position": 0.375,
 		      "numerator": 3,
@@ -13693,18 +14737,74 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x97fa696c66e0b11e
-	// Question: Select the inequalities that are true
+	// Extracted from question: x5db05ceda936c5d0
+	// Question: Select the correct inequalities from a number line
 	// Widget key: image_1
-	test("number-line - [x97fa696c66e0b11e] Select the inequalities that are true", async () => {
+	test("number-line - [x5db05ceda936c5d0] Select the correct inequalities from a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 2,
+		  "min": -2,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "denominator": 2
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#000000",
+		      "style": "dot",
+		      "mathml": "<mo>-</mo><mn>1.3</mn>",
+		      "position": -1.3
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#000000",
+		      "style": "dot",
+		      "mathml": "<mn>0.7</mn>",
+		      "position": 0.7
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x97fa696c66e0b11e
+	// Question: Select the true inequalities
+	// Widget key: image_1
+	test("number-line - [x97fa696c66e0b11e] Select the true inequalities", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 20,
 		  "min": -20,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -13748,17 +14848,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x7c61e7280f77ac6a
-	// Question: Select the correct inequalities using a number line
+	// Question: Identify correct inequalities using a number line
 	// Widget key: image_1
-	test("number-line - [x7c61e7280f77ac6a] Select the correct inequalities using a number line", async () => {
+	test("number-line - [x7c61e7280f77ac6a] Identify correct inequalities using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 100,
 		  "min": -100,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -13801,24 +14903,84 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7b49e10b83d18dbc
-	// Question: Select true inequalities using a number line
+	// Extracted from question: x96407c71318ac40a
+	// Question: Identify correct inequalities from a number line
 	// Widget key: image_1
-	test("number-line - [x7b49e10b83d18dbc] Select true inequalities using a number line", async () => {
+	test("number-line - [x96407c71318ac40a] Identify correct inequalities from a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 1,
+		  "min": -1,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "denominator": 6
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "-",
+		      "type": "fraction",
+		      "color": "#333333",
+		      "style": "dot",
+		      "position": -0.1666666667,
+		      "numerator": 1,
+		      "denominator": 6
+		    },
+		    {
+		      "sign": "+",
+		      "type": "fraction",
+		      "color": "#333333",
+		      "style": "dot",
+		      "position": 0.8333333333,
+		      "numerator": 5,
+		      "denominator": 6
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7b49e10b83d18dbc
+	// Question: Identify correct inequalities from a number line
+	// Widget key: image_1
+	test("number-line - [x7b49e10b83d18dbc] Identify correct inequalities from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -13854,17 +15016,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xd8f74c2ad290d41b
-	// Question: Sign of a product from a number line
+	// Question: Sign of the product a·b
 	// Widget key: image_1
-	test("number-line - [xd8f74c2ad290d41b] Sign of a product from a number line", async () => {
+	test("number-line - [xd8f74c2ad290d41b] Sign of the product a·b", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -8,
 		  "type": "numberLine",
-		  "width": 125,
-		  "height": 240,
+		  "model": null,
+		  "width": 320,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -13884,59 +15048,7 @@ describe("numberLine widget tests", () => {
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>b</mi>",
-		      "position": -3.6
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x946d1c1b5794c5d0
-	// Question: Determine the sign of b/c
-	// Widget key: image_1
-	test("number-line - [x946d1c1b5794c5d0] Determine the sign of b/c", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 2,
-		  "min": -2,
-		  "type": "numberLine",
-		  "width": 125,
-		  "height": 240,
-		  "orientation": "vertical",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "type": "mathml",
-		      "color": "#6495ED",
-		      "style": "dot",
-		      "mathml": "<mi>b</mi>",
-		      "position": 0.8
-		    },
-		    {
-		      "type": "mathml",
-		      "color": "#6495ED",
-		      "style": "dot",
-		      "mathml": "<mi>c</mi>",
-		      "position": -1.8
+		      "position": -3.5
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -13958,17 +15070,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x7eb0f597fff433a8
-	// Question: Determine the sign of an expression from a number line
+	// Question: Determine the sign of y·(x/y)
 	// Widget key: image_1
-	test("number-line - [x7eb0f597fff433a8] Determine the sign of an expression from a number line", async () => {
+	test("number-line - [x7eb0f597fff433a8] Determine the sign of y·(x/y)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 9,
 		  "min": -9,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 69,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -14009,18 +15123,20 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xcc1780adf5a9f187
-	// Question: Determine the sign of a·(−b)
+	// Extracted from question: x946d1c1b5794c5d0
+	// Question: Determine the sign of a quotient from a number line
 	// Widget key: image_1
-	test("number-line - [xcc1780adf5a9f187] Determine the sign of a·(−b)", async () => {
+	test("number-line - [x946d1c1b5794c5d0] Determine the sign of a quotient from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 4,
-		  "min": -4,
+		  "max": 2,
+		  "min": -2,
 		  "type": "numberLine",
-		  "width": 125,
-		  "height": 240,
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -14030,17 +15146,71 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>b</mi>",
-		      "position": -2.5
+		      "position": 0.85
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
+		      "style": "dot",
+		      "mathml": "<mi>c</mi>",
+		      "position": -1.85
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcc1780adf5a9f187
+	// Question: Sign of a·(−b) on a number line
+	// Widget key: image_1
+	test("number-line - [xcc1780adf5a9f187] Sign of a·(−b) on a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 4,
+		  "min": -4,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
+		  "orientation": "vertical",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "type": "mathml",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>a</mi>",
 		      "position": 0
+		    },
+		    {
+		      "type": "mathml",
+		      "color": "#6495ed",
+		      "style": "dot",
+		      "mathml": "<mi>b</mi>",
+		      "position": -2.5
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -14062,17 +15232,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf512502ffef902d8
-	// Question: Determine the sign of -xy
+	// Question: Sign of −xy
 	// Widget key: image_1
-	test("number-line - [xf512502ffef902d8] Determine the sign of -xy", async () => {
+	test("number-line - [xf512502ffef902d8] Sign of −xy", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 9,
 		  "min": -11,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 180,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -14114,17 +15286,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf3a72fc9244f5d0b
-	// Question: Determine the sign of y ÷ x from a number line
+	// Question: Determine the sign of y ÷ x
 	// Widget key: image_1
-	test("number-line - [xf3a72fc9244f5d0b] Determine the sign of y ÷ x from a number line", async () => {
+	test("number-line - [xf3a72fc9244f5d0b] Determine the sign of y ÷ x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -14134,14 +15308,14 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>x</mi>",
 		      "position": -1.25
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>y</mi>",
 		      "position": 0
@@ -14165,107 +15339,20 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x46737fa249a0abbc
-	// Question: Effect on mean and median after removing an outlier wage
-	// Widget key: image_1
-	test("number-line - [x46737fa249a0abbc] Effect on mean and median after removing an outlier wage", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 40,
-		  "min": 15,
-		  "type": "numberLine",
-		  "width": 320,
-		  "height": 130,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 5
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#11accd",
-		      "style": "dot",
-		      "value": 15,
-		      "position": 15
-		    },
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#11accd",
-		      "style": "dot",
-		      "value": 16,
-		      "position": 16
-		    },
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#11accd",
-		      "style": "dot",
-		      "value": 18,
-		      "position": 18
-		    },
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#11accd",
-		      "style": "dot",
-		      "value": 19,
-		      "position": 19
-		    },
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#11accd",
-		      "style": "dot",
-		      "value": 20,
-		      "position": 20
-		    },
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#a75a05",
-		      "style": "dot",
-		      "value": 40,
-		      "position": 40
-		    }
-		  ],
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xecfa7f81ad9a97f8
-	// Question: Effect of removing a high outlier on mean and median
+	// Question: Effect of removing an outlier on the mean and median
 	// Widget key: image_1
-	test("number-line - [xecfa7f81ad9a97f8] Effect of removing a high outlier on mean and median", async () => {
+	test("number-line - [xecfa7f81ad9a97f8] Effect of removing an outlier on the mean and median", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 5000,
 		  "min": 1000,
 		  "type": "numberLine",
-		  "width": 320,
-		  "height": 106,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -14336,17 +15423,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x2793302cc08c9d81
-	// Question: Identify the point closest to sqrt(97) on a number line
+	// Question: Identify the point for √97 on a number line
 	// Widget key: image_1
-	test("number-line - [x2793302cc08c9d81] Identify the point closest to sqrt(97) on a number line", async () => {
+	test("number-line - [x2793302cc08c9d81] Identify the point for √97 on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": 9.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -14395,21 +15484,23 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x69935621f216bc8c
-	// Question: Identify a point representing a square root on a number line
+	// Question: Point closest to −√52 on a number line
 	// Widget key: image_1
-	test("number-line - [x69935621f216bc8c] Identify a point representing a square root on a number line", async () => {
+	test("number-line - [x69935621f216bc8c] Point closest to −√52 on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -7,
 		  "min": -7.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
+		    "type": "whole",
+		    "interval": 0.1
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
@@ -14418,14 +15509,14 @@ describe("numberLine widget tests", () => {
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>j</mi>",
-		      "position": -7.311
+		      "position": -7.3111502
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>k</mi>",
-		      "position": -7.2628
+		      "position": -7.26284
 		    },
 		    {
 		      "type": "mathml",
@@ -14454,44 +15545,46 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x414b8220aec34836
-	// Question: Choose the point closest to −√77
+	// Question: Select the point closest to a negative square root on a number line
 	// Widget key: image_1
-	test("number-line - [x414b8220aec34836] Choose the point closest to −√77", async () => {
+	test("number-line - [x414b8220aec34836] Select the point closest to a negative square root on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -8.5,
 		  "min": -9,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
 		    "denominator": 10
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>m</mi>",
-		      "position": -8.774
+		      "position": -8.78
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>n</mi>",
-		      "position": -8.726284
+		      "position": -8.72
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>o</mi>",
-		      "position": -8.69
+		      "position": -8.65
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -14513,17 +15606,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x654e1ffb45d6f82c
-	// Question: Select the point representing the square root of 75 on a number line
+	// Question: Locate √75 on a number line
 	// Widget key: image_1
-	test("number-line - [x654e1ffb45d6f82c] Select the point representing the square root of 75 on a number line", async () => {
+	test("number-line - [x654e1ffb45d6f82c] Locate √75 on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 9,
 		  "min": 8.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -14536,21 +15631,21 @@ describe("numberLine widget tests", () => {
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>d</mi>",
-		      "position": 8.66
+		      "position": 8.6602
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>e</mi>",
-		      "position": 8.72
+		      "position": 8.705
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>f</mi>",
-		      "position": 8.78
+		      "position": 8.76
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -14572,23 +15667,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xdf9b279db19b86d3
-	// Question: Identify the point representing the square root of 27
+	// Question: Identify the point closest to √27 on a number line
 	// Widget key: image_1
-	test("number-line - [xdf9b279db19b86d3] Identify the point representing the square root of 27", async () => {
+	test("number-line - [xdf9b279db19b86d3] Identify the point closest to √27 on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 5.5,
 		  "min": 5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
 		    "denominator": 10
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -14631,41 +15728,43 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x4d8dbe91bd4466f1
-	// Question: Closest point to -√8 on a number line
+	// Question: Select the point that approximates a negative square root on a number line
 	// Widget key: image_1
-	test("number-line - [x4d8dbe91bd4466f1] Closest point to -√8 on a number line", async () => {
+	test("number-line - [x4d8dbe91bd4466f1] Select the point that approximates a negative square root on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -2.5,
 		  "min": -3,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
+		    "type": "whole",
+		    "interval": 0.1
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>j</mi>",
-		      "position": -2.88502
+		      "position": -2.885
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>k</mi>",
 		      "position": -2.8284
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>l</mi>",
 		      "position": -2.7489
@@ -14690,23 +15789,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x75206aad4d824373
-	// Question: Identify the point closest to −√84 on a number line
+	// Question: Locate the negative square root of 84 on a number line
 	// Widget key: image_1
-	test("number-line - [x75206aad4d824373] Identify the point closest to −√84 on a number line", async () => {
+	test("number-line - [x75206aad4d824373] Locate the negative square root of 84 on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": -9,
 		  "min": -9.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 0.1
+		    "type": "fraction",
+		    "denominator": 10
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -14720,14 +15821,14 @@ describe("numberLine widget tests", () => {
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>n</mi>",
-		      "position": -9.1651
+		      "position": -9.165
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>o</mi>",
-		      "position": -9.090569
+		      "position": -9.091
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -14749,23 +15850,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8801e1b9a9c6f18a
-	// Question: Identify the point closest to sqrt(23)
+	// Question: Identify the point that represents √23 on a number line
 	// Widget key: image_1
-	test("number-line - [x8801e1b9a9c6f18a] Identify the point closest to sqrt(23)", async () => {
+	test("number-line - [x8801e1b9a9c6f18a] Identify the point that represents √23 on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 5,
 		  "min": 4.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 10
+		    "type": "whole",
+		    "interval": 0.1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -14808,23 +15911,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x192b8af759e7cb42
-	// Question: Expressions representing a distance on a number line
+	// Question: Select expressions for the distance between -2 and 1
 	// Widget key: image_1
-	test("number-line - [x192b8af759e7cb42] Expressions representing a distance on a number line", async () => {
+	test("number-line - [x192b8af759e7cb42] Select expressions for the distance between -2 and 1", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "sign": "-",
@@ -14862,21 +15967,29 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf0699745a047e2a1
-	// Question: Select the number line for an absolute value difference
+	// Question: Select the number line model for an absolute value expression
 	// Widget key: choice_a_number_line
-	test("number-line - [xf0699745a047e2a1] Select the number line for an absolute value difference (1)", async () => {
+	test("number-line - [xf0699745a047e2a1] Select the number line model for an absolute value expression (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
-		  "min": -2,
+		  "min": -2.5,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 100,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 1.5,
+		      "color": "#000000",
+		      "start": 0.5
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
+		    "type": "fraction",
+		    "denominator": 2
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
@@ -14899,10 +16012,7 @@ describe("numberLine widget tests", () => {
 		      "denominator": 2
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 2
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -14921,21 +16031,29 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf0699745a047e2a1
-	// Question: Select the number line for an absolute value difference
+	// Question: Select the number line model for an absolute value expression
 	// Widget key: choice_b_number_line
-	test("number-line - [xf0699745a047e2a1] Select the number line for an absolute value difference (2)", async () => {
+	test("number-line - [xf0699745a047e2a1] Select the number line model for an absolute value expression (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
-		  "min": -2,
+		  "min": -2.5,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 100,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 1.5,
+		      "color": "#000000",
+		      "start": -0.5
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
+		    "type": "fraction",
+		    "denominator": 2
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
@@ -14958,10 +16076,7 @@ describe("numberLine widget tests", () => {
 		      "denominator": 2
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 2
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -14980,21 +16095,29 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf0699745a047e2a1
-	// Question: Select the number line for an absolute value difference
+	// Question: Select the number line model for an absolute value expression
 	// Widget key: choice_c_number_line
-	test("number-line - [xf0699745a047e2a1] Select the number line for an absolute value difference (3)", async () => {
+	test("number-line - [xf0699745a047e2a1] Select the number line model for an absolute value expression (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
-		  "min": -2,
+		  "min": -2.5,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 100,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": -0.5,
+		      "color": "#000000",
+		      "start": -1.5
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
+		    "type": "fraction",
+		    "denominator": 2
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
@@ -15017,10 +16140,7 @@ describe("numberLine widget tests", () => {
 		      "denominator": 2
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 2
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -15039,21 +16159,29 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf0699745a047e2a1
-	// Question: Select the number line for an absolute value difference
+	// Question: Select the number line model for an absolute value expression
 	// Widget key: choice_d_number_line
-	test("number-line - [xf0699745a047e2a1] Select the number line for an absolute value difference (4)", async () => {
+	test("number-line - [xf0699745a047e2a1] Select the number line model for an absolute value expression (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
-		  "min": -2,
+		  "min": -2.5,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 100,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 0.5,
+		      "color": "#000000",
+		      "start": -1.5
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
+		    "type": "fraction",
+		    "denominator": 2
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
@@ -15076,10 +16204,255 @@ describe("numberLine widget tests", () => {
 		      "denominator": 2
 		    }
 		  ],
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 2
-		  }
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x678e737d9d948dd2
+	// Question: Match an absolute value expression to a number line
+	// Widget key: choice_a_number_line
+	test("number-line - [x678e737d9d948dd2] Match an absolute value expression to a number line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -10,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 7,
+		      "color": "#000000",
+		      "start": -2
+		    }
+		  ],
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "-",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 2,
+		      "position": -2
+		    },
+		    {
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 7,
+		      "position": 7
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x678e737d9d948dd2
+	// Question: Match an absolute value expression to a number line
+	// Widget key: choice_b_number_line
+	test("number-line - [x678e737d9d948dd2] Match an absolute value expression to a number line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -10,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 7,
+		      "color": "#000000",
+		      "start": 2
+		    }
+		  ],
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 2,
+		      "position": 2
+		    },
+		    {
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 7,
+		      "position": 7
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x678e737d9d948dd2
+	// Question: Match an absolute value expression to a number line
+	// Widget key: choice_c_number_line
+	test("number-line - [x678e737d9d948dd2] Match an absolute value expression to a number line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -10,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 2,
+		      "color": "#000000",
+		      "start": -7
+		    }
+		  ],
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "-",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 7,
+		      "position": -7
+		    },
+		    {
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 2,
+		      "position": 2
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x678e737d9d948dd2
+	// Question: Match an absolute value expression to a number line
+	// Widget key: choice_d_number_line
+	test("number-line - [x678e737d9d948dd2] Match an absolute value expression to a number line (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 10,
+		  "min": -10,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": -2,
+		      "color": "#000000",
+		      "start": -7
+		    }
+		  ],
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "-",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 7,
+		      "position": -7
+		    },
+		    {
+		      "sign": "-",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 2,
+		      "position": -2
+		    }
+		  ],
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -15107,8 +16480,10 @@ describe("numberLine widget tests", () => {
 		  "max": -3,
 		  "min": -5,
 		  "type": "numberLine",
-		  "width": 80,
-		  "height": 325,
+		  "model": null,
+		  "width": 300,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -15152,202 +16527,50 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x678e737d9d948dd2
-	// Question: Select the number line model for an absolute value expression
-	// Widget key: choice_a_numberline
-	test("number-line - [x678e737d9d948dd2] Select the number line model for an absolute value expression (1)", async () => {
+	// Extracted from question: x2e27812b11dffe14
+	// Question: Select the number line model for an absolute difference
+	// Widget key: choice_a_number_line
+	test("number-line - [x2e27812b11dffe14] Select the number line model for an absolute difference (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 10,
-		  "min": -10,
+		  "max": 3,
+		  "min": -3,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
 		    {
-		      "sign": "-",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 2,
-		      "position": -2
-		    },
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 7,
-		      "position": 7
+		      "end": -0.6666666666666666,
+		      "color": "#000000",
+		      "start": -1.6666666666666667
 		    }
 		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x678e737d9d948dd2
-	// Question: Select the number line model for an absolute value expression
-	// Widget key: choice_b_numberline
-	test("number-line - [x678e737d9d948dd2] Select the number line model for an absolute value expression (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -10,
-		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 2,
-		      "position": 2
-		    },
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 7,
-		      "position": 7
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x678e737d9d948dd2
-	// Question: Select the number line model for an absolute value expression
-	// Widget key: choice_c_numberline
-	test("number-line - [x678e737d9d948dd2] Select the number line model for an absolute value expression (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -10,
-		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
+		    "type": "fraction",
+		    "denominator": 3
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "sign": "-",
-		      "type": "whole",
+		      "type": "fraction",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "value": 7,
-		      "position": -7
-		    },
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 2,
-		      "position": 2
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x678e737d9d948dd2
-	// Question: Select the number line model for an absolute value expression
-	// Widget key: choice_d_numberline
-	test("number-line - [x678e737d9d948dd2] Select the number line model for an absolute value expression (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 10,
-		  "min": -10,
-		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "sign": "-",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 7,
-		      "position": -7
+		      "position": -1.6666666666666667,
+		      "numerator": 5,
+		      "denominator": 3
 		    },
 		    {
 		      "sign": "-",
-		      "type": "whole",
+		      "type": "fraction",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "value": 2,
-		      "position": -2
+		      "position": -0.6666666666666666,
+		      "numerator": 2,
+		      "denominator": 3
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -15369,21 +16592,29 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x2e27812b11dffe14
-	// Question: Match an absolute value expression to a number line model
-	// Widget key: choice_a_visual
-	test("number-line - [x2e27812b11dffe14] Match an absolute value expression to a number line model (1)", async () => {
+	// Question: Select the number line model for an absolute difference
+	// Widget key: choice_b_number_line
+	test("number-line - [x2e27812b11dffe14] Select the number line model for an absolute difference (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 100,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 0.6666666666666666,
+		      "color": "#000000",
+		      "start": -1.6666666666666667
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
+		    "type": "fraction",
+		    "denominator": 3
 		  },
 		  "showTickLabels": false,
 		  "highlightedPoints": [
@@ -15392,23 +16623,215 @@ describe("numberLine widget tests", () => {
 		      "type": "fraction",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "position": -1.6666666666667,
+		      "position": -1.6666666666666667,
 		      "numerator": 5,
 		      "denominator": 3
 		    },
+		    {
+		      "sign": "+",
+		      "type": "fraction",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "position": 0.6666666666666666,
+		      "numerator": 2,
+		      "denominator": 3
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2e27812b11dffe14
+	// Question: Select the number line model for an absolute difference
+	// Widget key: choice_c_number_line
+	test("number-line - [x2e27812b11dffe14] Select the number line model for an absolute difference (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 3,
+		  "min": -3,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 1.6666666666666667,
+		      "color": "#000000",
+		      "start": 0.6666666666666666
+		    }
+		  ],
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "denominator": 3
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "+",
+		      "type": "fraction",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "position": 0.6666666666666666,
+		      "numerator": 2,
+		      "denominator": 3
+		    },
+		    {
+		      "sign": "+",
+		      "type": "fraction",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "position": 1.6666666666666667,
+		      "numerator": 5,
+		      "denominator": 3
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2e27812b11dffe14
+	// Question: Select the number line model for an absolute difference
+	// Widget key: choice_d_number_line
+	test("number-line - [x2e27812b11dffe14] Select the number line model for an absolute difference (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 3,
+		  "min": -3,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 1.6666666666666667,
+		      "color": "#000000",
+		      "start": -0.6666666666666666
+		    }
+		  ],
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "denominator": 3
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
 		    {
 		      "sign": "-",
 		      "type": "fraction",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "position": -0.6666666666667,
+		      "position": -0.6666666666666666,
 		      "numerator": 2,
 		      "denominator": 3
+		    },
+		    {
+		      "sign": "+",
+		      "type": "fraction",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "position": 1.6666666666666667,
+		      "numerator": 5,
+		      "denominator": 3
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2cb364c025caa4e5
+	// Question: Select the number line model for an absolute difference
+	// Widget key: choice_a_number_line
+	test("number-line - [x2cb364c025caa4e5] Select the number line model for an absolute difference (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 2,
+		  "min": -2,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 1.25,
+		      "color": "#000000",
+		      "start": 0.25
+		    }
+		  ],
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "+",
+		      "type": "fraction",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "position": 0.25,
+		      "numerator": 1,
+		      "denominator": 4
+		    },
+		    {
+		      "sign": "+",
+		      "type": "fraction",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "position": 1.25,
+		      "numerator": 5,
+		      "denominator": 4
 		    }
 		  ],
 		  "secondaryTickInterval": {
 		    "type": "fraction",
-		    "denominator": 3
+		    "denominator": 4
 		  }
 		} as unknown as WidgetInput
 
@@ -15427,18 +16850,26 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2e27812b11dffe14
-	// Question: Match an absolute value expression to a number line model
-	// Widget key: choice_b_visual
-	test("number-line - [x2e27812b11dffe14] Match an absolute value expression to a number line model (2)", async () => {
+	// Extracted from question: x2cb364c025caa4e5
+	// Question: Select the number line model for an absolute difference
+	// Widget key: choice_b_number_line
+	test("number-line - [x2cb364c025caa4e5] Select the number line model for an absolute difference (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 3,
-		  "min": -3,
+		  "max": 2,
+		  "min": -2,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 100,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 1.25,
+		      "color": "#000000",
+		      "start": -0.25
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -15451,23 +16882,23 @@ describe("numberLine widget tests", () => {
 		      "type": "fraction",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "position": -1.6666666666667,
-		      "numerator": 5,
-		      "denominator": 3
+		      "position": -0.25,
+		      "numerator": 1,
+		      "denominator": 4
 		    },
 		    {
 		      "sign": "+",
 		      "type": "fraction",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "position": 0.6666666666667,
-		      "numerator": 2,
-		      "denominator": 3
+		      "position": 1.25,
+		      "numerator": 5,
+		      "denominator": 4
 		    }
 		  ],
 		  "secondaryTickInterval": {
 		    "type": "fraction",
-		    "denominator": 3
+		    "denominator": 4
 		  }
 		} as unknown as WidgetInput
 
@@ -15486,18 +16917,26 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2e27812b11dffe14
-	// Question: Match an absolute value expression to a number line model
-	// Widget key: choice_c_visual
-	test("number-line - [x2e27812b11dffe14] Match an absolute value expression to a number line model (3)", async () => {
+	// Extracted from question: x2cb364c025caa4e5
+	// Question: Select the number line model for an absolute difference
+	// Widget key: choice_c_number_line
+	test("number-line - [x2cb364c025caa4e5] Select the number line model for an absolute difference (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 3,
-		  "min": -3,
+		  "max": 2,
+		  "min": -2,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 100,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": -0.25,
+		      "color": "#000000",
+		      "start": -1.25
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -15506,27 +16945,27 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
-		      "sign": "+",
+		      "sign": "-",
 		      "type": "fraction",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "position": 0.6666666666667,
-		      "numerator": 2,
-		      "denominator": 3
+		      "position": -1.25,
+		      "numerator": 5,
+		      "denominator": 4
 		    },
 		    {
-		      "sign": "+",
+		      "sign": "-",
 		      "type": "fraction",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "position": 1.6666666666667,
-		      "numerator": 5,
-		      "denominator": 3
+		      "position": -0.25,
+		      "numerator": 1,
+		      "denominator": 4
 		    }
 		  ],
 		  "secondaryTickInterval": {
 		    "type": "fraction",
-		    "denominator": 3
+		    "denominator": 4
 		  }
 		} as unknown as WidgetInput
 
@@ -15545,18 +16984,26 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2e27812b11dffe14
-	// Question: Match an absolute value expression to a number line model
-	// Widget key: choice_d_visual
-	test("number-line - [x2e27812b11dffe14] Match an absolute value expression to a number line model (4)", async () => {
+	// Extracted from question: x2cb364c025caa4e5
+	// Question: Select the number line model for an absolute difference
+	// Widget key: choice_d_number_line
+	test("number-line - [x2cb364c025caa4e5] Select the number line model for an absolute difference (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 3,
-		  "min": -3,
+		  "max": 2,
+		  "min": -2,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 100,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 0.25,
+		      "color": "#000000",
+		      "start": -1.25
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -15569,23 +17016,23 @@ describe("numberLine widget tests", () => {
 		      "type": "fraction",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "position": -0.6666666666667,
-		      "numerator": 2,
-		      "denominator": 3
+		      "position": -1.25,
+		      "numerator": 5,
+		      "denominator": 4
 		    },
 		    {
 		      "sign": "+",
 		      "type": "fraction",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "position": 1.6666666666667,
-		      "numerator": 5,
-		      "denominator": 3
+		      "position": 0.25,
+		      "numerator": 1,
+		      "denominator": 4
 		    }
 		  ],
 		  "secondaryTickInterval": {
 		    "type": "fraction",
-		    "denominator": 3
+		    "denominator": 4
 		  }
 		} as unknown as WidgetInput
 
@@ -15605,17 +17052,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x5afb43cd66f2bb42
-	// Question: Select expressions for the distance between -2 and 1.5
+	// Question: Select expressions for the distance between −2 and 1.5
 	// Widget key: image_1
-	test("number-line - [x5afb43cd66f2bb42] Select expressions for the distance between -2 and 1.5", async () => {
+	test("number-line - [x5afb43cd66f2bb42] Select expressions for the distance between −2 and 1.5", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -3,
 		  "type": "numberLine",
-		  "width": 80,
-		  "height": 325,
+		  "model": null,
+		  "width": 320,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -15624,10 +17073,11 @@ describe("numberLine widget tests", () => {
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
-		      "type": "mathml",
+		      "sign": "-",
+		      "type": "whole",
 		      "color": "#0c7f99",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mn>2</mn>",
+		      "value": 2,
 		      "position": -2
 		    },
 		    {
@@ -15660,17 +17110,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf3035ac589940ba4
-	// Question: Select expressions for the distance between -1/4 and 3/4
+	// Question: Select two expressions for a distance on a number line
 	// Widget key: image_1
-	test("number-line - [xf3035ac589940ba4] Select expressions for the distance between -1/4 and 3/4", async () => {
+	test("number-line - [xf3035ac589940ba4] Select two expressions for a distance on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -0.5,
 		  "type": "numberLine",
-		  "width": 80,
-		  "height": 325,
+		  "model": null,
+		  "width": 300,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -15716,17 +17168,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xa8ccf6741922eaaf
-	// Question: Select expressions for the distance between −4 and 1
+	// Question: Select two expressions for distance on a number line
 	// Widget key: image_1
-	test("number-line - [xa8ccf6741922eaaf] Select expressions for the distance between −4 and 1", async () => {
+	test("number-line - [xa8ccf6741922eaaf] Select two expressions for distance on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -6,
 		  "type": "numberLine",
-		  "width": 76.8,
-		  "height": 240,
+		  "model": null,
+		  "width": 360,
+		  "height": 400,
+		  "segments": null,
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
@@ -15769,18 +17223,83 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: xe48c613caa524b09
+	// Question: Select distance expressions between 3/4 and 2
+	// Widget key: image_1
+	test("number-line - [xe48c613caa524b09] Select distance expressions between 3/4 and 2", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 2.25,
+		  "min": 0.25,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 460,
+		  "height": 300,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "denominator": 4
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "+",
+		      "type": "fraction",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "position": 0.75,
+		      "numerator": 3,
+		      "denominator": 4
+		    },
+		    {
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "value": 2,
+		      "position": 2
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: x06454d11ce9a2807
-	// Question: Match an expression to a number line model
-	// Widget key: choice_a_numberline
-	test("number-line - [x06454d11ce9a2807] Match an expression to a number line model (1)", async () => {
+	// Question: Match an absolute-value expression to a number line
+	// Widget key: choice_a_number_line
+	test("number-line - [x06454d11ce9a2807] Match an absolute-value expression to a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": -3,
+		      "color": "#000000",
+		      "start": -6
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -15824,17 +17343,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x06454d11ce9a2807
-	// Question: Match an expression to a number line model
-	// Widget key: choice_b_numberline
-	test("number-line - [x06454d11ce9a2807] Match an expression to a number line model (2)", async () => {
+	// Question: Match an absolute-value expression to a number line
+	// Widget key: choice_b_number_line
+	test("number-line - [x06454d11ce9a2807] Match an absolute-value expression to a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 3,
+		      "color": "#000000",
+		      "start": -6
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -15878,17 +17405,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x06454d11ce9a2807
-	// Question: Match an expression to a number line model
-	// Widget key: choice_c_numberline
-	test("number-line - [x06454d11ce9a2807] Match an expression to a number line model (3)", async () => {
+	// Question: Match an absolute-value expression to a number line
+	// Widget key: choice_c_number_line
+	test("number-line - [x06454d11ce9a2807] Match an absolute-value expression to a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 6,
+		      "color": "#000000",
+		      "start": 3
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -15932,17 +17467,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x06454d11ce9a2807
-	// Question: Match an expression to a number line model
-	// Widget key: choice_d_numberline
-	test("number-line - [x06454d11ce9a2807] Match an expression to a number line model (4)", async () => {
+	// Question: Match an absolute-value expression to a number line
+	// Widget key: choice_d_number_line
+	test("number-line - [x06454d11ce9a2807] Match an absolute-value expression to a number line (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 6,
+		      "color": "#000000",
+		      "start": -3
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -15986,17 +17529,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x76d6e637a385ffc0
-	// Question: Select two distance expressions between -4/3 and 1/3
+	// Question: Select expressions for the distance between −4/3 and 1/3
 	// Widget key: image_1
-	test("number-line - [x76d6e637a385ffc0] Select two distance expressions between -4/3 and 1/3", async () => {
+	test("number-line - [x76d6e637a385ffc0] Select expressions for the distance between −4/3 and 1/3", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
-		  "min": -1.6666666667,
+		  "min": -1.6666666666666667,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 88,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -16009,7 +17554,7 @@ describe("numberLine widget tests", () => {
 		      "type": "fraction",
 		      "color": "#11accd",
 		      "style": "dot",
-		      "position": -1.3333333333,
+		      "position": -1.3333333333333333,
 		      "numerator": 4,
 		      "denominator": 3
 		    },
@@ -16018,7 +17563,7 @@ describe("numberLine widget tests", () => {
 		      "type": "fraction",
 		      "color": "#11accd",
 		      "style": "dot",
-		      "position": 0.3333333333,
+		      "position": 0.3333333333333333,
 		      "numerator": 1,
 		      "denominator": 3
 		    }
@@ -16042,239 +17587,279 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x2977b6e04d636e31
-	// Question: Select the number line model for the absolute value expression
-	// Widget key: choice_a_number_line
-	test("number-line - [x2977b6e04d636e31] Select the number line model for the absolute value expression (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "sign": "-",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 4,
-		      "position": -4
-		    },
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 1,
-		      "position": 1
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2977b6e04d636e31
-	// Question: Select the number line model for the absolute value expression
-	// Widget key: choice_b_number_line
-	test("number-line - [x2977b6e04d636e31] Select the number line model for the absolute value expression (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "sign": "-",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 1,
-		      "position": -1
-		    },
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 4,
-		      "position": 4
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2977b6e04d636e31
-	// Question: Select the number line model for the absolute value expression
-	// Widget key: choice_c_number_line
-	test("number-line - [x2977b6e04d636e31] Select the number line model for the absolute value expression (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 1,
-		      "position": 1
-		    },
-		    {
-		      "sign": "+",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 4,
-		      "position": 4
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2977b6e04d636e31
-	// Question: Select the number line model for the absolute value expression
-	// Widget key: choice_d_number_line
-	test("number-line - [x2977b6e04d636e31] Select the number line model for the absolute value expression (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 5,
-		  "min": -5,
-		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "showTickLabels": false,
-		  "highlightedPoints": [
-		    {
-		      "sign": "-",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 4,
-		      "position": -4
-		    },
-		    {
-		      "sign": "-",
-		      "type": "whole",
-		      "color": "#0c7f99",
-		      "style": "dot",
-		      "value": 1,
-		      "position": -1
-		    }
-		  ],
-		  "secondaryTickInterval": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x17b0d05150d27b19
-	// Question: Select the number line model for |8 − 1|
+	// Question: Select the number line model for an absolute value expression
 	// Widget key: choice_a_nl
-	test("number-line - [x17b0d05150d27b19] Select the number line model for |8 − 1| (1)", async () => {
+	test("number-line - [x2977b6e04d636e31] Select the number line model for an absolute value expression (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 1,
+		      "color": "#000000",
+		      "start": -4
+		    }
+		  ],
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "-",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 4,
+		      "position": -4
+		    },
+		    {
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 1,
+		      "position": 1
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2977b6e04d636e31
+	// Question: Select the number line model for an absolute value expression
+	// Widget key: choice_b_nl
+	test("number-line - [x2977b6e04d636e31] Select the number line model for an absolute value expression (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 4,
+		      "color": "#000000",
+		      "start": -1
+		    }
+		  ],
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "-",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 1,
+		      "position": -1
+		    },
+		    {
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 4,
+		      "position": 4
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2977b6e04d636e31
+	// Question: Select the number line model for an absolute value expression
+	// Widget key: choice_c_nl
+	test("number-line - [x2977b6e04d636e31] Select the number line model for an absolute value expression (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 4,
+		      "color": "#000000",
+		      "start": 1
+		    }
+		  ],
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 1,
+		      "position": 1
+		    },
+		    {
+		      "sign": "+",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 4,
+		      "position": 4
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2977b6e04d636e31
+	// Question: Select the number line model for an absolute value expression
+	// Widget key: choice_d_nl
+	test("number-line - [x2977b6e04d636e31] Select the number line model for an absolute value expression (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 5,
+		  "min": -5,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": -1,
+		      "color": "#000000",
+		      "start": -4
+		    }
+		  ],
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "showTickLabels": false,
+		  "highlightedPoints": [
+		    {
+		      "sign": "-",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 4,
+		      "position": -4
+		    },
+		    {
+		      "sign": "-",
+		      "type": "whole",
+		      "color": "#0c7f99",
+		      "style": "dot",
+		      "value": 1,
+		      "position": -1
+		    }
+		  ],
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x17b0d05150d27b19
+	// Question: Select the number line model for an absolute value expression
+	// Widget key: choice_a_nl
+	test("number-line - [x17b0d05150d27b19] Select the number line model for an absolute value expression (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 8,
+		      "color": "#000000",
+		      "start": -1
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "sign": "-",
@@ -16312,23 +17897,31 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x17b0d05150d27b19
-	// Question: Select the number line model for |8 − 1|
+	// Question: Select the number line model for an absolute value expression
 	// Widget key: choice_b_nl
-	test("number-line - [x17b0d05150d27b19] Select the number line model for |8 − 1| (2)", async () => {
+	test("number-line - [x17b0d05150d27b19] Select the number line model for an absolute value expression (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
-		  "min": 0,
+		  "min": -10,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 8,
+		      "color": "#000000",
+		      "start": 1
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "sign": "+",
@@ -16366,23 +17959,31 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x17b0d05150d27b19
-	// Question: Select the number line model for |8 − 1|
+	// Question: Select the number line model for an absolute value expression
 	// Widget key: choice_c_nl
-	test("number-line - [x17b0d05150d27b19] Select the number line model for |8 − 1| (3)", async () => {
+	test("number-line - [x17b0d05150d27b19] Select the number line model for an absolute value expression (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 0,
+		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": -1,
+		      "color": "#000000",
+		      "start": -8
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "sign": "-",
@@ -16420,23 +18021,31 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x17b0d05150d27b19
-	// Question: Select the number line model for |8 − 1|
+	// Question: Select the number line model for an absolute value expression
 	// Widget key: choice_d_nl
-	test("number-line - [x17b0d05150d27b19] Select the number line model for |8 − 1| (4)", async () => {
+	test("number-line - [x17b0d05150d27b19] Select the number line model for an absolute value expression (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -10,
 		  "type": "numberLine",
-		  "width": 230,
-		  "height": 80,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": [
+		    {
+		      "end": 1,
+		      "color": "#000000",
+		      "start": -8
+		    }
+		  ],
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "sign": "-",
@@ -16474,17 +18083,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb846237172363521
-	// Question: Match expressions to points on a number line
+	// Question: Match expressions to points on a number line (no calculator)
 	// Widget key: image_1
-	test("number-line - [xb846237172363521] Match expressions to points on a number line", async () => {
+	test("number-line - [xb846237172363521] Match expressions to points on a number line (no calculator)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": 6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -16497,21 +18108,21 @@ describe("numberLine widget tests", () => {
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>a</mi>",
-		      "position": 7.818
+		      "position": 7.82
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>b</mi>",
-		      "position": 8.544
+		      "position": 8.54
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>c</mi>",
-		      "position": 9.425
+		      "position": 9.42
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -16536,17 +18147,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x86aaf35c7a4370a9
-	// Question: Match expressions to points on a number line
+	// Question: Match square roots to points on a number line
 	// Widget key: image_1
-	test("number-line - [x86aaf35c7a4370a9] Match expressions to points on a number line", async () => {
+	test("number-line - [x86aaf35c7a4370a9] Match square roots to points on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 5.8,
 		  "min": 3.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 69,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -16556,24 +18169,24 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>a</mi>",
 		      "position": 4
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>b</mi>",
-		      "position": 5.196
+		      "position": 5.2
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>c</mi>",
-		      "position": 5.657
+		      "position": 5.66
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -16604,8 +18217,10 @@ describe("numberLine widget tests", () => {
 		  "max": 11,
 		  "min": 8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 150,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -16615,21 +18230,21 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>d</mi>",
-		      "position": 8.944
+		      "position": 8.944291
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>e</mi>",
-		      "position": 9.425
+		      "position": 9.42468
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>f</mi>",
 		      "position": 10
@@ -16666,8 +18281,10 @@ describe("numberLine widget tests", () => {
 		  "max": 9,
 		  "min": 6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 69,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -16687,14 +18304,14 @@ describe("numberLine widget tests", () => {
 		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>n</mi>",
-		      "position": 7.211
+		      "position": 7.21
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>o</mi>",
-		      "position": 7.9375
+		      "position": 7.94
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -16728,8 +18345,10 @@ describe("numberLine widget tests", () => {
 		  "max": 11,
 		  "min": 8,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 180,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -16739,24 +18358,24 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>x</mi>",
-		      "position": 9.425
+		      "position": 9.4248
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>y</mi>",
 		      "position": 10
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>z</mi>",
-		      "position": 10.198
+		      "position": 10.2
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -16790,8 +18409,10 @@ describe("numberLine widget tests", () => {
 		  "max": 4,
 		  "min": 0,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 70,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -16801,21 +18422,21 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>p</mi>",
-		      "position": 1.571
+		      "position": 1.5708
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>q</mi>",
 		      "position": 2.236
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>r</mi>",
 		      "position": 3.12
@@ -16852,8 +18473,10 @@ describe("numberLine widget tests", () => {
 		  "max": -3.5,
 		  "min": -6.5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 69,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "fraction",
@@ -16866,21 +18489,21 @@ describe("numberLine widget tests", () => {
 		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>a</mi>",
-		      "position": -6.28
+		      "position": -6.3
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>b</mi>",
-		      "position": -5.667
+		      "position": -5.8
 		    },
 		    {
 		      "type": "mathml",
 		      "color": "#6495ED",
 		      "style": "dot",
 		      "mathml": "<mi>c</mi>",
-		      "position": -4.244
+		      "position": -4.3
 		    }
 		  ],
 		  "secondaryTickInterval": null
@@ -16911,32 +18534,34 @@ describe("numberLine widget tests", () => {
 		  "max": 0,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 160,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>d</mi>",
 		      "position": -3.14
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>e</mi>",
-		      "position": -2.8284271247461903
+		      "position": -2.83
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>f</mi>",
 		      "position": -1.5
@@ -16973,8 +18598,10 @@ describe("numberLine widget tests", () => {
 		  "max": 11,
 		  "min": 6,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 90,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -16984,21 +18611,21 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>x</mi>",
-		      "position": 8.832
+		      "position": 8.83
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>y</mi>",
-		      "position": 9.425
+		      "position": 9.43
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>z</mi>",
 		      "position": 10
@@ -17035,32 +18662,34 @@ describe("numberLine widget tests", () => {
 		  "max": -4,
 		  "min": -9,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 70,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": true,
+		  "showTickLabels": false,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#000000",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>s</mi>",
 		      "position": -8.246
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#000000",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>t</mi>",
 		      "position": -6.283
 		    },
 		    {
 		      "type": "mathml",
-		      "color": "#000000",
+		      "color": "#6495ed",
 		      "style": "dot",
 		      "mathml": "<mi>u</mi>",
 		      "position": -5
@@ -17088,28 +18717,27 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x7b27f9336e6b6272
-	// Question: Find the missing value on a number line
+	// Question: Find the missing value
 	// Widget key: image_1
-	test("number-line - [x7b27f9336e6b6272] Find the missing value on a number line", async () => {
+	test("number-line - [x7b27f9336e6b6272] Find the missing value", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 5
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -17137,8 +18765,10 @@ describe("numberLine widget tests", () => {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17177,19 +18807,18 @@ describe("numberLine widget tests", () => {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 5
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -17217,8 +18846,10 @@ describe("numberLine widget tests", () => {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17248,17 +18879,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x6a9ec443b339eca6
-	// Question: Find the missing value
+	// Question: Find the missing value on a number line
 	// Widget key: image_1
-	test("number-line - [x6a9ec443b339eca6] Find the missing value", async () => {
+	test("number-line - [x6a9ec443b339eca6] Find the missing value on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17297,8 +18930,10 @@ describe("numberLine widget tests", () => {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17328,17 +18963,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x681b1cd156c59e80
-	// Question: Find the missing value
+	// Question: Find the missing value on a number line
 	// Widget key: image_1
-	test("number-line - [x681b1cd156c59e80] Find the missing value", async () => {
+	test("number-line - [x681b1cd156c59e80] Find the missing value on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17368,28 +19005,27 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xcc20326bcb5bf91d
-	// Question: Find the missing value on a number line
+	// Question: Find the missing value
 	// Widget key: image_1
-	test("number-line - [xcc20326bcb5bf91d] Find the missing value on a number line", async () => {
+	test("number-line - [xcc20326bcb5bf91d] Find the missing value", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 5
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -17417,8 +19053,10 @@ describe("numberLine widget tests", () => {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17448,17 +19086,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x0120f9f9574a64c2
-	// Question: Find the missing value
+	// Question: Find the missing value on a number line
 	// Widget key: image_1
-	test("number-line - [x0120f9f9574a64c2] Find the missing value", async () => {
+	test("number-line - [x0120f9f9574a64c2] Find the missing value on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17497,8 +19137,10 @@ describe("numberLine widget tests", () => {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
-		  "width": 380,
-		  "height": 80,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17528,25 +19170,30 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8e53cd0658445816
-	// Question: Find the missing value using a number line
+	// Question: Find the missing value on a number line
 	// Widget key: image_1
-	test("number-line - [x8e53cd0658445816] Find the missing value using a number line", async () => {
+	test("number-line - [x8e53cd0658445816] Find the missing value on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 1
+		    "interval": 5
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -17574,8 +19221,10 @@ describe("numberLine widget tests", () => {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17614,8 +19263,10 @@ describe("numberLine widget tests", () => {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17645,17 +19296,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xbd3b34293fb591a2
-	// Question: Find the missing value on a number line
+	// Question: Find the missing value using a number line
 	// Widget key: image_1
-	test("number-line - [xbd3b34293fb591a2] Find the missing value on a number line", async () => {
+	test("number-line - [xbd3b34293fb591a2] Find the missing value using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17685,25 +19338,30 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x146cb2ef734d4012
-	// Question: Find the missing value
+	// Question: Find the missing value using a number line
 	// Widget key: image_1
-	test("number-line - [x146cb2ef734d4012] Find the missing value", async () => {
+	test("number-line - [x146cb2ef734d4012] Find the missing value using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 1
+		    "interval": 5
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": null,
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -17722,17 +19380,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xa88752a37218add6
-	// Question: Find the missing value using a number line
+	// Question: Find the missing value on a number line
 	// Widget key: image_1
-	test("number-line - [xa88752a37218add6] Find the missing value using a number line", async () => {
+	test("number-line - [xa88752a37218add6] Find the missing value on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17762,17 +19422,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xf77b08ed8d926109
-	// Question: Find the missing value
+	// Question: Find the missing value using a number line
 	// Widget key: image_1
-	test("number-line - [xf77b08ed8d926109] Find the missing value", async () => {
+	test("number-line - [xf77b08ed8d926109] Find the missing value using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17802,17 +19464,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x54b1b23af62ae203
-	// Question: Find the missing value on a number line
+	// Question: Find the missing value
 	// Widget key: image_1
-	test("number-line - [x54b1b23af62ae203] Find the missing value on a number line", async () => {
+	test("number-line - [x54b1b23af62ae203] Find the missing value", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17839,17 +19503,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x195497fa81db1cd0
-	// Question: Find the missing value on a number line
+	// Question: Find the missing value
 	// Widget key: image_1
-	test("number-line - [x195497fa81db1cd0] Find the missing value on a number line", async () => {
+	test("number-line - [x195497fa81db1cd0] Find the missing value", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17879,17 +19545,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xfec8bc26b6ada198
-	// Question: Find the missing value using a number line
+	// Question: Find the missing value
 	// Widget key: image_1
-	test("number-line - [xfec8bc26b6ada198] Find the missing value using a number line", async () => {
+	test("number-line - [xfec8bc26b6ada198] Find the missing value", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17919,17 +19587,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xa39914d9a6b44171
-	// Question: Find the missing value using a number line
+	// Question: Find the missing value
 	// Widget key: image_1
-	test("number-line - [xa39914d9a6b44171] Find the missing value using a number line", async () => {
+	test("number-line - [xa39914d9a6b44171] Find the missing value", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -17968,48 +19638,10 @@ describe("numberLine widget tests", () => {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 5
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": null,
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6924bf3af0c393ef
-	// Question: Find the missing value
-	// Widget key: image_1
-	test("number-line - [x6924bf3af0c393ef] Find the missing value", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 15,
-		  "min": -15,
-		  "type": "numberLine",
-		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -18048,8 +19680,10 @@ describe("numberLine widget tests", () => {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -18088,8 +19722,10 @@ describe("numberLine widget tests", () => {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -18119,17 +19755,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb8ca93d297136904
-	// Question: Find the missing value
+	// Question: Find the missing value using a number line
 	// Widget key: image_1
-	test("number-line - [xb8ca93d297136904] Find the missing value", async () => {
+	test("number-line - [xb8ca93d297136904] Find the missing value using a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 380,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -18168,8 +19806,10 @@ describe("numberLine widget tests", () => {
 		  "max": 15,
 		  "min": -15,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 380,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -18199,17 +19839,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x24f798bd
-	// Question: Opposite of -3 on a number line
+	// Question: Identify the opposite of -3 on a number line
 	// Widget key: image_1
-	test("number-line - [x24f798bd] Opposite of -3 on a number line", async () => {
+	test("number-line - [x24f798bd] Identify the opposite of -3 on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 7,
 		  "min": -7,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -18272,23 +19914,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x16fab81c
-	// Question: Identify the opposite on a number line
+	// Question: Identify the opposite of a number on a number line
 	// Widget key: image_1
-	test("number-line - [x16fab81c] Identify the opposite on a number line", async () => {
+	test("number-line - [x16fab81c] Identify the opposite of a number on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -18345,23 +19989,25 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x1b944977
-	// Question: Identify the opposite of -1 on a number line
+	// Question: Identify the opposite of a number on a number line
 	// Widget key: image_1
-	test("number-line - [x1b944977] Identify the opposite of -1 on a number line", async () => {
+	test("number-line - [x1b944977] Identify the opposite of a number on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 7,
 		  "min": -7,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -18418,33 +20064,26 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x81ab69357992c427
-	// Question: Graph the opposite of 4 on a number line
-	// Widget key: choice_a_number_line
-	test("number-line - [x81ab69357992c427] Graph the opposite of 4 on a number line (1)", async () => {
+	// Question: Graph the opposite of 4 on the number line
+	// Widget key: number_line_initial
+	test("number-line - [x81ab69357992c427] Graph the opposite of 4 on the number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 2
 		  },
 		  "showTickLabels": true,
-		  "highlightedPoints": [
-		    {
-		      "sign": "-",
-		      "type": "whole",
-		      "color": "#0066CC",
-		      "style": "dot",
-		      "value": 4,
-		      "position": -4
-		    }
-		  ],
+		  "highlightedPoints": null,
 		  "secondaryTickInterval": {
 		    "type": "whole",
 		    "interval": 1
@@ -18467,17 +20106,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x81ab69357992c427
-	// Question: Graph the opposite of 4 on a number line
-	// Widget key: choice_b_number_line
-	test("number-line - [x81ab69357992c427] Graph the opposite of 4 on a number line (2)", async () => {
+	// Question: Graph the opposite of 4 on the number line
+	// Widget key: number_line_choice_a
+	test("number-line - [x81ab69357992c427] Graph the opposite of 4 on the number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -18488,7 +20129,7 @@ describe("numberLine widget tests", () => {
 		    {
 		      "sign": "+",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "value": 4,
 		      "position": 4
@@ -18516,17 +20157,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x81ab69357992c427
-	// Question: Graph the opposite of 4 on a number line
-	// Widget key: choice_c_number_line
-	test("number-line - [x81ab69357992c427] Graph the opposite of 4 on a number line (3)", async () => {
+	// Question: Graph the opposite of 4 on the number line
+	// Widget key: number_line_choice_b
+	test("number-line - [x81ab69357992c427] Graph the opposite of 4 on the number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -18537,7 +20180,58 @@ describe("numberLine widget tests", () => {
 		    {
 		      "sign": "-",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#11accd",
+		      "style": "dot",
+		      "value": 4,
+		      "position": -4
+		    }
+		  ],
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLine", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x81ab69357992c427
+	// Question: Graph the opposite of 4 on the number line
+	// Widget key: number_line_choice_c
+	test("number-line - [x81ab69357992c427] Graph the opposite of 4 on the number line (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 6,
+		  "min": -6,
+		  "type": "numberLine",
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 2
+		  },
+		  "showTickLabels": true,
+		  "highlightedPoints": [
+		    {
+		      "sign": "-",
+		      "type": "whole",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "value": 2,
 		      "position": -2
@@ -18565,29 +20259,31 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xcb3e37851559832d
-	// Question: Graph the opposite of 1.5 on the number line
-	// Widget key: nl_choice_a
-	test("number-line - [xcb3e37851559832d] Graph the opposite of 1.5 on the number line (1)", async () => {
+	// Question: Graph the opposite of 1.5 on a number line
+	// Widget key: number_line_choice_a
+	test("number-line - [xcb3e37851559832d] Graph the opposite of 1.5 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1.5,
 		  "min": -1.5,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 200,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 0.5
+		    "type": "fraction",
+		    "denominator": 2
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mn>1.5</mn>",
+		      "mathml": "<!-- no label -->",
 		      "position": -1.5
 		    }
 		  ],
@@ -18610,29 +20306,31 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xcb3e37851559832d
-	// Question: Graph the opposite of 1.5 on the number line
-	// Widget key: nl_choice_b
-	test("number-line - [xcb3e37851559832d] Graph the opposite of 1.5 on the number line (2)", async () => {
+	// Question: Graph the opposite of 1.5 on a number line
+	// Widget key: number_line_choice_b
+	test("number-line - [xcb3e37851559832d] Graph the opposite of 1.5 on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1.5,
 		  "min": -1.5,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 200,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 0.5
+		    "type": "fraction",
+		    "denominator": 2
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#D7263D",
+		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<mn>1.5</mn>",
+		      "mathml": "<!-- no label -->",
 		      "position": 1.5
 		    }
 		  ],
@@ -18655,29 +20353,31 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xcb3e37851559832d
-	// Question: Graph the opposite of 1.5 on the number line
-	// Widget key: nl_choice_c
-	test("number-line - [xcb3e37851559832d] Graph the opposite of 1.5 on the number line (3)", async () => {
+	// Question: Graph the opposite of 1.5 on a number line
+	// Widget key: number_line_choice_c
+	test("number-line - [xcb3e37851559832d] Graph the opposite of 1.5 on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1.5,
 		  "min": -1.5,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 200,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 0.5
+		    "type": "fraction",
+		    "denominator": 2
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#FF9900",
+		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<mo>-</mo><mn>0.5</mn>",
+		      "mathml": "<!-- no label -->",
 		      "position": -0.5
 		    }
 		  ],
@@ -18700,17 +20400,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x7da07235
-	// Question: Identify the opposite of a number on a number line
+	// Question: Identify the opposite of 2 on a number line
 	// Widget key: image_1
-	test("number-line - [x7da07235] Identify the opposite of a number on a number line", async () => {
+	test("number-line - [x7da07235] Identify the opposite of 2 on a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 7,
 		  "min": -7,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -18782,8 +20484,10 @@ describe("numberLine widget tests", () => {
 		  "max": 10,
 		  "min": -5,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -18846,17 +20550,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x10a2191e
-	// Question: Opposite of 7 on a number line
+	// Question: Identify the opposite of 7 on the number line
 	// Widget key: image_1
-	test("number-line - [x10a2191e] Opposite of 7 on a number line", async () => {
+	test("number-line - [x10a2191e] Identify the opposite of 7 on the number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 7,
 		  "min": -7,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -18919,30 +20625,32 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb15dcef5fbe05c37
-	// Question: Graph the opposite of a fraction on a number line
-	// Widget key: nl_choice_a
-	test("number-line - [xb15dcef5fbe05c37] Graph the opposite of a fraction on a number line (1)", async () => {
+	// Question: Graph the opposite of 2/3 on a number line
+	// Widget key: numberline_choice_a
+	test("number-line - [xb15dcef5fbe05c37] Graph the opposite of 2/3 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -1,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 480,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 3
+		    "type": "whole",
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "sign": "-",
 		      "type": "fraction",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
-		      "position": -0.6666666667,
+		      "position": -0.6666666666666666,
 		      "numerator": 2,
 		      "denominator": 3
 		    }
@@ -18969,30 +20677,32 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb15dcef5fbe05c37
-	// Question: Graph the opposite of a fraction on a number line
-	// Widget key: nl_choice_b
-	test("number-line - [xb15dcef5fbe05c37] Graph the opposite of a fraction on a number line (2)", async () => {
+	// Question: Graph the opposite of 2/3 on a number line
+	// Widget key: numberline_choice_b
+	test("number-line - [xb15dcef5fbe05c37] Graph the opposite of 2/3 on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -1,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 480,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 3
+		    "type": "whole",
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "sign": "+",
 		      "type": "fraction",
-		      "color": "#0066CC",
+		      "color": "#e67e22",
 		      "style": "dot",
-		      "position": 0.6666666667,
+		      "position": 0.6666666666666666,
 		      "numerator": 2,
 		      "denominator": 3
 		    }
@@ -19019,30 +20729,32 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: xb15dcef5fbe05c37
-	// Question: Graph the opposite of a fraction on a number line
-	// Widget key: nl_choice_c
-	test("number-line - [xb15dcef5fbe05c37] Graph the opposite of a fraction on a number line (3)", async () => {
+	// Question: Graph the opposite of 2/3 on a number line
+	// Widget key: numberline_choice_c
+	test("number-line - [xb15dcef5fbe05c37] Graph the opposite of 2/3 on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -1,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 480,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 3
+		    "type": "whole",
+		    "interval": 1
 		  },
 		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "sign": "-",
 		      "type": "fraction",
-		      "color": "#0066CC",
+		      "color": "#9b59b6",
 		      "style": "dot",
-		      "position": -0.3333333333,
+		      "position": -0.3333333333333333,
 		      "numerator": 1,
 		      "denominator": 3
 		    }
@@ -19068,58 +20780,20 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xb15dcef5fbe05c37
-	// Question: Graph the opposite of a fraction on a number line
-	// Widget key: nl_stimulus
-	test("number-line - [xb15dcef5fbe05c37] Graph the opposite of a fraction on a number line (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 1,
-		  "min": -1,
-		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "fraction",
-		    "denominator": 3
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": null,
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "denominator": 6
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x8f7d9f5cd0ea9740
-	// Question: Graph the opposite of −0.4 on a number line
-	// Widget key: choice_a_numberline
-	test("number-line - [x8f7d9f5cd0ea9740] Graph the opposite of −0.4 on a number line (1)", async () => {
+	// Question: Graph the opposite of a number on a number line
+	// Widget key: nl_choice_a
+	test("number-line - [x8f7d9f5cd0ea9740] Graph the opposite of a number on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -19129,9 +20803,9 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#0066CC",
+		      "color": "#FF6B6B",
 		      "style": "dot",
-		      "mathml": "<mrow></mrow>",
+		      "mathml": "<mo>-</mo><mn>0.4</mn>",
 		      "position": -0.4
 		    }
 		  ],
@@ -19157,17 +20831,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8f7d9f5cd0ea9740
-	// Question: Graph the opposite of −0.4 on a number line
-	// Widget key: choice_b_numberline
-	test("number-line - [x8f7d9f5cd0ea9740] Graph the opposite of −0.4 on a number line (2)", async () => {
+	// Question: Graph the opposite of a number on a number line
+	// Widget key: nl_choice_b
+	test("number-line - [x8f7d9f5cd0ea9740] Graph the opposite of a number on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -19177,9 +20853,9 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
-		      "mathml": "<mrow></mrow>",
+		      "mathml": "<mn>0.4</mn>",
 		      "position": 0.4
 		    }
 		  ],
@@ -19205,17 +20881,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8f7d9f5cd0ea9740
-	// Question: Graph the opposite of −0.4 on a number line
-	// Widget key: choice_c_numberline
-	test("number-line - [x8f7d9f5cd0ea9740] Graph the opposite of −0.4 on a number line (3)", async () => {
+	// Question: Graph the opposite of a number on a number line
+	// Widget key: nl_choice_c
+	test("number-line - [x8f7d9f5cd0ea9740] Graph the opposite of a number on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -2,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 400,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -19225,10 +20903,10 @@ describe("numberLine widget tests", () => {
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
-		      "color": "#0066CC",
+		      "color": "#9B59B6",
 		      "style": "dot",
-		      "mathml": "<mrow></mrow>",
-		      "position": 0.2
+		      "mathml": "<mn>0.6</mn>",
+		      "position": 0.6
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -19262,14 +20940,16 @@ describe("numberLine widget tests", () => {
 		  "max": 7,
 		  "min": -7,
 		  "type": "numberLine",
+		  "model": null,
 		  "width": 460,
-		  "height": 80,
+		  "height": 300,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "showTickLabels": false,
+		  "showTickLabels": true,
 		  "highlightedPoints": [
 		    {
 		      "type": "mathml",
@@ -19326,17 +21006,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8544017494eef924
-	// Question: Graph the opposite of -7 on the number line
-	// Widget key: nl_choice_a
-	test("number-line - [x8544017494eef924] Graph the opposite of -7 on the number line (1)", async () => {
+	// Question: Graph the opposite of -7 on a number line
+	// Widget key: choice_a_number_line
+	test("number-line - [x8544017494eef924] Graph the opposite of -7 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 9,
 		  "min": -9,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 480,
+		  "height": 340,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -19347,7 +21029,7 @@ describe("numberLine widget tests", () => {
 		    {
 		      "sign": "+",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "value": 7,
 		      "position": 7
@@ -19375,17 +21057,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8544017494eef924
-	// Question: Graph the opposite of -7 on the number line
-	// Widget key: nl_choice_b
-	test("number-line - [x8544017494eef924] Graph the opposite of -7 on the number line (2)", async () => {
+	// Question: Graph the opposite of -7 on a number line
+	// Widget key: choice_b_number_line
+	test("number-line - [x8544017494eef924] Graph the opposite of -7 on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 9,
 		  "min": -9,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 480,
+		  "height": 340,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -19396,7 +21080,7 @@ describe("numberLine widget tests", () => {
 		    {
 		      "sign": "-",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "value": 7,
 		      "position": -7
@@ -19424,17 +21108,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x8544017494eef924
-	// Question: Graph the opposite of -7 on the number line
-	// Widget key: nl_choice_c
-	test("number-line - [x8544017494eef924] Graph the opposite of -7 on the number line (3)", async () => {
+	// Question: Graph the opposite of -7 on a number line
+	// Widget key: choice_c_number_line
+	test("number-line - [x8544017494eef924] Graph the opposite of -7 on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 9,
 		  "min": -9,
 		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
+		  "model": null,
+		  "width": 480,
+		  "height": 340,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -19445,10 +21131,10 @@ describe("numberLine widget tests", () => {
 		    {
 		      "sign": "+",
 		      "type": "whole",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
-		      "value": 0,
-		      "position": 0
+		      "value": 6,
+		      "position": 6
 		    }
 		  ],
 		  "secondaryTickInterval": {
@@ -19472,58 +21158,20 @@ describe("numberLine widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x8544017494eef924
-	// Question: Graph the opposite of -7 on the number line
-	// Widget key: number_line_initial
-	test("number-line - [x8544017494eef924] Graph the opposite of -7 on the number line (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 9,
-		  "min": -9,
-		  "type": "numberLine",
-		  "width": 500,
-		  "height": 180,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 2
-		  },
-		  "showTickLabels": true,
-		  "highlightedPoints": null,
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLine", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x6f4dd57345731d22
-	// Question: Opposite of -3/4 on a number line
+	// Question: Graph the opposite of −3/4 on a number line
 	// Widget key: nl_choice_a
-	test("number-line - [x6f4dd57345731d22] Opposite of -3/4 on a number line (1)", async () => {
+	test("number-line - [x6f4dd57345731d22] Graph the opposite of −3/4 on a number line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -1,
 		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -19534,7 +21182,7 @@ describe("numberLine widget tests", () => {
 		    {
 		      "sign": "+",
 		      "type": "fraction",
-		      "color": "#0066CC",
+		      "color": "#11accd",
 		      "style": "dot",
 		      "position": 0.75,
 		      "numerator": 3,
@@ -19563,17 +21211,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x6f4dd57345731d22
-	// Question: Opposite of -3/4 on a number line
+	// Question: Graph the opposite of −3/4 on a number line
 	// Widget key: nl_choice_b
-	test("number-line - [x6f4dd57345731d22] Opposite of -3/4 on a number line (2)", async () => {
+	test("number-line - [x6f4dd57345731d22] Graph the opposite of −3/4 on a number line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -1,
 		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -19584,7 +21234,7 @@ describe("numberLine widget tests", () => {
 		    {
 		      "sign": "-",
 		      "type": "fraction",
-		      "color": "#CC0000",
+		      "color": "#e67e22",
 		      "style": "dot",
 		      "position": -0.75,
 		      "numerator": 3,
@@ -19613,17 +21263,19 @@ describe("numberLine widget tests", () => {
 	})
 
 	// Extracted from question: x6f4dd57345731d22
-	// Question: Opposite of -3/4 on a number line
+	// Question: Graph the opposite of −3/4 on a number line
 	// Widget key: nl_choice_c
-	test("number-line - [x6f4dd57345731d22] Opposite of -3/4 on a number line (3)", async () => {
+	test("number-line - [x6f4dd57345731d22] Graph the opposite of −3/4 on a number line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 1,
 		  "min": -1,
 		  "type": "numberLine",
-		  "width": 520,
-		  "height": 180,
+		  "model": null,
+		  "width": 420,
+		  "height": 320,
+		  "segments": null,
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
@@ -19634,11 +21286,11 @@ describe("numberLine widget tests", () => {
 		    {
 		      "sign": "+",
 		      "type": "fraction",
-		      "color": "#00AA00",
+		      "color": "#2ecc71",
 		      "style": "dot",
-		      "position": 0.25,
+		      "position": 0.5,
 		      "numerator": 1,
-		      "denominator": 4
+		      "denominator": 2
 		    }
 		  ],
 		  "secondaryTickInterval": {

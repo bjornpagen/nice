@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.935Z
+// Generated on: 2025-09-18T05:17:02.121Z
 // Widget Type: probabilitySpinner
 // Source: Real questions from database
 //
@@ -26,15 +26,15 @@ import * as logger from "@superbuilders/slog"
 
 describe("probabilitySpinner widget tests", () => {
 	// Extracted from question: x891978ec319a0b50
-	// Question: Probability of landing on the beaver
+	// Question: Probability of landing on a beaver
 	// Widget key: image_1
-	test("probability-spinner - [x891978ec319a0b50] Probability of landing on the beaver", async () => {
+	test("probability-spinner - [x891978ec319a0b50] Probability of landing on a beaver", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "probabilitySpinner",
 		  "title": "Animal Spinner",
-		  "width": 265,
+		  "width": 400,
 		  "groups": [
 		    {
 		      "color": "#8B4513",
@@ -42,18 +42,18 @@ describe("probabilitySpinner widget tests", () => {
 		      "emoji": "🦫"
 		    },
 		    {
-		      "color": "#6D4C41",
+		      "color": "#1E90FF",
 		      "count": 1,
 		      "emoji": "🦦"
 		    },
 		    {
-		      "color": "#2E7D32",
+		      "color": "#2E8B57",
 		      "count": 1,
 		      "emoji": "🐢"
 		    }
 		  ],
-		  "height": 265,
-		  "pointerAngle": 60
+		  "height": 400,
+		  "pointerAngle": 0
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -79,32 +79,32 @@ describe("probabilitySpinner widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "probabilitySpinner",
-		  "title": null,
-		  "width": 200,
+		  "title": "Color Spinner",
+		  "width": 400,
 		  "groups": [
 		    {
 		      "color": "#28ae7b",
 		      "count": 1,
-		      "emoji": ":"
+		      "emoji": "🎯"
 		    },
 		    {
 		      "color": "#6495ed",
 		      "count": 1,
-		      "emoji": ":"
+		      "emoji": "🎯"
 		    },
 		    {
 		      "color": "#9d38bd",
 		      "count": 1,
-		      "emoji": ":"
+		      "emoji": "🎯"
 		    },
 		    {
 		      "color": "#ff00af",
 		      "count": 1,
-		      "emoji": ":"
+		      "emoji": "🎯"
 		    }
 		  ],
-		  "height": 200,
-		  "pointerAngle": 80
+		  "height": 400,
+		  "pointerAngle": 45
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -131,10 +131,10 @@ describe("probabilitySpinner widget tests", () => {
 		const input = {
 		  "type": "probabilitySpinner",
 		  "title": null,
-		  "width": 280,
+		  "width": 320,
 		  "groups": [
 		    {
-		      "color": "#4A90E2",
+		      "color": "#4F86F7",
 		      "count": 2,
 		      "emoji": null
 		    },
@@ -144,7 +144,7 @@ describe("probabilitySpinner widget tests", () => {
 		      "emoji": null
 		    }
 		  ],
-		  "height": 280,
+		  "height": 320,
 		  "pointerAngle": 90
 		} as unknown as WidgetInput
 
@@ -164,38 +164,38 @@ describe("probabilitySpinner widget tests", () => {
 	})
 
 	// Extracted from question: x14436e9c61b55100
-	// Question: Probability of landing on green
+	// Question: Probability of landing on green on a spinner
 	// Widget key: image_1
-	test("probability-spinner - [x14436e9c61b55100] Probability of landing on green", async () => {
+	test("probability-spinner - [x14436e9c61b55100] Probability of landing on green on a spinner", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "probabilitySpinner",
 		  "title": "Color Spinner",
-		  "width": 200,
+		  "width": 360,
 		  "groups": [
 		    {
-		      "color": "#6495ed",
+		      "color": "#28ae7b99",
 		      "count": 1,
-		      "emoji": "🎯"
+		      "emoji": "�"
 		    },
 		    {
-		      "color": "#9d38bd",
+		      "color": "#6495ed99",
 		      "count": 1,
-		      "emoji": "🎯"
+		      "emoji": "�"
 		    },
 		    {
-		      "color": "#ff00af",
+		      "color": "#9d38bd99",
 		      "count": 1,
-		      "emoji": "🎯"
+		      "emoji": "�"
 		    },
 		    {
-		      "color": "#28ae7b",
+		      "color": "#ff00af99",
 		      "count": 1,
-		      "emoji": "🎯"
+		      "emoji": "�"
 		    }
 		  ],
-		  "height": 200,
+		  "height": 360,
 		  "pointerAngle": 80
 		} as unknown as WidgetInput
 
@@ -223,21 +223,21 @@ describe("probabilitySpinner widget tests", () => {
 		const input = {
 		  "type": "probabilitySpinner",
 		  "title": "Animal Spinner",
-		  "width": 265,
+		  "width": 360,
 		  "groups": [
+		    {
+		      "color": "#8B5E3C",
+		      "count": 4,
+		      "emoji": "🦫"
+		    },
 		    {
 		      "color": "#2E8B57",
 		      "count": 1,
 		      "emoji": "🐢"
-		    },
-		    {
-		      "color": "#8B4513",
-		      "count": 4,
-		      "emoji": "🦫"
 		    }
 		  ],
-		  "height": 265,
-		  "pointerAngle": 10
+		  "height": 360,
+		  "pointerAngle": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -256,78 +256,78 @@ describe("probabilitySpinner widget tests", () => {
 	})
 
 	// Extracted from question: x337e68855d74fec2
-	// Question: Probability of not shaded sector on a spinner
+	// Question: Probability of not landing on a shaded sector
 	// Widget key: image_1
-	test("probability-spinner - [x337e68855d74fec2] Probability of not shaded sector on a spinner", async () => {
+	test("probability-spinner - [x337e68855d74fec2] Probability of not landing on a shaded sector", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "probabilitySpinner",
 		  "title": null,
-		  "width": 280,
+		  "width": 320,
 		  "groups": [
 		    {
-		      "color": "#D0021B",
+		      "color": "#E53935",
 		      "count": 1,
-		      "emoji": ":"
+		      "emoji": null
 		    },
 		    {
 		      "color": "#FFFFFF",
 		      "count": 1,
-		      "emoji": ":"
+		      "emoji": null
 		    },
 		    {
-		      "color": "#D0021B",
+		      "color": "#E53935",
 		      "count": 1,
-		      "emoji": ":"
-		    },
-		    {
-		      "color": "#FFFFFF",
-		      "count": 1,
-		      "emoji": ":"
-		    },
-		    {
-		      "color": "#D0021B",
-		      "count": 1,
-		      "emoji": ":"
+		      "emoji": null
 		    },
 		    {
 		      "color": "#FFFFFF",
 		      "count": 1,
-		      "emoji": ":"
+		      "emoji": null
 		    },
 		    {
-		      "color": "#D0021B",
+		      "color": "#E53935",
 		      "count": 1,
-		      "emoji": ":"
-		    },
-		    {
-		      "color": "#FFFFFF",
-		      "count": 1,
-		      "emoji": ":"
-		    },
-		    {
-		      "color": "#D0021B",
-		      "count": 1,
-		      "emoji": ":"
+		      "emoji": null
 		    },
 		    {
 		      "color": "#FFFFFF",
 		      "count": 1,
-		      "emoji": ":"
+		      "emoji": null
 		    },
 		    {
-		      "color": "#D0021B",
+		      "color": "#E53935",
 		      "count": 1,
-		      "emoji": ":"
+		      "emoji": null
 		    },
 		    {
 		      "color": "#FFFFFF",
 		      "count": 1,
-		      "emoji": ":"
+		      "emoji": null
+		    },
+		    {
+		      "color": "#E53935",
+		      "count": 1,
+		      "emoji": null
+		    },
+		    {
+		      "color": "#FFFFFF",
+		      "count": 1,
+		      "emoji": null
+		    },
+		    {
+		      "color": "#E53935",
+		      "count": 1,
+		      "emoji": null
+		    },
+		    {
+		      "color": "#FFFFFF",
+		      "count": 1,
+		      "emoji": null
 		    }
 		  ],
-		  "height": 280,
+		  "height": 320,
 		  "pointerAngle": 15
 		} as unknown as WidgetInput
 
@@ -355,36 +355,36 @@ describe("probabilitySpinner widget tests", () => {
 		const input = {
 		  "type": "probabilitySpinner",
 		  "title": "Animal Spinner",
-		  "width": 265,
+		  "width": 380,
 		  "groups": [
 		    {
-		      "color": "#F94144",
+		      "color": "#F4A261",
 		      "count": 1,
 		      "emoji": "🐿️"
 		    },
 		    {
-		      "color": "#F3722C",
+		      "color": "#2A9D8F",
 		      "count": 1,
 		      "emoji": "🐛"
 		    },
 		    {
-		      "color": "#F9C74F",
+		      "color": "#1E90FF",
 		      "count": 1,
 		      "emoji": "🐰"
 		    },
 		    {
-		      "color": "#90BE6D",
+		      "color": "#9B59B6",
 		      "count": 1,
 		      "emoji": "🦝"
 		    },
 		    {
-		      "color": "#577590",
+		      "color": "#E74C3C",
 		      "count": 1,
 		      "emoji": "🐞"
 		    }
 		  ],
-		  "height": 265,
-		  "pointerAngle": 288
+		  "height": 380,
+		  "pointerAngle": 90
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -410,32 +410,32 @@ describe("probabilitySpinner widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "probabilitySpinner",
-		  "title": "Color Spinner",
-		  "width": 200,
+		  "title": null,
+		  "width": 400,
 		  "groups": [
+		    {
+		      "color": "#28ae7b",
+		      "count": 1,
+		      "emoji": null
+		    },
 		    {
 		      "color": "#6495ed",
 		      "count": 1,
-		      "emoji": "🔵"
+		      "emoji": null
 		    },
 		    {
 		      "color": "#9d38bd",
 		      "count": 1,
-		      "emoji": "🟣"
+		      "emoji": null
 		    },
 		    {
 		      "color": "#ff00af",
 		      "count": 1,
-		      "emoji": "🩷"
-		    },
-		    {
-		      "color": "#28ae7b",
-		      "count": 1,
-		      "emoji": "🟢"
+		      "emoji": null
 		    }
 		  ],
-		  "height": 200,
-		  "pointerAngle": 135
+		  "height": 400,
+		  "pointerAngle": 120
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -462,26 +462,26 @@ describe("probabilitySpinner widget tests", () => {
 		const input = {
 		  "type": "probabilitySpinner",
 		  "title": "Animal Spinner",
-		  "width": 265,
+		  "width": 360,
 		  "groups": [
 		    {
-		      "color": "#6A5ACD",
-		      "count": 1,
-		      "emoji": "🐘"
-		    },
-		    {
-		      "color": "#FFB347",
+		      "color": "#FF9800",
 		      "count": 2,
-		      "emoji": "🐵"
+		      "emoji": "🐒"
 		    },
 		    {
-		      "color": "#6EC6FF",
+		      "color": "#90CAF9",
 		      "count": 2,
 		      "emoji": "🐭"
+		    },
+		    {
+		      "color": "#9C27B0",
+		      "count": 1,
+		      "emoji": "🐘"
 		    }
 		  ],
-		  "height": 265,
-		  "pointerAngle": 36
+		  "height": 360,
+		  "pointerAngle": 324
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -508,26 +508,26 @@ describe("probabilitySpinner widget tests", () => {
 		const input = {
 		  "type": "probabilitySpinner",
 		  "title": "Animal Spinner",
-		  "width": 265,
+		  "width": 360,
 		  "groups": [
 		    {
-		      "color": "#B0BEC5",
+		      "color": "#9E9E9E",
 		      "count": 4,
 		      "emoji": "🐘"
 		    },
 		    {
-		      "color": "#FFD166",
+		      "color": "#4FC3F7",
 		      "count": 2,
 		      "emoji": "🐭"
 		    },
 		    {
-		      "color": "#8BC34A",
+		      "color": "#FF7043",
 		      "count": 1,
-		      "emoji": "🐒"
+		      "emoji": "🐵"
 		    }
 		  ],
-		  "height": 265,
-		  "pointerAngle": 250
+		  "height": 360,
+		  "pointerAngle": 90
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -554,21 +554,21 @@ describe("probabilitySpinner widget tests", () => {
 		const input = {
 		  "type": "probabilitySpinner",
 		  "title": null,
-		  "width": 280,
+		  "width": 360,
 		  "groups": [
 		    {
-		      "color": "#5B87E5",
+		      "color": "#5A8DEE",
 		      "count": 4,
-		      "emoji": null
+		      "emoji": ""
 		    },
 		    {
 		      "color": "#FFFFFF",
 		      "count": 1,
-		      "emoji": null
+		      "emoji": ""
 		    }
 		  ],
-		  "height": 280,
-		  "pointerAngle": 20
+		  "height": 360,
+		  "pointerAngle": 30
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)

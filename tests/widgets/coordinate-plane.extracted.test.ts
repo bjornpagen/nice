@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.953Z
+// Generated on: 2025-09-18T05:17:02.148Z
 // Widget Type: coordinatePlane
 // Source: Real questions from database
 //
@@ -25,39 +25,16 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("coordinatePlane widget tests", () => {
-	// Extracted from question: xe5fa84ef3e6eedd2
+	// Extracted from question: xcd14c41979f4e20a
 	// Question: Solve a system of linear equations
-	// Widget key: coordinate_plane
-	test("coordinate-plane - [xe5fa84ef3e6eedd2] Solve a system of linear equations", async () => {
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [xcd14c41979f4e20a] Solve a system of linear equations", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
-		  "lines": [
-		    {
-		      "id": "line_neg2x_plus_7",
-		      "color": "#6495ED",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -2,
-		        "yIntercept": 7
-		      }
-		    },
-		    {
-		      "id": "line_5x_minus_7",
-		      "color": "#FF00AF",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 5,
-		        "yIntercept": -7
-		      }
-		    }
-		  ],
-		  "width": 280,
+		  "lines": [],
+		  "width": 345,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -72,37 +49,8 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 280,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 7,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 5,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -7,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": -2,
-		      "id": "p4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 345,
+		  "points": [],
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [],
@@ -124,10 +72,57 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3c4a3348f92002cf
-	// Question: Solve a system of equations by graphing
+	// Extracted from question: x17655e79f69878da
+	// Question: Find the solution to the system of equations
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x3c4a3348f92002cf] Solve a system of equations by graphing", async () => {
+	test("coordinate-plane - [x17655e79f69878da] Find the solution to the system of equations", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcf92b6d44bbed80b
+	// Question: Solve a system of linear equations
+	// Widget key: graph_reference
+	test("coordinate-plane - [xcf92b6d44bbed80b] Solve a system of linear equations", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -173,14 +168,14 @@ describe("coordinatePlane widget tests", () => {
 
 	// Extracted from question: x42f372d87e77f20c
 	// Question: Solve a system of linear equations
-	// Widget key: coordinate_plane
+	// Widget key: coordinate_plane_empty
 	test("coordinate-plane - [x42f372d87e77f20c] Solve a system of linear equations", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 280,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -195,7 +190,7 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 280,
+		  "height": 360,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -218,39 +213,39 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd2acacdae4f04fdc
+	// Extracted from question: xee3b92b9d7566088
 	// Question: Estimate the solution to a system of linear equations
-	// Widget key: coordinate_plane
-	test("coordinate-plane - [xd2acacdae4f04fdc] Estimate the solution to a system of linear equations", async () => {
+	// Widget key: graph_widget
+	test("coordinate-plane - [xee3b92b9d7566088] Estimate the solution to a system of linear equations", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [
 		    {
-		      "id": "line_neg1x_plus_2",
+		      "id": "line_y_4x_minus_2",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -1,
-		        "yIntercept": 2
+		        "slope": 4,
+		        "yIntercept": -2
 		      }
 		    },
 		    {
-		      "id": "line_3x_minus_4",
+		      "id": "line_y_x_plus_3",
 		      "color": "#ca337c",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 3,
-		        "yIntercept": -4
+		        "slope": 1,
+		        "yIntercept": 3
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 7,
 		    "min": -7,
@@ -265,33 +260,33 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 0,
-		      "y": 2,
-		      "id": "A1",
+		      "y": -2,
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
-		      "y": 1,
-		      "id": "A2",
+		      "y": 2,
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
-		      "y": -4,
-		      "id": "B1",
+		      "y": 3,
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
-		      "y": -1,
-		      "id": "B2",
+		      "y": 4,
+		      "id": "p4",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -299,6 +294,71 @@ describe("coordinatePlane widget tests", () => {
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa0cec3b1186ad9d4
+	// Question: Find the length of a line segment on a coordinate plane
+	// Widget key: image_1
+	test("coordinate-plane - [xa0cec3b1186ad9d4] Find the length of a line segment on a coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 375,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_segment",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 2,
+		          "y": 2
+		        },
+		        {
+		          "x": 8,
+		          "y": 7
+		        }
+		      ]
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -318,30 +378,30 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x0392a744c70c9459
-	// Question: Find the length of a line segment on a coordinate plane
+	// Question: Length of a line segment on a coordinate plane
 	// Widget key: image_1
-	test("coordinate-plane - [x0392a744c70c9459] Find the length of a line segment on a coordinate plane", async () => {
+	test("coordinate-plane - [x0392a744c70c9459] Length of a line segment on a coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 240,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 180,
+		  "height": 300,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -350,7 +410,7 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_segment",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "points": [
 		        {
@@ -383,30 +443,30 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xb92831092a75fbdd
-	// Question: Find the length of a line segment
+	// Question: Find the length of a line segment on a coordinate plane
 	// Widget key: image_1
-	test("coordinate-plane - [xb92831092a75fbdd] Find the length of a line segment", async () => {
+	test("coordinate-plane - [xb92831092a75fbdd] Find the length of a line segment on a coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 240,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 13,
+		    "max": 12,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 9,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 166,
+		  "height": 300,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -415,7 +475,7 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_segment",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": "Line segment",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -448,30 +508,30 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x7fda10cec7548d53
-	// Question: Find the length of a line segment on a coordinate plane
+	// Question: Length of a line segment on a coordinate plane
 	// Widget key: image_1
-	test("coordinate-plane - [x7fda10cec7548d53] Find the length of a line segment on a coordinate plane", async () => {
+	test("coordinate-plane - [x7fda10cec7548d53] Length of a line segment on a coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 240,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 144,
+		  "height": 360,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -480,7 +540,7 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_segment",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "points": [
 		        {
@@ -512,10 +572,252 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x3a4a3f5974a76c41
+	// Question: Length of a line segment on a coordinate plane
+	// Widget key: image_1
+	test("coordinate-plane - [x3a4a3f5974a76c41] Length of a line segment on a coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_segment",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 2,
+		          "y": 7
+		        },
+		        {
+		          "x": 4,
+		          "y": 2
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb1790d57d4a4e82f
+	// Question: Find the length of a line segment on a coordinate plane
+	// Widget key: image_1
+	test("coordinate-plane - [xb1790d57d4a4e82f] Find the length of a line segment on a coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 360,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_segment",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": "Line segment from (2, 7) to (14, 2)",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 2,
+		          "y": 7
+		        },
+		        {
+		          "x": 14,
+		          "y": 2
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb292ed785ef63dd2
+	// Question: Find the length of a line segment on a coordinate plane
+	// Widget key: image_1
+	test("coordinate-plane - [xb292ed785ef63dd2] Find the length of a line segment on a coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_segment",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": "Line segment from (2, 2) to (6, 5)",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 2,
+		          "y": 2
+		        },
+		        {
+		          "x": 6,
+		          "y": 5
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7c8e7b2dd73b3179
+	// Question: Graph a point on the coordinate plane
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x7c8e7b2dd73b3179] Graph a point on the coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: x80c8f6d7b84f6237
-	// Question: Select the graph that plots (3, 0)
-	// Widget key: coordinate_plane
-	test("coordinate-plane - [x80c8f6d7b84f6237] Select the graph that plots (3, 0)", async () => {
+	// Question: Plot a point on the coordinate plane
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x80c8f6d7b84f6237] Plot a point on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -532,6 +834,53 @@ describe("coordinatePlane widget tests", () => {
 		  "yAxis": {
 		    "max": 6,
 		    "min": -6,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x54d37c22378e7b9f
+	// Question: Select the graph of a point on the coordinate plane
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x54d37c22378e7b9f] Select the graph of a point on the coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
@@ -607,9 +956,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xe0942c18f0ff61da
-	// Question: Select the graph of a point on the coordinate plane
+	// Question: Graph the point (0, −9)
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xe0942c18f0ff61da] Select the graph of a point on the coordinate plane", async () => {
+	test("coordinate-plane - [xe0942c18f0ff61da] Graph the point (0, −9)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -654,9 +1003,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x5ca32a31bd8019a1
-	// Question: Select the graph with the point (2, 9)
+	// Question: Identify a point on the coordinate plane
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x5ca32a31bd8019a1] Select the graph with the point (2, 9)", async () => {
+	test("coordinate-plane - [x5ca32a31bd8019a1] Identify a point on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -701,9 +1050,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x1ff9d77b07e1e511
-	// Question: Identify a plotted point on the coordinate plane
+	// Question: Graph a point on the coordinate plane
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x1ff9d77b07e1e511] Identify a plotted point on the coordinate plane", async () => {
+	test("coordinate-plane - [x1ff9d77b07e1e511] Graph a point on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -747,10 +1096,289 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4591caa2ecef2ac9
-	// Question: Identify the corresponding point in a scaled copy
+	// Extracted from question: x9ca7c743947f256e
+	// Question: Select the line that fits the data
 	// Widget key: image_1
-	test("coordinate-plane - [x4591caa2ecef2ac9] Identify the corresponding point in a scaled copy", async () => {
+	test("coordinate-plane - [x9ca7c743947f256e] Select the line that fits the data", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_A",
+		      "color": "#a24d61",
+		      "label": "A",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -0.75,
+		        "yIntercept": 9
+		      }
+		    },
+		    {
+		      "id": "line_B",
+		      "color": "#e1a158",
+		      "label": "B",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.75,
+		        "yIntercept": 2
+		      }
+		    },
+		    {
+		      "id": "line_C",
+		      "color": "#77b05d",
+		      "label": "C",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 6
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 9,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 8,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3.5,
+		      "y": 7.5,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 6.5,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 6,
+		      "id": "p5",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 6,
+		      "id": "p6",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 5.5,
+		      "id": "p7",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 6.2,
+		      "id": "p8",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 6.7,
+		      "id": "p9",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 8.7,
+		      "id": "p10",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 7,
+		      "id": "p11",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 7.7,
+		      "id": "p12",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xdf7523558d395623
+	// Question: Select the sequence of transformations that maps one triangle to another
+	// Widget key: image_1
+	test("coordinate-plane - [xdf7523558d395623] Select the sequence of transformations that maps one triangle to another", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 300,
+		  "xAxis": {
+		    "max": 12,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 7,
+		      "y": 10,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 10,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 6,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 7,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 0,
+		      "id": "E",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 2,
+		      "id": "F",
+		      "label": "F",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": " ",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#99999922",
+		      "strokeColor": "#999999"
+		    },
+		    {
+		      "label": " ",
+		      "isClosed": true,
+		      "vertices": [
+		        "D",
+		        "E",
+		        "F"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf69829baa1ca4cca
+	// Question: Identify a corresponding side in a scaled figure
+	// Widget key: image_1
+	test("coordinate-plane - [xf69829baa1ca4cca] Identify a corresponding side in a scaled figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -758,61 +1386,89 @@ describe("coordinatePlane widget tests", () => {
 		  "lines": [],
 		  "width": 325,
 		  "xAxis": {
-		    "max": 18,
+		    "max": 20,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 16,
+		    "max": 20,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 325,
 		  "points": [
 		    {
-		      "x": 2,
-		      "y": 11,
-		      "id": "f1_left",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 6,
-		      "y": 14,
-		      "id": "M",
-		      "label": "M",
-		      "style": "closed"
-		    },
-		    {
 		      "x": 5,
-		      "y": 11,
-		      "id": "f1_right",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 8,
-		      "y": 5,
+		      "y": 12,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 16,
-		      "y": 11,
+		      "x": 5,
+		      "y": 5,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 14,
+		      "x": 4,
 		      "y": 5,
 		      "id": "C",
 		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 9,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 12,
+		      "id": "E",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 3,
+		      "id": "M",
+		      "label": "M",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 11,
+		      "id": "N",
+		      "label": "N",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 17,
+		      "id": "O",
+		      "label": "O",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 13,
+		      "y": 17,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 13,
+		      "y": 3,
+		      "id": "Q",
+		      "label": "Q",
 		      "style": "closed"
 		    }
 		  ],
@@ -821,22 +1477,26 @@ describe("coordinatePlane widget tests", () => {
 		      "label": "Figure 1",
 		      "isClosed": true,
 		      "vertices": [
-		        "f1_left",
-		        "M",
-		        "f1_right"
+		        "A",
+		        "B",
+		        "C",
+		        "D",
+		        "E"
 		      ],
-		      "fillColor": "#11accd22",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    },
 		    {
 		      "label": "Figure 2",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
+		        "M",
+		        "N",
+		        "O",
+		        "P",
+		        "Q"
 		      ],
-		      "fillColor": "#1fab5422",
+		      "fillColor": "#1fab5426",
 		      "strokeColor": "#1fab54"
 		    }
 		  ],
@@ -860,67 +1520,99 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x8cf37b9b4a054c4c
-	// Question: Identify the constant of proportionality from a graph
+	// Extracted from question: x0635b3f999fb8d3d
+	// Question: Identify corresponding points in scaled figures
 	// Widget key: image_1
-	test("coordinate-plane - [x8cf37b9b4a054c4c] Identify the constant of proportionality from a graph", async () => {
+	test("coordinate-plane - [x0635b3f999fb8d3d] Identify corresponding points in scaled figures", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
-		  "lines": [
-		    {
-		      "id": "line_A",
-		      "color": "#11accd",
-		      "label": "A",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 4,
-		        "yIntercept": 0
-		      }
-		    },
-		    {
-		      "id": "line_B",
-		      "color": "#1fab54",
-		      "label": "B",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1.3333333333333333,
-		        "yIntercept": 0
-		      }
-		    },
-		    {
-		      "id": "line_C",
-		      "color": "#7854ab",
-		      "label": "C",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.4,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
+		  "lines": [],
 		  "width": 325,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "Figure 1 and Figure 2",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "Coordinates",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 325,
-		  "points": [],
-		  "polygons": [],
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 5,
+		      "id": "M",
+		      "label": "M",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "id": "F1_R",
+		      "label": "",
+		      "style": "open"
+		    },
+		    {
+		      "x": 5,
+		      "y": 8,
+		      "id": "F1_T",
+		      "label": "",
+		      "style": "open"
+		    },
+		    {
+		      "x": 1,
+		      "y": 1,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 1,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 7,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "Figure 2",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "C",
+		        "B"
+		      ],
+		      "fillColor": "#00000000",
+		      "strokeColor": "#11accd"
+		    },
+		    {
+		      "label": "Figure 1",
+		      "isClosed": true,
+		      "vertices": [
+		        "M",
+		        "F1_R",
+		        "F1_T"
+		      ],
+		      "fillColor": "#00000000",
+		      "strokeColor": "#1fab54"
+		    }
+		  ],
 		  "distances": [],
 		  "polylines": [],
 		  "showQuadrantLabels": false
@@ -941,10 +1633,403 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xb8b3010feff5acae
-	// Question: Identify a constant of proportionality from a graph
+	// Extracted from question: xdf88e1a30d63eec0
+	// Question: Identify the corresponding point in a scaled copy
 	// Widget key: image_1
-	test("coordinate-plane - [xb8b3010feff5acae] Identify a constant of proportionality from a graph", async () => {
+	test("coordinate-plane - [xdf88e1a30d63eec0] Identify the corresponding point in a scaled copy", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 325,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 14,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 4,
+		      "id": "M",
+		      "label": "M",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 3,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 13,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 15,
+		      "y": 13,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 15,
+		      "y": 3,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_figure1",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": "Figure 1",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 1,
+		          "y": 9
+		        },
+		        {
+		          "x": 6,
+		          "y": 9
+		        },
+		        {
+		          "x": 6,
+		          "y": 4
+		        },
+		        {
+		          "x": 4,
+		          "y": 4
+		        },
+		        {
+		          "x": 1,
+		          "y": 9
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_figure2",
+		      "type": "points",
+		      "color": "#1fab54",
+		      "label": "Figure 2",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 11,
+		          "y": 3
+		        },
+		        {
+		          "x": 15,
+		          "y": 3
+		        },
+		        {
+		          "x": 15,
+		          "y": 13
+		        },
+		        {
+		          "x": 5,
+		          "y": 13
+		        },
+		        {
+		          "x": 11,
+		          "y": 3
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4ab06ac8d3ad587b
+	// Question: Identify corresponding side in a scaled copy
+	// Widget key: image_1
+	test("coordinate-plane - [x4ab06ac8d3ad587b] Identify corresponding side in a scaled copy", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 325,
+		  "xAxis": {
+		    "max": 18,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 18,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": 4,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 11,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 11,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 8,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 4,
+		      "id": "E",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 3,
+		      "id": "M",
+		      "label": "M",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 17,
+		      "id": "N",
+		      "label": "N",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 15,
+		      "y": 17,
+		      "id": "O",
+		      "label": "O",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 11,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 15,
+		      "y": 3,
+		      "id": "Q",
+		      "label": "Q",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "Figure 1",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D",
+		        "E"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    },
+		    {
+		      "label": "Figure 2",
+		      "isClosed": true,
+		      "vertices": [
+		        "M",
+		        "N",
+		        "O",
+		        "P",
+		        "Q"
+		      ],
+		      "fillColor": "#1fab5426",
+		      "strokeColor": "#1fab54"
+		    }
+		  ],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xebe0471136d91d4b
+	// Question: Find the scale factor between two rectangles
+	// Widget key: image_1
+	test("coordinate-plane - [xebe0471136d91d4b] Find the scale factor between two rectangles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 325,
+		  "xAxis": {
+		    "max": 12,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_figure_b",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": "Figure B",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 2,
+		          "y": 2
+		        },
+		        {
+		          "x": 2,
+		          "y": 5
+		        },
+		        {
+		          "x": 11,
+		          "y": 5
+		        },
+		        {
+		          "x": 11,
+		          "y": 2
+		        },
+		        {
+		          "x": 2,
+		          "y": 2
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_figure_a",
+		      "type": "points",
+		      "color": "#1fab54",
+		      "label": "Figure A",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 2,
+		          "y": 6
+		        },
+		        {
+		          "x": 2,
+		          "y": 7
+		        },
+		        {
+		          "x": 5,
+		          "y": 7
+		        },
+		        {
+		          "x": 5,
+		          "y": 6
+		        },
+		        {
+		          "x": 2,
+		          "y": 6
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb8b3010feff5acae
+	// Question: Select the line with constant of proportionality 2/3
+	// Widget key: image_1
+	test("coordinate-plane - [xb8b3010feff5acae] Select the line with constant of proportionality 2/3", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -957,7 +2042,7 @@ describe("coordinatePlane widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 3.5,
+		        "slope": 3,
 		        "yIntercept": 0
 		      }
 		    },
@@ -988,18 +2073,204 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "height": 325,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xaa8ed5f8c55d2ae7
+	// Question: Find the constant of proportionality from a graph
+	// Widget key: image_1
+	test("coordinate-plane - [xaa8ed5f8c55d2ae7] Find the constant of proportionality from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_y_eq_x",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 1,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 6,
+		      "id": "P1",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb74eb2192a8afd98
+	// Question: Find the slope from a graphed line
+	// Widget key: image_1
+	test("coordinate-plane - [xb74eb2192a8afd98] Find the slope from a graphed line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_main",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 3,
+		        "yIntercept": 6
+		      }
+		    }
+		  ],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 5,
+		    "min": -5,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "min": -5,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5081fa2ea349aca3
+	// Question: Find the slope from a graph
+	// Widget key: image_1
+	test("coordinate-plane - [x5081fa2ea349aca3] Find the slope from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_main",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": -2,
+		        "C": -7,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 6,
+		    "min": -6,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "min": -6,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -1034,7 +2305,7 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "id": "line_purple",
 		      "color": "#9d38bd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -1047,41 +2318,19 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "height": 325,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "p_origin",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 0,
-		      "id": "p_purple_xint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 9,
-		      "id": "p_green_start",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [
@@ -1089,7 +2338,7 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_blue_curve",
 		      "type": "function",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "xRange": {
 		        "max": 10,
@@ -1097,26 +2346,62 @@ describe("coordinatePlane widget tests", () => {
 		      },
 		      "resolution": 200,
 		      "coefficients": [
-		        0.08,
+		        0.1,
 		        0,
 		        0
 		      ]
 		    },
 		    {
 		      "id": "polyline_green_curve",
-		      "type": "function",
+		      "type": "points",
 		      "color": "#28ae7b",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
-		      "xRange": {
-		        "max": 10,
-		        "min": 0
-		      },
-		      "resolution": 200,
-		      "coefficients": [
-		        -0.08,
-		        0,
-		        9
+		      "points": [
+		        {
+		          "x": 0,
+		          "y": 9
+		        },
+		        {
+		          "x": 1,
+		          "y": 6
+		        },
+		        {
+		          "x": 2,
+		          "y": 4.5
+		        },
+		        {
+		          "x": 3,
+		          "y": 3.6
+		        },
+		        {
+		          "x": 4,
+		          "y": 3
+		        },
+		        {
+		          "x": 5,
+		          "y": 2.571
+		        },
+		        {
+		          "x": 6,
+		          "y": 2.25
+		        },
+		        {
+		          "x": 7,
+		          "y": 2
+		        },
+		        {
+		          "x": 8,
+		          "y": 1.8
+		        },
+		        {
+		          "x": 9,
+		          "y": 1.636
+		        },
+		        {
+		          "x": 10,
+		          "y": 1.5
+		        }
 		      ]
 		    }
 		  ],
@@ -1139,9 +2424,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x2c34d4d4fbabb97a
-	// Question: Number of proportional relationships on a coordinate plane
+	// Question: How many proportional relationships are shown?
 	// Widget key: image_1
-	test("coordinate-plane - [x2c34d4d4fbabb97a] Number of proportional relationships on a coordinate plane", async () => {
+	test("coordinate-plane - [x2c34d4d4fbabb97a] How many proportional relationships are shown?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1150,7 +2435,7 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "id": "line_green",
 		      "color": "#28ae7b",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -1161,7 +2446,7 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "id": "line_blue",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -1172,7 +2457,7 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "id": "line_purple",
 		      "color": "#9d38bd",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -1185,14 +2470,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
@@ -1241,169 +2526,19 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xfe7c6ed4b0d4d900
-	// Question: Count proportional relationships on a coordinate plane
-	// Widget key: image_1
-	test("coordinate-plane - [xfe7c6ed4b0d4d900] Count proportional relationships on a coordinate plane", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [
-		    {
-		      "id": "line_green",
-		      "color": "#28ae7b",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.5,
-		        "yIntercept": 0
-		      }
-		    },
-		    {
-		      "id": "line_purple",
-		      "color": "#9d38bd",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 3,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 325,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "x",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "y",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "origin",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 2,
-		      "id": "blue_start",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [
-		    {
-		      "id": "polyline_blue_curve",
-		      "type": "function",
-		      "color": "#6495ed",
-		      "label": "",
-		      "style": "solid",
-		      "xRange": {
-		        "max": 10,
-		        "min": 0
-		      },
-		      "resolution": 200,
-		      "coefficients": [
-		        0.0952380952,
-		        0.0476190476,
-		        2
-		      ]
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc55ca0bf22c8247e
-	// Question: Plot points and determine proportionality
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xc55ca0bf22c8247e] Plot points and determine proportionality", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 360,
-		  "xAxis": {
-		    "max": 6.5,
-		    "min": -1,
-		    "label": "Hours",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 55,
-		    "min": -5,
-		    "label": "Earnings",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "height": 360,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xb2f7d2a4bbb4d015
-	// Question: Count proportional relationships on a coordinate plane
+	// Question: How many proportional relationships are shown?
 	// Widget key: image_1
-	test("coordinate-plane - [xb2f7d2a4bbb4d015] Count proportional relationships on a coordinate plane", async () => {
+	test("coordinate-plane - [xb2f7d2a4bbb4d015] How many proportional relationships are shown?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [
 		    {
-		      "id": "line_green",
+		      "id": "line_slope_1",
 		      "color": "#28ae7b",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -1412,9 +2547,9 @@ describe("coordinatePlane widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "line_blue",
+		      "id": "line_slope_3_5",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -1423,9 +2558,9 @@ describe("coordinatePlane widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "line_purple",
+		      "id": "line_slope_1_3",
 		      "color": "#9d38bd",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -1481,9 +2616,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xac9ca145e3ff81d4
-	// Question: Plot points from a table and determine proportionality
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xac9ca145e3ff81d4] Plot points from a table and determine proportionality", async () => {
+	// Question: Plot ordered pairs and identify proportionality
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [xac9ca145e3ff81d4] Plot ordered pairs and identify proportionality", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1528,9 +2663,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x0c6519c79d1c60af
-	// Question: Plot ordered pairs and identify a proportional relationship
-	// Widget key: plane_empty
-	test("coordinate-plane - [x0c6519c79d1c60af] Plot ordered pairs and identify a proportional relationship", async () => {
+	// Question: Plot ordered pairs and determine proportionality
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [x0c6519c79d1c60af] Plot ordered pairs and determine proportionality", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1539,14 +2674,14 @@ describe("coordinatePlane widget tests", () => {
 		  "width": 360,
 		  "xAxis": {
 		    "max": 4.5,
-		    "min": -0.5,
+		    "min": 0,
 		    "label": "Storage (GB)",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 500,
-		    "min": -50,
+		    "min": 0,
 		    "label": "Songs",
 		    "tickInterval": 50,
 		    "showGridLines": true
@@ -1574,10 +2709,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x5a6c2961568b8359
+	// Extracted from question: x454440a0107897f9
 	// Question: Plot ordered pairs and assess proportionality
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x5a6c2961568b8359] Plot ordered pairs and assess proportionality", async () => {
+	// Widget key: plane_stimulus
+	test("coordinate-plane - [x454440a0107897f9] Plot ordered pairs and assess proportionality", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1585,15 +2720,62 @@ describe("coordinatePlane widget tests", () => {
 		  "lines": [],
 		  "width": 360,
 		  "xAxis": {
-		    "max": 7,
-		    "min": -0.5,
+		    "max": 22,
+		    "min": -4,
+		    "label": "Kilometers",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 55,
+		    "min": -5,
+		    "label": "Minutes",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5a6c2961568b8359
+	// Question: Plot points from a table and test proportionality
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x5a6c2961568b8359] Plot points from a table and test proportionality", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 360,
+		  "xAxis": {
+		    "max": 6,
+		    "min": 0,
 		    "label": "Targets hit",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 20,
-		    "min": -2,
+		    "max": 18,
+		    "min": 0,
 		    "label": "Points",
 		    "tickInterval": 2,
 		    "showGridLines": true
@@ -1621,63 +2803,16 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xca2ec09641388000
-	// Question: Plot ordered pairs and assess proportionality
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xca2ec09641388000] Plot ordered pairs and assess proportionality", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 360,
-		  "xAxis": {
-		    "max": 24,
-		    "min": 0,
-		    "label": "Chicken wings",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 12,
-		    "min": 0,
-		    "label": "Price",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 360,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x6d27fb41885a7a77
-	// Question: Select the graph of a line in slope-intercept form
+	// Question: Select the graph of y = -1/3x + 5
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x6d27fb41885a7a77] Select the graph of a line in slope-intercept form", async () => {
+	test("coordinate-plane - [x6d27fb41885a7a77] Select the graph of y = -1/3x + 5", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -1692,54 +2827,7 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 500,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa793847e4c597904
-	// Question: Graph the line y = 4x − 9
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xa793847e4c597904] Graph the line y = 4x − 9", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 428,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -1763,15 +2851,15 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x4e0548d22e1822b2
-	// Question: Identify the correct graph of y = -2x + 5
+	// Question: Select the graph of y = -2x + 5
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x4e0548d22e1822b2] Identify the correct graph of y = -2x + 5", async () => {
+	test("coordinate-plane - [x4e0548d22e1822b2] Select the graph of y = -2x + 5", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -1786,7 +2874,7 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -1810,15 +2898,15 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x0343717eb1ad23e9
-	// Question: Identify the graph of y = 4/5x − 7
+	// Question: Select the graph of a line in slope-intercept form
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x0343717eb1ad23e9] Identify the graph of y = 4/5x − 7", async () => {
+	test("coordinate-plane - [x0343717eb1ad23e9] Select the graph of a line in slope-intercept form", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -1833,7 +2921,7 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -1857,56 +2945,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xfa5da5fce35b3433
-	// Question: Select the graph of y = x + 4
+	// Question: Graph the line y = x + 4
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xfa5da5fce35b3433] Select the graph of y = x + 4", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x41b096b42d1050b4
-	// Question: Graph the line y = -3x + 7
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x41b096b42d1050b4] Graph the line y = -3x + 7", async () => {
+	test("coordinate-plane - [xfa5da5fce35b3433] Graph the line y = x + 4", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1950,10 +2991,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xfe5ac51c24aed858
-	// Question: Select the graph of y = -x - 6
+	// Extracted from question: x41b096b42d1050b4
+	// Question: Select the graph of y = -3x + 7
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xfe5ac51c24aed858] Select the graph of y = -x - 6", async () => {
+	test("coordinate-plane - [x41b096b42d1050b4] Select the graph of y = -3x + 7", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1997,10 +3038,198 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa82a01dabb65f81c
-	// Question: Select the graph of y = (2/3)x − 4
+	// Extracted from question: x57216f94cb401439
+	// Question: Select the graph of a line from its equation
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xa82a01dabb65f81c] Select the graph of y = (2/3)x − 4", async () => {
+	test("coordinate-plane - [x57216f94cb401439] Select the graph of a line from its equation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 428,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 428,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcfbafcbbbbadec5f
+	// Question: Graph the line y = 3/4 x + 2
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [xcfbafcbbbbadec5f] Graph the line y = 3/4 x + 2", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x09c4113cde2e71be
+	// Question: Graph the line y = 2x − 7
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x09c4113cde2e71be] Graph the line y = 2x − 7", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe103ffec7ab888e3
+	// Question: Select the graph of a linear equation
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [xe103ffec7ab888e3] Select the graph of a linear equation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 428,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 428,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa82a01dabb65f81c
+	// Question: Graph a line from slope–intercept form
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [xa82a01dabb65f81c] Graph a line from slope–intercept form", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2045,9 +3274,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xafbb6f34200c6a60
-	// Question: Graph a line from slope-intercept form
+	// Question: Graph the line y = 6/5 x + 1
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xafbb6f34200c6a60] Graph a line from slope-intercept form", async () => {
+	test("coordinate-plane - [xafbb6f34200c6a60] Graph the line y = 6/5 x + 1", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2091,57 +3320,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xae1f52d54ca20e1c
-	// Question: Select the graph of y = -1/4 x + 6
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xae1f52d54ca20e1c] Select the graph of y = -1/4 x + 6", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe6cacb86284df85d
-	// Question: Reflect a quadrilateral across the y-axis
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [xe6cacb86284df85d] Reflect a quadrilateral across the y-axis", async () => {
+	// Extracted from question: x04ef364b331fe4c7
+	// Question: Reflect a triangle across the y-axis
+	// Widget key: coordinate_plane_triangle
+	test("coordinate-plane - [x04ef364b331fe4c7] Reflect a triangle across the y-axis", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2165,43 +3347,35 @@ describe("coordinatePlane widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 2,
-		      "y": -3,
+		      "x": -3,
+		      "y": 6,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": -6,
+		      "x": -6,
+		      "y": 2,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 5,
-		      "y": -4,
+		      "x": -3,
+		      "y": 4,
 		      "id": "C",
 		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": -2,
-		      "id": "D",
-		      "label": "D",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "ABCD",
+		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
 		        "B",
-		        "C",
-		        "D"
+		        "C"
 		      ],
 		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
@@ -2228,9 +3402,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x990879e7218e4680
-	// Question: Reflect a triangle across a horizontal line
-	// Widget key: stimulus_graph
-	test("coordinate-plane - [x990879e7218e4680] Reflect a triangle across a horizontal line", async () => {
+	// Question: Reflect a triangle across a line
+	// Widget key: stimulus_plane
+	test("coordinate-plane - [x990879e7218e4680] Reflect a triangle across a line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2244,7 +3418,7 @@ describe("coordinatePlane widget tests", () => {
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": 0,
-		        "yIntercept": 0
+		        "yIntercept": -1
 		      }
 		    }
 		  ],
@@ -2266,22 +3440,22 @@ describe("coordinatePlane widget tests", () => {
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": -1,
-		      "y": 6,
+		      "x": -4,
+		      "y": 1,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -2,
-		      "y": 7,
+		      "y": 5,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -4,
-		      "y": 3,
+		      "x": -1,
+		      "y": 4,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
@@ -2289,14 +3463,14 @@ describe("coordinatePlane widget tests", () => {
 		  ],
 		  "polygons": [
 		    {
-		      "label": "△ABC",
+		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#11accd33",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -2321,9 +3495,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xeda9c8c09b2abd9f
-	// Question: Reflect a quadrilateral across a vertical line
+	// Question: Reflect a quadrilateral across line ℓ
 	// Widget key: stimulus_graph
-	test("coordinate-plane - [xeda9c8c09b2abd9f] Reflect a quadrilateral across a vertical line", async () => {
+	test("coordinate-plane - [xeda9c8c09b2abd9f] Reflect a quadrilateral across line ℓ", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2337,7 +3511,7 @@ describe("coordinatePlane widget tests", () => {
 		      "equation": {
 		        "A": 1,
 		        "B": 0,
-		        "C": 0,
+		        "C": 2,
 		        "type": "standard"
 		      }
 		    }
@@ -2360,29 +3534,29 @@ describe("coordinatePlane widget tests", () => {
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": -4,
-		      "y": 4,
+		      "x": -2,
+		      "y": 0,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -3,
-		      "y": 6,
+		      "x": -1,
+		      "y": 5,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -5,
-		      "y": 5,
+		      "x": -3,
+		      "y": 6,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -4,
-		      "y": 0,
+		      "x": -2,
+		      "y": 4,
 		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
@@ -2398,7 +3572,7 @@ describe("coordinatePlane widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#11accd1a",
+		      "fillColor": "#11accd33",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -2487,7 +3661,7 @@ describe("coordinatePlane widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#11accd22",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -2576,7 +3750,7 @@ describe("coordinatePlane widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd33",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -2602,7 +3776,7 @@ describe("coordinatePlane widget tests", () => {
 
 	// Extracted from question: xbc86d86e5153be53
 	// Question: Reflect a triangle across the x-axis
-	// Widget key: coordinate_plane_original
+	// Widget key: reference_diagram
 	test("coordinate-plane - [xbc86d86e5153be53] Reflect a triangle across the x-axis", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2630,34 +3804,34 @@ describe("coordinatePlane widget tests", () => {
 		      "x": -2,
 		      "y": 0,
 		      "id": "A",
-		      "label": "",
+		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
 		      "y": 5,
 		      "id": "B",
-		      "label": "",
+		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -4,
 		      "y": 4,
 		      "id": "C",
-		      "label": "",
+		      "label": "C",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "",
+		      "label": "ABC",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -2683,7 +3857,7 @@ describe("coordinatePlane widget tests", () => {
 
 	// Extracted from question: xbda9b252b05d78e0
 	// Question: Reflect a triangle across the y-axis
-	// Widget key: stimulus_graph
+	// Widget key: triangle_stimulus
 	test("coordinate-plane - [xbda9b252b05d78e0] Reflect a triangle across the y-axis", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2710,241 +3884,38 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 2,
-		      "id": "A",
-		      "label": "A",
+		      "id": "P1",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 4,
-		      "id": "B",
-		      "label": "B",
+		      "id": "P2",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 3,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "ABC",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#11accd22",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc1a897e916cad874
-	// Question: Reflect a quadrilateral across a vertical line
-	// Widget key: stimulus_graph
-	test("coordinate-plane - [xc1a897e916cad874] Reflect a quadrilateral across a vertical line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [
-		    {
-		      "id": "line_l",
-		      "color": "#000000",
-		      "label": "ℓ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": 4,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": -5,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": -1,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": -1,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -4,
-		      "id": "p4",
+		      "id": "P3",
 		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "",
+		      "label": " ",
 		      "isClosed": true,
 		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3",
-		        "p4"
+		        "P1",
+		        "P2",
+		        "P3"
 		      ],
-		      "fillColor": "#11accd22",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x43b3a1711b805747
-	// Question: How many solutions does the linear system have?
-	// Widget key: coordinate_plane
-	test("coordinate-plane - [x43b3a1711b805747] How many solutions does the linear system have?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#6495ED",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "A": 4,
-		        "B": -6,
-		        "C": -24,
-		        "type": "standard"
-		      }
-		    },
-		    {
-		      "id": "line_2",
-		      "color": "#FF00AF",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "A": 2,
-		        "B": -3,
-		        "C": -6,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 280,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 280,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": 0,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 4,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 0,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 2,
-		      "id": "p4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
 		  "distances": [],
 		  "polylines": [],
 		  "showQuadrantLabels": false
@@ -2966,15 +3937,15 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x519daca98e4be579
-	// Question: How many solutions does the system have?
+	// Question: Number of solutions for a linear system
 	// Widget key: coordinate_plane
-	test("coordinate-plane - [x519daca98e4be579] How many solutions does the system have?", async () => {
+	test("coordinate-plane - [x519daca98e4be579] Number of solutions for a linear system", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 280,
+		  "width": 345,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -2989,7 +3960,7 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 280,
+		  "height": 345,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -3013,9 +3984,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x8162ca287ecd407a
-	// Question: Complete a ratio table and select the graph
+	// Question: Complete a ratio table and select the corresponding graph
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x8162ca287ecd407a] Complete a ratio table and select the graph", async () => {
+	test("coordinate-plane - [x8162ca287ecd407a] Complete a ratio table and select the corresponding graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3059,54 +4030,32 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x109a849190c03f75
-	// Question: Select an ordered pair that fits the salt–water ratio
-	// Widget key: image_1
-	test("coordinate-plane - [x109a849190c03f75] Select an ordered pair that fits the salt–water ratio", async () => {
+	// Extracted from question: x9ffa92ab135f2aeb
+	// Question: Complete a ratio table and select the correct graph
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x9ffa92ab135f2aeb] Complete a ratio table and select the correct graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 380,
+		  "width": 425,
 		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Water (scoops)",
-		    "tickInterval": 1,
+		    "max": 50,
+		    "min": -5,
+		    "label": "x",
+		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Salt (scoops)",
+		    "max": 6,
+		    "min": -1,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 380,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": 2.5,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 3,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 4,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 425,
+		  "points": [],
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [],
@@ -3128,47 +4077,44 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3d89f552fbb972ee
-	// Question: Angle of rotation about the origin
+	// Extracted from question: x849d98f5daffa001
+	// Question: Compare distance and speed from table and graph
 	// Widget key: image_1
-	test("coordinate-plane - [x3d89f552fbb972ee] Angle of rotation about the origin", async () => {
+	test("coordinate-plane - [x849d98f5daffa001] Compare distance and speed from table and graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 325,
+		  "lines": [
+		    {
+		      "id": "line_mrs_smith",
+		      "color": "#6495ed",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -0.15,
+		        "yIntercept": 4.5
+		      }
+		    }
+		  ],
+		  "width": 468,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
-		    "tickInterval": 1,
+		    "max": 50,
+		    "min": 0,
+		    "label": "Time (minutes)",
+		    "tickInterval": 2.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
-		    "tickInterval": 1,
+		    "max": 5,
+		    "min": 0,
+		    "label": "Distance (kilometers)",
+		    "tickInterval": 0.25,
 		    "showGridLines": true
 		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": 4,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -4,
-		      "id": "A_prime",
-		      "label": "A′",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 456,
+		  "points": [],
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [],
@@ -3191,9 +4137,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xbf1cc072e328b0fa
-	// Question: Find the coordinates of the fourth vertex of a square
+	// Question: Find the missing vertex of a square on the coordinate plane
 	// Widget key: image_1
-	test("coordinate-plane - [xbf1cc072e328b0fa] Find the coordinates of the fourth vertex of a square", async () => {
+	test("coordinate-plane - [xbf1cc072e328b0fa] Find the missing vertex of a square on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3203,14 +4149,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -3236,26 +4182,27 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": -3,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
 		      "label": "",
-		      "isClosed": true,
+		      "isClosed": false,
 		      "vertices": [
 		        "A",
-		        "B",
-		        "C",
-		        "D"
+		        "B"
 		      ],
-		      "fillColor": "#11accd1A",
+		      "fillColor": "#00000000",
+		      "strokeColor": "#11accd"
+		    },
+		    {
+		      "label": "",
+		      "isClosed": false,
+		      "vertices": [
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#00000000",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -3279,10 +4226,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa308e4407932fbb6
-	// Question: Find the coordinates of the fourth vertex of a rectangle
+	// Extracted from question: x279ee4b02f62bd70
+	// Question: Find the fourth vertex of a rectangle on the coordinate plane
 	// Widget key: image_1
-	test("coordinate-plane - [xa308e4407932fbb6] Find the coordinates of the fourth vertex of a rectangle", async () => {
+	test("coordinate-plane - [x279ee4b02f62bd70] Find the fourth vertex of a rectangle on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3292,14 +4239,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -3307,21 +4254,21 @@ describe("coordinatePlane widget tests", () => {
 		  "points": [
 		    {
 		      "x": -7,
-		      "y": -2,
+		      "y": -7.5,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": -2,
+		      "x": -3,
+		      "y": -7.5,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": -5,
+		      "x": -3,
+		      "y": 2.5,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
@@ -3331,36 +4278,23 @@ describe("coordinatePlane widget tests", () => {
 		  "distances": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_AB",
+		      "id": "polyline_rectangle_sides",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "AB",
+		      "label": null,
 		      "style": "solid",
 		      "points": [
 		        {
 		          "x": -7,
-		          "y": -2
+		          "y": -7.5
 		        },
 		        {
-		          "x": 3,
-		          "y": -2
-		        }
-		      ]
-		    },
-		    {
-		      "id": "polyline_BC",
-		      "type": "points",
-		      "color": "#11accd",
-		      "label": "BC",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 3,
-		          "y": -2
+		          "x": -3,
+		          "y": -7.5
 		        },
 		        {
-		          "x": 3,
-		          "y": -5
+		          "x": -3,
+		          "y": 2.5
 		        }
 		      ]
 		    }
@@ -3384,9 +4318,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x28a145ded0ee0724
-	// Question: Find the coordinates of the missing rectangle vertex
+	// Question: Find the coordinates of the fourth vertex of a rectangle
 	// Widget key: image_1
-	test("coordinate-plane - [x28a145ded0ee0724] Find the coordinates of the missing rectangle vertex", async () => {
+	test("coordinate-plane - [x28a145ded0ee0724] Find the coordinates of the fourth vertex of a rectangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3396,14 +4330,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -3413,28 +4347,28 @@ describe("coordinatePlane widget tests", () => {
 		      "x": 2,
 		      "y": 1,
 		      "id": "A",
-		      "label": "",
+		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 1,
 		      "id": "B",
-		      "label": "",
+		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 6,
 		      "id": "C",
-		      "label": "",
+		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 6,
 		      "id": "D",
-		      "label": "",
+		      "label": "D",
 		      "style": "closed"
 		    }
 		  ],
@@ -3448,96 +4382,7 @@ describe("coordinatePlane widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2dc3412b82f69a2f
-	// Question: Find the missing rectangle vertex coordinates
-	// Widget key: image_1
-	test("coordinate-plane - [x2dc3412b82f69a2f] Find the missing rectangle vertex coordinates", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -5,
-		      "y": -8,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 0,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 0,
-		      "id": "C",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -8,
-		      "id": "D",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -3562,9 +4407,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xd7436c6190b8008c
-	// Question: Find the missing vertex of a rectangle
+	// Question: Find the coordinates of the fourth vertex of a rectangle
 	// Widget key: image_1
-	test("coordinate-plane - [xd7436c6190b8008c] Find the missing vertex of a rectangle", async () => {
+	test("coordinate-plane - [xd7436c6190b8008c] Find the coordinates of the fourth vertex of a rectangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3574,14 +4419,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -3590,22 +4435,22 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "x": 3,
 		      "y": 5,
-		      "id": "ptA",
-		      "label": "",
+		      "id": "A",
+		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": -4,
-		      "id": "ptB",
-		      "label": "",
+		      "id": "B",
+		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -2,
 		      "y": -4,
-		      "id": "ptC",
-		      "label": "",
+		      "id": "C",
+		      "label": "C",
 		      "style": "closed"
 		    }
 		  ],
@@ -3616,7 +4461,7 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_AB",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "AB",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -3633,7 +4478,7 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_BC",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "BC",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -3666,9 +4511,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x81d63cdf93a848ae
-	// Question: Identify the error in a congruence argument about segments
+	// Question: Identify the error about congruent segments
 	// Widget key: image_1
-	test("coordinate-plane - [x81d63cdf93a848ae] Identify the error in a congruence argument about segments", async () => {
+	test("coordinate-plane - [x81d63cdf93a848ae] Identify the error about congruent segments", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3678,14 +4523,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -3693,31 +4538,17 @@ describe("coordinatePlane widget tests", () => {
 		  "points": [
 		    {
 		      "x": 3,
-		      "y": 13,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
+		      "y": 3,
+		      "id": "p1",
+		      "label": "",
+		      "style": "open"
 		    },
 		    {
 		      "x": 11,
-		      "y": 5,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 13,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 11,
-		      "y": 5,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
+		      "y": 11,
+		      "id": "p2",
+		      "label": "",
+		      "style": "open"
 		    }
 		  ],
 		  "polygons": [],
@@ -3727,16 +4558,16 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_ab",
 		      "type": "points",
 		      "color": "#ca337c",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "points": [
 		        {
 		          "x": 3,
-		          "y": 13
+		          "y": 3
 		        },
 		        {
 		          "x": 11,
-		          "y": 5
+		          "y": 11
 		        }
 		      ]
 		    },
@@ -3744,16 +4575,16 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_cd",
 		      "type": "points",
 		      "color": "#0c7f99",
-		      "label": " ",
+		      "label": null,
 		      "style": "dashed",
 		      "points": [
 		        {
 		          "x": 3,
-		          "y": 13
+		          "y": 3
 		        },
 		        {
 		          "x": 11,
-		          "y": 5
+		          "y": 11
 		        }
 		      ]
 		    }
@@ -3777,9 +4608,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xd6f1f271190819b0
-	// Question: Identify the error about congruence of coincident circles
+	// Question: Identify the error in a congruence conclusion for circles
 	// Widget key: image_1
-	test("coordinate-plane - [xd6f1f271190819b0] Identify the error about congruence of coincident circles", async () => {
+	test("coordinate-plane - [xd6f1f271190819b0] Identify the error in a congruence conclusion for circles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3787,16 +4618,16 @@ describe("coordinatePlane widget tests", () => {
 		  "lines": [],
 		  "width": 300,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -3817,7 +4648,7 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_circle_solid",
 		      "type": "points",
 		      "color": "#ca337c",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "points": [
 		        {
@@ -3825,96 +4656,96 @@ describe("coordinatePlane widget tests", () => {
 		          "y": 8
 		        },
 		        {
-		          "x": 14.761,
-		          "y": 9.812
+		          "x": 14.7615,
+		          "y": 9.8117
 		        },
 		        {
-		          "x": 14.062,
+		          "x": 14.0622,
 		          "y": 11.5
 		        },
 		        {
-		          "x": 12.95,
-		          "y": 12.95
+		          "x": 12.9497,
+		          "y": 12.9497
 		        },
 		        {
 		          "x": 11.5,
-		          "y": 14.062
+		          "y": 14.0622
 		        },
 		        {
-		          "x": 9.812,
-		          "y": 14.761
+		          "x": 9.8117,
+		          "y": 14.7615
 		        },
 		        {
 		          "x": 8,
 		          "y": 15
 		        },
 		        {
-		          "x": 6.188,
-		          "y": 14.761
+		          "x": 6.1883,
+		          "y": 14.7615
 		        },
 		        {
 		          "x": 4.5,
-		          "y": 14.062
+		          "y": 14.0622
 		        },
 		        {
-		          "x": 3.05,
-		          "y": 12.95
+		          "x": 3.0503,
+		          "y": 12.9497
 		        },
 		        {
-		          "x": 1.938,
+		          "x": 1.9378,
 		          "y": 11.5
 		        },
 		        {
-		          "x": 1.239,
-		          "y": 9.812
+		          "x": 1.2385,
+		          "y": 9.8117
 		        },
 		        {
 		          "x": 1,
 		          "y": 8
 		        },
 		        {
-		          "x": 1.239,
-		          "y": 6.188
+		          "x": 1.2385,
+		          "y": 6.1883
 		        },
 		        {
-		          "x": 1.938,
+		          "x": 1.9378,
 		          "y": 4.5
 		        },
 		        {
-		          "x": 3.05,
-		          "y": 3.05
+		          "x": 3.0503,
+		          "y": 3.0503
 		        },
 		        {
 		          "x": 4.5,
-		          "y": 1.938
+		          "y": 1.9378
 		        },
 		        {
-		          "x": 6.188,
-		          "y": 1.239
+		          "x": 6.1883,
+		          "y": 1.2385
 		        },
 		        {
 		          "x": 8,
 		          "y": 1
 		        },
 		        {
-		          "x": 9.812,
-		          "y": 1.239
+		          "x": 9.8117,
+		          "y": 1.2385
 		        },
 		        {
 		          "x": 11.5,
-		          "y": 1.938
+		          "y": 1.9378
 		        },
 		        {
-		          "x": 12.95,
-		          "y": 3.05
+		          "x": 12.9497,
+		          "y": 3.0503
 		        },
 		        {
-		          "x": 14.062,
+		          "x": 14.0622,
 		          "y": 4.5
 		        },
 		        {
-		          "x": 14.761,
-		          "y": 6.188
+		          "x": 14.7615,
+		          "y": 6.1883
 		        },
 		        {
 		          "x": 15,
@@ -3926,7 +4757,7 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_circle_dashed",
 		      "type": "points",
 		      "color": "#0c7f99",
-		      "label": "",
+		      "label": null,
 		      "style": "dashed",
 		      "points": [
 		        {
@@ -3934,96 +4765,96 @@ describe("coordinatePlane widget tests", () => {
 		          "y": 8
 		        },
 		        {
-		          "x": 14.761,
-		          "y": 9.812
+		          "x": 14.7615,
+		          "y": 9.8117
 		        },
 		        {
-		          "x": 14.062,
+		          "x": 14.0622,
 		          "y": 11.5
 		        },
 		        {
-		          "x": 12.95,
-		          "y": 12.95
+		          "x": 12.9497,
+		          "y": 12.9497
 		        },
 		        {
 		          "x": 11.5,
-		          "y": 14.062
+		          "y": 14.0622
 		        },
 		        {
-		          "x": 9.812,
-		          "y": 14.761
+		          "x": 9.8117,
+		          "y": 14.7615
 		        },
 		        {
 		          "x": 8,
 		          "y": 15
 		        },
 		        {
-		          "x": 6.188,
-		          "y": 14.761
+		          "x": 6.1883,
+		          "y": 14.7615
 		        },
 		        {
 		          "x": 4.5,
-		          "y": 14.062
+		          "y": 14.0622
 		        },
 		        {
-		          "x": 3.05,
-		          "y": 12.95
+		          "x": 3.0503,
+		          "y": 12.9497
 		        },
 		        {
-		          "x": 1.938,
+		          "x": 1.9378,
 		          "y": 11.5
 		        },
 		        {
-		          "x": 1.239,
-		          "y": 9.812
+		          "x": 1.2385,
+		          "y": 9.8117
 		        },
 		        {
 		          "x": 1,
 		          "y": 8
 		        },
 		        {
-		          "x": 1.239,
-		          "y": 6.188
+		          "x": 1.2385,
+		          "y": 6.1883
 		        },
 		        {
-		          "x": 1.938,
+		          "x": 1.9378,
 		          "y": 4.5
 		        },
 		        {
-		          "x": 3.05,
-		          "y": 3.05
+		          "x": 3.0503,
+		          "y": 3.0503
 		        },
 		        {
 		          "x": 4.5,
-		          "y": 1.938
+		          "y": 1.9378
 		        },
 		        {
-		          "x": 6.188,
-		          "y": 1.239
+		          "x": 6.1883,
+		          "y": 1.2385
 		        },
 		        {
 		          "x": 8,
 		          "y": 1
 		        },
 		        {
-		          "x": 9.812,
-		          "y": 1.239
+		          "x": 9.8117,
+		          "y": 1.2385
 		        },
 		        {
 		          "x": 11.5,
-		          "y": 1.938
+		          "y": 1.9378
 		        },
 		        {
-		          "x": 12.95,
-		          "y": 3.05
+		          "x": 12.9497,
+		          "y": 3.0503
 		        },
 		        {
-		          "x": 14.062,
+		          "x": 14.0622,
 		          "y": 4.5
 		        },
 		        {
-		          "x": 14.761,
-		          "y": 6.188
+		          "x": 14.7615,
+		          "y": 6.1883
 		        },
 		        {
 		          "x": 15,
@@ -4032,171 +4863,6 @@ describe("coordinatePlane widget tests", () => {
 		      ]
 		    }
 		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x66f0bccdd354052d
-	// Question: Plot the image of a point under a translation
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [x66f0bccdd354052d] Plot the image of a point under a translation", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": -1,
-		      "id": "Q",
-		      "label": "Q",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x65fea0e77b813718
-	// Question: Translate a point on a coordinate plane
-	// Widget key: coordinate_plane
-	test("coordinate-plane - [x65fea0e77b813718] Translate a point on a coordinate plane", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 4,
-		      "id": "point_q",
-		      "label": "Q",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x25751e4741cc427e
-	// Question: Translate a point on the coordinate plane
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [x25751e4741cc427e] Translate a point on the coordinate plane", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -1,
-		      "y": 5,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -4216,9 +4882,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x26ae8086aa6ab989
-	// Question: Image of a point under a translation
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [x26ae8086aa6ab989] Image of a point under a translation", async () => {
+	// Question: Plot the image of a point under a translation
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [x26ae8086aa6ab989] Plot the image of a point under a translation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4271,9 +4937,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xc3fd56f021953d67
-	// Question: Identify the image after a 270-degree rotation
+	// Question: Identify the image after a 270° counterclockwise rotation about the origin
 	// Widget key: image_1
-	test("coordinate-plane - [xc3fd56f021953d67] Identify the image after a 270-degree rotation", async () => {
+	test("coordinate-plane - [xc3fd56f021953d67] Identify the image after a 270° counterclockwise rotation about the origin", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4283,14 +4949,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4299,43 +4965,43 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "x": 5,
 		      "y": 7,
-		      "id": "Q1",
+		      "id": "q1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 7,
 		      "y": -3,
-		      "id": "Q2",
+		      "id": "q2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": 0,
-		      "id": "Q3",
+		      "id": "q3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -3,
 		      "y": -2,
-		      "id": "Q4",
+		      "id": "q4",
 		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "Q",
+		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "Q1",
-		        "Q2",
-		        "Q3",
-		        "Q4"
+		        "q1",
+		        "q2",
+		        "q3",
+		        "q4"
 		      ],
-		      "fillColor": "#E6F7FB",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -4372,51 +5038,51 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": 4,
+		      "x": -4,
 		      "y": 1,
-		      "id": "pt_R",
+		      "id": "R",
 		      "label": "R",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
-		      "y": 0,
-		      "id": "pt_A",
+		      "y": 1,
+		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -1,
-		      "y": 4,
-		      "id": "pt_B",
+		      "y": -4,
+		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
-		      "y": -4,
-		      "id": "pt_C",
+		      "y": 4,
+		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 0,
-		      "y": -5,
-		      "id": "pt_D",
+		      "x": 1,
+		      "y": 5,
+		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
 		    }
@@ -4442,10 +5108,99 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1a489d7abf06d964
-	// Question: Identify the image after a 180-degree rotation
+	// Extracted from question: x6d6bef66301a787b
+	// Question: Identify the image after a 270° clockwise rotation
 	// Widget key: image_1
-	test("coordinate-plane - [x1a489d7abf06d964] Identify the image after a 180-degree rotation", async () => {
+	test("coordinate-plane - [x6d6bef66301a787b] Identify the image after a 270° clockwise rotation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 7,
+		      "id": "R1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 4,
+		      "id": "R2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 4,
+		      "id": "R3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 2,
+		      "id": "R4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "R",
+		      "isClosed": true,
+		      "vertices": [
+		        "R1",
+		        "R2",
+		        "R3",
+		        "R4"
+		      ],
+		      "fillColor": "#11accd33",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x20678c177199fc08
+	// Question: Find the scale factor from areas of similar triangles
+	// Widget key: image_1
+	test("coordinate-plane - [x20678c177199fc08] Find the scale factor from areas of similar triangles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4453,60 +5208,161 @@ describe("coordinatePlane widget tests", () => {
 		  "lines": [],
 		  "width": 325,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": 0,
+		    "label": " ",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": 0,
+		    "label": " ",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 325,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 4,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 0,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 0,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 0,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 0,
-		      "id": "Q",
-		      "label": "Q",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "polygons": [],
 		  "distances": [],
-		  "polylines": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_triangle_t_outline",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 1,
+		          "y": 1
+		        },
+		        {
+		          "x": 5,
+		          "y": 1
+		        },
+		        {
+		          "x": 1,
+		          "y": 6
+		        },
+		        {
+		          "x": 1,
+		          "y": 1
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_right_angle_vertical",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 1.3,
+		          "y": 1
+		        },
+		        {
+		          "x": 1.3,
+		          "y": 1.3
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_right_angle_horizontal",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 1,
+		          "y": 1.3
+		        },
+		        {
+		          "x": 1.3,
+		          "y": 1.3
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbf302ff9da9553c8
+	// Question: Find the scale factor from rectangle areas
+	// Widget key: image_1
+	test("coordinate-plane - [xbf302ff9da9553c8] Find the scale factor from rectangle areas", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": " ",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": " ",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_rect_k",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": "Rectangle K",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 2,
+		          "y": 4
+		        },
+		        {
+		          "x": 10,
+		          "y": 4
+		        },
+		        {
+		          "x": 10,
+		          "y": 8
+		        },
+		        {
+		          "x": 2,
+		          "y": 8
+		        },
+		        {
+		          "x": 2,
+		          "y": 4
+		        }
+		      ]
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -4526,14 +5382,26 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xbd2a2feb7936be35
-	// Question: Identify true statements from a distance–time graph
+	// Question: Identify true statements about a proportional distance–time graph
 	// Widget key: image_1
-	test("coordinate-plane - [xbd2a2feb7936be35] Identify true statements from a distance–time graph", async () => {
+	test("coordinate-plane - [xbd2a2feb7936be35] Identify true statements about a proportional distance–time graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
-		  "lines": [],
+		  "lines": [
+		    {
+		      "id": "line_proportional",
+		      "color": "#6495ed",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 80,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
 		  "width": 360,
 		  "xAxis": {
 		    "max": 5,
@@ -4561,22 +5429,83 @@ describe("coordinatePlane widget tests", () => {
 		  ],
 		  "polygons": [],
 		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x97fd25d654d867bf
+	// Question: Identify true statements about a paint mixture graph
+	// Widget key: image_1
+	test("coordinate-plane - [x97fd25d654d867bf] Identify true statements about a paint mixture graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 360,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Liters of blue paint",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Liters of red paint",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "O",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 9,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_origin_to_A",
-		      "type": "points",
+		      "id": "polyline_paint_ratio",
+		      "type": "function",
 		      "color": "#6495ed",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 5,
-		          "y": 400
-		        }
+		      "xRange": {
+		        "max": 10,
+		        "min": 0
+		      },
+		      "resolution": 100,
+		      "coefficients": [
+		        3,
+		        0
 		      ]
 		    }
 		  ],
@@ -4598,151 +5527,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x8dc1da390aff75c9
-	// Question: Interpret a proportional relationship from a graph
-	// Widget key: image_1
-	test("coordinate-plane - [x8dc1da390aff75c9] Interpret a proportional relationship from a graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [
-		    {
-		      "id": "line_proportional",
-		      "color": "#6495ed",
-		      "label": "null",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.25,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 360,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Duration (minutes)",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Total cost (dollars)",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 8,
-		      "y": 2,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x97fd25d654d867bf
-	// Question: Interpret statements from a paint-mixing graph
-	// Widget key: image_1
-	test("coordinate-plane - [x97fd25d654d867bf] Interpret statements from a paint-mixing graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [
-		    {
-		      "id": "line_y_eq_3x",
-		      "color": "#6495ed",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 3,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 360,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Liters of blue paint",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Liters of red paint",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "origin",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 9,
-		      "id": "point_A",
-		      "label": "A",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x6e4980f1c3418eb4
-	// Question: Identify true statements about a proportional distance–time graph
+	// Question: True statements about a distance–time graph
 	// Widget key: image_1
-	test("coordinate-plane - [x6e4980f1c3418eb4] Identify true statements about a proportional distance–time graph", async () => {
+	test("coordinate-plane - [x6e4980f1c3418eb4] True statements about a distance–time graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4780,6 +5568,73 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "x": 4,
 		      "y": 500,
+		      "id": "point_A",
+		      "label": "A",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9c946afd631afdea
+	// Question: Interpret statements about a proportional relationship on a graph
+	// Widget key: image_1
+	test("coordinate-plane - [x9c946afd631afdea] Interpret statements about a proportional relationship on a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_proportional",
+		      "color": "#6495ed",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 40,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 360,
+		  "xAxis": {
+		    "max": 7,
+		    "min": 0,
+		    "label": "Rental days",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 350,
+		    "min": 0,
+		    "label": "Total cost (dollars)",
+		    "tickInterval": 50,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 200,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
@@ -4807,9 +5662,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x14b06f01627567dc
-	// Question: Select the graph of Amir's altitude over time
-	// Widget key: coordinate_plane
-	test("coordinate-plane - [x14b06f01627567dc] Select the graph of Amir's altitude over time", async () => {
+	// Question: Graph Amir's altitude over time
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x14b06f01627567dc] Graph Amir's altitude over time", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4819,14 +5674,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 65,
 		    "min": 0,
-		    "label": "Time (minutes)",
+		    "label": "Time in minutes",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 420,
 		    "min": -360,
-		    "label": "Altitude (meters)",
+		    "label": "Altitude in meters",
 		    "tickInterval": 60,
 		    "showGridLines": true
 		  },
@@ -4853,104 +5708,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xdc28743e11ab4f10
-	// Question: Graph the relationship between file size and time
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xdc28743e11ab4f10] Graph the relationship between file size and time", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 100,
-		    "min": -10,
-		    "label": "Time (seconds)",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 400,
-		    "min": -40,
-		    "label": "Files (megabytes)",
-		    "tickInterval": 20,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x410b06b89adabc3c
-	// Question: Graph a linear temperature–time relationship
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x410b06b89adabc3c] Graph a linear temperature–time relationship", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 15,
-		    "min": -2,
-		    "label": "Time in minutes",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 85,
-		    "min": -15,
-		    "label": "Temperature in degrees Celsius",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xd65a6039f2a16da1
-	// Question: Graph temperature over time with a cooling rate
+	// Question: Graph the room temperature over time
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xd65a6039f2a16da1] Graph temperature over time with a cooling rate", async () => {
+	test("coordinate-plane - [xd65a6039f2a16da1] Graph the room temperature over time", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4959,15 +5720,15 @@ describe("coordinatePlane widget tests", () => {
 		  "width": 400,
 		  "xAxis": {
 		    "max": 70,
-		    "min": 0,
-		    "label": "",
+		    "min": -5,
+		    "label": null,
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 50,
-		    "min": 0,
-		    "label": "",
+		    "min": -5,
+		    "label": null,
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
@@ -4995,9 +5756,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xc0a26769677f3cf5
-	// Question: Graph the battery’s capacity over time
+	// Question: Graph the relationship between battery capacity and time
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xc0a26769677f3cf5] Graph the battery’s capacity over time", async () => {
+	test("coordinate-plane - [xc0a26769677f3cf5] Graph the relationship between battery capacity and time", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5018,7 +5779,7 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
-		  "height": 436,
+		  "height": 420,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -5054,14 +5815,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 6,
 		    "min": -0.5,
-		    "label": "Time (seconds)",
+		    "label": "Time in seconds",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 2,
 		    "min": -22,
-		    "label": "Elevation (meters)",
+		    "label": "Elevation in meters",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
@@ -5089,15 +5850,15 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x838dfcc95af22194
-	// Question: Select the graph of beard length over time
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x838dfcc95af22194] Select the graph of beard length over time", async () => {
+	// Question: Graph a linear relationship: Rip Van Winkle's beard
+	// Widget key: beard_plane
+	test("coordinate-plane - [x838dfcc95af22194] Graph a linear relationship: Rip Van Winkle's beard", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 400,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 25,
 		    "min": 0,
@@ -5112,7 +5873,7 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 4,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 432,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -5136,9 +5897,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xf3d31d6245dff323
-	// Question: Graph a linear relationship from a rate and a data point
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xf3d31d6245dff323] Graph a linear relationship from a rate and a data point", async () => {
+	// Question: Graph a linear relationship from a rate and a point
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [xf3d31d6245dff323] Graph a linear relationship from a rate and a point", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5148,14 +5909,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 30,
 		    "min": 0,
-		    "label": "Time (minutes)",
+		    "label": "Time in minutes",
 		    "tickInterval": 2.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 250,
 		    "min": 0,
-		    "label": "Water level (centimeters)",
+		    "label": "Water level in centimeters",
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
@@ -5183,15 +5944,15 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x0e3bfaa9a115ce7d
-	// Question: Graph the relationship between slushy amount and time
+	// Question: Graph a linear relationship for a slushy
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x0e3bfaa9a115ce7d] Graph the relationship between slushy amount and time", async () => {
+	test("coordinate-plane - [x0e3bfaa9a115ce7d] Graph a linear relationship for a slushy", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 400,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 55,
 		    "min": -5,
@@ -5206,101 +5967,7 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 25,
 		    "showGridLines": true
 		  },
-		  "height": 400,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x33f26168fd454ba7
-	// Question: Graph Mr. Mole's elevation over time
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x33f26168fd454ba7] Graph Mr. Mole's elevation over time", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 20,
-		    "min": -2,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "min": -50,
-		    "label": "",
-		    "tickInterval": 2.5,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8f8d832158f61603
-	// Question: Graph the relationship between fuel and distance
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x8f8d832158f61603] Graph the relationship between fuel and distance", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 420,
-		  "xAxis": {
-		    "max": 600,
-		    "min": 0,
-		    "label": "Distance in kilometers",
-		    "tickInterval": 50,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 440,
-		    "min": 0,
-		    "label": "Fuel in liters",
-		    "tickInterval": 40,
-		    "showGridLines": true
-		  },
-		  "height": 432,
+		  "height": 436,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -5336,14 +6003,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 20,
 		    "min": -2,
-		    "label": "",
+		    "label": "Time (minutes)",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 4,
 		    "min": -0.5,
-		    "label": "",
+		    "label": "Elevation (kilometers)",
 		    "tickInterval": 0.25,
 		    "showGridLines": true
 		  },
@@ -5370,188 +6037,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4b8ae43914651214
-	// Question: Side length after scaling a rhombus
-	// Widget key: image_1
-	test("coordinate-plane - [x4b8ae43914651214] Side length after scaling a rhombus", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 265,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 265,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": 6,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": 9,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": 4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 1,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc5eb7430d3fecf4a
-	// Question: Scaled copy side length of segment BC
-	// Widget key: image_1
-	test("coordinate-plane - [xc5eb7430d3fecf4a] Scaled copy side length of segment BC", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 325,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 4,
-		      "y": 3,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 8,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 8,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 3,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x699e3b16cdc81fe7
-	// Question: Dilate a triangle about a point (multiple choice)
-	// Widget key: stimulus_triangle
-	test("coordinate-plane - [x699e3b16cdc81fe7] Dilate a triangle about a point (multiple choice)", async () => {
+	// Extracted from question: x76ba5af1174bd25d
+	// Question: Dilate a triangle about point P by factor 1/4
+	// Widget key: stimulus_graph
+	test("coordinate-plane - [x76ba5af1174bd25d] Dilate a triangle about point P by factor 1/4", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5575,29 +6064,29 @@ describe("coordinatePlane widget tests", () => {
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": 4,
-		      "y": 2,
+		      "x": 6,
+		      "y": 3,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -2,
-		      "y": 3,
+		      "x": 6,
+		      "y": -5,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 1,
-		      "y": -2,
+		      "x": -6,
+		      "y": -5,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 1,
-		      "y": 0,
+		      "x": 6,
+		      "y": -1,
 		      "id": "P",
 		      "label": "P",
 		      "style": "closed"
@@ -5636,10 +6125,186 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: xd1b9b05e0b909aa4
+	// Question: Dilation of a Triangle with Center P and Scale Factor 3
+	// Widget key: dilation_stimulus
+	test("coordinate-plane - [xd1b9b05e0b909aa4] Dilation of a Triangle with Center P and Scale Factor 3", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 0,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -3,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -2,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": -2,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "Triangle ABC",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#0c7f9940",
+		      "strokeColor": "#0c7f99"
+		    }
+		  ],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x699e3b16cdc81fe7
+	// Question: Dilation of a triangle with center P and scale factor 2
+	// Widget key: diagram_image
+	test("coordinate-plane - [x699e3b16cdc81fe7] Dilation of a triangle with center P and scale factor 2", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 4,
+		      "y": 2,
+		      "id": "A",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 3,
+		      "id": "B",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -2,
+		      "id": "C",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 0,
+		      "id": "P_center",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#0c7f9930",
+		      "strokeColor": "#0c7f99"
+		    }
+		  ],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: xfc3b5b3a7130e8f8
-	// Question: Dilate a triangle with center P and scale factor 1/3
-	// Widget key: stimulus_graph
-	test("coordinate-plane - [xfc3b5b3a7130e8f8] Dilate a triangle with center P and scale factor 1/3", async () => {
+	// Question: Dilate a triangle with a given center and scale factor
+	// Widget key: dilation_stimulus
+	test("coordinate-plane - [xfc3b5b3a7130e8f8] Dilate a triangle with a given center and scale factor", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5664,28 +6329,28 @@ describe("coordinatePlane widget tests", () => {
 		  "points": [
 		    {
 		      "x": 3,
-		      "y": 4,
-		      "id": "A",
-		      "label": "A",
+		      "y": 12,
+		      "id": "v1",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 15,
-		      "y": 1,
-		      "id": "B",
-		      "label": "B",
+		      "y": 15,
+		      "id": "v2",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
-		      "y": 10,
-		      "id": "C",
-		      "label": "C",
+		      "y": 6,
+		      "id": "v3",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 9,
-		      "y": 4,
+		      "y": 12,
 		      "id": "P",
 		      "label": "P",
 		      "style": "closed"
@@ -5696,11 +6361,11 @@ describe("coordinatePlane widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
+		        "v1",
+		        "v2",
+		        "v3"
 		      ],
-		      "fillColor": "#cfeef5",
+		      "fillColor": "#0c7f9940",
 		      "strokeColor": "#0c7f99"
 		    }
 		  ],
@@ -5725,9 +6390,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x30be93715276ca16
-	// Question: Dilation of a triangle with center A and scale factor 4
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x30be93715276ca16] Dilation of a triangle with center A and scale factor 4", async () => {
+	// Question: Dilate a triangle about a point (multiple choice)
+	// Widget key: triangle_abc_plane
+	test("coordinate-plane - [x30be93715276ca16] Dilate a triangle about a point (multiple choice)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5738,116 +6403,35 @@ describe("coordinatePlane widget tests", () => {
 		    "max": 8,
 		    "min": -8,
 		    "label": "x",
-		    "tickInterval": 1,
+		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
 		    "label": "y",
-		    "tickInterval": 1,
+		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": 0,
-		      "y": 0,
+		      "x": -6,
+		      "y": 6,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
-		    {
-		      "x": 3,
-		      "y": -2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -2,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "Triangle ABC",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#0c7f9933",
-		      "strokeColor": "#0c7f99"
-		    }
-		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd42b7764d3ba9f30
-	// Question: Dilation of a triangle about a point
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [xd42b7764d3ba9f30] Dilation of a triangle about a point", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
 		    {
 		      "x": -3,
-		      "y": 1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
+		      "y": 4,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -2,
-		      "y": -3,
+		      "x": -6,
+		      "y": 4,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
@@ -5862,8 +6446,8 @@ describe("coordinatePlane widget tests", () => {
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#0c7f9933",
-		      "strokeColor": "#0c7f99"
+		      "fillColor": "#0C7F9933",
+		      "strokeColor": "#0C7F99"
 		    }
 		  ],
 		  "distances": [],
@@ -5886,10 +6470,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x58e6b39062d09854
-	// Question: Dilate a triangle by a factor of 1/2 centered at P
-	// Widget key: stimulus_graph
-	test("coordinate-plane - [x58e6b39062d09854] Dilate a triangle by a factor of 1/2 centered at P", async () => {
+	// Extracted from question: x0719781bab05e601
+	// Question: Identify the image of a triangle under a dilation
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x0719781bab05e601] Identify the image of a triangle under a dilation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5913,117 +6497,29 @@ describe("coordinatePlane widget tests", () => {
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": -3,
-		      "y": 1,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": -3,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": -1,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
+		      "x": 2,
 		      "y": 5,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#0c7f9933",
-		      "strokeColor": "#0c7f99"
-		    }
-		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x19d65eff59f631fa
-	// Question: Dilation of a triangle by a factor of 1/3 about P
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [x19d65eff59f631fa] Dilation of a triangle by a factor of 1/3 about P", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": -7,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -5,
+		      "x": 6,
 		      "y": 2,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 7,
-		      "y": 5,
+		      "x": 2,
+		      "y": 2,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": -4,
+		      "x": 6,
+		      "y": 5,
 		      "id": "P",
 		      "label": "P",
 		      "style": "closed"
@@ -6038,7 +6534,7 @@ describe("coordinatePlane widget tests", () => {
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#0c7f991a",
+		      "fillColor": "#0c7f9940",
 		      "strokeColor": "#0c7f99"
 		    }
 		  ],
@@ -6062,10 +6558,91 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xb61f99316b7bbdde
-	// Question: Plot two points and find their distance
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xb61f99316b7bbdde] Plot two points and find their distance", async () => {
+	// Extracted from question: x0333813884c1be31
+	// Question: Dilate a triangle with center A and scale factor 1/4
+	// Widget key: triangle_stimulus
+	test("coordinate-plane - [x0333813884c1be31] Dilate a triangle with center A and scale factor 1/4", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": -6,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#0c7f9926",
+		      "strokeColor": "#0c7f99"
+		    }
+		  ],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0a1f5c1423a51975
+	// Question: Plot two points and find the distance
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [x0a1f5c1423a51975] Plot two points and find the distance", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6109,10 +6686,57 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: xb0349cbae6416de6
+	// Question: Plot two points and find the distance
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [xb0349cbae6416de6] Plot two points and find the distance", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: x746e761ee63e52a4
-	// Question: Select two points 3 units from point C with the same y-coordinate
-	// Widget key: plane_with_point_c
-	test("coordinate-plane - [x746e761ee63e52a4] Select two points 3 units from point C with the same y-coordinate", async () => {
+	// Question: Select the graph with two points 3 units from Point C
+	// Widget key: plane_with_C
+	test("coordinate-plane - [x746e761ee63e52a4] Select the graph with two points 3 units from Point C", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6165,9 +6789,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x0711e6ae63700ab5
-	// Question: Plot two points 8 units from a given point
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x0711e6ae63700ab5] Plot two points 8 units from a given point", async () => {
+	// Question: Select the graph with two points 8 units from B sharing the same x-coordinate
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [x0711e6ae63700ab5] Select the graph with two points 8 units from B sharing the same x-coordinate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6219,10 +6843,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xda124c90a3284ca2
-	// Question: Plot two points and find their distance
+	// Extracted from question: x4b65f94bc86d24c0
+	// Question: Plot two points and find the distance
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xda124c90a3284ca2] Plot two points and find their distance", async () => {
+	test("coordinate-plane - [x4b65f94bc86d24c0] Plot two points and find the distance", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6267,9 +6891,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xa47987e3e61344d9
-	// Question: Select the plotted points and find the distance
+	// Question: Plot two points and find the distance between them
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xa47987e3e61344d9] Select the plotted points and find the distance", async () => {
+	test("coordinate-plane - [xa47987e3e61344d9] Plot two points and find the distance between them", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6313,10 +6937,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2025f0d42cef2755
-	// Question: Identify what is 4 units from a point on the coordinate plane
-	// Widget key: image_1
-	test("coordinate-plane - [x2025f0d42cef2755] Identify what is 4 units from a point on the coordinate plane", async () => {
+	// Extracted from question: x1a798373be341c6e
+	// Question: Select two points 3 units from Point A with the same x-coordinate
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [x1a798373be341c6e] Select two points 3 units from Point A with the same x-coordinate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6326,37 +6950,78 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": -4,
-		      "y": 2,
-		      "id": "pt_a",
+		      "x": 5,
+		      "y": 6,
+		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
-		    },
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x113b5d8f7e46ae46
+	// Question: Select two points 7 units from a given point with the same y-coordinate
+	// Widget key: coordinate_plane_initial
+	test("coordinate-plane - [x113b5d8f7e46ae46] Select two points 7 units from a given point with the same y-coordinate", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
 		    {
-		      "x": 2,
-		      "y": 7,
-		      "id": "pt_b",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -8,
-		      "y": -6,
-		      "id": "pt_c",
+		      "x": 1,
+		      "y": -4,
+		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    }
@@ -6382,40 +7047,32 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x067e3e95f42bd0c5
-	// Question: Select the graph with two points 7 units from point D sharing the same x-coordinate
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [x067e3e95f42bd0c5] Select the graph with two points 7 units from point D sharing the same x-coordinate", async () => {
+	// Extracted from question: xf3d267f695b76dd6
+	// Question: Create a scale drawing of a city block
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [xf3d267f695b76dd6] Create a scale drawing of a city block", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
+		    "max": 12,
+		    "min": -12,
 		    "label": "x",
-		    "tickInterval": 1,
+		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
+		    "max": 12,
+		    "min": -12,
 		    "label": "y",
-		    "tickInterval": 1,
+		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": 1,
-		      "id": "point_D",
-		      "label": "D",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 400,
+		  "points": [],
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [],
@@ -6437,10 +7094,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xbd438433898c564b
-	// Question: Select the square base on a scaled grid
-	// Widget key: grid_image
-	test("coordinate-plane - [xbd438433898c564b] Select the square base on a scaled grid", async () => {
+	// Extracted from question: xa8b16b53226fc876
+	// Question: Create a scale drawing of a right triangle garden
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [xa8b16b53226fc876] Create a scale drawing of a right triangle garden", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6462,78 +7119,6 @@ describe("coordinatePlane widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 400,
-		  "points": [
-		    {
-		      "x": 6,
-		      "y": 9,
-		      "id": "sL",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 9,
-		      "y": 9,
-		      "id": "sR",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [
-		    {
-		      "color": "#000000",
-		      "style": "solid",
-		      "pointId1": "sL",
-		      "pointId2": "sR",
-		      "showLegs": false,
-		      "showLegLabels": false,
-		      "hypotenuseLabel": "2 cm"
-		    }
-		  ],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa8b16b53226fc876
-	// Question: Scale drawing of a right triangle
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xa8b16b53226fc876] Scale drawing of a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 500,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -6565,141 +7150,22 @@ describe("coordinatePlane widget tests", () => {
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 500,
-		  "xAxis": {
-		    "max": 12,
-		    "min": -12,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 12,
-		    "min": -12,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x614adc65676dfce8
-	// Question: Select a rectangle to represent a hut base on a grid
-	// Widget key: grid_image
-	test("coordinate-plane - [x614adc65676dfce8] Select a rectangle to represent a hut base on a grid", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
 		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
+		    "max": 12,
+		    "min": -12,
 		    "label": "x",
-		    "tickInterval": 1,
+		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
+		    "max": 12,
+		    "min": -12,
 		    "label": "y",
-		    "tickInterval": 1,
+		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "height": 400,
-		  "points": [
-		    {
-		      "x": 7,
-		      "y": 9,
-		      "id": "scale_left",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 9,
-		      "y": 9,
-		      "id": "scale_right",
-		      "label": "",
-		      "style": "open"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [
-		    {
-		      "color": "#000000",
-		      "style": "solid",
-		      "pointId1": "scale_left",
-		      "pointId2": "scale_right",
-		      "showLegs": false,
-		      "showLegLabels": false,
-		      "hypotenuseLabel": "1 m"
-		    }
-		  ],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xfe0967d69113158a
-	// Question: Create a scale drawing of a processor
-	// Widget key: grid_widget
-	test("coordinate-plane - [xfe0967d69113158a] Create a scale drawing of a processor", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 500,
-		  "xAxis": {
-		    "max": 12,
-		    "min": -12,
-		    "label": "x",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 12,
-		    "min": -12,
-		    "label": "y",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 500,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -6722,57 +7188,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x63d0f3e2dac95aee
-	// Question: Draw a square face to scale on a grid
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x63d0f3e2dac95aee] Draw a square face to scale on a grid", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 500,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x06acb2c026c2704a
-	// Question: Select the correct house outline on a scaled grid
-	// Widget key: grid_image
-	test("coordinate-plane - [x06acb2c026c2704a] Select the correct house outline on a scaled grid", async () => {
+	// Extracted from question: xa20e5503075f43b9
+	// Question: Select the scaled rectangle for the mausoleum plan
+	// Widget key: mausoleum_grid
+	test("coordinate-plane - [xa20e5503075f43b9] Select the scaled rectangle for the mausoleum plan", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6802,50 +7221,16 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_scale_bar",
 		      "type": "points",
 		      "color": "#000000",
-		      "label": "4 m",
+		      "label": "10 m",
 		      "style": "solid",
 		      "points": [
 		        {
-		          "x": 6.5,
+		          "x": 6,
 		          "y": 9
 		        },
 		        {
-		          "x": 9.5,
+		          "x": 10,
 		          "y": 9
-		        }
-		      ]
-		    },
-		    {
-		      "id": "polyline_tick_left",
-		      "type": "points",
-		      "color": "#000000",
-		      "label": "",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 6.5,
-		          "y": 8.7
-		        },
-		        {
-		          "x": 6.5,
-		          "y": 9.3
-		        }
-		      ]
-		    },
-		    {
-		      "id": "polyline_tick_right",
-		      "type": "points",
-		      "color": "#000000",
-		      "label": "",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 9.5,
-		          "y": 8.7
-		        },
-		        {
-		          "x": 9.5,
-		          "y": 9.3
 		        }
 		      ]
 		    }
@@ -6868,82 +7253,32 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xbc78fdd06685c4d8
-	// Question: True or false statements about a coordinate plane
-	// Widget key: image_1
-	test("coordinate-plane - [xbc78fdd06685c4d8] True or false statements about a coordinate plane", async () => {
+	// Extracted from question: xe6c4fc015fff1124
+	// Question: Scale drawing of a right triangle
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [xe6c4fc015fff1124] Scale drawing of a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 440,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 20,
+		    "min": -2,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 20,
+		    "min": -2,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -7,
-		      "y": 9,
-		      "id": "pt_cafeteria",
-		      "label": "Cafeteria",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": -2,
-		      "id": "pt_math",
-		      "label": "Math",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": -5,
-		      "id": "pt_science",
-		      "label": "Science",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 9,
-		      "id": "pt_library",
-		      "label": "Library",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": -5,
-		      "id": "pt_art",
-		      "label": "Art",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 4,
-		      "id": "pt_band",
-		      "label": "Band",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": -8,
-		      "id": "pt_history",
-		      "label": "History",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 400,
+		  "points": [],
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [],
@@ -6965,84 +7300,106 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x37fa5721684c7aa0
-	// Question: Identify the location with an x-coordinate of 6
-	// Widget key: image_1
-	test("coordinate-plane - [x37fa5721684c7aa0] Identify the location with an x-coordinate of 6", async () => {
+	// Extracted from question: xfe0967d69113158a
+	// Question: Create a scale drawing of a square processor
+	// Widget key: grid_stimulus
+	test("coordinate-plane - [xfe0967d69113158a] Create a scale drawing of a square processor", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 440,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb33fd58db9a5f93e
+	// Question: Select a rectangle representing the manor's base
+	// Widget key: manor_grid
+	test("coordinate-plane - [xb33fd58db9a5f93e] Select a rectangle representing the manor's base", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "home",
-		      "label": "Home",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 6,
-		      "id": "courthouse",
-		      "label": "Courthouse",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": -3,
-		      "id": "library",
-		      "label": "Library",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -6,
-		      "id": "bank",
-		      "label": "Bank",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 6,
-		      "id": "grocery_store",
-		      "label": "Grocery Store",
-		      "style": "closed"
-		    },
-		    {
 		      "x": 6,
-		      "y": -8,
-		      "id": "hospital",
-		      "label": "Hospital",
-		      "style": "closed"
+		      "y": 9,
+		      "id": "p1",
+		      "label": "",
+		      "style": "open"
 		    },
 		    {
-		      "x": 7,
-		      "y": 0,
-		      "id": "school",
-		      "label": "School",
-		      "style": "closed"
+		      "x": 9,
+		      "y": 9,
+		      "id": "p2",
+		      "label": "",
+		      "style": "open"
 		    }
 		  ],
 		  "polygons": [],
-		  "distances": [],
+		  "distances": [
+		    {
+		      "color": "#000000",
+		      "style": "solid",
+		      "pointId1": "p1",
+		      "pointId2": "p2",
+		      "showLegs": false,
+		      "showLegLabels": false,
+		      "hypotenuseLabel": "18 m"
+		    }
+		  ],
 		  "polylines": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -7063,30 +7420,30 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x0d24861f30ebbf5a
-	// Question: Perimeter of a right triangle on a grid
+	// Question: Perimeter of a right triangle
 	// Widget key: image_1
-	test("coordinate-plane - [x0d24861f30ebbf5a] Perimeter of a right triangle on a grid", async () => {
+	test("coordinate-plane - [x0d24861f30ebbf5a] Perimeter of a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 240,
+		  "width": 436,
 		  "xAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": " ",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 11,
 		    "min": 0,
-		    "label": "",
+		    "label": " ",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 165,
+		  "height": 300,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -7099,29 +7456,29 @@ describe("coordinatePlane widget tests", () => {
 		      "style": "solid",
 		      "points": [
 		        {
-		          "x": 0,
-		          "y": 0
+		          "x": 1,
+		          "y": 1
 		        },
 		        {
-		          "x": 0,
-		          "y": 9
+		          "x": 1,
+		          "y": 10
 		        }
 		      ]
 		    },
 		    {
-		      "id": "polyline_hypotenuse",
+		      "id": "polyline_diagonal",
 		      "type": "points",
 		      "color": "#7854ab",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
 		        {
-		          "x": 0,
-		          "y": 9
+		          "x": 1,
+		          "y": 10
 		        },
 		        {
-		          "x": 12,
-		          "y": 0
+		          "x": 13,
+		          "y": 1
 		        }
 		      ]
 		    },
@@ -7133,12 +7490,12 @@ describe("coordinatePlane widget tests", () => {
 		      "style": "solid",
 		      "points": [
 		        {
-		          "x": 12,
-		          "y": 0
+		          "x": 1,
+		          "y": 1
 		        },
 		        {
-		          "x": 0,
-		          "y": 0
+		          "x": 13,
+		          "y": 1
 		        }
 		      ]
 		    }
@@ -7170,22 +7527,22 @@ describe("coordinatePlane widget tests", () => {
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 198.621,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 12,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 12,
+		    "max": 14,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 240,
+		  "height": 400,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -7194,23 +7551,23 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_triangle",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "Triangle",
 		      "style": "solid",
 		      "points": [
 		        {
-		          "x": 1,
+		          "x": 0,
 		          "y": 0
 		        },
 		        {
-		          "x": 6,
+		          "x": 5,
 		          "y": 12
 		        },
 		        {
-		          "x": 11,
+		          "x": 10,
 		          "y": 0
 		        },
 		        {
-		          "x": 1,
+		          "x": 0,
 		          "y": 0
 		        }
 		      ]
@@ -7243,74 +7600,125 @@ describe("coordinatePlane widget tests", () => {
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 146.667,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 12,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 16,
+		    "max": 18,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 240,
+		  "height": 400,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_leg_horizontal",
+		      "id": "polyline_triangle_edges",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": "Triangle",
 		      "style": "solid",
 		      "points": [
 		        {
-		          "x": 0,
-		          "y": 0
+		          "x": 2,
+		          "y": 16
 		        },
 		        {
-		          "x": 8,
-		          "y": 0
+		          "x": 2,
+		          "y": 1
+		        },
+		        {
+		          "x": 10,
+		          "y": 16
+		        },
+		        {
+		          "x": 2,
+		          "y": 16
 		        }
 		      ]
-		    },
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbd10785336828609
+	// Question: Perimeter of a parallelogram on a coordinate grid
+	// Widget key: image_1
+	test("coordinate-plane - [xbd10785336828609] Perimeter of a parallelogram on a coordinate grid", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 360,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
 		    {
-		      "id": "polyline_leg_vertical",
+		      "id": "polyline_parallelogram_outline",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "points": [
 		        {
-		          "x": 0,
-		          "y": 0
+		          "x": 1,
+		          "y": 1
 		        },
 		        {
-		          "x": 0,
-		          "y": 15
-		        }
-		      ]
-		    },
-		    {
-		      "id": "polyline_hypotenuse",
-		      "type": "points",
-		      "color": "#aa87ff",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 0,
-		          "y": 15
+		          "x": 9,
+		          "y": 1
 		        },
 		        {
-		          "x": 8,
-		          "y": 0
+		          "x": 15,
+		          "y": 9
+		        },
+		        {
+		          "x": 7,
+		          "y": 9
+		        },
+		        {
+		          "x": 1,
+		          "y": 1
 		        }
 		      ]
 		    }
@@ -7342,91 +7750,557 @@ describe("coordinatePlane widget tests", () => {
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 210,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 14,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 240,
+		  "height": 480,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_bottom",
+		      "id": "polyline_ab",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 2,
+		          "y": 14
+		        },
+		        {
+		          "x": 7,
+		          "y": 14
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_bc",
+		      "type": "points",
+		      "color": "#aa87ff",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 7,
+		          "y": 14
+		        },
+		        {
+		          "x": 12,
+		          "y": 2
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_cd",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 12,
+		          "y": 2
+		        },
+		        {
+		          "x": 7,
+		          "y": 2
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_da",
+		      "type": "points",
+		      "color": "#aa87ff",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 7,
+		          "y": 2
+		        },
+		        {
+		          "x": 2,
+		          "y": 14
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2e886215480f372b
+	// Question: Perimeter of a trapezoid on a coordinate grid
+	// Widget key: image_1
+	test("coordinate-plane - [x2e886215480f372b] Perimeter of a trapezoid on a coordinate grid", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 360,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_trapezoid",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 1,
+		          "y": 9
+		        },
+		        {
+		          "x": 1,
+		          "y": 1
+		        },
+		        {
+		          "x": 9,
+		          "y": 1
+		        },
+		        {
+		          "x": 15,
+		          "y": 9
+		        },
+		        {
+		          "x": 1,
+		          "y": 9
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xddaf3b999ca1bedb
+	// Question: Perimeter of a trapezoid on a coordinate grid
+	// Widget key: image_1
+	test("coordinate-plane - [xddaf3b999ca1bedb] Perimeter of a trapezoid on a coordinate grid", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 384,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 480,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_trapezoid",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": "Trapezoid",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 2,
+		          "y": 9
+		        },
+		        {
+		          "x": 6,
+		          "y": 9
+		        },
+		        {
+		          "x": 6,
+		          "y": 5
+		        },
+		        {
+		          "x": 2,
+		          "y": 2
+		        },
+		        {
+		          "x": 2,
+		          "y": 9
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x89f1c21413a25ab7
+	// Question: Perimeter of a trapezoid on a coordinate plane
+	// Widget key: image_1
+	test("coordinate-plane - [x89f1c21413a25ab7] Perimeter of a trapezoid on a coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "A",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 0,
+		      "id": "B",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 3,
+		      "id": "C",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 3,
+		      "id": "D",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_bottom_base",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 9,
+		          "y": 0
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_top_base",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 4,
+		          "y": 3
+		        },
+		        {
+		          "x": 5,
+		          "y": 3
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_left_slant",
+		      "type": "points",
+		      "color": "#aa87ff",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 4,
+		          "y": 3
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_right_slant",
+		      "type": "points",
+		      "color": "#aa87ff",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 9,
+		          "y": 0
+		        },
+		        {
+		          "x": 5,
+		          "y": 3
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x16291eef386cc41a
+	// Question: Perimeter of a triangle on a coordinate grid
+	// Widget key: image_1
+	test("coordinate-plane - [x16291eef386cc41a] Perimeter of a triangle on a coordinate grid", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 360,
+		  "xAxis": {
+		    "max": 20,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 14,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_left_slant",
+		      "type": "points",
+		      "color": "#7854ab",
+		      "label": " ",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 1,
+		          "y": 13
+		        },
+		        {
+		          "x": 10,
+		          "y": 1
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_right_slant",
+		      "type": "points",
+		      "color": "#7854ab",
+		      "label": " ",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 10,
+		          "y": 1
+		        },
+		        {
+		          "x": 19,
+		          "y": 13
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_base",
 		      "type": "points",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
 		        {
-		          "x": 2,
-		          "y": 0
+		          "x": 19,
+		          "y": 13
 		        },
 		        {
-		          "x": 7,
-		          "y": 0
+		          "x": 1,
+		          "y": 13
 		        }
 		      ]
 		    },
 		    {
-		      "id": "polyline_right_side",
+		      "id": "polyline_dashed_left_vertical",
 		      "type": "points",
-		      "color": "#aa87ff",
+		      "color": "#ca337c",
 		      "label": " ",
-		      "style": "solid",
+		      "style": "dashed",
 		      "points": [
 		        {
-		          "x": 7,
-		          "y": 0
+		          "x": 1,
+		          "y": 13
 		        },
 		        {
-		          "x": 12,
-		          "y": 12
+		          "x": 1,
+		          "y": 1
 		        }
 		      ]
 		    },
 		    {
-		      "id": "polyline_top",
+		      "id": "polyline_dashed_top_left",
 		      "type": "points",
-		      "color": "#11accd",
+		      "color": "#ca337c",
 		      "label": " ",
-		      "style": "solid",
+		      "style": "dashed",
 		      "points": [
 		        {
-		          "x": 12,
-		          "y": 12
+		          "x": 1,
+		          "y": 1
 		        },
 		        {
-		          "x": 7,
-		          "y": 12
+		          "x": 10,
+		          "y": 1
 		        }
 		      ]
 		    },
 		    {
-		      "id": "polyline_left_side",
+		      "id": "polyline_dashed_top_right",
 		      "type": "points",
-		      "color": "#aa87ff",
+		      "color": "#ca337c",
 		      "label": " ",
-		      "style": "solid",
+		      "style": "dashed",
 		      "points": [
 		        {
-		          "x": 7,
-		          "y": 12
+		          "x": 10,
+		          "y": 1
 		        },
 		        {
-		          "x": 2,
-		          "y": 0
+		          "x": 19,
+		          "y": 1
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_dashed_right_vertical",
+		      "type": "points",
+		      "color": "#ca337c",
+		      "label": " ",
+		      "style": "dashed",
+		      "points": [
+		        {
+		          "x": 19,
+		          "y": 1
+		        },
+		        {
+		          "x": 19,
+		          "y": 13
 		        }
 		      ]
 		    }
@@ -7458,65 +8332,60 @@ describe("coordinatePlane widget tests", () => {
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 240,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 14,
 		    "min": 0,
-		    "label": "",
+		    "label": " ",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 7,
+		    "max": 14,
 		    "min": 0,
-		    "label": "",
+		    "label": " ",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 120,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [
+		  "height": 360,
+		  "points": [
 		    {
-		      "id": "polyline_legs",
-		      "type": "points",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 1,
-		          "y": 1
-		        },
-		        {
-		          "x": 1,
-		          "y": 6
-		        },
-		        {
-		          "x": 13,
-		          "y": 6
-		        }
-		      ]
+		      "x": 1,
+		      "y": 1,
+		      "id": "A",
+		      "label": "",
+		      "style": "closed"
 		    },
 		    {
-		      "id": "polyline_hypotenuse",
-		      "type": "points",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 1,
-		          "y": 1
-		        },
-		        {
-		          "x": 13,
-		          "y": 6
-		        }
-		      ]
+		      "x": 13,
+		      "y": 1,
+		      "id": "B",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 6,
+		      "id": "C",
+		      "label": "",
+		      "style": "closed"
 		    }
 		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#11accd00",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "distances": [],
+		  "polylines": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -7544,171 +8413,66 @@ describe("coordinatePlane widget tests", () => {
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 192,
+		  "width": 384,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 240,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [
+		  "height": 384,
+		  "points": [
 		    {
-		      "id": "polyline_parallelogram",
-		      "type": "points",
-		      "color": "#11accd",
+		      "x": 6,
+		      "y": 1,
+		      "id": "A",
 		      "label": "",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 2,
-		          "y": 2
-		        },
-		        {
-		          "x": 6,
-		          "y": 5
-		        },
-		        {
-		          "x": 6,
-		          "y": 9
-		        },
-		        {
-		          "x": 2,
-		          "y": 6
-		        },
-		        {
-		          "x": 2,
-		          "y": 2
-		        }
-		      ]
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd786a14488ad3f36
-	// Question: Plot the image of a point under dilation
-	// Widget key: stimulus_graph
-	test("coordinate-plane - [xd786a14488ad3f36] Plot the image of a point under dilation", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 6,
-		      "id": "point_C",
-		      "label": "C",
 		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6d7c5581bca5d4ba
-	// Question: Plot the image of a point under dilation
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [x6d7c5581bca5d4ba] Plot the image of a point under dilation", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
+		    },
 		    {
-		      "x": -2,
-		      "y": -1,
-		      "id": "P",
-		      "label": "P",
+		      "x": 6,
+		      "y": 5,
+		      "id": "B",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
-		      "y": -1,
+		      "y": 8,
 		      "id": "C",
-		      "label": "C",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 4,
+		      "id": "D",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
-		  "polygons": [],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
 		  "distances": [],
 		  "polylines": [],
 		  "showQuadrantLabels": false
@@ -7730,9 +8494,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xedff36d830ee5daf
-	// Question: Plot the image of a point under a dilation
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xedff36d830ee5daf] Plot the image of a point under a dilation", async () => {
+	// Question: Dilate a point about a center (scale factor 1/4)
+	// Widget key: coordinate_plane_initial
+	test("coordinate-plane - [xedff36d830ee5daf] Dilate a point about a center (scale factor 1/4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7759,12 +8523,184 @@ describe("coordinatePlane widget tests", () => {
 		      "x": -6,
 		      "y": -5,
 		      "id": "P",
-		      "label": "P",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 7,
+		      "id": "B",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd786a14488ad3f36
+	// Question: Image of a point under dilation about the origin
+	// Widget key: coordinate_plane_initial
+	test("coordinate-plane - [xd786a14488ad3f36] Image of a point under dilation about the origin", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 6,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6d7c5581bca5d4ba
+	// Question: Dilation of a point about a center
+	// Widget key: stimulus_graph
+	test("coordinate-plane - [x6d7c5581bca5d4ba] Dilation of a point about a center", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 0,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0868dc390e73f9e4
+	// Question: Image of a point under dilation about the origin
+	// Widget key: coordinate_plane_initial
+	test("coordinate-plane - [x0868dc390e73f9e4] Image of a point under dilation about the origin", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 1,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
@@ -7792,9 +8728,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xe6bce54b4419452a
-	// Question: Dilate a point about a center with scale factor 1/2
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [xe6bce54b4419452a] Dilate a point about a center with scale factor 1/2", async () => {
+	// Question: Dilate a point about a center by a scale factor of 1/2
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [xe6bce54b4419452a] Dilate a point about a center by a scale factor of 1/2", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7802,15 +8738,15 @@ describe("coordinatePlane widget tests", () => {
 		  "lines": [],
 		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
+		    "max": 8,
+		    "min": -8,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
+		    "max": 8,
+		    "min": -8,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
@@ -7818,17 +8754,17 @@ describe("coordinatePlane widget tests", () => {
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": 6,
-		      "y": 0,
-		      "id": "P",
-		      "label": "P",
+		      "x": -4,
+		      "y": 3,
+		      "id": "B",
+		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 0,
-		      "y": 4,
-		      "id": "B",
-		      "label": "B",
+		      "x": 2,
+		      "y": -1,
+		      "id": "P",
+		      "label": "P",
 		      "style": "closed"
 		    }
 		  ],
@@ -7855,7 +8791,7 @@ describe("coordinatePlane widget tests", () => {
 
 	// Extracted from question: x821b9fc3cb9b7927
 	// Question: Plot the image of a point under a dilation about the origin
-	// Widget key: coordinate_plane
+	// Widget key: coordinate_plane_initial
 	test("coordinate-plane - [x821b9fc3cb9b7927] Plot the image of a point under a dilation about the origin", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -7908,134 +8844,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x6f4b09d1c4997a93
-	// Question: Dilate a point about a center (scale factor 3)
-	// Widget key: coordinate_plane
-	test("coordinate-plane - [x6f4b09d1c4997a93] Dilate a point about a center (scale factor 3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 5,
-		      "id": "point_A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 6,
-		      "id": "point_P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5449087e792daae3
-	// Question: Plot the image of a point under dilation
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [x5449087e792daae3] Plot the image of a point under dilation", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbe00292aec67729a
-	// Question: Dilate a point about the origin (scale factor 3)
-	// Widget key: stimulus_graph
-	test("coordinate-plane - [xbe00292aec67729a] Dilate a point about the origin (scale factor 3)", async () => {
+	// Extracted from question: x8f39e2de63e5db28
+	// Question: Dilate a point about the origin
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x8f39e2de63e5db28] Dilate a point about the origin", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8059,8 +8871,8 @@ describe("coordinatePlane widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": -2,
-		      "y": 0,
+		      "x": -3,
+		      "y": -2,
 		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
@@ -8087,10 +8899,134 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x6f4b09d1c4997a93
+	// Question: Dilate a point about another point (scale factor 3)
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [x6f4b09d1c4997a93] Dilate a point about another point (scale factor 3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 5,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 6,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5449087e792daae3
+	// Question: Plot the image of a point under a dilation about a center
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [x5449087e792daae3] Plot the image of a point under a dilation about a center", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 4,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: xe41a4baf75672192
-	// Question: Plot the image of a point under a dilation
+	// Question: Dilate a point about a center by a given scale factor
 	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [xe41a4baf75672192] Plot the image of a point under a dilation", async () => {
+	test("coordinate-plane - [xe41a4baf75672192] Dilate a point about a center by a given scale factor", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8150,9 +9086,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x5c392ed5f3a7a46f
-	// Question: Plot the image of a point under dilation
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [x5c392ed5f3a7a46f] Plot the image of a point under dilation", async () => {
+	// Question: Dilate a point about the origin by a factor of one-third
+	// Widget key: dilation_plane
+	test("coordinate-plane - [x5c392ed5f3a7a46f] Dilate a point about the origin by a factor of one-third", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8178,11 +9114,173 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "x": 3,
 		      "y": -6,
-		      "id": "point_A",
+		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    }
 		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd612e1faf58b8d94
+	// Question: Identify the slowest eating rate from a line graph
+	// Widget key: image_1
+	test("coordinate-plane - [xd612e1faf58b8d94] Identify the slowest eating rate from a line graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_k",
+		      "color": "#1fab54",
+		      "label": "K",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 3.5,
+		        "yIntercept": 0
+		      }
+		    },
+		    {
+		      "id": "line_j",
+		      "color": "#11accd",
+		      "label": "J",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 4.75,
+		        "yIntercept": 0
+		      }
+		    },
+		    {
+		      "id": "line_l",
+		      "color": "#7854ab",
+		      "label": "L",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 5.5,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 456,
+		  "xAxis": {
+		    "max": 6,
+		    "min": 0,
+		    "label": "Minutes",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 30,
+		    "min": 0,
+		    "label": "Hot dogs",
+		    "tickInterval": 10,
+		    "showGridLines": true
+		  },
+		  "height": 348,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4c57dad6d2022e12
+	// Question: Which arcade game can Satoko play the most times?
+	// Widget key: image_1
+	test("coordinate-plane - [x4c57dad6d2022e12] Which arcade game can Satoko play the most times?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_claw",
+		      "color": "#11accd",
+		      "label": "Claw",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 5,
+		        "yIntercept": 0
+		      }
+		    },
+		    {
+		      "id": "line_ddr",
+		      "color": "#1fab54",
+		      "label": "DDR",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 3.3333333333333335,
+		        "yIntercept": 0
+		      }
+		    },
+		    {
+		      "id": "line_kof",
+		      "color": "#7854ab",
+		      "label": "KOF",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 2,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 333,
+		  "xAxis": {
+		    "max": 9,
+		    "min": 0,
+		    "label": "Times",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 25,
+		    "min": 0,
+		    "label": "Cost (tokens)",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "height": 328,
+		  "points": [],
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [],
@@ -8214,7 +9312,7 @@ describe("coordinatePlane widget tests", () => {
 		  "type": "coordinatePlane",
 		  "lines": [
 		    {
-		      "id": "line_n",
+		      "id": "line_N",
 		      "color": "#1fab54",
 		      "label": "N",
 		      "style": "solid",
@@ -8225,7 +9323,7 @@ describe("coordinatePlane widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "line_m",
+		      "id": "line_M",
 		      "color": "#11accd",
 		      "label": "M",
 		      "style": "solid",
@@ -8236,7 +9334,7 @@ describe("coordinatePlane widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "line_o",
+		      "id": "line_O",
 		      "color": "#7854ab",
 		      "label": "O",
 		      "style": "solid",
@@ -8294,74 +9392,6 @@ describe("coordinatePlane widget tests", () => {
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 5,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5b3cddc02a578c1e
-	// Question: Reflect a point across a line
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [x5b3cddc02a578c1e] Reflect a point across a line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [
-		    {
-		      "id": "line_l",
-		      "color": "#000000",
-		      "label": "ℓ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": -2,
-		        "type": "standard"
-		      }
-		    }
-		  ],
 		  "width": 400,
 		  "xAxis": {
 		    "max": 8,
@@ -8408,10 +9438,323 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xb93d4ff5889d1d9b
+	// Extracted from question: xa9ca26f62775919b
+	// Question: Reflect a point across the x-axis
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [xa9ca26f62775919b] Reflect a point across the x-axis", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": -5,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3fe10c20aea32b7b
+	// Question: Reflect a point across the y-axis
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [x3fe10c20aea32b7b] Reflect a point across the y-axis", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 6,
+		      "id": "point_P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf5caad0b269d58a2
 	// Question: Reflect a point across a line on a coordinate plane
+	// Widget key: coordinate_plane_initial
+	test("coordinate-plane - [xf5caad0b269d58a2] Reflect a point across a line on a coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_n",
+		      "color": "#000000",
+		      "label": "n",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 2,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -1,
+		      "y": -1,
+		      "id": "point_C",
+		      "label": "C",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5b3cddc02a578c1e
+	// Question: Reflect a point across a line
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [x5b3cddc02a578c1e] Reflect a point across a line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_l",
+		      "color": "#000000",
+		      "label": "ℓ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 0,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 5,
+		      "id": "point_A",
+		      "label": "A",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7da2cdc751aa884b
+	// Question: Reflect a point across a line
+	// Widget key: stimulus_graph
+	test("coordinate-plane - [x7da2cdc751aa884b] Reflect a point across a line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_m",
+		      "color": "#000000",
+		      "label": "m",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 5,
+		      "id": "point_B",
+		      "label": "B",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb93d4ff5889d1d9b
+	// Question: Reflect a point across a line
 	// Widget key: reflection_stimulus
-	test("coordinate-plane - [xb93d4ff5889d1d9b] Reflect a point across a line on a coordinate plane", async () => {
+	test("coordinate-plane - [xb93d4ff5889d1d9b] Reflect a point across a line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8449,7 +9792,7 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": -3,
-		      "id": "D",
+		      "id": "point_D",
 		      "label": "D",
 		      "style": "closed"
 		    }
@@ -8559,7 +9902,7 @@ describe("coordinatePlane widget tests", () => {
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -8578,9 +9921,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x1d1aa0d0
-	// Question: Graph y = 0.4x and identify true statements
+	// Question: Graph y = 0.4x and select true statements
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x1d1aa0d0] Graph y = 0.4x and identify true statements", async () => {
+	test("coordinate-plane - [x1d1aa0d0] Graph y = 0.4x and select true statements", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8625,9 +9968,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xb5bcdb04
-	// Question: Graph a proportional relationship and select its equation
+	// Question: Graph a proportional relationship and write its equation
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xb5bcdb04] Graph a proportional relationship and select its equation", async () => {
+	test("coordinate-plane - [xb5bcdb04] Graph a proportional relationship and write its equation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8653,7 +9996,7 @@ describe("coordinatePlane widget tests", () => {
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -8671,10 +10014,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc74fd0cd
+	// Extracted from question: x9bf41aad
 	// Question: Graph a proportional relationship and select its equation
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xc74fd0cd] Graph a proportional relationship and select its equation", async () => {
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [x9bf41aad] Graph a proportional relationship and select its equation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8696,6 +10039,100 @@ describe("coordinatePlane widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8828345c
+	// Question: Graph a proportional relationship and choose its equation
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x8828345c] Graph a proportional relationship and choose its equation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x078d72cc
+	// Question: Unit rate and graph of a proportional relationship (sugar and flour)
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x078d72cc] Unit rate and graph of a proportional relationship (sugar and flour)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -1,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -1,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -8719,9 +10156,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xaae82f5e
-	// Question: Graph a proportional relationship and select its equation
+	// Question: Graph a proportional relationship and write its equation
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xaae82f5e] Graph a proportional relationship and select its equation", async () => {
+	test("coordinate-plane - [xaae82f5e] Graph a proportional relationship and write its equation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8747,54 +10184,7 @@ describe("coordinatePlane widget tests", () => {
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcccb2293
-	// Question: Find the slope from a proportional table and select the matching graph
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xcccb2293] Find the slope from a proportional table and select the matching graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -8813,9 +10203,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xd4107869
-	// Question: Find the slope from a proportional table and select the graph
+	// Question: Find the slope from a table and select its graph
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xd4107869] Find the slope from a proportional table and select the graph", async () => {
+	test("coordinate-plane - [xd4107869] Find the slope from a table and select its graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8837,53 +10227,6 @@ describe("coordinatePlane widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x97f9a47d
-	// Question: Unit rate and graph of a proportional relationship
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x97f9a47d] Unit rate and graph of a proportional relationship", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 450,
-		  "xAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 11,
-		    "min": 0,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 450,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -8935,7 +10278,7 @@ describe("coordinatePlane widget tests", () => {
 		  "polygons": [],
 		  "distances": [],
 		  "polylines": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -8953,78 +10296,31 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x30b0fdf3
-	// Question: Find the slope from a table and select the graph
+	// Extracted from question: xcdb1d41b
+	// Question: Graph a proportional relationship and find the unit rate
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x30b0fdf3] Find the slope from a table and select the graph", async () => {
+	test("coordinate-plane - [xcdb1d41b] Graph a proportional relationship and find the unit rate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "x",
+		    "label": "t",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "y",
+		    "label": "d",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x03ff0c0e
-	// Question: Select the graph of y = 2.5x and choose true statements
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x03ff0c0e] Select the graph of y = 2.5x and choose true statements", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -9056,7 +10352,7 @@ describe("coordinatePlane widget tests", () => {
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -9071,7 +10367,7 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -9095,15 +10391,15 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x7c5f8a51
-	// Question: Find a unit rate from a table and select the matching graph
-	// Widget key: graph_plane_empty
-	test("coordinate-plane - [x7c5f8a51] Find a unit rate from a table and select the matching graph", async () => {
+	// Question: Painter's unit rate and graphing a proportional relationship
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x7c5f8a51] Painter's unit rate and graphing a proportional relationship", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 450,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 5,
 		    "min": -1,
@@ -9118,7 +10414,7 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
-		  "height": 450,
+		  "height": 400,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -9142,15 +10438,15 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x618f7065
-	// Question: Unit rate and graph of a proportional relationship
+	// Question: Graph a proportional relationship and find the unit rate
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x618f7065] Unit rate and graph of a proportional relationship", async () => {
+	test("coordinate-plane - [x618f7065] Graph a proportional relationship and find the unit rate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -9165,7 +10461,7 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -9189,30 +10485,30 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x05c8fae7
-	// Question: Graph a proportional relationship from a heart-rate table
+	// Question: Graph a proportional relationship from a table (heart rate)
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x05c8fae7] Graph a proportional relationship from a heart-rate table", async () => {
+	test("coordinate-plane - [x05c8fae7] Graph a proportional relationship from a table (heart rate)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 450,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 8,
-		    "min": 0,
+		    "max": 11,
+		    "min": -1,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 100,
-		    "min": 0,
+		    "min": -10,
 		    "label": "y",
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
-		  "height": 450,
+		  "height": 400,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -9236,30 +10532,30 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x722dad66
-	// Question: Slope and graph of d = 60t
+	// Question: Slope and graph of a proportional relationship (distance vs. time)
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x722dad66] Slope and graph of d = 60t", async () => {
+	test("coordinate-plane - [x722dad66] Slope and graph of a proportional relationship (distance vs. time)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 450,
+		  "width": 425,
 		  "xAxis": {
 		    "max": 8,
-		    "min": -1,
+		    "min": 0,
 		    "label": "t",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 100,
-		    "min": -10,
+		    "min": 0,
 		    "label": "d",
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
-		  "height": 450,
+		  "height": 425,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -9282,63 +10578,16 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x5becdef5
-	// Question: Unit rate and graph of a proportional relationship
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x5becdef5] Unit rate and graph of a proportional relationship", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 500,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "t",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "d",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xebf38548
+	// Extracted from question: xbd05a232
 	// Question: Graph a proportional relationship and find the unit rate
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xebf38548] Graph a proportional relationship and find the unit rate", async () => {
+	test("coordinate-plane - [xbd05a232] Graph a proportional relationship and find the unit rate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -9353,7 +10602,7 @@ describe("coordinatePlane widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "polygons": [],
 		  "distances": [],
@@ -9376,75 +10625,142 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xca2cd29b1e2d1fcb
-	// Question: Plot data in a scatter plot
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xca2cd29b1e2d1fcb] Plot data in a scatter plot", async () => {
+	// Extracted from question: x04db8b621cc1126a
+	// Question: Select the fastest reader (unit rate)
+	// Widget key: choice_c_visual
+	test("coordinate-plane - [x04db8b621cc1126a] Select the fastest reader (unit rate)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 425,
+		  "lines": [
+		    {
+		      "id": "line_ariel",
+		      "color": "#208170",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 150,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
 		  "xAxis": {
-		    "max": 11,
-		    "min": -1,
-		    "label": "Sick days",
+		    "max": 6,
+		    "min": 0,
+		    "label": "Minutes",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 11,
-		    "min": -1,
-		    "label": "T-shirts",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9ac1c2abe1fcb39f
-	// Question: Select the correct scatter plot from a data table
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x9ac1c2abe1fcb39f] Select the correct scatter plot from a data table", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 300,
+		    "max": 800,
 		    "min": 0,
-		    "label": "Coffee (mL)",
+		    "label": "Words",
 		    "tickInterval": 50,
 		    "showGridLines": true
 		  },
-		  "yAxis": {
-		    "max": 22,
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 300,
+		      "id": "p1",
+		      "label": "(2, 300)",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb6ac5d9ca12a5d02
+	// Question: Select a scatterplot for wage vs. years worked
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [xb6ac5d9ca12a5d02] Select a scatterplot for wage vs. years worked", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 5,
 		    "min": 0,
-		    "label": "Duration (min)",
-		    "tickInterval": 2,
+		    "label": "Years",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": 0,
+		    "label": "Wage",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8a90f6b9504385d1
+	// Question: Plot exam data in a scatter plot
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x8a90f6b9504385d1] Plot exam data in a scatter plot", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": 0,
+		    "label": "Period",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": 0,
+		    "label": "Avg score",
+		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
 		  "height": 425,
@@ -9471,9 +10787,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x55d464b3a4cce929
-	// Question: Plot soccer goals by foot on a scatter plot
-	// Widget key: scatter_plane
-	test("coordinate-plane - [x55d464b3a4cce929] Plot soccer goals by foot on a scatter plot", async () => {
+	// Question: Plot soccer goals by foot (scatter plot)
+	// Widget key: scatter_plane_empty
+	test("coordinate-plane - [x55d464b3a4cce929] Plot soccer goals by foot (scatter plot)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9517,10 +10833,151 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x9c7dd01ce33ecc1b
+	// Question: Select the scatter plot for goals scored with feet and head
+	// Widget key: scatter_axes
+	test("coordinate-plane - [x9c7dd01ce33ecc1b] Select the scatter plot for goals scored with feet and head", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 40,
+		    "min": 0,
+		    "label": "Feet",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 13,
+		    "min": 0,
+		    "label": "Head",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x03d1c43076dba054
+	// Question: Create a scatter plot from a data table
+	// Widget key: scatter_plane
+	test("coordinate-plane - [x03d1c43076dba054] Create a scatter plot from a data table", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 11,
+		    "min": 0,
+		    "label": "Age",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 15,
+		    "min": 0,
+		    "label": "Sleep",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6e9f175da707bb4c
+	// Question: Select the scatter plot for predicted vs. actual hurricanes
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x6e9f175da707bb4c] Select the scatter plot for predicted vs. actual hurricanes", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 30,
+		    "min": 0,
+		    "label": "Predicted",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 30,
+		    "min": 0,
+		    "label": "Actual",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: xca55e3b9be236d3b
-	// Question: Unchanged properties under a translation (segments)
+	// Question: Properties preserved by a translation (segments)
 	// Widget key: image_1
-	test("coordinate-plane - [xca55e3b9be236d3b] Unchanged properties under a translation (segments)", async () => {
+	test("coordinate-plane - [xca55e3b9be236d3b] Properties preserved by a translation (segments)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9528,16 +10985,16 @@ describe("coordinatePlane widget tests", () => {
 		  "lines": [],
 		  "width": 400,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -9546,270 +11003,13 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": -6,
-		      "id": "A_point",
+		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": -3,
-		      "id": "B_point",
-		      "label": "B",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [
-		    {
-		      "id": "polyline_AB",
-		      "type": "points",
-		      "color": "#11accd",
-		      "label": "",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 2,
-		          "y": -6
-		        },
-		        {
-		          "x": 2,
-		          "y": -3
-		        }
-		      ]
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0d4a63e1e71d66c7
-	// Question: Translation: Unchanged properties of a circle
-	// Widget key: image_1
-	test("coordinate-plane - [x0d4a63e1e71d66c7] Translation: Unchanged properties of a circle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 325,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": -2,
-		      "id": "A_center",
-		      "label": "A",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [
-		    {
-		      "id": "polyline_circle_A",
-		      "type": "points",
-		      "color": "#11accd",
-		      "label": "",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 4,
-		          "y": -2
-		        },
-		        {
-		          "x": 3.898,
-		          "y": -1.223
-		        },
-		        {
-		          "x": 3.598,
-		          "y": -0.5
-		        },
-		        {
-		          "x": 3.121,
-		          "y": 0.121
-		        },
-		        {
-		          "x": 2.5,
-		          "y": 0.598
-		        },
-		        {
-		          "x": 1.776,
-		          "y": 0.898
-		        },
-		        {
-		          "x": 1,
-		          "y": 1
-		        },
-		        {
-		          "x": 0.224,
-		          "y": 0.898
-		        },
-		        {
-		          "x": -0.5,
-		          "y": 0.598
-		        },
-		        {
-		          "x": -1.121,
-		          "y": 0.121
-		        },
-		        {
-		          "x": -1.598,
-		          "y": -0.5
-		        },
-		        {
-		          "x": -1.898,
-		          "y": -1.223
-		        },
-		        {
-		          "x": -2,
-		          "y": -2
-		        },
-		        {
-		          "x": -1.898,
-		          "y": -2.777
-		        },
-		        {
-		          "x": -1.598,
-		          "y": -3.5
-		        },
-		        {
-		          "x": -1.121,
-		          "y": -4.121
-		        },
-		        {
-		          "x": -0.5,
-		          "y": -4.598
-		        },
-		        {
-		          "x": 0.224,
-		          "y": -4.898
-		        },
-		        {
-		          "x": 1,
-		          "y": -5
-		        },
-		        {
-		          "x": 1.776,
-		          "y": -4.898
-		        },
-		        {
-		          "x": 2.5,
-		          "y": -4.598
-		        },
-		        {
-		          "x": 3.121,
-		          "y": -4.121
-		        },
-		        {
-		          "x": 3.598,
-		          "y": -3.5
-		        },
-		        {
-		          "x": 3.898,
-		          "y": -2.777
-		        },
-		        {
-		          "x": 4,
-		          "y": -2
-		        }
-		      ]
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb1ab267224304176
-	// Question: Unchanged properties under a reflection
-	// Widget key: image_1
-	test("coordinate-plane - [xb1ab267224304176] Unchanged properties under a reflection", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [
-		    {
-		      "id": "line_l",
-		      "color": "#7854ab",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -0.5,
-		        "yIntercept": 2
-		      }
-		    }
-		  ],
-		  "width": 325,
-		  "xAxis": {
-		    "max": 3,
-		    "min": -7,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -1,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": 3,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 6,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
@@ -9817,7 +11017,7 @@ describe("coordinatePlane widget tests", () => {
 		  ],
 		  "polygons": [
 		    {
-		      "label": "",
+		      "label": " ",
 		      "isClosed": false,
 		      "vertices": [
 		        "A",
@@ -9847,10 +11047,175 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9ba310ac8b279553
-	// Question: Unchanged properties under reflection of a quadrilateral
+	// Extracted from question: x0d4a63e1e71d66c7
+	// Question: Identify properties unchanged by a translation of a circle
 	// Widget key: image_1
-	test("coordinate-plane - [x9ba310ac8b279553] Unchanged properties under reflection of a quadrilateral", async () => {
+	test("coordinate-plane - [x0d4a63e1e71d66c7] Identify properties unchanged by a translation of a circle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 325,
+		  "xAxis": {
+		    "max": 6,
+		    "min": -4,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 4,
+		    "min": -6,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": -2,
+		      "id": "A_center",
+		      "label": "A",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_circle_A",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 4,
+		          "y": -2
+		        },
+		        {
+		          "x": 3.897777,
+		          "y": -1.223543
+		        },
+		        {
+		          "x": 3.598076,
+		          "y": -0.5
+		        },
+		        {
+		          "x": 3.12132,
+		          "y": 0.12132
+		        },
+		        {
+		          "x": 2.5,
+		          "y": 0.598076
+		        },
+		        {
+		          "x": 1.776457,
+		          "y": 0.897777
+		        },
+		        {
+		          "x": 1,
+		          "y": 1
+		        },
+		        {
+		          "x": 0.223543,
+		          "y": 0.897777
+		        },
+		        {
+		          "x": -0.5,
+		          "y": 0.598076
+		        },
+		        {
+		          "x": -1.12132,
+		          "y": 0.12132
+		        },
+		        {
+		          "x": -1.598076,
+		          "y": -0.5
+		        },
+		        {
+		          "x": -1.897777,
+		          "y": -1.223543
+		        },
+		        {
+		          "x": -2,
+		          "y": -2
+		        },
+		        {
+		          "x": -1.897777,
+		          "y": -2.776457
+		        },
+		        {
+		          "x": -1.598076,
+		          "y": -3.5
+		        },
+		        {
+		          "x": -1.12132,
+		          "y": -4.12132
+		        },
+		        {
+		          "x": -0.5,
+		          "y": -4.598076
+		        },
+		        {
+		          "x": 0.223543,
+		          "y": -4.897777
+		        },
+		        {
+		          "x": 1,
+		          "y": -5
+		        },
+		        {
+		          "x": 1.776457,
+		          "y": -4.897777
+		        },
+		        {
+		          "x": 2.5,
+		          "y": -4.598076
+		        },
+		        {
+		          "x": 3.12132,
+		          "y": -4.12132
+		        },
+		        {
+		          "x": 3.598076,
+		          "y": -3.5
+		        },
+		        {
+		          "x": 3.897777,
+		          "y": -2.776457
+		        },
+		        {
+		          "x": 4,
+		          "y": -2
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb1ab267224304176
+	// Question: Unchanged properties under reflection
+	// Widget key: image_1
+	test("coordinate-plane - [xb1ab267224304176] Unchanged properties under reflection", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9859,7 +11224,99 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "id": "line_l",
 		      "color": "#7854ab",
-		      "label": "",
+		      "label": "ℓ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -0.5,
+		        "yIntercept": 2
+		      }
+		    }
+		  ],
+		  "width": 325,
+		  "xAxis": {
+		    "max": 1,
+		    "min": -7,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 7,
+		    "min": -1,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 3,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_AB",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": "AB",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": -2,
+		          "y": 3
+		        },
+		        {
+		          "x": -5,
+		          "y": 6
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9ba310ac8b279553
+	// Question: Reflection: Unchanged properties of a quadrilateral
+	// Widget key: image_1
+	test("coordinate-plane - [x9ba310ac8b279553] Reflection: Unchanged properties of a quadrilateral", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_l",
+		      "color": "#7854ab",
+		      "label": "ℓ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -9872,14 +11329,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -9924,7 +11381,7 @@ describe("coordinatePlane widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -9949,9 +11406,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x1d0f1dbd803693ef
-	// Question: Unchanged properties of a circle under reflection
+	// Question: Properties preserved under reflection of a circle
 	// Widget key: image_1
-	test("coordinate-plane - [x1d0f1dbd803693ef] Unchanged properties of a circle under reflection", async () => {
+	test("coordinate-plane - [x1d0f1dbd803693ef] Properties preserved under reflection of a circle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9960,7 +11417,7 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "id": "line_l",
 		      "color": "#7854ab",
-		      "label": "",
+		      "label": "ℓ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -9971,26 +11428,26 @@ describe("coordinatePlane widget tests", () => {
 		  ],
 		  "width": 325,
 		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 2,
+		    "min": -9,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 1,
+		    "min": -9,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 298,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": -6,
 		      "y": -6,
-		      "id": "centerA",
-		      "label": "",
+		      "id": "A",
+		      "label": "A",
 		      "style": "closed"
 		    }
 		  ],
@@ -9998,10 +11455,10 @@ describe("coordinatePlane widget tests", () => {
 		  "distances": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_circleA",
+		      "id": "polyline_circle_A",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "Circle A",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -10093,12 +11550,8 @@ describe("coordinatePlane widget tests", () => {
 		          "y": -7
 		        },
 		        {
-		          "x": -7.532089,
-		          "y": -7.285575
-		        },
-		        {
 		          "x": -7.285575,
-		          "y": -7.532089
+		          "y": -7.285575
 		        },
 		        {
 		          "x": -7,
@@ -10174,9 +11627,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xf558054694db4056
-	// Question: Properties of a circle preserved under rotation
+	// Question: Properties preserved by rotating a circle 180°
 	// Widget key: image_1
-	test("coordinate-plane - [xf558054694db4056] Properties of a circle preserved under rotation", async () => {
+	test("coordinate-plane - [xf558054694db4056] Properties preserved by rotating a circle 180°", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10184,32 +11637,32 @@ describe("coordinatePlane widget tests", () => {
 		  "lines": [],
 		  "width": 325,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 6,
+		    "min": -6,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 6,
+		    "min": -6,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 250,
+		  "height": 350,
 		  "points": [
 		    {
 		      "x": -3,
 		      "y": 0,
-		      "id": "center_A",
+		      "id": "A_center",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": -2,
-		      "id": "point_P",
+		      "id": "P",
 		      "label": "P",
 		      "style": "closed"
 		    }
@@ -10221,7 +11674,7 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_circle_A",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": "Circle A",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -10229,144 +11682,144 @@ describe("coordinatePlane widget tests", () => {
 		          "y": 0
 		        },
 		        {
-		          "x": -1.03,
-		          "y": 0.348
+		          "x": -1.030384494,
+		          "y": 0.347296356
 		        },
 		        {
-		          "x": -1.12,
-		          "y": 0.684
+		          "x": -1.12061476,
+		          "y": 0.684040286
 		        },
 		        {
-		          "x": -1.268,
+		          "x": -1.267949192,
 		          "y": 1
 		        },
 		        {
-		          "x": -1.468,
-		          "y": 1.286
+		          "x": -1.467911114,
+		          "y": 1.28557522
 		        },
 		        {
-		          "x": -1.714,
-		          "y": 1.532
+		          "x": -1.71442478,
+		          "y": 1.532088886
 		        },
 		        {
 		          "x": -2,
-		          "y": 1.732
+		          "y": 1.732050808
 		        },
 		        {
-		          "x": -2.316,
-		          "y": 1.88
+		          "x": -2.315959714,
+		          "y": 1.87938524
 		        },
 		        {
-		          "x": -2.652,
-		          "y": 1.97
+		          "x": -2.652703644,
+		          "y": 1.969615506
 		        },
 		        {
 		          "x": -3,
 		          "y": 2
 		        },
 		        {
-		          "x": -3.348,
-		          "y": 1.97
+		          "x": -3.347296356,
+		          "y": 1.969615506
 		        },
 		        {
-		          "x": -3.684,
-		          "y": 1.88
+		          "x": -3.684040286,
+		          "y": 1.87938524
 		        },
 		        {
 		          "x": -4,
-		          "y": 1.732
+		          "y": 1.732050808
 		        },
 		        {
-		          "x": -4.286,
-		          "y": 1.532
+		          "x": -4.28557522,
+		          "y": 1.532088886
 		        },
 		        {
-		          "x": -4.532,
-		          "y": 1.286
+		          "x": -4.532088886,
+		          "y": 1.28557522
 		        },
 		        {
-		          "x": -4.732,
+		          "x": -4.732050808,
 		          "y": 1
 		        },
 		        {
-		          "x": -4.88,
-		          "y": 0.684
+		          "x": -4.87938524,
+		          "y": 0.684040286
 		        },
 		        {
-		          "x": -4.97,
-		          "y": 0.348
+		          "x": -4.969615506,
+		          "y": 0.347296356
 		        },
 		        {
 		          "x": -5,
 		          "y": 0
 		        },
 		        {
-		          "x": -4.97,
-		          "y": -0.348
+		          "x": -4.969615506,
+		          "y": -0.347296356
 		        },
 		        {
-		          "x": -4.88,
-		          "y": -0.684
+		          "x": -4.87938524,
+		          "y": -0.684040286
 		        },
 		        {
-		          "x": -4.732,
+		          "x": -4.732050808,
 		          "y": -1
 		        },
 		        {
-		          "x": -4.532,
-		          "y": -1.286
+		          "x": -4.532088886,
+		          "y": -1.28557522
 		        },
 		        {
-		          "x": -4.286,
-		          "y": -1.532
+		          "x": -4.28557522,
+		          "y": -1.532088886
 		        },
 		        {
 		          "x": -4,
-		          "y": -1.732
+		          "y": -1.732050808
 		        },
 		        {
-		          "x": -3.684,
-		          "y": -1.88
+		          "x": -3.684040286,
+		          "y": -1.87938524
 		        },
 		        {
-		          "x": -3.348,
-		          "y": -1.97
+		          "x": -3.347296356,
+		          "y": -1.969615506
 		        },
 		        {
 		          "x": -3,
 		          "y": -2
 		        },
 		        {
-		          "x": -2.652,
-		          "y": -1.97
+		          "x": -2.652703644,
+		          "y": -1.969615506
 		        },
 		        {
-		          "x": -2.316,
-		          "y": -1.88
+		          "x": -2.315959714,
+		          "y": -1.87938524
 		        },
 		        {
 		          "x": -2,
-		          "y": -1.732
+		          "y": -1.732050808
 		        },
 		        {
-		          "x": -1.714,
-		          "y": -1.532
+		          "x": -1.71442478,
+		          "y": -1.532088886
 		        },
 		        {
-		          "x": -1.468,
-		          "y": -1.286
+		          "x": -1.467911114,
+		          "y": -1.28557522
 		        },
 		        {
-		          "x": -1.268,
+		          "x": -1.267949192,
 		          "y": -1
 		        },
 		        {
-		          "x": -1.12,
-		          "y": -0.684
+		          "x": -1.12061476,
+		          "y": -0.684040286
 		        },
 		        {
-		          "x": -1.03,
-		          "y": -0.348
+		          "x": -1.030384494,
+		          "y": -0.347296356
 		        },
 		        {
 		          "x": -1,
@@ -10394,9 +11847,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x18aae9273e7fa09d
-	// Question: Unchanged properties under a rotation
+	// Question: Unchanged properties under rotation (segments)
 	// Widget key: image_1
-	test("coordinate-plane - [x18aae9273e7fa09d] Unchanged properties under a rotation", async () => {
+	test("coordinate-plane - [x18aae9273e7fa09d] Unchanged properties under rotation (segments)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10404,20 +11857,20 @@ describe("coordinatePlane widget tests", () => {
 		  "lines": [],
 		  "width": 325,
 		  "xAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "",
+		    "max": 2,
+		    "min": -5,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "",
+		    "max": 1,
+		    "min": -3,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 196,
+		  "height": 325,
 		  "points": [
 		    {
 		      "x": 1,
@@ -10445,19 +11898,254 @@ describe("coordinatePlane widget tests", () => {
 		  "distances": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_ab",
+		      "id": "polyline_AB",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "AB",
+		      "label": " ",
 		      "style": "solid",
 		      "points": [
 		        {
-		          "x": 1,
+		          "x": -2,
 		          "y": -2
 		        },
 		        {
-		          "x": -2,
+		          "x": 1,
 		          "y": -2
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc242e81e1706e84a
+	// Question: Does the graph represent a linear function?
+	// Widget key: image_1
+	test("coordinate-plane - [xc242e81e1706e84a] Does the graph represent a linear function?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_1",
+		      "color": "#4A90E2",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": -2
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -5,
+		      "y": -2,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -2,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": -2,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa4469305
+	// Question: Does the graph represent a function?
+	// Widget key: image_1
+	test("coordinate-plane - [xa4469305] Does the graph represent a function?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 7,
+		    "min": -5,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_upper",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": -4,
+		          "y": 0
+		        },
+		        {
+		          "x": -3,
+		          "y": 2.21
+		        },
+		        {
+		          "x": -2,
+		          "y": 3.13
+		        },
+		        {
+		          "x": -1,
+		          "y": 3.83
+		        },
+		        {
+		          "x": 0,
+		          "y": 4.43
+		        },
+		        {
+		          "x": 1,
+		          "y": 4.95
+		        },
+		        {
+		          "x": 2,
+		          "y": 5.42
+		        },
+		        {
+		          "x": 3,
+		          "y": 5.86
+		        },
+		        {
+		          "x": 4,
+		          "y": 6.26
+		        },
+		        {
+		          "x": 5,
+		          "y": 6.64
+		        },
+		        {
+		          "x": 6,
+		          "y": 7
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_lower",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": -4,
+		          "y": 0
+		        },
+		        {
+		          "x": -3,
+		          "y": -2.21
+		        },
+		        {
+		          "x": -2,
+		          "y": -3.13
+		        },
+		        {
+		          "x": -1,
+		          "y": -3.83
+		        },
+		        {
+		          "x": 0,
+		          "y": -4.43
+		        },
+		        {
+		          "x": 1,
+		          "y": -4.95
+		        },
+		        {
+		          "x": 2,
+		          "y": -5.42
+		        },
+		        {
+		          "x": 3,
+		          "y": -5.86
+		        },
+		        {
+		          "x": 4,
+		          "y": -6.26
+		        },
+		        {
+		          "x": 5,
+		          "y": -6.64
+		        },
+		        {
+		          "x": 6,
+		          "y": -7
 		        }
 		      ]
 		    }
@@ -10493,14 +12181,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -10513,234 +12201,108 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_relation",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "Relationship",
 		      "style": "solid",
 		      "points": [
 		        {
 		          "x": -8,
-		          "y": -1
-		        },
-		        {
-		          "x": -6,
-		          "y": 3
-		        },
-		        {
-		          "x": -4,
-		          "y": 5
-		        },
-		        {
-		          "x": -2,
 		          "y": 2
 		        },
 		        {
-		          "x": 0,
-		          "y": 4
-		        },
-		        {
-		          "x": 2,
-		          "y": 1
-		        },
-		        {
-		          "x": 1,
-		          "y": -1
-		        },
-		        {
-		          "x": 0,
-		          "y": -3
-		        },
-		        {
-		          "x": -2,
-		          "y": -4
-		        },
-		        {
-		          "x": -4,
-		          "y": 0
+		          "x": -7,
+		          "y": 3.5
 		        },
 		        {
 		          "x": -6,
-		          "y": -2
-		        },
-		        {
-		          "x": -4,
-		          "y": -6
-		        },
-		        {
-		          "x": -2,
-		          "y": -7
-		        },
-		        {
-		          "x": 0,
-		          "y": -7
-		        },
-		        {
-		          "x": 2,
-		          "y": -5
-		        },
-		        {
-		          "x": 4,
-		          "y": -3
-		        },
-		        {
-		          "x": 6,
-		          "y": -4
-		        },
-		        {
-		          "x": 8,
-		          "y": -2
-		        }
-		      ]
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa4469305
-	// Question: Does the graph represent a function?
-	// Widget key: image_1
-	test("coordinate-plane - [xa4469305] Does the graph represent a function?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 345,
-		  "xAxis": {
-		    "max": 6,
-		    "min": -4,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 7,
-		    "min": -7,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 345,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [
-		    {
-		      "id": "polyline_upper",
-		      "type": "points",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": -4,
-		          "y": 0
-		        },
-		        {
-		          "x": -3,
-		          "y": 1
-		        },
-		        {
-		          "x": -2,
-		          "y": 2
-		        },
-		        {
-		          "x": -1,
-		          "y": 3
-		        },
-		        {
-		          "x": 0,
-		          "y": 4
-		        },
-		        {
-		          "x": 1,
 		          "y": 5
 		        },
 		        {
-		          "x": 2,
-		          "y": 5.5
+		          "x": -5,
+		          "y": 5.8
 		        },
 		        {
-		          "x": 3,
+		          "x": -4,
 		          "y": 6
 		        },
 		        {
-		          "x": 4,
-		          "y": 6.5
-		        },
-		        {
-		          "x": 5,
-		          "y": 6.8
-		        },
-		        {
-		          "x": 6,
-		          "y": 7
-		        }
-		      ]
-		    },
-		    {
-		      "id": "polyline_lower",
-		      "type": "points",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": -4,
-		          "y": 0
-		        },
-		        {
 		          "x": -3,
-		          "y": -1
+		          "y": 5.6
 		        },
 		        {
 		          "x": -2,
-		          "y": -2
+		          "y": 5
 		        },
 		        {
 		          "x": -1,
-		          "y": -3
+		          "y": 4.5
 		        },
 		        {
 		          "x": 0,
-		          "y": -4
+		          "y": 4
 		        },
 		        {
 		          "x": 1,
-		          "y": -5
+		          "y": 2.7
 		        },
 		        {
 		          "x": 2,
-		          "y": -5.5
+		          "y": 0.5
 		        },
 		        {
-		          "x": 3,
+		          "x": 1,
+		          "y": -1.2
+		        },
+		        {
+		          "x": 0,
+		          "y": -3
+		        },
+		        {
+		          "x": -1.5,
+		          "y": -4.5
+		        },
+		        {
+		          "x": -3,
+		          "y": -5.4
+		        },
+		        {
+		          "x": -4.5,
 		          "y": -6
 		        },
 		        {
-		          "x": 4,
-		          "y": -6.5
+		          "x": -6,
+		          "y": -6.2
+		        },
+		        {
+		          "x": -5,
+		          "y": -7.5
+		        },
+		        {
+		          "x": -3,
+		          "y": -7.2
+		        },
+		        {
+		          "x": 0,
+		          "y": -7
+		        },
+		        {
+		          "x": 2,
+		          "y": -6
+		        },
+		        {
+		          "x": 3.5,
+		          "y": -4
 		        },
 		        {
 		          "x": 5,
-		          "y": -6.8
+		          "y": -1.5
 		        },
 		        {
-		          "x": 6,
-		          "y": -7
+		          "x": 6.5,
+		          "y": 1
+		        },
+		        {
+		          "x": 8,
+		          "y": 3
 		        }
 		      ]
 		    }
@@ -10773,9 +12335,9 @@ describe("coordinatePlane widget tests", () => {
 		  "type": "coordinatePlane",
 		  "lines": [
 		    {
-		      "id": "line_vertical_x_eq_neg2",
+		      "id": "line_vertical",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "A": 1,
@@ -10789,14 +12351,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -10833,9 +12395,9 @@ describe("coordinatePlane widget tests", () => {
 		  "type": "coordinatePlane",
 		  "lines": [
 		    {
-		      "id": "line_vertical_x_1",
+		      "id": "line_x_eq_1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "A": 1,
@@ -10849,14 +12411,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -10884,16 +12446,16 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xdf5fc29b
-	// Question: Does the graph represent a function?
+	// Question: Does this graph represent a function?
 	// Widget key: image_1
-	test("coordinate-plane - [xdf5fc29b] Does the graph represent a function?", async () => {
+	test("coordinate-plane - [xdf5fc29b] Does this graph represent a function?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [
 		    {
-		      "id": "line_x_eq_6",
+		      "id": "line_vertical_x_eq_6",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
@@ -10909,14 +12471,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -10954,16 +12516,16 @@ describe("coordinatePlane widget tests", () => {
 		  "lines": [],
 		  "width": 345,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -10973,7 +12535,7 @@ describe("coordinatePlane widget tests", () => {
 		  "distances": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_left_upper",
+		      "id": "polyline_left_sideways_u",
 		      "type": "points",
 		      "color": "#11accd",
 		      "label": " ",
@@ -10985,206 +12547,108 @@ describe("coordinatePlane widget tests", () => {
 		        },
 		        {
 		          "x": -7,
-		          "y": 5.073
+		          "y": 4.5
 		        },
 		        {
 		          "x": -6,
-		          "y": 4.073
-		        },
-		        {
-		          "x": -5.5,
-		          "y": 3.545
+		          "y": 3.2
 		        },
 		        {
 		          "x": -5,
-		          "y": 3
-		        },
-		        {
-		          "x": -4.5,
-		          "y": 2.436
+		          "y": 2.2
 		        },
 		        {
 		          "x": -4,
-		          "y": 1.855
-		        },
-		        {
-		          "x": -3.5,
-		          "y": 1.255
+		          "y": 1.2
 		        },
 		        {
 		          "x": -3,
-		          "y": 0.636
+		          "y": 0.5
 		        },
 		        {
 		          "x": -2.5,
 		          "y": 0
-		        }
-		      ]
-		    },
-		    {
-		      "id": "polyline_left_lower",
-		      "type": "points",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
+		        },
+		        {
+		          "x": -3.2,
+		          "y": -0.5
+		        },
+		        {
+		          "x": -4.2,
+		          "y": -1.2
+		        },
+		        {
+		          "x": -5.2,
+		          "y": -2.2
+		        },
+		        {
+		          "x": -6.2,
+		          "y": -3.2
+		        },
+		        {
+		          "x": -7.2,
+		          "y": -4.5
+		        },
 		        {
 		          "x": -8,
 		          "y": -6
-		        },
-		        {
-		          "x": -7,
-		          "y": -5.073
-		        },
-		        {
-		          "x": -6,
-		          "y": -4.073
-		        },
-		        {
-		          "x": -5.5,
-		          "y": -3.545
-		        },
-		        {
-		          "x": -5,
-		          "y": -3
-		        },
-		        {
-		          "x": -4.5,
-		          "y": -2.436
-		        },
-		        {
-		          "x": -4,
-		          "y": -1.855
-		        },
-		        {
-		          "x": -3.5,
-		          "y": -1.255
-		        },
-		        {
-		          "x": -3,
-		          "y": -0.636
-		        },
-		        {
-		          "x": -2.5,
-		          "y": 0
 		        }
 		      ]
 		    },
 		    {
-		      "id": "polyline_right_upper",
+		      "id": "polyline_right_sideways_u",
 		      "type": "points",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
-		        {
-		          "x": -2.5,
-		          "y": 0
-		        },
-		        {
-		          "x": -2,
-		          "y": 0.104
-		        },
-		        {
-		          "x": -1.5,
-		          "y": 0.169
-		        },
-		        {
-		          "x": -1,
-		          "y": 0.195
-		        },
-		        {
-		          "x": -0.5,
-		          "y": 0.182
-		        },
-		        {
-		          "x": 0,
-		          "y": 0.13
-		        },
-		        {
-		          "x": 1,
-		          "y": 0.091
-		        },
-		        {
-		          "x": 2,
-		          "y": 0.468
-		        },
-		        {
-		          "x": 3,
-		          "y": 1
-		        },
-		        {
-		          "x": 4,
-		          "y": 1.688
-		        },
-		        {
-		          "x": 5.5,
-		          "y": 3.013
-		        },
-		        {
-		          "x": 7,
-		          "y": 4.688
-		        },
 		        {
 		          "x": 8,
 		          "y": 6
-		        }
-		      ]
-		    },
-		    {
-		      "id": "polyline_right_lower",
-		      "type": "points",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
+		        },
+		        {
+		          "x": 7,
+		          "y": 4.5
+		        },
+		        {
+		          "x": 6,
+		          "y": 3.2
+		        },
+		        {
+		          "x": 5,
+		          "y": 2.2
+		        },
+		        {
+		          "x": 4,
+		          "y": 1.2
+		        },
+		        {
+		          "x": 3,
+		          "y": 0.5
+		        },
 		        {
 		          "x": -2.5,
 		          "y": 0
 		        },
 		        {
-		          "x": -2,
-		          "y": -0.104
-		        },
-		        {
-		          "x": -1.5,
-		          "y": -0.169
-		        },
-		        {
-		          "x": -1,
-		          "y": -0.195
-		        },
-		        {
-		          "x": -0.5,
-		          "y": -0.182
-		        },
-		        {
-		          "x": 0,
-		          "y": -0.13
-		        },
-		        {
-		          "x": 1,
-		          "y": -0.091
-		        },
-		        {
-		          "x": 2,
-		          "y": -0.468
-		        },
-		        {
 		          "x": 3,
-		          "y": -1
+		          "y": -0.5
 		        },
 		        {
 		          "x": 4,
-		          "y": -1.688
+		          "y": -1.2
 		        },
 		        {
-		          "x": 5.5,
-		          "y": -3.013
+		          "x": 5,
+		          "y": -2.2
+		        },
+		        {
+		          "x": 6,
+		          "y": -3.2
 		        },
 		        {
 		          "x": 7,
-		          "y": -4.688
+		          "y": -4.5
 		        },
 		        {
 		          "x": 8,
@@ -11222,16 +12686,16 @@ describe("coordinatePlane widget tests", () => {
 		  "lines": [],
 		  "width": 345,
 		  "xAxis": {
-		    "max": 8,
+		    "max": 10,
 		    "min": -6,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -3,
-		    "label": "",
+		    "max": 10,
+		    "min": -6,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -11241,10 +12705,10 @@ describe("coordinatePlane widget tests", () => {
 		  "distances": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_upper_curve",
+		      "id": "polyline_upper_branch",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "Relation (upper branch)",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -11252,56 +12716,32 @@ describe("coordinatePlane widget tests", () => {
 		          "y": 8
 		        },
 		        {
-		          "x": -5,
-		          "y": 7.6
-		        },
-		        {
 		          "x": -4,
-		          "y": 7.1
-		        },
-		        {
-		          "x": -3,
-		          "y": 6.2
+		          "y": 7
 		        },
 		        {
 		          "x": -2,
-		          "y": 5.4
-		        },
-		        {
-		          "x": -1,
-		          "y": 4.6
+		          "y": 6.2
 		        },
 		        {
 		          "x": 0,
-		          "y": 4
-		        },
-		        {
-		          "x": 1,
-		          "y": 3.6
+		          "y": 5.6
 		        },
 		        {
 		          "x": 2,
-		          "y": 3.3
-		        },
-		        {
-		          "x": 3,
-		          "y": 3.1
+		          "y": 5.2
 		        },
 		        {
 		          "x": 4,
-		          "y": 3
+		          "y": 4.6
 		        },
 		        {
 		          "x": 5,
-		          "y": 2.9
+		          "y": 5
 		        },
 		        {
 		          "x": 6,
-		          "y": 2.7
-		        },
-		        {
-		          "x": 7,
-		          "y": 2.6
+		          "y": 4
 		        },
 		        {
 		          "x": 8,
@@ -11310,10 +12750,10 @@ describe("coordinatePlane widget tests", () => {
 		      ]
 		    },
 		    {
-		      "id": "polyline_lower_curve",
+		      "id": "polyline_lower_branch",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "Relation (lower branch)",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -11321,56 +12761,32 @@ describe("coordinatePlane widget tests", () => {
 		          "y": -3
 		        },
 		        {
-		          "x": -5,
-		          "y": -2.3
-		        },
-		        {
 		          "x": -4,
-		          "y": -1.5
-		        },
-		        {
-		          "x": -3,
-		          "y": -0.5
+		          "y": -1.8
 		        },
 		        {
 		          "x": -2,
-		          "y": 0.5
-		        },
-		        {
-		          "x": -1,
-		          "y": 1.35
+		          "y": -0.8
 		        },
 		        {
 		          "x": 0,
-		          "y": 2
-		        },
-		        {
-		          "x": 1,
-		          "y": 2.45
+		          "y": 0.2
 		        },
 		        {
 		          "x": 2,
-		          "y": 2.75
-		        },
-		        {
-		          "x": 3,
-		          "y": 2.95
+		          "y": 0.9
 		        },
 		        {
 		          "x": 4,
-		          "y": 3.05
+		          "y": 1.6
 		        },
 		        {
 		          "x": 5,
-		          "y": 3.05
+		          "y": 0
 		        },
 		        {
 		          "x": 6,
-		          "y": 3
-		        },
-		        {
-		          "x": 7,
-		          "y": 2.75
+		          "y": 1.5
 		        },
 		        {
 		          "x": 8,
@@ -11398,9 +12814,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x78e757c7
-	// Question: Does the graph represent a function?
+	// Question: Determine whether the graph represents a function
 	// Widget key: image_1
-	test("coordinate-plane - [x78e757c7] Does the graph represent a function?", async () => {
+	test("coordinate-plane - [x78e757c7] Determine whether the graph represents a function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11408,16 +12824,16 @@ describe("coordinatePlane widget tests", () => {
 		  "lines": [],
 		  "width": 345,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 9,
+		    "min": -9,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 9,
+		    "min": -9,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -11430,7 +12846,7 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_upper_u",
 		      "type": "function",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "xRange": {
 		        "max": 8,
@@ -11447,7 +12863,7 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_lower_u",
 		      "type": "function",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "xRange": {
 		        "max": 8,
@@ -11491,7 +12907,7 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "id": "line_vertical_x_neg5",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "A": 1,
@@ -11503,16 +12919,16 @@ describe("coordinatePlane widget tests", () => {
 		  ],
 		  "width": 345,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -11539,10 +12955,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x8982d9c5
-	// Question: Does the graph represent a function?
+	// Extracted from question: xb798abc9
+	// Question: Determine if a graph represents a function
 	// Widget key: image_1
-	test("coordinate-plane - [x8982d9c5] Does the graph represent a function?", async () => {
+	test("coordinate-plane - [xb798abc9] Determine if a graph represents a function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11550,16 +12966,16 @@ describe("coordinatePlane widget tests", () => {
 		  "lines": [],
 		  "width": 345,
 		  "xAxis": {
-		    "max": 5,
-		    "min": -1,
-		    "label": "",
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -11572,28 +12988,120 @@ describe("coordinatePlane widget tests", () => {
 		      "id": "polyline_relation",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": "Relation",
 		      "style": "solid",
 		      "points": [
 		        {
-		          "x": -1,
-		          "y": -8
-		        },
-		        {
-		          "x": 5,
-		          "y": -4
-		        },
-		        {
-		          "x": -1,
+		          "x": 2,
 		          "y": 0
 		        },
 		        {
-		          "x": 5,
-		          "y": 4
+		          "x": 1.6,
+		          "y": 0.8
 		        },
 		        {
-		          "x": -1,
+		          "x": 1.2,
+		          "y": 1.8
+		        },
+		        {
+		          "x": 1,
+		          "y": 3
+		        },
+		        {
+		          "x": 0.5,
+		          "y": 5
+		        },
+		        {
+		          "x": 0.2,
+		          "y": 7
+		        },
+		        {
+		          "x": 1,
+		          "y": 6.5
+		        },
+		        {
+		          "x": 2,
+		          "y": 6
+		        },
+		        {
+		          "x": 3,
+		          "y": 5.8
+		        },
+		        {
+		          "x": 4,
+		          "y": 5.8
+		        },
+		        {
+		          "x": 5,
+		          "y": 5.8
+		        },
+		        {
+		          "x": 6,
+		          "y": 5.9
+		        },
+		        {
+		          "x": 7,
+		          "y": 6.2
+		        },
+		        {
+		          "x": 8,
+		          "y": 6.8
+		        },
+		        {
+		          "x": 7,
 		          "y": 8
+		        },
+		        {
+		          "x": 6,
+		          "y": 9
+		        },
+		        {
+		          "x": 5,
+		          "y": 9.2
+		        },
+		        {
+		          "x": 4,
+		          "y": 9
+		        },
+		        {
+		          "x": 3,
+		          "y": 8
+		        },
+		        {
+		          "x": 2,
+		          "y": 7
+		        },
+		        {
+		          "x": 3,
+		          "y": 5
+		        },
+		        {
+		          "x": 4,
+		          "y": 3.5
+		        },
+		        {
+		          "x": 5,
+		          "y": 2.2
+		        },
+		        {
+		          "x": 6,
+		          "y": 1.8
+		        },
+		        {
+		          "x": 7,
+		          "y": 1.7
+		        },
+		        {
+		          "x": 8,
+		          "y": 2
+		        },
+		        {
+		          "x": 9,
+		          "y": 3.2
+		        },
+		        {
+		          "x": 10,
+		          "y": 5
 		        }
 		      ]
 		    }
@@ -11616,77 +13124,77 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xb798abc9
-	// Question: Determine whether a graph represents a function
-	// Widget key: image_1
-	test("coordinate-plane - [xb798abc9] Determine whether a graph represents a function", async () => {
+	// Extracted from question: x35fd9563b0336f27
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: coordinate_plane_initial
+	test("coordinate-plane - [x35fd9563b0336f27] Translate a quadrilateral on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 345,
+		  "width": 425,
 		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 345,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [
+		  "height": 425,
+		  "points": [
 		    {
-		      "id": "polyline_relation",
-		      "type": "points",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 2,
-		          "y": 1
-		        },
-		        {
-		          "x": 5,
-		          "y": 4
-		        },
-		        {
-		          "x": 3,
-		          "y": 7
-		        },
-		        {
-		          "x": 5,
-		          "y": 8
-		        },
-		        {
-		          "x": 7,
-		          "y": 6
-		        },
-		        {
-		          "x": 5,
-		          "y": 3
-		        },
-		        {
-		          "x": 8,
-		          "y": 2
-		        },
-		        {
-		          "x": 9,
-		          "y": 1
-		        }
-		      ]
+		      "x": 0,
+		      "y": 0,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 2,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 1,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
 		    }
 		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "distances": [],
+		  "polylines": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -11770,7 +13278,7 @@ describe("coordinatePlane widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#11accd22",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -11794,10 +13302,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2130676b11201508
-	// Question: Translate a triangle left on a coordinate plane
-	// Widget key: triangle_stimulus
-	test("coordinate-plane - [x2130676b11201508] Translate a triangle left on a coordinate plane", async () => {
+	// Extracted from question: x8c0fd855955cee06
+	// Question: Translate a quadrilateral on a coordinate plane
+	// Widget key: coordinate_plane_initial
+	test("coordinate-plane - [x8c0fd855955cee06] Translate a quadrilateral on a coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11821,37 +13329,45 @@ describe("coordinatePlane widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": -1,
-		      "y": 1,
+		      "x": 2,
+		      "y": -3,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 2,
-		      "y": -3,
+		      "x": -1,
+		      "y": 3,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": 0,
+		      "x": -1,
+		      "y": -3,
 		      "id": "C",
 		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": -4,
+		      "id": "D",
+		      "label": "D",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "ABC",
+		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
 		        "B",
-		        "C"
+		        "C",
+		        "D"
 		      ],
-		      "fillColor": "#11accd1F",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -11925,7 +13441,7 @@ describe("coordinatePlane widget tests", () => {
 		  ],
 		  "polygons": [
 		    {
-		      "label": "",
+		      "label": "ABC",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
@@ -11957,9 +13473,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x622210c259822d46
-	// Question: Translate a triangle: left 3 and down 3
-	// Widget key: triangle_stimulus
-	test("coordinate-plane - [x622210c259822d46] Translate a triangle: left 3 and down 3", async () => {
+	// Question: Translate a triangle left and down on a coordinate plane
+	// Widget key: coordinate_plane_initial
+	test("coordinate-plane - [x622210c259822d46] Translate a triangle left and down on a coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12006,14 +13522,14 @@ describe("coordinatePlane widget tests", () => {
 		  ],
 		  "polygons": [
 		    {
-		      "label": "",
+		      "label": "Triangle ABC",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -12037,10 +13553,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc0eece1841e195e0
-	// Question: Translate a quadrilateral 5 units to the right
-	// Widget key: stimulus_graph
-	test("coordinate-plane - [xc0eece1841e195e0] Translate a quadrilateral 5 units to the right", async () => {
+	// Extracted from question: xac5edfba8adcc82a
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: quadrilateral_initial
+	test("coordinate-plane - [xac5edfba8adcc82a] Translate a quadrilateral on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12064,29 +13580,29 @@ describe("coordinatePlane widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": -1,
-		      "y": 2,
+		      "x": -4,
+		      "y": 1,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -6,
-		      "y": 1,
+		      "x": 3,
+		      "y": -1,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -7,
-		      "y": -2,
+		      "x": 4,
+		      "y": 1,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 0,
-		      "y": -5,
+		      "x": -5,
+		      "y": 3,
 		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
@@ -12094,7 +13610,7 @@ describe("coordinatePlane widget tests", () => {
 		  ],
 		  "polygons": [
 		    {
-		      "label": "",
+		      "label": "ABCD",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
@@ -12102,7 +13618,7 @@ describe("coordinatePlane widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#CCEAF5",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -12127,9 +13643,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xcf519d006338bb59
-	// Question: Translate a triangle on the coordinate plane
-	// Widget key: triangle_stimulus
-	test("coordinate-plane - [xcf519d006338bb59] Translate a triangle on the coordinate plane", async () => {
+	// Question: Translate triangle ABC by 1 unit left and 5 units up
+	// Widget key: triangle_abc_image
+	test("coordinate-plane - [xcf519d006338bb59] Translate triangle ABC by 1 unit left and 5 units up", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12176,14 +13692,14 @@ describe("coordinatePlane widget tests", () => {
 		  ],
 		  "polygons": [
 		    {
-		      "label": " ",
+		      "label": "ABC",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd33",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -12207,10 +13723,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4b6bef69f89b1100
+	// Extracted from question: xfd9f142d6c27eec3
 	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [x4b6bef69f89b1100] Translate a quadrilateral on the coordinate plane", async () => {
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [xfd9f142d6c27eec3] Translate a quadrilateral on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12234,29 +13750,29 @@ describe("coordinatePlane widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": -2,
+		      "x": 6,
+		      "y": -5,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 2,
-		      "y": -4,
+		      "x": 0,
+		      "y": -3,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
-		      "y": 2,
+		      "y": -2,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": -1,
+		      "x": 5,
+		      "y": -4,
 		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
@@ -12272,7 +13788,7 @@ describe("coordinatePlane widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#11accd22",
+		      "fillColor": "#11accd33",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -12297,9 +13813,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xe244fa846fc76401
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: initial_graph
-	test("coordinate-plane - [xe244fa846fc76401] Translate a quadrilateral on the coordinate plane", async () => {
+	// Question: Image of a quadrilateral under a translation
+	// Widget key: coordinate_plane_original
+	test("coordinate-plane - [xe244fa846fc76401] Image of a quadrilateral under a translation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12353,7 +13869,7 @@ describe("coordinatePlane widget tests", () => {
 		  ],
 		  "polygons": [
 		    {
-		      "label": "",
+		      "label": "ABCD",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
@@ -12361,7 +13877,7 @@ describe("coordinatePlane widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#11accd1F",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -12385,10 +13901,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x0b5dd0317f0857d9
-	// Question: Identify a quadrilateral from given vertices
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x0b5dd0317f0857d9] Identify a quadrilateral from given vertices", async () => {
+	// Extracted from question: xf0760a2809822a64
+	// Question: Image of a quadrilateral under a translation
+	// Widget key: coordinate_plane_initial
+	test("coordinate-plane - [xf0760a2809822a64] Image of a quadrilateral under a translation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12396,69 +13912,64 @@ describe("coordinatePlane widget tests", () => {
 		  "lines": [],
 		  "width": 425,
 		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
+		    "max": 8,
+		    "min": -8,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
+		    "max": 8,
+		    "min": -8,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x444d0678bef5498e
-	// Question: Identify a triangle from three vertices on a coordinate plane
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x444d0678bef5498e] Identify a triangle from three vertices on a coordinate plane", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "polygons": [],
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": -4,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": -2,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 1,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
 		  "distances": [],
 		  "polylines": [],
 		  "showQuadrantLabels": false
@@ -12480,9 +13991,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x0c9e74efe84ad405
-	// Question: Select the graph that forms the pentagon from given vertices
+	// Question: Select the pentagon with given vertices
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x0c9e74efe84ad405] Select the graph that forms the pentagon from given vertices", async () => {
+	test("coordinate-plane - [x0c9e74efe84ad405] Select the pentagon with given vertices", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12526,10 +14037,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x0bd727c39829602d
-	// Question: Select the graph showing a pentagon with given vertices
+	// Extracted from question: x0b5dd0317f0857d9
+	// Question: Select the quadrilateral from given vertices
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x0bd727c39829602d] Select the graph showing a pentagon with given vertices", async () => {
+	test("coordinate-plane - [x0b5dd0317f0857d9] Select the quadrilateral from given vertices", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12574,9 +14085,103 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x464316abed728ee9
-	// Question: Select the graph for given triangle vertices
+	// Question: Identify a triangle from given vertices
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x464316abed728ee9] Select the graph for given triangle vertices", async () => {
+	test("coordinate-plane - [x464316abed728ee9] Identify a triangle from given vertices", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x444d0678bef5498e
+	// Question: Select the triangle with given vertices
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x444d0678bef5498e] Select the triangle with given vertices", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0bd727c39829602d
+	// Question: Select the graph that shows the given pentagon
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x0bd727c39829602d] Select the graph that shows the given pentagon", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12621,56 +14226,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x08f2ede236e8a319
-	// Question: Select the triangle from given vertices
+	// Question: Select the triangle with given vertices on a coordinate plane
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x08f2ede236e8a319] Select the triangle from given vertices", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc27c078f05d13381
-	// Question: Identify the pentagon from given vertices
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xc27c078f05d13381] Identify the pentagon from given vertices", async () => {
+	test("coordinate-plane - [x08f2ede236e8a319] Select the triangle with given vertices on a coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12715,56 +14273,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x2139aff8c2468d19
-	// Question: Identify a quadrilateral from given vertices on a coordinate plane
+	// Question: Identify a quadrilateral from vertex coordinates
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x2139aff8c2468d19] Identify a quadrilateral from given vertices on a coordinate plane", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd77f24f920e2355f
-	// Question: Select the graph showing a triangle from given vertices
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xd77f24f920e2355f] Select the graph showing a triangle from given vertices", async () => {
+	test("coordinate-plane - [x2139aff8c2468d19] Identify a quadrilateral from vertex coordinates", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12856,9 +14367,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x53ce41b82e264d27
-	// Question: Identify a pentagon from given vertices on a coordinate plane
+	// Question: Select the graph of a pentagon from given vertices
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x53ce41b82e264d27] Identify a pentagon from given vertices on a coordinate plane", async () => {
+	test("coordinate-plane - [x53ce41b82e264d27] Select the graph of a pentagon from given vertices", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12903,9 +14414,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x2e255b756911f229
-	// Question: Identify a quadrilateral from given vertices on a graph
+	// Question: Select a quadrilateral from vertex coordinates
 	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x2e255b756911f229] Identify a quadrilateral from given vertices on a graph", async () => {
+	test("coordinate-plane - [x2e255b756911f229] Select a quadrilateral from vertex coordinates", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12949,10 +14460,166 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x153dcbdb24bf96bf
+	// Question: Identify a quadrilateral from given vertices
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x153dcbdb24bf96bf] Identify a quadrilateral from given vertices", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc3cf32285979342e
+	// Question: Identify a rectangle from two vertices and the perimeter
+	// Widget key: stimulus_graph
+	test("coordinate-plane - [xc3cf32285979342e] Identify a rectangle from two vertices and the perimeter", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 340,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -5,
+		      "y": 6,
+		      "id": "P_left_top",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 6,
+		      "id": "P_right_top",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x90cf0299a9d89f40
+	// Question: Identify a rectangle on the coordinate plane
+	// Widget key: coordinate_plane_empty
+	test("coordinate-plane - [x90cf0299a9d89f40] Identify a rectangle on the coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [],
+		  "width": 340,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: x864348e6b3571126
-	// Question: Draw a rectangle on a coordinate plane
-	// Widget key: coordinate_plane_initial
-	test("coordinate-plane - [x864348e6b3571126] Draw a rectangle on a coordinate plane", async () => {
+	// Question: Select the rectangle from coordinates and perimeter
+	// Widget key: coordinate_plane_top_points
+	test("coordinate-plane - [x864348e6b3571126] Select the rectangle from coordinates and perimeter", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12978,15 +14645,15 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "x": -3,
 		      "y": 2,
-		      "id": "UL",
-		      "label": " ",
+		      "id": "P1",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
 		      "y": 2,
-		      "id": "UR",
-		      "label": " ",
+		      "id": "P2",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -13011,99 +14678,10 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xfeabeeb8281f94ac
-	// Question: Select a rectangle given two vertices and perimeter
-	// Widget key: graph_choice_b
-	test("coordinate-plane - [xfeabeeb8281f94ac] Select a rectangle given two vertices and perimeter", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 340,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": 4,
-		      "id": "UL",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "id": "UR",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 2,
-		      "id": "LR",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 2,
-		      "id": "LL",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "UL",
-		        "UR",
-		        "LR",
-		        "LL"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbc1d82d67dc942a5
-	// Question: Identify a rectangle from two vertices and a perimeter
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [xbc1d82d67dc942a5] Identify a rectangle from two vertices and a perimeter", async () => {
+	// Extracted from question: x9117b7858e7f418f
+	// Question: Identify a rectangle from coordinates and area
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [x9117b7858e7f418f] Identify a rectangle from coordinates and area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13148,9 +14726,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: x95ae2112be449690
-	// Question: Draw a rectangle from coordinates and area
-	// Widget key: coordinate_plane_empty
-	test("coordinate-plane - [x95ae2112be449690] Draw a rectangle from coordinates and area", async () => {
+	// Question: Select the rectangle on a coordinate plane
+	// Widget key: graph_choice_b
+	test("coordinate-plane - [x95ae2112be449690] Select the rectangle on a coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13172,8 +14750,50 @@ describe("coordinatePlane widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 325,
-		  "points": [],
-		  "polygons": [],
+		  "points": [
+		    {
+		      "x": -1,
+		      "y": 7,
+		      "id": "A",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 7,
+		      "id": "B",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 3,
+		      "id": "C",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 3,
+		      "id": "D",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "B",
+		        "A",
+		        "D",
+		        "C"
+		      ],
+		      "fillColor": "#00000000",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
 		  "distances": [],
 		  "polylines": [],
 		  "showQuadrantLabels": false
@@ -13195,9 +14815,9 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xc0cdf19d2b5cb0f3
-	// Question: Select the rectangle that matches the given vertices and area
-	// Widget key: coordinate_plane_stimulus
-	test("coordinate-plane - [xc0cdf19d2b5cb0f3] Select the rectangle that matches the given vertices and area", async () => {
+	// Question: Select the rectangle on the coordinate plane
+	// Widget key: coordinate_plane
+	test("coordinate-plane - [xc0cdf19d2b5cb0f3] Select the rectangle on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13223,75 +14843,13 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "x": -4,
 		      "y": 4,
-		      "id": "P_left_top",
+		      "id": "UL",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 4,
-		      "id": "P_right_top",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xea3406f5dda54d38
-	// Question: Draw a rectangle from two vertices and its area
-	// Widget key: coordinate_plane_points
-	test("coordinate-plane - [xea3406f5dda54d38] Draw a rectangle from two vertices and its area", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 340,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -8,
-		      "y": 8,
-		      "id": "UL",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 8,
 		      "id": "UR",
 		      "label": "",
 		      "style": "closed"
@@ -13331,14 +14889,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 13,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 13,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -13348,7 +14906,7 @@ describe("coordinatePlane widget tests", () => {
 		  "distances": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_B",
+		      "id": "polyline_figure_b",
 		      "type": "points",
 		      "color": "#11accd",
 		      "label": "Figure B",
@@ -13373,7 +14931,7 @@ describe("coordinatePlane widget tests", () => {
 		      ]
 		    },
 		    {
-		      "id": "polyline_A",
+		      "id": "polyline_figure_a",
 		      "type": "points",
 		      "color": "#1fab54",
 		      "label": "Figure A",
@@ -13394,74 +14952,6 @@ describe("coordinatePlane widget tests", () => {
 		        {
 		          "x": 5,
 		          "y": 6
-		        }
-		      ]
-		    },
-		    {
-		      "id": "polyline_B_marker_vert",
-		      "type": "points",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 1.5,
-		          "y": 1
-		        },
-		        {
-		          "x": 1.5,
-		          "y": 1.5
-		        }
-		      ]
-		    },
-		    {
-		      "id": "polyline_B_marker_horiz",
-		      "type": "points",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 1,
-		          "y": 1.5
-		        },
-		        {
-		          "x": 1.5,
-		          "y": 1.5
-		        }
-		      ]
-		    },
-		    {
-		      "id": "polyline_A_marker_vert",
-		      "type": "points",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 5.5,
-		          "y": 6
-		        },
-		        {
-		          "x": 5.5,
-		          "y": 6.5
-		        }
-		      ]
-		    },
-		    {
-		      "id": "polyline_A_marker_horiz",
-		      "type": "points",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 5,
-		          "y": 6.5
-		        },
-		        {
-		          "x": 5.5,
-		          "y": 6.5
 		        }
 		      ]
 		    }
@@ -13497,14 +14987,14 @@ describe("coordinatePlane widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -13513,56 +15003,56 @@ describe("coordinatePlane widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 2,
-		      "id": "A_BL",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 2,
-		      "id": "A_BR",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "id": "A_TR",
+		      "id": "A_bl",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 4,
-		      "id": "A_TL",
+		      "id": "A_tl",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 4,
+		      "id": "A_tr",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 2,
+		      "id": "A_br",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 1,
-		      "id": "B_BL",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 10,
-		      "y": 1,
-		      "id": "B_BR",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 10,
-		      "y": 7,
-		      "id": "B_TR",
+		      "id": "B_bl",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 7,
-		      "id": "B_TL",
+		      "id": "B_tl",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 7,
+		      "id": "B_tr",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 1,
+		      "id": "B_br",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -13572,24 +15062,24 @@ describe("coordinatePlane widget tests", () => {
 		      "label": "Figure A",
 		      "isClosed": true,
 		      "vertices": [
-		        "A_BL",
-		        "A_BR",
-		        "A_TR",
-		        "A_TL"
+		        "A_bl",
+		        "A_tl",
+		        "A_tr",
+		        "A_br"
 		      ],
-		      "fillColor": "#11accd10",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    },
 		    {
 		      "label": "Figure B",
 		      "isClosed": true,
 		      "vertices": [
-		        "B_BL",
-		        "B_BR",
-		        "B_TR",
-		        "B_TL"
+		        "B_bl",
+		        "B_tl",
+		        "B_tr",
+		        "B_br"
 		      ],
-		      "fillColor": "#1fab5410",
+		      "fillColor": "#1fab5426",
 		      "strokeColor": "#1fab54"
 		    }
 		  ],
@@ -13613,176 +15103,113 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x97c96356134d8d5f
-	// Question: Dilation: perimeter and angle measure (true or false)
+	// Extracted from question: xf5a0cdba5192688b
+	// Question: Is Figure B a scaled copy of Figure A?
 	// Widget key: image_1
-	test("coordinate-plane - [x97c96356134d8d5f] Dilation: perimeter and angle measure (true or false)", async () => {
+	test("coordinate-plane - [xf5a0cdba5192688b] Is Figure B a scaled copy of Figure A?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 245,
+		  "width": 325,
 		  "xAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "",
+		    "max": 14,
+		    "min": 0,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "",
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 245,
+		  "height": 325,
 		  "points": [
 		    {
-		      "x": -1,
-		      "y": -1,
-		      "id": "A",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 0,
-		      "y": 3,
-		      "id": "B",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
 		      "x": 2,
-		      "y": 1,
-		      "id": "C",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 2,
-		      "y": 0,
-		      "id": "D",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": -4,
-		      "y": -3,
-		      "id": "P",
+		      "y": 2,
+		      "id": "A1",
 		      "label": "",
 		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
+		    },
 		    {
+		      "x": 4,
+		      "y": 2,
+		      "id": "A2",
 		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe4e2dc829e16edbd
-	// Question: Dilations: evaluate claims about lengths and areas
-	// Widget key: image_1
-	test("coordinate-plane - [xe4e2dc829e16edbd] Dilations: evaluate claims about lengths and areas", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 245,
-		  "xAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 245,
-		  "points": [
+		      "style": "closed"
+		    },
 		    {
-		      "x": 6,
-		      "y": 12,
-		      "id": "A",
-		      "label": "A",
+		      "x": 4,
+		      "y": 4,
+		      "id": "A3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 4,
+		      "id": "A4",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
-		      "y": 6,
-		      "id": "B",
-		      "label": "B",
+		      "y": 2,
+		      "id": "B1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 2,
+		      "id": "B2",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 12,
 		      "y": 8,
-		      "id": "C",
-		      "label": "C",
+		      "id": "B3",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 8,
-		      "y": 12,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 14,
-		      "y": 12,
-		      "id": "P",
-		      "label": "P",
+		      "x": 6,
+		      "y": 8,
+		      "id": "B4",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "",
+		      "label": "Figure A",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
+		        "A1",
+		        "A2",
+		        "A3",
+		        "A4"
 		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#000000"
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    },
+		    {
+		      "label": "Figure B",
+		      "isClosed": true,
+		      "vertices": [
+		        "B1",
+		        "B2",
+		        "B3",
+		        "B4"
+		      ],
+		      "fillColor": "#1fab5426",
+		      "strokeColor": "#1fab54"
 		    }
 		  ],
 		  "distances": [],
@@ -13805,31 +15232,31 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4cc9827bd569a06b
-	// Question: True/false claims about a dilation
+	// Extracted from question: x7315a86592fa0d88
+	// Question: Effects of a dilation on lengths and areas
 	// Widget key: image_1
-	test("coordinate-plane - [x4cc9827bd569a06b] True/false claims about a dilation", async () => {
+	test("coordinate-plane - [x7315a86592fa0d88] Effects of a dilation on lengths and areas", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 245,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
+		    "max": 7,
+		    "min": -7,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
+		    "max": 7,
+		    "min": -7,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 245,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 3,
@@ -13862,7 +15289,7 @@ describe("coordinatePlane widget tests", () => {
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#0000001A",
 		      "strokeColor": "#000000"
 		    }
 		  ],
@@ -13886,375 +15313,56 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x49840f2dd4d24958
-	// Question: Dilation: angle and area claims
+	// Extracted from question: x6eac7a02db40d4ba
+	// Question: Determine truth of statements about segments under dilation
 	// Widget key: image_1
-	test("coordinate-plane - [x49840f2dd4d24958] Dilation: angle and area claims", async () => {
+	test("coordinate-plane - [x6eac7a02db40d4ba] Determine truth of statements about segments under dilation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 22,
 		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 220,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 3,
-		      "id": "A",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 8,
-		      "y": 3,
-		      "id": "B",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 4,
-		      "y": 7,
-		      "id": "C",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 6,
-		      "y": 5,
-		      "id": "P",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb56001af90a2e003
-	// Question: Determine truth of claims after a dilation
-	// Widget key: image_1
-	test("coordinate-plane - [xb56001af90a2e003] Determine truth of claims after a dilation", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 245,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -6,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -7,
+		    "max": 22,
+		    "min": 0,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 245,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": -1,
-		      "y": -1,
+		      "x": 10,
+		      "y": 6,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 0,
-		      "y": 3,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 1,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -4,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": -3,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 1,
-		      "id": "Ap",
-		      "label": "A′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 9,
-		      "id": "Bp",
-		      "label": "B′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 5,
-		      "id": "Cp",
-		      "label": "C′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": -5,
-		      "id": "Dp",
-		      "label": "D′",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": " ",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#000000"
-		    },
-		    {
-		      "label": " ",
-		      "isClosed": true,
-		      "vertices": [
-		        "Ap",
-		        "Bp",
-		        "Cp",
-		        "Dp"
-		      ],
-		      "fillColor": "#1fab5400",
-		      "strokeColor": "#1fab54"
-		    }
-		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x72ade7f538932594
-	// Question: True or false: properties under dilation
-	// Widget key: image_1
-	test("coordinate-plane - [x72ade7f538932594] True or false: properties under dilation", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 220,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 220,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 3,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 3,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
+		      "x": 13,
 		      "y": 7,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 5,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe8641e3d98b5f653
-	// Question: Dilations: Determine truth of claims about corresponding segments
-	// Widget key: image_1
-	test("coordinate-plane - [xe8641e3d98b5f653] Dilations: Determine truth of claims about corresponding segments", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 245,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 245,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 7,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 1,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 7,
-		      "y": 3,
+		      "y": 12,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": 7,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
 		      "x": 9,
-		      "y": 7,
+		      "y": 8,
 		      "id": "P",
 		      "label": "P",
 		      "style": "closed"
@@ -14262,15 +15370,14 @@ describe("coordinatePlane widget tests", () => {
 		  ],
 		  "polygons": [
 		    {
-		      "label": " ",
+		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
 		        "B",
-		        "C",
-		        "D"
+		        "C"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#000000"
 		    }
 		  ],
@@ -14295,56 +15402,56 @@ describe("coordinatePlane widget tests", () => {
 	})
 
 	// Extracted from question: xcfb4766a96147a2c
-	// Question: True or false: properties under dilation about a point
+	// Question: Claims about a dilation: angle measures and center coordinates
 	// Widget key: image_1
-	test("coordinate-plane - [xcfb4766a96147a2c] True or false: properties under dilation about a point", async () => {
+	test("coordinate-plane - [xcfb4766a96147a2c] Claims about a dilation: angle measures and center coordinates", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 5,
 		      "y": 2,
 		      "id": "A",
-		      "label": "",
+		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 8,
 		      "y": 3,
 		      "id": "B",
-		      "label": "",
-		      "style": "open"
+		      "label": "B",
+		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 8,
 		      "id": "C",
-		      "label": "",
-		      "style": "open"
+		      "label": "C",
+		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "",
+		      "label": "ABC",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
@@ -14375,241 +15482,49 @@ describe("coordinatePlane widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2b82cfe45635a0dd
-	// Question: Properties under a dilation: true or false
+	// Extracted from question: x37a83f33095d55bd
+	// Question: True/false claims about a triangle dilation
 	// Widget key: image_1
-	test("coordinate-plane - [x2b82cfe45635a0dd] Properties under a dilation: true or false", async () => {
+	test("coordinate-plane - [x37a83f33095d55bd] True/false claims about a triangle dilation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "coordinatePlane",
 		  "lines": [],
-		  "width": 245,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 5,
+		    "min": -5,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 5,
+		    "min": -5,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 245,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": -3,
+		      "x": 1,
+		      "y": 1,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 1,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
 		      "y": -3,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 3,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -3,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -1,
-		      "y": 2,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x203708454712a789
-	// Question: Determine truth of claims under a dilation
-	// Widget key: image_1
-	test("coordinate-plane - [x203708454712a789] Determine truth of claims under a dilation", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 245,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 245,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 9,
-		      "id": "A",
-		      "label": "A",
-		      "style": "open"
-		    },
-		    {
-		      "x": 5,
-		      "y": 3,
-		      "id": "B",
-		      "label": "B",
-		      "style": "open"
-		    },
-		    {
-		      "x": 8,
-		      "y": 3,
-		      "id": "C",
-		      "label": "C",
-		      "style": "open"
-		    },
-		    {
-		      "x": 8,
-		      "y": 6,
-		      "id": "D",
-		      "label": "D",
-		      "style": "open"
-		    },
-		    {
-		      "x": 5,
-		      "y": 6,
-		      "id": "P",
-		      "label": "P",
-		      "style": "open"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "distances": [],
-		  "polylines": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for coordinatePlane", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe6adc00053eb530d
-	// Question: Dilations and segment relationships
-	// Widget key: image_1
-	test("coordinate-plane - [xe6adc00053eb530d] Dilations and segment relationships", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "coordinatePlane",
-		  "lines": [],
-		  "width": 245,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 245,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 6,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 10,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
@@ -14624,10 +15539,128 @@ describe("coordinatePlane widget tests", () => {
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#000000"
 		    }
 		  ],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa57f1acc88b37c5b
+	// Question: Compare slopes: table and line
+	// Widget key: image_1
+	test("coordinate-plane - [xa57f1acc88b37c5b] Compare slopes: table and line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_g",
+		      "color": "#11accd",
+		      "label": "g",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -0.5,
+		        "yIntercept": 2
+		      }
+		    }
+		  ],
+		  "width": 328,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x-axis",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y-axis",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 328,
+		  "points": [],
+		  "polygons": [],
+		  "distances": [],
+		  "polylines": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for coordinatePlane", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x70089bcc2f5bdb2d
+	// Question: Compare y-intercepts of two functions
+	// Widget key: image_1
+	test("coordinate-plane - [x70089bcc2f5bdb2d] Compare y-intercepts of two functions", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "coordinatePlane",
+		  "lines": [
+		    {
+		      "id": "line_p",
+		      "color": "#11accd",
+		      "label": "p",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 1,
+		        "yIntercept": -6
+		      }
+		    }
+		  ],
+		  "width": 328,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "t",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 328,
+		  "points": [],
+		  "polygons": [],
 		  "distances": [],
 		  "polylines": [],
 		  "showQuadrantLabels": false

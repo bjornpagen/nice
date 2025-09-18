@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.968Z
+// Generated on: 2025-09-18T05:17:02.167Z
 // Widget Type: polyhedronNetDiagram
 // Source: Real questions from database
 //
@@ -26,9 +26,9 @@ import * as logger from "@superbuilders/slog"
 
 describe("polyhedronNetDiagram widget tests", () => {
 	// Extracted from question: x0b1d59dfad3f9df4
-	// Question: Surface area of a right triangular prism (skateboard ramp)
+	// Question: Surface area of a triangular prism (ramp)
 	// Widget key: image_1
-	test("polyhedron-net-diagram - [x0b1d59dfad3f9df4] Surface area of a right triangular prism (skateboard ramp)", async () => {
+	test("polyhedron-net-diagram - [x0b1d59dfad3f9df4] Surface area of a triangular prism (ramp)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -40,9 +40,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "height": 0.9
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 227,
+		  "width": 360,
 		  "height": 320,
-		  "showLabels": true,
+		  "showLabels": false,
 		  "lateralHeight": 3.5,
 		  "polyhedronType": "triangularPrism"
 		} as unknown as WidgetInput
@@ -63,9 +63,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa2cc3aca85b395ce
-	// Question: Find the surface area of a cube
+	// Question: Surface area of a cube from its net
 	// Widget key: image_2
-	test("polyhedron-net-diagram - [xa2cc3aca85b395ce] Find the surface area of a cube", async () => {
+	test("polyhedron-net-diagram - [xa2cc3aca85b395ce] Surface area of a cube from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -74,8 +74,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 270,
-		  "height": 216,
+		  "width": 375,
+		  "height": 300,
 		  "showLabels": false,
 		  "polyhedronType": "cube"
 		} as unknown as WidgetInput
@@ -96,9 +96,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x952422856d62c21e
-	// Question: Surface area from a rectangular prism net
+	// Question: Surface area of a rectangular prism from its net
 	// Widget key: image_2
-	test("polyhedron-net-diagram - [x952422856d62c21e] Surface area from a rectangular prism net", async () => {
+	test("polyhedron-net-diagram - [x952422856d62c21e] Surface area of a rectangular prism from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -108,8 +108,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "length": 20
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 260,
-		  "height": 230,
+		  "width": 360,
+		  "height": 320,
 		  "showLabels": false,
 		  "lateralHeight": 30,
 		  "polyhedronType": "rectangularPrism"
@@ -131,9 +131,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe2a050cab649a32b
-	// Question: Surface area of a triangular-prism tent
+	// Question: Surface area of a triangular prism tent (including the floor)
 	// Widget key: image_1
-	test("polyhedron-net-diagram - [xe2a050cab649a32b] Surface area of a triangular-prism tent", async () => {
+	test("polyhedron-net-diagram - [xe2a050cab649a32b] Surface area of a triangular prism tent (including the floor)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -145,8 +145,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "height": 1.7
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 260,
-		  "height": 260,
+		  "width": 360,
+		  "height": 360,
 		  "showLabels": true,
 		  "lateralHeight": 3,
 		  "polyhedronType": "triangularPrism"
@@ -168,9 +168,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2c09a69cef8a52d6
-	// Question: Surface area of a square pyramid from a net
+	// Question: Surface area of a square pyramid
 	// Widget key: image_2
-	test("polyhedron-net-diagram - [x2c09a69cef8a52d6] Surface area of a square pyramid from a net", async () => {
+	test("polyhedron-net-diagram - [x2c09a69cef8a52d6] Surface area of a square pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -179,8 +179,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 266.087,
-		  "height": 270,
+		  "width": 360,
+		  "height": 360,
 		  "showLabels": true,
 		  "lateralHeight": 140,
 		  "polyhedronType": "squarePyramid"
@@ -213,8 +213,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 260,
-		  "height": 243,
+		  "width": 380,
+		  "height": 360,
 		  "showLabels": true,
 		  "lateralHeight": 30,
 		  "polyhedronType": "squarePyramid"
@@ -236,9 +236,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x05cfd2fe82c6be0e
-	// Question: Surface area of a scratching post
+	// Question: Surface area of a rectangular prism from a net
 	// Widget key: image_2
-	test("polyhedron-net-diagram - [x05cfd2fe82c6be0e] Surface area of a scratching post", async () => {
+	test("polyhedron-net-diagram - [x05cfd2fe82c6be0e] Surface area of a rectangular prism from a net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -248,8 +248,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "length": 10
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 136,
-		  "height": 300,
+		  "width": 400,
+		  "height": 400,
 		  "showLabels": false,
 		  "lateralHeight": 90,
 		  "polyhedronType": "rectangularPrism"
@@ -271,9 +271,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xef2418627b5b28d2
-	// Question: Find the surface area of a square pyramid from its net
+	// Question: Surface area of a square pyramid from its net
 	// Widget key: image_2
-	test("polyhedron-net-diagram - [xef2418627b5b28d2] Find the surface area of a square pyramid from its net", async () => {
+	test("polyhedron-net-diagram - [xef2418627b5b28d2] Surface area of a square pyramid from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -283,7 +283,7 @@ describe("polyhedronNetDiagram widget tests", () => {
 		  },
 		  "type": "polyhedronNetDiagram",
 		  "width": 350,
-		  "height": 326.667,
+		  "height": 327,
 		  "showLabels": true,
 		  "lateralHeight": 4,
 		  "polyhedronType": "squarePyramid"
@@ -319,8 +319,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "height": 4
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 288,
-		  "height": 272,
+		  "width": 440,
+		  "height": 360,
 		  "showLabels": true,
 		  "lateralHeight": 7,
 		  "polyhedronType": "triangularPrism"
@@ -354,7 +354,7 @@ describe("polyhedronNetDiagram widget tests", () => {
 		  },
 		  "type": "polyhedronNetDiagram",
 		  "width": 350,
-		  "height": 284,
+		  "height": 350,
 		  "showLabels": true,
 		  "polyhedronType": "cube"
 		} as unknown as WidgetInput
@@ -409,9 +409,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6bf2799019a4c116
-	// Question: Find the surface area of a right triangular prism from its net
+	// Question: Surface area of a right triangular prism from its net
 	// Widget key: image_2
-	test("polyhedron-net-diagram - [x6bf2799019a4c116] Find the surface area of a right triangular prism from its net", async () => {
+	test("polyhedron-net-diagram - [x6bf2799019a4c116] Surface area of a right triangular prism from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -423,8 +423,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "height": 3
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 256,
-		  "height": 304,
+		  "width": 400,
+		  "height": 320,
 		  "showLabels": true,
 		  "lateralHeight": 11,
 		  "polyhedronType": "triangularPrism"
@@ -459,7 +459,7 @@ describe("polyhedronNetDiagram widget tests", () => {
 		  },
 		  "type": "polyhedronNetDiagram",
 		  "width": 400,
-		  "height": 191,
+		  "height": 320,
 		  "showLabels": false,
 		  "lateralHeight": 3,
 		  "polyhedronType": "rectangularPrism"
@@ -481,9 +481,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5fe595a08c112276
-	// Question: Surface area of a right triangular prism from its net
+	// Question: Find the surface area of a right triangular prism from its net
 	// Widget key: image_2
-	test("polyhedron-net-diagram - [x5fe595a08c112276] Surface area of a right triangular prism from its net", async () => {
+	test("polyhedron-net-diagram - [x5fe595a08c112276] Find the surface area of a right triangular prism from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -495,9 +495,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "height": 3
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 500,
-		  "height": 350,
-		  "showLabels": true,
+		  "width": 420,
+		  "height": 360,
+		  "showLabels": false,
 		  "lateralHeight": 7,
 		  "polyhedronType": "triangularPrism"
 		} as unknown as WidgetInput
@@ -530,8 +530,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		  },
 		  "type": "polyhedronNetDiagram",
 		  "width": 350,
-		  "height": 280,
-		  "showLabels": false,
+		  "height": 320,
+		  "showLabels": true,
 		  "polyhedronType": "cube"
 		} as unknown as WidgetInput
 
@@ -562,8 +562,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 300,
-		  "height": 300,
+		  "width": 360,
+		  "height": 360,
 		  "showLabels": true,
 		  "lateralHeight": 4,
 		  "polyhedronType": "squarePyramid"
@@ -597,7 +597,7 @@ describe("polyhedronNetDiagram widget tests", () => {
 		  },
 		  "type": "polyhedronNetDiagram",
 		  "width": 350,
-		  "height": 280,
+		  "height": 300,
 		  "showLabels": true,
 		  "polyhedronType": "cube"
 		} as unknown as WidgetInput
@@ -618,9 +618,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xdc67de44dab2c3e8
-	// Question: Find the surface area of a rectangular prism from its net
+	// Question: Find the surface area from a rectangular prism net
 	// Widget key: image_2
-	test("polyhedron-net-diagram - [xdc67de44dab2c3e8] Find the surface area of a rectangular prism from its net", async () => {
+	test("polyhedron-net-diagram - [xdc67de44dab2c3e8] Find the surface area from a rectangular prism net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -630,8 +630,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "length": 5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 350,
-		  "height": 196,
+		  "width": 420,
+		  "height": 320,
 		  "showLabels": true,
 		  "lateralHeight": 2,
 		  "polyhedronType": "rectangularPrism"
@@ -653,20 +653,20 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x64f0b3a6c49c33e2
-	// Question: Find the surface area of a rectangular prism from its net
+	// Question: Surface area of a rectangular prism from its net
 	// Widget key: image_2
-	test("polyhedron-net-diagram - [x64f0b3a6c49c33e2] Find the surface area of a rectangular prism from its net", async () => {
+	test("polyhedron-net-diagram - [x64f0b3a6c49c33e2] Surface area of a rectangular prism from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
 		    "type": "rectangle",
-		    "width": 4,
-		    "length": 3
+		    "width": 3,
+		    "length": 4
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 300,
-		  "height": 237.5,
+		  "width": 380,
+		  "height": 320,
 		  "showLabels": true,
 		  "lateralHeight": 2,
 		  "polyhedronType": "rectangularPrism"
@@ -688,9 +688,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb8c8ec4d70f42920
-	// Question: Find the surface area of a triangular prism from its net
+	// Question: Surface area of a triangular prism from its net
 	// Widget key: image_2
-	test("polyhedron-net-diagram - [xb8c8ec4d70f42920] Find the surface area of a triangular prism from its net", async () => {
+	test("polyhedron-net-diagram - [xb8c8ec4d70f42920] Surface area of a triangular prism from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -702,9 +702,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "height": 2
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 224,
-		  "height": 208,
-		  "showLabels": false,
+		  "width": 420,
+		  "height": 380,
+		  "showLabels": true,
 		  "lateralHeight": 7,
 		  "polyhedronType": "triangularPrism"
 		} as unknown as WidgetInput
@@ -725,9 +725,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xcbc3b5f0e2dd746d
-	// Question: Find the surface area of a rectangular prism using its net
+	// Question: Find the surface area of a rectangular prism from its net
 	// Widget key: image_6
-	test("polyhedron-net-diagram - [xcbc3b5f0e2dd746d] Find the surface area of a rectangular prism using its net", async () => {
+	test("polyhedron-net-diagram - [xcbc3b5f0e2dd746d] Find the surface area of a rectangular prism from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -760,9 +760,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xca0bf838fcfa3f34
-	// Question: Surface area of a cube from its net
+	// Question: Find the surface area of a cube from its net
 	// Widget key: image_2
-	test("polyhedron-net-diagram - [xca0bf838fcfa3f34] Surface area of a cube from its net", async () => {
+	test("polyhedron-net-diagram - [xca0bf838fcfa3f34] Find the surface area of a cube from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -772,7 +772,7 @@ describe("polyhedronNetDiagram widget tests", () => {
 		  },
 		  "type": "polyhedronNetDiagram",
 		  "width": 350,
-		  "height": 283,
+		  "height": 300,
 		  "showLabels": true,
 		  "polyhedronType": "cube"
 		} as unknown as WidgetInput
@@ -793,9 +793,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x89ece9feb268fdc4
-	// Question: Find the surface area of a square pyramid from its net
+	// Question: Surface area of a square pyramid from its net
 	// Widget key: image_2
-	test("polyhedron-net-diagram - [x89ece9feb268fdc4] Find the surface area of a square pyramid from its net", async () => {
+	test("polyhedron-net-diagram - [x89ece9feb268fdc4] Surface area of a square pyramid from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -826,368 +826,6 @@ describe("polyhedronNetDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xb8111de5396058b2
-	// Question: Identify the rectangular prism net
-	// Widget key: choice_a_net
-	test("polyhedron-net-diagram - [xb8111de5396058b2] Identify the rectangular prism net (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "base": {
-		    "type": "rectangle",
-		    "width": 5,
-		    "length": 8
-		  },
-		  "type": "polyhedronNetDiagram",
-		  "width": 140,
-		  "height": 120,
-		  "showLabels": false,
-		  "lateralHeight": 6,
-		  "polyhedronType": "rectangularPrism"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronNetDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb8111de5396058b2
-	// Question: Identify the rectangular prism net
-	// Widget key: choice_b_net
-	test("polyhedron-net-diagram - [xb8111de5396058b2] Identify the rectangular prism net (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "base": {
-		    "base": 6,
-		    "type": "triangle",
-		    "side1": 5,
-		    "side2": 5,
-		    "height": 5
-		  },
-		  "type": "polyhedronNetDiagram",
-		  "width": 120,
-		  "height": 120,
-		  "showLabels": false,
-		  "lateralHeight": 5,
-		  "polyhedronType": "triangularPyramid"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronNetDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb8111de5396058b2
-	// Question: Identify the rectangular prism net
-	// Widget key: choice_c_net
-	test("polyhedron-net-diagram - [xb8111de5396058b2] Identify the rectangular prism net (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "base": {
-		    "side": 5,
-		    "type": "pentagon"
-		  },
-		  "type": "polyhedronNetDiagram",
-		  "width": 130,
-		  "height": 130,
-		  "showLabels": false,
-		  "lateralHeight": 5.5,
-		  "polyhedronType": "pentagonalPyramid"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronNetDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb8111de5396058b2
-	// Question: Identify the rectangular prism net
-	// Widget key: choice_d_net
-	test("polyhedron-net-diagram - [xb8111de5396058b2] Identify the rectangular prism net (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "base": {
-		    "base": 6,
-		    "type": "triangle",
-		    "side1": 5,
-		    "side2": 5,
-		    "height": 4
-		  },
-		  "type": "polyhedronNetDiagram",
-		  "width": 140,
-		  "height": 120,
-		  "showLabels": false,
-		  "lateralHeight": 8,
-		  "polyhedronType": "triangularPrism"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronNetDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8cd9cfce22606e6e
-	// Question: Identify the net of a triangular prism
-	// Widget key: choice_a_net
-	test("polyhedron-net-diagram - [x8cd9cfce22606e6e] Identify the net of a triangular prism (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "base": {
-		    "side": 6,
-		    "type": "square"
-		  },
-		  "type": "polyhedronNetDiagram",
-		  "width": 220,
-		  "height": 220,
-		  "showLabels": false,
-		  "lateralHeight": 7,
-		  "polyhedronType": "squarePyramid"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronNetDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8cd9cfce22606e6e
-	// Question: Identify the net of a triangular prism
-	// Widget key: choice_b_net
-	test("polyhedron-net-diagram - [x8cd9cfce22606e6e] Identify the net of a triangular prism (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "base": {
-		    "base": 6,
-		    "type": "triangle",
-		    "side1": 5.5,
-		    "side2": 5.5,
-		    "height": 5
-		  },
-		  "type": "polyhedronNetDiagram",
-		  "width": 220,
-		  "height": 200,
-		  "showLabels": false,
-		  "lateralHeight": 6.5,
-		  "polyhedronType": "triangularPyramid"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronNetDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8cd9cfce22606e6e
-	// Question: Identify the net of a triangular prism
-	// Widget key: choice_c_net
-	test("polyhedron-net-diagram - [x8cd9cfce22606e6e] Identify the net of a triangular prism (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "base": {
-		    "base": 7,
-		    "type": "triangle",
-		    "side1": 6,
-		    "side2": 6,
-		    "height": 5
-		  },
-		  "type": "polyhedronNetDiagram",
-		  "width": 220,
-		  "height": 200,
-		  "showLabels": false,
-		  "lateralHeight": 6.8,
-		  "polyhedronType": "triangularPyramid"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronNetDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8cd9cfce22606e6e
-	// Question: Identify the net of a triangular prism
-	// Widget key: choice_d_net
-	test("polyhedron-net-diagram - [x8cd9cfce22606e6e] Identify the net of a triangular prism (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "base": {
-		    "base": 6,
-		    "type": "triangle",
-		    "side1": 5,
-		    "side2": 5,
-		    "height": 4
-		  },
-		  "type": "polyhedronNetDiagram",
-		  "width": 240,
-		  "height": 200,
-		  "showLabels": false,
-		  "lateralHeight": 8,
-		  "polyhedronType": "triangularPrism"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronNetDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x81677ce01e6fdaad
-	// Question: Identify the 3D shape from a net
-	// Widget key: image_1
-	test("polyhedron-net-diagram - [x81677ce01e6fdaad] Identify the 3D shape from a net", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "base": {
-		    "base": 3,
-		    "type": "triangle",
-		    "side1": 4,
-		    "side2": 5,
-		    "height": 4
-		  },
-		  "type": "polyhedronNetDiagram",
-		  "width": 195,
-		  "height": 180,
-		  "showLabels": false,
-		  "lateralHeight": 7,
-		  "polyhedronType": "triangularPrism"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronNetDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6a3fb181fd601eab
-	// Question: Identify the solid formed by a net
-	// Widget key: image_1
-	test("polyhedron-net-diagram - [x6a3fb181fd601eab] Identify the solid formed by a net", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "base": {
-		    "base": 3,
-		    "type": "triangle",
-		    "side1": 4,
-		    "side2": 5,
-		    "height": 4
-		  },
-		  "type": "polyhedronNetDiagram",
-		  "width": 200,
-		  "height": 260,
-		  "showLabels": false,
-		  "lateralHeight": 6,
-		  "polyhedronType": "triangularPrism"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronNetDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xad911af252ca42bf
 	// Question: Identify the net of a cube
 	// Widget key: choice_a_net
@@ -1197,12 +835,12 @@ describe("polyhedronNetDiagram widget tests", () => {
 		const input = {
 		  "base": {
 		    "type": "rectangle",
-		    "width": 5,
+		    "width": 4,
 		    "length": 8
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 420,
-		  "height": 300,
+		  "width": 380,
+		  "height": 380,
 		  "showLabels": false,
 		  "lateralHeight": 6,
 		  "polyhedronType": "rectangularPrism"
@@ -1233,13 +871,13 @@ describe("polyhedronNetDiagram widget tests", () => {
 		  "base": {
 		    "base": 6,
 		    "type": "triangle",
-		    "side1": 5.5,
-		    "side2": 5.5,
+		    "side1": 5,
+		    "side2": 5,
 		    "height": 5
 		  },
 		  "type": "polyhedronNetDiagram",
 		  "width": 360,
-		  "height": 340,
+		  "height": 360,
 		  "showLabels": false,
 		  "lateralHeight": 6,
 		  "polyhedronType": "triangularPyramid"
@@ -1268,18 +906,18 @@ describe("polyhedronNetDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "base": 6,
+		    "base": 7,
 		    "type": "triangle",
-		    "side1": 5.5,
-		    "side2": 5.5,
-		    "height": 5
+		    "side1": 6,
+		    "side2": 6,
+		    "height": 5.5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 460,
-		  "height": 340,
+		  "width": 360,
+		  "height": 360,
 		  "showLabels": false,
-		  "lateralHeight": 8,
-		  "polyhedronType": "triangularPrism"
+		  "lateralHeight": 7,
+		  "polyhedronType": "triangularPyramid"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1305,12 +943,12 @@ describe("polyhedronNetDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "side": 6,
+		    "side": 5,
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 360,
-		  "height": 340,
+		  "width": 380,
+		  "height": 380,
 		  "showLabels": false,
 		  "polyhedronType": "cube"
 		} as unknown as WidgetInput
@@ -1330,10 +968,153 @@ describe("polyhedronNetDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x033d85774a48004c
-	// Question: Identify the net of a tetrahedron
+	// Extracted from question: xb8111de5396058b2
+	// Question: Identify the net of a rectangular prism
+	// Widget key: choice_a_net
+	test("polyhedron-net-diagram - [xb8111de5396058b2] Identify the net of a rectangular prism (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "base": {
+		    "type": "rectangle",
+		    "width": 5,
+		    "length": 8
+		  },
+		  "type": "polyhedronNetDiagram",
+		  "width": 380,
+		  "height": 340,
+		  "showLabels": false,
+		  "lateralHeight": 4,
+		  "polyhedronType": "rectangularPrism"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronNetDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb8111de5396058b2
+	// Question: Identify the net of a rectangular prism
+	// Widget key: choice_b_net
+	test("polyhedron-net-diagram - [xb8111de5396058b2] Identify the net of a rectangular prism (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "base": {
+		    "base": 6,
+		    "type": "triangle",
+		    "side1": 5,
+		    "side2": 5,
+		    "height": 4
+		  },
+		  "type": "polyhedronNetDiagram",
+		  "width": 360,
+		  "height": 360,
+		  "showLabels": false,
+		  "lateralHeight": 5,
+		  "polyhedronType": "triangularPyramid"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronNetDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb8111de5396058b2
+	// Question: Identify the net of a rectangular prism
+	// Widget key: choice_c_net
+	test("polyhedron-net-diagram - [xb8111de5396058b2] Identify the net of a rectangular prism (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "base": {
+		    "side": 4,
+		    "type": "pentagon"
+		  },
+		  "type": "polyhedronNetDiagram",
+		  "width": 360,
+		  "height": 360,
+		  "showLabels": false,
+		  "lateralHeight": 5,
+		  "polyhedronType": "pentagonalPyramid"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronNetDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb8111de5396058b2
+	// Question: Identify the net of a rectangular prism
+	// Widget key: choice_d_net
+	test("polyhedron-net-diagram - [xb8111de5396058b2] Identify the net of a rectangular prism (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "base": {
+		    "base": 6,
+		    "type": "triangle",
+		    "side1": 5,
+		    "side2": 5,
+		    "height": 4
+		  },
+		  "type": "polyhedronNetDiagram",
+		  "width": 380,
+		  "height": 360,
+		  "showLabels": false,
+		  "lateralHeight": 8,
+		  "polyhedronType": "triangularPrism"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronNetDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8cd9cfce22606e6e
+	// Question: Identify the net of a triangular prism
 	// Widget key: net_choice_a
-	test("polyhedron-net-diagram - [x033d85774a48004c] Identify the net of a tetrahedron (2)", async () => {
+	test("polyhedron-net-diagram - [x8cd9cfce22606e6e] Identify the net of a triangular prism (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1342,8 +1123,224 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
+		  "width": 360,
+		  "height": 320,
+		  "showLabels": false,
+		  "lateralHeight": 7,
+		  "polyhedronType": "squarePyramid"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronNetDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8cd9cfce22606e6e
+	// Question: Identify the net of a triangular prism
+	// Widget key: net_choice_b
+	test("polyhedron-net-diagram - [x8cd9cfce22606e6e] Identify the net of a triangular prism (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "base": {
+		    "base": 6,
+		    "type": "triangle",
+		    "side1": 5,
+		    "side2": 5,
+		    "height": 5
+		  },
+		  "type": "polyhedronNetDiagram",
+		  "width": 360,
+		  "height": 320,
+		  "showLabels": false,
+		  "lateralHeight": 6,
+		  "polyhedronType": "triangularPyramid"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronNetDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8cd9cfce22606e6e
+	// Question: Identify the net of a triangular prism
+	// Widget key: net_choice_c
+	test("polyhedron-net-diagram - [x8cd9cfce22606e6e] Identify the net of a triangular prism (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "base": {
+		    "side": 4.5,
+		    "type": "pentagon"
+		  },
+		  "type": "polyhedronNetDiagram",
+		  "width": 360,
+		  "height": 320,
+		  "showLabels": false,
+		  "lateralHeight": 7,
+		  "polyhedronType": "pentagonalPyramid"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronNetDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8cd9cfce22606e6e
+	// Question: Identify the net of a triangular prism
+	// Widget key: net_choice_d
+	test("polyhedron-net-diagram - [x8cd9cfce22606e6e] Identify the net of a triangular prism (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "base": {
+		    "base": 6,
+		    "type": "triangle",
+		    "side1": 5,
+		    "side2": 5,
+		    "height": 4
+		  },
+		  "type": "polyhedronNetDiagram",
+		  "width": 360,
+		  "height": 320,
+		  "showLabels": false,
+		  "lateralHeight": 8,
+		  "polyhedronType": "triangularPrism"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronNetDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x81677ce01e6fdaad
+	// Question: Identify the shape from a net
+	// Widget key: image_1
+	test("polyhedron-net-diagram - [x81677ce01e6fdaad] Identify the shape from a net", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "base": {
+		    "base": 6,
+		    "type": "triangle",
+		    "side1": 5,
+		    "side2": 5,
+		    "height": 4
+		  },
+		  "type": "polyhedronNetDiagram",
+		  "width": 380,
+		  "height": 320,
+		  "showLabels": false,
+		  "lateralHeight": 9,
+		  "polyhedronType": "triangularPrism"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronNetDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6a3fb181fd601eab
+	// Question: Identify the solid formed by a net
+	// Widget key: image_1
+	test("polyhedron-net-diagram - [x6a3fb181fd601eab] Identify the solid formed by a net", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "base": {
+		    "base": 6,
+		    "type": "triangle",
+		    "side1": 5,
+		    "side2": 5,
+		    "height": 4
+		  },
+		  "type": "polyhedronNetDiagram",
+		  "width": 360,
+		  "height": 440,
+		  "showLabels": false,
+		  "lateralHeight": 8,
+		  "polyhedronType": "triangularPrism"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronNetDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x033d85774a48004c
+	// Question: Identify the net of a triangular pyramid
+	// Widget key: choice_a_net
+	test("polyhedron-net-diagram - [x033d85774a48004c] Identify the net of a triangular pyramid (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "base": {
+		    "side": 8,
+		    "type": "square"
+		  },
+		  "type": "polyhedronNetDiagram",
 		  "width": 420,
-		  "height": 420,
+		  "height": 380,
 		  "showLabels": false,
 		  "lateralHeight": 7,
 		  "polyhedronType": "squarePyramid"
@@ -1365,9 +1362,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x033d85774a48004c
-	// Question: Identify the net of a tetrahedron
-	// Widget key: net_choice_b
-	test("polyhedron-net-diagram - [x033d85774a48004c] Identify the net of a tetrahedron (3)", async () => {
+	// Question: Identify the net of a triangular pyramid
+	// Widget key: choice_b_net
+	test("polyhedron-net-diagram - [x033d85774a48004c] Identify the net of a triangular pyramid (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1379,10 +1376,10 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "height": 5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 380,
-		  "height": 340,
+		  "width": 420,
+		  "height": 380,
 		  "showLabels": false,
-		  "lateralHeight": 6,
+		  "lateralHeight": 7,
 		  "polyhedronType": "triangularPyramid"
 		} as unknown as WidgetInput
 
@@ -1402,21 +1399,22 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x033d85774a48004c
-	// Question: Identify the net of a tetrahedron
-	// Widget key: net_choice_c
-	test("polyhedron-net-diagram - [x033d85774a48004c] Identify the net of a tetrahedron (4)", async () => {
+	// Question: Identify the net of a triangular pyramid
+	// Widget key: choice_c_net
+	test("polyhedron-net-diagram - [x033d85774a48004c] Identify the net of a triangular pyramid (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "side": 6,
-		    "type": "square"
+		    "side": 5,
+		    "type": "pentagon"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 400,
-		  "height": 400,
+		  "width": 420,
+		  "height": 380,
 		  "showLabels": false,
-		  "polyhedronType": "cube"
+		  "lateralHeight": 7,
+		  "polyhedronType": "pentagonalPyramid"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1435,9 +1433,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x033d85774a48004c
-	// Question: Identify the net of a tetrahedron
-	// Widget key: net_choice_d
-	test("polyhedron-net-diagram - [x033d85774a48004c] Identify the net of a tetrahedron (5)", async () => {
+	// Question: Identify the net of a triangular pyramid
+	// Widget key: choice_d_net
+	test("polyhedron-net-diagram - [x033d85774a48004c] Identify the net of a triangular pyramid (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1446,11 +1444,11 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "triangle",
 		    "side1": 5,
 		    "side2": 5,
-		    "height": 5
+		    "height": 4
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 500,
-		  "height": 350,
+		  "width": 420,
+		  "height": 400,
 		  "showLabels": false,
 		  "lateralHeight": 8,
 		  "polyhedronType": "triangularPrism"
@@ -1483,11 +1481,11 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "triangle",
 		    "side1": 5,
 		    "side2": 5,
-		    "height": 4
+		    "height": 5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 120,
-		  "height": 110,
+		  "width": 360,
+		  "height": 360,
 		  "showLabels": false,
 		  "lateralHeight": 8,
 		  "polyhedronType": "triangularPrism"
@@ -1523,8 +1521,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "height": 5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 120,
-		  "height": 120,
+		  "width": 360,
+		  "height": 360,
 		  "showLabels": false,
 		  "lateralHeight": 6,
 		  "polyhedronType": "triangularPyramid"
@@ -1553,15 +1551,18 @@ describe("polyhedronNetDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "side": 6,
-		    "type": "square"
+		    "base": 5,
+		    "type": "triangle",
+		    "side1": 4.5,
+		    "side2": 4.5,
+		    "height": 4.5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 120,
-		  "height": 120,
+		  "width": 360,
+		  "height": 360,
 		  "showLabels": false,
-		  "lateralHeight": 7,
-		  "polyhedronType": "squarePyramid"
+		  "lateralHeight": 5.5,
+		  "polyhedronType": "triangularPyramid"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1587,12 +1588,12 @@ describe("polyhedronNetDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "side": 6,
+		    "side": 5,
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 120,
-		  "height": 120,
+		  "width": 360,
+		  "height": 360,
 		  "showLabels": false,
 		  "polyhedronType": "cube"
 		} as unknown as WidgetInput
@@ -1613,9 +1614,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2d009ffa46ca3820
-	// Question: Identify the shape from a net of squares
+	// Question: Identify a 3D shape from a net
 	// Widget key: image_1
-	test("polyhedron-net-diagram - [x2d009ffa46ca3820] Identify the shape from a net of squares", async () => {
+	test("polyhedron-net-diagram - [x2d009ffa46ca3820] Identify a 3D shape from a net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1624,8 +1625,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 195,
-		  "height": 156,
+		  "width": 360,
+		  "height": 360,
 		  "showLabels": false,
 		  "polyhedronType": "cube"
 		} as unknown as WidgetInput
@@ -1653,14 +1654,16 @@ describe("polyhedronNetDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "side": 5,
-		    "type": "square"
+		    "type": "rectangle",
+		    "width": 5,
+		    "length": 8
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 300,
-		  "height": 250,
+		  "width": 380,
+		  "height": 320,
 		  "showLabels": false,
-		  "polyhedronType": "cube"
+		  "lateralHeight": 6,
+		  "polyhedronType": "rectangularPrism"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1690,13 +1693,13 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "triangle",
 		    "side1": 6,
 		    "side2": 6,
-		    "height": 5.2
+		    "height": 5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 300,
-		  "height": 250,
+		  "width": 360,
+		  "height": 320,
 		  "showLabels": false,
-		  "lateralHeight": 7,
+		  "lateralHeight": 6,
 		  "polyhedronType": "triangularPyramid"
 		} as unknown as WidgetInput
 
@@ -1723,17 +1726,17 @@ describe("polyhedronNetDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "base": 5,
+		    "base": 4,
 		    "type": "triangle",
-		    "side1": 5,
-		    "side2": 5,
-		    "height": 4.33
+		    "side1": 4.5,
+		    "side2": 4.5,
+		    "height": 3.5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 300,
-		  "height": 250,
+		  "width": 360,
+		  "height": 320,
 		  "showLabels": false,
-		  "lateralHeight": 6.5,
+		  "lateralHeight": 5.5,
 		  "polyhedronType": "triangularPyramid"
 		} as unknown as WidgetInput
 
@@ -1762,13 +1765,13 @@ describe("polyhedronNetDiagram widget tests", () => {
 		  "base": {
 		    "base": 6,
 		    "type": "triangle",
-		    "side1": 6,
-		    "side2": 6,
-		    "height": 5
+		    "side1": 5,
+		    "side2": 5,
+		    "height": 4
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 320,
-		  "height": 260,
+		  "width": 360,
+		  "height": 340,
 		  "showLabels": false,
 		  "lateralHeight": 8,
 		  "polyhedronType": "triangularPrism"
@@ -1790,21 +1793,21 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x29a33987cc70cc98
-	// Question: Identify the shape formed by a net
+	// Question: Identify a solid from its net
 	// Widget key: image_1
-	test("polyhedron-net-diagram - [x29a33987cc70cc98] Identify the shape formed by a net", async () => {
+	test("polyhedron-net-diagram - [x29a33987cc70cc98] Identify a solid from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "side": 6,
+		    "side": 5,
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 450,
-		  "height": 450,
+		  "width": 380,
+		  "height": 380,
 		  "showLabels": false,
-		  "lateralHeight": 7,
+		  "lateralHeight": 6,
 		  "polyhedronType": "squarePyramid"
 		} as unknown as WidgetInput
 
@@ -1824,22 +1827,22 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1267d7f8869081ee
-	// Question: Identify the net for an octahedron
+	// Question: Identify the net of an octahedron
 	// Widget key: choice_a_net
-	test("polyhedron-net-diagram - [x1267d7f8869081ee] Identify the net for an octahedron (2)", async () => {
+	test("polyhedron-net-diagram - [x1267d7f8869081ee] Identify the net of an octahedron (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
 		    "base": 6,
 		    "type": "triangle",
-		    "side1": 5.5,
-		    "side2": 5.5,
+		    "side1": 5,
+		    "side2": 5,
 		    "height": 5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 96,
-		  "height": 80,
+		  "width": 360,
+		  "height": 360,
 		  "showLabels": false,
 		  "lateralHeight": 6,
 		  "polyhedronType": "triangularPyramid"
@@ -1861,19 +1864,19 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1267d7f8869081ee
-	// Question: Identify the net for an octahedron
+	// Question: Identify the net of an octahedron
 	// Widget key: choice_b_net
-	test("polyhedron-net-diagram - [x1267d7f8869081ee] Identify the net for an octahedron (3)", async () => {
+	test("polyhedron-net-diagram - [x1267d7f8869081ee] Identify the net of an octahedron (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "side": 4,
+		    "side": 5,
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 92,
-		  "height": 76,
+		  "width": 360,
+		  "height": 360,
 		  "showLabels": false,
 		  "polyhedronType": "cube"
 		} as unknown as WidgetInput
@@ -1894,24 +1897,24 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1267d7f8869081ee
-	// Question: Identify the net for an octahedron
+	// Question: Identify the net of an octahedron
 	// Widget key: choice_c_net
-	test("polyhedron-net-diagram - [x1267d7f8869081ee] Identify the net for an octahedron (4)", async () => {
+	test("polyhedron-net-diagram - [x1267d7f8869081ee] Identify the net of an octahedron (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "base": 4,
+		    "base": 6,
 		    "type": "triangle",
-		    "side1": 4,
-		    "side2": 4,
-		    "height": 3.5
+		    "side1": 5,
+		    "side2": 5,
+		    "height": 4
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 60,
-		  "height": 97,
+		  "width": 360,
+		  "height": 360,
 		  "showLabels": false,
-		  "lateralHeight": 6,
+		  "lateralHeight": 8,
 		  "polyhedronType": "triangularPrism"
 		} as unknown as WidgetInput
 
@@ -1931,22 +1934,22 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1267d7f8869081ee
-	// Question: Identify the net for an octahedron
+	// Question: Identify the net of an octahedron
 	// Widget key: choice_d_net
-	test("polyhedron-net-diagram - [x1267d7f8869081ee] Identify the net for an octahedron (5)", async () => {
+	test("polyhedron-net-diagram - [x1267d7f8869081ee] Identify the net of an octahedron (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "base": 4.5,
+		    "base": 6,
 		    "type": "triangle",
-		    "side1": 4,
-		    "side2": 4,
-		    "height": 4
+		    "side1": 5,
+		    "side2": 5,
+		    "height": 5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 72,
-		  "height": 96,
+		  "width": 360,
+		  "height": 360,
 		  "showLabels": false,
 		  "lateralHeight": 6,
 		  "polyhedronType": "triangularPyramid"
@@ -1977,13 +1980,13 @@ describe("polyhedronNetDiagram widget tests", () => {
 		  "base": {
 		    "base": 6,
 		    "type": "triangle",
-		    "side1": 6,
-		    "side2": 6,
-		    "height": 5.2
+		    "side1": 5,
+		    "side2": 5,
+		    "height": 5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 198,
-		  "height": 165,
+		  "width": 380,
+		  "height": 340,
 		  "showLabels": false,
 		  "lateralHeight": 6,
 		  "polyhedronType": "triangularPyramid"
@@ -2016,8 +2019,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 420,
-		  "height": 420,
+		  "width": 380,
+		  "height": 380,
 		  "showLabels": false,
 		  "lateralHeight": 7,
 		  "polyhedronType": "squarePyramid"
@@ -2048,15 +2051,15 @@ describe("polyhedronNetDiagram widget tests", () => {
 		  "base": {
 		    "base": 6,
 		    "type": "triangle",
-		    "side1": 5,
-		    "side2": 5,
+		    "side1": 5.5,
+		    "side2": 5.5,
 		    "height": 5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 400,
-		  "height": 360,
+		  "width": 380,
+		  "height": 380,
 		  "showLabels": false,
-		  "lateralHeight": 5,
+		  "lateralHeight": 6.5,
 		  "polyhedronType": "triangularPyramid"
 		} as unknown as WidgetInput
 
@@ -2083,17 +2086,17 @@ describe("polyhedronNetDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "base": 8,
+		    "base": 5.5,
 		    "type": "triangle",
-		    "side1": 7,
-		    "side2": 7,
-		    "height": 6
+		    "side1": 5,
+		    "side2": 5,
+		    "height": 4.8
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 420,
-		  "height": 360,
+		  "width": 380,
+		  "height": 380,
 		  "showLabels": false,
-		  "lateralHeight": 5.5,
+		  "lateralHeight": 6,
 		  "polyhedronType": "triangularPyramid"
 		} as unknown as WidgetInput
 
@@ -2124,11 +2127,11 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "triangle",
 		    "side1": 5,
 		    "side2": 5,
-		    "height": 5
+		    "height": 4.5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 520,
-		  "height": 360,
+		  "width": 380,
+		  "height": 380,
 		  "showLabels": false,
 		  "lateralHeight": 8,
 		  "polyhedronType": "triangularPrism"
@@ -2150,22 +2153,22 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x48e04bd47959538d
-	// Question: Identify the solid formed by the net
+	// Question: Identify the solid formed by a triangular net
 	// Widget key: image_1
-	test("polyhedron-net-diagram - [x48e04bd47959538d] Identify the solid formed by the net", async () => {
+	test("polyhedron-net-diagram - [x48e04bd47959538d] Identify the solid formed by a triangular net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
 		    "base": 6,
 		    "type": "triangle",
-		    "side1": 5.5,
-		    "side2": 5.5,
+		    "side1": 5,
+		    "side2": 5,
 		    "height": 5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 222,
-		  "height": 296,
+		  "width": 380,
+		  "height": 440,
 		  "showLabels": false,
 		  "lateralHeight": 7,
 		  "polyhedronType": "triangularPyramid"
@@ -2187,22 +2190,22 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x086f122f1f57f437
-	// Question: Identify the shape formed by a net
+	// Question: Identify the solid from a net
 	// Widget key: image_1
-	test("polyhedron-net-diagram - [x086f122f1f57f437] Identify the shape formed by a net", async () => {
+	test("polyhedron-net-diagram - [x086f122f1f57f437] Identify the solid from a net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
 		    "base": 6,
 		    "type": "triangle",
-		    "side1": 5,
-		    "side2": 5,
-		    "height": 4
+		    "side1": 6,
+		    "side2": 6,
+		    "height": 5.2
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 195,
-		  "height": 180,
+		  "width": 380,
+		  "height": 320,
 		  "showLabels": false,
 		  "lateralHeight": 8,
 		  "polyhedronType": "triangularPrism"
@@ -2224,9 +2227,9 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc02491695ca51567
-	// Question: Identify the solid from a net
+	// Question: Identify the solid formed by a net of six squares
 	// Widget key: image_1
-	test("polyhedron-net-diagram - [xc02491695ca51567] Identify the solid from a net", async () => {
+	test("polyhedron-net-diagram - [xc02491695ca51567] Identify the solid formed by a net of six squares", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2235,8 +2238,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 195,
-		  "height": 156,
+		  "width": 360,
+		  "height": 320,
 		  "showLabels": false,
 		  "polyhedronType": "cube"
 		} as unknown as WidgetInput
@@ -2257,24 +2260,24 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1b2d522be1ad518c
-	// Question: Identify the solid from a net
+	// Question: Identify the shape from a net
 	// Widget key: image_1
-	test("polyhedron-net-diagram - [x1b2d522be1ad518c] Identify the solid from a net", async () => {
+	test("polyhedron-net-diagram - [x1b2d522be1ad518c] Identify the shape from a net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
 		    "base": 6,
 		    "type": "triangle",
-		    "side1": 5,
-		    "side2": 5,
+		    "side1": 4,
+		    "side2": 7.2,
 		    "height": 4
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 195,
-		  "height": 180,
+		  "width": 380,
+		  "height": 320,
 		  "showLabels": false,
-		  "lateralHeight": 8,
+		  "lateralHeight": 10,
 		  "polyhedronType": "triangularPrism"
 		} as unknown as WidgetInput
 
@@ -2294,21 +2297,21 @@ describe("polyhedronNetDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2b03516c0180b352
-	// Question: Identify the solid formed by a net
+	// Question: Identify the solid from a net
 	// Widget key: image_1
-	test("polyhedron-net-diagram - [x2b03516c0180b352] Identify the solid formed by a net", async () => {
+	test("polyhedron-net-diagram - [x2b03516c0180b352] Identify the solid from a net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "side": 6,
+		    "side": 5,
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 320,
-		  "height": 320,
+		  "width": 380,
+		  "height": 380,
 		  "showLabels": false,
-		  "lateralHeight": 8,
+		  "lateralHeight": 6,
 		  "polyhedronType": "squarePyramid"
 		} as unknown as WidgetInput
 
@@ -2339,10 +2342,10 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 450,
-		  "height": 450,
+		  "width": 380,
+		  "height": 380,
 		  "showLabels": false,
-		  "lateralHeight": 8,
+		  "lateralHeight": 7,
 		  "polyhedronType": "squarePyramid"
 		} as unknown as WidgetInput
 
@@ -2369,12 +2372,12 @@ describe("polyhedronNetDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "base": {
-		    "side": 5,
+		    "side": 4,
 		    "type": "square"
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 450,
-		  "height": 450,
+		  "width": 380,
+		  "height": 380,
 		  "showLabels": false,
 		  "polyhedronType": "cube"
 		} as unknown as WidgetInput
@@ -2406,11 +2409,11 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "type": "triangle",
 		    "side1": 5,
 		    "side2": 5,
-		    "height": 4.5
+		    "height": 5
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 450,
-		  "height": 400,
+		  "width": 380,
+		  "height": 380,
 		  "showLabels": false,
 		  "lateralHeight": 6,
 		  "polyhedronType": "triangularPyramid"
@@ -2446,8 +2449,8 @@ describe("polyhedronNetDiagram widget tests", () => {
 		    "height": 4
 		  },
 		  "type": "polyhedronNetDiagram",
-		  "width": 600,
-		  "height": 350,
+		  "width": 380,
+		  "height": 380,
 		  "showLabels": false,
 		  "lateralHeight": 8,
 		  "polyhedronType": "triangularPrism"

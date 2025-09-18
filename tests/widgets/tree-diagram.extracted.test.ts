@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.970Z
+// Generated on: 2025-09-18T05:17:02.168Z
 // Widget Type: treeDiagram
 // Source: Real questions from database
 //
@@ -26,57 +26,57 @@ import * as logger from "@superbuilders/slog"
 
 describe("treeDiagram widget tests", () => {
 	// Extracted from question: xffe5660467b89a5c
-	// Question: Whose display correctly represents the sample space?
+	// Question: Which display correctly represents the sample space?
 	// Widget key: image_1
-	test("tree-diagram - [xffe5660467b89a5c] Whose display correctly represents the sample space?", async () => {
+	test("tree-diagram - [xffe5660467b89a5c] Which display correctly represents the sample space?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "P",
+		      "to": "p",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "R",
+		      "to": "r",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "B",
+		      "to": "b",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
 		      "to": "p_l",
-		      "from": "P",
+		      "from": "p",
 		      "style": "solid"
 		    },
 		    {
 		      "to": "p_u",
-		      "from": "P",
+		      "from": "p",
 		      "style": "solid"
 		    },
 		    {
 		      "to": "r_l",
-		      "from": "R",
+		      "from": "r",
 		      "style": "solid"
 		    },
 		    {
 		      "to": "r_u",
-		      "from": "R",
+		      "from": "r",
 		      "style": "solid"
 		    },
 		    {
 		      "to": "b_l",
-		      "from": "B",
+		      "from": "b",
 		      "style": "solid"
 		    },
 		    {
 		      "to": "b_u",
-		      "from": "B",
+		      "from": "b",
 		      "style": "solid"
 		    }
 		  ],
@@ -88,37 +88,37 @@ describe("treeDiagram widget tests", () => {
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
-		        "y": 12
+		        "y": 40
 		      }
 		    },
 		    {
-		      "id": "P",
+		      "id": "p",
 		      "color": "#000000",
 		      "label": "P",
 		      "style": "circled",
 		      "position": {
-		        "x": 86.8,
-		        "y": 74
+		        "x": 100,
+		        "y": 110
 		      }
 		    },
 		    {
-		      "id": "R",
+		      "id": "r",
 		      "color": "#000000",
 		      "label": "R",
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
-		        "y": 74
+		        "y": 110
 		      }
 		    },
 		    {
-		      "id": "B",
+		      "id": "b",
 		      "color": "#000000",
 		      "label": "B",
 		      "style": "circled",
 		      "position": {
-		        "x": 353.2,
-		        "y": 74
+		        "x": 340,
+		        "y": 110
 		      }
 		    },
 		    {
@@ -127,8 +127,8 @@ describe("treeDiagram widget tests", () => {
 		      "label": "L",
 		      "style": "circled",
 		      "position": {
-		        "x": 120,
-		        "y": 174
+		        "x": 60,
+		        "y": 220
 		      }
 		    },
 		    {
@@ -137,8 +137,8 @@ describe("treeDiagram widget tests", () => {
 		      "label": "U",
 		      "style": "circled",
 		      "position": {
-		        "x": 53.2,
-		        "y": 174
+		        "x": 140,
+		        "y": 220
 		      }
 		    },
 		    {
@@ -147,8 +147,8 @@ describe("treeDiagram widget tests", () => {
 		      "label": "L",
 		      "style": "circled",
 		      "position": {
-		        "x": 186.8,
-		        "y": 174
+		        "x": 180,
+		        "y": 220
 		      }
 		    },
 		    {
@@ -157,8 +157,8 @@ describe("treeDiagram widget tests", () => {
 		      "label": "U",
 		      "style": "circled",
 		      "position": {
-		        "x": 253.2,
-		        "y": 174
+		        "x": 260,
+		        "y": 220
 		      }
 		    },
 		    {
@@ -167,8 +167,8 @@ describe("treeDiagram widget tests", () => {
 		      "label": "L",
 		      "style": "circled",
 		      "position": {
-		        "x": 320,
-		        "y": 174
+		        "x": 300,
+		        "y": 220
 		      }
 		    },
 		    {
@@ -177,13 +177,13 @@ describe("treeDiagram widget tests", () => {
 		      "label": "U",
 		      "style": "circled",
 		      "position": {
-		        "x": 386.8,
-		        "y": 174
+		        "x": 380,
+		        "y": 220
 		      }
 		    }
 		  ],
 		  "width": 440,
-		  "height": 204,
+		  "height": 300,
 		  "nodeRadius": 20,
 		  "nodeFontSize": 14
 		} as unknown as WidgetInput
@@ -204,52 +204,52 @@ describe("treeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa32758572502b4bd
-	// Question: Tree diagrams for one-topping pizza choices
+	// Question: Tree diagrams for pizza combinations
 	// Widget key: image_1
-	test("tree-diagram - [xa32758572502b4bd] Tree diagrams for one-topping pizza choices (1)", async () => {
+	test("tree-diagram - [xa32758572502b4bd] Tree diagrams for pizza combinations (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "nT",
+		      "to": "t",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nD",
+		      "to": "d",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nP_L",
-		      "from": "nT",
+		      "to": "t_p",
+		      "from": "t",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nC_L",
-		      "from": "nT",
+		      "to": "t_c",
+		      "from": "t",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nM_L",
-		      "from": "nT",
+		      "to": "t_m",
+		      "from": "t",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nP_R",
-		      "from": "nD",
+		      "to": "d_p",
+		      "from": "d",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nC_R",
-		      "from": "nD",
+		      "to": "d_c",
+		      "from": "d",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nM_R",
-		      "from": "nD",
+		      "to": "d_m",
+		      "from": "d",
 		      "style": "solid"
 		    }
 		  ],
@@ -257,96 +257,96 @@ describe("treeDiagram widget tests", () => {
 		    {
 		      "id": "root",
 		      "color": "#000000",
-		      "label": "Start",
+		      "label": null,
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
-		        "y": 12
+		        "y": 30
 		      }
 		    },
 		    {
-		      "id": "nT",
+		      "id": "t",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
 		      "position": {
 		        "x": 120,
-		        "y": 74
+		        "y": 90
 		      }
 		    },
 		    {
-		      "id": "nD",
+		      "id": "d",
 		      "color": "#000000",
 		      "label": "D",
 		      "style": "circled",
 		      "position": {
 		        "x": 320,
-		        "y": 74
+		        "y": 90
 		      }
 		    },
 		    {
-		      "id": "nP_L",
+		      "id": "t_p",
 		      "color": "#000000",
 		      "label": "P",
 		      "style": "circled",
 		      "position": {
 		        "x": 53.2,
-		        "y": 174
+		        "y": 190
 		      }
 		    },
 		    {
-		      "id": "nC_L",
+		      "id": "t_c",
 		      "color": "#000000",
 		      "label": "C",
 		      "style": "circled",
 		      "position": {
 		        "x": 120,
-		        "y": 174
+		        "y": 190
 		      }
 		    },
 		    {
-		      "id": "nM_L",
+		      "id": "t_m",
 		      "color": "#000000",
 		      "label": "M",
 		      "style": "circled",
 		      "position": {
 		        "x": 186.8,
-		        "y": 174
+		        "y": 190
 		      }
 		    },
 		    {
-		      "id": "nP_R",
+		      "id": "d_p",
 		      "color": "#000000",
 		      "label": "P",
 		      "style": "circled",
 		      "position": {
 		        "x": 253.2,
-		        "y": 174
+		        "y": 190
 		      }
 		    },
 		    {
-		      "id": "nC_R",
+		      "id": "d_c",
 		      "color": "#000000",
 		      "label": "C",
 		      "style": "circled",
 		      "position": {
 		        "x": 320,
-		        "y": 174
+		        "y": 190
 		      }
 		    },
 		    {
-		      "id": "nM_R",
+		      "id": "d_m",
 		      "color": "#000000",
 		      "label": "M",
 		      "style": "circled",
 		      "position": {
 		        "x": 386.8,
-		        "y": 174
+		        "y": 190
 		      }
 		    }
 		  ],
 		  "width": 440,
-		  "height": 204,
+		  "height": 304,
 		  "nodeRadius": 20,
 		  "nodeFontSize": 16
 		} as unknown as WidgetInput
@@ -367,57 +367,57 @@ describe("treeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa32758572502b4bd
-	// Question: Tree diagrams for one-topping pizza choices
+	// Question: Tree diagrams for pizza combinations
 	// Widget key: image_2
-	test("tree-diagram - [xa32758572502b4bd] Tree diagrams for one-topping pizza choices (2)", async () => {
+	test("tree-diagram - [xa32758572502b4bd] Tree diagrams for pizza combinations (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "nP",
+		      "to": "p",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nM",
+		      "to": "m",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nC",
+		      "to": "c",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nT_P",
-		      "from": "nP",
+		      "to": "p_t",
+		      "from": "p",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nD_P",
-		      "from": "nP",
+		      "to": "p_d",
+		      "from": "p",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nT_M",
-		      "from": "nM",
+		      "to": "m_t",
+		      "from": "m",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nD_M",
-		      "from": "nM",
+		      "to": "m_d",
+		      "from": "m",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nT_C",
-		      "from": "nC",
+		      "to": "c_t",
+		      "from": "c",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nD_C",
-		      "from": "nC",
+		      "to": "c_d",
+		      "from": "c",
 		      "style": "solid"
 		    }
 		  ],
@@ -425,106 +425,106 @@ describe("treeDiagram widget tests", () => {
 		    {
 		      "id": "root",
 		      "color": "#000000",
-		      "label": "Start",
+		      "label": null,
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
-		        "y": 12
+		        "y": 30
 		      }
 		    },
 		    {
-		      "id": "nP",
+		      "id": "p",
 		      "color": "#000000",
 		      "label": "P",
 		      "style": "circled",
 		      "position": {
 		        "x": 86.8,
-		        "y": 74
+		        "y": 90
 		      }
 		    },
 		    {
-		      "id": "nM",
+		      "id": "m",
 		      "color": "#000000",
 		      "label": "M",
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
-		        "y": 74
+		        "y": 90
 		      }
 		    },
 		    {
-		      "id": "nC",
+		      "id": "c",
 		      "color": "#000000",
 		      "label": "C",
 		      "style": "circled",
 		      "position": {
 		        "x": 353.2,
-		        "y": 74
+		        "y": 90
 		      }
 		    },
 		    {
-		      "id": "nT_P",
+		      "id": "p_t",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
 		      "position": {
 		        "x": 53.2,
-		        "y": 174
+		        "y": 190
 		      }
 		    },
 		    {
-		      "id": "nD_P",
+		      "id": "p_d",
 		      "color": "#000000",
 		      "label": "D",
 		      "style": "circled",
 		      "position": {
 		        "x": 120,
-		        "y": 174
+		        "y": 190
 		      }
 		    },
 		    {
-		      "id": "nT_M",
+		      "id": "m_t",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
 		      "position": {
 		        "x": 186.8,
-		        "y": 174
+		        "y": 190
 		      }
 		    },
 		    {
-		      "id": "nD_M",
+		      "id": "m_d",
 		      "color": "#000000",
 		      "label": "D",
 		      "style": "circled",
 		      "position": {
 		        "x": 253.2,
-		        "y": 174
+		        "y": 190
 		      }
 		    },
 		    {
-		      "id": "nT_C",
+		      "id": "c_t",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
 		      "position": {
 		        "x": 320,
-		        "y": 174
+		        "y": 190
 		      }
 		    },
 		    {
-		      "id": "nD_C",
+		      "id": "c_d",
 		      "color": "#000000",
 		      "label": "D",
 		      "style": "circled",
 		      "position": {
 		        "x": 386.8,
-		        "y": 174
+		        "y": 190
 		      }
 		    }
 		  ],
 		  "width": 440,
-		  "height": 204,
+		  "height": 304,
 		  "nodeRadius": 20,
 		  "nodeFontSize": 16
 		} as unknown as WidgetInput
@@ -545,72 +545,72 @@ describe("treeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfced0271e1570dd0
-	// Question: Identify the correct sample-space display
+	// Question: Select the correct sample space display
 	// Widget key: image_2
-	test("tree-diagram - [xfced0271e1570dd0] Identify the correct sample-space display", async () => {
+	test("tree-diagram - [xfced0271e1570dd0] Select the correct sample space display", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "nB",
+		      "to": "B1",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nT",
+		      "to": "T1",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nP",
+		      "to": "P1",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "b_b",
-		      "from": "nB",
+		      "to": "B1_B",
+		      "from": "B1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "b_t",
-		      "from": "nB",
+		      "to": "B1_T",
+		      "from": "B1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "b_p",
-		      "from": "nB",
+		      "to": "B1_P",
+		      "from": "B1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "t_b",
-		      "from": "nT",
+		      "to": "T1_B",
+		      "from": "T1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "t_t",
-		      "from": "nT",
+		      "to": "T1_T",
+		      "from": "T1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "t_p",
-		      "from": "nT",
+		      "to": "T1_P",
+		      "from": "T1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "p_b",
-		      "from": "nP",
+		      "to": "P1_B",
+		      "from": "P1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "p_t",
-		      "from": "nP",
+		      "to": "P1_T",
+		      "from": "P1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "p_p",
-		      "from": "nP",
+		      "to": "P1_P",
+		      "from": "P1",
 		      "style": "solid"
 		    }
 		  ],
@@ -618,138 +618,138 @@ describe("treeDiagram widget tests", () => {
 		    {
 		      "id": "root",
 		      "color": "#000000",
-		      "label": "Start",
+		      "label": " ",
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
-		        "y": 24
+		        "y": 40
 		      }
 		    },
 		    {
-		      "id": "nB",
+		      "id": "B1",
 		      "color": "#000000",
 		      "label": "B",
 		      "style": "circled",
 		      "position": {
-		        "x": 86.8,
-		        "y": 74
+		        "x": 100,
+		        "y": 100
 		      }
 		    },
 		    {
-		      "id": "nT",
-		      "color": "#000000",
-		      "label": "T",
-		      "style": "circled",
-		      "position": {
-		        "x": 220,
-		        "y": 74
-		      }
-		    },
-		    {
-		      "id": "nP",
-		      "color": "#000000",
-		      "label": "P",
-		      "style": "circled",
-		      "position": {
-		        "x": 353.2,
-		        "y": 74
-		      }
-		    },
-		    {
-		      "id": "b_b",
-		      "color": "#000000",
-		      "label": "B",
-		      "style": "circled",
-		      "position": {
-		        "x": 42.4,
-		        "y": 174
-		      }
-		    },
-		    {
-		      "id": "b_t",
-		      "color": "#000000",
-		      "label": "T",
-		      "style": "circled",
-		      "position": {
-		        "x": 86.8,
-		        "y": 174
-		      }
-		    },
-		    {
-		      "id": "b_p",
-		      "color": "#000000",
-		      "label": "P",
-		      "style": "circled",
-		      "position": {
-		        "x": 131.2,
-		        "y": 174
-		      }
-		    },
-		    {
-		      "id": "t_b",
-		      "color": "#000000",
-		      "label": "B",
-		      "style": "circled",
-		      "position": {
-		        "x": 175.6,
-		        "y": 174
-		      }
-		    },
-		    {
-		      "id": "t_t",
+		      "id": "T1",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
-		        "y": 174
+		        "y": 100
 		      }
 		    },
 		    {
-		      "id": "t_p",
+		      "id": "P1",
 		      "color": "#000000",
 		      "label": "P",
 		      "style": "circled",
 		      "position": {
-		        "x": 264.4,
-		        "y": 174
+		        "x": 340,
+		        "y": 100
 		      }
 		    },
 		    {
-		      "id": "p_b",
+		      "id": "B1_B",
 		      "color": "#000000",
 		      "label": "B",
 		      "style": "circled",
 		      "position": {
-		        "x": 308.8,
-		        "y": 174
+		        "x": 40,
+		        "y": 200
 		      }
 		    },
 		    {
-		      "id": "p_t",
+		      "id": "B1_T",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
 		      "position": {
-		        "x": 353.2,
-		        "y": 174
+		        "x": 100,
+		        "y": 200
 		      }
 		    },
 		    {
-		      "id": "p_p",
+		      "id": "B1_P",
 		      "color": "#000000",
 		      "label": "P",
 		      "style": "circled",
 		      "position": {
-		        "x": 397.6,
-		        "y": 174
+		        "x": 160,
+		        "y": 200
+		      }
+		    },
+		    {
+		      "id": "T1_B",
+		      "color": "#000000",
+		      "label": "B",
+		      "style": "circled",
+		      "position": {
+		        "x": 180,
+		        "y": 200
+		      }
+		    },
+		    {
+		      "id": "T1_T",
+		      "color": "#000000",
+		      "label": "T",
+		      "style": "circled",
+		      "position": {
+		        "x": 220,
+		        "y": 200
+		      }
+		    },
+		    {
+		      "id": "T1_P",
+		      "color": "#000000",
+		      "label": "P",
+		      "style": "circled",
+		      "position": {
+		        "x": 260,
+		        "y": 200
+		      }
+		    },
+		    {
+		      "id": "P1_B",
+		      "color": "#000000",
+		      "label": "B",
+		      "style": "circled",
+		      "position": {
+		        "x": 300,
+		        "y": 200
+		      }
+		    },
+		    {
+		      "id": "P1_T",
+		      "color": "#000000",
+		      "label": "T",
+		      "style": "circled",
+		      "position": {
+		        "x": 340,
+		        "y": 200
+		      }
+		    },
+		    {
+		      "id": "P1_P",
+		      "color": "#000000",
+		      "label": "P",
+		      "style": "circled",
+		      "position": {
+		        "x": 380,
+		        "y": 200
 		      }
 		    }
 		  ],
 		  "width": 440,
-		  "height": 204,
+		  "height": 300,
 		  "nodeRadius": 20,
-		  "nodeFontSize": 14
+		  "nodeFontSize": 16
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -768,90 +768,90 @@ describe("treeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xcfc0bdb0990dfe10
-	// Question: Choose a tree diagram for three random steps
-	// Widget key: image_1
-	test("tree-diagram - [xcfc0bdb0990dfe10] Choose a tree diagram for three random steps (1)", async () => {
+	// Question: Choose the tree diagram for 3 random steps
+	// Widget key: diagram_choice_a
+	test("tree-diagram - [xcfc0bdb0990dfe10] Choose the tree diagram for 3 random steps (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "a1",
-		      "from": "root",
+		      "to": "out3L",
+		      "from": "rootA",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "a2",
-		      "from": "root",
+		      "to": "out2L1R",
+		      "from": "rootA",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "a3",
-		      "from": "root",
+		      "to": "out1L2R",
+		      "from": "rootA",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "a4",
-		      "from": "root",
+		      "to": "out3R",
+		      "from": "rootA",
 		      "style": "solid"
 		    }
 		  ],
 		  "nodes": [
 		    {
-		      "id": "root",
+		      "id": "rootA",
 		      "color": "#000000",
-		      "label": "<root>",
+		      "label": null,
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
-		        "y": 20
+		        "y": 40
 		      }
 		    },
 		    {
-		      "id": "a1",
+		      "id": "out3L",
 		      "color": "#000000",
 		      "label": "3 Lefts",
 		      "style": "circled",
 		      "position": {
 		        "x": 70,
-		        "y": 94
+		        "y": 240
 		      }
 		    },
 		    {
-		      "id": "a2",
+		      "id": "out2L1R",
 		      "color": "#000000",
 		      "label": "2 Lefts 1 Right",
 		      "style": "circled",
 		      "position": {
 		        "x": 170,
-		        "y": 94
+		        "y": 240
 		      }
 		    },
 		    {
-		      "id": "a3",
+		      "id": "out1L2R",
 		      "color": "#000000",
 		      "label": "1 Left 2 Rights",
 		      "style": "circled",
 		      "position": {
 		        "x": 270,
-		        "y": 94
+		        "y": 240
 		      }
 		    },
 		    {
-		      "id": "a4",
+		      "id": "out3R",
 		      "color": "#000000",
 		      "label": "3 Rights",
 		      "style": "circled",
 		      "position": {
 		        "x": 370,
-		        "y": 94
+		        "y": 240
 		      }
 		    }
 		  ],
 		  "width": 440,
-		  "height": 144,
-		  "nodeRadius": 40,
+		  "height": 320,
+		  "nodeRadius": 38,
 		  "nodeFontSize": 12
 		} as unknown as WidgetInput
 
@@ -871,82 +871,82 @@ describe("treeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xcfc0bdb0990dfe10
-	// Question: Choose a tree diagram for three random steps
-	// Widget key: image_2
-	test("tree-diagram - [xcfc0bdb0990dfe10] Choose a tree diagram for three random steps (2)", async () => {
+	// Question: Choose the tree diagram for 3 random steps
+	// Widget key: diagram_choice_b
+	test("tree-diagram - [xcfc0bdb0990dfe10] Choose the tree diagram for 3 random steps (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "nL1",
+		      "to": "l1",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nR1",
+		      "to": "r1",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nLL2",
-		      "from": "nL1",
+		      "to": "ll",
+		      "from": "l1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nLR2",
-		      "from": "nL1",
+		      "to": "lr",
+		      "from": "l1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nRL2",
-		      "from": "nR1",
+		      "to": "rl",
+		      "from": "r1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nRR2",
-		      "from": "nR1",
+		      "to": "rr",
+		      "from": "r1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nLLL3",
-		      "from": "nLL2",
+		      "to": "lll",
+		      "from": "ll",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nLLR3",
-		      "from": "nLL2",
+		      "to": "llr",
+		      "from": "ll",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nLRL3",
-		      "from": "nLR2",
+		      "to": "lrl",
+		      "from": "lr",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nLRR3",
-		      "from": "nLR2",
+		      "to": "lrr",
+		      "from": "lr",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nRLL3",
-		      "from": "nRL2",
+		      "to": "rll",
+		      "from": "rl",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nRLR3",
-		      "from": "nRL2",
+		      "to": "rlr",
+		      "from": "rl",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nRRL3",
-		      "from": "nRR2",
+		      "to": "rrl",
+		      "from": "rr",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nRRR3",
-		      "from": "nRR2",
+		      "to": "rrr",
+		      "from": "rr",
 		      "style": "solid"
 		    }
 		  ],
@@ -954,158 +954,158 @@ describe("treeDiagram widget tests", () => {
 		    {
 		      "id": "root",
 		      "color": "#000000",
-		      "label": "<root>",
+		      "label": null,
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
-		        "y": 20
+		        "y": 40
 		      }
 		    },
 		    {
-		      "id": "nL1",
+		      "id": "l1",
 		      "color": "#000000",
 		      "label": "L",
 		      "style": "circled",
 		      "position": {
 		        "x": 120,
-		        "y": 74
+		        "y": 100
 		      }
 		    },
 		    {
-		      "id": "nR1",
+		      "id": "r1",
 		      "color": "#000000",
 		      "label": "R",
 		      "style": "circled",
 		      "position": {
 		        "x": 320,
-		        "y": 74
+		        "y": 100
 		      }
 		    },
 		    {
-		      "id": "nLL2",
+		      "id": "ll",
 		      "color": "#000000",
 		      "label": "L",
 		      "style": "circled",
 		      "position": {
 		        "x": 70,
-		        "y": 174
+		        "y": 180
 		      }
 		    },
 		    {
-		      "id": "nLR2",
+		      "id": "lr",
 		      "color": "#000000",
 		      "label": "R",
 		      "style": "circled",
 		      "position": {
 		        "x": 170,
-		        "y": 174
+		        "y": 180
 		      }
 		    },
 		    {
-		      "id": "nRL2",
+		      "id": "rl",
 		      "color": "#000000",
 		      "label": "L",
 		      "style": "circled",
 		      "position": {
 		        "x": 270,
-		        "y": 174
+		        "y": 180
 		      }
 		    },
 		    {
-		      "id": "nRR2",
+		      "id": "rr",
 		      "color": "#000000",
 		      "label": "R",
 		      "style": "circled",
 		      "position": {
 		        "x": 370,
-		        "y": 174
+		        "y": 180
 		      }
 		    },
 		    {
-		      "id": "nLLL3",
+		      "id": "lll",
 		      "color": "#000000",
 		      "label": "L",
 		      "style": "circled",
 		      "position": {
 		        "x": 45,
-		        "y": 274
+		        "y": 260
 		      }
 		    },
 		    {
-		      "id": "nLLR3",
+		      "id": "llr",
 		      "color": "#000000",
 		      "label": "R",
 		      "style": "circled",
 		      "position": {
 		        "x": 95,
-		        "y": 274
+		        "y": 260
 		      }
 		    },
 		    {
-		      "id": "nLRL3",
+		      "id": "lrl",
 		      "color": "#000000",
 		      "label": "L",
 		      "style": "circled",
 		      "position": {
 		        "x": 145,
-		        "y": 274
+		        "y": 260
 		      }
 		    },
 		    {
-		      "id": "nLRR3",
+		      "id": "lrr",
 		      "color": "#000000",
 		      "label": "R",
 		      "style": "circled",
 		      "position": {
 		        "x": 195,
-		        "y": 274
+		        "y": 260
 		      }
 		    },
 		    {
-		      "id": "nRLL3",
+		      "id": "rll",
 		      "color": "#000000",
 		      "label": "L",
 		      "style": "circled",
 		      "position": {
 		        "x": 245,
-		        "y": 274
+		        "y": 260
 		      }
 		    },
 		    {
-		      "id": "nRLR3",
+		      "id": "rlr",
 		      "color": "#000000",
 		      "label": "R",
 		      "style": "circled",
 		      "position": {
 		        "x": 295,
-		        "y": 274
+		        "y": 260
 		      }
 		    },
 		    {
-		      "id": "nRRL3",
+		      "id": "rrl",
 		      "color": "#000000",
 		      "label": "L",
 		      "style": "circled",
 		      "position": {
 		        "x": 345,
-		        "y": 274
+		        "y": 260
 		      }
 		    },
 		    {
-		      "id": "nRRR3",
+		      "id": "rrr",
 		      "color": "#000000",
 		      "label": "R",
 		      "style": "circled",
 		      "position": {
 		        "x": 395,
-		        "y": 274
+		        "y": 260
 		      }
 		    }
 		  ],
 		  "width": 440,
 		  "height": 308,
 		  "nodeRadius": 20,
-		  "nodeFontSize": 14
+		  "nodeFontSize": 12
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1124,31 +1124,31 @@ describe("treeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x150b1c6c6e15ce1f
-	// Question: Select the tree diagram for three coin flips
+	// Question: Choose the correct tree diagram for three coin flips
 	// Widget key: image_1
-	test("tree-diagram - [x150b1c6c6e15ce1f] Select the tree diagram for three coin flips (1)", async () => {
+	test("tree-diagram - [x150b1c6c6e15ce1f] Choose the correct tree diagram for three coin flips (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "nA",
+		      "to": "n3heads",
 		      "from": "rootB",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nB",
+		      "to": "n2h1t",
 		      "from": "rootB",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nC",
+		      "to": "n1h2t",
 		      "from": "rootB",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "nD",
+		      "to": "n3tails",
 		      "from": "rootB",
 		      "style": "solid"
 		    }
@@ -1157,58 +1157,58 @@ describe("treeDiagram widget tests", () => {
 		    {
 		      "id": "rootB",
 		      "color": "#000000",
-		      "label": null,
+		      "label": "Start",
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
-		        "y": 24
+		        "y": 50
 		      }
 		    },
 		    {
-		      "id": "nA",
+		      "id": "n3heads",
 		      "color": "#000000",
 		      "label": "3 heads",
 		      "style": "circled",
 		      "position": {
 		        "x": 70,
-		        "y": 94
+		        "y": 200
 		      }
 		    },
 		    {
-		      "id": "nB",
+		      "id": "n2h1t",
 		      "color": "#000000",
 		      "label": "2 heads and 1 tail",
 		      "style": "circled",
 		      "position": {
 		        "x": 170,
-		        "y": 94
+		        "y": 200
 		      }
 		    },
 		    {
-		      "id": "nC",
+		      "id": "n1h2t",
 		      "color": "#000000",
 		      "label": "1 head and 2 tails",
 		      "style": "circled",
 		      "position": {
 		        "x": 270,
-		        "y": 94
+		        "y": 200
 		      }
 		    },
 		    {
-		      "id": "nD",
+		      "id": "n3tails",
 		      "color": "#000000",
 		      "label": "3 tails",
 		      "style": "circled",
 		      "position": {
 		        "x": 370,
-		        "y": 94
+		        "y": 200
 		      }
 		    }
 		  ],
 		  "width": 440,
-		  "height": 144,
-		  "nodeRadius": 36,
-		  "nodeFontSize": 14
+		  "height": 300,
+		  "nodeRadius": 30,
+		  "nodeFontSize": 11
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1227,98 +1227,98 @@ describe("treeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x150b1c6c6e15ce1f
-	// Question: Select the tree diagram for three coin flips
+	// Question: Choose the correct tree diagram for three coin flips
 	// Widget key: image_2
-	test("tree-diagram - [x150b1c6c6e15ce1f] Select the tree diagram for three coin flips (2)", async () => {
+	test("tree-diagram - [x150b1c6c6e15ce1f] Choose the correct tree diagram for three coin flips (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "n1H",
-		      "from": "rootA",
+		      "to": "h1",
+		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n1T",
-		      "from": "rootA",
+		      "to": "t1",
+		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n2HH",
-		      "from": "n1H",
+		      "to": "hh2",
+		      "from": "h1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n2HT",
-		      "from": "n1H",
+		      "to": "ht2",
+		      "from": "h1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n2TH",
-		      "from": "n1T",
+		      "to": "th2",
+		      "from": "t1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n2TT",
-		      "from": "n1T",
+		      "to": "tt2",
+		      "from": "t1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n3HHH",
-		      "from": "n2HH",
+		      "to": "hhh3",
+		      "from": "hh2",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n3HHT",
-		      "from": "n2HH",
+		      "to": "hht3",
+		      "from": "hh2",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n3HTH",
-		      "from": "n2HT",
+		      "to": "hth3",
+		      "from": "ht2",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n3HTT",
-		      "from": "n2HT",
+		      "to": "htt3",
+		      "from": "ht2",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n3THH",
-		      "from": "n2TH",
+		      "to": "thh3",
+		      "from": "th2",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n3THT",
-		      "from": "n2TH",
+		      "to": "tht3",
+		      "from": "th2",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n3TTH",
-		      "from": "n2TT",
+		      "to": "tth3",
+		      "from": "tt2",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n3TTT",
-		      "from": "n2TT",
+		      "to": "ttt3",
+		      "from": "tt2",
 		      "style": "solid"
 		    }
 		  ],
 		  "nodes": [
 		    {
-		      "id": "rootA",
+		      "id": "root",
 		      "color": "#000000",
-		      "label": null,
+		      "label": "Start",
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
-		        "y": 24
+		        "y": 30
 		      }
 		    },
 		    {
-		      "id": "n1H",
+		      "id": "h1",
 		      "color": "#000000",
 		      "label": "H",
 		      "style": "circled",
@@ -1328,7 +1328,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n1T",
+		      "id": "t1",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -1338,7 +1338,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n2HH",
+		      "id": "hh2",
 		      "color": "#000000",
 		      "label": "H",
 		      "style": "circled",
@@ -1348,7 +1348,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n2HT",
+		      "id": "ht2",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -1358,7 +1358,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n2TH",
+		      "id": "th2",
 		      "color": "#000000",
 		      "label": "H",
 		      "style": "circled",
@@ -1368,7 +1368,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n2TT",
+		      "id": "tt2",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -1378,7 +1378,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n3HHH",
+		      "id": "hhh3",
 		      "color": "#000000",
 		      "label": "H",
 		      "style": "circled",
@@ -1388,7 +1388,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n3HHT",
+		      "id": "hht3",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -1398,7 +1398,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n3HTH",
+		      "id": "hth3",
 		      "color": "#000000",
 		      "label": "H",
 		      "style": "circled",
@@ -1408,7 +1408,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n3HTT",
+		      "id": "htt3",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -1418,7 +1418,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n3THH",
+		      "id": "thh3",
 		      "color": "#000000",
 		      "label": "H",
 		      "style": "circled",
@@ -1428,7 +1428,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n3THT",
+		      "id": "tht3",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -1438,7 +1438,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n3TTH",
+		      "id": "tth3",
 		      "color": "#000000",
 		      "label": "H",
 		      "style": "circled",
@@ -1448,7 +1448,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n3TTT",
+		      "id": "ttt3",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -1489,48 +1489,48 @@ describe("treeDiagram widget tests", () => {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "g",
+		      "to": "node-g",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "o",
+		      "to": "node-o",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "y",
+		      "to": "node-y",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "l1",
-		      "from": "g",
+		      "to": "node-g-l",
+		      "from": "node-g",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "s1",
-		      "from": "g",
+		      "to": "node-g-s",
+		      "from": "node-g",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "l2",
-		      "from": "o",
+		      "to": "node-o-l",
+		      "from": "node-o",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "s2",
-		      "from": "o",
+		      "to": "node-o-s",
+		      "from": "node-o",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "l3",
-		      "from": "y",
+		      "to": "node-y-l",
+		      "from": "node-y",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "s3",
-		      "from": "y",
+		      "to": "node-y-s",
+		      "from": "node-y",
 		      "style": "solid"
 		    }
 		  ],
@@ -1546,7 +1546,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "g",
+		      "id": "node-g",
 		      "color": "#000000",
 		      "label": "G",
 		      "style": "circled",
@@ -1556,7 +1556,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "o",
+		      "id": "node-o",
 		      "color": "#000000",
 		      "label": "O",
 		      "style": "circled",
@@ -1566,7 +1566,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "y",
+		      "id": "node-y",
 		      "color": "#000000",
 		      "label": "Y",
 		      "style": "circled",
@@ -1576,7 +1576,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "l1",
+		      "id": "node-g-l",
 		      "color": "#000000",
 		      "label": "L",
 		      "style": "circled",
@@ -1586,7 +1586,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "s1",
+		      "id": "node-g-s",
 		      "color": "#000000",
 		      "label": "S",
 		      "style": "circled",
@@ -1596,7 +1596,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "l2",
+		      "id": "node-o-l",
 		      "color": "#000000",
 		      "label": "L",
 		      "style": "circled",
@@ -1606,7 +1606,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "s2",
+		      "id": "node-o-s",
 		      "color": "#000000",
 		      "label": "S",
 		      "style": "circled",
@@ -1616,7 +1616,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "l3",
+		      "id": "node-y-l",
 		      "color": "#000000",
 		      "label": "L",
 		      "style": "circled",
@@ -1626,7 +1626,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "s3",
+		      "id": "node-y-s",
 		      "color": "#000000",
 		      "label": "S",
 		      "style": "circled",
@@ -1637,7 +1637,7 @@ describe("treeDiagram widget tests", () => {
 		    }
 		  ],
 		  "width": 440,
-		  "height": 204,
+		  "height": 304,
 		  "nodeRadius": 20,
 		  "nodeFontSize": 16
 		} as unknown as WidgetInput
@@ -1667,49 +1667,49 @@ describe("treeDiagram widget tests", () => {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "l",
-		      "from": "root2",
+		      "to": "node-l",
+		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "s",
-		      "from": "root2",
+		      "to": "node-s",
+		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "g1",
-		      "from": "l",
+		      "to": "node-l-g",
+		      "from": "node-l",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "o1",
-		      "from": "l",
+		      "to": "node-l-o",
+		      "from": "node-l",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "y1",
-		      "from": "l",
+		      "to": "node-l-y",
+		      "from": "node-l",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "g2",
-		      "from": "s",
+		      "to": "node-s-g",
+		      "from": "node-s",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "o2",
-		      "from": "s",
+		      "to": "node-s-o",
+		      "from": "node-s",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "y2",
-		      "from": "s",
+		      "to": "node-s-y",
+		      "from": "node-s",
 		      "style": "solid"
 		    }
 		  ],
 		  "nodes": [
 		    {
-		      "id": "root2",
+		      "id": "root",
 		      "color": "#000000",
 		      "label": null,
 		      "style": "circled",
@@ -1719,7 +1719,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "l",
+		      "id": "node-l",
 		      "color": "#000000",
 		      "label": "L",
 		      "style": "circled",
@@ -1729,7 +1729,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "s",
+		      "id": "node-s",
 		      "color": "#000000",
 		      "label": "S",
 		      "style": "circled",
@@ -1739,7 +1739,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "g1",
+		      "id": "node-l-g",
 		      "color": "#000000",
 		      "label": "G",
 		      "style": "circled",
@@ -1749,7 +1749,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "o1",
+		      "id": "node-l-o",
 		      "color": "#000000",
 		      "label": "O",
 		      "style": "circled",
@@ -1759,7 +1759,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "y1",
+		      "id": "node-l-y",
 		      "color": "#000000",
 		      "label": "Y",
 		      "style": "circled",
@@ -1769,7 +1769,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "g2",
+		      "id": "node-s-g",
 		      "color": "#000000",
 		      "label": "G",
 		      "style": "circled",
@@ -1779,7 +1779,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "o2",
+		      "id": "node-s-o",
 		      "color": "#000000",
 		      "label": "O",
 		      "style": "circled",
@@ -1789,7 +1789,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "y2",
+		      "id": "node-s-y",
 		      "color": "#000000",
 		      "label": "Y",
 		      "style": "circled",
@@ -1800,7 +1800,7 @@ describe("treeDiagram widget tests", () => {
 		    }
 		  ],
 		  "width": 440,
-		  "height": 204,
+		  "height": 304,
 		  "nodeRadius": 20,
 		  "nodeFontSize": 16
 		} as unknown as WidgetInput
@@ -1821,90 +1821,90 @@ describe("treeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa26f24ccdf07b97c
-	// Question: Select the tree diagram for a round-trip travel choice
+	// Question: Select the tree diagram for round-trip travel choices
 	// Widget key: image_1
-	test("tree-diagram - [xa26f24ccdf07b97c] Select the tree diagram for a round-trip travel choice (1)", async () => {
+	test("tree-diagram - [xa26f24ccdf07b97c] Select the tree diagram for round-trip travel choices (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "n1",
-		      "from": "root",
+		      "to": "b1",
+		      "from": "r",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n2",
-		      "from": "root",
+		      "to": "b2",
+		      "from": "r",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n3",
-		      "from": "n1",
+		      "to": "c1",
+		      "from": "b1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n4",
-		      "from": "n1",
+		      "to": "c2",
+		      "from": "b1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n5",
-		      "from": "n2",
+		      "to": "c3",
+		      "from": "b2",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n6",
-		      "from": "n2",
+		      "to": "c4",
+		      "from": "b2",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n7",
-		      "from": "n3",
+		      "to": "t1",
+		      "from": "c1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n8",
-		      "from": "n3",
+		      "to": "t2",
+		      "from": "c1",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n9",
-		      "from": "n4",
+		      "to": "t3",
+		      "from": "c2",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n10",
-		      "from": "n4",
+		      "to": "t4",
+		      "from": "c2",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n11",
-		      "from": "n5",
+		      "to": "t5",
+		      "from": "c3",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n12",
-		      "from": "n5",
+		      "to": "t6",
+		      "from": "c3",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n13",
-		      "from": "n6",
+		      "to": "t7",
+		      "from": "c4",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "n14",
-		      "from": "n6",
+		      "to": "t8",
+		      "from": "c4",
 		      "style": "solid"
 		    }
 		  ],
 		  "nodes": [
 		    {
-		      "id": "root",
+		      "id": "r",
 		      "color": "#000000",
-		      "label": " ",
+		      "label": null,
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
@@ -1912,7 +1912,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n1",
+		      "id": "b1",
 		      "color": "#000000",
 		      "label": "B",
 		      "style": "circled",
@@ -1922,7 +1922,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n2",
+		      "id": "b2",
 		      "color": "#000000",
 		      "label": "B",
 		      "style": "circled",
@@ -1932,7 +1932,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n3",
+		      "id": "c1",
 		      "color": "#000000",
 		      "label": "C",
 		      "style": "circled",
@@ -1942,7 +1942,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n4",
+		      "id": "c2",
 		      "color": "#000000",
 		      "label": "C",
 		      "style": "circled",
@@ -1952,7 +1952,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n5",
+		      "id": "c3",
 		      "color": "#000000",
 		      "label": "C",
 		      "style": "circled",
@@ -1962,7 +1962,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n6",
+		      "id": "c4",
 		      "color": "#000000",
 		      "label": "C",
 		      "style": "circled",
@@ -1972,7 +1972,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n7",
+		      "id": "t1",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -1982,7 +1982,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n8",
+		      "id": "t2",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -1992,7 +1992,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n9",
+		      "id": "t3",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -2002,7 +2002,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n10",
+		      "id": "t4",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -2012,7 +2012,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n11",
+		      "id": "t5",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -2022,7 +2022,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n12",
+		      "id": "t6",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -2032,7 +2032,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n13",
+		      "id": "t7",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -2042,7 +2042,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "n14",
+		      "id": "t8",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -2054,8 +2054,8 @@ describe("treeDiagram widget tests", () => {
 		  ],
 		  "width": 440,
 		  "height": 304,
-		  "nodeRadius": 18,
-		  "nodeFontSize": 14
+		  "nodeRadius": 20,
+		  "nodeFontSize": 16
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2074,80 +2074,80 @@ describe("treeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa26f24ccdf07b97c
-	// Question: Select the tree diagram for a round-trip travel choice
+	// Question: Select the tree diagram for round-trip travel choices
 	// Widget key: image_2
-	test("tree-diagram - [xa26f24ccdf07b97c] Select the tree diagram for a round-trip travel choice (2)", async () => {
+	test("tree-diagram - [xa26f24ccdf07b97c] Select the tree diagram for round-trip travel choices (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "b1",
-		      "from": "root",
+		      "to": "top_b",
+		      "from": "r",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "c1",
-		      "from": "root",
+		      "to": "top_c",
+		      "from": "r",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "t1",
-		      "from": "root",
+		      "to": "top_t",
+		      "from": "r",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "b1_b",
-		      "from": "b1",
+		      "to": "b_b",
+		      "from": "top_b",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "b1_c",
-		      "from": "b1",
+		      "to": "b_c",
+		      "from": "top_b",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "b1_t",
-		      "from": "b1",
+		      "to": "b_t",
+		      "from": "top_b",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "c1_b",
-		      "from": "c1",
+		      "to": "c_b",
+		      "from": "top_c",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "c1_c",
-		      "from": "c1",
+		      "to": "c_c",
+		      "from": "top_c",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "c1_t",
-		      "from": "c1",
+		      "to": "c_t",
+		      "from": "top_c",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "t1_b",
-		      "from": "t1",
+		      "to": "t_b",
+		      "from": "top_t",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "t1_c",
-		      "from": "t1",
+		      "to": "t_c",
+		      "from": "top_t",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "t1_t",
-		      "from": "t1",
+		      "to": "t_t",
+		      "from": "top_t",
 		      "style": "solid"
 		    }
 		  ],
 		  "nodes": [
 		    {
-		      "id": "root",
+		      "id": "r",
 		      "color": "#000000",
-		      "label": " ",
+		      "label": null,
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
@@ -2155,7 +2155,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "b1",
+		      "id": "top_b",
 		      "color": "#000000",
 		      "label": "B",
 		      "style": "circled",
@@ -2165,7 +2165,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "c1",
+		      "id": "top_c",
 		      "color": "#000000",
 		      "label": "C",
 		      "style": "circled",
@@ -2175,7 +2175,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "t1",
+		      "id": "top_t",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -2185,7 +2185,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "b1_b",
+		      "id": "b_b",
 		      "color": "#000000",
 		      "label": "B",
 		      "style": "circled",
@@ -2195,7 +2195,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "b1_c",
+		      "id": "b_c",
 		      "color": "#000000",
 		      "label": "C",
 		      "style": "circled",
@@ -2205,7 +2205,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "b1_t",
+		      "id": "b_t",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -2215,7 +2215,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "c1_b",
+		      "id": "c_b",
 		      "color": "#000000",
 		      "label": "B",
 		      "style": "circled",
@@ -2225,7 +2225,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "c1_c",
+		      "id": "c_c",
 		      "color": "#000000",
 		      "label": "C",
 		      "style": "circled",
@@ -2235,7 +2235,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "c1_t",
+		      "id": "c_t",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -2245,7 +2245,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "t1_b",
+		      "id": "t_b",
 		      "color": "#000000",
 		      "label": "B",
 		      "style": "circled",
@@ -2255,7 +2255,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "t1_c",
+		      "id": "t_c",
 		      "color": "#000000",
 		      "label": "C",
 		      "style": "circled",
@@ -2265,7 +2265,7 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "t1_t",
+		      "id": "t_t",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
@@ -2276,9 +2276,9 @@ describe("treeDiagram widget tests", () => {
 		    }
 		  ],
 		  "width": 440,
-		  "height": 204,
-		  "nodeRadius": 18,
-		  "nodeFontSize": 14
+		  "height": 304,
+		  "nodeRadius": 20,
+		  "nodeFontSize": 16
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2297,57 +2297,57 @@ describe("treeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8098a292aa874f61
-	// Question: Select the correct sample space display for tour type and time
+	// Question: Identify the correct sample space display
 	// Widget key: image_3
-	test("tree-diagram - [x8098a292aa874f61] Select the correct sample space display for tour type and time", async () => {
+	test("tree-diagram - [x8098a292aa874f61] Identify the correct sample space display", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "w",
+		      "to": "W",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "b",
+		      "to": "B",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "t",
+		      "to": "T",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "w_m",
-		      "from": "w",
+		      "to": "W_M",
+		      "from": "W",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "w_e",
-		      "from": "w",
+		      "to": "W_E",
+		      "from": "W",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "b_m",
-		      "from": "b",
+		      "to": "B_M",
+		      "from": "B",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "b_e",
-		      "from": "b",
+		      "to": "B_E",
+		      "from": "B",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "t_m",
-		      "from": "t",
+		      "to": "T_M",
+		      "from": "T",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "t_e",
-		      "from": "t",
+		      "to": "T_E",
+		      "from": "T",
 		      "style": "solid"
 		    }
 		  ],
@@ -2355,108 +2355,108 @@ describe("treeDiagram widget tests", () => {
 		    {
 		      "id": "root",
 		      "color": "#000000",
-		      "label": null,
+		      "label": " ",
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
-		        "y": 30
+		        "y": 17.65
 		      }
 		    },
 		    {
-		      "id": "w",
+		      "id": "W",
 		      "color": "#000000",
 		      "label": "W",
 		      "style": "circled",
 		      "position": {
 		        "x": 86.8,
-		        "y": 74
+		        "y": 108.82
 		      }
 		    },
 		    {
-		      "id": "b",
+		      "id": "B",
 		      "color": "#000000",
 		      "label": "B",
 		      "style": "circled",
 		      "position": {
 		        "x": 220,
-		        "y": 74
+		        "y": 108.82
 		      }
 		    },
 		    {
-		      "id": "t",
+		      "id": "T",
 		      "color": "#000000",
 		      "label": "T",
 		      "style": "circled",
 		      "position": {
 		        "x": 353.2,
-		        "y": 74
+		        "y": 108.82
 		      }
 		    },
 		    {
-		      "id": "w_m",
+		      "id": "W_M",
 		      "color": "#000000",
 		      "label": "M",
 		      "style": "circled",
 		      "position": {
 		        "x": 53.2,
-		        "y": 174
+		        "y": 255.88
 		      }
 		    },
 		    {
-		      "id": "w_e",
+		      "id": "W_E",
 		      "color": "#000000",
 		      "label": "E",
 		      "style": "circled",
 		      "position": {
 		        "x": 120,
-		        "y": 174
+		        "y": 255.88
 		      }
 		    },
 		    {
-		      "id": "b_m",
+		      "id": "B_M",
 		      "color": "#000000",
 		      "label": "M",
 		      "style": "circled",
 		      "position": {
 		        "x": 186.8,
-		        "y": 174
+		        "y": 255.88
 		      }
 		    },
 		    {
-		      "id": "b_e",
+		      "id": "B_E",
 		      "color": "#000000",
 		      "label": "E",
 		      "style": "circled",
 		      "position": {
 		        "x": 253.2,
-		        "y": 174
+		        "y": 255.88
 		      }
 		    },
 		    {
-		      "id": "t_m",
+		      "id": "T_M",
 		      "color": "#000000",
 		      "label": "M",
 		      "style": "circled",
 		      "position": {
 		        "x": 320,
-		        "y": 174
+		        "y": 255.88
 		      }
 		    },
 		    {
-		      "id": "t_e",
+		      "id": "T_E",
 		      "color": "#000000",
 		      "label": "E",
 		      "style": "circled",
 		      "position": {
 		        "x": 386.8,
-		        "y": 174
+		        "y": 255.88
 		      }
 		    }
 		  ],
 		  "width": 440,
-		  "height": 204,
+		  "height": 300,
 		  "nodeRadius": 20,
-		  "nodeFontSize": 14
+		  "nodeFontSize": 16
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2475,62 +2475,62 @@ describe("treeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc17be1d52db777d5
-	// Question: Whose display correctly represents the sample space?
+	// Question: Choose the correct sample-space display
 	// Widget key: image_1
-	test("tree-diagram - [xc17be1d52db777d5] Whose display correctly represents the sample space?", async () => {
+	test("tree-diagram - [xc17be1d52db777d5] Choose the correct sample-space display", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "treeDiagram",
 		  "edges": [
 		    {
-		      "to": "R",
+		      "to": "r_node",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "F",
+		      "to": "f_node",
 		      "from": "root",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "LW",
-		      "from": "R",
+		      "to": "leaf_rw",
+		      "from": "r_node",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "LS",
-		      "from": "R",
+		      "to": "leaf_rs",
+		      "from": "r_node",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "LG",
-		      "from": "R",
+		      "to": "leaf_rg",
+		      "from": "r_node",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "LP",
-		      "from": "R",
+		      "to": "leaf_rp",
+		      "from": "r_node",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "RW",
-		      "from": "F",
+		      "to": "leaf_fw",
+		      "from": "f_node",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "RS",
-		      "from": "F",
+		      "to": "leaf_fs",
+		      "from": "f_node",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "RG",
-		      "from": "F",
+		      "to": "leaf_fg",
+		      "from": "f_node",
 		      "style": "solid"
 		    },
 		    {
-		      "to": "RP",
-		      "from": "F",
+		      "to": "leaf_fp",
+		      "from": "f_node",
 		      "style": "solid"
 		    }
 		  ],
@@ -2546,110 +2546,110 @@ describe("treeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "R",
+		      "id": "r_node",
 		      "color": "#000000",
 		      "label": "R",
 		      "style": "circled",
 		      "position": {
 		        "x": 120,
-		        "y": 74
+		        "y": 80
 		      }
 		    },
 		    {
-		      "id": "F",
+		      "id": "f_node",
 		      "color": "#000000",
 		      "label": "F",
 		      "style": "circled",
 		      "position": {
 		        "x": 320,
-		        "y": 74
+		        "y": 80
 		      }
 		    },
 		    {
-		      "id": "LW",
+		      "id": "leaf_rw",
 		      "color": "#000000",
 		      "label": "W",
 		      "style": "circled",
 		      "position": {
 		        "x": 45,
-		        "y": 174
+		        "y": 240
 		      }
 		    },
 		    {
-		      "id": "LS",
+		      "id": "leaf_rs",
 		      "color": "#000000",
 		      "label": "S",
 		      "style": "circled",
 		      "position": {
 		        "x": 95,
-		        "y": 174
+		        "y": 240
 		      }
 		    },
 		    {
-		      "id": "LG",
+		      "id": "leaf_rg",
 		      "color": "#000000",
 		      "label": "G",
 		      "style": "circled",
 		      "position": {
 		        "x": 145,
-		        "y": 174
+		        "y": 240
 		      }
 		    },
 		    {
-		      "id": "LP",
+		      "id": "leaf_rp",
 		      "color": "#000000",
 		      "label": "P",
 		      "style": "circled",
 		      "position": {
 		        "x": 195,
-		        "y": 174
+		        "y": 240
 		      }
 		    },
 		    {
-		      "id": "RW",
+		      "id": "leaf_fw",
 		      "color": "#000000",
 		      "label": "W",
 		      "style": "circled",
 		      "position": {
 		        "x": 245,
-		        "y": 174
+		        "y": 240
 		      }
 		    },
 		    {
-		      "id": "RS",
+		      "id": "leaf_fs",
 		      "color": "#000000",
 		      "label": "S",
 		      "style": "circled",
 		      "position": {
 		        "x": 295,
-		        "y": 174
+		        "y": 240
 		      }
 		    },
 		    {
-		      "id": "RG",
+		      "id": "leaf_fg",
 		      "color": "#000000",
 		      "label": "G",
 		      "style": "circled",
 		      "position": {
 		        "x": 345,
-		        "y": 174
+		        "y": 240
 		      }
 		    },
 		    {
-		      "id": "RP",
+		      "id": "leaf_fp",
 		      "color": "#000000",
 		      "label": "P",
 		      "style": "circled",
 		      "position": {
 		        "x": 395,
-		        "y": 174
+		        "y": 240
 		      }
 		    }
 		  ],
 		  "width": 440,
-		  "height": 204,
+		  "height": 300,
 		  "nodeRadius": 20,
-		  "nodeFontSize": 14
+		  "nodeFontSize": 16
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)

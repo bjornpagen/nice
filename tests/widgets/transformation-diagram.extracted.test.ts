@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.971Z
+// Generated on: 2025-09-18T05:17:02.169Z
 // Widget Type: transformationDiagram
 // Source: Real questions from database
 //
@@ -25,71 +25,10 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("transformationDiagram widget tests", () => {
-	// Extracted from question: x0f909223c9cac4e5
-	// Question: Determine the angle of rotation about a point
-	// Widget key: image_1
-	test("transformation-diagram - [x0f909223c9cac4e5] Determine the angle of rotation about a point", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "transformationDiagram",
-		  "width": 325,
-		  "height": 156,
-		  "preImage": {
-		    "label": null,
-		    "vertices": [
-		      {
-		        "x": 93.75,
-		        "y": 118.75
-		      },
-		      {
-		        "x": 150,
-		        "y": 81.25
-		      },
-		      {
-		        "x": 206.25,
-		        "y": 43.75
-		      }
-		    ],
-		    "fillColor": "#00000000",
-		    "angleMarks": [],
-		    "sideLengths": [],
-		    "strokeColor": "#b3b3b3",
-		    "vertexLabels": [
-		      "A'",
-		      "P",
-		      "A"
-		    ]
-		  },
-		  "transformation": {
-		    "type": "rotation",
-		    "angle": 0,
-		    "centerOfRotation": {
-		      "x": 150,
-		      "y": 81.25
-		    }
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for transformationDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x64eedd0feaf0a4e9
-	// Question: Determine angles of rotation for a rotated quadrilateral
+	// Question: Determine angles of rotation for a quadrilateral
 	// Widget key: image_1
-	test("transformation-diagram - [x64eedd0feaf0a4e9] Determine angles of rotation for a rotated quadrilateral", async () => {
+	test("transformation-diagram - [x64eedd0feaf0a4e9] Determine angles of rotation for a quadrilateral", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -116,7 +55,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 107.143
 		      }
 		    ],
-		    "fillColor": "#A7E8F3",
+		    "fillColor": "#FFFFFF00",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#11accd",
@@ -152,16 +91,77 @@ describe("transformationDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1c6f03f93e701299
-	// Question: Determine angles of rotation from a rotated triangle
+	// Extracted from question: x85b1af568c1e6a17
+	// Question: Angles of rotation about a point
 	// Widget key: image_1
-	test("transformation-diagram - [x1c6f03f93e701299] Determine angles of rotation from a rotated triangle", async () => {
+	test("transformation-diagram - [x85b1af568c1e6a17] Angles of rotation about a point", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
 		  "width": 325,
-		  "height": 175,
+		  "height": 256,
+		  "preImage": {
+		    "label": "A, Q, A'",
+		    "vertices": [
+		      {
+		        "x": 243.75,
+		        "y": 81.25
+		      },
+		      {
+		        "x": 150,
+		        "y": 43.75
+		      },
+		      {
+		        "x": 112.5,
+		        "y": 137.5
+		      }
+		    ],
+		    "fillColor": "#ffffff00",
+		    "angleMarks": [],
+		    "sideLengths": [],
+		    "strokeColor": "#888888",
+		    "vertexLabels": [
+		      "A",
+		      "Q",
+		      "A'"
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 0,
+		    "centerOfRotation": {
+		      "x": 150,
+		      "y": 43.75
+		    }
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for transformationDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1c6f03f93e701299
+	// Question: Angles of rotation about a point
+	// Widget key: image_1
+	test("transformation-diagram - [x1c6f03f93e701299] Angles of rotation about a point", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "transformationDiagram",
+		  "width": 325,
+		  "height": 201,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -178,7 +178,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 25
 		      }
 		    ],
-		    "fillColor": "#ca337c33",
+		    "fillColor": "#FFE5F1",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#ca337c",
@@ -214,9 +214,9 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x42fd94585aa7869b
-	// Question: Determine the angle of rotation from a diagram
+	// Question: Determine the angle of rotation
 	// Widget key: image_1
-	test("transformation-diagram - [x42fd94585aa7869b] Determine the angle of rotation from a diagram", async () => {
+	test("transformation-diagram - [x42fd94585aa7869b] Determine the angle of rotation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -275,9 +275,9 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x297abd97564f5023
-	// Question: Determine angles of rotation from a rotated quadrilateral
+	// Question: Determine angles of rotation from a diagram
 	// Widget key: image_1
-	test("transformation-diagram - [x297abd97564f5023] Determine angles of rotation from a rotated quadrilateral", async () => {
+	test("transformation-diagram - [x297abd97564f5023] Determine angles of rotation from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -288,107 +288,36 @@ describe("transformationDiagram widget tests", () => {
 		    "label": "ABCD",
 		    "vertices": [
 		      {
-		        "x": 93.75,
-		        "y": 175
-		      },
-		      {
-		        "x": 75,
-		        "y": 137.5
-		      },
-		      {
 		        "x": 187.5,
-		        "y": 43.75
+		        "y": 193.75
 		      },
 		      {
-		        "x": 168.75,
+		        "x": 150,
 		        "y": 212.5
-		      }
-		    ],
-		    "fillColor": "#f6d1e2",
-		    "angleMarks": [],
-		    "sideLengths": [],
-		    "strokeColor": "#ca337c",
-		    "vertexLabels": [
-		      "A",
-		      "B",
-		      "C",
-		      "D"
-		    ]
-		  },
-		  "transformation": {
-		    "type": "rotation",
-		    "angle": -90,
-		    "centerOfRotation": {
-		      "x": 150,
-		      "y": 137.5
-		    }
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for transformationDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6d4dfb26a3b44a3e
-	// Question: Identify the image after a 90° clockwise rotation
-	// Widget key: image_1
-	test("transformation-diagram - [x6d4dfb26a3b44a3e] Identify the image after a 90° clockwise rotation", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "transformationDiagram",
-		  "width": 325,
-		  "height": 231,
-		  "preImage": {
-		    "label": "center",
-		    "vertices": [
-		      {
-		        "x": 243.75,
-		        "y": 175
-		      },
-		      {
-		        "x": 249.94,
-		        "y": 123.101
-		      },
-		      {
-		        "x": 187.5,
-		        "y": 43.75
 		      },
 		      {
 		        "x": 56.25,
 		        "y": 100
 		      },
 		      {
-		        "x": 50.06,
-		        "y": 151.899
+		        "x": 225,
+		        "y": 118.75
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#11accd33",
 		    "angleMarks": [],
 		    "sideLengths": [],
-		    "strokeColor": "#00000000",
+		    "strokeColor": "#11accd",
 		    "vertexLabels": [
 		      "A",
 		      "B",
-		      "P",
 		      "C",
 		      "D"
 		    ]
 		  },
 		  "transformation": {
 		    "type": "rotation",
-		    "angle": 0,
+		    "angle": 270,
 		    "centerOfRotation": {
 		      "x": 150,
 		      "y": 137.5
@@ -411,63 +340,290 @@ describe("transformationDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x014b6ef7252c3176
-	// Question: Identify the image after a 270° clockwise rotation
+	// Extracted from question: x35ae15324cadb751
+	// Question: Identify the image after a 180-degree rotation
 	// Widget key: image_1
-	test("transformation-diagram - [x014b6ef7252c3176] Identify the image after a 270° clockwise rotation", async () => {
+	test("transformation-diagram - [x35ae15324cadb751] Identify the image after a 180-degree rotation (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 300,
-		  "height": 225,
+		  "width": 270,
+		  "height": 200,
 		  "preImage": {
-		    "label": null,
+		    "label": "P",
 		    "vertices": [
 		      {
-		        "x": 25,
-		        "y": 125
+		        "x": 155.833,
+		        "y": 42.5
 		      },
 		      {
-		        "x": 96.967,
-		        "y": 198.744
+		        "x": 141.667,
+		        "y": 14.167
 		      },
 		      {
-		        "x": 273.744,
-		        "y": 128.033
-		      },
-		      {
-		        "x": 275,
-		        "y": 25
-		      },
-		      {
-		        "x": 200,
-		        "y": 200
-		      },
-		      {
-		        "x": 150,
-		        "y": 75
+		        "x": 113.333,
+		        "y": 42.5
 		      }
 		    ],
 		    "fillColor": "#00000000",
 		    "angleMarks": [],
 		    "sideLengths": [],
-		    "strokeColor": "#00000000",
+		    "strokeColor": "#11accd",
 		    "vertexLabels": [
-		      "A",
-		      "B",
-		      "R",
-		      "D",
-		      "C",
-		      "center"
+		      " ",
+		      " ",
+		      " "
 		    ]
 		  },
 		  "transformation": {
 		    "type": "rotation",
-		    "angle": -270,
+		    "angle": 0,
 		    "centerOfRotation": {
-		      "x": 150,
-		      "y": 75
+		      "x": 85,
+		      "y": 28.333
+		    }
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for transformationDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x35ae15324cadb751
+	// Question: Identify the image after a 180-degree rotation
+	// Widget key: choice_a_diagram
+	test("transformation-diagram - [x35ae15324cadb751] Identify the image after a 180-degree rotation (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "transformationDiagram",
+		  "width": 270,
+		  "height": 270,
+		  "preImage": {
+		    "label": "P",
+		    "vertices": [
+		      {
+		        "x": 155.833,
+		        "y": 99.167
+		      },
+		      {
+		        "x": 141.667,
+		        "y": 70.833
+		      },
+		      {
+		        "x": 113.333,
+		        "y": 99.167
+		      }
+		    ],
+		    "fillColor": "#00000000",
+		    "angleMarks": [],
+		    "sideLengths": [],
+		    "strokeColor": "#11accd",
+		    "vertexLabels": [
+		      " ",
+		      " ",
+		      " "
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 180,
+		    "centerOfRotation": {
+		      "x": 85,
+		      "y": 85
+		    }
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for transformationDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x35ae15324cadb751
+	// Question: Identify the image after a 180-degree rotation
+	// Widget key: choice_b_diagram
+	test("transformation-diagram - [x35ae15324cadb751] Identify the image after a 180-degree rotation (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "transformationDiagram",
+		  "width": 270,
+		  "height": 270,
+		  "preImage": {
+		    "label": "P",
+		    "vertices": [
+		      {
+		        "x": 155.833,
+		        "y": 99.167
+		      },
+		      {
+		        "x": 141.667,
+		        "y": 70.833
+		      },
+		      {
+		        "x": 113.333,
+		        "y": 99.167
+		      }
+		    ],
+		    "fillColor": "#00000000",
+		    "angleMarks": [],
+		    "sideLengths": [],
+		    "strokeColor": "#11accd",
+		    "vertexLabels": [
+		      " ",
+		      " ",
+		      " "
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 150,
+		    "centerOfRotation": {
+		      "x": 85,
+		      "y": 85
+		    }
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for transformationDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x35ae15324cadb751
+	// Question: Identify the image after a 180-degree rotation
+	// Widget key: choice_c_diagram
+	test("transformation-diagram - [x35ae15324cadb751] Identify the image after a 180-degree rotation (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "transformationDiagram",
+		  "width": 270,
+		  "height": 270,
+		  "preImage": {
+		    "label": "P",
+		    "vertices": [
+		      {
+		        "x": 155.833,
+		        "y": 99.167
+		      },
+		      {
+		        "x": 141.667,
+		        "y": 70.833
+		      },
+		      {
+		        "x": 113.333,
+		        "y": 99.167
+		      }
+		    ],
+		    "fillColor": "#00000000",
+		    "angleMarks": [],
+		    "sideLengths": [],
+		    "strokeColor": "#11accd",
+		    "vertexLabels": [
+		      " ",
+		      " ",
+		      " "
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": -96,
+		      "y": 0
+		    }
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for transformationDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x35ae15324cadb751
+	// Question: Identify the image after a 180-degree rotation
+	// Widget key: choice_d_diagram
+	test("transformation-diagram - [x35ae15324cadb751] Identify the image after a 180-degree rotation (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "transformationDiagram",
+		  "width": 270,
+		  "height": 270,
+		  "preImage": {
+		    "label": "P",
+		    "vertices": [
+		      {
+		        "x": 155.833,
+		        "y": 99.167
+		      },
+		      {
+		        "x": 141.667,
+		        "y": 70.833
+		      },
+		      {
+		        "x": 113.333,
+		        "y": 99.167
+		      }
+		    ],
+		    "fillColor": "#00000000",
+		    "angleMarks": [],
+		    "sideLengths": [],
+		    "strokeColor": "#11accd",
+		    "vertexLabels": [
+		      " ",
+		      " ",
+		      " "
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": -96,
+		      "y": -20
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -488,9 +644,9 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x02d283b3a5235279
-	// Question: Length of a corresponding segment after rotation
+	// Question: Length of a segment after a rotation
 	// Widget key: image_1
-	test("transformation-diagram - [x02d283b3a5235279] Length of a corresponding segment after rotation", async () => {
+	test("transformation-diagram - [x02d283b3a5235279] Length of a segment after a rotation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -517,34 +673,34 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 262.5
 		      }
 		    ],
-		    "fillColor": "#E0F2FA",
+		    "fillColor": "#87CEFA55",
 		    "angleMarks": [
 		      {
 		        "label": "123°",
-		        "radius": 18,
+		        "radius": 12,
 		        "vertexIndex": 2,
-		        "labelDistance": 22
+		        "labelDistance": 18
 		      }
 		    ],
 		    "sideLengths": [
 		      {
-		        "value": "4",
-		        "offset": 12,
+		        "value": "",
+		        "offset": 10,
 		        "position": "outside"
 		      },
 		      {
 		        "value": "5",
-		        "offset": 12,
+		        "offset": 10,
 		        "position": "outside"
 		      },
 		      {
 		        "value": "2.8",
-		        "offset": 12,
+		        "offset": 10,
 		        "position": "outside"
 		      },
 		      {
-		        "value": "3",
-		        "offset": 12,
+		        "value": "",
+		        "offset": 10,
 		        "position": "outside"
 		      }
 		    ],
@@ -582,9 +738,9 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfe0e823a7ded0a83
-	// Question: Measure of an angle after rotation
+	// Question: Measure of an angle after a rotation
 	// Widget key: image_1
-	test("transformation-diagram - [xfe0e823a7ded0a83] Measure of an angle after rotation", async () => {
+	test("transformation-diagram - [xfe0e823a7ded0a83] Measure of an angle after a rotation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -595,33 +751,33 @@ describe("transformationDiagram widget tests", () => {
 		    "label": "ABC",
 		    "vertices": [
 		      {
+		        "x": 140.061,
+		        "y": 47.727
+		      },
+		      {
 		        "x": 41.486,
 		        "y": 27.555
 		      },
 		      {
 		        "x": 147.445,
 		        "y": 162.212
-		      },
-		      {
-		        "x": 140.061,
-		        "y": 47.727
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#ADD8E680",
 		    "angleMarks": [
 		      {
 		        "label": "40°",
-		        "radius": 12.5,
-		        "vertexIndex": 2,
-		        "labelDistance": 18
+		        "radius": 18,
+		        "vertexIndex": 0,
+		        "labelDistance": 14
 		      }
 		    ],
 		    "sideLengths": [],
 		    "strokeColor": "#000000",
 		    "vertexLabels": [
+		      "A",
 		      "B",
-		      "C",
-		      "A"
+		      "C"
 		    ]
 		  },
 		  "transformation": {
@@ -650,48 +806,48 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf613edebe37981e4
-	// Question: Length of a segment under reflection
+	// Question: Find the length of a segment after reflection
 	// Widget key: image_1
-	test("transformation-diagram - [xf613edebe37981e4] Length of a segment under reflection", async () => {
+	test("transformation-diagram - [xf613edebe37981e4] Find the length of a segment after reflection", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 323.077,
+		  "width": 323,
 		  "height": 350,
 		  "preImage": {
 		    "label": "ABCD",
 		    "vertices": [
 		      {
-		        "x": 269.231,
-		        "y": 188.462
-		      },
-		      {
-		        "x": 188.462,
-		        "y": 215.385
+		        "x": 296.154,
+		        "y": 269.231
 		      },
 		      {
 		        "x": 161.538,
 		        "y": 323.077
 		      },
 		      {
-		        "x": 296.154,
-		        "y": 269.231
+		        "x": 188.462,
+		        "y": 215.385
+		      },
+		      {
+		        "x": 269.231,
+		        "y": 188.462
 		      }
 		    ],
-		    "fillColor": "#CCE7FF",
+		    "fillColor": "#ADD8E680",
 		    "angleMarks": [
 		      {
 		        "label": "90°",
-		        "radius": 18,
+		        "radius": 16,
 		        "vertexIndex": 0,
-		        "labelDistance": 12
+		        "labelDistance": 20
 		      },
 		      {
 		        "label": "93°",
-		        "radius": 18,
+		        "radius": 16,
 		        "vertexIndex": 3,
-		        "labelDistance": 12
+		        "labelDistance": 20
 		      }
 		    ],
 		    "sideLengths": [
@@ -701,7 +857,7 @@ describe("transformationDiagram widget tests", () => {
 		        "position": "outside"
 		      },
 		      {
-		        "value": "",
+		        "value": "41",
 		        "offset": 12,
 		        "position": "outside"
 		      },
@@ -757,47 +913,63 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0611b8bfc546e264
-	// Question: Measure of angle B in a translated triangle
+	// Question: Measure of angle B after a translation
 	// Widget key: image_1
-	test("transformation-diagram - [x0611b8bfc546e264] Measure of angle B in a translated triangle", async () => {
+	test("transformation-diagram - [x0611b8bfc546e264] Measure of angle B after a translation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
 		  "width": 350,
-		  "height": 262.5,
+		  "height": 263,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
 		      {
-		        "x": 58.333,
-		        "y": 145.833
+		        "x": 87.5,
+		        "y": 29.167
 		      },
 		      {
 		        "x": 29.167,
-		        "y": 204.167
+		        "y": 145.833
 		      },
 		      {
-		        "x": 175,
-		        "y": 233.333
+		        "x": 320.833,
+		        "y": 204.167
 		      }
 		    ],
-		    "fillColor": "#E0F3FA",
+		    "fillColor": "#99c2ff80",
 		    "angleMarks": [
 		      {
 		        "label": "80°",
-		        "radius": 16,
+		        "radius": 18,
 		        "vertexIndex": 0,
-		        "labelDistance": 20
+		        "labelDistance": 22
 		      },
 		      {
 		        "label": "26°",
-		        "radius": 16,
+		        "radius": 18,
 		        "vertexIndex": 2,
-		        "labelDistance": 20
+		        "labelDistance": 22
 		      }
 		    ],
-		    "sideLengths": [],
+		    "sideLengths": [
+		      {
+		        "value": "2",
+		        "offset": 0,
+		        "position": "inside"
+		      },
+		      {
+		        "value": "5",
+		        "offset": 0,
+		        "position": "inside"
+		      },
+		      {
+		        "value": "",
+		        "offset": 0,
+		        "position": "inside"
+		      }
+		    ],
 		    "strokeColor": "#000000",
 		    "vertexLabels": [
 		      "A",
@@ -808,8 +980,8 @@ describe("transformationDiagram widget tests", () => {
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": 100,
-		      "y": -80
+		      "x": 5,
+		      "y": 4
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -859,47 +1031,28 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 31.818
 		      }
 		    ],
-		    "fillColor": "#ADD8E655",
-		    "angleMarks": [
-		      {
-		        "label": "90°",
-		        "radius": 18,
-		        "vertexIndex": 1,
-		        "labelDistance": 14
-		      },
-		      {
-		        "label": "36°",
-		        "radius": 18,
-		        "vertexIndex": 2,
-		        "labelDistance": 14
-		      },
-		      {
-		        "label": "36°",
-		        "radius": 18,
-		        "vertexIndex": 3,
-		        "labelDistance": 14
-		      }
-		    ],
+		    "fillColor": "#B3D5FF80",
+		    "angleMarks": [],
 		    "sideLengths": [
 		      {
 		        "value": "2.2",
-		        "offset": 8,
-		        "position": "inside"
+		        "offset": 12,
+		        "position": "outside"
 		      },
 		      {
 		        "value": "4.5",
-		        "offset": 8,
-		        "position": "inside"
+		        "offset": 12,
+		        "position": "outside"
 		      },
 		      {
 		        "value": "6.1",
-		        "offset": 8,
-		        "position": "inside"
+		        "offset": 12,
+		        "position": "outside"
 		      },
 		      {
 		        "value": "1.4",
-		        "offset": 8,
-		        "position": "inside"
+		        "offset": 12,
+		        "position": "outside"
 		      }
 		    ],
 		    "strokeColor": "#000000",
@@ -913,8 +1066,8 @@ describe("transformationDiagram widget tests", () => {
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": -63.637,
-		      "y": 159.091
+		      "x": -2,
+		      "y": -5
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -935,47 +1088,63 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x28a540bb2db4835d
-	// Question: Find the measure of angle C in a reflected triangle
+	// Question: Find an angle measure after a reflection
 	// Widget key: image_1
-	test("transformation-diagram - [x28a540bb2db4835d] Find the measure of angle C in a reflected triangle", async () => {
+	test("transformation-diagram - [x28a540bb2db4835d] Find an angle measure after a reflection", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
 		  "width": 350,
-		  "height": 303.333,
+		  "height": 303,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
 		      {
-		        "x": 23.333,
-		        "y": 256.667
+		        "x": 46.667,
+		        "y": 116.667
 		      },
 		      {
 		        "x": 140,
 		        "y": 210
 		      },
 		      {
-		        "x": 46.667,
-		        "y": 116.667
+		        "x": 23.333,
+		        "y": 256.667
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#87CEFA55",
 		    "angleMarks": [
-		      {
-		        "label": "67°",
-		        "radius": 18,
-		        "vertexIndex": 1,
-		        "labelDistance": 20
-		      },
 		      {
 		        "label": "59°",
 		        "radius": 18,
 		        "vertexIndex": 0,
-		        "labelDistance": 20
+		        "labelDistance": 24
+		      },
+		      {
+		        "label": "67°",
+		        "radius": 16,
+		        "vertexIndex": 1,
+		        "labelDistance": 22
 		      }
 		    ],
-		    "sideLengths": [],
+		    "sideLengths": [
+		      {
+		        "value": "",
+		        "offset": 12,
+		        "position": "outside"
+		      },
+		      {
+		        "value": "57",
+		        "offset": 10,
+		        "position": "outside"
+		      },
+		      {
+		        "value": "61",
+		        "offset": 10,
+		        "position": "outside"
+		      }
+		    ],
 		    "strokeColor": "#000000",
 		    "vertexLabels": [
 		      "A",
@@ -987,8 +1156,8 @@ describe("transformationDiagram widget tests", () => {
 		    "type": "reflection",
 		    "lineOfReflection": {
 		      "to": {
-		        "x": 221.667,
-		        "y": 303.333
+		        "x": 221.197,
+		        "y": 302.394
 		      },
 		      "from": {
 		        "x": 70,
@@ -1016,9 +1185,9 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbbbde7ff25ddf0ae
-	// Question: Area of a rectangle after a rotation
+	// Question: Area of a rotated rectangle
 	// Widget key: image_1
-	test("transformation-diagram - [xbbbde7ff25ddf0ae] Area of a rectangle after a rotation", async () => {
+	test("transformation-diagram - [xbbbde7ff25ddf0ae] Area of a rotated rectangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1029,44 +1198,44 @@ describe("transformationDiagram widget tests", () => {
 		    "label": "ABCD",
 		    "vertices": [
 		      {
-		        "x": 60,
-		        "y": 120
+		        "x": 70,
+		        "y": 240
 		      },
 		      {
-		        "x": 180,
-		        "y": 120
+		        "x": 190,
+		        "y": 240
 		      },
 		      {
-		        "x": 180,
-		        "y": 160
+		        "x": 190,
+		        "y": 260
 		      },
 		      {
-		        "x": 60,
-		        "y": 160
+		        "x": 70,
+		        "y": 260
 		      }
 		    ],
-		    "fillColor": "#6aa9ff33",
+		    "fillColor": "#ADD8E680",
 		    "angleMarks": [],
 		    "sideLengths": [
 		      {
 		        "value": "",
-		        "offset": 8,
-		        "position": "outside"
+		        "offset": 0,
+		        "position": "inside"
 		      },
 		      {
-		        "value": "2",
-		        "offset": 10,
+		        "value": "",
+		        "offset": 0,
 		        "position": "inside"
 		      },
 		      {
 		        "value": "6",
 		        "offset": 10,
-		        "position": "inside"
+		        "position": "outside"
 		      },
 		      {
 		        "value": "",
-		        "offset": 8,
-		        "position": "outside"
+		        "offset": 0,
+		        "position": "inside"
 		      }
 		    ],
 		    "strokeColor": "#000000",
@@ -1081,8 +1250,8 @@ describe("transformationDiagram widget tests", () => {
 		    "type": "rotation",
 		    "angle": 95,
 		    "centerOfRotation": {
-		      "x": 120,
-		      "y": 60
+		      "x": 130,
+		      "y": 150
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -1103,14 +1272,14 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1a7907dab800f3a1
-	// Question: Perimeter of a triangle after a rotation
+	// Question: Perimeter after a rotation
 	// Widget key: image_1
-	test("transformation-diagram - [x1a7907dab800f3a1] Perimeter of a triangle after a rotation", async () => {
+	test("transformation-diagram - [x1a7907dab800f3a1] Perimeter after a rotation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 296,
+		  "width": 296.154,
 		  "height": 350,
 		  "preImage": {
 		    "label": "ABC",
@@ -1128,11 +1297,11 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 297.244
 		      }
 		    ],
-		    "fillColor": "#A7C7E780",
+		    "fillColor": "#4da3ff55",
 		    "angleMarks": [
 		      {
 		        "label": "20°",
-		        "radius": 18,
+		        "radius": 22,
 		        "vertexIndex": 0,
 		        "labelDistance": 14
 		      }
@@ -1140,7 +1309,7 @@ describe("transformationDiagram widget tests", () => {
 		    "sideLengths": [
 		      {
 		        "value": "5.1",
-		        "offset": 10,
+		        "offset": 12,
 		        "position": "outside"
 		      },
 		      {
@@ -1150,7 +1319,7 @@ describe("transformationDiagram widget tests", () => {
 		      },
 		      {
 		        "value": "5.8",
-		        "offset": 10,
+		        "offset": 12,
 		        "position": "outside"
 		      }
 		    ],
@@ -1212,13 +1381,13 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 286.364
 		      }
 		    ],
-		    "fillColor": "#CCE5FF",
+		    "fillColor": "#cfe8ff80",
 		    "angleMarks": [
 		      {
 		        "label": "18°",
 		        "radius": 20,
 		        "vertexIndex": 0,
-		        "labelDistance": 12
+		        "labelDistance": 14
 		      }
 		    ],
 		    "sideLengths": [
@@ -1283,11 +1452,11 @@ describe("transformationDiagram widget tests", () => {
 		    "label": "ABC",
 		    "vertices": [
 		      {
-		        "x": 159.091,
+		        "x": 31.818,
 		        "y": 127.273
 		      },
 		      {
-		        "x": 31.818,
+		        "x": 159.091,
 		        "y": 127.273
 		      },
 		      {
@@ -1295,37 +1464,30 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 31.818
 		      }
 		    ],
-		    "fillColor": "#CCE5FF80",
-		    "angleMarks": [
-		      {
-		        "label": "90°",
-		        "radius": 12,
-		        "vertexIndex": 0,
-		        "labelDistance": 16
-		      }
-		    ],
+		    "fillColor": "#00000000",
+		    "angleMarks": [],
 		    "sideLengths": [
+		      {
+		        "value": "3",
+		        "offset": 10,
+		        "position": "inside"
+		      },
 		      {
 		        "value": "4",
 		        "offset": 10,
-		        "position": "outside"
+		        "position": "inside"
 		      },
 		      {
 		        "value": "",
 		        "offset": 10,
-		        "position": "outside"
-		      },
-		      {
-		        "value": "3",
-		        "offset": 10,
-		        "position": "outside"
+		        "position": "inside"
 		      }
 		    ],
 		    "strokeColor": "#000000",
 		    "vertexLabels": [
+		      "C",
 		      "A",
-		      "B",
-		      "C"
+		      "B"
 		    ]
 		  },
 		  "transformation": {
@@ -1361,48 +1523,48 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfebb6b0033d5b89b
-	// Question: Length of a segment after a translation
+	// Question: Length of a translated segment
 	// Widget key: image_1
-	test("transformation-diagram - [xfebb6b0033d5b89b] Length of a segment after a translation", async () => {
+	test("transformation-diagram - [xfebb6b0033d5b89b] Length of a translated segment", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
 		  "width": 350,
-		  "height": 239.474,
+		  "height": 239,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
 		      {
-		        "x": 202.632,
-		        "y": 128.947
+		        "x": 280,
+		        "y": 180
 		      },
 		      {
-		        "x": 313.158,
-		        "y": 92.105
+		        "x": 330,
+		        "y": 100
 		      },
 		      {
-		        "x": 257.895,
-		        "y": 202.632
+		        "x": 250,
+		        "y": 60
 		      }
 		    ],
-		    "fillColor": "#ADD8E633",
+		    "fillColor": "#6495ED40",
 		    "angleMarks": [],
 		    "sideLengths": [
 		      {
 		        "value": "8",
 		        "offset": 12,
-		        "position": "outside"
+		        "position": "inside"
 		      },
 		      {
 		        "value": "9",
 		        "offset": 12,
-		        "position": "outside"
+		        "position": "inside"
 		      },
 		      {
 		        "value": "6",
 		        "offset": 12,
-		        "position": "outside"
+		        "position": "inside"
 		      }
 		    ],
 		    "strokeColor": "#000000",
@@ -1415,8 +1577,8 @@ describe("transformationDiagram widget tests", () => {
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": -165.79,
-		      "y": -55.263
+		      "x": -120,
+		      "y": -60
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -1445,7 +1607,7 @@ describe("transformationDiagram widget tests", () => {
 		const input = {
 		  "type": "transformationDiagram",
 		  "width": 350,
-		  "height": 255,
+		  "height": 254.545,
 		  "preImage": {
 		    "label": "ABCD",
 		    "vertices": [
@@ -1466,7 +1628,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 127.273
 		      }
 		    ],
-		    "fillColor": "#ADD8E680",
+		    "fillColor": "#6495ed55",
 		    "angleMarks": [],
 		    "sideLengths": [
 		      {
@@ -1530,292 +1692,318 @@ describe("transformationDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x47365ede15825ef1
-	// Question: Identify a dilation image with scale factor 3/2
-	// Widget key: choice_a_figure
-	test("transformation-diagram - [x47365ede15825ef1] Identify a dilation image with scale factor 3/2 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
-		  "preImage": {
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 119,
-		        "y": 51
-		      },
-		      {
-		        "x": 119,
-		        "y": 119
-		      },
-		      {
-		        "x": 68,
-		        "y": 85
-		      }
-		    ],
-		    "fillColor": "#ffffff",
-		    "angleMarks": [],
-		    "sideLengths": [],
-		    "strokeColor": "#11accd",
-		    "vertexLabels": [
-		      "A",
-		      "B",
-		      "C"
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "scaleFactor": 0.75,
-		    "centerOfDilation": {
-		      "x": 119,
-		      "y": 85
-		    }
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for transformationDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x47365ede15825ef1
-	// Question: Identify a dilation image with scale factor 3/2
-	// Widget key: choice_b_figure
-	test("transformation-diagram - [x47365ede15825ef1] Identify a dilation image with scale factor 3/2 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
-		  "preImage": {
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 119,
-		        "y": 51
-		      },
-		      {
-		        "x": 119,
-		        "y": 119
-		      },
-		      {
-		        "x": 68,
-		        "y": 85
-		      }
-		    ],
-		    "fillColor": "#ffffff",
-		    "angleMarks": [],
-		    "sideLengths": [],
-		    "strokeColor": "#11accd",
-		    "vertexLabels": [
-		      "A",
-		      "B",
-		      "C"
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "scaleFactor": 1.5,
-		    "centerOfDilation": {
-		      "x": 119,
-		      "y": 85
-		    }
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for transformationDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x47365ede15825ef1
-	// Question: Identify a dilation image with scale factor 3/2
-	// Widget key: choice_c_figure
-	test("transformation-diagram - [x47365ede15825ef1] Identify a dilation image with scale factor 3/2 (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
-		  "preImage": {
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 119,
-		        "y": 51
-		      },
-		      {
-		        "x": 119,
-		        "y": 119
-		      },
-		      {
-		        "x": 68,
-		        "y": 85
-		      }
-		    ],
-		    "fillColor": "#ffffff",
-		    "angleMarks": [],
-		    "sideLengths": [],
-		    "strokeColor": "#11accd",
-		    "vertexLabels": [
-		      "A",
-		      "B",
-		      "C"
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "scaleFactor": 1.5,
-		    "centerOfDilation": {
-		      "x": 68,
-		      "y": 85
-		    }
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for transformationDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x47365ede15825ef1
-	// Question: Identify a dilation image with scale factor 3/2
-	// Widget key: choice_d_figure
-	test("transformation-diagram - [x47365ede15825ef1] Identify a dilation image with scale factor 3/2 (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
-		  "preImage": {
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 119,
-		        "y": 51
-		      },
-		      {
-		        "x": 119,
-		        "y": 119
-		      },
-		      {
-		        "x": 68,
-		        "y": 85
-		      }
-		    ],
-		    "fillColor": "#ffffff",
-		    "angleMarks": [],
-		    "sideLengths": [],
-		    "strokeColor": "#11accd",
-		    "vertexLabels": [
-		      "A",
-		      "B",
-		      "C"
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "scaleFactor": 0.75,
-		    "centerOfDilation": {
-		      "x": 68,
-		      "y": 85
-		    }
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for transformationDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x604c7c450eb40990
-	// Question: Identify the image of a triangle under dilation
+	// Extracted from question: xd3a4d32a5fee1c24
+	// Question: Scaled copy: possible corresponding side length
 	// Widget key: image_1
-	test("transformation-diagram - [x604c7c450eb40990] Identify the image of a triangle under dilation (1)", async () => {
+	test("transformation-diagram - [xd3a4d32a5fee1c24] Scaled copy: possible corresponding side length", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 488,
+		  "height": 500,
 		  "preImage": {
-		    "label": "ABC",
+		    "label": "ABCD",
 		    "vertices": [
 		      {
-		        "x": 102,
-		        "y": 51
+		        "x": 35.294,
+		        "y": 94.118
 		      },
 		      {
-		        "x": 136,
-		        "y": 102
+		        "x": 152.941,
+		        "y": 35.294
 		      },
 		      {
-		        "x": 51,
-		        "y": 136
+		        "x": 94.118,
+		        "y": 94.118
+		      },
+		      {
+		        "x": 152.941,
+		        "y": 152.941
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#FFFFFF00",
 		    "angleMarks": [],
-		    "sideLengths": [],
+		    "sideLengths": [
+		      {
+		        "value": "",
+		        "offset": 8,
+		        "position": "outside"
+		      },
+		      {
+		        "value": "",
+		        "offset": 8,
+		        "position": "outside"
+		      },
+		      {
+		        "value": "",
+		        "offset": 8,
+		        "position": "outside"
+		      },
+		      {
+		        "value": "16 units",
+		        "offset": 10,
+		        "position": "outside"
+		      }
+		    ],
 		    "strokeColor": "#11accd",
 		    "vertexLabels": [
 		      "A",
 		      "B",
-		      "C"
+		      "C",
+		      "D"
 		    ]
 		  },
 		  "transformation": {
 		    "type": "dilation",
 		    "scaleFactor": 1,
 		    "centerOfDilation": {
-		      "x": 102,
-		      "y": 102
+		      "x": 0,
+		      "y": 0
+		    }
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for transformationDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x47365ede15825ef1
+	// Question: Identify the image of a triangle under a dilation
+	// Widget key: choice_a_figure
+	test("transformation-diagram - [x47365ede15825ef1] Identify the image of a triangle under a dilation (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "transformationDiagram",
+		  "width": 270,
+		  "height": 270,
+		  "preImage": {
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 119,
+		        "y": 51
+		      },
+		      {
+		        "x": 119,
+		        "y": 119
+		      },
+		      {
+		        "x": 68,
+		        "y": 85
+		      }
+		    ],
+		    "fillColor": "#ffffff",
+		    "angleMarks": [],
+		    "sideLengths": [],
+		    "strokeColor": "#000000",
+		    "vertexLabels": [
+		      "A",
+		      "B",
+		      "C"
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "scaleFactor": 0.67,
+		    "centerOfDilation": {
+		      "x": 119,
+		      "y": 85
+		    }
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for transformationDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x47365ede15825ef1
+	// Question: Identify the image of a triangle under a dilation
+	// Widget key: choice_b_figure
+	test("transformation-diagram - [x47365ede15825ef1] Identify the image of a triangle under a dilation (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "transformationDiagram",
+		  "width": 270,
+		  "height": 270,
+		  "preImage": {
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 119,
+		        "y": 51
+		      },
+		      {
+		        "x": 119,
+		        "y": 119
+		      },
+		      {
+		        "x": 68,
+		        "y": 85
+		      }
+		    ],
+		    "fillColor": "#ffffff",
+		    "angleMarks": [],
+		    "sideLengths": [],
+		    "strokeColor": "#000000",
+		    "vertexLabels": [
+		      "A",
+		      "B",
+		      "C"
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "scaleFactor": 1.5,
+		    "centerOfDilation": {
+		      "x": 119,
+		      "y": 85
+		    }
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for transformationDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x47365ede15825ef1
+	// Question: Identify the image of a triangle under a dilation
+	// Widget key: choice_c_figure
+	test("transformation-diagram - [x47365ede15825ef1] Identify the image of a triangle under a dilation (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "transformationDiagram",
+		  "width": 270,
+		  "height": 270,
+		  "preImage": {
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 119,
+		        "y": 51
+		      },
+		      {
+		        "x": 119,
+		        "y": 119
+		      },
+		      {
+		        "x": 68,
+		        "y": 85
+		      }
+		    ],
+		    "fillColor": "#ffffff",
+		    "angleMarks": [],
+		    "sideLengths": [],
+		    "strokeColor": "#000000",
+		    "vertexLabels": [
+		      "A",
+		      "B",
+		      "C"
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "scaleFactor": 1.5,
+		    "centerOfDilation": {
+		      "x": 68,
+		      "y": 85
+		    }
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for transformationDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x47365ede15825ef1
+	// Question: Identify the image of a triangle under a dilation
+	// Widget key: choice_d_figure
+	test("transformation-diagram - [x47365ede15825ef1] Identify the image of a triangle under a dilation (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "transformationDiagram",
+		  "width": 270,
+		  "height": 270,
+		  "preImage": {
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 119,
+		        "y": 51
+		      },
+		      {
+		        "x": 119,
+		        "y": 119
+		      },
+		      {
+		        "x": 68,
+		        "y": 85
+		      }
+		    ],
+		    "fillColor": "#ffffff",
+		    "angleMarks": [],
+		    "sideLengths": [],
+		    "strokeColor": "#000000",
+		    "vertexLabels": [
+		      "A",
+		      "B",
+		      "C"
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "scaleFactor": 0.67,
+		    "centerOfDilation": {
+		      "x": 68,
+		      "y": 85
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -1843,8 +2031,8 @@ describe("transformationDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 340,
+		  "height": 340,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -1861,7 +2049,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 136
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#FFFFFF",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#11accd",
@@ -1904,8 +2092,8 @@ describe("transformationDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 340,
+		  "height": 340,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -1922,7 +2110,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 136
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#FFFFFF",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#11accd",
@@ -1965,8 +2153,8 @@ describe("transformationDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 340,
+		  "height": 340,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -1983,7 +2171,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 136
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#FFFFFF",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#11accd",
@@ -2026,8 +2214,8 @@ describe("transformationDiagram widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 340,
+		  "height": 340,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -2044,7 +2232,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 136
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#FFFFFF",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#11accd",
@@ -2080,15 +2268,15 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc0c504fedb55ca58
-	// Question: Identify the image of a triangle after a dilation
+	// Question: Identify a dilation image with scale factor 1/4
 	// Widget key: image_1
-	test("transformation-diagram - [xc0c504fedb55ca58] Identify the image of a triangle after a dilation (1)", async () => {
+	test("transformation-diagram - [xc0c504fedb55ca58] Identify a dilation image with scale factor 1/4 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 145.714,
+		  "width": 270,
+		  "height": 230,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -2105,10 +2293,10 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 32.381
 		      }
 		    ],
-		    "fillColor": "#E6F7FB",
+		    "fillColor": "#FFFFFF",
 		    "angleMarks": [],
 		    "sideLengths": [],
-		    "strokeColor": "#11accd",
+		    "strokeColor": "#000000",
 		    "vertexLabels": [
 		      "A",
 		      "B",
@@ -2141,15 +2329,15 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc0c504fedb55ca58
-	// Question: Identify the image of a triangle after a dilation
+	// Question: Identify a dilation image with scale factor 1/4
 	// Widget key: choice_a_figure
-	test("transformation-diagram - [xc0c504fedb55ca58] Identify the image of a triangle after a dilation (2)", async () => {
+	test("transformation-diagram - [xc0c504fedb55ca58] Identify a dilation image with scale factor 1/4 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 145.714,
+		  "width": 270,
+		  "height": 230,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -2166,10 +2354,10 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 32.381
 		      }
 		    ],
-		    "fillColor": "#E6F7FB",
+		    "fillColor": "#FFFFFF",
 		    "angleMarks": [],
 		    "sideLengths": [],
-		    "strokeColor": "#11accd",
+		    "strokeColor": "#000000",
 		    "vertexLabels": [
 		      "A",
 		      "B",
@@ -2202,15 +2390,15 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc0c504fedb55ca58
-	// Question: Identify the image of a triangle after a dilation
+	// Question: Identify a dilation image with scale factor 1/4
 	// Widget key: choice_b_figure
-	test("transformation-diagram - [xc0c504fedb55ca58] Identify the image of a triangle after a dilation (3)", async () => {
+	test("transformation-diagram - [xc0c504fedb55ca58] Identify a dilation image with scale factor 1/4 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 145.714,
+		  "width": 270,
+		  "height": 230,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -2227,10 +2415,10 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 32.381
 		      }
 		    ],
-		    "fillColor": "#E6F7FB",
+		    "fillColor": "#FFFFFF",
 		    "angleMarks": [],
 		    "sideLengths": [],
-		    "strokeColor": "#11accd",
+		    "strokeColor": "#000000",
 		    "vertexLabels": [
 		      "A",
 		      "B",
@@ -2263,15 +2451,15 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc0c504fedb55ca58
-	// Question: Identify the image of a triangle after a dilation
+	// Question: Identify a dilation image with scale factor 1/4
 	// Widget key: choice_c_figure
-	test("transformation-diagram - [xc0c504fedb55ca58] Identify the image of a triangle after a dilation (4)", async () => {
+	test("transformation-diagram - [xc0c504fedb55ca58] Identify a dilation image with scale factor 1/4 (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 145.714,
+		  "width": 270,
+		  "height": 230,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -2288,10 +2476,10 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 32.381
 		      }
 		    ],
-		    "fillColor": "#E6F7FB",
+		    "fillColor": "#FFFFFF",
 		    "angleMarks": [],
 		    "sideLengths": [],
-		    "strokeColor": "#11accd",
+		    "strokeColor": "#000000",
 		    "vertexLabels": [
 		      "A",
 		      "B",
@@ -2324,15 +2512,15 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc0c504fedb55ca58
-	// Question: Identify the image of a triangle after a dilation
+	// Question: Identify a dilation image with scale factor 1/4
 	// Widget key: choice_d_figure
-	test("transformation-diagram - [xc0c504fedb55ca58] Identify the image of a triangle after a dilation (5)", async () => {
+	test("transformation-diagram - [xc0c504fedb55ca58] Identify a dilation image with scale factor 1/4 (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 145.714,
+		  "width": 270,
+		  "height": 230,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -2349,10 +2537,10 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 32.381
 		      }
 		    ],
-		    "fillColor": "#E6F7FB",
+		    "fillColor": "#FFFFFF",
 		    "angleMarks": [],
 		    "sideLengths": [],
-		    "strokeColor": "#11accd",
+		    "strokeColor": "#000000",
 		    "vertexLabels": [
 		      "A",
 		      "B",
@@ -2385,35 +2573,35 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6654329a81441075
-	// Question: Identify a dilated triangle with a given center and scale factor
-	// Widget key: choice_a_figure
-	test("transformation-diagram - [x6654329a81441075] Identify a dilated triangle with a given center and scale factor (2)", async () => {
+	// Question: Identify the dilated image of a triangle (center A, scale factor 3/4)
+	// Widget key: choice_a_visual
+	test("transformation-diagram - [x6654329a81441075] Identify the dilated image of a triangle (center A, scale factor 3/4) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 500,
+		  "height": 450,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
 		      {
-		        "x": 119,
-		        "y": 34
+		        "x": 440,
+		        "y": 80
 		      },
 		      {
-		        "x": 102,
-		        "y": 136
+		        "x": 360,
+		        "y": 420
 		      },
 		      {
-		        "x": 34,
-		        "y": 85
+		        "x": 120,
+		        "y": 260
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#ffffff00",
 		    "angleMarks": [],
 		    "sideLengths": [],
-		    "strokeColor": "#11accd",
+		    "strokeColor": "#000000",
 		    "vertexLabels": [
 		      "A",
 		      "B",
@@ -2422,10 +2610,10 @@ describe("transformationDiagram widget tests", () => {
 		  },
 		  "transformation": {
 		    "type": "dilation",
-		    "scaleFactor": 0.4,
+		    "scaleFactor": 0.35,
 		    "centerOfDilation": {
-		      "x": 119,
-		      "y": 34
+		      "x": 440,
+		      "y": 80
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -2446,35 +2634,35 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6654329a81441075
-	// Question: Identify a dilated triangle with a given center and scale factor
-	// Widget key: choice_b_figure
-	test("transformation-diagram - [x6654329a81441075] Identify a dilated triangle with a given center and scale factor (3)", async () => {
+	// Question: Identify the dilated image of a triangle (center A, scale factor 3/4)
+	// Widget key: choice_b_visual
+	test("transformation-diagram - [x6654329a81441075] Identify the dilated image of a triangle (center A, scale factor 3/4) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 500,
+		  "height": 450,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
 		      {
-		        "x": 119,
-		        "y": 34
+		        "x": 440,
+		        "y": 80
 		      },
 		      {
-		        "x": 102,
-		        "y": 136
+		        "x": 360,
+		        "y": 420
 		      },
 		      {
-		        "x": 34,
-		        "y": 85
+		        "x": 120,
+		        "y": 260
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#ffffff00",
 		    "angleMarks": [],
 		    "sideLengths": [],
-		    "strokeColor": "#11accd",
+		    "strokeColor": "#000000",
 		    "vertexLabels": [
 		      "A",
 		      "B",
@@ -2485,8 +2673,8 @@ describe("transformationDiagram widget tests", () => {
 		    "type": "dilation",
 		    "scaleFactor": 0.75,
 		    "centerOfDilation": {
-		      "x": 119,
-		      "y": 34
+		      "x": 440,
+		      "y": 80
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -2507,35 +2695,35 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6654329a81441075
-	// Question: Identify a dilated triangle with a given center and scale factor
-	// Widget key: choice_c_figure
-	test("transformation-diagram - [x6654329a81441075] Identify a dilated triangle with a given center and scale factor (4)", async () => {
+	// Question: Identify the dilated image of a triangle (center A, scale factor 3/4)
+	// Widget key: choice_c_visual
+	test("transformation-diagram - [x6654329a81441075] Identify the dilated image of a triangle (center A, scale factor 3/4) (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 500,
+		  "height": 450,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
 		      {
-		        "x": 119,
-		        "y": 34
+		        "x": 440,
+		        "y": 80
 		      },
 		      {
-		        "x": 102,
-		        "y": 136
+		        "x": 360,
+		        "y": 420
 		      },
 		      {
-		        "x": 34,
-		        "y": 85
+		        "x": 120,
+		        "y": 260
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#ffffff00",
 		    "angleMarks": [],
 		    "sideLengths": [],
-		    "strokeColor": "#11accd",
+		    "strokeColor": "#000000",
 		    "vertexLabels": [
 		      "A",
 		      "B",
@@ -2544,10 +2732,10 @@ describe("transformationDiagram widget tests", () => {
 		  },
 		  "transformation": {
 		    "type": "dilation",
-		    "scaleFactor": 0.75,
+		    "scaleFactor": 0.45,
 		    "centerOfDilation": {
-		      "x": 110.5,
-		      "y": 46.75
+		      "x": 300,
+		      "y": 250
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -2568,35 +2756,35 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6654329a81441075
-	// Question: Identify a dilated triangle with a given center and scale factor
-	// Widget key: choice_d_figure
-	test("transformation-diagram - [x6654329a81441075] Identify a dilated triangle with a given center and scale factor (5)", async () => {
+	// Question: Identify the dilated image of a triangle (center A, scale factor 3/4)
+	// Widget key: choice_d_visual
+	test("transformation-diagram - [x6654329a81441075] Identify the dilated image of a triangle (center A, scale factor 3/4) (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 500,
+		  "height": 450,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
 		      {
-		        "x": 119,
-		        "y": 34
+		        "x": 440,
+		        "y": 80
 		      },
 		      {
-		        "x": 102,
-		        "y": 136
+		        "x": 360,
+		        "y": 420
 		      },
 		      {
-		        "x": 34,
-		        "y": 85
+		        "x": 120,
+		        "y": 260
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#ffffff00",
 		    "angleMarks": [],
 		    "sideLengths": [],
-		    "strokeColor": "#11accd",
+		    "strokeColor": "#000000",
 		    "vertexLabels": [
 		      "A",
 		      "B",
@@ -2605,10 +2793,10 @@ describe("transformationDiagram widget tests", () => {
 		  },
 		  "transformation": {
 		    "type": "dilation",
-		    "scaleFactor": 0.4,
+		    "scaleFactor": 0.3,
 		    "centerOfDilation": {
-		      "x": 110.5,
-		      "y": 46.75
+		      "x": 300,
+		      "y": 200
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -2629,15 +2817,15 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x42af57ec523a07d4
-	// Question: Identify the image of a triangle under dilation (scale factor 1/3)
+	// Question: Identify the image of a dilation (scale factor 1/3)
 	// Widget key: choice_a_figure
-	test("transformation-diagram - [x42af57ec523a07d4] Identify the image of a triangle under dilation (scale factor 1/3) (2)", async () => {
+	test("transformation-diagram - [x42af57ec523a07d4] Identify the image of a dilation (scale factor 1/3) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 270,
+		  "height": 270,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -2654,7 +2842,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 153
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#FFFFFF00",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#11accd",
@@ -2666,7 +2854,7 @@ describe("transformationDiagram widget tests", () => {
 		  },
 		  "transformation": {
 		    "type": "dilation",
-		    "scaleFactor": 0.75,
+		    "scaleFactor": 0.8,
 		    "centerOfDilation": {
 		      "x": 85,
 		      "y": 85
@@ -2690,15 +2878,15 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x42af57ec523a07d4
-	// Question: Identify the image of a triangle under dilation (scale factor 1/3)
+	// Question: Identify the image of a dilation (scale factor 1/3)
 	// Widget key: choice_b_figure
-	test("transformation-diagram - [x42af57ec523a07d4] Identify the image of a triangle under dilation (scale factor 1/3) (3)", async () => {
+	test("transformation-diagram - [x42af57ec523a07d4] Identify the image of a dilation (scale factor 1/3) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 270,
+		  "height": 270,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -2715,7 +2903,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 153
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#FFFFFF00",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#11accd",
@@ -2751,15 +2939,15 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x42af57ec523a07d4
-	// Question: Identify the image of a triangle under dilation (scale factor 1/3)
+	// Question: Identify the image of a dilation (scale factor 1/3)
 	// Widget key: choice_c_figure
-	test("transformation-diagram - [x42af57ec523a07d4] Identify the image of a triangle under dilation (scale factor 1/3) (4)", async () => {
+	test("transformation-diagram - [x42af57ec523a07d4] Identify the image of a dilation (scale factor 1/3) (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 270,
+		  "height": 270,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -2776,7 +2964,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 153
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#FFFFFF00",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#11accd",
@@ -2812,15 +3000,15 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x42af57ec523a07d4
-	// Question: Identify the image of a triangle under dilation (scale factor 1/3)
+	// Question: Identify the image of a dilation (scale factor 1/3)
 	// Widget key: choice_d_figure
-	test("transformation-diagram - [x42af57ec523a07d4] Identify the image of a triangle under dilation (scale factor 1/3) (5)", async () => {
+	test("transformation-diagram - [x42af57ec523a07d4] Identify the image of a dilation (scale factor 1/3) (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 270,
+		  "height": 270,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -2837,7 +3025,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 153
 		      }
 		    ],
-		    "fillColor": "#00000000",
+		    "fillColor": "#FFFFFF00",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#11accd",
@@ -2849,7 +3037,7 @@ describe("transformationDiagram widget tests", () => {
 		  },
 		  "transformation": {
 		    "type": "dilation",
-		    "scaleFactor": 0.75,
+		    "scaleFactor": 0.8,
 		    "centerOfDilation": {
 		      "x": 42.5,
 		      "y": 93.5
@@ -2873,15 +3061,15 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbc50b5a72210c4cc
-	// Question: Dilation of a triangle with center P and scale factor 2/3
-	// Widget key: choice_a_figure
-	test("transformation-diagram - [xbc50b5a72210c4cc] Dilation of a triangle with center P and scale factor 2/3 (2)", async () => {
+	// Question: Identify the image of a triangle under dilation (scale factor 2/3)
+	// Widget key: image_1
+	test("transformation-diagram - [xbc50b5a72210c4cc] Identify the image of a triangle under dilation (scale factor 2/3) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 270,
+		  "height": 270,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -2898,7 +3086,68 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 136
 		      }
 		    ],
-		    "fillColor": "#FFFFFF",
+		    "fillColor": "#FFFFFF00",
+		    "angleMarks": [],
+		    "sideLengths": [],
+		    "strokeColor": "#11accd",
+		    "vertexLabels": [
+		      "A",
+		      "B",
+		      "C"
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 0,
+		    "centerOfRotation": {
+		      "x": 136,
+		      "y": 136
+		    }
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for transformationDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbc50b5a72210c4cc
+	// Question: Identify the image of a triangle under dilation (scale factor 2/3)
+	// Widget key: choice_a_visual
+	test("transformation-diagram - [xbc50b5a72210c4cc] Identify the image of a triangle under dilation (scale factor 2/3) (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "transformationDiagram",
+		  "width": 270,
+		  "height": 270,
+		  "preImage": {
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 51,
+		        "y": 34
+		      },
+		      {
+		        "x": 102,
+		        "y": 34
+		      },
+		      {
+		        "x": 51,
+		        "y": 136
+		      }
+		    ],
+		    "fillColor": "#FFFFFF00",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#11accd",
@@ -2910,7 +3159,7 @@ describe("transformationDiagram widget tests", () => {
 		  },
 		  "transformation": {
 		    "type": "dilation",
-		    "scaleFactor": 0.3333333,
+		    "scaleFactor": 0.4,
 		    "centerOfDilation": {
 		      "x": 136,
 		      "y": 136
@@ -2934,15 +3183,15 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbc50b5a72210c4cc
-	// Question: Dilation of a triangle with center P and scale factor 2/3
-	// Widget key: choice_b_figure
-	test("transformation-diagram - [xbc50b5a72210c4cc] Dilation of a triangle with center P and scale factor 2/3 (3)", async () => {
+	// Question: Identify the image of a triangle under dilation (scale factor 2/3)
+	// Widget key: choice_b_visual
+	test("transformation-diagram - [xbc50b5a72210c4cc] Identify the image of a triangle under dilation (scale factor 2/3) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 270,
+		  "height": 270,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -2959,7 +3208,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 136
 		      }
 		    ],
-		    "fillColor": "#FFFFFF",
+		    "fillColor": "#FFFFFF00",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#11accd",
@@ -2971,7 +3220,7 @@ describe("transformationDiagram widget tests", () => {
 		  },
 		  "transformation": {
 		    "type": "dilation",
-		    "scaleFactor": 0.6666667,
+		    "scaleFactor": 0.6666666667,
 		    "centerOfDilation": {
 		      "x": 136,
 		      "y": 136
@@ -2995,15 +3244,15 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbc50b5a72210c4cc
-	// Question: Dilation of a triangle with center P and scale factor 2/3
-	// Widget key: choice_c_figure
-	test("transformation-diagram - [xbc50b5a72210c4cc] Dilation of a triangle with center P and scale factor 2/3 (4)", async () => {
+	// Question: Identify the image of a triangle under dilation (scale factor 2/3)
+	// Widget key: choice_c_visual
+	test("transformation-diagram - [xbc50b5a72210c4cc] Identify the image of a triangle under dilation (scale factor 2/3) (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 270,
+		  "height": 270,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -3020,7 +3269,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 136
 		      }
 		    ],
-		    "fillColor": "#FFFFFF",
+		    "fillColor": "#FFFFFF00",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#11accd",
@@ -3032,7 +3281,7 @@ describe("transformationDiagram widget tests", () => {
 		  },
 		  "transformation": {
 		    "type": "dilation",
-		    "scaleFactor": 0.6666667,
+		    "scaleFactor": 0.6666666667,
 		    "centerOfDilation": {
 		      "x": 102,
 		      "y": 34
@@ -3056,15 +3305,15 @@ describe("transformationDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbc50b5a72210c4cc
-	// Question: Dilation of a triangle with center P and scale factor 2/3
-	// Widget key: choice_d_figure
-	test("transformation-diagram - [xbc50b5a72210c4cc] Dilation of a triangle with center P and scale factor 2/3 (5)", async () => {
+	// Question: Identify the image of a triangle under dilation (scale factor 2/3)
+	// Widget key: choice_d_visual
+	test("transformation-diagram - [xbc50b5a72210c4cc] Identify the image of a triangle under dilation (scale factor 2/3) (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "transformationDiagram",
-		  "width": 170,
-		  "height": 170,
+		  "width": 270,
+		  "height": 270,
 		  "preImage": {
 		    "label": "ABC",
 		    "vertices": [
@@ -3081,7 +3330,7 @@ describe("transformationDiagram widget tests", () => {
 		        "y": 136
 		      }
 		    ],
-		    "fillColor": "#FFFFFF",
+		    "fillColor": "#FFFFFF00",
 		    "angleMarks": [],
 		    "sideLengths": [],
 		    "strokeColor": "#11accd",
@@ -3093,7 +3342,7 @@ describe("transformationDiagram widget tests", () => {
 		  },
 		  "transformation": {
 		    "type": "dilation",
-		    "scaleFactor": 0.3333333,
+		    "scaleFactor": 0.4,
 		    "centerOfDilation": {
 		      "x": 102,
 		      "y": 34

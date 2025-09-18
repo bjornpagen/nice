@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.956Z
+// Generated on: 2025-09-18T05:17:02.151Z
 // Widget Type: compositeShapeDiagram
 // Source: Real questions from database
 //
@@ -25,293 +25,124 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("compositeShapeDiagram widget tests", () => {
-	// Extracted from question: x9b74005f28d0b824
-	// Question: Area of a shaded region between a circle and a rectangle
+	// Extracted from question: xb9a2f2df68f7f278
+	// Question: Area of the shaded region (rectangle and circle)
 	// Widget key: image_1
-	test("composite-shape-diagram - [x9b74005f28d0b824] Area of a shaded region between a circle and a rectangle", async () => {
+	test("composite-shape-diagram - [xb9a2f2df68f7f278] Area of the shaded region (rectangle and circle)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 260,
-		  "height": 260,
+		  "width": 350,
+		  "height": 300,
+		  "shapes": [
+		    {
+		      "id": "rect1",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "TL",
+		        "TR",
+		        "BR",
+		        "BL"
+		      ]
+		    },
+		    {
+		      "id": "circle1",
+		      "type": "circle",
+		      "radius": 3,
+		      "centerId": "C"
+		    }
+		  ],
 		  "vertices": [
 		    {
-		      "x": 130,
-		      "y": 130,
-		      "id": "center"
+		      "x": 0,
+		      "y": 0,
+		      "id": "TL"
 		    },
 		    {
-		      "x": 250,
-		      "y": 130,
-		      "id": "p0"
+		      "x": 8,
+		      "y": 0,
+		      "id": "TR"
 		    },
 		    {
-		      "x": 240.866,
-		      "y": 175.922,
-		      "id": "p1"
+		      "x": 8,
+		      "y": 7,
+		      "id": "BR"
 		    },
 		    {
-		      "x": 214.853,
-		      "y": 214.853,
-		      "id": "p2"
+		      "x": 0,
+		      "y": 7,
+		      "id": "BL"
 		    },
 		    {
-		      "x": 175.922,
-		      "y": 240.866,
-		      "id": "p3"
+		      "x": 4,
+		      "y": 3.5,
+		      "id": "C"
 		    },
 		    {
-		      "x": 130,
-		      "y": 250,
-		      "id": "p4"
-		    },
-		    {
-		      "x": 84.078,
-		      "y": 240.866,
-		      "id": "p5"
-		    },
-		    {
-		      "x": 45.147,
-		      "y": 214.853,
-		      "id": "p6"
-		    },
-		    {
-		      "x": 19.134,
-		      "y": 175.922,
-		      "id": "p7"
-		    },
-		    {
-		      "x": 10,
-		      "y": 130,
-		      "id": "p8"
-		    },
-		    {
-		      "x": 19.134,
-		      "y": 84.078,
-		      "id": "p9"
-		    },
-		    {
-		      "x": 45.147,
-		      "y": 45.147,
-		      "id": "p10"
-		    },
-		    {
-		      "x": 84.078,
-		      "y": 19.134,
-		      "id": "p11"
-		    },
-		    {
-		      "x": 130,
-		      "y": 10,
-		      "id": "p12"
-		    },
-		    {
-		      "x": 175.922,
-		      "y": 19.134,
-		      "id": "p13"
-		    },
-		    {
-		      "x": 214.853,
-		      "y": 45.147,
-		      "id": "p14"
-		    },
-		    {
-		      "x": 240.866,
-		      "y": 84.078,
-		      "id": "p15"
-		    },
-		    {
-		      "x": 105,
-		      "y": 75,
-		      "id": "rectTopLeft"
-		    },
-		    {
-		      "x": 155,
-		      "y": 75,
-		      "id": "rectTopRight"
-		    },
-		    {
-		      "x": 155,
-		      "y": 185,
-		      "id": "rectBottomRight"
-		    },
-		    {
-		      "x": 105,
-		      "y": 185,
-		      "id": "rectBottomLeft"
+		      "x": 7,
+		      "y": 3.5,
+		      "id": "R"
 		    }
 		  ],
 		  "regionLabels": null,
 		  "boundaryEdges": [
 		    {
-		      "to": "p1",
-		      "from": "p0",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p2",
-		      "from": "p1",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p3",
-		      "from": "p2",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p4",
-		      "from": "p3",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p5",
-		      "from": "p4",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p6",
-		      "from": "p5",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p7",
-		      "from": "p6",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p8",
-		      "from": "p7",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p9",
-		      "from": "p8",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p10",
-		      "from": "p9",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p11",
-		      "from": "p10",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p12",
-		      "from": "p11",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p13",
-		      "from": "p12",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p14",
-		      "from": "p13",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p15",
-		      "from": "p14",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "p0",
-		      "from": "p15",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "rectTopRight",
-		      "from": "rectTopLeft",
+		      "to": "TR",
+		      "from": "TL",
 		      "type": "simple",
 		      "label": {
 		        "unit": "cm",
-		        "value": 5
+		        "value": 8
 		      }
 		    },
 		    {
-		      "to": "rectBottomRight",
-		      "from": "rectTopRight",
+		      "to": "BR",
+		      "from": "TR",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "BL",
+		      "from": "BR",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "TL",
+		      "from": "BL",
 		      "type": "simple",
 		      "label": {
 		        "unit": "cm",
-		        "value": 11
+		        "value": 7
 		      }
-		    },
-		    {
-		      "to": "rectBottomLeft",
-		      "from": "rectBottomRight",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "rectTopLeft",
-		      "from": "rectBottomLeft",
-		      "type": "simple",
-		      "label": null
 		    }
 		  ],
 		  "shadedRegions": [
 		    {
-		      "fillColor": "#ccfaff80",
-		      "vertexIds": [
-		        "p0",
-		        "p1",
-		        "p2",
-		        "p3",
-		        "p4",
-		        "p5",
-		        "p6",
-		        "p7",
-		        "p8",
-		        "p9",
-		        "p10",
-		        "p11",
-		        "p12",
-		        "p13",
-		        "p14",
-		        "p15"
-		      ]
-		    },
-		    {
-		      "fillColor": "#fdfdfd",
-		      "vertexIds": [
-		        "rectTopLeft",
-		        "rectTopRight",
-		        "rectBottomRight",
-		        "rectBottomLeft"
-		      ]
+		      "path": [
+		        {
+		          "shapeId": "rect1",
+		          "pathType": "outer"
+		        },
+		        {
+		          "shapeId": "circle1",
+		          "pathType": "inner"
+		        }
+		      ],
+		      "fillColor": "#ccfaff80"
 		    }
 		  ],
 		  "internalSegments": [
 		    {
 		      "label": {
 		        "unit": "cm",
-		        "value": 12
+		        "value": 3
 		      },
 		      "style": "solid",
-		      "toVertexId": "p0",
-		      "fromVertexId": "center"
+		      "toVertexId": "R",
+		      "fromVertexId": "C"
 		    }
 		  ],
 		  "rightAngleMarkers": null
@@ -339,9 +170,28 @@ describe("compositeShapeDiagram widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 400,
-		  "height": 400,
+		  "width": 360,
+		  "height": 360,
+		  "shapes": [
+		    {
+		      "id": "rect",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "topLeft",
+		        "topRight",
+		        "bottomRight",
+		        "bottomLeft"
+		      ]
+		    },
+		    {
+		      "id": "circ",
+		      "type": "circle",
+		      "radius": 11,
+		      "centerId": "O"
+		    }
+		  ],
 		  "vertices": [
 		    {
 		      "x": 0,
@@ -349,227 +199,77 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "id": "O"
 		    },
 		    {
-		      "x": -20,
-		      "y": -30,
-		      "id": "R1"
-		    },
-		    {
-		      "x": 20,
-		      "y": -30,
-		      "id": "R2"
-		    },
-		    {
-		      "x": 20,
-		      "y": 30,
-		      "id": "R3"
-		    },
-		    {
-		      "x": -20,
-		      "y": 30,
-		      "id": "R4"
-		    },
-		    {
-		      "x": 110,
+		      "x": 11,
 		      "y": 0,
-		      "id": "C0"
+		      "id": "C"
 		    },
 		    {
-		      "x": 101.63,
-		      "y": 42.1,
-		      "id": "C1"
+		      "x": -2,
+		      "y": -3,
+		      "id": "topLeft"
 		    },
 		    {
-		      "x": 77.78,
-		      "y": 77.78,
-		      "id": "C2"
+		      "x": 2,
+		      "y": -3,
+		      "id": "topRight"
 		    },
 		    {
-		      "x": 42.1,
-		      "y": 101.63,
-		      "id": "C3"
+		      "x": 2,
+		      "y": 3,
+		      "id": "bottomRight"
 		    },
 		    {
-		      "x": 0,
-		      "y": 110,
-		      "id": "C4"
-		    },
-		    {
-		      "x": -42.1,
-		      "y": 101.63,
-		      "id": "C5"
-		    },
-		    {
-		      "x": -77.78,
-		      "y": 77.78,
-		      "id": "C6"
-		    },
-		    {
-		      "x": -101.63,
-		      "y": 42.1,
-		      "id": "C7"
-		    },
-		    {
-		      "x": -110,
-		      "y": 0,
-		      "id": "C8"
-		    },
-		    {
-		      "x": -101.63,
-		      "y": -42.1,
-		      "id": "C9"
-		    },
-		    {
-		      "x": -77.78,
-		      "y": -77.78,
-		      "id": "C10"
-		    },
-		    {
-		      "x": -42.1,
-		      "y": -101.63,
-		      "id": "C11"
-		    },
-		    {
-		      "x": 0,
-		      "y": -110,
-		      "id": "C12"
-		    },
-		    {
-		      "x": 42.1,
-		      "y": -101.63,
-		      "id": "C13"
-		    },
-		    {
-		      "x": 77.78,
-		      "y": -77.78,
-		      "id": "C14"
-		    },
-		    {
-		      "x": 101.63,
-		      "y": -42.1,
-		      "id": "C15"
+		      "x": -2,
+		      "y": 3,
+		      "id": "bottomLeft"
 		    }
 		  ],
 		  "regionLabels": null,
 		  "boundaryEdges": [
 		    {
-		      "path": [
-		        "C0",
-		        "C1",
-		        "C2",
-		        "C3",
-		        "C4",
-		        "C5",
-		        "C6",
-		        "C7",
-		        "C8",
-		        "C9",
-		        "C10",
-		        "C11",
-		        "C12",
-		        "C13",
-		        "C14",
-		        "C15",
-		        "C0"
-		      ],
-		      "type": "partitioned",
-		      "segments": [
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        },
-		        {
-		          "label": null,
-		          "style": "solid"
-		        }
-		      ]
+		      "to": "topRight",
+		      "from": "topLeft",
+		      "type": "simple",
+		      "label": {
+		        "unit": "cm",
+		        "value": 4
+		      }
+		    },
+		    {
+		      "to": "bottomRight",
+		      "from": "topRight",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "bottomLeft",
+		      "from": "bottomRight",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "topLeft",
+		      "from": "bottomLeft",
+		      "type": "simple",
+		      "label": {
+		        "unit": "cm",
+		        "value": 6
+		      }
 		    }
 		  ],
 		  "shadedRegions": [
 		    {
-		      "fillColor": "#ccfaff80",
-		      "vertexIds": [
-		        "C0",
-		        "C1",
-		        "C2",
-		        "C3",
-		        "C4",
-		        "C5",
-		        "C6",
-		        "C7",
-		        "C8",
-		        "C9",
-		        "C10",
-		        "C11",
-		        "C12",
-		        "C13",
-		        "C14",
-		        "C15"
-		      ]
-		    },
-		    {
-		      "fillColor": "#ffffff",
-		      "vertexIds": [
-		        "R1",
-		        "R2",
-		        "R3",
-		        "R4"
-		      ]
+		      "path": [
+		        {
+		          "shapeId": "circ",
+		          "pathType": "outer"
+		        },
+		        {
+		          "shapeId": "rect",
+		          "pathType": "inner"
+		        }
+		      ],
+		      "fillColor": "#ccfaff80"
 		    }
 		  ],
 		  "internalSegments": [
@@ -579,38 +279,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 11
 		      },
 		      "style": "solid",
-		      "toVertexId": "C0",
+		      "toVertexId": "C",
 		      "fromVertexId": "O"
-		    },
-		    {
-		      "label": {
-		        "unit": "cm",
-		        "value": 4
-		      },
-		      "style": "solid",
-		      "toVertexId": "R2",
-		      "fromVertexId": "R1"
-		    },
-		    {
-		      "label": {
-		        "unit": "cm",
-		        "value": 6
-		      },
-		      "style": "solid",
-		      "toVertexId": "R3",
-		      "fromVertexId": "R2"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "R4",
-		      "fromVertexId": "R3"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "R1",
-		      "fromVertexId": "R4"
 		    }
 		  ],
 		  "rightAngleMarkers": null
@@ -631,227 +301,102 @@ describe("compositeShapeDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd8c0fb6d8bfff96e
-	// Question: Area of a shaded region: circle minus rectangle
+	// Extracted from question: x9b74005f28d0b824
+	// Question: Area of a shaded region between a circle and a rectangle
 	// Widget key: image_1
-	test("composite-shape-diagram - [xd8c0fb6d8bfff96e] Area of a shaded region: circle minus rectangle", async () => {
+	test("composite-shape-diagram - [x9b74005f28d0b824] Area of a shaded region between a circle and a rectangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 280,
-		  "height": 280,
+		  "width": 360,
+		  "height": 360,
+		  "shapes": [
+		    {
+		      "id": "circle1",
+		      "type": "circle",
+		      "radius": 120,
+		      "centerId": "center"
+		    },
+		    {
+		      "id": "rect1",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "r_tl",
+		        "r_tr",
+		        "r_br",
+		        "r_bl"
+		      ]
+		    }
+		  ],
 		  "vertices": [
 		    {
-		      "x": 260,
-		      "y": 140,
-		      "id": "C0"
-		    },
-		    {
-		      "x": 243.923,
-		      "y": 80,
-		      "id": "C1"
-		    },
-		    {
-		      "x": 200,
-		      "y": 36.077,
-		      "id": "C2"
-		    },
-		    {
-		      "x": 140,
-		      "y": 20,
-		      "id": "C3"
-		    },
-		    {
-		      "x": 80,
-		      "y": 36.077,
-		      "id": "C4"
-		    },
-		    {
-		      "x": 36.077,
-		      "y": 80,
-		      "id": "C5"
-		    },
-		    {
-		      "x": 20,
-		      "y": 140,
-		      "id": "C6"
-		    },
-		    {
-		      "x": 36.077,
-		      "y": 200,
-		      "id": "C7"
-		    },
-		    {
-		      "x": 80,
-		      "y": 243.923,
-		      "id": "C8"
-		    },
-		    {
-		      "x": 140,
-		      "y": 260,
-		      "id": "C9"
-		    },
-		    {
-		      "x": 200,
-		      "y": 243.923,
-		      "id": "C10"
-		    },
-		    {
-		      "x": 243.923,
-		      "y": 200,
-		      "id": "C11"
-		    },
-		    {
-		      "x": 70,
-		      "y": 90,
-		      "id": "R1"
-		    },
-		    {
-		      "x": 210,
-		      "y": 90,
-		      "id": "R2"
-		    },
-		    {
-		      "x": 210,
-		      "y": 190,
-		      "id": "R3"
-		    },
-		    {
-		      "x": 70,
-		      "y": 190,
-		      "id": "R4"
-		    },
-		    {
-		      "x": 140,
-		      "y": 140,
+		      "x": 130,
+		      "y": 130,
 		      "id": "center"
+		    },
+		    {
+		      "x": 250,
+		      "y": 130,
+		      "id": "east"
+		    },
+		    {
+		      "x": 105,
+		      "y": 75,
+		      "id": "r_tl"
+		    },
+		    {
+		      "x": 155,
+		      "y": 75,
+		      "id": "r_tr"
+		    },
+		    {
+		      "x": 155,
+		      "y": 185,
+		      "id": "r_br"
+		    },
+		    {
+		      "x": 105,
+		      "y": 185,
+		      "id": "r_bl"
 		    }
 		  ],
 		  "regionLabels": null,
-		  "boundaryEdges": [
-		    {
-		      "to": "C1",
-		      "from": "C0",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C2",
-		      "from": "C1",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C3",
-		      "from": "C2",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C4",
-		      "from": "C3",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C5",
-		      "from": "C4",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C6",
-		      "from": "C5",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C7",
-		      "from": "C6",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C8",
-		      "from": "C7",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C9",
-		      "from": "C8",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C10",
-		      "from": "C9",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C11",
-		      "from": "C10",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C0",
-		      "from": "C11",
-		      "type": "simple",
-		      "label": null
-		    }
-		  ],
+		  "boundaryEdges": [],
 		  "shadedRegions": [
 		    {
-		      "fillColor": "#ccfaff80",
-		      "vertexIds": [
-		        "C0",
-		        "C1",
-		        "C2",
-		        "C3",
-		        "C4",
-		        "C5",
-		        "C6",
-		        "C7",
-		        "C8",
-		        "C9",
-		        "C10",
-		        "C11"
-		      ]
-		    },
-		    {
-		      "fillColor": "#ffffff",
-		      "vertexIds": [
-		        "R1",
-		        "R2",
-		        "R3",
-		        "R4"
-		      ]
+		      "path": [
+		        {
+		          "shapeId": "circle1",
+		          "pathType": "outer"
+		        },
+		        {
+		          "shapeId": "rect1",
+		          "pathType": "inner"
+		        }
+		      ],
+		      "fillColor": "#ccfaff80"
 		    }
 		  ],
 		  "internalSegments": [
 		    {
 		      "label": {
 		        "unit": "cm",
-		        "value": 7
+		        "value": 12
 		      },
 		      "style": "solid",
-		      "toVertexId": "R2",
-		      "fromVertexId": "R1"
+		      "toVertexId": "east",
+		      "fromVertexId": "center"
 		    },
 		    {
-		      "label": null,
+		      "label": {
+		        "unit": "cm",
+		        "value": 11
+		      },
 		      "style": "solid",
-		      "toVertexId": "R3",
-		      "fromVertexId": "R2"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "R4",
-		      "fromVertexId": "R3"
+		      "toVertexId": "r_br",
+		      "fromVertexId": "r_tr"
 		    },
 		    {
 		      "label": {
@@ -859,16 +404,145 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 5
 		      },
 		      "style": "solid",
-		      "toVertexId": "R1",
-		      "fromVertexId": "R4"
+		      "toVertexId": "r_tr",
+		      "fromVertexId": "r_tl"
+		    }
+		  ],
+		  "rightAngleMarkers": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for compositeShapeDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x70ade9874035cc08
+	// Question: Area of a shaded region between a square and an inscribed circle
+	// Widget key: image_1
+	test("composite-shape-diagram - [x70ade9874035cc08] Area of a shaded region between a square and an inscribed circle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "fit": "auto",
+		  "type": "compositeShapeDiagram",
+		  "width": 420,
+		  "height": 350,
+		  "shapes": [
+		    {
+		      "id": "square",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "topLeft",
+		        "topRight",
+		        "bottomRight",
+		        "bottomLeft"
+		      ]
 		    },
+		    {
+		      "id": "circle",
+		      "type": "circle",
+		      "radius": 35,
+		      "centerId": "center"
+		    }
+		  ],
+		  "vertices": [
+		    {
+		      "x": 35,
+		      "y": 35,
+		      "id": "topLeft"
+		    },
+		    {
+		      "x": 140,
+		      "y": 35,
+		      "id": "topRight"
+		    },
+		    {
+		      "x": 140,
+		      "y": 140,
+		      "id": "bottomRight"
+		    },
+		    {
+		      "x": 35,
+		      "y": 140,
+		      "id": "bottomLeft"
+		    },
+		    {
+		      "x": 87.5,
+		      "y": 87.5,
+		      "id": "center"
+		    },
+		    {
+		      "x": 122.5,
+		      "y": 87.5,
+		      "id": "circleRight"
+		    }
+		  ],
+		  "regionLabels": null,
+		  "boundaryEdges": [
+		    {
+		      "to": "topRight",
+		      "from": "topLeft",
+		      "type": "simple",
+		      "label": {
+		        "unit": "cm",
+		        "value": 3
+		      }
+		    },
+		    {
+		      "to": "bottomRight",
+		      "from": "topRight",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "bottomLeft",
+		      "from": "bottomRight",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "topLeft",
+		      "from": "bottomLeft",
+		      "type": "simple",
+		      "label": {
+		        "unit": "cm",
+		        "value": 3
+		      }
+		    }
+		  ],
+		  "shadedRegions": [
+		    {
+		      "path": [
+		        {
+		          "shapeId": "square",
+		          "pathType": "outer"
+		        },
+		        {
+		          "shapeId": "circle",
+		          "pathType": "inner"
+		        }
+		      ],
+		      "fillColor": "#ccfaff80"
+		    }
+		  ],
+		  "internalSegments": [
 		    {
 		      "label": {
 		        "unit": "cm",
-		        "value": 6
+		        "value": 1
 		      },
 		      "style": "solid",
-		      "toVertexId": "C0",
+		      "toVertexId": "circleRight",
 		      "fromVertexId": "center"
 		    }
 		  ],
@@ -890,180 +564,197 @@ describe("compositeShapeDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3a68667079fdffdd
+	// Extracted from question: x7893c043131fd6d6
 	// Question: Area of a shaded region (circle and rectangle)
 	// Widget key: image_1
-	test("composite-shape-diagram - [x3a68667079fdffdd] Area of a shaded region (circle and rectangle)", async () => {
+	test("composite-shape-diagram - [x7893c043131fd6d6] Area of a shaded region (circle and rectangle)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 200,
-		  "height": 200,
+		  "width": 360,
+		  "height": 360,
+		  "shapes": [
+		    {
+		      "id": "outerCircle",
+		      "type": "circle",
+		      "radius": 160,
+		      "centerId": "O"
+		    },
+		    {
+		      "id": "innerRect",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "rectTL",
+		        "rectTR",
+		        "rectBR",
+		        "rectBL"
+		      ]
+		    }
+		  ],
 		  "vertices": [
 		    {
-		      "x": 100,
-		      "y": 100,
+		      "x": 180,
+		      "y": 180,
 		      "id": "O"
 		    },
 		    {
-		      "x": 70,
-		      "y": 80,
-		      "id": "R1"
-		    },
-		    {
-		      "x": 130,
-		      "y": 80,
-		      "id": "R2"
-		    },
-		    {
-		      "x": 130,
-		      "y": 120,
-		      "id": "R3"
-		    },
-		    {
-		      "x": 70,
-		      "y": 120,
-		      "id": "R4"
-		    },
-		    {
-		      "x": 180,
-		      "y": 100,
-		      "id": "C0"
-		    },
-		    {
-		      "x": 169.3,
-		      "y": 140,
-		      "id": "C1"
-		    },
-		    {
-		      "x": 140,
-		      "y": 169.3,
-		      "id": "C2"
-		    },
-		    {
-		      "x": 100,
+		      "x": 340,
 		      "y": 180,
-		      "id": "C3"
+		      "id": "R"
 		    },
 		    {
 		      "x": 60,
-		      "y": 169.3,
-		      "id": "C4"
+		      "y": 160,
+		      "id": "rectTL"
 		    },
 		    {
-		      "x": 30.7,
-		      "y": 140,
-		      "id": "C5"
+		      "x": 300,
+		      "y": 160,
+		      "id": "rectTR"
 		    },
 		    {
-		      "x": 20,
-		      "y": 100,
-		      "id": "C6"
-		    },
-		    {
-		      "x": 30.7,
-		      "y": 60,
-		      "id": "C7"
+		      "x": 300,
+		      "y": 200,
+		      "id": "rectBR"
 		    },
 		    {
 		      "x": 60,
-		      "y": 30.7,
-		      "id": "C8"
+		      "y": 200,
+		      "id": "rectBL"
+		    }
+		  ],
+		  "regionLabels": null,
+		  "boundaryEdges": [],
+		  "shadedRegions": [
+		    {
+		      "path": [
+		        {
+		          "shapeId": "outerCircle",
+		          "pathType": "outer"
+		        },
+		        {
+		          "shapeId": "innerRect",
+		          "pathType": "inner"
+		        }
+		      ],
+		      "fillColor": "#ccfaff80"
+		    }
+		  ],
+		  "internalSegments": [
+		    {
+		      "label": {
+		        "unit": "cm",
+		        "value": 8
+		      },
+		      "style": "solid",
+		      "toVertexId": "R",
+		      "fromVertexId": "O"
 		    },
 		    {
-		      "x": 100,
-		      "y": 20,
-		      "id": "C9"
+		      "label": {
+		        "unit": "cm",
+		        "value": 12
+		      },
+		      "style": "solid",
+		      "toVertexId": "rectTR",
+		      "fromVertexId": "rectTL"
 		    },
 		    {
-		      "x": 140,
-		      "y": 30.7,
-		      "id": "C10"
+		      "label": {
+		        "unit": "cm",
+		        "value": 2
+		      },
+		      "style": "solid",
+		      "toVertexId": "rectBR",
+		      "fromVertexId": "rectTR"
+		    }
+		  ],
+		  "rightAngleMarkers": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for compositeShapeDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3a68667079fdffdd
+	// Question: Area of a shaded region (circle minus rectangle)
+	// Widget key: image_1
+	test("composite-shape-diagram - [x3a68667079fdffdd] Area of a shaded region (circle minus rectangle)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "fit": "auto",
+		  "type": "compositeShapeDiagram",
+		  "width": 400,
+		  "height": 400,
+		  "shapes": [
+		    {
+		      "id": "circle1",
+		      "type": "circle",
+		      "radius": 8,
+		      "centerId": "O"
 		    },
 		    {
-		      "x": 169.3,
-		      "y": 60,
-		      "id": "C11"
+		      "id": "rect1",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ]
+		    }
+		  ],
+		  "vertices": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "O"
+		    },
+		    {
+		      "x": 8,
+		      "y": 0,
+		      "id": "R"
+		    },
+		    {
+		      "x": -3,
+		      "y": -2,
+		      "id": "A"
+		    },
+		    {
+		      "x": 3,
+		      "y": -2,
+		      "id": "B"
+		    },
+		    {
+		      "x": 3,
+		      "y": 2,
+		      "id": "C"
+		    },
+		    {
+		      "x": -3,
+		      "y": 2,
+		      "id": "D"
 		    }
 		  ],
 		  "regionLabels": null,
 		  "boundaryEdges": [
 		    {
-		      "to": "C1",
-		      "from": "C0",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C2",
-		      "from": "C1",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C3",
-		      "from": "C2",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C4",
-		      "from": "C3",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C5",
-		      "from": "C4",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C6",
-		      "from": "C5",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C7",
-		      "from": "C6",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C8",
-		      "from": "C7",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C9",
-		      "from": "C8",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C10",
-		      "from": "C9",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C11",
-		      "from": "C10",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "C0",
-		      "from": "C11",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "R2",
-		      "from": "R1",
+		      "to": "B",
+		      "from": "A",
 		      "type": "simple",
 		      "label": {
 		        "unit": "cm",
@@ -1071,53 +762,28 @@ describe("compositeShapeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "to": "R3",
-		      "from": "R2",
+		      "to": "C",
+		      "from": "B",
 		      "type": "simple",
 		      "label": {
 		        "unit": "cm",
 		        "value": 2
 		      }
-		    },
-		    {
-		      "to": "R4",
-		      "from": "R3",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "R1",
-		      "from": "R4",
-		      "type": "simple",
-		      "label": null
 		    }
 		  ],
 		  "shadedRegions": [
 		    {
-		      "fillColor": "#ccfaff80",
-		      "vertexIds": [
-		        "C0",
-		        "C1",
-		        "C2",
-		        "C3",
-		        "C4",
-		        "C5",
-		        "C6",
-		        "C7",
-		        "C8",
-		        "C9",
-		        "C10",
-		        "C11"
-		      ]
-		    },
-		    {
-		      "fillColor": "#ffffff",
-		      "vertexIds": [
-		        "R1",
-		        "R2",
-		        "R3",
-		        "R4"
-		      ]
+		      "path": [
+		        {
+		          "shapeId": "circle1",
+		          "pathType": "outer"
+		        },
+		        {
+		          "shapeId": "rect1",
+		          "pathType": "inner"
+		        }
+		      ],
+		      "fillColor": "#ccfaff80"
 		    }
 		  ],
 		  "internalSegments": [
@@ -1127,7 +793,7 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 4
 		      },
 		      "style": "solid",
-		      "toVertexId": "C0",
+		      "toVertexId": "R",
 		      "fromVertexId": "O"
 		    }
 		  ],
@@ -1150,15 +816,34 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x55061cb6ed4c4ee5
-	// Question: Area of a shaded region: rectangle minus circle
+	// Question: Area of a shaded region (rectangle and circle)
 	// Widget key: image_1
-	test("composite-shape-diagram - [x55061cb6ed4c4ee5] Area of a shaded region: rectangle minus circle", async () => {
+	test("composite-shape-diagram - [x55061cb6ed4c4ee5] Area of a shaded region (rectangle and circle)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
 		  "width": 350,
 		  "height": 350,
+		  "shapes": [
+		    {
+		      "id": "rect1",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ]
+		    },
+		    {
+		      "id": "circ1",
+		      "type": "circle",
+		      "radius": 25,
+		      "centerId": "O"
+		    }
+		  ],
 		  "vertices": [
 		    {
 		      "x": 25,
@@ -1189,121 +874,6 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "x": 187.5,
 		      "y": 175,
 		      "id": "R"
-		    },
-		    {
-		      "x": 186.64814565,
-		      "y": 181.470476125,
-		      "id": "c1"
-		    },
-		    {
-		      "x": 184.1506351,
-		      "y": 187.5,
-		      "id": "c2"
-		    },
-		    {
-		      "x": 180.17766928,
-		      "y": 192.67766928,
-		      "id": "c3"
-		    },
-		    {
-		      "x": 175,
-		      "y": 196.6506351,
-		      "id": "c4"
-		    },
-		    {
-		      "x": 168.970476125,
-		      "y": 199.14814565,
-		      "id": "c5"
-		    },
-		    {
-		      "x": 162.5,
-		      "y": 200,
-		      "id": "c6"
-		    },
-		    {
-		      "x": 156.029523875,
-		      "y": 199.14814565,
-		      "id": "c7"
-		    },
-		    {
-		      "x": 150,
-		      "y": 196.6506351,
-		      "id": "c8"
-		    },
-		    {
-		      "x": 144.82233072,
-		      "y": 192.67766928,
-		      "id": "c9"
-		    },
-		    {
-		      "x": 140.8493649,
-		      "y": 187.5,
-		      "id": "c10"
-		    },
-		    {
-		      "x": 138.35185435,
-		      "y": 181.470476125,
-		      "id": "c11"
-		    },
-		    {
-		      "x": 137.5,
-		      "y": 175,
-		      "id": "L"
-		    },
-		    {
-		      "x": 138.35185435,
-		      "y": 168.529523875,
-		      "id": "c13"
-		    },
-		    {
-		      "x": 140.8493649,
-		      "y": 162.5,
-		      "id": "c14"
-		    },
-		    {
-		      "x": 144.82233072,
-		      "y": 157.32233072,
-		      "id": "c15"
-		    },
-		    {
-		      "x": 150,
-		      "y": 153.3493649,
-		      "id": "c16"
-		    },
-		    {
-		      "x": 156.029523875,
-		      "y": 150.85185435,
-		      "id": "c17"
-		    },
-		    {
-		      "x": 162.5,
-		      "y": 150,
-		      "id": "c18"
-		    },
-		    {
-		      "x": 168.970476125,
-		      "y": 150.85185435,
-		      "id": "c19"
-		    },
-		    {
-		      "x": 175,
-		      "y": 153.3493649,
-		      "id": "c20"
-		    },
-		    {
-		      "x": 180.17766928,
-		      "y": 157.32233072,
-		      "id": "c21"
-		    },
-		    {
-		      "x": 184.1506351,
-		      "y": 162.5,
-		      "id": "c22"
-		    },
-		    {
-		      "x": 186.64814565,
-		      "y": 168.529523875,
-		      "id": "c23"
 		    }
 		  ],
 		  "regionLabels": null,
@@ -1341,13 +911,17 @@ describe("compositeShapeDiagram widget tests", () => {
 		  ],
 		  "shadedRegions": [
 		    {
-		      "fillColor": "#ccfaff80",
-		      "vertexIds": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ]
+		      "path": [
+		        {
+		          "shapeId": "rect1",
+		          "pathType": "outer"
+		        },
+		        {
+		          "shapeId": "circ1",
+		          "pathType": "inner"
+		        }
+		      ],
+		      "fillColor": "#ccfaff80"
 		    }
 		  ],
 		  "internalSegments": [
@@ -1359,150 +933,6 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "style": "solid",
 		      "toVertexId": "R",
 		      "fromVertexId": "O"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c1",
-		      "fromVertexId": "R"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c2",
-		      "fromVertexId": "c1"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c3",
-		      "fromVertexId": "c2"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c4",
-		      "fromVertexId": "c3"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c5",
-		      "fromVertexId": "c4"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c6",
-		      "fromVertexId": "c5"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c7",
-		      "fromVertexId": "c6"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c8",
-		      "fromVertexId": "c7"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c9",
-		      "fromVertexId": "c8"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c10",
-		      "fromVertexId": "c9"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c11",
-		      "fromVertexId": "c10"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "L",
-		      "fromVertexId": "c11"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c13",
-		      "fromVertexId": "L"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c14",
-		      "fromVertexId": "c13"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c15",
-		      "fromVertexId": "c14"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c16",
-		      "fromVertexId": "c15"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c17",
-		      "fromVertexId": "c16"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c18",
-		      "fromVertexId": "c17"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c19",
-		      "fromVertexId": "c18"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c20",
-		      "fromVertexId": "c19"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c21",
-		      "fromVertexId": "c20"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c22",
-		      "fromVertexId": "c21"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c23",
-		      "fromVertexId": "c22"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "R",
-		      "fromVertexId": "c23"
 		    }
 		  ],
 		  "rightAngleMarkers": null
@@ -1524,172 +954,71 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc12b923ac5d6ad9e
-	// Question: Area of a shaded region (rectangle with inscribed circle)
+	// Question: Area of a shaded region between a rectangle and a circle
 	// Widget key: image_1
-	test("composite-shape-diagram - [xc12b923ac5d6ad9e] Area of a shaded region (rectangle with inscribed circle)", async () => {
+	test("composite-shape-diagram - [xc12b923ac5d6ad9e] Area of a shaded region between a rectangle and a circle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 420,
-		  "height": 560,
+		  "width": 360,
+		  "height": 360,
+		  "shapes": [
+		    {
+		      "id": "rect",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "topLeft",
+		        "topRight",
+		        "bottomRight",
+		        "bottomLeft"
+		      ]
+		    },
+		    {
+		      "id": "circle",
+		      "type": "circle",
+		      "radius": 35,
+		      "centerId": "center"
+		    }
+		  ],
 		  "vertices": [
 		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "A"
+		      "x": 35,
+		      "y": 35,
+		      "id": "topLeft"
 		    },
 		    {
-		      "x": 3,
-		      "y": 0,
-		      "id": "B"
+		      "x": 140,
+		      "y": 35,
+		      "id": "topRight"
 		    },
 		    {
-		      "x": 3,
-		      "y": 4,
-		      "id": "C"
+		      "x": 140,
+		      "y": 175,
+		      "id": "bottomRight"
 		    },
 		    {
-		      "x": 0,
-		      "y": 4,
-		      "id": "D"
+		      "x": 35,
+		      "y": 175,
+		      "id": "bottomLeft"
 		    },
 		    {
-		      "x": 1.5,
-		      "y": 2,
-		      "id": "O"
+		      "x": 87.5,
+		      "y": 105,
+		      "id": "center"
 		    },
 		    {
-		      "x": 2.5,
-		      "y": 2,
-		      "id": "P"
-		    },
-		    {
-		      "x": 2.5,
-		      "y": 2,
-		      "id": "c0"
-		    },
-		    {
-		      "x": 2.465925826,
-		      "y": 2.258819045,
-		      "id": "c1"
-		    },
-		    {
-		      "x": 2.366025404,
-		      "y": 2.5,
-		      "id": "c2"
-		    },
-		    {
-		      "x": 2.207106781,
-		      "y": 2.707106781,
-		      "id": "c3"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2.866025404,
-		      "id": "c4"
-		    },
-		    {
-		      "x": 1.758819045,
-		      "y": 2.965925826,
-		      "id": "c5"
-		    },
-		    {
-		      "x": 1.5,
-		      "y": 3,
-		      "id": "c6"
-		    },
-		    {
-		      "x": 1.241180955,
-		      "y": 2.965925826,
-		      "id": "c7"
-		    },
-		    {
-		      "x": 1,
-		      "y": 2.866025404,
-		      "id": "c8"
-		    },
-		    {
-		      "x": 0.792893219,
-		      "y": 2.707106781,
-		      "id": "c9"
-		    },
-		    {
-		      "x": 0.633974596,
-		      "y": 2.5,
-		      "id": "c10"
-		    },
-		    {
-		      "x": 0.534074174,
-		      "y": 2.258819045,
-		      "id": "c11"
-		    },
-		    {
-		      "x": 0.5,
-		      "y": 2,
-		      "id": "c12"
-		    },
-		    {
-		      "x": 0.534074174,
-		      "y": 1.741180955,
-		      "id": "c13"
-		    },
-		    {
-		      "x": 0.633974596,
-		      "y": 1.5,
-		      "id": "c14"
-		    },
-		    {
-		      "x": 0.792893219,
-		      "y": 1.292893219,
-		      "id": "c15"
-		    },
-		    {
-		      "x": 1,
-		      "y": 1.133974596,
-		      "id": "c16"
-		    },
-		    {
-		      "x": 1.241180955,
-		      "y": 1.034074174,
-		      "id": "c17"
-		    },
-		    {
-		      "x": 1.5,
-		      "y": 1,
-		      "id": "c18"
-		    },
-		    {
-		      "x": 1.758819045,
-		      "y": 1.034074174,
-		      "id": "c19"
-		    },
-		    {
-		      "x": 2,
-		      "y": 1.133974596,
-		      "id": "c20"
-		    },
-		    {
-		      "x": 2.207106781,
-		      "y": 1.292893219,
-		      "id": "c21"
-		    },
-		    {
-		      "x": 2.366025404,
-		      "y": 1.5,
-		      "id": "c22"
-		    },
-		    {
-		      "x": 2.465925826,
-		      "y": 1.741180955,
-		      "id": "c23"
+		      "x": 122.5,
+		      "y": 105,
+		      "id": "circleRight"
 		    }
 		  ],
 		  "regionLabels": null,
 		  "boundaryEdges": [
 		    {
-		      "to": "B",
-		      "from": "A",
+		      "to": "topRight",
+		      "from": "topLeft",
 		      "type": "simple",
 		      "label": {
 		        "unit": "cm",
@@ -1697,65 +1026,40 @@ describe("compositeShapeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "to": "C",
-		      "from": "B",
+		      "to": "bottomRight",
+		      "from": "topRight",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "bottomLeft",
+		      "from": "bottomRight",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "topLeft",
+		      "from": "bottomLeft",
 		      "type": "simple",
 		      "label": {
 		        "unit": "cm",
 		        "value": 4
 		      }
-		    },
-		    {
-		      "to": "D",
-		      "from": "C",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "A",
-		      "from": "D",
-		      "type": "simple",
-		      "label": null
 		    }
 		  ],
 		  "shadedRegions": [
 		    {
-		      "fillColor": "#ccfaff80",
-		      "vertexIds": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ]
-		    },
-		    {
-		      "fillColor": "#ffffff",
-		      "vertexIds": [
-		        "c0",
-		        "c1",
-		        "c2",
-		        "c3",
-		        "c4",
-		        "c5",
-		        "c6",
-		        "c7",
-		        "c8",
-		        "c9",
-		        "c10",
-		        "c11",
-		        "c12",
-		        "c13",
-		        "c14",
-		        "c15",
-		        "c16",
-		        "c17",
-		        "c18",
-		        "c19",
-		        "c20",
-		        "c21",
-		        "c22",
-		        "c23"
-		      ]
+		      "path": [
+		        {
+		          "shapeId": "rect",
+		          "pathType": "outer"
+		        },
+		        {
+		          "shapeId": "circle",
+		          "pathType": "inner"
+		        }
+		      ],
+		      "fillColor": "#ccfaff80"
 		    }
 		  ],
 		  "internalSegments": [
@@ -1765,8 +1069,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 1
 		      },
 		      "style": "solid",
-		      "toVertexId": "P",
-		      "fromVertexId": "O"
+		      "toVertexId": "circleRight",
+		      "fromVertexId": "center"
 		    }
 		  ],
 		  "rightAngleMarkers": null
@@ -1788,45 +1092,64 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9b473530bde85c53
-	// Question: Shaded area between a rectangle and an inscribed circle
+	// Question: Area of a shaded region (rectangle and circle)
 	// Widget key: image_1
-	test("composite-shape-diagram - [x9b473530bde85c53] Shaded area between a rectangle and an inscribed circle", async () => {
+	test("composite-shape-diagram - [x9b473530bde85c53] Area of a shaded region (rectangle and circle)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
 		  "width": 350,
 		  "height": 350,
+		  "shapes": [
+		    {
+		      "id": "rect1",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "topLeft",
+		        "topRight",
+		        "bottomRight",
+		        "bottomLeft"
+		      ]
+		    },
+		    {
+		      "id": "circle1",
+		      "type": "circle",
+		      "radius": 50,
+		      "centerId": "center"
+		    }
+		  ],
 		  "vertices": [
 		    {
-		      "x": 0,
-		      "y": 0,
+		      "x": 25,
+		      "y": 25,
 		      "id": "topLeft"
 		    },
 		    {
-		      "x": 11,
-		      "y": 0,
+		      "x": 300,
+		      "y": 25,
 		      "id": "topRight"
 		    },
 		    {
-		      "x": 11,
-		      "y": 12,
+		      "x": 300,
+		      "y": 325,
 		      "id": "bottomRight"
 		    },
 		    {
-		      "x": 0,
-		      "y": 12,
+		      "x": 25,
+		      "y": 325,
 		      "id": "bottomLeft"
 		    },
 		    {
-		      "x": 5.5,
-		      "y": 6,
+		      "x": 162.5,
+		      "y": 175,
 		      "id": "center"
 		    },
 		    {
-		      "x": 7.5,
-		      "y": 6,
-		      "id": "radiusEnd"
+		      "x": 212.5,
+		      "y": 175,
+		      "id": "circleRight"
 		    }
 		  ],
 		  "regionLabels": null,
@@ -1837,17 +1160,14 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "type": "simple",
 		      "label": {
 		        "unit": "cm",
-		        "value": 11
+		        "value": 12
 		      }
 		    },
 		    {
 		      "to": "bottomRight",
 		      "from": "topRight",
 		      "type": "simple",
-		      "label": {
-		        "unit": "cm",
-		        "value": 12
-		      }
+		      "label": null
 		    },
 		    {
 		      "to": "bottomLeft",
@@ -1859,10 +1179,27 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "to": "topLeft",
 		      "from": "bottomLeft",
 		      "type": "simple",
-		      "label": null
+		      "label": {
+		        "unit": "cm",
+		        "value": 11
+		      }
 		    }
 		  ],
-		  "shadedRegions": null,
+		  "shadedRegions": [
+		    {
+		      "path": [
+		        {
+		          "shapeId": "rect1",
+		          "pathType": "outer"
+		        },
+		        {
+		          "shapeId": "circle1",
+		          "pathType": "inner"
+		        }
+		      ],
+		      "fillColor": "#ccfaff80"
+		    }
+		  ],
 		  "internalSegments": [
 		    {
 		      "label": {
@@ -1870,7 +1207,7 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 2
 		      },
 		      "style": "solid",
-		      "toVertexId": "radiusEnd",
+		      "toVertexId": "circleRight",
 		      "fromVertexId": "center"
 		    }
 		  ],
@@ -1893,15 +1230,34 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf0438c2e9eb979cd
-	// Question: Area of a shaded region between a circle and a square
+	// Question: Area of a shaded region with a circle inside a square
 	// Widget key: image_1
-	test("composite-shape-diagram - [xf0438c2e9eb979cd] Area of a shaded region between a circle and a square", async () => {
+	test("composite-shape-diagram - [xf0438c2e9eb979cd] Area of a shaded region with a circle inside a square", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "none",
 		  "type": "compositeShapeDiagram",
 		  "width": 350,
 		  "height": 325,
+		  "shapes": [
+		    {
+		      "id": "square",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ]
+		    },
+		    {
+		      "id": "circle",
+		      "type": "circle",
+		      "radius": 125,
+		      "centerId": "center"
+		    }
+		  ],
 		  "vertices": [
 		    {
 		      "x": 25,
@@ -1926,87 +1282,12 @@ describe("compositeShapeDiagram widget tests", () => {
 		    {
 		      "x": 162.5,
 		      "y": 162.5,
-		      "id": "O"
+		      "id": "center"
 		    },
 		    {
 		      "x": 287.5,
 		      "y": 162.5,
-		      "id": "c0"
-		    },
-		    {
-		      "x": 277.985,
-		      "y": 210.335,
-		      "id": "c1"
-		    },
-		    {
-		      "x": 250.888,
-		      "y": 250.888,
-		      "id": "c2"
-		    },
-		    {
-		      "x": 210.335,
-		      "y": 277.985,
-		      "id": "c3"
-		    },
-		    {
-		      "x": 162.5,
-		      "y": 287.5,
-		      "id": "c4"
-		    },
-		    {
-		      "x": 114.665,
-		      "y": 277.985,
-		      "id": "c5"
-		    },
-		    {
-		      "x": 74.112,
-		      "y": 250.888,
-		      "id": "c6"
-		    },
-		    {
-		      "x": 47.015,
-		      "y": 210.335,
-		      "id": "c7"
-		    },
-		    {
-		      "x": 37.5,
-		      "y": 162.5,
-		      "id": "c8"
-		    },
-		    {
-		      "x": 47.015,
-		      "y": 114.665,
-		      "id": "c9"
-		    },
-		    {
-		      "x": 74.112,
-		      "y": 74.112,
-		      "id": "c10"
-		    },
-		    {
-		      "x": 114.665,
-		      "y": 47.015,
-		      "id": "c11"
-		    },
-		    {
-		      "x": 162.5,
-		      "y": 37.5,
-		      "id": "c12"
-		    },
-		    {
-		      "x": 210.335,
-		      "y": 47.015,
-		      "id": "c13"
-		    },
-		    {
-		      "x": 250.888,
-		      "y": 74.112,
-		      "id": "c14"
-		    },
-		    {
-		      "x": 277.985,
-		      "y": 114.665,
-		      "id": "c15"
+		      "id": "circleRight"
 		    }
 		  ],
 		  "regionLabels": null,
@@ -2044,141 +1325,28 @@ describe("compositeShapeDiagram widget tests", () => {
 		  ],
 		  "shadedRegions": [
 		    {
-		      "fillColor": "#ccfaff80",
-		      "vertexIds": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ]
-		    },
-		    {
-		      "fillColor": "#ffffff",
-		      "vertexIds": [
-		        "c0",
-		        "c1",
-		        "c2",
-		        "c3",
-		        "c4",
-		        "c5",
-		        "c6",
-		        "c7",
-		        "c8",
-		        "c9",
-		        "c10",
-		        "c11",
-		        "c12",
-		        "c13",
-		        "c14",
-		        "c15"
-		      ]
+		      "path": [
+		        {
+		          "shapeId": "square",
+		          "pathType": "outer"
+		        },
+		        {
+		          "shapeId": "circle",
+		          "pathType": "inner"
+		        }
+		      ],
+		      "fillColor": "#ccfaff80"
 		    }
 		  ],
 		  "internalSegments": [
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c1",
-		      "fromVertexId": "c0"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c2",
-		      "fromVertexId": "c1"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c3",
-		      "fromVertexId": "c2"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c4",
-		      "fromVertexId": "c3"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c5",
-		      "fromVertexId": "c4"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c6",
-		      "fromVertexId": "c5"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c7",
-		      "fromVertexId": "c6"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c8",
-		      "fromVertexId": "c7"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c9",
-		      "fromVertexId": "c8"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c10",
-		      "fromVertexId": "c9"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c11",
-		      "fromVertexId": "c10"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c12",
-		      "fromVertexId": "c11"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c13",
-		      "fromVertexId": "c12"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c14",
-		      "fromVertexId": "c13"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c15",
-		      "fromVertexId": "c14"
-		    },
-		    {
-		      "label": null,
-		      "style": "solid",
-		      "toVertexId": "c0",
-		      "fromVertexId": "c15"
-		    },
 		    {
 		      "label": {
 		        "unit": "cm",
 		        "value": 5
 		      },
 		      "style": "solid",
-		      "toVertexId": "c0",
-		      "fromVertexId": "O"
+		      "toVertexId": "circleRight",
+		      "fromVertexId": "center"
 		    }
 		  ],
 		  "rightAngleMarkers": null
@@ -2200,45 +1368,64 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xba5a78efccb96b8e
-	// Question: Area of a shaded region (circle inside rectangle)
+	// Question: Area of a shaded region (rectangle minus circle)
 	// Widget key: image_1
-	test("composite-shape-diagram - [xba5a78efccb96b8e] Area of a shaded region (circle inside rectangle)", async () => {
+	test("composite-shape-diagram - [xba5a78efccb96b8e] Area of a shaded region (rectangle minus circle)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 440,
-		  "height": 300,
+		  "width": 300,
+		  "height": 390,
+		  "shapes": [
+		    {
+		      "id": "rect1",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ]
+		    },
+		    {
+		      "id": "circle1",
+		      "type": "circle",
+		      "radius": 50,
+		      "centerId": "center"
+		    }
+		  ],
 		  "vertices": [
 		    {
-		      "x": 0,
-		      "y": 0,
+		      "x": 25,
+		      "y": 25,
 		      "id": "A"
 		    },
 		    {
-		      "x": 11,
-		      "y": 0,
+		      "x": 200,
+		      "y": 25,
 		      "id": "B"
 		    },
 		    {
-		      "x": 11,
-		      "y": 7,
+		      "x": 200,
+		      "y": 300,
 		      "id": "C"
 		    },
 		    {
-		      "x": 0,
-		      "y": 7,
+		      "x": 25,
+		      "y": 300,
 		      "id": "D"
 		    },
 		    {
-		      "x": 5.5,
-		      "y": 3.5,
-		      "id": "O"
+		      "x": 112.5,
+		      "y": 162.5,
+		      "id": "center"
 		    },
 		    {
-		      "x": 7.5,
-		      "y": 3.5,
-		      "id": "R"
+		      "x": 162.5,
+		      "y": 162.5,
+		      "id": "circleRight"
 		    }
 		  ],
 		  "regionLabels": null,
@@ -2249,14 +1436,17 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "type": "simple",
 		      "label": {
 		        "unit": "cm",
-		        "value": 11
+		        "value": 7
 		      }
 		    },
 		    {
 		      "to": "C",
 		      "from": "B",
 		      "type": "simple",
-		      "label": null
+		      "label": {
+		        "unit": "cm",
+		        "value": 11
+		      }
 		    },
 		    {
 		      "to": "D",
@@ -2268,13 +1458,24 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "to": "A",
 		      "from": "D",
 		      "type": "simple",
-		      "label": {
-		        "unit": "cm",
-		        "value": 7
-		      }
+		      "label": null
 		    }
 		  ],
-		  "shadedRegions": null,
+		  "shadedRegions": [
+		    {
+		      "path": [
+		        {
+		          "shapeId": "rect1",
+		          "pathType": "outer"
+		        },
+		        {
+		          "shapeId": "circle1",
+		          "pathType": "inner"
+		        }
+		      ],
+		      "fillColor": "#ccfaff80"
+		    }
+		  ],
 		  "internalSegments": [
 		    {
 		      "label": {
@@ -2282,8 +1483,289 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 2
 		      },
 		      "style": "solid",
-		      "toVertexId": "R",
-		      "fromVertexId": "O"
+		      "toVertexId": "circleRight",
+		      "fromVertexId": "center"
+		    }
+		  ],
+		  "rightAngleMarkers": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for compositeShapeDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7a1aff151bb13cf8
+	// Question: How many tile packages for a patio extension
+	// Widget key: image_1
+	test("composite-shape-diagram - [x7a1aff151bb13cf8] How many tile packages for a patio extension", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "fit": "auto",
+		  "type": "compositeShapeDiagram",
+		  "width": 320,
+		  "height": 320,
+		  "shapes": [
+		    {
+		      "id": "outer",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "O1",
+		        "O2",
+		        "O3",
+		        "O4"
+		      ]
+		    },
+		    {
+		      "id": "inner",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "I1",
+		        "I2",
+		        "I3",
+		        "I4"
+		      ]
+		    }
+		  ],
+		  "vertices": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "O1"
+		    },
+		    {
+		      "x": 9.25,
+		      "y": 0,
+		      "id": "O2"
+		    },
+		    {
+		      "x": 9.25,
+		      "y": 7.75,
+		      "id": "O3"
+		    },
+		    {
+		      "x": 0,
+		      "y": 7.75,
+		      "id": "O4"
+		    },
+		    {
+		      "x": 1.5,
+		      "y": 0,
+		      "id": "I1"
+		    },
+		    {
+		      "x": 7.75,
+		      "y": 0,
+		      "id": "I2"
+		    },
+		    {
+		      "x": 7.75,
+		      "y": 6.25,
+		      "id": "I3"
+		    },
+		    {
+		      "x": 1.5,
+		      "y": 6.25,
+		      "id": "I4"
+		    }
+		  ],
+		  "regionLabels": [
+		    {
+		      "text": "Patio",
+		      "position": {
+		        "x": 4.625,
+		        "y": 3.125
+		      }
+		    },
+		    {
+		      "text": "Extension",
+		      "position": {
+		        "x": 4.625,
+		        "y": 7.1
+		      }
+		    }
+		  ],
+		  "boundaryEdges": [
+		    {
+		      "to": "O2",
+		      "from": "O1",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "O3",
+		      "from": "O2",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "O4",
+		      "from": "O3",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "O1",
+		      "from": "O4",
+		      "type": "simple",
+		      "label": null
+		    }
+		  ],
+		  "shadedRegions": [
+		    {
+		      "path": [
+		        {
+		          "shapeId": "outer",
+		          "pathType": "outer"
+		        },
+		        {
+		          "shapeId": "inner",
+		          "pathType": "inner"
+		        }
+		      ],
+		      "fillColor": "#ccfaff"
+		    }
+		  ],
+		  "internalSegments": null,
+		  "rightAngleMarkers": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for compositeShapeDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcfa9b7a54cfbf6a1
+	// Question: Volume of movable storage steps
+	// Widget key: image_1
+	test("composite-shape-diagram - [xcfa9b7a54cfbf6a1] Volume of movable storage steps", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "fit": "auto",
+		  "type": "compositeShapeDiagram",
+		  "width": 420,
+		  "height": 360,
+		  "shapes": null,
+		  "vertices": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "TL"
+		    },
+		    {
+		      "x": 20,
+		      "y": 0,
+		      "id": "MT"
+		    },
+		    {
+		      "x": 20,
+		      "y": 15,
+		      "id": "IT"
+		    },
+		    {
+		      "x": 40,
+		      "y": 15,
+		      "id": "RT"
+		    },
+		    {
+		      "x": 40,
+		      "y": 30,
+		      "id": "BR"
+		    },
+		    {
+		      "x": 0,
+		      "y": 30,
+		      "id": "BL"
+		    },
+		    {
+		      "x": 55,
+		      "y": 10,
+		      "id": "depth1"
+		    }
+		  ],
+		  "regionLabels": null,
+		  "boundaryEdges": [
+		    {
+		      "to": "BR",
+		      "from": "BL",
+		      "type": "simple",
+		      "label": {
+		        "unit": "m",
+		        "value": 0.4
+		      }
+		    },
+		    {
+		      "to": "RT",
+		      "from": "BR",
+		      "type": "simple",
+		      "label": {
+		        "unit": "m",
+		        "value": 0.15
+		      }
+		    },
+		    {
+		      "to": "IT",
+		      "from": "RT",
+		      "type": "simple",
+		      "label": {
+		        "unit": "m",
+		        "value": 0.2
+		      }
+		    },
+		    {
+		      "to": "MT",
+		      "from": "IT",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "TL",
+		      "from": "MT",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "BL",
+		      "from": "TL",
+		      "type": "simple",
+		      "label": {
+		        "unit": "m",
+		        "value": 0.3
+		      }
+		    }
+		  ],
+		  "shadedRegions": null,
+		  "internalSegments": [
+		    {
+		      "label": {
+		        "unit": "m",
+		        "value": 0.5
+		      },
+		      "style": "dashed",
+		      "toVertexId": "depth1",
+		      "fromVertexId": "RT"
 		    }
 		  ],
 		  "rightAngleMarkers": null
@@ -2305,80 +1787,92 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xaee2680b7bbe6277
-	// Question: Find the areas of two triangles and the whole figure
+	// Question: Find the areas of the parts and the whole figure
 	// Widget key: image_1
-	test("composite-shape-diagram - [xaee2680b7bbe6277] Find the areas of two triangles and the whole figure", async () => {
+	test("composite-shape-diagram - [xaee2680b7bbe6277] Find the areas of the parts and the whole figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 400,
-		  "height": 320,
+		  "width": 360,
+		  "height": 360,
+		  "shapes": null,
 		  "vertices": [
 		    {
-		      "x": 0,
-		      "y": 0,
+		      "x": 103.662,
+		      "y": 2.254,
 		      "id": "top"
 		    },
 		    {
-		      "x": -6,
-		      "y": 10,
-		      "id": "left"
+		      "x": 24.789,
+		      "y": 205.07,
+		      "id": "leftMid"
 		    },
 		    {
-		      "x": 6,
-		      "y": 10,
-		      "id": "right"
+		      "x": 182.535,
+		      "y": 205.07,
+		      "id": "rightMid"
 		    },
 		    {
-		      "x": 0,
-		      "y": 20,
+		      "x": 103.662,
+		      "y": 317.746,
 		      "id": "bottom"
 		    },
 		    {
-		      "x": 0,
-		      "y": 10,
-		      "id": "mid"
+		      "x": 16.789,
+		      "y": 2.254,
+		      "id": "leftScaleTop"
+		    },
+		    {
+		      "x": 16.789,
+		      "y": 205.07,
+		      "id": "leftScaleMid"
+		    },
+		    {
+		      "x": 16.789,
+		      "y": 317.746,
+		      "id": "leftScaleBottom"
 		    }
 		  ],
 		  "regionLabels": [
 		    {
 		      "text": "A",
 		      "position": {
-		        "x": 0,
-		        "y": 16
+		        "x": 103.662,
+		        "y": 120
 		      }
 		    },
 		    {
 		      "text": "B",
 		      "position": {
-		        "x": 0,
-		        "y": 4
+		        "x": 103.662,
+		        "y": 270
 		      }
 		    }
 		  ],
 		  "boundaryEdges": [
 		    {
-		      "to": "left",
-		      "from": "bottom",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "top",
-		      "from": "left",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "right",
+		      "to": "rightMid",
 		      "from": "top",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
 		      "to": "bottom",
-		      "from": "right",
+		      "from": "rightMid",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "leftMid",
+		      "from": "bottom",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "top",
+		      "from": "leftMid",
 		      "type": "simple",
 		      "label": null
 		    }
@@ -2391,26 +1885,26 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 7
 		      },
 		      "style": "dashed",
-		      "toVertexId": "right",
-		      "fromVertexId": "left"
+		      "toVertexId": "rightMid",
+		      "fromVertexId": "leftMid"
 		    },
 		    {
 		      "label": {
 		        "unit": "units",
 		        "value": 9
 		      },
-		      "style": "dashed",
-		      "toVertexId": "bottom",
-		      "fromVertexId": "mid"
+		      "style": "solid",
+		      "toVertexId": "leftScaleTop",
+		      "fromVertexId": "leftScaleMid"
 		    },
 		    {
 		      "label": {
 		        "unit": "units",
 		        "value": 5
 		      },
-		      "style": "dashed",
-		      "toVertexId": "top",
-		      "fromVertexId": "mid"
+		      "style": "solid",
+		      "toVertexId": "leftScaleBottom",
+		      "fromVertexId": "leftScaleMid"
 		    }
 		  ],
 		  "rightAngleMarkers": null
@@ -2438,9 +1932,11 @@ describe("compositeShapeDiagram widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 520,
-		  "height": 340,
+		  "width": 400,
+		  "height": 300,
+		  "shapes": null,
 		  "vertices": [
 		    {
 		      "x": 28.829,
@@ -2451,16 +1947,6 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "x": 28.829,
 		      "y": 118.198,
 		      "id": "L"
-		    },
-		    {
-		      "x": 86.487,
-		      "y": 118.198,
-		      "id": "H1"
-		    },
-		    {
-		      "x": 144.144,
-		      "y": 118.198,
-		      "id": "H2"
 		    },
 		    {
 		      "x": 86.487,
@@ -2476,21 +1962,31 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "x": 317.117,
 		      "y": 118.198,
 		      "id": "R"
+		    },
+		    {
+		      "x": 86.487,
+		      "y": 118.198,
+		      "id": "V1top"
+		    },
+		    {
+		      "x": 144.144,
+		      "y": 118.198,
+		      "id": "V2top"
 		    }
 		  ],
 		  "regionLabels": [
 		    {
 		      "text": "A",
 		      "position": {
-		        "x": 110,
+		        "x": 150,
 		        "y": 70
 		      }
 		    },
 		    {
 		      "text": "B",
 		      "position": {
-		        "x": 55,
-		        "y": 155
+		        "x": 60,
+		        "y": 150
 		      }
 		    },
 		    {
@@ -2503,8 +1999,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		    {
 		      "text": "D",
 		      "position": {
-		        "x": 220,
-		        "y": 140
+		        "x": 230,
+		        "y": 150
 		      }
 		    }
 		  ],
@@ -2543,41 +2039,7 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "label": null
 		    }
 		  ],
-		  "shadedRegions": [
-		    {
-		      "fillColor": "#bc26124d",
-		      "vertexIds": [
-		        "T",
-		        "L",
-		        "R"
-		      ]
-		    },
-		    {
-		      "fillColor": "#e07d104d",
-		      "vertexIds": [
-		        "L",
-		        "BL",
-		        "H1"
-		      ]
-		    },
-		    {
-		      "fillColor": "#ca337c4d",
-		      "vertexIds": [
-		        "H1",
-		        "BL",
-		        "BR",
-		        "H2"
-		      ]
-		    },
-		    {
-		      "fillColor": "#01a9954d",
-		      "vertexIds": [
-		        "H2",
-		        "BR",
-		        "R"
-		      ]
-		    }
-		  ],
+		  "shadedRegions": null,
 		  "internalSegments": [
 		    {
 		      "label": {
@@ -2585,7 +2047,7 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 2
 		      },
 		      "style": "dashed",
-		      "toVertexId": "H1",
+		      "toVertexId": "V1top",
 		      "fromVertexId": "L"
 		    },
 		    {
@@ -2594,8 +2056,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 2
 		      },
 		      "style": "dashed",
-		      "toVertexId": "H2",
-		      "fromVertexId": "H1"
+		      "toVertexId": "V2top",
+		      "fromVertexId": "V1top"
 		    },
 		    {
 		      "label": {
@@ -2604,7 +2066,7 @@ describe("compositeShapeDiagram widget tests", () => {
 		      },
 		      "style": "dashed",
 		      "toVertexId": "R",
-		      "fromVertexId": "H2"
+		      "fromVertexId": "V2top"
 		    },
 		    {
 		      "label": {
@@ -2613,7 +2075,7 @@ describe("compositeShapeDiagram widget tests", () => {
 		      },
 		      "style": "dashed",
 		      "toVertexId": "BL",
-		      "fromVertexId": "H1"
+		      "fromVertexId": "V1top"
 		    },
 		    {
 		      "label": {
@@ -2622,24 +2084,34 @@ describe("compositeShapeDiagram widget tests", () => {
 		      },
 		      "style": "dashed",
 		      "toVertexId": "BR",
-		      "fromVertexId": "H2"
+		      "fromVertexId": "V2top"
 		    }
 		  ],
 		  "rightAngleMarkers": [
 		    {
 		      "cornerVertexId": "L",
 		      "adjacentVertex1Id": "T",
-		      "adjacentVertex2Id": "H1"
+		      "adjacentVertex2Id": "V1top"
 		    },
 		    {
-		      "cornerVertexId": "H1",
+		      "cornerVertexId": "V1top",
 		      "adjacentVertex1Id": "L",
 		      "adjacentVertex2Id": "BL"
 		    },
 		    {
-		      "cornerVertexId": "H2",
+		      "cornerVertexId": "V2top",
 		      "adjacentVertex1Id": "R",
 		      "adjacentVertex2Id": "BR"
+		    },
+		    {
+		      "cornerVertexId": "BL",
+		      "adjacentVertex1Id": "V1top",
+		      "adjacentVertex2Id": "BR"
+		    },
+		    {
+		      "cornerVertexId": "BR",
+		      "adjacentVertex1Id": "V2top",
+		      "adjacentVertex2Id": "BL"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -2660,98 +2132,123 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1a7f41561b0f2295
-	// Question: Find areas of parts and whole of a composite figure
+	// Question: Areas of parts of a composite figure
 	// Widget key: image_1
-	test("composite-shape-diagram - [x1a7f41561b0f2295] Find areas of parts and whole of a composite figure", async () => {
+	test("composite-shape-diagram - [x1a7f41561b0f2295] Areas of parts of a composite figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 480,
-		  "height": 360,
+		  "width": 360,
+		  "height": 400,
+		  "shapes": null,
 		  "vertices": [
 		    {
 		      "x": 28.852,
 		      "y": 238.689,
-		      "id": "L_bottom"
+		      "id": "A_leftBottom"
 		    },
 		    {
 		      "x": 28.852,
 		      "y": 133.77,
-		      "id": "L_top"
+		      "id": "B_leftTop"
 		    },
 		    {
 		      "x": 186.23,
 		      "y": 2.623,
-		      "id": "topApex"
+		      "id": "C_topRight"
 		    },
 		    {
 		      "x": 186.23,
 		      "y": 238.689,
-		      "id": "R_mid"
+		      "id": "D_rightBottom"
 		    },
 		    {
 		      "x": 107.541,
 		      "y": 317.377,
-		      "id": "bottomPoint"
+		      "id": "E_bottomApex"
 		    },
 		    {
 		      "x": 186.23,
 		      "y": 133.77,
-		      "id": "R_top"
+		      "id": "R_topDash"
+		    },
+		    {
+		      "x": 186.23,
+		      "y": 317.377,
+		      "id": "R_extBottom"
 		    }
 		  ],
 		  "regionLabels": [
 		    {
 		      "text": "A",
 		      "position": {
-		        "x": 112,
-		        "y": 275
+		        "x": 100,
+		        "y": 90
 		      }
 		    },
 		    {
 		      "text": "B",
 		      "position": {
-		        "x": 108,
-		        "y": 186
+		        "x": 100,
+		        "y": 190
 		      }
 		    },
 		    {
 		      "text": "C",
 		      "position": {
-		        "x": 150,
-		        "y": 90
+		        "x": 120,
+		        "y": 280
 		      }
 		    }
 		  ],
 		  "boundaryEdges": [
 		    {
-		      "to": "L_top",
-		      "from": "L_bottom",
+		      "to": "B_leftTop",
+		      "from": "A_leftBottom",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "topApex",
-		      "from": "L_top",
+		      "to": "C_topRight",
+		      "from": "B_leftTop",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "R_mid",
-		      "from": "topApex",
+		      "path": [
+		        "C_topRight",
+		        "R_topDash",
+		        "D_rightBottom"
+		      ],
+		      "type": "partitioned",
+		      "segments": [
+		        {
+		          "label": {
+		            "unit": "units",
+		            "value": 5
+		          },
+		          "style": "solid"
+		        },
+		        {
+		          "label": {
+		            "unit": "units",
+		            "value": 4
+		          },
+		          "style": "solid"
+		        }
+		      ]
+		    },
+		    {
+		      "to": "E_bottomApex",
+		      "from": "D_rightBottom",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "bottomPoint",
-		      "from": "R_mid",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "L_bottom",
-		      "from": "bottomPoint",
+		      "to": "A_leftBottom",
+		      "from": "E_bottomApex",
 		      "type": "simple",
 		      "label": null
 		    }
@@ -2764,8 +2261,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 6
 		      },
 		      "style": "dashed",
-		      "toVertexId": "R_mid",
-		      "fromVertexId": "L_bottom"
+		      "toVertexId": "R_topDash",
+		      "fromVertexId": "B_leftTop"
 		    },
 		    {
 		      "label": {
@@ -2773,11 +2270,31 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 6
 		      },
 		      "style": "dashed",
-		      "toVertexId": "R_top",
-		      "fromVertexId": "L_top"
+		      "toVertexId": "D_rightBottom",
+		      "fromVertexId": "A_leftBottom"
+		    },
+		    {
+		      "label": {
+		        "unit": "units",
+		        "value": 3
+		      },
+		      "style": "dashed",
+		      "toVertexId": "R_extBottom",
+		      "fromVertexId": "D_rightBottom"
 		    }
 		  ],
-		  "rightAngleMarkers": null
+		  "rightAngleMarkers": [
+		    {
+		      "cornerVertexId": "B_leftTop",
+		      "adjacentVertex1Id": "A_leftBottom",
+		      "adjacentVertex2Id": "R_topDash"
+		    },
+		    {
+		      "cornerVertexId": "A_leftBottom",
+		      "adjacentVertex1Id": "B_leftTop",
+		      "adjacentVertex2Id": "D_rightBottom"
+		    }
+		  ]
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2796,112 +2313,120 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd9db17552e59568e
-	// Question: Areas of a composite figure (triangle and rectangles)
+	// Question: Area of a composite figure (triangle and rectangles)
 	// Widget key: image_1
-	test("composite-shape-diagram - [xd9db17552e59568e] Areas of a composite figure (triangle and rectangles)", async () => {
+	test("composite-shape-diagram - [xd9db17552e59568e] Area of a composite figure (triangle and rectangles)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
 		  "width": 320,
 		  "height": 306,
+		  "shapes": null,
 		  "vertices": [
 		    {
-		      "x": 30.085,
-		      "y": 276.239,
-		      "id": "bottomLeft"
+		      "x": 0,
+		      "y": 0,
+		      "id": "BL"
 		    },
 		    {
-		      "x": 30.085,
-		      "y": 30.086,
-		      "id": "topLeft"
+		      "x": 6,
+		      "y": 0,
+		      "id": "BM"
 		    },
 		    {
-		      "x": 194.188,
-		      "y": 30.086,
-		      "id": "topRightLargeRect"
+		      "x": 9,
+		      "y": 0,
+		      "id": "BR"
 		    },
 		    {
-		      "x": 194.188,
-		      "y": 84.786,
-		      "id": "junction"
+		      "x": 9,
+		      "y": 7,
+		      "id": "CR"
 		    },
 		    {
-		      "x": 276.239,
-		      "y": 84.786,
-		      "id": "topRight"
+		      "x": 6,
+		      "y": 7,
+		      "id": "CL"
 		    },
 		    {
-		      "x": 276.239,
-		      "y": 276.239,
-		      "id": "bottomRight"
+		      "x": 6,
+		      "y": 9,
+		      "id": "TT"
 		    },
 		    {
-		      "x": 194.188,
-		      "y": 276.239,
-		      "id": "bottomRightLargeRect"
+		      "x": 0,
+		      "y": 9,
+		      "id": "TL"
 		    }
 		  ],
 		  "regionLabels": [
 		    {
 		      "text": "A",
 		      "position": {
-		        "x": 112.1,
-		        "y": 153.2
+		        "x": 3,
+		        "y": 4.5
 		      }
 		    },
 		    {
 		      "text": "B",
 		      "position": {
-		        "x": 225,
-		        "y": 60
+		        "x": 7.5,
+		        "y": 8.4
 		      }
 		    },
 		    {
 		      "text": "C",
 		      "position": {
-		        "x": 235,
-		        "y": 190
+		        "x": 7.5,
+		        "y": 3.5
 		      }
 		    }
 		  ],
 		  "boundaryEdges": [
 		    {
-		      "to": "topLeft",
-		      "from": "bottomLeft",
-		      "type": "simple",
-		      "label": {
-		        "unit": "units",
-		        "value": 9
-		      }
+		      "path": [
+		        "BL",
+		        "BM",
+		        "BR"
+		      ],
+		      "type": "partitioned",
+		      "segments": [
+		        {
+		          "label": {
+		            "unit": "units",
+		            "value": 6
+		          },
+		          "style": "solid"
+		        },
+		        {
+		          "label": null,
+		          "style": "solid"
+		        }
+		      ]
 		    },
 		    {
-		      "to": "topRightLargeRect",
-		      "from": "topLeft",
-		      "type": "simple",
-		      "label": {
-		        "unit": "units",
-		        "value": 6
-		      }
-		    },
-		    {
-		      "to": "topRight",
-		      "from": "topRightLargeRect",
+		      "to": "CR",
+		      "from": "BR",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "bottomRight",
-		      "from": "topRight",
+		      "to": "TT",
+		      "from": "CR",
 		      "type": "simple",
-		      "label": {
-		        "unit": "units",
-		        "value": 7
-		      }
+		      "label": null
 		    },
 		    {
-		      "to": "bottomLeft",
-		      "from": "bottomRight",
+		      "to": "TL",
+		      "from": "TT",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "BL",
+		      "from": "TL",
 		      "type": "simple",
 		      "label": {
 		        "unit": "units",
@@ -2909,53 +2434,38 @@ describe("compositeShapeDiagram widget tests", () => {
 		      }
 		    }
 		  ],
-		  "shadedRegions": [
-		    {
-		      "fillColor": "#e84d3950",
-		      "vertexIds": [
-		        "topLeft",
-		        "topRightLargeRect",
-		        "bottomRightLargeRect",
-		        "bottomLeft"
-		      ]
-		    },
-		    {
-		      "fillColor": "#01a99550",
-		      "vertexIds": [
-		        "topRightLargeRect",
-		        "junction",
-		        "topRight"
-		      ]
-		    },
-		    {
-		      "fillColor": "#7854ab50",
-		      "vertexIds": [
-		        "junction",
-		        "topRight",
-		        "bottomRight",
-		        "bottomRightLargeRect"
-		      ]
-		    }
-		  ],
+		  "shadedRegions": null,
 		  "internalSegments": [
 		    {
-		      "label": null,
+		      "label": {
+		        "unit": "units",
+		        "value": 2
+		      },
 		      "style": "dashed",
-		      "toVertexId": "bottomRightLargeRect",
-		      "fromVertexId": "topRightLargeRect"
+		      "toVertexId": "CL",
+		      "fromVertexId": "TT"
+		    },
+		    {
+		      "label": {
+		        "unit": "units",
+		        "value": 7
+		      },
+		      "style": "dashed",
+		      "toVertexId": "BM",
+		      "fromVertexId": "CL"
 		    },
 		    {
 		      "label": null,
 		      "style": "dashed",
-		      "toVertexId": "topRight",
-		      "fromVertexId": "junction"
+		      "toVertexId": "CR",
+		      "fromVertexId": "CL"
 		    }
 		  ],
 		  "rightAngleMarkers": [
 		    {
-		      "cornerVertexId": "junction",
-		      "adjacentVertex1Id": "topRightLargeRect",
-		      "adjacentVertex2Id": "topRight"
+		      "cornerVertexId": "CL",
+		      "adjacentVertex1Id": "TT",
+		      "adjacentVertex2Id": "CR"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -2976,49 +2486,63 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x618d8cf7ccef9284
-	// Question: Find areas of a composite figure
+	// Question: Areas of parts and whole for a composite figure
 	// Widget key: image_1
-	test("composite-shape-diagram - [x618d8cf7ccef9284] Find areas of a composite figure", async () => {
+	test("composite-shape-diagram - [x618d8cf7ccef9284] Areas of parts and whole for a composite figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 480,
+		  "width": 360,
 		  "height": 360,
+		  "shapes": [
+		    {
+		      "id": "outer",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "LT",
+		        "RT",
+		        "RB",
+		        "M",
+		        "LB"
+		      ]
+		    }
+		  ],
 		  "vertices": [
 		    {
-		      "x": 31.429,
-		      "y": 31.429,
-		      "id": "TL"
+		      "x": 0,
+		      "y": 0,
+		      "id": "LT"
 		    },
 		    {
-		      "x": 260,
-		      "y": 31.429,
-		      "id": "TR"
+		      "x": 8,
+		      "y": 0,
+		      "id": "RT"
 		    },
 		    {
-		      "x": 260,
-		      "y": 317.143,
-		      "id": "BR"
+		      "x": 8,
+		      "y": 10,
+		      "id": "RB"
 		    },
 		    {
-		      "x": 31.429,
-		      "y": 317.143,
-		      "id": "BL"
+		      "x": 6,
+		      "y": 5,
+		      "id": "M"
 		    },
 		    {
-		      "x": 202.857,
-		      "y": 174.286,
-		      "id": "E"
+		      "x": 0,
+		      "y": 10,
+		      "id": "LB"
 		    },
 		    {
-		      "x": 31.429,
-		      "y": 174.286,
+		      "x": 0,
+		      "y": 5,
 		      "id": "Lmid"
 		    },
 		    {
-		      "x": 260,
-		      "y": 174.286,
+		      "x": 8,
+		      "y": 5,
 		      "id": "Rmid"
 		    }
 		  ],
@@ -3026,35 +2550,29 @@ describe("compositeShapeDiagram widget tests", () => {
 		    {
 		      "text": "A",
 		      "position": {
-		        "x": 145.7,
-		        "y": 100
+		        "x": 4,
+		        "y": 2.5
 		      }
 		    },
 		    {
 		      "text": "B",
 		      "position": {
-		        "x": 90,
-		        "y": 240
+		        "x": 2.2,
+		        "y": 7.2
 		      }
 		    },
 		    {
 		      "text": "C",
 		      "position": {
-		        "x": 235,
-		        "y": 240
+		        "x": 7.2,
+		        "y": 7.2
 		      }
 		    }
 		  ],
 		  "boundaryEdges": [
 		    {
-		      "to": "TL",
-		      "from": "BL",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "TR",
-		      "from": "TL",
+		      "to": "RT",
+		      "from": "LT",
 		      "type": "simple",
 		      "label": {
 		        "unit": "units",
@@ -3062,51 +2580,31 @@ describe("compositeShapeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "to": "BR",
-		      "from": "TR",
+		      "to": "RB",
+		      "from": "RT",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "E",
-		      "from": "BR",
+		      "to": "M",
+		      "from": "RB",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "BL",
-		      "from": "E",
+		      "to": "LB",
+		      "from": "M",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "LT",
+		      "from": "LB",
 		      "type": "simple",
 		      "label": null
 		    }
 		  ],
-		  "shadedRegions": [
-		    {
-		      "fillColor": "#e84d3950",
-		      "vertexIds": [
-		        "TL",
-		        "TR",
-		        "Rmid",
-		        "Lmid"
-		      ]
-		    },
-		    {
-		      "fillColor": "#01a99550",
-		      "vertexIds": [
-		        "Lmid",
-		        "BL",
-		        "E"
-		      ]
-		    },
-		    {
-		      "fillColor": "#ca337c50",
-		      "vertexIds": [
-		        "Rmid",
-		        "BR",
-		        "E"
-		      ]
-		    }
-		  ],
+		  "shadedRegions": null,
 		  "internalSegments": [
 		    {
 		      "label": {
@@ -3114,7 +2612,7 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 6
 		      },
 		      "style": "dashed",
-		      "toVertexId": "E",
+		      "toVertexId": "M",
 		      "fromVertexId": "Lmid"
 		    },
 		    {
@@ -3124,7 +2622,7 @@ describe("compositeShapeDiagram widget tests", () => {
 		      },
 		      "style": "dashed",
 		      "toVertexId": "Rmid",
-		      "fromVertexId": "E"
+		      "fromVertexId": "M"
 		    },
 		    {
 		      "label": {
@@ -3132,7 +2630,7 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 5
 		      },
 		      "style": "dashed",
-		      "toVertexId": "BL",
+		      "toVertexId": "LB",
 		      "fromVertexId": "Lmid"
 		    },
 		    {
@@ -3141,20 +2639,20 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 5
 		      },
 		      "style": "dashed",
-		      "toVertexId": "BR",
+		      "toVertexId": "RB",
 		      "fromVertexId": "Rmid"
 		    }
 		  ],
 		  "rightAngleMarkers": [
 		    {
 		      "cornerVertexId": "Lmid",
-		      "adjacentVertex1Id": "BL",
-		      "adjacentVertex2Id": "E"
+		      "adjacentVertex1Id": "LB",
+		      "adjacentVertex2Id": "M"
 		    },
 		    {
 		      "cornerVertexId": "Rmid",
-		      "adjacentVertex1Id": "BR",
-		      "adjacentVertex2Id": "E"
+		      "adjacentVertex1Id": "RB",
+		      "adjacentVertex2Id": "M"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -3175,45 +2673,67 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x52a99356a5daec25
-	// Question: Find areas of a triangle, a rectangle, and the whole figure
+	// Question: Areas of parts and whole for a composite figure
 	// Widget key: image_1
-	test("composite-shape-diagram - [x52a99356a5daec25] Find areas of a triangle, a rectangle, and the whole figure", async () => {
+	test("composite-shape-diagram - [x52a99356a5daec25] Areas of parts and whole for a composite figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 440,
-		  "height": 320,
+		  "width": 400,
+		  "height": 400,
+		  "shapes": [
+		    {
+		      "id": "rectangle_B",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "rect_top_left",
+		        "rect_top_right",
+		        "rect_bottom_right",
+		        "rect_bottom_left"
+		      ]
+		    },
+		    {
+		      "id": "triangle_A",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "triangle_left",
+		        "rect_bottom_left",
+		        "rect_top_left"
+		      ]
+		    }
+		  ],
 		  "vertices": [
 		    {
 		      "x": 2.038,
 		      "y": 165.096,
-		      "id": "tip"
-		    },
-		    {
-		      "x": 42.803,
-		      "y": 287.389,
-		      "id": "BL"
-		    },
-		    {
-		      "x": 185.478,
-		      "y": 287.389,
-		      "id": "BR"
-		    },
-		    {
-		      "x": 185.478,
-		      "y": 63.185,
-		      "id": "TR"
+		      "id": "triangle_left"
 		    },
 		    {
 		      "x": 42.803,
 		      "y": 63.185,
-		      "id": "TL"
+		      "id": "rect_top_left"
+		    },
+		    {
+		      "x": 185.478,
+		      "y": 63.185,
+		      "id": "rect_top_right"
+		    },
+		    {
+		      "x": 185.478,
+		      "y": 287.389,
+		      "id": "rect_bottom_right"
+		    },
+		    {
+		      "x": 42.803,
+		      "y": 287.389,
+		      "id": "rect_bottom_left"
 		    },
 		    {
 		      "x": 42.803,
 		      "y": 165.096,
-		      "id": "foot"
+		      "id": "foot_on_base"
 		    }
 		  ],
 		  "regionLabels": [
@@ -3221,27 +2741,42 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "text": "A",
 		      "position": {
 		        "x": 18,
-		        "y": 185
+		        "y": 165
 		      }
 		    },
 		    {
 		      "text": "B",
 		      "position": {
-		        "x": 120,
-		        "y": 180
+		        "x": 114,
+		        "y": 175
 		      }
 		    }
 		  ],
 		  "boundaryEdges": [
 		    {
-		      "to": "BL",
-		      "from": "tip",
+		      "to": "rect_bottom_left",
+		      "from": "triangle_left",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "BR",
-		      "from": "BL",
+		      "to": "rect_bottom_right",
+		      "from": "rect_bottom_left",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "rect_top_right",
+		      "from": "rect_bottom_right",
+		      "type": "simple",
+		      "label": {
+		        "unit": "units",
+		        "value": 11
+		      }
+		    },
+		    {
+		      "to": "rect_top_left",
+		      "from": "rect_top_right",
 		      "type": "simple",
 		      "label": {
 		        "unit": "units",
@@ -3249,64 +2784,28 @@ describe("compositeShapeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "to": "TR",
-		      "from": "BR",
-		      "type": "simple",
-		      "label": {
-		        "unit": "units",
-		        "value": 11
-		      }
-		    },
-		    {
-		      "to": "TL",
-		      "from": "TR",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "tip",
-		      "from": "TL",
+		      "to": "triangle_left",
+		      "from": "rect_top_left",
 		      "type": "simple",
 		      "label": null
 		    }
 		  ],
-		  "shadedRegions": [
-		    {
-		      "fillColor": "#e84d3950",
-		      "vertexIds": [
-		        "TL",
-		        "BL",
-		        "tip"
-		      ]
-		    },
-		    {
-		      "fillColor": "#01a99550",
-		      "vertexIds": [
-		        "TL",
-		        "TR",
-		        "BR",
-		        "BL"
-		      ]
-		    }
-		  ],
+		  "shadedRegions": null,
 		  "internalSegments": [
 		    {
-		      "label": {
-		        "unit": "units",
-		        "value": 11
-		      },
+		      "label": null,
 		      "style": "dashed",
-		      "toVertexId": "BL",
-		      "fromVertexId": "TL"
+		      "toVertexId": "rect_bottom_left",
+		      "fromVertexId": "rect_top_left"
 		    },
 		    {
 		      "label": {
 		        "unit": "units",
 		        "value": 2
 		      },
-		      "style": "solid",
-		      "toVertexId": "foot",
-		      "fromVertexId": "tip"
+		      "style": "dashed",
+		      "toVertexId": "foot_on_base",
+		      "fromVertexId": "triangle_left"
 		    }
 		  ],
 		  "rightAngleMarkers": null
@@ -3328,45 +2827,47 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb0f43fd03d2eff7c
-	// Question: Find the area of a composite shape
+	// Question: Area of a shape with one pair of parallel sides
 	// Widget key: image_1
-	test("composite-shape-diagram - [xb0f43fd03d2eff7c] Find the area of a composite shape", async () => {
+	test("composite-shape-diagram - [xb0f43fd03d2eff7c] Area of a shape with one pair of parallel sides", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 480,
-		  "height": 360,
+		  "width": 320,
+		  "height": 320,
+		  "shapes": null,
 		  "vertices": [
 		    {
-		      "x": 0,
-		      "y": 9,
+		      "x": 20,
+		      "y": 260,
 		      "id": "A"
 		    },
 		    {
-		      "x": 9,
-		      "y": 9,
+		      "x": 300,
+		      "y": 260,
 		      "id": "B"
 		    },
 		    {
-		      "x": 9,
-		      "y": 3,
+		      "x": 300,
+		      "y": 160,
 		      "id": "C"
 		    },
 		    {
-		      "x": 0,
-		      "y": 3,
+		      "x": 20,
+		      "y": 160,
 		      "id": "D"
 		    },
 		    {
-		      "x": 4.5,
-		      "y": 0,
-		      "id": "apex"
+		      "x": 160,
+		      "y": 80,
+		      "id": "E"
 		    },
 		    {
-		      "x": 4.5,
-		      "y": 3,
-		      "id": "midBase"
+		      "x": 160,
+		      "y": 160,
+		      "id": "M"
 		    }
 		  ],
 		  "regionLabels": null,
@@ -3384,17 +2885,20 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "to": "C",
 		      "from": "B",
 		      "type": "simple",
-		      "label": null
+		      "label": {
+		        "unit": "units",
+		        "value": 6
+		      }
 		    },
 		    {
-		      "to": "apex",
+		      "to": "E",
 		      "from": "C",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
 		      "to": "D",
-		      "from": "apex",
+		      "from": "E",
 		      "type": "simple",
 		      "label": null
 		    },
@@ -3402,10 +2906,7 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "to": "A",
 		      "from": "D",
 		      "type": "simple",
-		      "label": {
-		        "unit": "units",
-		        "value": 6
-		      }
+		      "label": null
 		    }
 		  ],
 		  "shadedRegions": null,
@@ -3422,17 +2923,11 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 3
 		      },
 		      "style": "dashed",
-		      "toVertexId": "midBase",
-		      "fromVertexId": "apex"
+		      "toVertexId": "M",
+		      "fromVertexId": "E"
 		    }
 		  ],
-		  "rightAngleMarkers": [
-		    {
-		      "cornerVertexId": "midBase",
-		      "adjacentVertex1Id": "apex",
-		      "adjacentVertex2Id": "D"
-		    }
-		  ]
+		  "rightAngleMarkers": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3451,52 +2946,54 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc24275a8d9e83363
-	// Question: Find the area of a composite shape (rectangle minus triangle)
+	// Question: Area of a composite shape
 	// Widget key: image_1
-	test("composite-shape-diagram - [xc24275a8d9e83363] Find the area of a composite shape (rectangle minus triangle)", async () => {
+	test("composite-shape-diagram - [xc24275a8d9e83363] Area of a composite shape", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 520,
-		  "height": 360,
+		  "width": 320,
+		  "height": 320,
+		  "shapes": null,
 		  "vertices": [
 		    {
-		      "x": 0,
-		      "y": 10,
-		      "id": "BL"
+		      "x": 31.429,
+		      "y": 288.571,
+		      "id": "A"
 		    },
 		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "TL"
+		      "x": 31.429,
+		      "y": 2.857,
+		      "id": "B"
 		    },
 		    {
-		      "x": 3,
-		      "y": 4,
-		      "id": "APEX"
+		      "x": 117.143,
+		      "y": 117.143,
+		      "id": "C"
 		    },
 		    {
-		      "x": 7,
-		      "y": 0,
-		      "id": "TR"
+		      "x": 231.429,
+		      "y": 2.857,
+		      "id": "D"
 		    },
 		    {
-		      "x": 7,
-		      "y": 10,
-		      "id": "BR"
+		      "x": 231.429,
+		      "y": 288.571,
+		      "id": "E"
 		    },
 		    {
-		      "x": 3,
-		      "y": 10,
-		      "id": "BF"
+		      "x": 117.143,
+		      "y": 288.571,
+		      "id": "F"
 		    }
 		  ],
 		  "regionLabels": null,
 		  "boundaryEdges": [
 		    {
-		      "to": "TL",
-		      "from": "BL",
+		      "to": "B",
+		      "from": "A",
 		      "type": "simple",
 		      "label": {
 		        "unit": "units",
@@ -3504,26 +3001,26 @@ describe("compositeShapeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "to": "APEX",
-		      "from": "TL",
+		      "to": "C",
+		      "from": "B",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "TR",
-		      "from": "APEX",
+		      "to": "D",
+		      "from": "C",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "BR",
-		      "from": "TR",
+		      "to": "E",
+		      "from": "D",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "BL",
-		      "from": "BR",
+		      "to": "A",
+		      "from": "E",
 		      "type": "simple",
 		      "label": {
 		        "unit": "units",
@@ -3531,7 +3028,18 @@ describe("compositeShapeDiagram widget tests", () => {
 		      }
 		    }
 		  ],
-		  "shadedRegions": null,
+		  "shadedRegions": [
+		    {
+		      "fillColor": "#aa87ff4D",
+		      "vertexIds": [
+		        "A",
+		        "B",
+		        "C",
+		        "D",
+		        "E"
+		      ]
+		    }
+		  ],
 		  "internalSegments": [
 		    {
 		      "label": {
@@ -3539,8 +3047,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 6
 		      },
 		      "style": "dashed",
-		      "toVertexId": "BF",
-		      "fromVertexId": "APEX"
+		      "toVertexId": "F",
+		      "fromVertexId": "C"
 		    }
 		  ],
 		  "rightAngleMarkers": null
@@ -3562,39 +3070,41 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5dc8c670f44d1837
-	// Question: Area of a shape with parallel sides
+	// Question: Find the area of a composite shape with parallel sides
 	// Widget key: image_1
-	test("composite-shape-diagram - [x5dc8c670f44d1837] Area of a shape with parallel sides", async () => {
+	test("composite-shape-diagram - [x5dc8c670f44d1837] Find the area of a composite shape with parallel sides", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 480,
-		  "height": 560,
+		  "width": 360,
+		  "height": 480,
+		  "shapes": null,
 		  "vertices": [
 		    {
-		      "x": 0,
-		      "y": 0,
+		      "x": 32,
+		      "y": 288,
 		      "id": "A"
 		    },
 		    {
-		      "x": 4,
-		      "y": 0,
+		      "x": 96,
+		      "y": 288,
 		      "id": "B"
 		    },
 		    {
-		      "x": 4,
-		      "y": 4,
+		      "x": 160,
+		      "y": 160,
 		      "id": "C"
 		    },
 		    {
-		      "x": 2,
-		      "y": 8,
+		      "x": 160,
+		      "y": 32,
 		      "id": "D"
 		    },
 		    {
-		      "x": 0,
-		      "y": 8,
+		      "x": 32,
+		      "y": 32,
 		      "id": "E"
 		    }
 		  ],
@@ -3606,23 +3116,23 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "type": "simple",
 		      "label": {
 		        "unit": "units",
-		        "value": 4
+		        "value": 2
 		      }
 		    },
 		    {
 		      "to": "C",
 		      "from": "B",
 		      "type": "simple",
-		      "label": {
-		        "unit": "units",
-		        "value": 4
-		      }
+		      "label": null
 		    },
 		    {
 		      "to": "D",
 		      "from": "C",
 		      "type": "simple",
-		      "label": null
+		      "label": {
+		        "unit": "units",
+		        "value": 4
+		      }
 		    },
 		    {
 		      "to": "E",
@@ -3630,7 +3140,7 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "type": "simple",
 		      "label": {
 		        "unit": "units",
-		        "value": 2
+		        "value": 4
 		      }
 		    },
 		    {
@@ -3643,7 +3153,18 @@ describe("compositeShapeDiagram widget tests", () => {
 		      }
 		    }
 		  ],
-		  "shadedRegions": null,
+		  "shadedRegions": [
+		    {
+		      "fillColor": "#aa87ff55",
+		      "vertexIds": [
+		        "A",
+		        "B",
+		        "C",
+		        "D",
+		        "E"
+		      ]
+		    }
+		  ],
 		  "internalSegments": null,
 		  "rightAngleMarkers": null
 		} as unknown as WidgetInput
@@ -3664,62 +3185,64 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x161673a7853ec0b5
-	// Question: Find the area of a composite shape
+	// Question: Area of a composite shape (rectangle with right triangles removed)
 	// Widget key: image_1
-	test("composite-shape-diagram - [x161673a7853ec0b5] Find the area of a composite shape", async () => {
+	test("composite-shape-diagram - [x161673a7853ec0b5] Area of a composite shape (rectangle with right triangles removed)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 480,
-		  "height": 360,
+		  "width": 320,
+		  "height": 320,
+		  "shapes": null,
 		  "vertices": [
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "A_topLeft"
+		      "id": "topLeft"
 		    },
 		    {
 		      "x": 9,
 		      "y": 0,
-		      "id": "B_topRight"
-		    },
-		    {
-		      "x": 9,
-		      "y": 4,
-		      "id": "C_rightCut"
-		    },
-		    {
-		      "x": 5,
-		      "y": 9,
-		      "id": "D_bottomRightInner"
-		    },
-		    {
-		      "x": 3,
-		      "y": 9,
-		      "id": "E_bottomLeftInner"
+		      "id": "topRight"
 		    },
 		    {
 		      "x": 0,
 		      "y": 5,
-		      "id": "F_leftCut"
+		      "id": "leftCut"
+		    },
+		    {
+		      "x": 9,
+		      "y": 4,
+		      "id": "rightCut"
 		    },
 		    {
 		      "x": 0,
 		      "y": 9,
-		      "id": "G_bottomLeftRect"
+		      "id": "bottomLeft"
 		    },
 		    {
 		      "x": 9,
 		      "y": 9,
-		      "id": "H_bottomRightRect"
+		      "id": "bottomRight"
+		    },
+		    {
+		      "x": 3,
+		      "y": 9,
+		      "id": "leftBaseEnd"
+		    },
+		    {
+		      "x": 5,
+		      "y": 9,
+		      "id": "rightBaseEnd"
 		    }
 		  ],
 		  "regionLabels": null,
 		  "boundaryEdges": [
 		    {
-		      "to": "B_topRight",
-		      "from": "A_topLeft",
+		      "to": "topRight",
+		      "from": "topLeft",
 		      "type": "simple",
 		      "label": {
 		        "unit": "units",
@@ -3727,8 +3250,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "to": "C_rightCut",
-		      "from": "B_topRight",
+		      "to": "rightCut",
+		      "from": "topRight",
 		      "type": "simple",
 		      "label": {
 		        "unit": "units",
@@ -3736,26 +3259,26 @@ describe("compositeShapeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "to": "D_bottomRightInner",
-		      "from": "C_rightCut",
+		      "to": "rightBaseEnd",
+		      "from": "rightCut",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "E_bottomLeftInner",
-		      "from": "D_bottomRightInner",
+		      "to": "leftBaseEnd",
+		      "from": "rightBaseEnd",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "F_leftCut",
-		      "from": "E_bottomLeftInner",
+		      "to": "leftCut",
+		      "from": "leftBaseEnd",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "A_topLeft",
-		      "from": "F_leftCut",
+		      "to": "topLeft",
+		      "from": "leftCut",
 		      "type": "simple",
 		      "label": {
 		        "unit": "units",
@@ -3768,29 +3291,20 @@ describe("compositeShapeDiagram widget tests", () => {
 		    {
 		      "label": {
 		        "unit": "units",
+		        "value": 4
+		      },
+		      "style": "dashed",
+		      "toVertexId": "bottomLeft",
+		      "fromVertexId": "leftCut"
+		    },
+		    {
+		      "label": {
+		        "unit": "units",
 		        "value": 3
 		      },
 		      "style": "dashed",
-		      "toVertexId": "E_bottomLeftInner",
-		      "fromVertexId": "G_bottomLeftRect"
-		    },
-		    {
-		      "label": {
-		        "unit": "units",
-		        "value": 4
-		      },
-		      "style": "dashed",
-		      "toVertexId": "F_leftCut",
-		      "fromVertexId": "G_bottomLeftRect"
-		    },
-		    {
-		      "label": {
-		        "unit": "units",
-		        "value": 4
-		      },
-		      "style": "dashed",
-		      "toVertexId": "D_bottomRightInner",
-		      "fromVertexId": "H_bottomRightRect"
+		      "toVertexId": "leftBaseEnd",
+		      "fromVertexId": "bottomLeft"
 		    },
 		    {
 		      "label": {
@@ -3798,20 +3312,29 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 5
 		      },
 		      "style": "dashed",
-		      "toVertexId": "C_rightCut",
-		      "fromVertexId": "H_bottomRightRect"
+		      "toVertexId": "bottomRight",
+		      "fromVertexId": "rightCut"
+		    },
+		    {
+		      "label": {
+		        "unit": "units",
+		        "value": 4
+		      },
+		      "style": "dashed",
+		      "toVertexId": "rightBaseEnd",
+		      "fromVertexId": "bottomRight"
 		    }
 		  ],
 		  "rightAngleMarkers": [
 		    {
-		      "cornerVertexId": "G_bottomLeftRect",
-		      "adjacentVertex1Id": "F_leftCut",
-		      "adjacentVertex2Id": "E_bottomLeftInner"
+		      "cornerVertexId": "bottomLeft",
+		      "adjacentVertex1Id": "leftCut",
+		      "adjacentVertex2Id": "leftBaseEnd"
 		    },
 		    {
-		      "cornerVertexId": "H_bottomRightRect",
-		      "adjacentVertex1Id": "C_rightCut",
-		      "adjacentVertex2Id": "D_bottomRightInner"
+		      "cornerVertexId": "bottomRight",
+		      "adjacentVertex1Id": "rightCut",
+		      "adjacentVertex2Id": "rightBaseEnd"
 		    }
 		  ]
 		} as unknown as WidgetInput
@@ -3838,75 +3361,65 @@ describe("compositeShapeDiagram widget tests", () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 480,
-		  "height": 360,
+		  "width": 400,
+		  "height": 400,
+		  "shapes": null,
 		  "vertices": [
 		    {
-		      "x": 133.77,
-		      "y": 317.377,
-		      "id": "bottomApex"
-		    },
-		    {
-		      "x": 28.852,
-		      "y": 238.689,
-		      "id": "bottomLeft"
-		    },
-		    {
-		      "x": 28.852,
-		      "y": 55.082,
-		      "id": "topLeft"
-		    },
-		    {
-		      "x": 133.77,
-		      "y": 2.623,
+		      "x": 4,
+		      "y": -2,
 		      "id": "topApex"
 		    },
 		    {
-		      "x": 238.689,
-		      "y": 55.082,
+		      "x": 8,
+		      "y": 0,
 		      "id": "topRight"
 		    },
 		    {
-		      "x": 238.689,
-		      "y": 238.689,
+		      "x": 8,
+		      "y": 7,
 		      "id": "bottomRight"
 		    },
 		    {
-		      "x": 18.852,
-		      "y": 2.623,
-		      "id": "leftMeasureTopTip"
+		      "x": 4,
+		      "y": 10,
+		      "id": "bottomApex"
 		    },
 		    {
-		      "x": 18.852,
-		      "y": 55.082,
-		      "id": "leftMeasureTopBound"
+		      "x": 0,
+		      "y": 7,
+		      "id": "bottomLeft"
 		    },
 		    {
-		      "x": 18.852,
-		      "y": 238.689,
-		      "id": "leftMeasureBottomBound"
+		      "x": 0,
+		      "y": 0,
+		      "id": "topLeft"
 		    },
 		    {
-		      "x": 18.852,
-		      "y": 317.377,
-		      "id": "leftMeasureBottomTip"
+		      "x": -1.5,
+		      "y": -2,
+		      "id": "leftGuideTop"
+		    },
+		    {
+		      "x": -1.5,
+		      "y": 0,
+		      "id": "leftGuideTopBase"
+		    },
+		    {
+		      "x": -1.5,
+		      "y": 7,
+		      "id": "leftGuideBottomBase"
+		    },
+		    {
+		      "x": -1.5,
+		      "y": 10,
+		      "id": "leftGuideBottom"
 		    }
 		  ],
 		  "regionLabels": null,
 		  "boundaryEdges": [
-		    {
-		      "to": "bottomLeft",
-		      "from": "bottomApex",
-		      "type": "simple",
-		      "label": null
-		    },
-		    {
-		      "to": "topLeft",
-		      "from": "bottomLeft",
-		      "type": "simple",
-		      "label": null
-		    },
 		    {
 		      "to": "topApex",
 		      "from": "topLeft",
@@ -3930,12 +3443,27 @@ describe("compositeShapeDiagram widget tests", () => {
 		      "from": "bottomRight",
 		      "type": "simple",
 		      "label": null
+		    },
+		    {
+		      "to": "bottomLeft",
+		      "from": "bottomApex",
+		      "type": "simple",
+		      "label": null
+		    },
+		    {
+		      "to": "topLeft",
+		      "from": "bottomLeft",
+		      "type": "simple",
+		      "label": null
 		    }
 		  ],
 		  "shadedRegions": null,
 		  "internalSegments": [
 		    {
-		      "label": null,
+		      "label": {
+		        "unit": "units",
+		        "value": 8
+		      },
 		      "style": "dashed",
 		      "toVertexId": "topRight",
 		      "fromVertexId": "topLeft"
@@ -3955,8 +3483,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 2
 		      },
 		      "style": "solid",
-		      "toVertexId": "leftMeasureTopBound",
-		      "fromVertexId": "leftMeasureTopTip"
+		      "toVertexId": "leftGuideTopBase",
+		      "fromVertexId": "leftGuideTop"
 		    },
 		    {
 		      "label": {
@@ -3964,8 +3492,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 7
 		      },
 		      "style": "solid",
-		      "toVertexId": "leftMeasureBottomBound",
-		      "fromVertexId": "leftMeasureTopBound"
+		      "toVertexId": "leftGuideBottomBase",
+		      "fromVertexId": "leftGuideTopBase"
 		    },
 		    {
 		      "label": {
@@ -3973,8 +3501,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 3
 		      },
 		      "style": "solid",
-		      "toVertexId": "leftMeasureBottomTip",
-		      "fromVertexId": "leftMeasureBottomBound"
+		      "toVertexId": "leftGuideBottom",
+		      "fromVertexId": "leftGuideBottomBase"
 		    }
 		  ],
 		  "rightAngleMarkers": null
@@ -3996,84 +3524,98 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x08f3220a196255d1
-	// Question: Area of a composite shape with one pair of parallel sides
+	// Question: Find the area of a composite shape
 	// Widget key: image_1
-	test("composite-shape-diagram - [x08f3220a196255d1] Area of a composite shape with one pair of parallel sides", async () => {
+	test("composite-shape-diagram - [x08f3220a196255d1] Find the area of a composite shape", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 320,
-		  "height": 200,
+		  "width": 400,
+		  "height": 300,
+		  "shapes": [
+		    {
+		      "id": "pentagon",
+		      "type": "polygon",
+		      "vertexIds": [
+		        "L",
+		        "A",
+		        "U1",
+		        "U2",
+		        "R"
+		      ]
+		    }
+		  ],
 		  "vertices": [
 		    {
-		      "x": 1.975,
-		      "y": 160,
-		      "id": "A_leftBase"
+		      "x": 0,
+		      "y": 8,
+		      "id": "L"
 		    },
 		    {
-		      "x": 160,
-		      "y": 1.975,
-		      "id": "B_apex"
+		      "x": 8,
+		      "y": 0,
+		      "id": "A"
 		    },
 		    {
-		      "x": 160,
-		      "y": 61.235,
-		      "id": "C_step1"
+		      "x": 8,
+		      "y": 3,
+		      "id": "U1"
 		    },
 		    {
-		      "x": 199.506,
-		      "y": 61.235,
-		      "id": "D_step2"
+		      "x": 10,
+		      "y": 3,
+		      "id": "U2"
 		    },
 		    {
-		      "x": 318.025,
-		      "y": 160,
-		      "id": "E_rightBase"
+		      "x": 16,
+		      "y": 8,
+		      "id": "R"
 		    },
 		    {
-		      "x": 160,
-		      "y": 160,
-		      "id": "F_bottomAtC"
+		      "x": 8,
+		      "y": 8,
+		      "id": "B1"
 		    },
 		    {
-		      "x": 199.506,
-		      "y": 160,
-		      "id": "G_bottomAtD"
+		      "x": 10,
+		      "y": 8,
+		      "id": "B2"
 		    }
 		  ],
 		  "regionLabels": null,
 		  "boundaryEdges": [
 		    {
-		      "to": "B_apex",
-		      "from": "A_leftBase",
+		      "to": "A",
+		      "from": "L",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "C_step1",
-		      "from": "B_apex",
+		      "to": "U1",
+		      "from": "A",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "D_step2",
-		      "from": "C_step1",
+		      "to": "U2",
+		      "from": "U1",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "E_rightBase",
-		      "from": "D_step2",
+		      "to": "R",
+		      "from": "U2",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
 		      "path": [
-		        "E_rightBase",
-		        "G_bottomAtD",
-		        "F_bottomAtC",
-		        "A_leftBase"
+		        "R",
+		        "B2",
+		        "B1",
+		        "L"
 		      ],
 		      "type": "partitioned",
 		      "segments": [
@@ -4109,8 +3651,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 5
 		      },
 		      "style": "dashed",
-		      "toVertexId": "F_bottomAtC",
-		      "fromVertexId": "C_step1"
+		      "toVertexId": "B1",
+		      "fromVertexId": "U1"
 		    },
 		    {
 		      "label": {
@@ -4118,8 +3660,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 5
 		      },
 		      "style": "dashed",
-		      "toVertexId": "G_bottomAtD",
-		      "fromVertexId": "D_step2"
+		      "toVertexId": "B2",
+		      "fromVertexId": "U2"
 		    },
 		    {
 		      "label": {
@@ -4127,8 +3669,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 8
 		      },
 		      "style": "dashed",
-		      "toVertexId": "F_bottomAtC",
-		      "fromVertexId": "B_apex"
+		      "toVertexId": "B1",
+		      "fromVertexId": "A"
 		    }
 		  ],
 		  "rightAngleMarkers": null
@@ -4150,73 +3692,66 @@ describe("compositeShapeDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf9aeebaa4d47c342
-	// Question: Find the area of a composite shape
+	// Question: Area of a composite shape
 	// Widget key: image_1
-	test("composite-shape-diagram - [xf9aeebaa4d47c342] Find the area of a composite shape", async () => {
+	test("composite-shape-diagram - [xf9aeebaa4d47c342] Area of a composite shape", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
+		  "fit": "auto",
 		  "type": "compositeShapeDiagram",
-		  "width": 271.145,
+		  "width": 320,
 		  "height": 320,
+		  "shapes": null,
 		  "vertices": [
 		    {
 		      "x": 24.427,
-		      "y": 173.435,
-		      "id": "L"
-		    },
-		    {
-		      "x": 24.427,
 		      "y": 2.443,
-		      "id": "T"
+		      "id": "A"
 		    },
 		    {
 		      "x": 268.702,
 		      "y": 173.435,
-		      "id": "R"
+		      "id": "B"
 		    },
 		    {
 		      "x": 195.42,
 		      "y": 295.573,
-		      "id": "BR"
+		      "id": "C"
 		    },
 		    {
-		      "x": 122.137,
+		      "x": 122.138,
 		      "y": 295.573,
-		      "id": "BL"
+		      "id": "D"
+		    },
+		    {
+		      "x": 24.427,
+		      "y": 173.435,
+		      "id": "E"
 		    },
 		    {
 		      "x": 122.138,
 		      "y": 173.435,
-		      "id": "H"
+		      "id": "F"
 		    }
 		  ],
 		  "regionLabels": null,
 		  "boundaryEdges": [
 		    {
-		      "to": "T",
-		      "from": "L",
-		      "type": "simple",
-		      "label": {
-		        "unit": "units",
-		        "value": 7
-		      }
-		    },
-		    {
-		      "to": "R",
-		      "from": "T",
+		      "to": "B",
+		      "from": "A",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "BR",
-		      "from": "R",
+		      "to": "C",
+		      "from": "B",
 		      "type": "simple",
 		      "label": null
 		    },
 		    {
-		      "to": "BL",
-		      "from": "BR",
+		      "to": "D",
+		      "from": "C",
 		      "type": "simple",
 		      "label": {
 		        "unit": "units",
@@ -4224,10 +3759,19 @@ describe("compositeShapeDiagram widget tests", () => {
 		      }
 		    },
 		    {
-		      "to": "L",
-		      "from": "BL",
+		      "to": "E",
+		      "from": "D",
 		      "type": "simple",
 		      "label": null
+		    },
+		    {
+		      "to": "A",
+		      "from": "E",
+		      "type": "simple",
+		      "label": {
+		        "unit": "units",
+		        "value": 7
+		      }
 		    }
 		  ],
 		  "shadedRegions": null,
@@ -4238,17 +3782,8 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 10
 		      },
 		      "style": "dashed",
-		      "toVertexId": "H",
-		      "fromVertexId": "L"
-		    },
-		    {
-		      "label": {
-		        "unit": "units",
-		        "value": 10
-		      },
-		      "style": "dashed",
-		      "toVertexId": "R",
-		      "fromVertexId": "H"
+		      "toVertexId": "B",
+		      "fromVertexId": "E"
 		    },
 		    {
 		      "label": {
@@ -4256,27 +3791,11 @@ describe("compositeShapeDiagram widget tests", () => {
 		        "value": 5
 		      },
 		      "style": "dashed",
-		      "toVertexId": "BL",
-		      "fromVertexId": "H"
+		      "toVertexId": "F",
+		      "fromVertexId": "D"
 		    }
 		  ],
-		  "rightAngleMarkers": [
-		    {
-		      "cornerVertexId": "L",
-		      "adjacentVertex1Id": "T",
-		      "adjacentVertex2Id": "H"
-		    },
-		    {
-		      "cornerVertexId": "H",
-		      "adjacentVertex1Id": "L",
-		      "adjacentVertex2Id": "BL"
-		    },
-		    {
-		      "cornerVertexId": "BL",
-		      "adjacentVertex1Id": "H",
-		      "adjacentVertex2Id": "BR"
-		    }
-		  ]
+		  "rightAngleMarkers": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)

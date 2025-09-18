@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.967Z
+// Generated on: 2025-09-18T05:17:02.167Z
 // Widget Type: scaleCopiesSlider
 // Source: Real questions from database
 //
@@ -26,37 +26,37 @@ import * as logger from "@superbuilders/slog"
 
 describe("scaleCopiesSlider widget tests", () => {
 	// Extracted from question: xbafa92b7a1e8edc2
-	// Question: Identify the slider that creates scale copies
-	// Widget key: interaction_3
-	test("scale-copies-slider - [xbafa92b7a1e8edc2] Identify the slider that creates scale copies", async () => {
+	// Question: Which slider creates scale copies?
+	// Widget key: sliders_diagram
+	test("scale-copies-slider - [xbafa92b7a1e8edc2] Which slider creates scale copies?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scaleCopiesSlider",
-		  "width": 700,
-		  "height": 300,
+		  "width": 420,
+		  "height": 320,
 		  "shapeA": {
 		    "after": {
-		      "width": 2,
-		      "height": 2
+		      "width": 300,
+		      "height": 300
 		    },
 		    "color": "#9AB8ED",
 		    "label": "Shape A",
 		    "before": {
-		      "width": 4,
-		      "height": 4
+		      "width": 400,
+		      "height": 400
 		    }
 		  },
 		  "shapeB": {
 		    "after": {
-		      "width": 1.5,
-		      "height": 4
+		      "width": 300,
+		      "height": 450
 		    },
 		    "color": "#9BEDCE",
 		    "label": "Shape B",
 		    "before": {
-		      "width": 1.5,
-		      "height": 2
+		      "width": 300,
+		      "height": 300
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -78,36 +78,36 @@ describe("scaleCopiesSlider widget tests", () => {
 
 	// Extracted from question: x8c3158397b22fe60
 	// Question: Identify the slider that creates scale copies
-	// Widget key: sliders_diagram
+	// Widget key: sliders_stimulus
 	test("scale-copies-slider - [x8c3158397b22fe60] Identify the slider that creates scale copies", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scaleCopiesSlider",
-		  "width": 700,
-		  "height": 350,
+		  "width": 460,
+		  "height": 340,
 		  "shapeA": {
 		    "after": {
-		      "width": 4.6,
-		      "height": 4.6
+		      "width": 500,
+		      "height": 500
 		    },
 		    "color": "#9AB8ED",
 		    "label": "Shape A",
 		    "before": {
-		      "width": 1,
-		      "height": 1
+		      "width": 500,
+		      "height": 500
 		    }
 		  },
 		  "shapeB": {
 		    "after": {
-		      "width": 4.6,
-		      "height": 1
+		      "width": 500,
+		      "height": 500
 		    },
 		    "color": "#9BEDCE",
 		    "label": "Shape B",
 		    "before": {
-		      "width": 1,
-		      "height": 1
+		      "width": 500,
+		      "height": 500
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -129,36 +129,36 @@ describe("scaleCopiesSlider widget tests", () => {
 
 	// Extracted from question: xc38994c2f93f0f77
 	// Question: Identify the slider that creates scale copies
-	// Widget key: interaction_3
+	// Widget key: sliders_visual
 	test("scale-copies-slider - [xc38994c2f93f0f77] Identify the slider that creates scale copies", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scaleCopiesSlider",
-		  "width": 700,
-		  "height": 350,
+		  "width": 480,
+		  "height": 360,
 		  "shapeA": {
 		    "after": {
-		      "width": 3,
-		      "height": 4
+		      "width": 360,
+		      "height": 490
 		    },
 		    "color": "#9AB8ED",
 		    "label": "Shape A",
 		    "before": {
-		      "width": 1,
-		      "height": 4
+		      "width": 470,
+		      "height": 490
 		    }
 		  },
 		  "shapeB": {
 		    "after": {
-		      "width": 3,
-		      "height": 3
+		      "width": 360,
+		      "height": 360
 		    },
 		    "color": "#9BEDCE",
 		    "label": "Shape B",
 		    "before": {
-		      "width": 1,
-		      "height": 1
+		      "width": 360,
+		      "height": 360
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -179,37 +179,37 @@ describe("scaleCopiesSlider widget tests", () => {
 	})
 
 	// Extracted from question: x2ef6637cd961c493
-	// Question: Identify the slider that creates scale copies
-	// Widget key: sliders_diagram
-	test("scale-copies-slider - [x2ef6637cd961c493] Identify the slider that creates scale copies", async () => {
+	// Question: Select the slider that creates scale copies
+	// Widget key: shapes_stimulus
+	test("scale-copies-slider - [x2ef6637cd961c493] Select the slider that creates scale copies", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scaleCopiesSlider",
-		  "width": 700,
-		  "height": 320,
+		  "width": 460,
+		  "height": 360,
 		  "shapeA": {
 		    "after": {
-		      "width": 1.9,
-		      "height": 1.3
+		      "width": 380,
+		      "height": 320
 		    },
 		    "color": "#9AB8ED",
 		    "label": "Shape A",
 		    "before": {
-		      "width": 1,
-		      "height": 4
+		      "width": 400,
+		      "height": 320
 		    }
 		  },
 		  "shapeB": {
 		    "after": {
-		      "width": 1,
-		      "height": 1.5
+		      "width": 320,
+		      "height": 320
 		    },
 		    "color": "#9BEDCE",
 		    "label": "Shape B",
 		    "before": {
-		      "width": 2,
-		      "height": 3
+		      "width": 320,
+		      "height": 320
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -231,36 +231,36 @@ describe("scaleCopiesSlider widget tests", () => {
 
 	// Extracted from question: x931564876600dc44
 	// Question: Identify the slider that creates scale copies
-	// Widget key: interaction_2
+	// Widget key: shapes_stimulus
 	test("scale-copies-slider - [x931564876600dc44] Identify the slider that creates scale copies", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scaleCopiesSlider",
-		  "width": 700,
-		  "height": 350,
+		  "width": 420,
+		  "height": 360,
 		  "shapeA": {
 		    "after": {
-		      "width": 0.3,
-		      "height": 3.7
+		      "width": 300,
+		      "height": 370
 		    },
 		    "color": "#9AB8ED",
 		    "label": "Shape A",
 		    "before": {
-		      "width": 3,
-		      "height": 1
+		      "width": 300,
+		      "height": 300
 		    }
 		  },
 		  "shapeB": {
 		    "after": {
-		      "width": 4,
-		      "height": 2
+		      "width": 400,
+		      "height": 400
 		    },
 		    "color": "#9BEDCE",
 		    "label": "Shape B",
 		    "before": {
-		      "width": 2,
-		      "height": 1
+		      "width": 300,
+		      "height": 300
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -281,37 +281,37 @@ describe("scaleCopiesSlider widget tests", () => {
 	})
 
 	// Extracted from question: x032382a5a923cc4f
-	// Question: Identify the slider that creates scaled copies
-	// Widget key: scale_slider_stimulus
-	test("scale-copies-slider - [x032382a5a923cc4f] Identify the slider that creates scaled copies", async () => {
+	// Question: Which slider creates scale copies of the shape?
+	// Widget key: scale_sliders_stimulus
+	test("scale-copies-slider - [x032382a5a923cc4f] Which slider creates scale copies of the shape?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scaleCopiesSlider",
-		  "width": 700,
-		  "height": 300,
+		  "width": 480,
+		  "height": 360,
 		  "shapeA": {
 		    "after": {
-		      "width": 1.5,
-		      "height": 4.5
+		      "width": 450,
+		      "height": 450
 		    },
 		    "color": "#9AB8ED",
 		    "label": "Shape A",
 		    "before": {
-		      "width": 1,
-		      "height": 3
+		      "width": 300,
+		      "height": 300
 		    }
 		  },
 		  "shapeB": {
 		    "after": {
-		      "width": 0.3,
-		      "height": 3.7
+		      "width": 460,
+		      "height": 500
 		    },
 		    "color": "#9BEDCE",
 		    "label": "Shape B",
 		    "before": {
-		      "width": 3,
-		      "height": 1
+		      "width": 300,
+		      "height": 460
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -332,37 +332,37 @@ describe("scaleCopiesSlider widget tests", () => {
 	})
 
 	// Extracted from question: x8b77019917451486
-	// Question: Which slider creates scale copies?
-	// Widget key: sliders_visual
-	test("scale-copies-slider - [x8b77019917451486] Which slider creates scale copies?", async () => {
+	// Question: Identify the slider that creates scale copies
+	// Widget key: shapes_diagram
+	test("scale-copies-slider - [x8b77019917451486] Identify the slider that creates scale copies", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scaleCopiesSlider",
-		  "width": 700,
+		  "width": 480,
 		  "height": 320,
 		  "shapeA": {
 		    "after": {
-		      "width": 1,
-		      "height": 2
+		      "width": 300,
+		      "height": 300
 		    },
 		    "color": "#9AB8ED",
 		    "label": "Shape A",
 		    "before": {
-		      "width": 2,
-		      "height": 4
+		      "width": 300,
+		      "height": 300
 		    }
 		  },
 		  "shapeB": {
 		    "after": {
-		      "width": 2,
-		      "height": 3
+		      "width": 300,
+		      "height": 300
 		    },
 		    "color": "#9BEDCE",
 		    "label": "Shape B",
 		    "before": {
-		      "width": 1,
-		      "height": 1
+		      "width": 300,
+		      "height": 300
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -383,37 +383,139 @@ describe("scaleCopiesSlider widget tests", () => {
 	})
 
 	// Extracted from question: x7ffde19d95e56a74
-	// Question: Identify which slider creates scale copies
-	// Widget key: stimulus_shapes
-	test("scale-copies-slider - [x7ffde19d95e56a74] Identify which slider creates scale copies", async () => {
+	// Question: Identify the slider that creates scaled copies
+	// Widget key: sliders_static
+	test("scale-copies-slider - [x7ffde19d95e56a74] Identify the slider that creates scaled copies", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scaleCopiesSlider",
-		  "width": 700,
-		  "height": 320,
+		  "width": 480,
+		  "height": 360,
 		  "shapeA": {
 		    "after": {
-		      "width": 2,
-		      "height": 1.5
+		      "width": 300,
+		      "height": 300
 		    },
 		    "color": "#9AB8ED",
 		    "label": "Shape A",
 		    "before": {
-		      "width": 4,
-		      "height": 3
+		      "width": 360,
+		      "height": 300
 		    }
 		  },
 		  "shapeB": {
 		    "after": {
-		      "width": 1.75,
-		      "height": 2.55
+		      "width": 317.5,
+		      "height": 345
 		    },
 		    "color": "#9BEDCE",
 		    "label": "Shape B",
 		    "before": {
-		      "width": 4,
-		      "height": 3
+		      "width": 360,
+		      "height": 300
+		    }
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scaleCopiesSlider", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd095465fbff5e7b1
+	// Question: Identify the slider that creates scale copies
+	// Widget key: interaction_2
+	test("scale-copies-slider - [xd095465fbff5e7b1] Identify the slider that creates scale copies", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scaleCopiesSlider",
+		  "width": 440,
+		  "height": 320,
+		  "shapeA": {
+		    "after": {
+		      "width": 300,
+		      "height": 300
+		    },
+		    "color": "#9AB8ED",
+		    "label": "Shape A",
+		    "before": {
+		      "width": 400,
+		      "height": 300
+		    }
+		  },
+		  "shapeB": {
+		    "after": {
+		      "width": 400,
+		      "height": 300
+		    },
+		    "color": "#9BEDCE",
+		    "label": "Shape B",
+		    "before": {
+		      "width": 400,
+		      "height": 300
+		    }
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for scaleCopiesSlider", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x38f82398d8a77d10
+	// Question: Which slider creates scale copies of the shape?
+	// Widget key: interaction_4
+	test("scale-copies-slider - [x38f82398d8a77d10] Which slider creates scale copies of the shape?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "scaleCopiesSlider",
+		  "width": 480,
+		  "height": 360,
+		  "shapeA": {
+		    "after": {
+		      "width": 349,
+		      "height": 383
+		    },
+		    "color": "#9AB8ED",
+		    "label": "Shape A",
+		    "before": {
+		      "width": 310,
+		      "height": 360
+		    }
+		  },
+		  "shapeB": {
+		    "after": {
+		      "width": 360,
+		      "height": 480
+		    },
+		    "color": "#9BEDCE",
+		    "label": "Shape B",
+		    "before": {
+		      "width": 360,
+		      "height": 480
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -434,37 +536,37 @@ describe("scaleCopiesSlider widget tests", () => {
 	})
 
 	// Extracted from question: xe5fe407f28762cee
-	// Question: Which slider creates scale copies?
-	// Widget key: sliders_visual
-	test("scale-copies-slider - [xe5fe407f28762cee] Which slider creates scale copies?", async () => {
+	// Question: Identify the slider that creates scale copies
+	// Widget key: interaction_3
+	test("scale-copies-slider - [xe5fe407f28762cee] Identify the slider that creates scale copies", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scaleCopiesSlider",
-		  "width": 700,
-		  "height": 300,
+		  "width": 480,
+		  "height": 360,
 		  "shapeA": {
 		    "after": {
-		      "width": 4,
-		      "height": 2
+		      "width": 320,
+		      "height": 320
 		    },
 		    "color": "#9AB8ED",
 		    "label": "Shape A",
 		    "before": {
-		      "width": 4,
-		      "height": 4
+		      "width": 320,
+		      "height": 320
 		    }
 		  },
 		  "shapeB": {
 		    "after": {
-		      "width": 4,
-		      "height": 4
+		      "width": 400,
+		      "height": 400
 		    },
 		    "color": "#9BEDCE",
 		    "label": "Shape B",
 		    "before": {
-		      "width": 2,
-		      "height": 2
+		      "width": 320,
+		      "height": 320
 		    }
 		  }
 		} as unknown as WidgetInput
@@ -485,37 +587,37 @@ describe("scaleCopiesSlider widget tests", () => {
 	})
 
 	// Extracted from question: x227bac92cbd5a583
-	// Question: Which slider creates scale copies of the shape?
-	// Widget key: scale_sliders
-	test("scale-copies-slider - [x227bac92cbd5a583] Which slider creates scale copies of the shape?", async () => {
+	// Question: Identify the slider that creates scale copies
+	// Widget key: interaction_4
+	test("scale-copies-slider - [x227bac92cbd5a583] Identify the slider that creates scale copies", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "scaleCopiesSlider",
-		  "width": 700,
-		  "height": 300,
+		  "width": 480,
+		  "height": 320,
 		  "shapeA": {
 		    "after": {
-		      "width": 4.7,
-		      "height": 1.3
+		      "width": 470,
+		      "height": 480
 		    },
 		    "color": "#9AB8ED",
 		    "label": "Shape A",
 		    "before": {
-		      "width": 2,
-		      "height": 4
+		      "width": 400,
+		      "height": 480
 		    }
 		  },
 		  "shapeB": {
 		    "after": {
-		      "width": 4,
-		      "height": 2
+		      "width": 425,
+		      "height": 480
 		    },
 		    "color": "#9BEDCE",
 		    "label": "Shape B",
 		    "before": {
-		      "width": 2,
-		      "height": 1
+		      "width": 400,
+		      "height": 480
 		    }
 		  }
 		} as unknown as WidgetInput

@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.966Z
+// Generated on: 2025-09-18T05:17:02.165Z
 // Widget Type: functionPlotGraph
 // Source: Real questions from database
 //
@@ -26,9 +26,9 @@ import * as logger from "@superbuilders/slog"
 
 describe("functionPlotGraph widget tests", () => {
 	// Extracted from question: x97abcd9e95e99550
-	// Question: Find the output from a graph at x = -7
+	// Question: Find the output when x = -7
 	// Widget key: image_1
-	test("function-plot-graph - [x97abcd9e95e99550] Find the output from a graph at x = -7", async () => {
+	test("function-plot-graph - [x97abcd9e95e99550] Find the output when x = -7", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -37,14 +37,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 4,
-		    "min": -6,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -52,10 +52,10 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_graph",
+		      "id": "polyline_1",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": "Graph",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -164,9 +164,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2ccb2b56a412a34a
-	// Question: Find the output from a graph at x = 6
+	// Question: Find the output from a graph
 	// Widget key: image_1
-	test("function-plot-graph - [x2ccb2b56a412a34a] Find the output from a graph at x = 6", async () => {
+	test("function-plot-graph - [x2ccb2b56a412a34a] Find the output from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -175,15 +175,15 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
-		    "tickInterval": 2,
+		    "label": "x",
+		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 2,
+		    "max": 4,
+		    "min": -4,
+		    "label": "y",
+		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 345,
@@ -193,7 +193,7 @@ describe("functionPlotGraph widget tests", () => {
 		      "id": "polyline_graph",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": "Graph",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -302,9 +302,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2ece34720d52423c
-	// Question: Find the output from a graph at x = 4
+	// Question: Read a graph: find y for x = 4
 	// Widget key: image_1
-	test("function-plot-graph - [x2ece34720d52423c] Find the output from a graph at x = 4", async () => {
+	test("function-plot-graph - [x2ece34720d52423c] Read a graph: find y for x = 4", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -313,14 +313,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -4,
-		    "label": "",
+		    "max": 7,
+		    "min": -3,
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -328,10 +328,10 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_graph",
+		      "id": "polyline_1",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "points": [
 		        {
@@ -440,9 +440,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x962ff292125ddbf0
-	// Question: Find the output from a graph at x = -1
+	// Question: Find the output from the graph when x = -1
 	// Widget key: image_1
-	test("function-plot-graph - [x962ff292125ddbf0] Find the output from a graph at x = -1", async () => {
+	test("function-plot-graph - [x962ff292125ddbf0] Find the output from the graph when x = -1", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -451,14 +451,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -466,10 +466,10 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_main",
+		      "id": "polyline_graph",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "null",
+		      "label": null,
 		      "style": "solid",
 		      "points": [
 		        {
@@ -578,9 +578,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x942e18e5a4b86101
-	// Question: Find the output from a graph at x = -5
+	// Question: Find an output value from a graph
 	// Widget key: image_1
-	test("function-plot-graph - [x942e18e5a4b86101] Find the output from a graph at x = -5", async () => {
+	test("function-plot-graph - [x942e18e5a4b86101] Find an output value from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -589,14 +589,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -604,14 +604,26 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_graph",
+		      "id": "polyline_function",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": "Graph",
 		      "style": "solid",
 		      "points": [
 		        {
 		          "x": -10,
+		          "y": -5
+		        },
+		        {
+		          "x": -9,
+		          "y": -5
+		        },
+		        {
+		          "x": -8,
+		          "y": -5
+		        },
+		        {
+		          "x": -7,
 		          "y": -5
 		        },
 		        {
@@ -627,12 +639,28 @@ describe("functionPlotGraph widget tests", () => {
 		          "y": -1
 		        },
 		        {
+		          "x": 2,
+		          "y": 0
+		        },
+		        {
 		          "x": 3,
 		          "y": 1
 		        },
 		        {
+		          "x": 5,
+		          "y": 2
+		        },
+		        {
 		          "x": 7,
 		          "y": 3
+		        },
+		        {
+		          "x": 8,
+		          "y": 0
+		        },
+		        {
+		          "x": 9,
+		          "y": -2
 		        },
 		        {
 		          "x": 10,
@@ -660,9 +688,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x48b2be540a8c2411
-	// Question: Read a function value from a graph
+	// Question: Find the y-value from a graph at x = -4
 	// Widget key: image_1
-	test("function-plot-graph - [x48b2be540a8c2411] Read a function value from a graph", async () => {
+	test("function-plot-graph - [x48b2be540a8c2411] Find the y-value from a graph at x = -4", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -671,14 +699,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 3,
-		    "min": -4,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -686,10 +714,10 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_graph",
+		      "id": "polyline_function",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "null",
+		      "label": "Graph",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -798,9 +826,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0dc1563fc702f882
-	// Question: Find the output when the input is 2
+	// Question: Find the output when x = 2
 	// Widget key: image_1
-	test("function-plot-graph - [x0dc1563fc702f882] Find the output when the input is 2", async () => {
+	test("function-plot-graph - [x0dc1563fc702f882] Find the output when x = 2", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -809,15 +837,15 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
-		    "tickInterval": 2,
+		    "label": "x",
+		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
-		    "tickInterval": 2,
+		    "label": "y",
+		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 345,
@@ -827,7 +855,7 @@ describe("functionPlotGraph widget tests", () => {
 		      "id": "polyline_graph",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "Graph of connected line segments",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -936,9 +964,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8df33c0f4fcfe2f5
-	// Question: Find the output when x = 6
+	// Question: Find the output from a graph at a given input
 	// Widget key: image_1
-	test("function-plot-graph - [x8df33c0f4fcfe2f5] Find the output when x = 6", async () => {
+	test("function-plot-graph - [x8df33c0f4fcfe2f5] Find the output from a graph at a given input", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -947,14 +975,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 9,
-		    "min": -4,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -965,7 +993,7 @@ describe("functionPlotGraph widget tests", () => {
 		      "id": "polyline_graph",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "Graph",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -1085,14 +1113,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 5,
+		    "min": -2,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1100,10 +1128,10 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_graph_segments",
+		      "id": "polyline_graph",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "Graph",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -1212,9 +1240,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xf74fcc4f02db29fc
-	// Question: Find the output from a graph
+	// Question: Find the output from a graph at x = 7
 	// Widget key: image_1
-	test("function-plot-graph - [xf74fcc4f02db29fc] Find the output from a graph", async () => {
+	test("function-plot-graph - [xf74fcc4f02db29fc] Find the output from a graph at x = 7", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1223,14 +1251,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1238,10 +1266,10 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_connected_segments",
+		      "id": "polyline_segment_graph",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": "Graph",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -1350,9 +1378,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8a3fd8eb0882a079
-	// Question: Find y when x = -1 from the graph
+	// Question: Find the output from a graph
 	// Widget key: image_1
-	test("function-plot-graph - [x8a3fd8eb0882a079] Find y when x = -1 from the graph", async () => {
+	test("function-plot-graph - [x8a3fd8eb0882a079] Find the output from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1361,14 +1389,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1379,7 +1407,7 @@ describe("functionPlotGraph widget tests", () => {
 		      "id": "polyline_graph",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": "Graph",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -1488,9 +1516,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd8efff80c076d466
-	// Question: Find the output from a graph at x = -5
+	// Question: Find the output when x = -5
 	// Widget key: image_1
-	test("function-plot-graph - [xd8efff80c076d466] Find the output from a graph at x = -5", async () => {
+	test("function-plot-graph - [xd8efff80c076d466] Find the output when x = -5", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1499,14 +1527,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -2,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1514,10 +1542,10 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_graph",
+		      "id": "polyline_piecewise_graph",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "Graph",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -1625,10 +1653,149 @@ describe("functionPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1019b658
-	// Question: Identify new moons and the period from a visibility graph
+	// Extracted from question: xfe7c6ed4b0d4d900
+	// Question: Count proportional relationships on a coordinate plane
 	// Widget key: image_1
-	test("function-plot-graph - [x1019b658] Identify new moons and the period from a visibility graph", async () => {
+	test("function-plot-graph - [xfe7c6ed4b0d4d900] Count proportional relationships on a coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "functionPlotGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "origin",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 2,
+		      "id": "point_0_2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polylines": [
+		    {
+		      "id": "polyline_green",
+		      "type": "points",
+		      "color": "#28ae7b",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 8,
+		          "y": 4
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_blue_curve",
+		      "type": "points",
+		      "color": "#6495ed",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 0,
+		          "y": 2
+		        },
+		        {
+		          "x": 1,
+		          "y": 2.2
+		        },
+		        {
+		          "x": 2,
+		          "y": 2.6
+		        },
+		        {
+		          "x": 3,
+		          "y": 3
+		        },
+		        {
+		          "x": 4,
+		          "y": 3.8
+		        },
+		        {
+		          "x": 5,
+		          "y": 4.9
+		        },
+		        {
+		          "x": 6,
+		          "y": 6.2
+		        },
+		        {
+		          "x": 7,
+		          "y": 7
+		        },
+		        {
+		          "x": 8,
+		          "y": 7.5
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_purple",
+		      "type": "points",
+		      "color": "#9d38bd",
+		      "label": null,
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": 0,
+		          "y": 0
+		        },
+		        {
+		          "x": 2,
+		          "y": 6
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for functionPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1019b658
+	// Question: Identify new moons and the period from a graph
+	// Widget key: image_1
+	test("function-plot-graph - [x1019b658] Identify new moons and the period from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1637,14 +1804,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 60,
 		    "min": 0,
-		    "label": "t[days]",
+		    "label": "Time (days)",
 		    "tickInterval": 3,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 100,
 		    "min": 0,
-		    "label": "M[%]",
+		    "label": "Moon visibility (percent)",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
@@ -1654,8 +1821,8 @@ describe("functionPlotGraph widget tests", () => {
 		    {
 		      "id": "polyline_moon_visibility",
 		      "type": "points",
-		      "color": "#2b7bba",
-		      "label": " ",
+		      "color": "#4A90E2",
+		      "label": "Moon visibility",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -1732,9 +1899,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x9cb5db3c6eb53987
-	// Question: Complete statements about a function from its graph
+	// Question: Complete statements from a graph of a function
 	// Widget key: image_1
-	test("function-plot-graph - [x9cb5db3c6eb53987] Complete statements about a function from its graph", async () => {
+	test("function-plot-graph - [x9cb5db3c6eb53987] Complete statements from a graph of a function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1758,10 +1925,10 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_function",
+		      "id": "polyline_wave",
 		      "type": "points",
-		      "color": "#4a90e2",
-		      "label": "y as a function of x",
+		      "color": "#3b7dd8",
+		      "label": " ",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -1769,128 +1936,192 @@ describe("functionPlotGraph widget tests", () => {
 		          "y": 0
 		        },
 		        {
-		          "x": -5.890486226,
-		          "y": 1.414213562
+		          "x": -6.021385919,
+		          "y": 1
+		        },
+		        {
+		          "x": -5.759586532,
+		          "y": 1.732050808
 		        },
 		        {
 		          "x": -5.497787144,
 		          "y": 2
 		        },
 		        {
-		          "x": -5.105088062,
-		          "y": 1.414213562
+		          "x": -5.235987756,
+		          "y": 1.732050808
+		        },
+		        {
+		          "x": -4.974188369,
+		          "y": 1
 		        },
 		        {
 		          "x": -4.712388981,
 		          "y": 0
 		        },
 		        {
-		          "x": -4.319689899,
-		          "y": -1.414213562
+		          "x": -4.450589594,
+		          "y": -1
 		        },
 		        {
-		          "x": -3.926990817,
+		          "x": -4.188790206,
+		          "y": -1.732050808
+		        },
+		        {
+		          "x": -3.926990819,
 		          "y": -2
 		        },
 		        {
-		          "x": -3.534291736,
-		          "y": -1.414213562
+		          "x": -3.665191431,
+		          "y": -1.732050808
 		        },
 		        {
-		          "x": -3.141592654,
+		          "x": -3.403392043,
+		          "y": -1
+		        },
+		        {
+		          "x": -3.141592656,
 		          "y": 0
 		        },
 		        {
-		          "x": -2.748893572,
-		          "y": 1.414213562
+		          "x": -2.879793268,
+		          "y": 1
 		        },
 		        {
-		          "x": -2.35619449,
+		          "x": -2.617993881,
+		          "y": 1.732050808
+		        },
+		        {
+		          "x": -2.356194493,
 		          "y": 2
 		        },
 		        {
-		          "x": -1.963495408,
-		          "y": 1.414213562
+		          "x": -2.094395105,
+		          "y": 1.732050808
 		        },
 		        {
-		          "x": -1.570796327,
+		          "x": -1.832595718,
+		          "y": 1
+		        },
+		        {
+		          "x": -1.57079633,
 		          "y": 0
 		        },
 		        {
-		          "x": -1.178097245,
-		          "y": -1.414213562
+		          "x": -1.308996943,
+		          "y": -1
 		        },
 		        {
-		          "x": -0.785398163,
+		          "x": -1.047197555,
+		          "y": -1.732050808
+		        },
+		        {
+		          "x": -0.785398167,
 		          "y": -2
 		        },
 		        {
-		          "x": -0.392699082,
-		          "y": -1.414213562
+		          "x": -0.52359878,
+		          "y": -1.732050808
+		        },
+		        {
+		          "x": -0.261799392,
+		          "y": -1
 		        },
 		        {
 		          "x": 0,
 		          "y": 0
 		        },
 		        {
-		          "x": 0.392699082,
-		          "y": 1.414213562
+		          "x": 0.261799392,
+		          "y": 1
 		        },
 		        {
-		          "x": 0.785398163,
+		          "x": 0.52359878,
+		          "y": 1.732050808
+		        },
+		        {
+		          "x": 0.785398167,
 		          "y": 2
 		        },
 		        {
-		          "x": 1.178097245,
-		          "y": 1.414213562
+		          "x": 1.047197555,
+		          "y": 1.732050808
 		        },
 		        {
-		          "x": 1.570796327,
+		          "x": 1.308996943,
+		          "y": 1
+		        },
+		        {
+		          "x": 1.57079633,
 		          "y": 0
 		        },
 		        {
-		          "x": 1.963495408,
-		          "y": -1.414213562
+		          "x": 1.832595718,
+		          "y": -1
 		        },
 		        {
-		          "x": 2.35619449,
+		          "x": 2.094395105,
+		          "y": -1.732050808
+		        },
+		        {
+		          "x": 2.356194493,
 		          "y": -2
 		        },
 		        {
-		          "x": 2.748893572,
-		          "y": -1.414213562
+		          "x": 2.617993881,
+		          "y": -1.732050808
 		        },
 		        {
-		          "x": 3.141592654,
+		          "x": 2.879793268,
+		          "y": -1
+		        },
+		        {
+		          "x": 3.141592656,
 		          "y": 0
 		        },
 		        {
-		          "x": 3.534291736,
-		          "y": 1.414213562
+		          "x": 3.403392043,
+		          "y": 1
 		        },
 		        {
-		          "x": 3.926990817,
+		          "x": 3.665191431,
+		          "y": 1.732050808
+		        },
+		        {
+		          "x": 3.926990819,
 		          "y": 2
 		        },
 		        {
-		          "x": 4.319689899,
-		          "y": 1.414213562
+		          "x": 4.188790206,
+		          "y": 1.732050808
+		        },
+		        {
+		          "x": 4.450589594,
+		          "y": 1
 		        },
 		        {
 		          "x": 4.712388981,
 		          "y": 0
 		        },
 		        {
-		          "x": 5.105088062,
-		          "y": -1.414213562
+		          "x": 4.974188369,
+		          "y": -1
+		        },
+		        {
+		          "x": 5.235987756,
+		          "y": -1.732050808
 		        },
 		        {
 		          "x": 5.497787144,
 		          "y": -2
 		        },
 		        {
-		          "x": 5.890486226,
-		          "y": -1.414213562
+		          "x": 5.759586532,
+		          "y": -1.732050808
+		        },
+		        {
+		          "x": 6.021385919,
+		          "y": -1
 		        },
 		        {
 		          "x": 6.283185307,
@@ -1929,14 +2160,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 25,
 		    "min": 0,
-		    "label": "t[h]",
+		    "label": "t [h]",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 25,
 		    "min": 0,
-		    "label": "d[km]",
+		    "label": "d [km]",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1946,7 +2177,7 @@ describe("functionPlotGraph widget tests", () => {
 		    {
 		      "id": "polyline_sean_commute",
 		      "type": "points",
-		      "color": "#88aaff",
+		      "color": "#8bb7f0",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
@@ -2015,14 +2246,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8.5,
 		    "min": 0,
-		    "label": "Time (hours)",
+		    "label": "t [h]",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 55,
 		    "min": 0,
-		    "label": "Distance (km)",
+		    "label": "x [km]",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
@@ -2032,7 +2263,7 @@ describe("functionPlotGraph widget tests", () => {
 		    {
 		      "id": "polyline_alberto",
 		      "type": "points",
-		      "color": "#1fab54",
+		      "color": "#2ca02c",
 		      "label": "Alberto",
 		      "style": "solid",
 		      "points": [
@@ -2073,7 +2304,7 @@ describe("functionPlotGraph widget tests", () => {
 		    {
 		      "id": "polyline_bianca",
 		      "type": "points",
-		      "color": "#11accd",
+		      "color": "#1f77b4",
 		      "label": "Bianca",
 		      "style": "solid",
 		      "points": [
@@ -2082,8 +2313,28 @@ describe("functionPlotGraph widget tests", () => {
 		          "y": 0
 		        },
 		        {
+		          "x": 1,
+		          "y": 2
+		        },
+		        {
+		          "x": 2,
+		          "y": 7
+		        },
+		        {
+		          "x": 3,
+		          "y": 15
+		        },
+		        {
+		          "x": 4,
+		          "y": 25
+		        },
+		        {
 		          "x": 5,
 		          "y": 35
+		        },
+		        {
+		          "x": 5.5,
+		          "y": 43
 		        },
 		        {
 		          "x": 6,
@@ -2111,9 +2362,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x16750bc5
-	// Question: Interpret a graph of sailboat speed versus length
+	// Question: Interpret a graph: Sailboat speed vs. length
 	// Widget key: image_1
-	test("function-plot-graph - [x16750bc5] Interpret a graph of sailboat speed versus length", async () => {
+	test("function-plot-graph - [x16750bc5] Interpret a graph: Sailboat speed vs. length", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2137,10 +2388,10 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_boat_speed",
+		      "id": "polyline_speed_curve",
 		      "type": "points",
-		      "color": "#3b82f6",
-		      "label": "Maximum speed vs. length",
+		      "color": "#4C9EE3",
+		      "label": " ",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -2148,132 +2399,52 @@ describe("functionPlotGraph widget tests", () => {
 		          "y": 0
 		        },
 		        {
-		          "x": 1,
-		          "y": 2.5
-		        },
-		        {
 		          "x": 2,
-		          "y": 3.536
-		        },
-		        {
-		          "x": 3,
-		          "y": 4.33
+		          "y": 3.9
 		        },
 		        {
 		          "x": 4,
 		          "y": 5
 		        },
 		        {
-		          "x": 5,
-		          "y": 5.59
-		        },
-		        {
 		          "x": 6,
-		          "y": 6.123
-		        },
-		        {
-		          "x": 7,
-		          "y": 6.614
+		          "y": 6.2
 		        },
 		        {
 		          "x": 8,
-		          "y": 7.071
-		        },
-		        {
-		          "x": 9,
-		          "y": 7.5
+		          "y": 7.1
 		        },
 		        {
 		          "x": 10,
-		          "y": 7.906
-		        },
-		        {
-		          "x": 11,
-		          "y": 8.291
+		          "y": 8.1
 		        },
 		        {
 		          "x": 12,
-		          "y": 8.66
-		        },
-		        {
-		          "x": 13,
-		          "y": 9.014
+		          "y": 8.9
 		        },
 		        {
 		          "x": 14,
-		          "y": 9.354
-		        },
-		        {
-		          "x": 15,
-		          "y": 9.683
+		          "y": 9.6
 		        },
 		        {
 		          "x": 16,
 		          "y": 10
 		        },
 		        {
-		          "x": 17,
-		          "y": 10.308
-		        },
-		        {
-		          "x": 18,
-		          "y": 10.607
-		        },
-		        {
-		          "x": 19,
-		          "y": 10.897
-		        },
-		        {
 		          "x": 20,
-		          "y": 11.18
-		        },
-		        {
-		          "x": 21,
-		          "y": 11.456
-		        },
-		        {
-		          "x": 22,
-		          "y": 11.726
-		        },
-		        {
-		          "x": 23,
-		          "y": 11.989
+		          "y": 11.2
 		        },
 		        {
 		          "x": 24,
-		          "y": 12.247
-		        },
-		        {
-		          "x": 25,
-		          "y": 12.5
-		        },
-		        {
-		          "x": 26,
-		          "y": 12.747
-		        },
-		        {
-		          "x": 27,
-		          "y": 12.99
+		          "y": 12.2
 		        },
 		        {
 		          "x": 28,
-		          "y": 13.229
-		        },
-		        {
-		          "x": 29,
-		          "y": 13.463
-		        },
-		        {
-		          "x": 30,
-		          "y": 13.693
-		        },
-		        {
-		          "x": 31,
-		          "y": 13.919
+		          "y": 13.1
 		        },
 		        {
 		          "x": 32,
-		          "y": 14.142
+		          "y": 13.8
 		        }
 		      ]
 		    }
@@ -2297,9 +2468,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x4c67fe6b0628aca8
-	// Question: Complete statements from a step function graph
+	// Question: Identify slopes and extrema from a step graph
 	// Widget key: image_1
-	test("function-plot-graph - [x4c67fe6b0628aca8] Complete statements from a step function graph", async () => {
+	test("function-plot-graph - [x4c67fe6b0628aca8] Identify slopes and extrema from a step graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2322,123 +2493,67 @@ describe("functionPlotGraph widget tests", () => {
 		  "height": 450,
 		  "points": [
 		    {
-		      "x": -4,
-		      "y": -3,
-		      "id": "open_-4_-3",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
 		      "x": -3,
 		      "y": -3,
-		      "id": "closed_-3_-3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": -2,
-		      "id": "open_-3_-2",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": -2,
-		      "y": -2,
-		      "id": "closed_-2_-2",
+		      "id": "pt_-3_-3_closed",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -2,
-		      "y": -1,
-		      "id": "open_-2_-1",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": -1,
-		      "y": -1,
-		      "id": "closed_-1_-1",
+		      "y": -2,
+		      "id": "pt_-2_-2_closed",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -1,
-		      "y": 0,
-		      "id": "open_-1_0",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "closed_0_0",
+		      "y": -1,
+		      "id": "pt_-1_-1_closed",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
-		      "y": 1,
-		      "id": "open_0_1",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 1,
-		      "y": 1,
-		      "id": "closed_1_1",
+		      "y": 0,
+		      "id": "pt_0_0_closed",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
-		      "y": 2,
-		      "id": "open_1_2",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "id": "closed_2_2",
+		      "y": 1,
+		      "id": "pt_1_1_closed",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
-		      "y": 3,
-		      "id": "open_2_3",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 3,
-		      "y": 3,
-		      "id": "closed_3_3",
+		      "y": 2,
+		      "id": "pt_2_2_closed",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
-		      "y": 4,
-		      "id": "open_3_4",
+		      "y": 3,
+		      "id": "pt_3_3_closed",
 		      "label": "",
-		      "style": "open"
+		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 4,
-		      "id": "closed_4_4",
+		      "id": "pt_4_4_closed",
 		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
 		  "polylines": [
 		    {
-		      "id": "polyline_step_1",
+		      "id": "polyline_step_neg4_to_neg3",
 		      "type": "points",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
@@ -2453,9 +2568,9 @@ describe("functionPlotGraph widget tests", () => {
 		      ]
 		    },
 		    {
-		      "id": "polyline_step_2",
+		      "id": "polyline_step_neg3_to_neg2",
 		      "type": "points",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
@@ -2470,9 +2585,9 @@ describe("functionPlotGraph widget tests", () => {
 		      ]
 		    },
 		    {
-		      "id": "polyline_step_3",
+		      "id": "polyline_step_neg2_to_neg1",
 		      "type": "points",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
@@ -2487,9 +2602,9 @@ describe("functionPlotGraph widget tests", () => {
 		      ]
 		    },
 		    {
-		      "id": "polyline_step_4",
+		      "id": "polyline_step_neg1_to_0",
 		      "type": "points",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
@@ -2504,9 +2619,9 @@ describe("functionPlotGraph widget tests", () => {
 		      ]
 		    },
 		    {
-		      "id": "polyline_step_5",
+		      "id": "polyline_step_0_to_1",
 		      "type": "points",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
@@ -2521,9 +2636,9 @@ describe("functionPlotGraph widget tests", () => {
 		      ]
 		    },
 		    {
-		      "id": "polyline_step_6",
+		      "id": "polyline_step_1_to_2",
 		      "type": "points",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
@@ -2538,9 +2653,9 @@ describe("functionPlotGraph widget tests", () => {
 		      ]
 		    },
 		    {
-		      "id": "polyline_step_7",
+		      "id": "polyline_step_2_to_3",
 		      "type": "points",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
@@ -2555,9 +2670,9 @@ describe("functionPlotGraph widget tests", () => {
 		      ]
 		    },
 		    {
-		      "id": "polyline_step_8",
+		      "id": "polyline_step_3_to_4",
 		      "type": "points",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
@@ -2620,7 +2735,7 @@ describe("functionPlotGraph widget tests", () => {
 		      "id": "polyline_function",
 		      "type": "points",
 		      "color": "#4A90E2",
-		      "label": "null",
+		      "label": " ",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -2629,7 +2744,7 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 0.5,
-		          "y": 6.2
+		          "y": 6.1
 		        },
 		        {
 		          "x": 1,
@@ -2637,15 +2752,15 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 1.5,
-		          "y": 3.8
+		          "y": 4
 		        },
 		        {
 		          "x": 2,
-		          "y": 3
+		          "y": 3.2
 		        },
 		        {
 		          "x": 2.5,
-		          "y": 2.5
+		          "y": 2.6
 		        },
 		        {
 		          "x": 3,
@@ -2657,27 +2772,27 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 5,
-		          "y": 1
+		          "y": 1.1
 		        },
 		        {
 		          "x": 6,
-		          "y": 0.8
+		          "y": 0.9
 		        },
 		        {
 		          "x": 7,
-		          "y": 0.6
+		          "y": 0.7
 		        },
 		        {
 		          "x": 8,
-		          "y": 0.5
+		          "y": 0.6
 		        },
 		        {
 		          "x": 9,
-		          "y": 0.4
+		          "y": 0.5
 		        },
 		        {
 		          "x": 10,
-		          "y": 0.35
+		          "y": 0.45
 		        }
 		      ]
 		    }
@@ -2701,9 +2816,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x572138ad
-	// Question: Describe a graph using slopes and a maximum value
+	// Question: Interpret a piecewise graph: slopes and maximum
 	// Widget key: image_1
-	test("function-plot-graph - [x572138ad] Describe a graph using slopes and a maximum value", async () => {
+	test("function-plot-graph - [x572138ad] Interpret a piecewise graph: slopes and maximum", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2724,63 +2839,13 @@ describe("functionPlotGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": 0,
-		      "id": "p3_0",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 2,
-		      "id": "p4_2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 4,
-		      "id": "p5_4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 3,
-		      "id": "p6_3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": 2,
-		      "id": "p7_2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 1,
-		      "id": "p8_1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 9,
-		      "y": 0,
-		      "id": "p9_0",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_function",
+		      "id": "polyline_function_y_of_x",
 		      "type": "points",
-		      "color": "#4A90E2",
-		      "label": "",
+		      "color": "#3b78e7",
+		      "label": null,
 		      "style": "solid",
 		      "points": [
 		        {
@@ -2837,71 +2902,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x59b75739
-	// Question: Complete statements from a function’s graph
+	// Question: Complete statements from a graph
 	// Widget key: image_1
-	test("function-plot-graph - [x59b75739] Complete statements from a function’s graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "functionPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "polylines": [
-		    {
-		      "id": "polyline_function",
-		      "type": "function",
-		      "color": "#4a90e2",
-		      "label": "y",
-		      "style": "solid",
-		      "xRange": {
-		        "max": 10,
-		        "min": -10
-		      },
-		      "resolution": 200,
-		      "coefficients": [
-		        -1,
-		        6,
-		        0
-		      ]
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for functionPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd764f378
-	// Question: Complete statements about a function from its graph
-	// Widget key: image_1
-	test("function-plot-graph - [xd764f378] Complete statements about a function from its graph", async () => {
+	test("function-plot-graph - [x59b75739] Complete statements from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2928,13 +2931,75 @@ describe("functionPlotGraph widget tests", () => {
 		      "id": "polyline_function",
 		      "type": "function",
 		      "color": "#4da3ff",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "xRange": {
 		        "max": 10,
 		        "min": -10
 		      },
 		      "resolution": 400,
+		      "coefficients": [
+		        -1,
+		        6,
+		        0
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for functionPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd764f378
+	// Question: Interpret key features from a graph
+	// Widget key: image_1
+	test("function-plot-graph - [xd764f378] Interpret key features from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "functionPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_function",
+		      "type": "function",
+		      "color": "#4da6ff",
+		      "label": " ",
+		      "style": "solid",
+		      "xRange": {
+		        "max": 10,
+		        "min": -10
+		      },
+		      "resolution": 200,
 		      "coefficients": [
 		        -0.5,
 		        4,
@@ -2961,9 +3026,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x93a49507
-	// Question: Read rates from a piecewise price graph
+	// Question: Determine hourly rates and maximum price from a graph
 	// Widget key: image_1
-	test("function-plot-graph - [x93a49507] Read rates from a piecewise price graph", async () => {
+	test("function-plot-graph - [x93a49507] Determine hourly rates and maximum price from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2972,14 +3037,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 25,
 		    "min": 0,
-		    "label": "t (hours)",
+		    "label": "t",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 33,
 		    "min": -4,
-		    "label": "P (dollars)",
+		    "label": "P",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -2987,19 +3052,15 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_price_piecewise",
+		      "id": "polyline_bike_price",
 		      "type": "points",
-		      "color": "#6fa3ef",
-		      "label": "null",
+		      "color": "#8fb3ff",
+		      "label": " ",
 		      "style": "solid",
 		      "points": [
 		        {
 		          "x": 0,
 		          "y": 8
-		        },
-		        {
-		          "x": 1,
-		          "y": 12
 		        },
 		        {
 		          "x": 2,
@@ -3010,35 +3071,19 @@ describe("functionPlotGraph widget tests", () => {
 		          "y": 20
 		        },
 		        {
-		          "x": 4,
-		          "y": 22
-		        },
-		        {
-		          "x": 5,
-		          "y": 24
-		        },
-		        {
 		          "x": 6,
-		          "y": 26
-		        },
-		        {
-		          "x": 7,
-		          "y": 27
+		          "y": 24
 		        },
 		        {
 		          "x": 8,
 		          "y": 28
 		        },
 		        {
-		          "x": 9,
-		          "y": 29
-		        },
-		        {
 		          "x": 10,
 		          "y": 30
 		        },
 		        {
-		          "x": 12,
+		          "x": 14,
 		          "y": 30
 		        },
 		        {
@@ -3071,9 +3116,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc78ba6a5
-	// Question: Interpret a function from its graph
+	// Question: Complete statements based on a graph
 	// Widget key: image_1
-	test("function-plot-graph - [xc78ba6a5] Interpret a function from its graph", async () => {
+	test("function-plot-graph - [xc78ba6a5] Complete statements based on a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3097,27 +3142,27 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_function",
+		      "id": "polyline_function_curve",
 		      "type": "points",
-		      "color": "#4c91d9",
+		      "color": "#4A90E2",
 		      "label": "y as a function of x",
 		      "style": "solid",
 		      "points": [
 		        {
 		          "x": -10,
-		          "y": 0.3
+		          "y": 0.2
 		        },
 		        {
 		          "x": -9,
-		          "y": 0.33
+		          "y": 0.23
 		        },
 		        {
 		          "x": -8,
-		          "y": 0.36
+		          "y": 0.28
 		        },
 		        {
 		          "x": -7,
-		          "y": 0.4
+		          "y": 0.35
 		        },
 		        {
 		          "x": -6,
@@ -3125,23 +3170,23 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": -5,
-		          "y": 0.52
+		          "y": 0.58
 		        },
 		        {
 		          "x": -4,
-		          "y": 0.6
+		          "y": 0.72
 		        },
 		        {
 		          "x": -3,
-		          "y": 0.75
+		          "y": 0.85
 		        },
 		        {
 		          "x": -2,
-		          "y": 0.9
+		          "y": 0.93
 		        },
 		        {
 		          "x": -1,
-		          "y": 0.97
+		          "y": 0.98
 		        },
 		        {
 		          "x": 0,
@@ -3157,15 +3202,15 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 3,
-		          "y": 2.6
+		          "y": 2.8
 		        },
 		        {
 		          "x": 4,
-		          "y": 3.5
+		          "y": 4
 		        },
 		        {
 		          "x": 5,
-		          "y": 5.2
+		          "y": 5.4
 		        },
 		        {
 		          "x": 6,
@@ -3173,11 +3218,11 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 7,
-		          "y": 8.2
+		          "y": 8.4
 		        },
 		        {
 		          "x": 8,
-		          "y": 9.2
+		          "y": 9.4
 		        },
 		        {
 		          "x": 9,
@@ -3209,19 +3254,19 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x337386a259aea1b2
-	// Question: Complete statements from a function graph
+	// Question: Complete statements about a function from its graph
 	// Widget key: image_1
-	test("function-plot-graph - [x337386a259aea1b2] Complete statements from a function graph", async () => {
+	test("function-plot-graph - [x337386a259aea1b2] Complete statements about a function from its graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "functionPlotGraph",
 		  "width": 425,
 		  "xAxis": {
-		    "max": 6.28318530718,
-		    "min": -6.28318530718,
+		    "max": 6.283,
+		    "min": -6.283,
 		    "label": "x",
-		    "tickInterval": 1.57079632679,
+		    "tickInterval": 1.571,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
@@ -3235,126 +3280,78 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_sinc",
+		      "id": "polyline_function",
 		      "type": "points",
-		      "color": "#3b82f6",
-		      "label": "null",
+		      "color": "#3b7ddd",
+		      "label": " ",
 		      "style": "solid",
 		      "points": [
 		        {
-		          "x": -6.28318530718,
+		          "x": -6.283,
 		          "y": 0
 		        },
 		        {
-		          "x": -6,
-		          "y": -0.0465692497
+		          "x": -5.498,
+		          "y": -0.1
 		        },
 		        {
-		          "x": -5.5,
-		          "y": -0.12828005919
+		          "x": -4.712,
+		          "y": -0.25
 		        },
 		        {
-		          "x": -5,
-		          "y": -0.19178485493
+		          "x": -3.927,
+		          "y": -0.1
 		        },
 		        {
-		          "x": -4.71238898038,
-		          "y": -0.21220659079
-		        },
-		        {
-		          "x": -4,
-		          "y": -0.18920062383
-		        },
-		        {
-		          "x": -3.5,
-		          "y": -0.10022377934
-		        },
-		        {
-		          "x": -3.14159265359,
+		          "x": -3.142,
 		          "y": 0
 		        },
 		        {
-		          "x": -3,
-		          "y": 0.04704000269
+		          "x": -2.356,
+		          "y": 0.4
 		        },
 		        {
-		          "x": -2.5,
-		          "y": 0.23938885764
+		          "x": -1.571,
+		          "y": 0.7
 		        },
 		        {
-		          "x": -2,
-		          "y": 0.45464871341
-		        },
-		        {
-		          "x": -1.5,
-		          "y": 0.66499665774
-		        },
-		        {
-		          "x": -1,
-		          "y": 0.84147098481
-		        },
-		        {
-		          "x": -0.5,
-		          "y": 0.95885107721
+		          "x": -0.785,
+		          "y": 0.9
 		        },
 		        {
 		          "x": 0,
 		          "y": 1
 		        },
 		        {
-		          "x": 0.5,
-		          "y": 0.95885107721
+		          "x": 0.785,
+		          "y": 0.9
 		        },
 		        {
-		          "x": 1,
-		          "y": 0.84147098481
+		          "x": 1.571,
+		          "y": 0.7
 		        },
 		        {
-		          "x": 1.5,
-		          "y": 0.66499665774
+		          "x": 2.356,
+		          "y": 0.4
 		        },
 		        {
-		          "x": 2,
-		          "y": 0.45464871341
-		        },
-		        {
-		          "x": 2.5,
-		          "y": 0.23938885764
-		        },
-		        {
-		          "x": 3,
-		          "y": 0.04704000269
-		        },
-		        {
-		          "x": 3.14159265359,
+		          "x": 3.142,
 		          "y": 0
 		        },
 		        {
-		          "x": 3.5,
-		          "y": -0.10022377934
+		          "x": 3.927,
+		          "y": -0.1
 		        },
 		        {
-		          "x": 4,
-		          "y": -0.18920062383
+		          "x": 4.712,
+		          "y": -0.25
 		        },
 		        {
-		          "x": 4.71238898038,
-		          "y": -0.21220659079
+		          "x": 5.498,
+		          "y": -0.1
 		        },
 		        {
-		          "x": 5,
-		          "y": -0.19178485493
-		        },
-		        {
-		          "x": 5.5,
-		          "y": -0.12828005919
-		        },
-		        {
-		          "x": 6,
-		          "y": -0.0465692497
-		        },
-		        {
-		          "x": 6.28318530718,
+		          "x": 6.283,
 		          "y": 0
 		        }
 		      ]
@@ -3407,57 +3404,33 @@ describe("functionPlotGraph widget tests", () => {
 		    {
 		      "id": "polyline_ecg",
 		      "type": "points",
-		      "color": "#4a90e2",
-		      "label": "ECG trace",
+		      "color": "#6aa9ff",
+		      "label": "[ECG trace]",
 		      "style": "solid",
 		      "points": [
 		        {
 		          "x": 0,
-		          "y": 0.0002
-		        },
-		        {
-		          "x": 0,
-		          "y": 0.006
-		        },
-		        {
-		          "x": 0.02,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 0.1,
-		          "y": 0.0007
-		        },
-		        {
-		          "x": 0.2,
 		          "y": 0.0001
 		        },
 		        {
-		          "x": 0.3,
-		          "y": 0.0006
+		          "x": 0,
+		          "y": 0.0068
 		        },
 		        {
-		          "x": 0.4,
+		          "x": 0.02,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 0.5,
-		          "y": 0.0005
+		          "x": 0.3,
+		          "y": 0.0004
 		        },
 		        {
 		          "x": 0.6,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 0.7,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 0.8,
-		          "y": 0.0001
-		        },
-		        {
-		          "x": 0.9,
-		          "y": 0.0002
+		          "x": 0.85,
+		          "y": 0.0005
 		        },
 		        {
 		          "x": 1,
@@ -3465,47 +3438,23 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 1,
-		          "y": 0.006
+		          "y": 0.0068
 		        },
 		        {
 		          "x": 1.02,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 1.1,
-		          "y": 0.0007
-		        },
-		        {
-		          "x": 1.2,
-		          "y": 0.0001
-		        },
-		        {
-		          "x": 1.3,
-		          "y": 0.0006
-		        },
-		        {
-		          "x": 1.4,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 1.5,
-		          "y": 0.0005
+		          "x": 1.3,
+		          "y": 0.0004
 		        },
 		        {
 		          "x": 1.6,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 1.7,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 1.8,
-		          "y": 0.0001
-		        },
-		        {
-		          "x": 1.9,
-		          "y": 0.0002
+		          "x": 1.85,
+		          "y": 0.0005
 		        },
 		        {
 		          "x": 2,
@@ -3513,47 +3462,23 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 2,
-		          "y": 0.006
+		          "y": 0.0068
 		        },
 		        {
 		          "x": 2.02,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 2.1,
-		          "y": 0.0007
-		        },
-		        {
-		          "x": 2.2,
-		          "y": 0.0001
-		        },
-		        {
-		          "x": 2.3,
-		          "y": 0.0006
-		        },
-		        {
-		          "x": 2.4,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 2.5,
-		          "y": 0.0005
+		          "x": 2.3,
+		          "y": 0.0004
 		        },
 		        {
 		          "x": 2.6,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 2.7,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 2.8,
-		          "y": 0.0001
-		        },
-		        {
-		          "x": 2.9,
-		          "y": 0.0002
+		          "x": 2.85,
+		          "y": 0.0005
 		        },
 		        {
 		          "x": 3,
@@ -3561,47 +3486,23 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 3,
-		          "y": 0.006
+		          "y": 0.0068
 		        },
 		        {
 		          "x": 3.02,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 3.1,
-		          "y": 0.0007
-		        },
-		        {
-		          "x": 3.2,
-		          "y": 0.0001
-		        },
-		        {
-		          "x": 3.3,
-		          "y": 0.0006
-		        },
-		        {
-		          "x": 3.4,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 3.5,
-		          "y": 0.0005
+		          "x": 3.3,
+		          "y": 0.0004
 		        },
 		        {
 		          "x": 3.6,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 3.7,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 3.8,
-		          "y": 0.0001
-		        },
-		        {
-		          "x": 3.9,
-		          "y": 0.0002
+		          "x": 3.85,
+		          "y": 0.0005
 		        },
 		        {
 		          "x": 4,
@@ -3609,47 +3510,23 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 4,
-		          "y": 0.006
+		          "y": 0.0068
 		        },
 		        {
 		          "x": 4.02,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 4.1,
-		          "y": 0.0007
-		        },
-		        {
-		          "x": 4.2,
-		          "y": 0.0001
-		        },
-		        {
-		          "x": 4.3,
-		          "y": 0.0006
-		        },
-		        {
-		          "x": 4.4,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 4.5,
-		          "y": 0.0005
+		          "x": 4.3,
+		          "y": 0.0004
 		        },
 		        {
 		          "x": 4.6,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 4.7,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 4.8,
-		          "y": 0.0001
-		        },
-		        {
-		          "x": 4.9,
-		          "y": 0.0002
+		          "x": 4.85,
+		          "y": 0.0005
 		        },
 		        {
 		          "x": 5,
@@ -3657,47 +3534,23 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 5,
-		          "y": 0.006
+		          "y": 0.0068
 		        },
 		        {
 		          "x": 5.02,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 5.1,
-		          "y": 0.0007
-		        },
-		        {
-		          "x": 5.2,
-		          "y": 0.0001
-		        },
-		        {
-		          "x": 5.3,
-		          "y": 0.0006
-		        },
-		        {
-		          "x": 5.4,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 5.5,
-		          "y": 0.0005
+		          "x": 5.3,
+		          "y": 0.0004
 		        },
 		        {
 		          "x": 5.6,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 5.7,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 5.8,
-		          "y": 0.0001
-		        },
-		        {
-		          "x": 5.9,
-		          "y": 0.0002
+		          "x": 5.85,
+		          "y": 0.0005
 		        },
 		        {
 		          "x": 6,
@@ -3705,47 +3558,23 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 6,
-		          "y": 0.006
+		          "y": 0.0068
 		        },
 		        {
 		          "x": 6.02,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 6.1,
-		          "y": 0.0007
-		        },
-		        {
-		          "x": 6.2,
-		          "y": 0.0001
-		        },
-		        {
-		          "x": 6.3,
-		          "y": 0.0006
-		        },
-		        {
-		          "x": 6.4,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 6.5,
-		          "y": 0.0005
+		          "x": 6.3,
+		          "y": 0.0004
 		        },
 		        {
 		          "x": 6.6,
 		          "y": 0.0002
 		        },
 		        {
-		          "x": 6.7,
-		          "y": 0.0003
-		        },
-		        {
-		          "x": 6.8,
-		          "y": 0.0001
-		        },
-		        {
-		          "x": 6.9,
-		          "y": 0.0002
+		          "x": 6.85,
+		          "y": 0.0005
 		        },
 		        {
 		          "x": 7,
@@ -3773,9 +3602,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc72be93336750776
-	// Question: Interpret a spring motion graph and complete statements
+	// Question: Interpret a spring motion graph
 	// Widget key: image_2
-	test("function-plot-graph - [xc72be93336750776] Interpret a spring motion graph and complete statements", async () => {
+	test("function-plot-graph - [xc72be93336750776] Interpret a spring motion graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3784,14 +3613,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "t",
+		    "label": "time (seconds)",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 50,
 		    "min": -50,
-		    "label": "p(t)",
+		    "label": "position (centimeters)",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
@@ -3799,9 +3628,9 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_spring_motion",
+		      "id": "polyline_oscillation",
 		      "type": "points",
-		      "color": "#3b82f6",
+		      "color": "#4c9ed9",
 		      "label": "p(t)",
 		      "style": "solid",
 		      "points": [
@@ -3810,360 +3639,36 @@ describe("functionPlotGraph widget tests", () => {
 		          "y": 40
 		        },
 		        {
-		          "x": 0.1,
-		          "y": 38.04226
-		        },
-		        {
-		          "x": 0.2,
-		          "y": 32.36068
-		        },
-		        {
-		          "x": 0.3,
-		          "y": 23.51141
-		        },
-		        {
-		          "x": 0.4,
-		          "y": 12.36068
-		        },
-		        {
-		          "x": 0.5,
-		          "y": 0
-		        },
-		        {
-		          "x": 0.6,
-		          "y": -12.36068
-		        },
-		        {
-		          "x": 0.7,
-		          "y": -23.51141
-		        },
-		        {
-		          "x": 0.8,
-		          "y": -32.36068
-		        },
-		        {
-		          "x": 0.9,
-		          "y": -38.04226
-		        },
-		        {
 		          "x": 1,
 		          "y": -40
-		        },
-		        {
-		          "x": 1.1,
-		          "y": -38.04226
-		        },
-		        {
-		          "x": 1.2,
-		          "y": -32.36068
-		        },
-		        {
-		          "x": 1.3,
-		          "y": -23.51141
-		        },
-		        {
-		          "x": 1.4,
-		          "y": -12.36068
-		        },
-		        {
-		          "x": 1.5,
-		          "y": 0
-		        },
-		        {
-		          "x": 1.6,
-		          "y": 12.36068
-		        },
-		        {
-		          "x": 1.7,
-		          "y": 23.51141
-		        },
-		        {
-		          "x": 1.8,
-		          "y": 32.36068
-		        },
-		        {
-		          "x": 1.9,
-		          "y": 38.04226
 		        },
 		        {
 		          "x": 2,
 		          "y": 40
 		        },
 		        {
-		          "x": 2.1,
-		          "y": 38.04226
-		        },
-		        {
-		          "x": 2.2,
-		          "y": 32.36068
-		        },
-		        {
-		          "x": 2.3,
-		          "y": 23.51141
-		        },
-		        {
-		          "x": 2.4,
-		          "y": 12.36068
-		        },
-		        {
-		          "x": 2.5,
-		          "y": 0
-		        },
-		        {
-		          "x": 2.6,
-		          "y": -12.36068
-		        },
-		        {
-		          "x": 2.7,
-		          "y": -23.51141
-		        },
-		        {
-		          "x": 2.8,
-		          "y": -32.36068
-		        },
-		        {
-		          "x": 2.9,
-		          "y": -38.04226
-		        },
-		        {
 		          "x": 3,
 		          "y": -40
-		        },
-		        {
-		          "x": 3.1,
-		          "y": -38.04226
-		        },
-		        {
-		          "x": 3.2,
-		          "y": -32.36068
-		        },
-		        {
-		          "x": 3.3,
-		          "y": -23.51141
-		        },
-		        {
-		          "x": 3.4,
-		          "y": -12.36068
-		        },
-		        {
-		          "x": 3.5,
-		          "y": 0
-		        },
-		        {
-		          "x": 3.6,
-		          "y": 12.36068
-		        },
-		        {
-		          "x": 3.7,
-		          "y": 23.51141
-		        },
-		        {
-		          "x": 3.8,
-		          "y": 32.36068
-		        },
-		        {
-		          "x": 3.9,
-		          "y": 38.04226
 		        },
 		        {
 		          "x": 4,
 		          "y": 40
 		        },
 		        {
-		          "x": 4.1,
-		          "y": 38.04226
-		        },
-		        {
-		          "x": 4.2,
-		          "y": 32.36068
-		        },
-		        {
-		          "x": 4.3,
-		          "y": 23.51141
-		        },
-		        {
-		          "x": 4.4,
-		          "y": 12.36068
-		        },
-		        {
-		          "x": 4.5,
-		          "y": 0
-		        },
-		        {
-		          "x": 4.6,
-		          "y": -12.36068
-		        },
-		        {
-		          "x": 4.7,
-		          "y": -23.51141
-		        },
-		        {
-		          "x": 4.8,
-		          "y": -32.36068
-		        },
-		        {
-		          "x": 4.9,
-		          "y": -38.04226
-		        },
-		        {
 		          "x": 5,
 		          "y": -40
-		        },
-		        {
-		          "x": 5.1,
-		          "y": -38.04226
-		        },
-		        {
-		          "x": 5.2,
-		          "y": -32.36068
-		        },
-		        {
-		          "x": 5.3,
-		          "y": -23.51141
-		        },
-		        {
-		          "x": 5.4,
-		          "y": -12.36068
-		        },
-		        {
-		          "x": 5.5,
-		          "y": 0
-		        },
-		        {
-		          "x": 5.6,
-		          "y": 12.36068
-		        },
-		        {
-		          "x": 5.7,
-		          "y": 23.51141
-		        },
-		        {
-		          "x": 5.8,
-		          "y": 32.36068
-		        },
-		        {
-		          "x": 5.9,
-		          "y": 38.04226
 		        },
 		        {
 		          "x": 6,
 		          "y": 40
 		        },
 		        {
-		          "x": 6.1,
-		          "y": 38.04226
-		        },
-		        {
-		          "x": 6.2,
-		          "y": 32.36068
-		        },
-		        {
-		          "x": 6.3,
-		          "y": 23.51141
-		        },
-		        {
-		          "x": 6.4,
-		          "y": 12.36068
-		        },
-		        {
-		          "x": 6.5,
-		          "y": 0
-		        },
-		        {
-		          "x": 6.6,
-		          "y": -12.36068
-		        },
-		        {
-		          "x": 6.7,
-		          "y": -23.51141
-		        },
-		        {
-		          "x": 6.8,
-		          "y": -32.36068
-		        },
-		        {
-		          "x": 6.9,
-		          "y": -38.04226
-		        },
-		        {
 		          "x": 7,
 		          "y": -40
 		        },
 		        {
-		          "x": 7.1,
-		          "y": -38.04226
-		        },
-		        {
-		          "x": 7.2,
-		          "y": -32.36068
-		        },
-		        {
-		          "x": 7.3,
-		          "y": -23.51141
-		        },
-		        {
-		          "x": 7.4,
-		          "y": -12.36068
-		        },
-		        {
-		          "x": 7.5,
-		          "y": 0
-		        },
-		        {
-		          "x": 7.6,
-		          "y": 12.36068
-		        },
-		        {
-		          "x": 7.7,
-		          "y": 23.51141
-		        },
-		        {
-		          "x": 7.8,
-		          "y": 32.36068
-		        },
-		        {
-		          "x": 7.9,
-		          "y": 38.04226
-		        },
-		        {
 		          "x": 8,
 		          "y": 40
-		        },
-		        {
-		          "x": 8.1,
-		          "y": 38.04226
-		        },
-		        {
-		          "x": 8.2,
-		          "y": 32.36068
-		        },
-		        {
-		          "x": 8.3,
-		          "y": 23.51141
-		        },
-		        {
-		          "x": 8.4,
-		          "y": 12.36068
-		        },
-		        {
-		          "x": 8.5,
-		          "y": 0
-		        },
-		        {
-		          "x": 8.6,
-		          "y": -12.36068
-		        },
-		        {
-		          "x": 8.7,
-		          "y": -23.51141
-		        },
-		        {
-		          "x": 8.8,
-		          "y": -32.36068
-		        },
-		        {
-		          "x": 8.9,
-		          "y": -38.04226
 		        },
 		        {
 		          "x": 9,
@@ -4190,10 +3695,71 @@ describe("functionPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x85e40c41
-	// Question: Interpret slope and sign from a piecewise graph
+	// Extracted from question: x906998f8
+	// Question: Interpret a profit graph for hot dog sales
 	// Widget key: image_1
-	test("function-plot-graph - [x85e40c41] Interpret slope and sign from a piecewise graph", async () => {
+	test("function-plot-graph - [x906998f8] Interpret a profit graph for hot dog sales", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "functionPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 21,
+		    "min": -2,
+		    "label": "n",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 13,
+		    "min": -9,
+		    "label": "P",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_profit",
+		      "type": "function",
+		      "color": "#3b7dd8",
+		      "label": " ",
+		      "style": "solid",
+		      "xRange": {
+		        "max": 21,
+		        "min": -2
+		      },
+		      "resolution": 200,
+		      "coefficients": [
+		        1,
+		        -8
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for functionPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x85e40c41
+	// Question: Complete statements from a graph of a function
+	// Widget key: image_1
+	test("function-plot-graph - [x85e40c41] Complete statements from a graph of a function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4219,8 +3785,8 @@ describe("functionPlotGraph widget tests", () => {
 		    {
 		      "id": "polyline_function",
 		      "type": "points",
-		      "color": "#2a6ea6",
-		      "label": " ",
+		      "color": "#1f77b4",
+		      "label": "y as a function of x",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -4261,9 +3827,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xf4f6c84c
-	// Question: Determine heart rate from an electrocardiogram
+	// Question: Find heart rate from an ECG graph
 	// Widget key: image_1
-	test("function-plot-graph - [xf4f6c84c] Determine heart rate from an electrocardiogram", async () => {
+	test("function-plot-graph - [xf4f6c84c] Find heart rate from an ECG graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4272,14 +3838,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 6,
 		    "min": 0,
-		    "label": "t (seconds)",
+		    "label": "t",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 0.007,
 		    "min": 0,
-		    "label": "V (volts)",
+		    "label": "V",
 		    "tickInterval": 0.001,
 		    "showGridLines": true
 		  },
@@ -4289,7 +3855,7 @@ describe("functionPlotGraph widget tests", () => {
 		    {
 		      "id": "polyline_ecg",
 		      "type": "points",
-		      "color": "#5b8bd8",
+		      "color": "#77a3ff",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
@@ -4299,147 +3865,203 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 0.05,
-		          "y": 0.0002
+		          "y": 0.0006
 		        },
 		        {
-		          "x": 0.33,
-		          "y": 0.0002
+		          "x": 0.2,
+		          "y": 0.0012
+		        },
+		        {
+		          "x": 0.4,
+		          "y": 0.0007
+		        },
+		        {
+		          "x": 0.55,
+		          "y": 0.0006
+		        },
+		        {
+		          "x": 0.6,
+		          "y": 0.004
 		        },
 		        {
 		          "x": 0.65,
-		          "y": 0.0002
+		          "y": 0.0006
 		        },
 		        {
-		          "x": 0.67,
-		          "y": 0.004
-		        },
-		        {
-		          "x": 0.69,
-		          "y": 0.0002
+		          "x": 0.8,
+		          "y": 0.0012
 		        },
 		        {
 		          "x": 1,
-		          "y": 0.0002
+		          "y": 0.0007
 		        },
 		        {
-		          "x": 1.31,
-		          "y": 0.0002
+		          "x": 1.15,
+		          "y": 0.0006
 		        },
 		        {
-		          "x": 1.33,
+		          "x": 1.2,
 		          "y": 0.004
 		        },
 		        {
-		          "x": 1.35,
-		          "y": 0.0002
+		          "x": 1.25,
+		          "y": 0.0006
 		        },
 		        {
-		          "x": 1.66,
-		          "y": 0.0002
+		          "x": 1.4,
+		          "y": 0.0012
 		        },
 		        {
-		          "x": 1.98,
-		          "y": 0.0002
+		          "x": 1.6,
+		          "y": 0.0007
+		        },
+		        {
+		          "x": 1.75,
+		          "y": 0.0006
+		        },
+		        {
+		          "x": 1.8,
+		          "y": 0.004
+		        },
+		        {
+		          "x": 1.85,
+		          "y": 0.0006
 		        },
 		        {
 		          "x": 2,
+		          "y": 0.0012
+		        },
+		        {
+		          "x": 2.2,
+		          "y": 0.0007
+		        },
+		        {
+		          "x": 2.35,
+		          "y": 0.0006
+		        },
+		        {
+		          "x": 2.4,
 		          "y": 0.004
 		        },
 		        {
-		          "x": 2.02,
-		          "y": 0.0002
+		          "x": 2.45,
+		          "y": 0.0006
 		        },
 		        {
-		          "x": 2.31,
-		          "y": 0.0002
+		          "x": 2.6,
+		          "y": 0.0012
 		        },
 		        {
-		          "x": 2.65,
-		          "y": 0.0002
+		          "x": 2.8,
+		          "y": 0.0007
 		        },
 		        {
-		          "x": 2.67,
-		          "y": 0.004
-		        },
-		        {
-		          "x": 2.69,
-		          "y": 0.0002
+		          "x": 2.95,
+		          "y": 0.0006
 		        },
 		        {
 		          "x": 3,
-		          "y": 0.0002
-		        },
-		        {
-		          "x": 3.31,
-		          "y": 0.0002
-		        },
-		        {
-		          "x": 3.33,
 		          "y": 0.004
 		        },
 		        {
-		          "x": 3.35,
-		          "y": 0.0002
+		          "x": 3.05,
+		          "y": 0.0006
+		        },
+		        {
+		          "x": 3.2,
+		          "y": 0.0012
+		        },
+		        {
+		          "x": 3.4,
+		          "y": 0.0007
+		        },
+		        {
+		          "x": 3.55,
+		          "y": 0.0006
+		        },
+		        {
+		          "x": 3.6,
+		          "y": 0.004
 		        },
 		        {
 		          "x": 3.65,
-		          "y": 0.0002
+		          "y": 0.0006
 		        },
 		        {
-		          "x": 3.98,
-		          "y": 0.0002
+		          "x": 3.8,
+		          "y": 0.0012
 		        },
 		        {
 		          "x": 4,
+		          "y": 0.0007
+		        },
+		        {
+		          "x": 4.15,
+		          "y": 0.0006
+		        },
+		        {
+		          "x": 4.2,
 		          "y": 0.004
 		        },
 		        {
-		          "x": 4.02,
-		          "y": 0.0002
+		          "x": 4.25,
+		          "y": 0.0006
 		        },
 		        {
-		          "x": 4.31,
-		          "y": 0.0002
+		          "x": 4.4,
+		          "y": 0.0012
 		        },
 		        {
-		          "x": 4.65,
-		          "y": 0.0002
+		          "x": 4.6,
+		          "y": 0.0007
 		        },
 		        {
-		          "x": 4.67,
+		          "x": 4.75,
+		          "y": 0.0006
+		        },
+		        {
+		          "x": 4.8,
 		          "y": 0.004
 		        },
 		        {
-		          "x": 4.69,
-		          "y": 0.0002
+		          "x": 4.85,
+		          "y": 0.0006
 		        },
 		        {
 		          "x": 5,
-		          "y": 0.0002
+		          "y": 0.0012
 		        },
 		        {
-		          "x": 5.31,
-		          "y": 0.0002
-		        },
-		        {
-		          "x": 5.33,
-		          "y": 0.004
+		          "x": 5.2,
+		          "y": 0.0007
 		        },
 		        {
 		          "x": 5.35,
-		          "y": 0.0002
+		          "y": 0.0006
 		        },
 		        {
-		          "x": 5.65,
-		          "y": 0.0002
+		          "x": 5.4,
+		          "y": 0.004
 		        },
 		        {
-		          "x": 5.98,
-		          "y": 0.0002
+		          "x": 5.45,
+		          "y": 0.0006
+		        },
+		        {
+		          "x": 5.6,
+		          "y": 0.0012
+		        },
+		        {
+		          "x": 5.8,
+		          "y": 0.0007
+		        },
+		        {
+		          "x": 5.95,
+		          "y": 0.0006
 		        },
 		        {
 		          "x": 6,
-		          "y": 0.004
+		          "y": 0.0007
 		        }
 		      ]
 		    }
@@ -4474,14 +4096,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 2,
 		    "min": 0,
-		    "label": "t",
+		    "label": "t (seconds)",
 		    "tickInterval": 0.1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 1.5,
 		    "min": -0.5,
-		    "label": "h",
+		    "label": "h (meters)",
 		    "tickInterval": 0.1,
 		    "showGridLines": true
 		  },
@@ -4491,8 +4113,8 @@ describe("functionPlotGraph widget tests", () => {
 		    {
 		      "id": "polyline_jump_height",
 		      "type": "points",
-		      "color": "#11accd",
-		      "label": " ",
+		      "color": "#1f77b4",
+		      "label": "Jump height",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -4541,9 +4163,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0e30a39ed41cfa4b
-	// Question: Interpret a height–time graph for a kicked football
+	// Question: Interpret a football height–time graph
 	// Widget key: image_1
-	test("function-plot-graph - [x0e30a39ed41cfa4b] Interpret a height–time graph for a kicked football", async () => {
+	test("function-plot-graph - [x0e30a39ed41cfa4b] Interpret a football height–time graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4567,153 +4189,10 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_football_height",
-		      "type": "points",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 0.5,
-		          "y": 6
-		        },
-		        {
-		          "x": 1.5,
-		          "y": 11
-		        },
-		        {
-		          "x": 2.5,
-		          "y": 6
-		        },
-		        {
-		          "x": 3,
-		          "y": 0
-		        }
-		      ]
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for functionPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x623b9944358fc7bb
-	// Question: Compare drinking rates and finish times from a graph
-	// Widget key: image_1
-	test("function-plot-graph - [x623b9944358fc7bb] Compare drinking rates and finish times from a graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "functionPlotGraph",
-		  "width": 468,
-		  "xAxis": {
-		    "max": 60,
-		    "min": 0,
-		    "label": "Time (seconds)",
-		    "tickInterval": 2.5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 300,
-		    "min": 0,
-		    "label": "Slushy (milliliters)",
-		    "tickInterval": 10,
-		    "showGridLines": true
-		  },
-		  "height": 456,
-		  "points": [],
-		  "polylines": [
-		    {
-		      "id": "polyline_mariana",
+		      "id": "polyline_trajectory",
 		      "type": "function",
-		      "color": "#6495ed",
+		      "color": "#4da3ff",
 		      "label": " ",
-		      "style": "solid",
-		      "xRange": {
-		        "max": 60,
-		        "min": 0
-		      },
-		      "resolution": 200,
-		      "coefficients": [
-		        -5,
-		        250
-		      ]
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for functionPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xdee96853cfcd1db9
-	// Question: Interpret a value from a proportional graph
-	// Widget key: image_1
-	test("function-plot-graph - [xdee96853cfcd1db9] Interpret a value from a proportional graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "functionPlotGraph",
-		  "width": 229,
-		  "xAxis": {
-		    "max": 3,
-		    "min": 0,
-		    "label": "Days",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 80,
-		    "min": 0,
-		    "label": "Grams",
-		    "tickInterval": 20,
-		    "showGridLines": true
-		  },
-		  "height": 196,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 30,
-		      "id": "p_1_30",
-		      "label": "(1, 30)",
-		      "style": "closed"
-		    }
-		  ],
-		  "polylines": [
-		    {
-		      "id": "polyline_hamster_food",
-		      "type": "function",
-		      "color": "#11accd",
-		      "label": "null",
 		      "style": "solid",
 		      "xRange": {
 		        "max": 3,
@@ -4721,7 +4200,8 @@ describe("functionPlotGraph widget tests", () => {
 		      },
 		      "resolution": 200,
 		      "coefficients": [
-		        30,
+		        -4.8888888889,
+		        14.6666666667,
 		        0
 		      ]
 		    }
@@ -4744,10 +4224,223 @@ describe("functionPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xe35f88fdc0b3dd32
-	// Question: Does the graph represent a linear function?
+	// Extracted from question: xadcb80a8c6fed5ff
+	// Question: Interpret statements from a time–distance graph
 	// Widget key: image_1
-	test("function-plot-graph - [xe35f88fdc0b3dd32] Does the graph represent a linear function?", async () => {
+	test("function-plot-graph - [xadcb80a8c6fed5ff] Interpret statements from a time–distance graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "functionPlotGraph",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 5,
+		    "min": 0,
+		    "label": "Time (hours)",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 15,
+		    "min": 0,
+		    "label": "Distance (kilometers)",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "origin_point",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 7.5,
+		      "id": "data_point_3_7_5",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polylines": [
+		    {
+		      "id": "polyline_time_distance",
+		      "type": "function",
+		      "color": "#6495ed",
+		      "label": " ",
+		      "style": "solid",
+		      "xRange": {
+		        "max": 5,
+		        "min": 0
+		      },
+		      "resolution": 200,
+		      "coefficients": [
+		        2.5,
+		        0
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for functionPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xeb75a762fbcdbb41
+	// Question: Interpret statements from a height–time graph
+	// Widget key: image_1
+	test("function-plot-graph - [xeb75a762fbcdbb41] Interpret statements from a height–time graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "functionPlotGraph",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 5,
+		    "min": 0,
+		    "label": "Time (minutes)",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 120,
+		    "min": 0,
+		    "label": "Height (meters)",
+		    "tickInterval": 20,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "origin",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 40,
+		      "id": "point_2_40",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polylines": [
+		    {
+		      "id": "polyline_balloon_rise",
+		      "type": "function",
+		      "color": "#6495ed",
+		      "label": " ",
+		      "style": "solid",
+		      "xRange": {
+		        "max": 5,
+		        "min": 0
+		      },
+		      "resolution": 100,
+		      "coefficients": [
+		        20,
+		        0
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for functionPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1d2dc119ea6b53c8
+	// Question: Time to fully charge a battery from a graph
+	// Widget key: image_1
+	test("function-plot-graph - [x1d2dc119ea6b53c8] Time to fully charge a battery from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "functionPlotGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 32.5,
+		    "min": 0,
+		    "label": "Time in minutes",
+		    "tickInterval": 2.5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": 0,
+		    "label": "Capacity, percent charged",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_charge",
+		      "type": "function",
+		      "color": "#6495ed",
+		      "label": " ",
+		      "style": "solid",
+		      "xRange": {
+		        "max": 30,
+		        "min": 0
+		      },
+		      "resolution": 200,
+		      "coefficients": [
+		        2,
+		        40
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for functionPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe35f88fdc0b3dd32
+	// Question: Determine whether a graph represents a linear function
+	// Widget key: image_1
+	test("function-plot-graph - [xe35f88fdc0b3dd32] Determine whether a graph represents a linear function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4756,14 +4449,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4771,10 +4464,10 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_v_shape",
+		      "id": "polyline_left",
 		      "type": "points",
 		      "color": "#4a90e2",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -4785,6 +4478,19 @@ describe("functionPlotGraph widget tests", () => {
 		          "x": 0,
 		          "y": 4
 		        },
+		        {
+		          "x": 2,
+		          "y": 0
+		        }
+		      ]
+		    },
+		    {
+		      "id": "polyline_right",
+		      "type": "points",
+		      "color": "#4a90e2",
+		      "label": " ",
+		      "style": "solid",
+		      "points": [
 		        {
 		          "x": 2,
 		          "y": 0
@@ -4819,147 +4525,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb551b3d0d7c96383
-	// Question: Does the graph represent y as a linear function of x?
+	// Question: Determine whether a graph represents a linear function
 	// Widget key: image_1
-	test("function-plot-graph - [xb551b3d0d7c96383] Does the graph represent y as a linear function of x?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "functionPlotGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "polylines": [
-		    {
-		      "id": "polyline_function_curve",
-		      "type": "points",
-		      "color": "#4A90E2",
-		      "label": " ",
-		      "style": "solid",
-		      "points": [
-		        {
-		          "x": -10,
-		          "y": -5
-		        },
-		        {
-		          "x": -9,
-		          "y": -4
-		        },
-		        {
-		          "x": -8,
-		          "y": -2.8
-		        },
-		        {
-		          "x": -7,
-		          "y": -1.2
-		        },
-		        {
-		          "x": -6,
-		          "y": 0
-		        },
-		        {
-		          "x": -5,
-		          "y": 1.2
-		        },
-		        {
-		          "x": -4,
-		          "y": 2.4
-		        },
-		        {
-		          "x": -3,
-		          "y": 3.2
-		        },
-		        {
-		          "x": -2,
-		          "y": 3.8
-		        },
-		        {
-		          "x": -1,
-		          "y": 4
-		        },
-		        {
-		          "x": 0,
-		          "y": 5
-		        },
-		        {
-		          "x": 1,
-		          "y": 5.4
-		        },
-		        {
-		          "x": 2,
-		          "y": 5.9
-		        },
-		        {
-		          "x": 3,
-		          "y": 6.4
-		        },
-		        {
-		          "x": 4,
-		          "y": 7
-		        },
-		        {
-		          "x": 5,
-		          "y": 7.5
-		        },
-		        {
-		          "x": 6,
-		          "y": 8
-		        },
-		        {
-		          "x": 7,
-		          "y": 8.3
-		        },
-		        {
-		          "x": 8,
-		          "y": 8.8
-		        },
-		        {
-		          "x": 9,
-		          "y": 9.2
-		        },
-		        {
-		          "x": 10,
-		          "y": 9.5
-		        }
-		      ]
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for functionPlotGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc0306a31012896cf
-	// Question: Does the graph represent a linear function?
-	// Widget key: image_1
-	test("function-plot-graph - [xc0306a31012896cf] Does the graph represent a linear function?", async () => {
+	test("function-plot-graph - [xb551b3d0d7c96383] Determine whether a graph represents a linear function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4985,8 +4553,82 @@ describe("functionPlotGraph widget tests", () => {
 		    {
 		      "id": "polyline_curve",
 		      "type": "points",
-		      "color": "#4a90e2",
+		      "color": "#5b9bd5",
 		      "label": " ",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": -9,
+		          "y": -4
+		        },
+		        {
+		          "x": -6,
+		          "y": 0
+		        },
+		        {
+		          "x": -1,
+		          "y": 4
+		        },
+		        {
+		          "x": 4,
+		          "y": 7
+		        },
+		        {
+		          "x": 6,
+		          "y": 8
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for functionPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc0306a31012896cf
+	// Question: Identify a linear function from a graph
+	// Widget key: image_1
+	test("function-plot-graph - [xc0306a31012896cf] Identify a linear function from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "functionPlotGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_curve",
+		      "type": "points",
+		      "color": "#4e79a7",
+		      "label": "Graph of y as a function of x",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -5035,9 +4677,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x032996f0289db831
-	// Question: Determine if the graph represents a linear function
+	// Question: Does the graph represent a linear function?
 	// Widget key: image_1
-	test("function-plot-graph - [x032996f0289db831] Determine if the graph represents a linear function", async () => {
+	test("function-plot-graph - [x032996f0289db831] Does the graph represent a linear function?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5061,43 +4703,71 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_curve",
+		      "id": "polyline_function_curve",
 		      "type": "points",
-		      "color": "#3b82f6",
-		      "label": " ",
+		      "color": "#4c78a8",
+		      "label": "y as a function of x",
 		      "style": "solid",
 		      "points": [
 		        {
-		          "x": -8,
+		          "x": -10,
 		          "y": -10
 		        },
 		        {
-		          "x": -6,
-		          "y": -8
+		          "x": -9,
+		          "y": -9.2
 		        },
 		        {
-		          "x": -4,
+		          "x": -8,
+		          "y": -8.5
+		        },
+		        {
+		          "x": -7,
+		          "y": -7.8
+		        },
+		        {
+		          "x": -6,
 		          "y": -7
 		        },
 		        {
-		          "x": -2,
+		          "x": -5,
+		          "y": -6.2
+		        },
+		        {
+		          "x": -4,
+		          "y": -5.5
+		        },
+		        {
+		          "x": -3,
 		          "y": -5
+		        },
+		        {
+		          "x": -2,
+		          "y": -4.2
 		        },
 		        {
 		          "x": -1,
 		          "y": -3
 		        },
 		        {
+		          "x": -0.5,
+		          "y": -1.6
+		        },
+		        {
 		          "x": 0,
 		          "y": 0
 		        },
 		        {
-		          "x": 0.8,
+		          "x": 0.5,
 		          "y": -0.4
 		        },
 		        {
-		          "x": 1.2,
-		          "y": -0.6
+		          "x": 1,
+		          "y": -0.7
+		        },
+		        {
+		          "x": 1.5,
+		          "y": -0.4
 		        },
 		        {
 		          "x": 2,
@@ -5105,7 +4775,7 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 2.5,
-		          "y": 0.5
+		          "y": 0.6
 		        },
 		        {
 		          "x": 3,
@@ -5113,7 +4783,7 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 3.5,
-		          "y": 3
+		          "y": 2.5
 		        },
 		        {
 		          "x": 4,
@@ -5121,11 +4791,19 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 4.5,
-		          "y": 7.5
+		          "y": 7.2
 		        },
 		        {
 		          "x": 5,
-		          "y": 9
+		          "y": 8.8
+		        },
+		        {
+		          "x": 5.5,
+		          "y": 9.6
+		        },
+		        {
+		          "x": 6,
+		          "y": 10
 		        }
 		      ]
 		    }
@@ -5149,9 +4827,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6b4c5b8cf7cf1bbf
-	// Question: Determine if a graph represents a linear function
+	// Question: Determine whether the graph represents a linear function
 	// Widget key: image_1
-	test("function-plot-graph - [x6b4c5b8cf7cf1bbf] Determine if a graph represents a linear function", async () => {
+	test("function-plot-graph - [x6b4c5b8cf7cf1bbf] Determine whether the graph represents a linear function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5177,7 +4855,7 @@ describe("functionPlotGraph widget tests", () => {
 		    {
 		      "id": "polyline_piecewise",
 		      "type": "points",
-		      "color": "#4da3ff",
+		      "color": "#3b7ddd",
 		      "label": " ",
 		      "style": "solid",
 		      "points": [
@@ -5223,9 +4901,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc1b82b8a8b5d0cc4
-	// Question: Does the graph represent a linear function?
+	// Question: Determine if a graph represents a linear function
 	// Widget key: image_1
-	test("function-plot-graph - [xc1b82b8a8b5d0cc4] Does the graph represent a linear function?", async () => {
+	test("function-plot-graph - [xc1b82b8a8b5d0cc4] Determine if a graph represents a linear function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5246,49 +4924,13 @@ describe("functionPlotGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [
-		    {
-		      "x": -1.5,
-		      "y": -1,
-		      "id": "pt1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "pt2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1.5,
-		      "y": 1,
-		      "id": "pt3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4.5,
-		      "y": -1,
-		      "id": "pt4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 1,
-		      "id": "pt5",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "polylines": [
 		    {
 		      "id": "polyline_curve",
 		      "type": "points",
-		      "color": "#4da6ff",
-		      "label": " ",
+		      "color": "#4A90E2",
+		      "label": "y as a function of x",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -5333,9 +4975,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x08ebf49899eb176e
-	// Question: Determine whether the graph represents a linear function
+	// Question: Does the graph represent y as a linear function of x?
 	// Widget key: image_1
-	test("function-plot-graph - [x08ebf49899eb176e] Determine whether the graph represents a linear function", async () => {
+	test("function-plot-graph - [x08ebf49899eb176e] Does the graph represent y as a linear function of x?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5356,39 +4998,66 @@ describe("functionPlotGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 6,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": -4,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": -6,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": -6,
+		      "id": "p5",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": -4,
+		      "id": "p6",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
 		  "polylines": [
 		    {
-		      "id": "polyline_curve",
-		      "type": "points",
-		      "color": "#3B85FF",
+		      "id": "polyline_function_curve",
+		      "type": "function",
+		      "color": "#4a90e2",
 		      "label": " ",
 		      "style": "solid",
-		      "points": [
-		        {
-		          "x": -2,
-		          "y": 6
-		        },
-		        {
-		          "x": 0,
-		          "y": 0
-		        },
-		        {
-		          "x": 2,
-		          "y": -4
-		        },
-		        {
-		          "x": 4,
-		          "y": -6
-		        },
-		        {
-		          "x": 6,
-		          "y": -6
-		        },
-		        {
-		          "x": 8,
-		          "y": -4
-		        }
+		      "xRange": {
+		        "max": 10,
+		        "min": -10
+		      },
+		      "resolution": 200,
+		      "coefficients": [
+		        0.25,
+		        -2.5,
+		        0
 		      ]
 		    }
 		  ],
@@ -5411,9 +5080,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x965572453c98814d
-	// Question: Does the graph represent y as a linear function of x?
+	// Question: Does the graph represent a linear function?
 	// Widget key: image_1
-	test("function-plot-graph - [x965572453c98814d] Does the graph represent y as a linear function of x?", async () => {
+	test("function-plot-graph - [x965572453c98814d] Does the graph represent a linear function?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5437,26 +5106,18 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_curve",
+		      "id": "polyline_decreasing_curve",
 		      "type": "points",
-		      "color": "#3b7ddd",
-		      "label": "",
+		      "color": "#2b8cbe",
+		      "label": " ",
 		      "style": "solid",
 		      "points": [
 		        {
 		          "x": -10,
-		          "y": -1
-		        },
-		        {
-		          "x": -9,
-		          "y": -1
+		          "y": -0.9
 		        },
 		        {
 		          "x": -8,
-		          "y": -1
-		        },
-		        {
-		          "x": -7,
 		          "y": -1
 		        },
 		        {
@@ -5468,32 +5129,16 @@ describe("functionPlotGraph widget tests", () => {
 		          "y": -1
 		        },
 		        {
-		          "x": -4,
-		          "y": -1.1
-		        },
-		        {
 		          "x": -3,
 		          "y": -1.2
 		        },
 		        {
-		          "x": -2,
-		          "y": -1.4
-		        },
-		        {
-		          "x": -1,
+		          "x": 0,
 		          "y": -1.6
 		        },
 		        {
-		          "x": 0,
-		          "y": -1.8
-		        },
-		        {
-		          "x": 1,
-		          "y": -1.9
-		        },
-		        {
 		          "x": 2,
-		          "y": -1.95
+		          "y": -2
 		        },
 		        {
 		          "x": 3,
@@ -5501,19 +5146,19 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 4,
-		          "y": -2.4
+		          "y": -2.8
 		        },
 		        {
 		          "x": 5,
-		          "y": -3
+		          "y": -3.8
 		        },
 		        {
 		          "x": 6,
-		          "y": -4.2
+		          "y": -5.1
 		        },
 		        {
 		          "x": 7,
-		          "y": -5.8
+		          "y": -6.2
 		        },
 		        {
 		          "x": 8,
@@ -5521,11 +5166,7 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 9,
-		          "y": -9
-		        },
-		        {
-		          "x": 9.8,
-		          "y": -9.8
+		          "y": -8.5
 		        },
 		        {
 		          "x": 10,
@@ -5553,25 +5194,25 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8e37b453
-	// Question: Does the graph represent a function?
+	// Question: Determine if a graph represents a function
 	// Widget key: image_1
-	test("function-plot-graph - [x8e37b453] Does the graph represent a function?", async () => {
+	test("function-plot-graph - [x8e37b453] Determine if a graph represents a function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "functionPlotGraph",
 		  "width": 345,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 5,
+		    "min": -5,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5579,16 +5220,16 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_1",
+		      "id": "polyline_parabola",
 		      "type": "function",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": "Relationship",
 		      "style": "solid",
 		      "xRange": {
-		        "max": 8,
-		        "min": -8
+		        "max": 0,
+		        "min": -4
 		      },
-		      "resolution": 400,
+		      "resolution": 200,
 		      "coefficients": [
 		        -3.75,
 		        -15,
@@ -5615,25 +5256,25 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: xda3fb364
-	// Question: Does the graph represent a function?
+	// Question: Determine whether the graph represents a function
 	// Widget key: image_1
-	test("function-plot-graph - [xda3fb364] Does the graph represent a function?", async () => {
+	test("function-plot-graph - [xda3fb364] Determine whether the graph represents a function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "functionPlotGraph",
 		  "width": 345,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 9,
+		    "min": -9,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 9,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5641,10 +5282,10 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_relationship_curve",
+		      "id": "polyline_relationship",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": "Relationship",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -5652,60 +5293,20 @@ describe("functionPlotGraph widget tests", () => {
 		          "y": 0.5
 		        },
 		        {
-		          "x": -7,
-		          "y": 3.5
-		        },
-		        {
-		          "x": -6.5,
-		          "y": 6.5
-		        },
-		        {
 		          "x": -5.5,
 		          "y": 8.5
-		        },
-		        {
-		          "x": -4.5,
-		          "y": 6.5
-		        },
-		        {
-		          "x": -3.5,
-		          "y": 3.5
 		        },
 		        {
 		          "x": -1.5,
 		          "y": 0.5
 		        },
 		        {
-		          "x": -0.5,
-		          "y": 3.5
-		        },
-		        {
-		          "x": 0.5,
-		          "y": 6.5
-		        },
-		        {
 		          "x": 1.5,
 		          "y": 8.5
 		        },
 		        {
-		          "x": 2.5,
-		          "y": 6.5
-		        },
-		        {
-		          "x": 3.5,
-		          "y": 3.5
-		        },
-		        {
 		          "x": 4.5,
 		          "y": 0.5
-		        },
-		        {
-		          "x": 5.5,
-		          "y": 3.5
-		        },
-		        {
-		          "x": 6.5,
-		          "y": 6.5
 		        },
 		        {
 		          "x": 7.5,
@@ -5732,26 +5333,26 @@ describe("functionPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xe3bb7807
+	// Extracted from question: x7e30065c
 	// Question: Determine whether the graph represents a function
 	// Widget key: image_1
-	test("function-plot-graph - [xe3bb7807] Determine whether the graph represents a function", async () => {
+	test("function-plot-graph - [x7e30065c] Determine whether the graph represents a function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "functionPlotGraph",
 		  "width": 345,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 7,
+		    "min": -6,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 4,
-		    "min": -6,
-		    "label": "",
+		    "max": 9,
+		    "min": -7,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5762,7 +5363,109 @@ describe("functionPlotGraph widget tests", () => {
 		      "id": "polyline_relation",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "Relation",
+		      "style": "solid",
+		      "points": [
+		        {
+		          "x": -5,
+		          "y": -6
+		        },
+		        {
+		          "x": -4,
+		          "y": -3.5
+		        },
+		        {
+		          "x": -3,
+		          "y": -1.2
+		        },
+		        {
+		          "x": -2,
+		          "y": -0.5
+		        },
+		        {
+		          "x": -1,
+		          "y": -0.8
+		        },
+		        {
+		          "x": 0,
+		          "y": -1
+		        },
+		        {
+		          "x": 1,
+		          "y": -1.3
+		        },
+		        {
+		          "x": 2,
+		          "y": -1.5
+		        },
+		        {
+		          "x": 3,
+		          "y": -0.5
+		        },
+		        {
+		          "x": 4,
+		          "y": 2
+		        },
+		        {
+		          "x": 5,
+		          "y": 5
+		        },
+		        {
+		          "x": 6,
+		          "y": 8
+		        }
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for functionPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe3bb7807
+	// Question: Does the graph represent a function?
+	// Widget key: image_1
+	test("function-plot-graph - [xe3bb7807] Does the graph represent a function?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "functionPlotGraph",
+		  "width": 345,
+		  "xAxis": {
+		    "max": 9,
+		    "min": -9,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 4,
+		    "min": -6,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_exponential_like",
+		      "type": "points",
+		      "color": "#11accd",
+		      "label": " ",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -5770,8 +5473,52 @@ describe("functionPlotGraph widget tests", () => {
 		          "y": -5
 		        },
 		        {
+		          "x": -7,
+		          "y": -5
+		        },
+		        {
+		          "x": -6,
+		          "y": -5
+		        },
+		        {
+		          "x": -5,
+		          "y": -5
+		        },
+		        {
+		          "x": -4,
+		          "y": -5
+		        },
+		        {
+		          "x": -3,
+		          "y": -5
+		        },
+		        {
+		          "x": -2,
+		          "y": -5
+		        },
+		        {
+		          "x": -1,
+		          "y": -5
+		        },
+		        {
+		          "x": 0,
+		          "y": -5
+		        },
+		        {
+		          "x": 1,
+		          "y": -5
+		        },
+		        {
 		          "x": 2,
 		          "y": -5
+		        },
+		        {
+		          "x": 3,
+		          "y": -4.8
+		        },
+		        {
+		          "x": 4,
+		          "y": -4.5
 		        },
 		        {
 		          "x": 5,
@@ -5811,9 +5558,9 @@ describe("functionPlotGraph widget tests", () => {
 	})
 
 	// Extracted from question: x9bfe2de6
-	// Question: Does the graph represent a function?
+	// Question: Determine whether a graph represents a function
 	// Widget key: image_1
-	test("function-plot-graph - [x9bfe2de6] Does the graph represent a function?", async () => {
+	test("function-plot-graph - [x9bfe2de6] Determine whether a graph represents a function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5822,14 +5569,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 4,
 		    "min": -12,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5837,10 +5584,10 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_curve",
+		      "id": "polyline_relationship",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "Relationship",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -5849,15 +5596,15 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": -7.5,
-		          "y": -7.5
+		          "y": -7.2
 		        },
 		        {
 		          "x": -7,
-		          "y": -8.2
+		          "y": -8.3
 		        },
 		        {
-		          "x": -6,
-		          "y": -9
+		          "x": -6.5,
+		          "y": -9.1
 		        },
 		        {
 		          "x": -5.5,
@@ -5873,23 +5620,19 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 0,
-		          "y": 0
+		          "y": -0.5
 		        },
 		        {
 		          "x": 2,
-		          "y": 1.7
+		          "y": 1.2
 		        },
 		        {
 		          "x": 4.5,
 		          "y": 2.5
 		        },
 		        {
-		          "x": 6,
-		          "y": 1.2
-		        },
-		        {
-		          "x": 7,
-		          "y": 0
+		          "x": 6.5,
+		          "y": 0.8
 		        },
 		        {
 		          "x": 8,
@@ -5916,10 +5659,71 @@ describe("functionPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd4bb9c5d
-	// Question: Does the graph represent a function?
+	// Extracted from question: xd39f914b
+	// Question: Determine whether the graph represents a function
 	// Widget key: image_1
-	test("function-plot-graph - [xd4bb9c5d] Does the graph represent a function?", async () => {
+	test("function-plot-graph - [xd39f914b] Determine whether the graph represents a function", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "functionPlotGraph",
+		  "width": 345,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [],
+		  "polylines": [
+		    {
+		      "id": "polyline_relation",
+		      "type": "function",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "xRange": {
+		        "max": 8,
+		        "min": -8
+		      },
+		      "resolution": 200,
+		      "coefficients": [
+		        -0.5,
+		        4
+		      ]
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for functionPlotGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd4bb9c5d
+	// Question: Determine whether a graph represents a function
+	// Widget key: image_1
+	test("function-plot-graph - [xd4bb9c5d] Determine whether a graph represents a function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5928,14 +5732,14 @@ describe("functionPlotGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5946,7 +5750,7 @@ describe("functionPlotGraph widget tests", () => {
 		      "id": "polyline_u_curve",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": "U-shaped curve",
 		      "style": "solid",
 		      "points": [
 		        {
@@ -5955,15 +5759,11 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 1.7,
-		          "y": 4
+		          "y": 2
 		        },
 		        {
-		          "x": 1.85,
-		          "y": 0
-		        },
-		        {
-		          "x": 1.95,
-		          "y": -2.5
+		          "x": 1.9,
+		          "y": -3
 		        },
 		        {
 		          "x": 2,
@@ -5971,27 +5771,23 @@ describe("functionPlotGraph widget tests", () => {
 		        },
 		        {
 		          "x": 2.1,
-		          "y": -2.5
+		          "y": -3
 		        },
 		        {
-		          "x": 2.3,
-		          "y": 0
+		          "x": 2.5,
+		          "y": -1
 		        },
 		        {
-		          "x": 2.7,
-		          "y": 3
+		          "x": 3,
+		          "y": 1
 		        },
 		        {
-		          "x": 3.5,
-		          "y": 5
+		          "x": 4,
+		          "y": 4
 		        },
 		        {
-		          "x": 4.5,
-		          "y": 6.7
-		        },
-		        {
-		          "x": 5.2,
-		          "y": 7.7
+		          "x": 5,
+		          "y": 7
 		        },
 		        {
 		          "x": 5.5,
@@ -6018,26 +5814,26 @@ describe("functionPlotGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7e30065c
+	// Extracted from question: x8982d9c5
 	// Question: Does the graph represent a function?
 	// Widget key: image_1
-	test("function-plot-graph - [x7e30065c] Does the graph represent a function?", async () => {
+	test("function-plot-graph - [x8982d9c5] Does the graph represent a function?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "functionPlotGraph",
 		  "width": 345,
 		  "xAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "",
+		    "max": 5,
+		    "min": -1,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 9,
-		    "min": -7,
-		    "label": "",
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -6045,102 +5841,62 @@ describe("functionPlotGraph widget tests", () => {
 		  "points": [],
 		  "polylines": [
 		    {
-		      "id": "polyline_relationship",
+		      "id": "polyline_relation",
 		      "type": "points",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "Relationship",
 		      "style": "solid",
 		      "points": [
 		        {
-		          "x": -5,
-		          "y": -6
-		        },
-		        {
-		          "x": -4.5,
-		          "y": -4.3
-		        },
-		        {
-		          "x": -4,
-		          "y": -3
-		        },
-		        {
-		          "x": -3.5,
-		          "y": -1.8
-		        },
-		        {
-		          "x": -3,
-		          "y": -1.2
-		        },
-		        {
-		          "x": -2.5,
-		          "y": -0.8
-		        },
-		        {
-		          "x": -2,
-		          "y": -0.5
-		        },
-		        {
-		          "x": -1.5,
-		          "y": -0.6
-		        },
-		        {
 		          "x": -1,
-		          "y": -0.7
-		        },
-		        {
-		          "x": -0.5,
-		          "y": -0.9
-		        },
-		        {
-		          "x": 0,
-		          "y": -1
-		        },
-		        {
-		          "x": 0.5,
-		          "y": -1.15
+		          "y": -8
 		        },
 		        {
 		          "x": 1,
-		          "y": -1.3
-		        },
-		        {
-		          "x": 1.5,
-		          "y": -1.4
-		        },
-		        {
-		          "x": 2,
-		          "y": -1.5
-		        },
-		        {
-		          "x": 2.5,
-		          "y": -1.2
+		          "y": -7
 		        },
 		        {
 		          "x": 3,
-		          "y": -0.5
-		        },
-		        {
-		          "x": 3.5,
-		          "y": 0.5
-		        },
-		        {
-		          "x": 4,
-		          "y": 2
-		        },
-		        {
-		          "x": 4.5,
-		          "y": 3.5
+		          "y": -5.5
 		        },
 		        {
 		          "x": 5,
-		          "y": 5
+		          "y": -4
 		        },
 		        {
-		          "x": 5.5,
-		          "y": 6.5
+		          "x": 3,
+		          "y": -3
 		        },
 		        {
-		          "x": 6,
+		          "x": 1,
+		          "y": -1.2
+		        },
+		        {
+		          "x": -1,
+		          "y": 0
+		        },
+		        {
+		          "x": 1,
+		          "y": 1.2
+		        },
+		        {
+		          "x": 3,
+		          "y": 3
+		        },
+		        {
+		          "x": 5,
+		          "y": 4
+		        },
+		        {
+		          "x": 3,
+		          "y": 5.5
+		        },
+		        {
+		          "x": 1,
+		          "y": 7
+		        },
+		        {
+		          "x": -1,
 		          "y": 8
 		        }
 		      ]

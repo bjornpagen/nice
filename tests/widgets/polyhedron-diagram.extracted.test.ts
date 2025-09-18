@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.962Z
+// Generated on: 2025-09-18T05:17:02.161Z
 // Widget Type: polyhedronDiagram
 // Source: Real questions from database
 //
@@ -35,17 +35,30 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 3,
-		    "height": 3,
+		    "width": 300,
+		    "height": 400,
 		    "length": 4
 		  },
-		  "width": 300,
-		  "height": 225,
-		  "labels": [],
+		  "width": 360,
+		  "height": 300,
+		  "labels": [
+		    {
+		      "text": "4 units",
+		      "target": "length"
+		    },
+		    {
+		      "text": "3 units",
+		      "target": "width"
+		    },
+		    {
+		      "text": "h units",
+		      "target": "height"
+		    }
+		  ],
 		  "segments": null,
 		  "diagonals": [
 		    {
-		      "label": " ",
+		      "label": "√34",
 		      "toVertexIndex": 6,
 		      "fromVertexIndex": 0
 		    }
@@ -71,21 +84,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xede6e4fe79ab0bc9
-	// Question: Length of a rectangular prism diagonal
+	// Question: Length of a rectangular prism's diagonal (nearest tenth)
 	// Widget key: image_1
-	test("polyhedron-diagram - [xede6e4fe79ab0bc9] Length of a rectangular prism diagonal", async () => {
+	test("polyhedron-diagram - [xede6e4fe79ab0bc9] Length of a rectangular prism's diagonal (nearest tenth)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 2,
-		    "height": 5,
+		    "width": 320,
+		    "height": 500,
 		    "length": 8
 		  },
 		  "width": 400,
-		  "height": 275,
+		  "height": 300,
 		  "labels": [
 		    {
 		      "text": "8",
@@ -104,65 +117,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  "diagonals": [
 		    {
 		      "label": "d",
-		      "toVertexIndex": 6,
-		      "fromVertexIndex": 0
-		    }
-		  ],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x93bb91eaa517d9a2
-	// Question: Length of the diagonal of a rectangular prism
-	// Widget key: image_1
-	test("polyhedron-diagram - [x93bb91eaa517d9a2] Length of the diagonal of a rectangular prism", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 2,
-		    "length": 7
-		  },
-		  "width": 300,
-		  "height": 164,
-		  "labels": [
-		    {
-		      "text": "7 units",
-		      "target": "length"
-		    },
-		    {
-		      "text": "4 units",
-		      "target": "width"
-		    },
-		    {
-		      "text": "2 units",
-		      "target": "height"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [
-		    {
-		      "label": "d",
-		      "toVertexIndex": 6,
+		      "toVertexIndex": 7,
 		      "fromVertexIndex": 0
 		    }
 		  ],
@@ -187,9 +142,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x14930323e5d6bbed
-	// Question: Find the height of a triangular prism
+	// Question: Height of an isosceles triangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x14930323e5d6bbed] Find the height of a triangular prism", async () => {
+	test("polyhedron-diagram - [x14930323e5d6bbed] Height of an isosceles triangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -197,35 +152,43 @@ describe("polyhedronDiagram widget tests", () => {
 		  "shape": {
 		    "base": {
 		      "b": 8,
-		      "h": 4,
+		      "h": 3,
 		      "hypotenuse": 5
 		    },
 		    "type": "triangularPrism",
 		    "length": 6
 		  },
-		  "width": 260,
-		  "height": 130,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": [
 		    {
 		      "to": {
-		        "type": "vertex",
-		        "index": 1
+		        "a": 0,
+		        "b": 1,
+		        "t": 0.85,
+		        "type": "edgePoint"
 		      },
 		      "from": {
-		        "type": "vertex",
-		        "index": 0
+		        "a": 0,
+		        "b": 1,
+		        "t": 0.15,
+		        "type": "edgePoint"
 		      },
 		      "label": "8"
 		    },
 		    {
 		      "to": {
-		        "type": "vertex",
-		        "index": 2
+		        "a": 1,
+		        "b": 2,
+		        "t": 0.85,
+		        "type": "edgePoint"
 		      },
 		      "from": {
-		        "type": "vertex",
-		        "index": 1
+		        "a": 1,
+		        "b": 2,
+		        "t": 0.15,
+		        "type": "edgePoint"
 		      },
 		      "label": "5"
 		    },
@@ -253,11 +216,11 @@ describe("polyhedronDiagram widget tests", () => {
 		      },
 		      "to": {
 		        "type": "vertex",
-		        "index": 1
+		        "index": 2
 		      },
 		      "from": {
 		        "type": "vertex",
-		        "index": 2
+		        "index": 0
 		      },
 		      "type": "right",
 		      "sizePx": 10
@@ -281,10 +244,55 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd10e7a38ac171f8b
-	// Question: Find the length of a triangular prism's side edge
+	// Extracted from question: x93bb91eaa517d9a2
+	// Question: Length of a rectangular prism diagonal (nearest tenth)
 	// Widget key: image_1
-	test("polyhedron-diagram - [xd10e7a38ac171f8b] Find the length of a triangular prism's side edge", async () => {
+	test("polyhedron-diagram - [x93bb91eaa517d9a2] Length of a rectangular prism diagonal (nearest tenth)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 418,
+		    "height": 300,
+		    "length": 7
+		  },
+		  "width": 300,
+		  "height": 300,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [
+		    {
+		      "label": "d",
+		      "toVertexIndex": 6,
+		      "fromVertexIndex": 0
+		    }
+		  ],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xaf49e2024263ca6d
+	// Question: Find the vertical height of a triangular prism
+	// Widget key: image_1
+	test("polyhedron-diagram - [xaf49e2024263ca6d] Find the vertical height of a triangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -292,17 +300,25 @@ describe("polyhedronDiagram widget tests", () => {
 		  "shape": {
 		    "base": {
 		      "b": 6,
-		      "h": 7,
-		      "hypotenuse": 0.0001
+		      "h": 4,
+		      "hypotenuse": 5.7
 		    },
 		    "type": "triangularPrism",
-		    "length": 4
+		    "length": 8
 		  },
-		  "width": 200,
-		  "height": 150,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
-		      "text": "s",
+		      "text": "h",
+		      "target": "height"
+		    },
+		    {
+		      "text": "6",
+		      "target": "baseFace"
+		    },
+		    {
+		      "text": "3√2",
 		      "target": "slantHeight"
 		    }
 		  ],
@@ -328,22 +344,81 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xe2a613efaa42a4f1
-	// Question: Length of a cube's diagonal
+	// Extracted from question: xd10e7a38ac171f8b
+	// Question: Length of the side edge of a triangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xe2a613efaa42a4f1] Length of a cube's diagonal", async () => {
+	test("polyhedron-diagram - [xd10e7a38ac171f8b] Length of the side edge of a triangular prism", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 6,
+		      "h": 7,
+		      "hypotenuse": 0.05
+		    },
+		    "type": "triangularPrism",
+		    "length": 4
+		  },
+		  "width": 400,
+		  "height": 360,
+		  "labels": [
+		    {
+		      "text": "6 cm",
+		      "target": "width"
+		    },
+		    {
+		      "text": "7 cm",
+		      "target": "height"
+		    },
+		    {
+		      "text": "4 cm",
+		      "target": "length"
+		    },
+		    {
+		      "text": "s",
+		      "target": "frontFace"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe2a613efaa42a4f1
+	// Question: Length of a cube's space diagonal
+	// Widget key: image_1
+	test("polyhedron-diagram - [xe2a613efaa42a4f1] Length of a cube's space diagonal", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 60,
-		    "height": 60,
+		    "width": 460,
+		    "height": 360,
 		    "length": 60
 		  },
-		  "width": 200,
-		  "height": 181,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "60",
@@ -387,29 +462,29 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x64d9d0a14a0c1a72
-	// Question: Length of a rectangular prism diagonal
+	// Question: Length of a rectangular prism's diagonal
 	// Widget key: image_1
-	test("polyhedron-diagram - [x64d9d0a14a0c1a72] Length of a rectangular prism diagonal", async () => {
+	test("polyhedron-diagram - [x64d9d0a14a0c1a72] Length of a rectangular prism's diagonal", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 2,
-		    "height": 6,
-		    "length": 3
+		    "width": 300,
+		    "height": 500,
+		    "length": 2
 		  },
 		  "width": 400,
-		  "height": 275,
+		  "height": 350,
 		  "labels": [
 		    {
 		      "text": "2",
-		      "target": "width"
+		      "target": "length"
 		    },
 		    {
 		      "text": "3",
-		      "target": "length"
+		      "target": "width"
 		    },
 		    {
 		      "text": "6",
@@ -445,25 +520,34 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x63c082b8829ef12d
-	// Question: Find the base side length of a square pyramid
+	// Question: Find the side length of a square pyramid’s base
 	// Widget key: image_1
-	test("polyhedron-diagram - [x63c082b8829ef12d] Find the base side length of a square pyramid", async () => {
+	test("polyhedron-diagram - [x63c082b8829ef12d] Find the side length of a square pyramid’s base", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 15,
-		    "baseWidth": 16,
-		    "baseLength": 16
+		    "height": 500,
+		    "baseWidth": 20,
+		    "baseLength": 20
 		  },
 		  "width": 300,
-		  "height": 198,
-		  "labels": [],
+		  "height": 350,
+		  "labels": [
+		    {
+		      "text": "17 units",
+		      "target": "slantHeight"
+		    },
+		    {
+		      "text": "15 units",
+		      "target": "height"
+		    }
+		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
+		  "shadedFace": "rightFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -484,87 +568,32 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x65d6b222fc86b62f
-	// Question: Find the height of a triangular face of a square pyramid
+	// Question: Slant height of a square pyramid face
 	// Widget key: image_1
-	test("polyhedron-diagram - [x65d6b222fc86b62f] Find the height of a triangular face of a square pyramid", async () => {
+	test("polyhedron-diagram - [x65d6b222fc86b62f] Slant height of a square pyramid face", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 15,
+		    "height": 315,
 		    "baseWidth": 12,
 		    "baseLength": 12
 		  },
-		  "width": 244,
-		  "height": 300,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
-		      "text": "12 units",
+		      "text": "12",
 		      "target": "length"
 		    },
 		    {
-		      "text": "15 units",
+		      "text": "15",
 		      "target": "height"
 		    },
 		    {
 		      "text": "s",
-		      "target": "slantHeight"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xaf49e2024263ca6d
-	// Question: Find the vertical height of a triangular prism
-	// Widget key: image_1
-	test("polyhedron-diagram - [xaf49e2024263ca6d] Find the vertical height of a triangular prism", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "base": {
-		      "b": 6,
-		      "h": 4,
-		      "hypotenuse": 4.243
-		    },
-		    "type": "triangularPrism",
-		    "length": 6
-		  },
-		  "width": 260,
-		  "height": 224,
-		  "labels": [
-		    {
-		      "text": "h",
-		      "target": "height"
-		    },
-		    {
-		      "text": "6",
-		      "target": "length"
-		    },
-		    {
-		      "text": "3√2",
 		      "target": "slantHeight"
 		    }
 		  ],
@@ -602,16 +631,24 @@ describe("polyhedronDiagram widget tests", () => {
 		    "base": {
 		      "b": 4,
 		      "h": 5,
-		      "hypotenuse": 0.00001
+		      "hypotenuse": 1e-7
 		    },
 		    "type": "triangularPrism",
 		    "length": 8
 		  },
-		  "width": 252,
-		  "height": 260,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
-		      "text": "s",
+		      "text": "4",
+		      "target": "length"
+		    },
+		    {
+		      "text": "5",
+		      "target": "height"
+		    },
+		    {
+		      "text": "S",
 		      "target": "slantHeight"
 		    }
 		  ],
@@ -638,37 +675,33 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa582eb823f74abe3
-	// Question: Find the vertical height of a square pyramid from its slant height
+	// Question: Find the vertical height of a square pyramid
 	// Widget key: image_1
-	test("polyhedron-diagram - [xa582eb823f74abe3] Find the vertical height of a square pyramid from its slant height", async () => {
+	test("polyhedron-diagram - [xa582eb823f74abe3] Find the vertical height of a square pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 7,
+		    "height": 362,
 		    "baseWidth": 10,
 		    "baseLength": 10
 		  },
-		  "width": 300,
-		  "height": 182,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "10",
 		      "target": "length"
 		    },
 		    {
-		      "text": "10",
-		      "target": "width"
+		      "text": "h",
+		      "target": "height"
 		    },
 		    {
 		      "text": "8",
 		      "target": "slantHeight"
-		    },
-		    {
-		      "text": "h",
-		      "target": "height"
 		    }
 		  ],
 		  "segments": null,
@@ -694,34 +727,38 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf2abed266afee2ef
-	// Question: Select the expression for the surface area of a square pyramid
+	// Question: Choose an expression for the surface area of a square pyramid
 	// Widget key: image_1
-	test("polyhedron-diagram - [xf2abed266afee2ef] Select the expression for the surface area of a square pyramid", async () => {
+	test("polyhedron-diagram - [xf2abed266afee2ef] Choose an expression for the surface area of a square pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 2.2360679775,
+		    "height": 500,
 		    "baseWidth": 4,
 		    "baseLength": 4
 		  },
-		  "width": 240,
-		  "height": 136,
+		  "width": 400,
+		  "height": 320,
 		  "labels": [
 		    {
-		      "text": "4",
+		      "text": "4 units",
+		      "target": "length"
+		    },
+		    {
+		      "text": "4 units",
 		      "target": "width"
 		    },
 		    {
-		      "text": "3",
+		      "text": "3 units",
 		      "target": "slantHeight"
 		    }
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -742,9 +779,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x172473036e581c3c
-	// Question: Expression for the surface area of a triangular prism
+	// Question: Select the expression for the surface area of a right triangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x172473036e581c3c] Expression for the surface area of a triangular prism", async () => {
+	test("polyhedron-diagram - [x172473036e581c3c] Select the expression for the surface area of a right triangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -758,12 +795,12 @@ describe("polyhedronDiagram widget tests", () => {
 		    "type": "triangularPrism",
 		    "length": 20
 		  },
-		  "width": 250,
-		  "height": 170,
+		  "width": 400,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": null,
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -793,12 +830,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 2,
-		    "height": 1,
+		    "width": 300,
+		    "height": 300,
 		    "length": 4
 		  },
-		  "width": 325,
-		  "height": 167,
+		  "width": 400,
+		  "height": 300,
 		  "labels": [
 		    {
 		      "text": "4 units",
@@ -836,9 +873,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3efa8c77671c849e
-	// Question: Surface area of a triangular prism: select the expression
+	// Question: Surface area expression for a triangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x3efa8c77671c849e] Surface area of a triangular prism: select the expression", async () => {
+	test("polyhedron-diagram - [x3efa8c77671c849e] Surface area expression for a triangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -847,14 +884,35 @@ describe("polyhedronDiagram widget tests", () => {
 		    "base": {
 		      "b": 6,
 		      "h": 1,
-		      "hypotenuse": 1e-11
+		      "hypotenuse": 4
 		    },
 		    "type": "triangularPrism",
 		    "length": 2
 		  },
-		  "width": 260,
-		  "height": 149,
-		  "labels": [],
+		  "width": 360,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "2 units",
+		      "target": "length"
+		    },
+		    {
+		      "text": "1 unit",
+		      "target": "height"
+		    },
+		    {
+		      "text": "6 units",
+		      "target": "frontFace"
+		    },
+		    {
+		      "text": "4 units",
+		      "target": "leftFace"
+		    },
+		    {
+		      "text": "4 units",
+		      "target": "rightFace"
+		    }
+		  ],
 		  "segments": null,
 		  "diagonals": [],
 		  "shadedFace": "frontFace",
@@ -878,21 +936,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2f65ef86bdb2184b
-	// Question: Choose an expression for the surface area of a rectangular prism
+	// Question: Surface area expression for a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x2f65ef86bdb2184b] Choose an expression for the surface area of a rectangular prism", async () => {
+	test("polyhedron-diagram - [x2f65ef86bdb2184b] Surface area expression for a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 3,
-		    "height": 2,
+		    "width": 320,
+		    "height": 300,
 		    "length": 5
 		  },
-		  "width": 325,
-		  "height": 167,
+		  "width": 400,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "5 units",
@@ -905,50 +963,6 @@ describe("polyhedronDiagram widget tests", () => {
 		    {
 		      "text": "2 units",
 		      "target": "height"
-		    }
-		  ],
-		  "segments": [],
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": [],
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3e79dc1c9f1f0132
-	// Question: Select an expression for the surface area of a cube
-	// Widget key: image_1
-	test("polyhedron-diagram - [x3e79dc1c9f1f0132] Select an expression for the surface area of a cube", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 7,
-		    "height": 7,
-		    "length": 7
-		  },
-		  "width": 245,
-		  "height": 206,
-		  "labels": [
-		    {
-		      "text": "7 units",
-		      "target": "length"
 		    }
 		  ],
 		  "segments": null,
@@ -973,26 +987,28 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x12d0d102580e3795
-	// Question: Surface area expression for a triangular prism
+	// Extracted from question: x3e79dc1c9f1f0132
+	// Question: Select the expression for the surface area of a cube
 	// Widget key: image_1
-	test("polyhedron-diagram - [x12d0d102580e3795] Surface area expression for a triangular prism", async () => {
+	test("polyhedron-diagram - [x3e79dc1c9f1f0132] Select the expression for the surface area of a cube", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
-		    "base": {
-		      "b": 4,
-		      "h": 3,
-		      "hypotenuse": 5
-		    },
-		    "type": "triangularPrism",
-		    "length": 10
+		    "type": "rectangularPrism",
+		    "width": 500,
+		    "height": 300,
+		    "length": 7
 		  },
-		  "width": 250,
-		  "height": 170,
-		  "labels": [],
+		  "width": 320,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "7 units",
+		      "target": "length"
+		    }
+		  ],
 		  "segments": null,
 		  "diagonals": [],
 		  "shadedFace": null,
@@ -1015,33 +1031,75 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xbe06146412485bd4
-	// Question: Expression for the surface area of a rectangular prism
+	// Extracted from question: x12d0d102580e3795
+	// Question: Select the surface area expression of a triangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xbe06146412485bd4] Expression for the surface area of a rectangular prism", async () => {
+	test("polyhedron-diagram - [x12d0d102580e3795] Select the surface area expression of a triangular prism", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 4,
+		      "h": 3,
+		      "hypotenuse": 5
+		    },
+		    "type": "triangularPrism",
+		    "length": 10
+		  },
+		  "width": 380,
+		  "height": 320,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbe06146412485bd4
+	// Question: Select the expression for the surface area of a rectangular prism
+	// Widget key: image_1
+	test("polyhedron-diagram - [xbe06146412485bd4] Select the expression for the surface area of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 5,
-		    "height": 6,
+		    "width": 500,
+		    "height": 500,
 		    "length": 3
 		  },
-		  "width": 229,
-		  "height": 245,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
-		      "text": "3",
+		      "text": "3 units",
 		      "target": "length"
 		    },
 		    {
-		      "text": "5",
+		      "text": "5 units",
 		      "target": "width"
 		    },
 		    {
-		      "text": "6",
+		      "text": "6 units",
 		      "target": "height"
 		    }
 		  ],
@@ -1068,21 +1126,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5dcd7e8ac02b80ca
-	// Question: Expression for the surface area of a cube
+	// Question: Select an expression for the surface area of a cube
 	// Widget key: image_1
-	test("polyhedron-diagram - [x5dcd7e8ac02b80ca] Expression for the surface area of a cube", async () => {
+	test("polyhedron-diagram - [x5dcd7e8ac02b80ca] Select an expression for the surface area of a cube", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 5,
-		    "height": 5,
+		    "width": 500,
+		    "height": 500,
 		    "length": 5
 		  },
-		  "width": 245,
-		  "height": 205,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "5 units",
@@ -1112,29 +1170,25 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xdcd6b77b237ce9df
-	// Question: Select the expression for the surface area of a square pyramid
+	// Question: Surface area of a square pyramid — select the expression
 	// Widget key: image_1
-	test("polyhedron-diagram - [xdcd6b77b237ce9df] Select the expression for the surface area of a square pyramid", async () => {
+	test("polyhedron-diagram - [xdcd6b77b237ce9df] Surface area of a square pyramid — select the expression", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 2.8284271247461903,
+		    "height": 302.8284271247462,
 		    "baseWidth": 2,
 		    "baseLength": 2
 		  },
-		  "width": 196,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "2 units",
 		      "target": "length"
-		    },
-		    {
-		      "text": "2 units",
-		      "target": "width"
 		    },
 		    {
 		      "text": "3 units",
@@ -1143,7 +1197,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
+		  "shadedFace": ",  ",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -1164,21 +1218,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x400e81235955172a
-	// Question: Surface area of a square pyramid
+	// Question: Select the expression for the surface area of a square pyramid
 	// Widget key: image_1
-	test("polyhedron-diagram - [x400e81235955172a] Surface area of a square pyramid", async () => {
+	test("polyhedron-diagram - [x400e81235955172a] Select the expression for the surface area of a square pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 4.5826,
+		    "height": 460,
 		    "baseWidth": 4,
 		    "baseLength": 4
 		  },
-		  "width": 218,
-		  "height": 240,
+		  "width": 380,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "4 units",
@@ -1216,172 +1270,29 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x309c1959f321d5d6
-	// Question: Surface area of a square pyramid — select the expression
+	// Question: Select an expression for the surface area of a square pyramid
 	// Widget key: image_1
-	test("polyhedron-diagram - [x309c1959f321d5d6] Surface area of a square pyramid — select the expression", async () => {
+	test("polyhedron-diagram - [x309c1959f321d5d6] Select an expression for the surface area of a square pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 4,
+		    "height": 402,
 		    "baseWidth": 6,
 		    "baseLength": 6
 		  },
-		  "width": 240,
-		  "height": 136,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
-		      "text": "6",
+		      "text": "6 units",
 		      "target": "length"
 		    },
 		    {
-		      "text": "5",
+		      "text": "5 units",
 		      "target": "slantHeight"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "baseFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x270f8e23bed25b31
-	// Question: Select an expression for the surface area of a triangular prism
-	// Widget key: image_1
-	test("polyhedron-diagram - [x270f8e23bed25b31] Select an expression for the surface area of a triangular prism", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "base": {
-		      "b": 8,
-		      "h": 2,
-		      "hypotenuse": 0.08
-		    },
-		    "type": "triangularPrism",
-		    "length": 11
-		  },
-		  "width": 176,
-		  "height": 260,
-		  "labels": [
-		    {
-		      "text": "11 units",
-		      "target": "length"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "bottomFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf91c32b1fcf04a57
-	// Question: Select an expression for the surface area of a square pyramid
-	// Widget key: image_1
-	test("polyhedron-diagram - [xf91c32b1fcf04a57] Select an expression for the surface area of a square pyramid", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPyramid",
-		    "height": 6.245,
-		    "baseWidth": 10,
-		    "baseLength": 10
-		  },
-		  "width": 240,
-		  "height": 136,
-		  "labels": [
-		    {
-		      "text": "10",
-		      "target": "length"
-		    },
-		    {
-		      "text": "10",
-		      "target": "width"
-		    },
-		    {
-		      "text": "8",
-		      "target": "slantHeight"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "baseFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6b173ed05d5b4289
-	// Question: Select the expression for the surface area of a cube
-	// Widget key: image_1
-	test("polyhedron-diagram - [x6b173ed05d5b4289] Select the expression for the surface area of a cube", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 9,
-		    "height": 9,
-		    "length": 9
-		  },
-		  "width": 245,
-		  "height": 204,
-		  "labels": [
-		    {
-		      "text": "9 units",
-		      "target": "width"
 		    }
 		  ],
 		  "segments": null,
@@ -1406,22 +1317,181 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xbc3cb70f8fd829cd
-	// Question: Expression for the surface area of a cube
+	// Extracted from question: x270f8e23bed25b31
+	// Question: Surface area of a triangular prism — choose the expression
 	// Widget key: image_1
-	test("polyhedron-diagram - [xbc3cb70f8fd829cd] Expression for the surface area of a cube", async () => {
+	test("polyhedron-diagram - [x270f8e23bed25b31] Surface area of a triangular prism — choose the expression", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 8,
+		      "h": 2,
+		      "hypotenuse": 5
+		    },
+		    "type": "triangularPrism",
+		    "length": 11
+		  },
+		  "width": 380,
+		  "height": 360,
+		  "labels": [
+		    {
+		      "text": "11 units",
+		      "target": "length"
+		    },
+		    {
+		      "text": "8 units",
+		      "target": "width"
+		    },
+		    {
+		      "text": "2 units",
+		      "target": "height"
+		    },
+		    {
+		      "text": "5 units",
+		      "target": "leftFace"
+		    },
+		    {
+		      "text": "5 units",
+		      "target": "rightFace"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf91c32b1fcf04a57
+	// Question: Surface area of a square pyramid (expression)
+	// Widget key: image_1
+	test("polyhedron-diagram - [xf91c32b1fcf04a57] Surface area of a square pyramid (expression)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPyramid",
+		    "height": 390,
+		    "baseWidth": 10,
+		    "baseLength": 10
+		  },
+		  "width": 360,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "10 units",
+		      "target": "length"
+		    },
+		    {
+		      "text": "10 units",
+		      "target": "width"
+		    },
+		    {
+		      "text": "8 units",
+		      "target": "slantHeight"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6b173ed05d5b4289
+	// Question: Select an expression for the surface area of a cube
+	// Widget key: image_1
+	test("polyhedron-diagram - [x6b173ed05d5b4289] Select an expression for the surface area of a cube", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 4,
+		    "width": 409,
+		    "height": 409,
+		    "length": 9
+		  },
+		  "width": 360,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "9 units",
+		      "target": "width"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": null,
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbc3cb70f8fd829cd
+	// Question: Select the expression for the surface area of a cube
+	// Widget key: image_1
+	test("polyhedron-diagram - [xbc3cb70f8fd829cd] Select the expression for the surface area of a cube", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 400,
+		    "height": 400,
 		    "length": 4
 		  },
-		  "width": 245,
-		  "height": 206,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "4 units",
@@ -1451,9 +1521,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x69b966e8d3fec7b5
-	// Question: Surface area expression for a triangular prism
+	// Question: Select the expression for the surface area of a triangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x69b966e8d3fec7b5] Surface area expression for a triangular prism", async () => {
+	test("polyhedron-diagram - [x69b966e8d3fec7b5] Select the expression for the surface area of a triangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1467,22 +1537,9 @@ describe("polyhedronDiagram widget tests", () => {
 		    "type": "triangularPrism",
 		    "length": 11
 		  },
-		  "width": 250,
-		  "height": 170,
-		  "labels": [
-		    {
-		      "text": "11 units",
-		      "target": "length"
-		    },
-		    {
-		      "text": "4 units",
-		      "target": "width"
-		    },
-		    {
-		      "text": "3 units",
-		      "target": "height"
-		    }
-		  ],
+		  "width": 380,
+		  "height": 320,
+		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
 		  "shadedFace": "frontFace",
@@ -1515,12 +1572,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 8,
-		    "height": 7,
+		    "width": 384,
+		    "height": 357,
 		    "length": 4
 		  },
-		  "width": 203,
-		  "height": 245,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "4 units",
@@ -1558,21 +1615,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x367bdd8732dfd654
-	// Question: Select an expression for the surface area of a cube
+	// Question: Select the expression for the surface area of a cube
 	// Widget key: image_1
-	test("polyhedron-diagram - [x367bdd8732dfd654] Select an expression for the surface area of a cube", async () => {
+	test("polyhedron-diagram - [x367bdd8732dfd654] Select the expression for the surface area of a cube", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 8,
-		    "height": 8,
+		    "width": 420,
+		    "height": 409,
 		    "length": 8
 		  },
-		  "width": 245,
-		  "height": 204,
+		  "width": 320,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "8 units",
@@ -1581,7 +1638,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "]}'}  } }}}} }}}} } }  } }  } } } } } } }  } } } }}}  } } }  }  } } } } } } }  }  } }  }}",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -1602,21 +1659,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x92663d3f35013837
-	// Question: Surface area of a rectangular prism — select an expression
+	// Question: Select an expression for the surface area of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x92663d3f35013837] Surface area of a rectangular prism — select an expression", async () => {
+	test("polyhedron-diagram - [x92663d3f35013837] Select an expression for the surface area of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 2,
-		    "height": 5,
+		    "width": 500,
+		    "height": 500,
 		    "length": 3
 		  },
-		  "width": 300,
-		  "height": 260,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "3 units",
@@ -1633,7 +1690,54 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "type",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0b1d59dfad3f9df4
+	// Question: Surface area of a triangular prism (ramp)
+	// Widget key: image_2
+	test("polyhedron-diagram - [x0b1d59dfad3f9df4] Surface area of a triangular prism (ramp)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 1.2,
+		      "h": 0.9,
+		      "hypotenuse": 1.5
+		    },
+		    "type": "triangularPrism",
+		    "length": 3.5
+		  },
+		  "width": 360,
+		  "height": 300,
+		  "labels": [
+		    {
+		      "text": "3.5 m",
+		      "target": "length"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "baseFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -1654,21 +1758,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6be05046e627fdaf
-	// Question: Surface area of a rectangular prism (caterpillar habitat)
+	// Question: Surface area of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x6be05046e627fdaf] Surface area of a rectangular prism (caterpillar habitat)", async () => {
+	test("polyhedron-diagram - [x6be05046e627fdaf] Surface area of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 0.4,
-		    "height": 0.8,
+		    "width": 400,
+		    "height": 300,
 		    "length": 1
 		  },
-		  "width": 250,
-		  "height": 168,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "1 meter",
@@ -1705,81 +1809,22 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x0b1d59dfad3f9df4
-	// Question: Surface area of a right triangular prism (skateboard ramp)
-	// Widget key: image_2
-	test("polyhedron-diagram - [x0b1d59dfad3f9df4] Surface area of a right triangular prism (skateboard ramp)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "base": {
-		      "b": 1.2,
-		      "h": 0.9,
-		      "hypotenuse": 1.5
-		    },
-		    "type": "triangularPrism",
-		    "length": 3.5
-		  },
-		  "width": 300,
-		  "height": 190,
-		  "labels": [
-		    {
-		      "text": "3.5 m",
-		      "target": "length"
-		    },
-		    {
-		      "text": "1.2 m",
-		      "target": "bottomFace"
-		    },
-		    {
-		      "text": "0.9 m",
-		      "target": "leftFace"
-		    },
-		    {
-		      "text": "1.5 m",
-		      "target": "rightFace"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "bottomFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x70b53795940b26b1
-	// Question: Surface area of a rectangular-prism door
+	// Question: Find the surface area of a door (rectangular prism)
 	// Widget key: image_1
-	test("polyhedron-diagram - [x70b53795940b26b1] Surface area of a rectangular-prism door", async () => {
+	test("polyhedron-diagram - [x70b53795940b26b1] Find the surface area of a door (rectangular prism)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 3,
-		    "height": 200,
+		    "width": 313,
+		    "height": 320,
 		    "length": 80
 		  },
-		  "width": 400,
-		  "height": 300,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "80 centimeters",
@@ -1817,21 +1862,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa2cc3aca85b395ce
-	// Question: Find the surface area of a cube
+	// Question: Surface area of a cube from its net
 	// Widget key: image_1
-	test("polyhedron-diagram - [xa2cc3aca85b395ce] Find the surface area of a cube", async () => {
+	test("polyhedron-diagram - [xa2cc3aca85b395ce] Surface area of a cube from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 13,
-		    "height": 13,
+		    "width": 313,
+		    "height": 313,
 		    "length": 13
 		  },
-		  "width": 250,
-		  "height": 206,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "13 cm",
@@ -1840,7 +1885,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": null,
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -1861,21 +1906,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x952422856d62c21e
-	// Question: Surface area from a rectangular prism net
+	// Question: Surface area of a rectangular prism from its net
 	// Widget key: image_1
-	test("polyhedron-diagram - [x952422856d62c21e] Surface area from a rectangular prism net", async () => {
+	test("polyhedron-diagram - [x952422856d62c21e] Surface area of a rectangular prism from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 8,
-		    "height": 30,
+		    "width": 380,
+		    "height": 300,
 		    "length": 20
 		  },
-		  "width": 240,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "20 cm",
@@ -1892,7 +1937,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "showHiddenEdges",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -1913,9 +1958,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9e7e36046c2f4fa1
-	// Question: Surface area of a triangular prism
+	// Question: Surface area of a triangular prism pedestal
 	// Widget key: image_1
-	test("polyhedron-diagram - [x9e7e36046c2f4fa1] Surface area of a triangular prism", async () => {
+	test("polyhedron-diagram - [x9e7e36046c2f4fa1] Surface area of a triangular prism pedestal", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1929,70 +1974,11 @@ describe("polyhedronDiagram widget tests", () => {
 		    "type": "triangularPrism",
 		    "length": 30
 		  },
-		  "width": 300,
-		  "height": 260,
+		  "width": 380,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "30 cm",
-		      "target": "length"
-		    },
-		    {
-		      "text": "16 cm",
-		      "target": "width"
-		    },
-		    {
-		      "text": "6 cm",
-		      "target": "height"
-		    },
-		    {
-		      "text": "10 cm",
-		      "target": "slantHeight"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "baseFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe2a050cab649a32b
-	// Question: Surface area of a triangular-prism tent
-	// Widget key: image_2
-	test("polyhedron-diagram - [xe2a050cab649a32b] Surface area of a triangular-prism tent", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "base": {
-		      "b": 2,
-		      "h": 1.7,
-		      "hypotenuse": 2
-		    },
-		    "type": "triangularPrism",
-		    "length": 3
-		  },
-		  "width": 260,
-		  "height": 208,
-		  "labels": [
-		    {
-		      "text": "3 m",
 		      "target": "length"
 		    }
 		  ],
@@ -2018,26 +2004,39 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xbd124d91ea216e98
-	// Question: Surface area of a triangular prism ramp
-	// Widget key: image_1
-	test("polyhedron-diagram - [xbd124d91ea216e98] Surface area of a triangular prism ramp", async () => {
+	// Extracted from question: xe2a050cab649a32b
+	// Question: Surface area of a triangular prism tent (including the floor)
+	// Widget key: image_2
+	test("polyhedron-diagram - [xe2a050cab649a32b] Surface area of a triangular prism tent (including the floor)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "base": {
-		      "b": 0.1,
-		      "h": 0.8,
-		      "hypotenuse": 0.81
+		      "b": 2,
+		      "h": 1.7,
+		      "hypotenuse": 2
 		    },
 		    "type": "triangularPrism",
-		    "length": 1
+		    "length": 3
 		  },
-		  "width": 300,
-		  "height": 102,
-		  "labels": [],
+		  "width": 360,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "3 m",
+		      "target": "length"
+		    },
+		    {
+		      "text": "2 m",
+		      "target": "baseFace"
+		    },
+		    {
+		      "text": "1.7 m",
+		      "target": "baseFace"
+		    }
+		  ],
 		  "segments": null,
 		  "diagonals": [],
 		  "shadedFace": "baseFace",
@@ -2060,22 +2059,64 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2c09a69cef8a52d6
-	// Question: Surface area of a square pyramid from a net
+	// Extracted from question: xbd124d91ea216e98
+	// Question: Surface area of a ramp (triangular prism)
 	// Widget key: image_1
-	test("polyhedron-diagram - [x2c09a69cef8a52d6] Surface area of a square pyramid from a net", async () => {
+	test("polyhedron-diagram - [xbd124d91ea216e98] Surface area of a ramp (triangular prism)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 0.8,
+		      "h": 0.1,
+		      "hypotenuse": 0.81
+		    },
+		    "type": "triangularPrism",
+		    "length": 1
+		  },
+		  "width": 400,
+		  "height": 300,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2c09a69cef8a52d6
+	// Question: Surface area of a square pyramid
+	// Widget key: image_1
+	test("polyhedron-diagram - [x2c09a69cef8a52d6] Surface area of a square pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 135.6,
+		    "height": 360,
 		    "baseWidth": 70,
 		    "baseLength": 70
 		  },
-		  "width": 140,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "70 cm",
@@ -2113,21 +2154,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb2cc0d629a0c9d68
-	// Question: Surface area of a square pyramid roof
+	// Question: Surface area of a square pyramid (birdhouse roof)
 	// Widget key: image_1
-	test("polyhedron-diagram - [xb2cc0d629a0c9d68] Surface area of a square pyramid roof", async () => {
+	test("polyhedron-diagram - [xb2cc0d629a0c9d68] Surface area of a square pyramid (birdhouse roof)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 0.565685,
+		    "height": 306.18621784789724,
 		    "baseWidth": 0.4,
 		    "baseLength": 0.4
 		  },
-		  "width": 196,
-		  "height": 240,
+		  "width": 380,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "0.4 m",
@@ -2174,13 +2215,17 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 27.3,
+		    "height": 307,
 		    "baseWidth": 25,
 		    "baseLength": 25
 		  },
-		  "width": 240,
-		  "height": 136,
+		  "width": 380,
+		  "height": 360,
 		  "labels": [
+		    {
+		      "text": "25 cm",
+		      "target": "length"
+		    },
 		    {
 		      "text": "25 cm",
 		      "target": "width"
@@ -2190,10 +2235,10 @@ describe("polyhedronDiagram widget tests", () => {
 		      "target": "slantHeight"
 		    }
 		  ],
-		  "segments": [],
+		  "segments": null,
 		  "diagonals": [],
 		  "shadedFace": "frontFace",
-		  "angleMarkers": [],
+		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
 
@@ -2222,12 +2267,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 14.6969,
+		    "height": 474,
 		    "baseWidth": 6,
 		    "baseLength": 6
 		  },
-		  "width": 175,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "6 cm",
@@ -2244,7 +2289,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "baseFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -2265,21 +2310,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc6b79ae4e5ddd647
-	// Question: Surface area of a cube
+	// Question: Surface area of a carpet-covered cube
 	// Widget key: image_1
-	test("polyhedron-diagram - [xc6b79ae4e5ddd647] Surface area of a cube", async () => {
+	test("polyhedron-diagram - [xc6b79ae4e5ddd647] Surface area of a carpet-covered cube", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 40,
-		    "height": 40,
+		    "width": 401,
+		    "height": 401,
 		    "length": 40
 		  },
-		  "width": 250,
-		  "height": 186,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "40 cm",
@@ -2309,21 +2354,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x05cfd2fe82c6be0e
-	// Question: Surface area of a scratching post
+	// Question: Surface area of a rectangular prism from a net
 	// Widget key: image_1
-	test("polyhedron-diagram - [x05cfd2fe82c6be0e] Surface area of a scratching post", async () => {
+	test("polyhedron-diagram - [x05cfd2fe82c6be0e] Surface area of a rectangular prism from a net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 10,
-		    "height": 90,
+		    "width": 350,
+		    "height": 400,
 		    "length": 10
 		  },
-		  "width": 94,
-		  "height": 250,
+		  "width": 400,
+		  "height": 350,
 		  "labels": [
 		    {
 		      "text": "10 cm",
@@ -2338,9 +2383,9 @@ describe("polyhedronDiagram widget tests", () => {
 		      "target": "height"
 		    }
 		  ],
-		  "segments": null,
+		  "segments": [],
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "shapeRectangularPrism",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -2361,21 +2406,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x40de7c6b55c2e345
-	// Question: Surface area of an ice block
+	// Question: Surface area of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x40de7c6b55c2e345] Surface area of an ice block", async () => {
+	test("polyhedron-diagram - [x40de7c6b55c2e345] Surface area of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 0.8,
-		    "height": 1.1,
+		    "width": 301,
+		    "height": 320,
 		    "length": 1.3
 		  },
-		  "width": 250,
-		  "height": 167,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "1.3 m",
@@ -2413,21 +2458,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2ea82a3291511b2e
-	// Question: Identify the solid from a rectangular vertical slice
+	// Question: Identify a solid from a vertical slice
 	// Widget key: choice_a_solid
-	test("polyhedron-diagram - [x2ea82a3291511b2e] Identify the solid from a rectangular vertical slice (2)", async () => {
+	test("polyhedron-diagram - [x2ea82a3291511b2e] Identify a solid from a vertical slice (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 80,
-		    "height": 140,
-		    "length": 80
+		    "width": 500,
+		    "height": 500,
+		    "length": 8
 		  },
-		  "width": 300,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -2452,25 +2497,25 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2ea82a3291511b2e
-	// Question: Identify the solid from a rectangular vertical slice
+	// Question: Identify a solid from a vertical slice
 	// Widget key: choice_b_solid
-	test("polyhedron-diagram - [x2ea82a3291511b2e] Identify the solid from a rectangular vertical slice (3)", async () => {
+	test("polyhedron-diagram - [x2ea82a3291511b2e] Identify a solid from a vertical slice (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 100,
-		    "baseWidth": 90,
-		    "baseLength": 90
+		    "height": 500,
+		    "baseWidth": 8,
+		    "baseLength": 8
 		  },
-		  "width": 300,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
+		  "shadedFace": "topFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -2491,25 +2536,25 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2ea82a3291511b2e
-	// Question: Identify the solid from a rectangular vertical slice
+	// Question: Identify a solid from a vertical slice
 	// Widget key: choice_c_solid
-	test("polyhedron-diagram - [x2ea82a3291511b2e] Identify the solid from a rectangular vertical slice (4)", async () => {
+	test("polyhedron-diagram - [x2ea82a3291511b2e] Identify a solid from a vertical slice (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 60,
-		    "baseWidth": 90,
-		    "baseLength": 90
+		    "height": 480,
+		    "baseWidth": 9,
+		    "baseLength": 7
 		  },
-		  "width": 300,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
+		  "shadedFace": "topFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -2530,28 +2575,28 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2ea82a3291511b2e
-	// Question: Identify the solid from a rectangular vertical slice
+	// Question: Identify a solid from a vertical slice
 	// Widget key: choice_d_solid
-	test("polyhedron-diagram - [x2ea82a3291511b2e] Identify the solid from a rectangular vertical slice (5)", async () => {
+	test("polyhedron-diagram - [x2ea82a3291511b2e] Identify a solid from a vertical slice (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "base": {
-		      "b": 90,
-		      "h": 70,
-		      "hypotenuse": 114
+		      "b": 8,
+		      "h": 7,
+		      "hypotenuse": 10
 		    },
 		    "type": "triangularPyramid",
-		    "height": 85
+		    "height": 480
 		  },
-		  "width": 300,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
+		  "shadedFace": "topFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -2572,9 +2617,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8bf3dcc1812f07b6
-	// Question: Identify a solid from its horizontal cross-section
+	// Question: Identify a solid from a horizontal slice (pentagon)
 	// Widget key: choice_a_solid
-	test("polyhedron-diagram - [x8bf3dcc1812f07b6] Identify a solid from its horizontal cross-section (1)", async () => {
+	test("polyhedron-diagram - [x8bf3dcc1812f07b6] Identify a solid from a horizontal slice (pentagon) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2583,13 +2628,13 @@ describe("polyhedronDiagram widget tests", () => {
 		    "base": {
 		      "b": 6,
 		      "h": 5,
-		      "hypotenuse": 7
+		      "hypotenuse": 7.8
 		    },
 		    "type": "triangularPrism",
 		    "length": 10
 		  },
-		  "width": 300,
-		  "height": 260,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -2614,102 +2659,99 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8bf3dcc1812f07b6
-	// Question: Identify a solid from its horizontal cross-section
+	// Question: Identify a solid from a horizontal slice (pentagon)
 	// Widget key: choice_b_solid
-	test("polyhedron-diagram - [x8bf3dcc1812f07b6] Identify a solid from its horizontal cross-section (2)", async () => {
+	test("polyhedron-diagram - [x8bf3dcc1812f07b6] Identify a solid from a horizontal slice (pentagon) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 10,
-		    "height": 14,
+		    "width": 388,
+		    "height": 312,
+		    "length": 8
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8bf3dcc1812f07b6
+	// Question: Identify a solid from a horizontal slice (pentagon)
+	// Widget key: choice_c_solid
+	test("polyhedron-diagram - [x8bf3dcc1812f07b6] Identify a solid from a horizontal slice (pentagon) (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 500,
+		    "height": 340,
+		    "length": 9
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8bf3dcc1812f07b6
+	// Question: Identify a solid from a horizontal slice (pentagon)
+	// Widget key: choice_d_solid
+	test("polyhedron-diagram - [x8bf3dcc1812f07b6] Identify a solid from a horizontal slice (pentagon) (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 360,
+		    "height": 300,
 		    "length": 10
 		  },
-		  "width": 300,
-		  "height": 260,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8bf3dcc1812f07b6
-	// Question: Identify a solid from its horizontal cross-section
-	// Widget key: choice_c_solid
-	test("polyhedron-diagram - [x8bf3dcc1812f07b6] Identify a solid from its horizontal cross-section (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 8,
-		    "height": 14,
-		    "length": 12
-		  },
-		  "width": 300,
-		  "height": 260,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8bf3dcc1812f07b6
-	// Question: Identify a solid from its horizontal cross-section
-	// Widget key: choice_d_solid
-	test("polyhedron-diagram - [x8bf3dcc1812f07b6] Identify a solid from its horizontal cross-section (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "base": {
-		      "b": 7,
-		      "h": 4.5,
-		      "hypotenuse": 8.5
-		    },
-		    "type": "triangularPrism",
-		    "length": 12
-		  },
-		  "width": 300,
-		  "height": 260,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -2734,9 +2776,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x209d34a33212eb67
-	// Question: Identify the solid from a triangular slice
+	// Question: Identify the solid from a triangular horizontal slice
 	// Widget key: choice_a_solid
-	test("polyhedron-diagram - [x209d34a33212eb67] Identify the solid from a triangular slice (2)", async () => {
+	test("polyhedron-diagram - [x209d34a33212eb67] Identify the solid from a triangular horizontal slice (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2744,14 +2786,14 @@ describe("polyhedronDiagram widget tests", () => {
 		  "shape": {
 		    "base": {
 		      "b": 6,
-		      "h": 8,
-		      "hypotenuse": 10
+		      "h": 5,
+		      "hypotenuse": 7.8
 		    },
 		    "type": "triangularPrism",
-		    "length": 12
+		    "length": 10
 		  },
-		  "width": 140,
-		  "height": 120,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -2776,21 +2818,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x209d34a33212eb67
-	// Question: Identify the solid from a triangular slice
+	// Question: Identify the solid from a triangular horizontal slice
 	// Widget key: choice_b_solid
-	test("polyhedron-diagram - [x209d34a33212eb67] Identify the solid from a triangular slice (3)", async () => {
+	test("polyhedron-diagram - [x209d34a33212eb67] Identify the solid from a triangular horizontal slice (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 10,
-		    "height": 14,
+		    "width": 500,
+		    "height": 420,
 		    "length": 10
 		  },
-		  "width": 140,
-		  "height": 120,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -2815,24 +2857,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x209d34a33212eb67
-	// Question: Identify the solid from a triangular slice
+	// Question: Identify the solid from a triangular horizontal slice
 	// Widget key: choice_c_solid
-	test("polyhedron-diagram - [x209d34a33212eb67] Identify the solid from a triangular slice (4)", async () => {
+	test("polyhedron-diagram - [x209d34a33212eb67] Identify the solid from a triangular horizontal slice (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
-		    "base": {
-		      "b": 8,
-		      "h": 6,
-		      "hypotenuse": 10
-		    },
-		    "type": "triangularPyramid",
-		    "height": 10
+		    "type": "rectangularPrism",
+		    "width": 460,
+		    "height": 360,
+		    "length": 12
 		  },
-		  "width": 140,
-		  "height": 120,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -2857,21 +2896,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x209d34a33212eb67
-	// Question: Identify the solid from a triangular slice
+	// Question: Identify the solid from a triangular horizontal slice
 	// Widget key: choice_d_solid
-	test("polyhedron-diagram - [x209d34a33212eb67] Identify the solid from a triangular slice (5)", async () => {
+	test("polyhedron-diagram - [x209d34a33212eb67] Identify the solid from a triangular horizontal slice (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 12,
-		    "baseWidth": 10,
-		    "baseLength": 10
+		    "height": 400,
+		    "baseWidth": 9,
+		    "baseLength": 9
 		  },
-		  "width": 140,
-		  "height": 120,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -2896,21 +2935,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb0b26af2552ebf85
-	// Question: Identify a solid from a triangular vertical slice
+	// Question: Select a solid that produces a triangular vertical slice
 	// Widget key: choice_a_solid
-	test("polyhedron-diagram - [xb0b26af2552ebf85] Identify a solid from a triangular vertical slice (1)", async () => {
+	test("polyhedron-diagram - [xb0b26af2552ebf85] Select a solid that produces a triangular vertical slice (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 10,
-		    "baseWidth": 8,
-		    "baseLength": 8
+		    "height": 500,
+		    "baseWidth": 6,
+		    "baseLength": 6
 		  },
-		  "width": 120,
-		  "height": 120,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -2935,21 +2974,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb0b26af2552ebf85
-	// Question: Identify a solid from a triangular vertical slice
+	// Question: Select a solid that produces a triangular vertical slice
 	// Widget key: choice_b_solid
-	test("polyhedron-diagram - [xb0b26af2552ebf85] Identify a solid from a triangular vertical slice (2)", async () => {
+	test("polyhedron-diagram - [xb0b26af2552ebf85] Select a solid that produces a triangular vertical slice (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 8,
-		    "height": 12,
-		    "length": 8
+		    "width": 410,
+		    "height": 460,
+		    "length": 6
 		  },
-		  "width": 120,
-		  "height": 120,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -2974,90 +3013,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb0b26af2552ebf85
-	// Question: Identify a solid from a triangular vertical slice
+	// Question: Select a solid that produces a triangular vertical slice
 	// Widget key: choice_c_solid
-	test("polyhedron-diagram - [xb0b26af2552ebf85] Identify a solid from a triangular vertical slice (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "base": {
-		      "b": 6,
-		      "h": 8,
-		      "hypotenuse": 10
-		    },
-		    "type": "triangularPrism",
-		    "length": 8
-		  },
-		  "width": 120,
-		  "height": 120,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb0b26af2552ebf85
-	// Question: Identify a solid from a triangular vertical slice
-	// Widget key: choice_d_solid
-	test("polyhedron-diagram - [xb0b26af2552ebf85] Identify a solid from a triangular vertical slice (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 8,
-		    "height": 8,
-		    "length": 8
-		  },
-		  "width": 120,
-		  "height": 120,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4f1f8eb1e5cd00ec
-	// Question: Identify a solid from a hexagonal cross-section
-	// Widget key: choice_a_solid
-	test("polyhedron-diagram - [x4f1f8eb1e5cd00ec] Identify a solid from a hexagonal cross-section (2)", async () => {
+	test("polyhedron-diagram - [xb0b26af2552ebf85] Select a solid that produces a triangular vertical slice (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3069,10 +3027,10 @@ describe("polyhedronDiagram widget tests", () => {
 		      "hypotenuse": 5
 		    },
 		    "type": "triangularPrism",
-		    "length": 8
+		    "length": 6
 		  },
-		  "width": 100,
-		  "height": 100,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -3096,104 +3054,111 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4f1f8eb1e5cd00ec
-	// Question: Identify a solid from a hexagonal cross-section
-	// Widget key: choice_b_solid
-	test("polyhedron-diagram - [x4f1f8eb1e5cd00ec] Identify a solid from a hexagonal cross-section (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 8,
-		    "height": 12,
-		    "length": 8
-		  },
-		  "width": 100,
-		  "height": 100,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4f1f8eb1e5cd00ec
-	// Question: Identify a solid from a hexagonal cross-section
-	// Widget key: choice_c_solid
-	test("polyhedron-diagram - [x4f1f8eb1e5cd00ec] Identify a solid from a hexagonal cross-section (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "base": {
-		      "b": 4,
-		      "h": 4,
-		      "hypotenuse": 5.66
-		    },
-		    "type": "triangularPyramid",
-		    "height": 9
-		  },
-		  "width": 100,
-		  "height": 100,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4f1f8eb1e5cd00ec
-	// Question: Identify a solid from a hexagonal cross-section
+	// Extracted from question: xb0b26af2552ebf85
+	// Question: Select a solid that produces a triangular vertical slice
 	// Widget key: choice_d_solid
-	test("polyhedron-diagram - [x4f1f8eb1e5cd00ec] Identify a solid from a hexagonal cross-section (5)", async () => {
+	test("polyhedron-diagram - [xb0b26af2552ebf85] Select a solid that produces a triangular vertical slice (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 10,
-		    "height": 14,
+		    "width": 410,
+		    "height": 410,
+		    "length": 4
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4f1f8eb1e5cd00ec
+	// Question: Identify a solid from its horizontal cross-section
+	// Widget key: choice_square_prism
+	test("polyhedron-diagram - [x4f1f8eb1e5cd00ec] Identify a solid from its horizontal cross-section (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 388,
+		    "height": 346,
+		    "length": 8
+		  },
+		  "width": 360,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "square base",
+		      "target": "topFace"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4f1f8eb1e5cd00ec
+	// Question: Identify a solid from its horizontal cross-section
+	// Widget key: choice_hexagonal_prism
+	test("polyhedron-diagram - [x4f1f8eb1e5cd00ec] Identify a solid from its horizontal cross-section (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 396,
+		    "height": 352,
 		    "length": 10
 		  },
-		  "width": 100,
-		  "height": 100,
-		  "labels": [],
+		  "width": 360,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "hexagonal base",
+		      "target": "topFace"
+		    }
+		  ],
 		  "segments": null,
 		  "diagonals": [],
 		  "shadedFace": "topFace",
@@ -3216,10 +3181,54 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x728cd6c47f90fd12
-	// Question: Identify a solid from a triangular vertical slice
-	// Widget key: choice_a_solid
-	test("polyhedron-diagram - [x728cd6c47f90fd12] Identify a solid from a triangular vertical slice (1)", async () => {
+	// Extracted from question: x4f1f8eb1e5cd00ec
+	// Question: Identify a solid from its horizontal cross-section
+	// Widget key: choice_pentagonal_prism
+	test("polyhedron-diagram - [x4f1f8eb1e5cd00ec] Identify a solid from its horizontal cross-section (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 372,
+		    "height": 338,
+		    "length": 9
+		  },
+		  "width": 360,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "pentagonal base",
+		      "target": "topFace"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4f1f8eb1e5cd00ec
+	// Question: Identify a solid from its horizontal cross-section
+	// Widget key: choice_triangular_prism
+	test("polyhedron-diagram - [x4f1f8eb1e5cd00ec] Identify a solid from its horizontal cross-section (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3227,288 +3236,6 @@ describe("polyhedronDiagram widget tests", () => {
 		  "shape": {
 		    "base": {
 		      "b": 6,
-		      "h": 5,
-		      "hypotenuse": 7.81
-		    },
-		    "type": "triangularPrism",
-		    "length": 10
-		  },
-		  "width": 100,
-		  "height": 100,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x728cd6c47f90fd12
-	// Question: Identify a solid from a triangular vertical slice
-	// Widget key: choice_b_solid
-	test("polyhedron-diagram - [x728cd6c47f90fd12] Identify a solid from a triangular vertical slice (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 12,
-		    "length": 6
-		  },
-		  "width": 100,
-		  "height": 100,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x728cd6c47f90fd12
-	// Question: Identify a solid from a triangular vertical slice
-	// Widget key: choice_c_solid
-	test("polyhedron-diagram - [x728cd6c47f90fd12] Identify a solid from a triangular vertical slice (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 8,
-		    "height": 8,
-		    "length": 8
-		  },
-		  "width": 100,
-		  "height": 100,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x728cd6c47f90fd12
-	// Question: Identify a solid from a triangular vertical slice
-	// Widget key: choice_d_solid
-	test("polyhedron-diagram - [x728cd6c47f90fd12] Identify a solid from a triangular vertical slice (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "base": {
-		      "b": 4,
-		      "h": 7,
-		      "hypotenuse": 8.06
-		    },
-		    "type": "triangularPrism",
-		    "length": 6
-		  },
-		  "width": 100,
-		  "height": 100,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa63d03bcdc40499a
-	// Question: Identify a solid from its horizontal slice (square)
-	// Widget key: choice_a_solid
-	test("polyhedron-diagram - [xa63d03bcdc40499a] Identify a solid from its horizontal slice (square) (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "base": {
-		      "b": 6,
-		      "h": 5,
-		      "hypotenuse": 8
-		    },
-		    "type": "triangularPrism",
-		    "length": 10
-		  },
-		  "width": 360,
-		  "height": 300,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa63d03bcdc40499a
-	// Question: Identify a solid from its horizontal slice (square)
-	// Widget key: choice_b_solid
-	test("polyhedron-diagram - [xa63d03bcdc40499a] Identify a solid from its horizontal slice (square) (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 8,
-		    "height": 12,
-		    "length": 8
-		  },
-		  "width": 360,
-		  "height": 300,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa63d03bcdc40499a
-	// Question: Identify a solid from its horizontal slice (square)
-	// Widget key: choice_c_solid
-	test("polyhedron-diagram - [xa63d03bcdc40499a] Identify a solid from its horizontal slice (square) (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 12,
-		    "length": 10
-		  },
-		  "width": 360,
-		  "height": 300,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa63d03bcdc40499a
-	// Question: Identify a solid from its horizontal slice (square)
-	// Widget key: choice_d_solid
-	test("polyhedron-diagram - [xa63d03bcdc40499a] Identify a solid from its horizontal slice (square) (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "base": {
-		      "b": 5,
 		      "h": 5,
 		      "hypotenuse": 7
 		    },
@@ -3516,7 +3243,378 @@ describe("polyhedronDiagram widget tests", () => {
 		    "length": 9
 		  },
 		  "width": 360,
-		  "height": 300,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "triangular base",
+		      "target": "topFace"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x728cd6c47f90fd12
+	// Question: Identify a solid that produces a triangular vertical slice
+	// Widget key: choice_a_visual
+	test("polyhedron-diagram - [x728cd6c47f90fd12] Identify a solid that produces a triangular vertical slice (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 100,
+		      "h": 86.6,
+		      "hypotenuse": 100
+		    },
+		    "type": "triangularPrism",
+		    "length": 160
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x728cd6c47f90fd12
+	// Question: Identify a solid that produces a triangular vertical slice
+	// Widget key: choice_b_visual
+	test("polyhedron-diagram - [x728cd6c47f90fd12] Identify a solid that produces a triangular vertical slice (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 500,
+		    "height": 300,
+		    "length": 100
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x728cd6c47f90fd12
+	// Question: Identify a solid that produces a triangular vertical slice
+	// Widget key: choice_c_visual
+	test("polyhedron-diagram - [x728cd6c47f90fd12] Identify a solid that produces a triangular vertical slice (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 400,
+		    "height": 400,
+		    "length": 140
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x728cd6c47f90fd12
+	// Question: Identify a solid that produces a triangular vertical slice
+	// Widget key: choice_d_visual
+	test("polyhedron-diagram - [x728cd6c47f90fd12] Identify a solid that produces a triangular vertical slice (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 100,
+		      "h": 86.6,
+		      "hypotenuse": 100
+		    },
+		    "type": "triangularPrism",
+		    "length": 120
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa63d03bcdc40499a
+	// Question: Identify a solid from a square cross-section
+	// Widget key: choice_a_solid
+	test("polyhedron-diagram - [xa63d03bcdc40499a] Identify a solid from a square cross-section (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 6,
+		      "h": 5,
+		      "hypotenuse": 7
+		    },
+		    "type": "triangularPrism",
+		    "length": 8
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa63d03bcdc40499a
+	// Question: Identify a solid from a square cross-section
+	// Widget key: choice_b_solid
+	test("polyhedron-diagram - [xa63d03bcdc40499a] Identify a solid from a square cross-section (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 360,
+		    "height": 360,
+		    "length": 6
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa63d03bcdc40499a
+	// Question: Identify a solid from a square cross-section
+	// Widget key: choice_c_solid
+	test("polyhedron-diagram - [xa63d03bcdc40499a] Identify a solid from a square cross-section (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPyramid",
+		    "height": 360,
+		    "baseWidth": 5,
+		    "baseLength": 8
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "baseFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa63d03bcdc40499a
+	// Question: Identify a solid from a square cross-section
+	// Widget key: choice_d_solid
+	test("polyhedron-diagram - [xa63d03bcdc40499a] Identify a solid from a square cross-section (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 6,
+		      "h": 5,
+		      "hypotenuse": 7
+		    },
+		    "type": "triangularPyramid",
+		    "height": 360
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "baseFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc8ec7679f407c09d
+	// Question: Identify the horizontal cross-section of a triangular prism
+	// Widget key: prism_image
+	test("polyhedron-diagram - [xc8ec7679f407c09d] Identify the horizontal cross-section of a triangular prism", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 8,
+		      "h": 6.93,
+		      "hypotenuse": 0.01
+		    },
+		    "type": "triangularPrism",
+		    "length": 12
+		  },
+		  "width": 400,
+		  "height": 340,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -3550,12 +3648,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 1,
-		    "height": 2,
+		    "width": 300,
+		    "height": 360,
 		    "length": 0.25
 		  },
-		  "width": 266,
-		  "height": 331,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "1/4 cm",
@@ -3567,318 +3665,6 @@ describe("polyhedronDiagram widget tests", () => {
 		    },
 		    {
 		      "text": "2 cm",
-		      "target": "height"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3258a97ffdfa1944
-	// Question: Volume of a rectangular prism with fractional edge lengths
-	// Widget key: image_1
-	test("polyhedron-diagram - [x3258a97ffdfa1944] Volume of a rectangular prism with fractional edge lengths", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 5,
-		    "height": 1.4,
-		    "length": 3.5
-		  },
-		  "width": 286.6055555555556,
-		  "height": 165.85555555555555,
-		  "labels": [
-		    {
-		      "text": "7/2 cm",
-		      "target": "length"
-		    },
-		    {
-		      "text": "5 cm",
-		      "target": "width"
-		    },
-		    {
-		      "text": "7/5 cm",
-		      "target": "height"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xdce8742b3cc2fed9
-	// Question: Volume of a rectangular prism
-	// Widget key: image_1
-	test("polyhedron-diagram - [xdce8742b3cc2fed9] Volume of a rectangular prism", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 1.5,
-		    "height": 1.5,
-		    "length": 1.5
-		  },
-		  "width": 441,
-		  "height": 333,
-		  "labels": [
-		    {
-		      "text": "3/2 cm",
-		      "target": "length"
-		    },
-		    {
-		      "text": "3/2 cm",
-		      "target": "width"
-		    },
-		    {
-		      "text": "3/2 cm",
-		      "target": "height"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x133c765d9fac63e4
-	// Question: Volume of a rectangular prism
-	// Widget key: image_1
-	test("polyhedron-diagram - [x133c765d9fac63e4] Volume of a rectangular prism", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 2.6666666667,
-		    "height": 1.2,
-		    "length": 3.75
-		  },
-		  "width": 314,
-		  "height": 152,
-		  "labels": [
-		    {
-		      "text": "15/4 centimeters",
-		      "target": "length"
-		    },
-		    {
-		      "text": "8/3 centimeters",
-		      "target": "width"
-		    },
-		    {
-		      "text": "6/5 centimeters",
-		      "target": "height"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe962cdeef30bf3c7
-	// Question: Volume of a rectangular prism with fractional edge lengths
-	// Widget key: image_1
-	test("polyhedron-diagram - [xe962cdeef30bf3c7] Volume of a rectangular prism with fractional edge lengths", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 1.6666666667,
-		    "height": 1.25,
-		    "length": 2.5
-		  },
-		  "width": 370,
-		  "height": 212,
-		  "labels": [
-		    {
-		      "text": "5/2 cm",
-		      "target": "length"
-		    },
-		    {
-		      "text": "5/3 cm",
-		      "target": "width"
-		    },
-		    {
-		      "text": "5/4 cm",
-		      "target": "height"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xce537f991c8a6ae9
-	// Question: Volume of a rectangular prism with fractional side lengths
-	// Widget key: image_1
-	test("polyhedron-diagram - [xce537f991c8a6ae9] Volume of a rectangular prism with fractional side lengths", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 1.3333333333333,
-		    "height": 0.6,
-		    "length": 3
-		  },
-		  "width": 361,
-		  "height": 145,
-		  "labels": [
-		    {
-		      "text": "3 cm",
-		      "target": "length"
-		    },
-		    {
-		      "text": "4/3 cm",
-		      "target": "width"
-		    },
-		    {
-		      "text": "3/5 cm",
-		      "target": "height"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x66525dfcd6b8cdf2
-	// Question: Find the volume of a rectangular prism
-	// Widget key: image_1
-	test("polyhedron-diagram - [x66525dfcd6b8cdf2] Find the volume of a rectangular prism", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 0.5,
-		    "height": 3,
-		    "length": 0.5
-		  },
-		  "width": 211,
-		  "height": 313,
-		  "labels": [
-		    {
-		      "text": "1/2 cm",
-		      "target": "length"
-		    },
-		    {
-		      "text": "1/2 cm",
-		      "target": "width"
-		    },
-		    {
-		      "text": "3 cm",
 		      "target": "height"
 		    }
 		  ],
@@ -3904,22 +3690,334 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1589e63b96423328
-	// Question: Volume of a rectangular prism with fractional side lengths
+	// Extracted from question: x3258a97ffdfa1944
+	// Question: Volume of a rectangular prism (fractional dimensions)
 	// Widget key: image_1
-	test("polyhedron-diagram - [x1589e63b96423328] Volume of a rectangular prism with fractional side lengths", async () => {
+	test("polyhedron-diagram - [x3258a97ffdfa1944] Volume of a rectangular prism (fractional dimensions)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 0.3333333333333,
-		    "height": 2.5,
+		    "width": 500,
+		    "height": 320,
+		    "length": 3.5
+		  },
+		  "width": 400,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "7 halves centimeters",
+		      "target": "length"
+		    },
+		    {
+		      "text": "5 centimeters",
+		      "target": "width"
+		    },
+		    {
+		      "text": "7 fifths centimeters",
+		      "target": "height"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xdce8742b3cc2fed9
+	// Question: Volume of a rectangular prism with fractional edge lengths
+	// Widget key: image_1
+	test("polyhedron-diagram - [xdce8742b3cc2fed9] Volume of a rectangular prism with fractional edge lengths", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 300,
+		    "height": 333,
+		    "length": 1.5
+		  },
+		  "width": 440,
+		  "height": 333,
+		  "labels": [
+		    {
+		      "text": "3/2 cm",
+		      "target": "length"
+		    },
+		    {
+		      "text": "3/2 cm",
+		      "target": "width"
+		    },
+		    {
+		      "text": "3/2 cm",
+		      "target": "height"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x133c765d9fac63e4
+	// Question: Volume of a rectangular prism with fractional edge lengths
+	// Widget key: image_1
+	test("polyhedron-diagram - [x133c765d9fac63e4] Volume of a rectangular prism with fractional edge lengths", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 300,
+		    "height": 320,
+		    "length": 3.75
+		  },
+		  "width": 400,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "15/4 cm",
+		      "target": "length"
+		    },
+		    {
+		      "text": "8/3 cm",
+		      "target": "width"
+		    },
+		    {
+		      "text": "6/5 cm",
+		      "target": "height"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe962cdeef30bf3c7
+	// Question: Volume of a rectangular prism with fractional edges
+	// Widget key: image_1
+	test("polyhedron-diagram - [xe962cdeef30bf3c7] Volume of a rectangular prism with fractional edges", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 356,
+		    "height": 387,
+		    "length": 2.5
+		  },
+		  "width": 370,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "5/2 cm",
+		      "target": "length"
+		    },
+		    {
+		      "text": "5/3 cm",
+		      "target": "width"
+		    },
+		    {
+		      "text": "5/4 cm",
+		      "target": "height"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xce537f991c8a6ae9
+	// Question: Volume of a rectangular prism
+	// Widget key: image_1
+	test("polyhedron-diagram - [xce537f991c8a6ae9] Volume of a rectangular prism", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 430,
+		    "height": 350,
+		    "length": 3
+		  },
+		  "width": 400,
+		  "height": 300,
+		  "labels": [
+		    {
+		      "text": "3 cm",
+		      "target": "length"
+		    },
+		    {
+		      "text": "4/3 cm",
+		      "target": "width"
+		    },
+		    {
+		      "text": "3/5 cm",
+		      "target": "height"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x66525dfcd6b8cdf2
+	// Question: Volume of a rectangular prism
+	// Widget key: image_1
+	test("polyhedron-diagram - [x66525dfcd6b8cdf2] Volume of a rectangular prism", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 500,
+		    "height": 300,
+		    "length": 0.5
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [
+		    {
+		      "text": "1/2 cm",
+		      "target": "length"
+		    },
+		    {
+		      "text": "1/2 cm",
+		      "target": "width"
+		    },
+		    {
+		      "text": "3 cm",
+		      "target": "height"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1589e63b96423328
+	// Question: Find the volume of a rectangular prism
+	// Widget key: image_1
+	test("polyhedron-diagram - [x1589e63b96423328] Find the volume of a rectangular prism", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 333.3333333333333,
+		    "height": 360,
 		    "length": 0.75
 		  },
-		  "width": 274,
-		  "height": 334,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "3/4 cm",
@@ -3957,38 +4055,38 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x74992be77d260c65
-	// Question: Volume of a rectangular prism
+	// Question: Volume of a rectangular prism (fractional edge lengths)
 	// Widget key: image_1
-	test("polyhedron-diagram - [x74992be77d260c65] Volume of a rectangular prism", async () => {
+	test("polyhedron-diagram - [x74992be77d260c65] Volume of a rectangular prism (fractional edge lengths)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 2.5,
+		    "width": 400,
+		    "height": 360,
 		    "length": 0.5
 		  },
-		  "width": 212,
-		  "height": 260,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
-		      "text": "1/2 cm",
+		      "text": "length = 1/2 cm",
 		      "target": "length"
 		    },
 		    {
-		      "text": "4 cm",
+		      "text": "width = 4 cm",
 		      "target": "width"
 		    },
 		    {
-		      "text": "5/2 cm",
+		      "text": "height = 5/2 cm",
 		      "target": "height"
 		    }
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "rightFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -4009,21 +4107,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa1f7981ec89f721b
-	// Question: Volume of a rectangular prism with fractional edges
+	// Question: Volume of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xa1f7981ec89f721b] Volume of a rectangular prism with fractional edges", async () => {
+	test("polyhedron-diagram - [xa1f7981ec89f721b] Volume of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 0.8,
-		    "height": 3.3333333333333335,
+		    "width": 478.125,
+		    "height": 350,
 		    "length": 0.2
 		  },
-		  "width": 171,
-		  "height": 299,
+		  "width": 400,
+		  "height": 350,
 		  "labels": [
 		    {
 		      "text": "1/5 cm",
@@ -4040,7 +4138,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "height",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -4070,23 +4168,23 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 5,
-		    "height": 0.6666666667,
+		    "width": 500,
+		    "height": 300,
 		    "length": 6
 		  },
-		  "width": 268,
-		  "height": 113,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [
 		    {
-		      "text": "6 cm",
+		      "text": "6 centimeters",
 		      "target": "length"
 		    },
 		    {
-		      "text": "5 cm",
+		      "text": "5 centimeters",
 		      "target": "width"
 		    },
 		    {
-		      "text": "2/3 cm",
+		      "text": "two-thirds centimeter",
 		      "target": "height"
 		    }
 		  ],
@@ -4113,21 +4211,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf6bc8dcc097b8c24
-	// Question: Volume of a rectangular prism
+	// Question: Volume of a rectangular prism with fractional dimensions
 	// Widget key: image_1
-	test("polyhedron-diagram - [xf6bc8dcc097b8c24] Volume of a rectangular prism", async () => {
+	test("polyhedron-diagram - [xf6bc8dcc097b8c24] Volume of a rectangular prism with fractional dimensions", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 1.5,
-		    "height": 0.8,
-		    "length": 1.6666666667
+		    "width": 300,
+		    "height": 300,
+		    "length": 1.6666667
 		  },
-		  "width": 426.0551724137931,
-		  "height": 243.64137931034477,
+		  "width": 426,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "5/3 cm",
@@ -4144,7 +4242,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "topFace",
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -4165,21 +4263,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xcb21fcf50df4c197
-	// Question: Volume of a rectangular prism with fractional edge lengths
+	// Question: Volume of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xcb21fcf50df4c197] Volume of a rectangular prism with fractional edge lengths", async () => {
+	test("polyhedron-diagram - [xcb21fcf50df4c197] Volume of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 1.3333333333333,
-		    "height": 0.6,
+		    "width": 433,
+		    "height": 306,
 		    "length": 1.25
 		  },
-		  "width": 481,
-		  "height": 277,
+		  "width": 480,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "5/4 cm",
@@ -4217,21 +4315,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbb63d46235fed35c
-	// Question: Find the volume of a rectangular prism
+	// Question: Volume of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xbb63d46235fed35c] Find the volume of a rectangular prism", async () => {
+	test("polyhedron-diagram - [xbb63d46235fed35c] Volume of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 3,
-		    "height": 2,
+		    "width": 300,
+		    "height": 320,
 		    "length": 1.75
 		  },
 		  "width": 333,
-		  "height": 280,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "7/4 cm",
@@ -4269,25 +4367,38 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd5439cc7efee0e37
-	// Question: Volume of a rectangular prism with fractional edge lengths
+	// Question: Volume of a rectangular prism with fractional dimensions
 	// Widget key: image_1
-	test("polyhedron-diagram - [xd5439cc7efee0e37] Volume of a rectangular prism with fractional edge lengths", async () => {
+	test("polyhedron-diagram - [xd5439cc7efee0e37] Volume of a rectangular prism with fractional dimensions", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 0.5,
-		    "height": 0.25,
-		    "length": 0.3333333333333333
+		    "width": 377,
+		    "height": 377,
+		    "length": 0.3333333333
 		  },
-		  "width": 500,
-		  "height": 350,
-		  "labels": [],
+		  "width": 420,
+		  "height": 360,
+		  "labels": [
+		    {
+		      "text": "1/3 cm",
+		      "target": "length"
+		    },
+		    {
+		      "text": "1/2 cm",
+		      "target": "width"
+		    },
+		    {
+		      "text": "1/4 cm",
+		      "target": "height"
+		    }
+		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "showHiddenEdges",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -4308,21 +4419,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbd72829280a20752
-	// Question: Volume of a rectangular prism
+	// Question: Find the volume of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xbd72829280a20752] Volume of a rectangular prism", async () => {
+	test("polyhedron-diagram - [xbd72829280a20752] Find the volume of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 2.3333333333333335,
-		    "height": 2,
+		    "width": 370,
+		    "height": 320,
 		    "length": 2
 		  },
 		  "width": 370,
-		  "height": 293,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "2 cm",
@@ -4360,21 +4471,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb177da31522f03a5
-	// Question: Volume of a rectangular prism
+	// Question: Volume of a rectangular prism with fractional dimensions
 	// Widget key: image_1
-	test("polyhedron-diagram - [xb177da31522f03a5] Volume of a rectangular prism", async () => {
+	test("polyhedron-diagram - [xb177da31522f03a5] Volume of a rectangular prism with fractional dimensions", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 0.25,
-		    "height": 1.6666666667,
+		    "width": 500,
+		    "height": 500,
 		    "length": 1.5
 		  },
-		  "width": 426,
-		  "height": 191,
+		  "width": 420,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "3/2 cm",
@@ -4391,7 +4502,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "showHiddenEdges",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -4412,21 +4523,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x920817df002cea53
-	// Question: Volume of a rectangular prism with fractional edge lengths
+	// Question: Volume of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x920817df002cea53] Volume of a rectangular prism with fractional edge lengths", async () => {
+	test("polyhedron-diagram - [x920817df002cea53] Volume of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 1.3333333333333333,
-		    "height": 1.3333333333333333,
-		    "length": 1.3333333333333333
+		    "width": 333.3333333,
+		    "height": 333.3333333,
+		    "length": 1.3333333333
 		  },
-		  "width": 470,
-		  "height": 349,
+		  "width": 470.0944444444445,
+		  "height": 349.34444444444443,
 		  "labels": [
 		    {
 		      "text": "4/3 cm",
@@ -4443,7 +4554,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "topFace",
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -4464,38 +4575,38 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc51a2a99ad044247
-	// Question: Find the volume of a rectangular prism
+	// Question: Volume of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xc51a2a99ad044247] Find the volume of a rectangular prism", async () => {
+	test("polyhedron-diagram - [xc51a2a99ad044247] Volume of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 0.5,
+		    "width": 400,
+		    "height": 500,
 		    "length": 1.5
 		  },
-		  "width": 296,
-		  "height": 178,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
-		      "text": "3/2 cm",
+		      "text": "3 halves centimeters",
 		      "target": "length"
 		    },
 		    {
-		      "text": "4 cm",
+		      "text": "4 centimeters",
 		      "target": "width"
 		    },
 		    {
-		      "text": "1/2 cm",
+		      "text": "1 half centimeter",
 		      "target": "height"
 		    }
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "topFace",
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -4516,21 +4627,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x26398b20d240c550
-	// Question: Volume of a rectangular prism with fractional side lengths
+	// Question: Volume of a rectangular prism with fractional edge lengths
 	// Widget key: image_1
-	test("polyhedron-diagram - [x26398b20d240c550] Volume of a rectangular prism with fractional side lengths", async () => {
+	test("polyhedron-diagram - [x26398b20d240c550] Volume of a rectangular prism with fractional edge lengths", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 0.4,
-		    "height": 0.4,
-		    "length": 0.4
+		    "width": 500,
+		    "height": 350,
+		    "length": 2
 		  },
-		  "width": 480,
-		  "height": 320,
+		  "width": 420,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "2/5 cm",
@@ -4567,61 +4678,22 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x84ef2f7abc8e0f7a
-	// Question: How many edges does the rectangular prism have?
-	// Widget key: image_1
-	test("polyhedron-diagram - [x84ef2f7abc8e0f7a] How many edges does the rectangular prism have?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 10,
-		    "height": 10,
-		    "length": 8
-		  },
-		  "width": 240,
-		  "height": 211,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": null,
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xb42c1ab7c344fe39
-	// Question: How many faces does the rectangular prism have?
+	// Question: Count faces of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xb42c1ab7c344fe39] How many faces does the rectangular prism have?", async () => {
+	test("polyhedron-diagram - [xb42c1ab7c344fe39] Count faces of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 10,
-		    "height": 20,
-		    "length": 8
+		    "width": 500,
+		    "height": 360,
+		    "length": 10
 		  },
-		  "width": 165,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -4646,60 +4718,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x566adeeedd7c7d93
-	// Question: Count the faces of a 3D shape
+	// Question: Count the faces of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x566adeeedd7c7d93] Count the faces of a 3D shape", async () => {
+	test("polyhedron-diagram - [x566adeeedd7c7d93] Count the faces of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 9,
-		    "height": 6,
-		    "length": 7
+		    "width": 500,
+		    "height": 400,
+		    "length": 10
 		  },
-		  "width": 250,
-		  "height": 175,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "none",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf7b8c4c8abf22e3e
-	// Question: How many edges does the shape have?
-	// Widget key: image_1
-	test("polyhedron-diagram - [xf7b8c4c8abf22e3e] How many edges does the shape have?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 14,
-		    "height": 8,
-		    "length": 18
-		  },
-		  "width": 250,
-		  "height": 175,
+		  "width": 400,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -4723,22 +4756,61 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xb85c6cf6c30c2ded
-	// Question: Count edges of a rectangular prism
+	// Extracted from question: xf7b8c4c8abf22e3e
+	// Question: Count the edges of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xb85c6cf6c30c2ded] Count edges of a rectangular prism", async () => {
+	test("polyhedron-diagram - [xf7b8c4c8abf22e3e] Count the edges of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 100,
-		    "height": 210,
-		    "length": 35
+		    "width": 500,
+		    "height": 300,
+		    "length": 12
 		  },
-		  "width": 165,
-		  "height": 240,
+		  "width": 360,
+		  "height": 300,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": null,
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x84ef2f7abc8e0f7a
+	// Question: Count the edges of a rectangular prism
+	// Widget key: image_1
+	test("polyhedron-diagram - [x84ef2f7abc8e0f7a] Count the edges of a rectangular prism", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 500,
+		    "height": 400,
+		    "length": 8
+		  },
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -4763,21 +4835,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x73c2763ff6b72557
-	// Question: Count edges of a rectangular pyramid
+	// Question: Edges of a rectangular pyramid
 	// Widget key: image_1
-	test("polyhedron-diagram - [x73c2763ff6b72557] Count edges of a rectangular pyramid", async () => {
+	test("polyhedron-diagram - [x73c2763ff6b72557] Edges of a rectangular pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 8,
-		    "baseWidth": 6,
+		    "height": 500,
+		    "baseWidth": 8,
 		    "baseLength": 10
 		  },
-		  "width": 300,
-		  "height": 240,
+		  "width": 380,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -4802,24 +4874,66 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2e3afaf619da8b08
-	// Question: How many faces does this shape have?
+	// Question: Count the faces of a triangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x2e3afaf619da8b08] How many faces does this shape have?", async () => {
+	test("polyhedron-diagram - [x2e3afaf619da8b08] Count the faces of a triangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "base": {
-		      "b": 3,
+		      "b": 6,
 		      "h": 4,
-		      "hypotenuse": 5
+		      "hypotenuse": 7
 		    },
 		    "type": "triangularPrism",
-		    "length": 8
+		    "length": 10
 		  },
-		  "width": 280,
-		  "height": 191,
+		  "width": 360,
+		  "height": 320,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "baseFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc80ff425c035f0cf
+	// Question: Number of edges in a triangular prism
+	// Widget key: image_1
+	test("polyhedron-diagram - [xc80ff425c035f0cf] Number of edges in a triangular prism", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 10,
+		      "h": 8,
+		      "hypotenuse": 12
+		    },
+		    "type": "triangularPrism",
+		    "length": 14
+		  },
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -4843,25 +4957,22 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc80ff425c035f0cf
-	// Question: How many edges does this shape have?
+	// Extracted from question: xb85c6cf6c30c2ded
+	// Question: Edges of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xc80ff425c035f0cf] How many edges does this shape have?", async () => {
+	test("polyhedron-diagram - [xb85c6cf6c30c2ded] Edges of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
-		    "base": {
-		      "b": 8,
-		      "h": 6,
-		      "hypotenuse": 10
-		    },
-		    "type": "triangularPrism",
-		    "length": 12
+		    "type": "rectangularPrism",
+		    "width": 500,
+		    "height": 500,
+		    "length": 10
 		  },
-		  "width": 116.757,
-		  "height": 180,
+		  "width": 360,
+		  "height": 420,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -4886,25 +4997,25 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x410135fc76108c69
-	// Question: How many edges does the shape have?
+	// Question: Count edges of a rectangular-based pyramid
 	// Widget key: image_1
-	test("polyhedron-diagram - [x410135fc76108c69] How many edges does the shape have?", async () => {
+	test("polyhedron-diagram - [x410135fc76108c69] Count edges of a rectangular-based pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 9,
-		    "baseWidth": 7,
-		    "baseLength": 10
+		    "height": 309,
+		    "baseWidth": 8,
+		    "baseLength": 12
 		  },
-		  "width": 240,
-		  "height": 136,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -4925,21 +5036,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe8ea55b009b486d5
-	// Question: Count the vertices of a rectangular prism
+	// Question: Count vertices of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xe8ea55b009b486d5] Count the vertices of a rectangular prism", async () => {
+	test("polyhedron-diagram - [xe8ea55b009b486d5] Count vertices of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 10,
-		    "height": 10,
-		    "length": 10
+		    "width": 500,
+		    "height": 400,
+		    "length": 8
 		  },
-		  "width": 240,
-		  "height": 211,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -4964,26 +5075,26 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x152be84756dfcd37
-	// Question: Count the vertices of a rectangular prism
+	// Question: How many vertices does this shape have?
 	// Widget key: image_1
-	test("polyhedron-diagram - [x152be84756dfcd37] Count the vertices of a rectangular prism", async () => {
+	test("polyhedron-diagram - [x152be84756dfcd37] How many vertices does this shape have?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 10,
+		    "width": 500,
+		    "height": 420,
 		    "length": 8
 		  },
-		  "width": 202,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "labels": [],
-		  "segments": null,
+		  "segments": [],
 		  "diagonals": [],
-		  "shadedFace": "none",
-		  "angleMarkers": null,
+		  "shadedFace": "rightFace",
+		  "angleMarkers": [],
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
 
@@ -5003,21 +5114,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x34eb7a8fa2029196
-	// Question: Count faces of a pyramid
+	// Question: Count faces of a rectangular pyramid
 	// Widget key: image_1
-	test("polyhedron-diagram - [x34eb7a8fa2029196] Count faces of a pyramid", async () => {
+	test("polyhedron-diagram - [x34eb7a8fa2029196] Count faces of a rectangular pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 12,
-		    "baseWidth": 6,
+		    "height": 320,
+		    "baseWidth": 7,
 		    "baseLength": 10
 		  },
-		  "width": 196,
-		  "height": 240,
+		  "width": 380,
+		  "height": 420,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -5042,24 +5153,24 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4d6dffcd15aa21fe
-	// Question: Count the vertices of a prism
+	// Question: Count the vertices of a 3D shape
 	// Widget key: image_1
-	test("polyhedron-diagram - [x4d6dffcd15aa21fe] Count the vertices of a prism", async () => {
+	test("polyhedron-diagram - [x4d6dffcd15aa21fe] Count the vertices of a 3D shape", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "base": {
-		      "b": 10,
-		      "h": 6,
-		      "hypotenuse": 11
+		      "b": 8,
+		      "h": 5,
+		      "hypotenuse": 9.4
 		    },
 		    "type": "triangularPrism",
-		    "length": 12
+		    "length": 10
 		  },
-		  "width": 117,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -5084,21 +5195,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x58e1676a80fadbc7
-	// Question: How many vertices does the shape have?
+	// Question: How many vertices does this shape have?
 	// Widget key: image_1
-	test("polyhedron-diagram - [x58e1676a80fadbc7] How many vertices does the shape have?", async () => {
+	test("polyhedron-diagram - [x58e1676a80fadbc7] How many vertices does this shape have?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 8,
+		    "height": 500,
 		    "baseWidth": 6,
-		    "baseLength": 10
+		    "baseLength": 8
 		  },
-		  "width": 240,
-		  "height": 136,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -5123,28 +5234,28 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb016663d49d69aa4
-	// Question: How many edges does the shape have?
+	// Question: Count edges of a 3D shape
 	// Widget key: image_1
-	test("polyhedron-diagram - [xb016663d49d69aa4] How many edges does the shape have?", async () => {
+	test("polyhedron-diagram - [xb016663d49d69aa4] Count edges of a 3D shape", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "base": {
-		      "b": 6,
-		      "h": 8,
+		      "b": 8,
+		      "h": 6,
 		      "hypotenuse": 10
 		    },
 		    "type": "triangularPrism",
 		    "length": 12
 		  },
-		  "width": 280,
-		  "height": 191,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": null,
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -5165,25 +5276,25 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x29fdd95e55936b9d
-	// Question: Count the vertices of a pyramid
+	// Question: Count the vertices of a rectangular pyramid
 	// Widget key: image_1
-	test("polyhedron-diagram - [x29fdd95e55936b9d] Count the vertices of a pyramid", async () => {
+	test("polyhedron-diagram - [x29fdd95e55936b9d] Count the vertices of a rectangular pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 12,
+		    "height": 407.36,
 		    "baseWidth": 8,
 		    "baseLength": 10
 		  },
-		  "width": 196,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "topFace",
+		  "shadedFace": "baseFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -5220,12 +5331,12 @@ describe("polyhedronDiagram widget tests", () => {
 		    "type": "triangularPrism",
 		    "length": 12
 		  },
-		  "width": 350,
-		  "height": 300,
+		  "width": 360,
+		  "height": 400,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": null,
+		  "shadedFace": "baseFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -5255,16 +5366,16 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 7,
-		    "baseWidth": 5,
+		    "height": 400,
+		    "baseWidth": 6,
 		    "baseLength": 8
 		  },
-		  "width": 240,
-		  "height": 136,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
+		  "shadedFace": "showHiddenEdges",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -5294,12 +5405,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 12,
-		    "height": 8,
+		    "width": 304,
+		    "height": 304,
 		    "length": 10
 		  },
-		  "width": 240,
-		  "height": 211,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -5324,28 +5435,28 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd48a461cc9c89f18
-	// Question: Count the vertices of a triangular prism
+	// Question: Count the vertices of a 3D shape
 	// Widget key: image_1
-	test("polyhedron-diagram - [xd48a461cc9c89f18] Count the vertices of a triangular prism", async () => {
+	test("polyhedron-diagram - [xd48a461cc9c89f18] Count the vertices of a 3D shape", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "base": {
-		      "b": 4,
-		      "h": 3,
-		      "hypotenuse": 5
+		      "b": 6,
+		      "h": 4,
+		      "hypotenuse": 7.21
 		    },
 		    "type": "triangularPrism",
-		    "length": 6
+		    "length": 8
 		  },
-		  "width": 280,
-		  "height": 191,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": null,
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -5366,21 +5477,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xef2418627b5b28d2
-	// Question: Find the surface area of a square pyramid from its net
+	// Question: Surface area of a square pyramid from its net
 	// Widget key: image_1
-	test("polyhedron-diagram - [xef2418627b5b28d2] Find the surface area of a square pyramid from its net", async () => {
+	test("polyhedron-diagram - [xef2418627b5b28d2] Surface area of a square pyramid from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 3.122,
+		    "height": 312,
 		    "baseWidth": 5,
 		    "baseLength": 5
 		  },
-		  "width": 240,
-		  "height": 136,
+		  "width": 380,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "5 units",
@@ -5434,9 +5545,22 @@ describe("polyhedronDiagram widget tests", () => {
 		    "type": "triangularPrism",
 		    "length": 7
 		  },
-		  "width": 118.4,
-		  "height": 166.4,
-		  "labels": [],
+		  "width": 360,
+		  "height": 360,
+		  "labels": [
+		    {
+		      "text": "7 units",
+		      "target": "length"
+		    },
+		    {
+		      "text": "4 units",
+		      "target": "height"
+		    },
+		    {
+		      "text": "6 units",
+		      "target": "width"
+		    }
+		  ],
 		  "segments": null,
 		  "diagonals": [],
 		  "shadedFace": "frontFace",
@@ -5469,12 +5593,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 3,
-		    "height": 3,
+		    "width": 398,
+		    "height": 398,
 		    "length": 3
 		  },
-		  "width": 120,
-		  "height": 97,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "3 units",
@@ -5483,7 +5607,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": null,
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -5513,12 +5637,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 1.732,
+		    "height": 311,
 		    "baseWidth": 2,
 		    "baseLength": 2
 		  },
-		  "width": 200,
-		  "height": 191,
+		  "width": 320,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "2 units",
@@ -5535,7 +5659,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
+		  "shadedFace": null,
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -5556,9 +5680,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6bf2799019a4c116
-	// Question: Find the surface area of a right triangular prism from its net
+	// Question: Surface area of a right triangular prism from its net
 	// Widget key: image_1
-	test("polyhedron-diagram - [x6bf2799019a4c116] Find the surface area of a right triangular prism from its net", async () => {
+	test("polyhedron-diagram - [x6bf2799019a4c116] Surface area of a right triangular prism from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5572,8 +5696,8 @@ describe("polyhedronDiagram widget tests", () => {
 		    "type": "triangularPrism",
 		    "length": 11
 		  },
-		  "width": 230.4,
-		  "height": 126.4,
+		  "width": 400,
+		  "height": 300,
 		  "labels": [
 		    {
 		      "text": "11",
@@ -5612,26 +5736,13 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 2,
-		    "height": 3,
+		    "width": 300,
+		    "height": 330,
 		    "length": 7
 		  },
-		  "width": 250,
-		  "height": 171,
-		  "labels": [
-		    {
-		      "text": "7 units",
-		      "target": "length"
-		    },
-		    {
-		      "text": "2 units",
-		      "target": "width"
-		    },
-		    {
-		      "text": "3 units",
-		      "target": "height"
-		    }
-		  ],
+		  "width": 400,
+		  "height": 320,
+		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
 		  "shadedFace": "frontFace",
@@ -5655,9 +5766,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5fe595a08c112276
-	// Question: Surface area of a right triangular prism from its net
+	// Question: Find the surface area of a right triangular prism from its net
 	// Widget key: image_1
-	test("polyhedron-diagram - [x5fe595a08c112276] Surface area of a right triangular prism from its net", async () => {
+	test("polyhedron-diagram - [x5fe595a08c112276] Find the surface area of a right triangular prism from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5671,8 +5782,8 @@ describe("polyhedronDiagram widget tests", () => {
 		    "type": "triangularPrism",
 		    "length": 7
 		  },
-		  "width": 400,
-		  "height": 300,
+		  "width": 380,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -5706,16 +5817,29 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 2,
-		    "height": 2,
+		    "width": 320,
+		    "height": 320,
 		    "length": 2
 		  },
-		  "width": 120,
-		  "height": 96.667,
-		  "labels": [],
+		  "width": 360,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "2 units",
+		      "target": "length"
+		    },
+		    {
+		      "text": "2 units",
+		      "target": "width"
+		    },
+		    {
+		      "text": "2 units",
+		      "target": "height"
+		    }
+		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": null,
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -5745,20 +5869,16 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 3.708,
+		    "height": 368,
 		    "baseWidth": 3,
 		    "baseLength": 3
 		  },
-		  "width": 196,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "3 units",
-		      "target": "length"
-		    },
-		    {
-		      "text": "3 units",
-		      "target": "width"
+		      "target": "baseFace"
 		    },
 		    {
 		      "text": "4 units",
@@ -5767,7 +5887,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "baseFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -5797,16 +5917,16 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 4,
+		    "width": 420,
+		    "height": 420,
 		    "length": 4
 		  },
-		  "width": 120,
-		  "height": 97,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "4 units",
-		      "target": "length"
+		      "target": "height"
 		    }
 		  ],
 		  "segments": null,
@@ -5832,21 +5952,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xdc67de44dab2c3e8
-	// Question: Find the surface area of a rectangular prism from its net
+	// Question: Find the surface area from a rectangular prism net
 	// Widget key: image_1
-	test("polyhedron-diagram - [xdc67de44dab2c3e8] Find the surface area of a rectangular prism from its net", async () => {
+	test("polyhedron-diagram - [xdc67de44dab2c3e8] Find the surface area from a rectangular prism net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 2,
-		    "height": 2,
+		    "width": 380,
+		    "height": 320,
 		    "length": 5
 		  },
-		  "width": 257,
-		  "height": 134,
+		  "width": 380,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "5 units",
@@ -5884,113 +6004,32 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x64f0b3a6c49c33e2
-	// Question: Find the surface area of a rectangular prism from its net
+	// Question: Surface area of a rectangular prism from its net
 	// Widget key: image_1
-	test("polyhedron-diagram - [x64f0b3a6c49c33e2] Find the surface area of a rectangular prism from its net", async () => {
+	test("polyhedron-diagram - [x64f0b3a6c49c33e2] Surface area of a rectangular prism from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 2,
+		    "width": 419,
+		    "height": 420,
 		    "length": 3
 		  },
-		  "width": 248,
-		  "height": 192,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb8c8ec4d70f42920
-	// Question: Find the surface area of a triangular prism from its net
-	// Widget key: image_1
-	test("polyhedron-diagram - [xb8c8ec4d70f42920] Find the surface area of a triangular prism from its net", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "base": {
-		      "b": 6,
-		      "h": 2,
-		      "hypotenuse": 6.3249
-		    },
-		    "type": "triangularPrism",
-		    "length": 7
-		  },
-		  "width": 125,
-		  "height": 166,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcbc3b5f0e2dd746d
-	// Question: Find the surface area of a rectangular prism using its net
-	// Widget key: image_5
-	test("polyhedron-diagram - [xcbc3b5f0e2dd746d] Find the surface area of a rectangular prism using its net", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 2,
-		    "height": 3,
-		    "length": 5
-		  },
-		  "width": 340,
-		  "height": 260,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
-		      "text": "5 units",
+		      "text": "3 units",
 		      "target": "length"
 		    },
 		    {
-		      "text": "2 units",
+		      "text": "4 units",
 		      "target": "width"
 		    },
 		    {
-		      "text": "3 units",
+		      "text": "2 units",
 		      "target": "height"
 		    }
 		  ],
@@ -6016,22 +6055,116 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xca0bf838fcfa3f34
-	// Question: Surface area of a cube from its net
+	// Extracted from question: xb8c8ec4d70f42920
+	// Question: Surface area of a triangular prism from its net
 	// Widget key: image_1
-	test("polyhedron-diagram - [xca0bf838fcfa3f34] Surface area of a cube from its net", async () => {
+	test("polyhedron-diagram - [xb8c8ec4d70f42920] Surface area of a triangular prism from its net", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 6,
+		      "h": 2,
+		      "hypotenuse": 6.3249
+		    },
+		    "type": "triangularPrism",
+		    "length": 7
+		  },
+		  "width": 380,
+		  "height": 340,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcbc3b5f0e2dd746d
+	// Question: Find the surface area of a rectangular prism from its net
+	// Widget key: image_5
+	test("polyhedron-diagram - [xcbc3b5f0e2dd746d] Find the surface area of a rectangular prism from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 5,
-		    "height": 5,
+		    "width": 300,
+		    "height": 300,
 		    "length": 5
 		  },
-		  "width": 120,
-		  "height": 97,
+		  "width": 340,
+		  "height": 300,
+		  "labels": [
+		    {
+		      "text": "2 units",
+		      "target": "width"
+		    },
+		    {
+		      "text": "3 units",
+		      "target": "height"
+		    },
+		    {
+		      "text": "5 units",
+		      "target": "length"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": null,
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xca0bf838fcfa3f34
+	// Question: Find the surface area of a cube from its net
+	// Widget key: image_1
+	test("polyhedron-diagram - [xca0bf838fcfa3f34] Find the surface area of a cube from its net", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 500,
+		    "height": 500,
+		    "length": 5
+		  },
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "5 units",
@@ -6061,25 +6194,29 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x89ece9feb268fdc4
-	// Question: Find the surface area of a square pyramid from its net
+	// Question: Surface area of a square pyramid from its net
 	// Widget key: image_1
-	test("polyhedron-diagram - [x89ece9feb268fdc4] Find the surface area of a square pyramid from its net", async () => {
+	test("polyhedron-diagram - [x89ece9feb268fdc4] Surface area of a square pyramid from its net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 2.236,
+		    "height": 300,
 		    "baseWidth": 4,
 		    "baseLength": 4
 		  },
-		  "width": 240,
-		  "height": 136,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "4 units",
 		      "target": "length"
+		    },
+		    {
+		      "text": "4 units",
+		      "target": "width"
 		    },
 		    {
 		      "text": "3 units",
@@ -6088,59 +6225,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2eb0e2f466977991
-	// Question: How many gas cans to fill a go-kart tank
-	// Widget key: image_1
-	test("polyhedron-diagram - [x2eb0e2f466977991] How many gas cans to fill a go-kart tank", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 25,
-		    "height": 8,
-		    "length": 40
-		  },
-		  "width": 240,
-		  "height": 89.167,
-		  "labels": [
-		    {
-		      "text": "40 cm",
-		      "target": "length"
-		    },
-		    {
-		      "text": "25 cm",
-		      "target": "width"
-		    },
-		    {
-		      "text": "8 cm",
-		      "target": "height"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "topFace",
+		  "shadedFace": null,
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -6161,21 +6246,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0df3ed66f98ce349
-	// Question: Depth of sand in a new terrarium
+	// Question: Depth of sand in a larger terrarium
 	// Widget key: image_1
-	test("polyhedron-diagram - [x0df3ed66f98ce349] Depth of sand in a new terrarium", async () => {
+	test("polyhedron-diagram - [x0df3ed66f98ce349] Depth of sand in a larger terrarium", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 20,
-		    "height": 30,
+		    "width": 300,
+		    "height": 300,
 		    "length": 50
 		  },
-		  "width": 240,
-		  "height": 143,
+		  "width": 400,
+		  "height": 300,
 		  "labels": [
 		    {
 		      "text": "50 cm",
@@ -6208,10 +6293,62 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x5be807a0bb804147
-	// Question: Find the tent's height from its volume
+	// Extracted from question: x2eb0e2f466977991
+	// Question: Fill a go-kart gas tank with 1-liter cans
 	// Widget key: image_1
-	test("polyhedron-diagram - [x5be807a0bb804147] Find the tent's height from its volume", async () => {
+	test("polyhedron-diagram - [x2eb0e2f466977991] Fill a go-kart gas tank with 1-liter cans", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 357,
+		    "height": 493,
+		    "length": 40
+		  },
+		  "width": 360,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "40 cm",
+		      "target": "length"
+		    },
+		    {
+		      "text": "25 cm",
+		      "target": "width"
+		    },
+		    {
+		      "text": "8 cm",
+		      "target": "height"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "baseFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5be807a0bb804147
+	// Question: Find the height of a tent from its volume
+	// Widget key: image_1
+	test("polyhedron-diagram - [x5be807a0bb804147] Find the height of a tent from its volume", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6219,14 +6356,14 @@ describe("polyhedronDiagram widget tests", () => {
 		  "shape": {
 		    "base": {
 		      "b": 1.5,
-		      "h": 1,
-		      "hypotenuse": 1.8
+		      "h": 2,
+		      "hypotenuse": 2.5
 		    },
 		    "type": "triangularPrism",
 		    "length": 3
 		  },
-		  "width": 260,
-		  "height": 208,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "1.5 m",
@@ -6260,21 +6397,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x929dd30d44c04709
-	// Question: Volume not occupied by the eraser
+	// Question: Volume not occupied by an object in a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x929dd30d44c04709] Volume not occupied by the eraser", async () => {
+	test("polyhedron-diagram - [x929dd30d44c04709] Volume not occupied by an object in a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 2,
-		    "height": 0.5,
+		    "width": 300,
+		    "height": 500,
 		    "length": 4
 		  },
-		  "width": 240,
-		  "height": 63,
+		  "width": 400,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "4 cm",
@@ -6291,7 +6428,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "topFace",
+		  "shadedFace": null,
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -6312,89 +6449,36 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x70e9eab964474ea1
-	// Question: Find the volume of a stepped fort
+	// Question: Volume of a stepped fort
 	// Widget key: image_1
-	test("polyhedron-diagram - [x70e9eab964474ea1] Find the volume of a stepped fort", async () => {
+	test("polyhedron-diagram - [x70e9eab964474ea1] Volume of a stepped fort", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 1.5,
-		    "height": 0.75,
-		    "length": 0.5
+		    "width": 300.5,
+		    "height": 300.75,
+		    "length": 1.5
 		  },
-		  "width": 280,
-		  "height": 169,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "1.5 m",
-		      "target": "width"
+		      "target": "length"
 		    },
 		    {
 		      "text": "0.5 m",
-		      "target": "length"
+		      "target": "width"
 		    },
 		    {
 		      "text": "0.75 m",
 		      "target": "height"
 		    }
 		  ],
-		  "segments": [
-		    {
-		      "to": {
-		        "a": 0,
-		        "b": 1,
-		        "t": 0.3333333333,
-		        "type": "edgePoint"
-		      },
-		      "from": {
-		        "type": "vertex",
-		        "index": 0
-		      },
-		      "label": "0.5 m"
-		    },
-		    {
-		      "to": {
-		        "type": "vertex",
-		        "index": 1
-		      },
-		      "from": {
-		        "a": 0,
-		        "b": 1,
-		        "t": 0.3333333333,
-		        "type": "edgePoint"
-		      },
-		      "label": "1 m"
-		    },
-		    {
-		      "to": {
-		        "a": 3,
-		        "b": 2,
-		        "t": 0.3333333333,
-		        "type": "edgePoint"
-		      },
-		      "from": {
-		        "a": 0,
-		        "b": 1,
-		        "t": 0.3333333333,
-		        "type": "edgePoint"
-		      },
-		      "label": "0.5 m"
-		    },
-		    {
-		      "to": {
-		        "type": "vertex",
-		        "index": 2
-		      },
-		      "from": {
-		        "type": "vertex",
-		        "index": 1
-		      },
-		      "label": "0.75 m"
-		    }
-		  ],
+		  "segments": null,
 		  "diagonals": [],
 		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
@@ -6426,24 +6510,20 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 22,
-		    "height": 30,
-		    "length": 5
+		    "width": 300,
+		    "height": 500,
+		    "length": 22
 		  },
-		  "width": 257,
-		  "height": 260,
+		  "width": 400,
+		  "height": 360,
 		  "labels": [
 		    {
-		      "text": "30 cm",
+		      "text": "Top view consists of two rectangles: 30 cm by 10 cm and 12 cm by 10 cm.",
+		      "target": "topFace"
+		    },
+		    {
+		      "text": "Height: 5 cm",
 		      "target": "height"
-		    },
-		    {
-		      "text": "22 cm",
-		      "target": "width"
-		    },
-		    {
-		      "text": "5 cm",
-		      "target": "length"
 		    }
 		  ],
 		  "segments": null,
@@ -6469,9 +6549,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa57b0c3a45753d51
-	// Question: Find the length of a wedge-shaped pillow from its volume
+	// Question: Find the length of a triangular prism (wedge) from its volume
 	// Widget key: image_1
-	test("polyhedron-diagram - [xa57b0c3a45753d51] Find the length of a wedge-shaped pillow from its volume", async () => {
+	test("polyhedron-diagram - [xa57b0c3a45753d51] Find the length of a triangular prism (wedge) from its volume", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6480,69 +6560,27 @@ describe("polyhedronDiagram widget tests", () => {
 		    "base": {
 		      "b": 1,
 		      "h": 0.5,
-		      "hypotenuse": 1.11803398875
+		      "hypotenuse": 1.1180339887
 		    },
 		    "type": "triangularPrism",
-		    "length": 1
+		    "length": 2
 		  },
-		  "width": 300,
-		  "height": 200,
-		  "labels": [],
-		  "segments": [
+		  "width": 360,
+		  "height": 300,
+		  "labels": [
 		    {
-		      "to": {
-		        "type": "vertex",
-		        "index": 1
-		      },
-		      "from": {
-		        "type": "vertex",
-		        "index": 0
-		      },
-		      "label": "1 m"
+		      "text": "1 m",
+		      "target": "frontFace"
 		    },
 		    {
-		      "to": {
-		        "type": "vertex",
-		        "index": 2
-		      },
-		      "from": {
-		        "type": "vertex",
-		        "index": 0
-		      },
-		      "label": "0.5 m"
-		    },
-		    {
-		      "to": {
-		        "type": "vertex",
-		        "index": 2
-		      },
-		      "from": {
-		        "type": "vertex",
-		        "index": 1
-		      },
-		      "label": "?"
+		      "text": "0.5 m",
+		      "target": "frontFace"
 		    }
 		  ],
+		  "segments": null,
 		  "diagonals": [],
 		  "shadedFace": "frontFace",
-		  "angleMarkers": [
-		    {
-		      "at": {
-		        "type": "vertex",
-		        "index": 0
-		      },
-		      "to": {
-		        "type": "vertex",
-		        "index": 2
-		      },
-		      "from": {
-		        "type": "vertex",
-		        "index": 1
-		      },
-		      "type": "right",
-		      "sizePx": 10
-		    }
-		  ],
+		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
 
@@ -6562,21 +6600,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xcdeb572c2c785ebb
-	// Question: Find the volume of a box kite
+	// Question: Volume of a box kite from lateral surface area
 	// Widget key: image_1
-	test("polyhedron-diagram - [xcdeb572c2c785ebb] Find the volume of a box kite", async () => {
+	test("polyhedron-diagram - [xcdeb572c2c785ebb] Volume of a box kite from lateral surface area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 30,
-		    "height": 70,
+		    "width": 308,
+		    "height": 360,
 		    "length": 30
 		  },
-		  "width": 206,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "30 cm",
@@ -6609,42 +6647,30 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xcfa9b7a54cfbf6a1
-	// Question: Find the volume of the steps
+	// Extracted from question: x7f5202907b781860
+	// Question: Find the volume of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xcfa9b7a54cfbf6a1] Find the volume of the steps", async () => {
+	test("polyhedron-diagram - [x7f5202907b781860] Find the volume of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 0.5,
-		    "height": 0.3,
-		    "length": 0.4
+		    "width": 500,
+		    "height": 350,
+		    "length": 3
 		  },
-		  "width": 260,
-		  "height": 178,
+		  "width": 400,
+		  "height": 300,
 		  "labels": [
 		    {
-		      "text": "0.4 m",
-		      "target": "length"
-		    },
-		    {
-		      "text": "0.5 m",
-		      "target": "width"
-		    },
-		    {
-		      "text": "0.3 m",
-		      "target": "height"
-		    },
-		    {
-		      "text": "0.15 m",
+		      "text": "21/2 square units",
 		      "target": "frontFace"
 		    },
 		    {
-		      "text": "0.2 m",
-		      "target": "bottomFace"
+		      "text": "8/3 units",
+		      "target": "length"
 		    }
 		  ],
 		  "segments": null,
@@ -6679,12 +6705,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 1,
-		    "height": 0.6666667,
-		    "length": 1.8
+		    "width": 500,
+		    "height": 300,
+		    "length": 10
 		  },
-		  "width": 270,
-		  "height": 117,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [
 		    {
 		      "text": "9/5 square units",
@@ -6717,54 +6743,6 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7f5202907b781860
-	// Question: Volume of a rectangular prism
-	// Widget key: image_1
-	test("polyhedron-diagram - [x7f5202907b781860] Volume of a rectangular prism", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 5,
-		    "length": 8
-		  },
-		  "width": 250,
-		  "height": 153,
-		  "labels": [
-		    {
-		      "text": "21/2 square units",
-		      "target": "frontFace"
-		    },
-		    {
-		      "text": "8/3 units",
-		      "target": "length"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x727c96fd78fc5080
 	// Question: Volume of a rectangular prism
 	// Widget key: image_1
@@ -6775,12 +6753,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 5,
-		    "height": 4,
-		    "length": 8
+		    "width": 500,
+		    "height": 300,
+		    "length": 10
 		  },
-		  "width": 250,
-		  "height": 98,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [
 		    {
 		      "text": "4 1/2 square units",
@@ -6823,20 +6801,20 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 2,
-		    "length": 3
+		    "width": 320,
+		    "height": 300,
+		    "length": 4
 		  },
-		  "width": 280,
-		  "height": 80,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [
 		    {
-		      "text": "2 and 1 eighth square units",
+		      "text": "2 1/8 square units",
 		      "target": "rightFace"
 		    },
 		    {
 		      "text": "4 units",
-		      "target": "width"
+		      "target": "length"
 		    }
 		  ],
 		  "segments": null,
@@ -6862,28 +6840,28 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf200affad8ace55d
-	// Question: Volume of a rectangular prism
+	// Question: Volume of a rectangular prism with fractional measures
 	// Widget key: image_1
-	test("polyhedron-diagram - [xf200affad8ace55d] Volume of a rectangular prism", async () => {
+	test("polyhedron-diagram - [xf200affad8ace55d] Volume of a rectangular prism with fractional measures", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 5,
-		    "length": 6
+		    "width": 380,
+		    "height": 320,
+		    "length": 4
 		  },
-		  "width": 195,
-		  "height": 200,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [
 		    {
-		      "text": "23/4 square units",
+		      "text": "23/4",
 		      "target": "rightFace"
 		    },
 		    {
-		      "text": "4/3 units",
+		      "text": "4/3",
 		      "target": "length"
 		    }
 		  ],
@@ -6910,21 +6888,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x17814ace06d69e26
-	// Question: Volume of a rectangular prism from base area and height
+	// Question: Volume of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x17814ace06d69e26] Volume of a rectangular prism from base area and height", async () => {
+	test("polyhedron-diagram - [x17814ace06d69e26] Volume of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 3,
-		    "height": 3.6666666667,
+		    "width": 300,
+		    "height": 300,
 		    "length": 3
 		  },
-		  "width": 250,
-		  "height": 176,
+		  "width": 380,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "9 square units",
@@ -6967,16 +6945,16 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 1.5,
-		    "height": 2,
+		    "width": 360,
+		    "height": 300,
 		    "length": 2.25
 		  },
-		  "width": 250,
-		  "height": 147,
+		  "width": 400,
+		  "height": 300,
 		  "labels": [
 		    {
 		      "text": "3 and 3 eighths square units",
-		      "target": "bottomFace"
+		      "target": "baseFace"
 		    },
 		    {
 		      "text": "2 units",
@@ -6985,7 +6963,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "bottomFace",
+		  "shadedFace": "baseFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -7015,12 +6993,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 10,
-		    "length": 4
+		    "width": 500,
+		    "height": 360,
+		    "length": 8
 		  },
-		  "width": 300,
-		  "height": 250,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "27/5 square units",
@@ -7063,26 +7041,26 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 0.6,
-		    "height": 0.25,
-		    "length": 0.6667
+		    "width": 310,
+		    "height": 300,
+		    "length": 3
 		  },
-		  "width": 250,
-		  "height": 197,
+		  "width": 400,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "3/20 square units",
 		      "target": "backFace"
 		    },
 		    {
-		      "text": "2/3 units",
+		      "text": "2/3 unit",
 		      "target": "length"
 		    }
 		  ],
-		  "segments": null,
+		  "segments": [],
 		  "diagonals": [],
 		  "shadedFace": "backFace",
-		  "angleMarkers": null,
+		  "angleMarkers": [],
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
 
@@ -7111,19 +7089,19 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 8,
-		    "height": 8,
-		    "length": 4
+		    "width": 442,
+		    "height": 344,
+		    "length": 6
 		  },
-		  "width": 250,
-		  "height": 154,
+		  "width": 400,
+		  "height": 340,
 		  "labels": [
 		    {
-		      "text": "25/4 square units",
+		      "text": "25 fourths square units",
 		      "target": "backFace"
 		    },
 		    {
-		      "text": "8/5 units",
+		      "text": "8 fifths units",
 		      "target": "length"
 		    }
 		  ],
@@ -7150,25 +7128,25 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe43a3b4361999020
-	// Question: Volume of a rectangular prism
+	// Question: Find the volume of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xe43a3b4361999020] Volume of a rectangular prism", async () => {
+	test("polyhedron-diagram - [xe43a3b4361999020] Find the volume of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 2.5,
-		    "height": 2.1,
-		    "length": 8
+		    "width": 300,
+		    "height": 300,
+		    "length": 3
 		  },
-		  "width": 280,
-		  "height": 122,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [
 		    {
 		      "text": "8 units",
-		      "target": "length"
+		      "target": "width"
 		    },
 		    {
 		      "text": "5 and 1 fourth square units",
@@ -7198,21 +7176,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x731344eea70aee01
-	// Question: Find the volume of a rectangular prism
+	// Question: Find the volume of a rectangular prism from base area and height
 	// Widget key: image_1
-	test("polyhedron-diagram - [x731344eea70aee01] Find the volume of a rectangular prism", async () => {
+	test("polyhedron-diagram - [x731344eea70aee01] Find the volume of a rectangular prism from base area and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 3,
-		    "length": 6
+		    "width": 500,
+		    "height": 335,
+		    "length": 8
 		  },
-		  "width": 250,
-		  "height": 89,
+		  "width": 380,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "16 1/4 square units",
@@ -7246,21 +7224,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5eec4d0ef5b2ecf9
-	// Question: Find the volume of a rectangular prism
+	// Question: Volume of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [x5eec4d0ef5b2ecf9] Find the volume of a rectangular prism", async () => {
+	test("polyhedron-diagram - [x5eec4d0ef5b2ecf9] Volume of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 10,
-		    "height": 3,
-		    "length": 5
+		    "width": 500,
+		    "height": 360,
+		    "length": 8
 		  },
-		  "width": 250,
-		  "height": 160,
+		  "width": 380,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "3 1/3 square units",
@@ -7294,28 +7272,28 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5e20453cc34a266c
-	// Question: Volume of a rectangular prism
+	// Question: Find the volume of a rectangular prism from base area and height
 	// Widget key: image_1
-	test("polyhedron-diagram - [x5e20453cc34a266c] Volume of a rectangular prism", async () => {
+	test("polyhedron-diagram - [x5e20453cc34a266c] Find the volume of a rectangular prism from base area and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 0.5,
-		    "height": 1.75,
-		    "length": 1
+		    "width": 500,
+		    "height": 300,
+		    "length": 8
 		  },
-		  "width": 210,
-		  "height": 220,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
-		      "text": "area = 1/2 square unit",
-		      "target": "bottomFace"
+		      "text": "1/2 square units",
+		      "target": "baseFace"
 		    },
 		    {
-		      "text": "height = 1 3/4 units",
+		      "text": "1 3/4 units",
 		      "target": "height"
 		    }
 		  ],
@@ -7342,24 +7320,24 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb6d9a31a8376ddf6
-	// Question: Volume of a rectangular prism
+	// Question: Volume of a rectangular prism from base area and height
 	// Widget key: image_1
-	test("polyhedron-diagram - [xb6d9a31a8376ddf6] Volume of a rectangular prism", async () => {
+	test("polyhedron-diagram - [xb6d9a31a8376ddf6] Volume of a rectangular prism from base area and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 3.6666666666666665,
-		    "height": 2,
+		    "width": 440,
+		    "height": 300,
 		    "length": 2
 		  },
-		  "width": 250,
-		  "height": 161,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
-		      "text": "7 and 1 third square units",
+		      "text": "7 1/3 square units",
 		      "target": "frontFace"
 		    },
 		    {
@@ -7406,109 +7384,26 @@ describe("polyhedronDiagram widget tests", () => {
 		    "type": "triangularPrism",
 		    "length": 3
 		  },
-		  "width": 320,
-		  "height": 255,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "3 m",
 		      "target": "length"
+		    },
+		    {
+		      "text": "2 m",
+		      "target": "width"
+		    },
+		    {
+		      "text": "1.7 m",
+		      "target": "height"
 		    }
 		  ],
-		  "segments": [
-		    {
-		      "to": {
-		        "type": "vertex",
-		        "index": 2
-		      },
-		      "from": {
-		        "a": 0,
-		        "b": 1,
-		        "type": "edgeMidpoint"
-		      },
-		      "label": "1.7 m"
-		    },
-		    {
-		      "to": {
-		        "a": 0,
-		        "b": 1,
-		        "t": 0.5,
-		        "type": "edgePoint"
-		      },
-		      "from": {
-		        "type": "vertex",
-		        "index": 0
-		      },
-		      "label": "1 m"
-		    },
-		    {
-		      "to": {
-		        "type": "vertex",
-		        "index": 1
-		      },
-		      "from": {
-		        "a": 0,
-		        "b": 1,
-		        "t": 0.5,
-		        "type": "edgePoint"
-		      },
-		      "label": "1 m"
-		    },
-		    {
-		      "to": {
-		        "type": "vertex",
-		        "index": 0
-		      },
-		      "from": {
-		        "type": "vertex",
-		        "index": 2
-		      },
-		      "label": "2 m"
-		    },
-		    {
-		      "to": {
-		        "type": "vertex",
-		        "index": 1
-		      },
-		      "from": {
-		        "type": "vertex",
-		        "index": 2
-		      },
-		      "label": "2 m"
-		    },
-		    {
-		      "to": {
-		        "type": "vertex",
-		        "index": 3
-		      },
-		      "from": {
-		        "type": "vertex",
-		        "index": 0
-		      },
-		      "label": "3 m"
-		    }
-		  ],
+		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": [
-		    {
-		      "at": {
-		        "a": 0,
-		        "b": 1,
-		        "t": 0.5,
-		        "type": "edgePoint"
-		      },
-		      "to": {
-		        "type": "vertex",
-		        "index": 2
-		      },
-		      "from": {
-		        "type": "vertex",
-		        "index": 0
-		      },
-		      "type": "right",
-		      "sizePx": 10
-		    }
-		  ],
+		  "shadedFace": "baseFace",
+		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
 
@@ -7528,21 +7423,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6a92e98e8ade6b1d
-	// Question: Surface area of a cube with a fractional side length
+	// Question: Surface area of a cube with fractional side length
 	// Widget key: image_1
-	test("polyhedron-diagram - [x6a92e98e8ade6b1d] Surface area of a cube with a fractional side length", async () => {
+	test("polyhedron-diagram - [x6a92e98e8ade6b1d] Surface area of a cube with fractional side length", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 0.6666666667,
-		    "height": 0.6666666667,
-		    "length": 0.6666666667
+		    "width": 320,
+		    "height": 300,
+		    "length": 2
 		  },
-		  "width": 250,
-		  "height": 220,
+		  "width": 350,
+		  "height": 300,
 		  "labels": [
 		    {
 		      "text": "2 thirds unit",
@@ -7572,21 +7467,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xcd6d731ccee64048
-	// Question: Surface area of a square pyramid model
+	// Question: Surface area of a square pyramid
 	// Widget key: image_2
-	test("polyhedron-diagram - [xcd6d731ccee64048] Surface area of a square pyramid model", async () => {
+	test("polyhedron-diagram - [xcd6d731ccee64048] Surface area of a square pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 5.292,
+		    "height": 320,
 		    "baseWidth": 12,
 		    "baseLength": 12
 		  },
 		  "width": 320,
-		  "height": 175,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "12 units",
@@ -7640,28 +7535,28 @@ describe("polyhedronDiagram widget tests", () => {
 		    "type": "triangularPrism",
 		    "length": 7
 		  },
-		  "width": 320,
-		  "height": 298,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
-		      "text": "7",
+		      "text": "7 units",
 		      "target": "length"
 		    },
 		    {
-		      "text": "6",
+		      "text": "6 units",
 		      "target": "bottomFace"
 		    },
 		    {
-		      "text": "5",
+		      "text": "5 units",
 		      "target": "leftFace"
 		    },
 		    {
-		      "text": "5",
+		      "text": "5 units",
 		      "target": "rightFace"
 		    },
 		    {
-		      "text": "4",
-		      "target": "frontFace"
+		      "text": "4 units",
+		      "target": "height"
 		    }
 		  ],
 		  "segments": null,
@@ -7696,12 +7591,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 2,
+		    "width": 400,
+		    "height": 300,
 		    "length": 2.5
 		  },
-		  "width": 300,
-		  "height": 243,
+		  "width": 350,
+		  "height": 300,
 		  "labels": [
 		    {
 		      "text": "2.5 units",
@@ -7718,7 +7613,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "topFace",
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -7739,21 +7634,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9e755b31bd1647a7
-	// Question: Find the surface area of a rectangular prism (cereal box)
+	// Question: Surface area of a rectangular prism (cereal box)
 	// Widget key: image_2
-	test("polyhedron-diagram - [x9e755b31bd1647a7] Find the surface area of a rectangular prism (cereal box)", async () => {
+	test("polyhedron-diagram - [x9e755b31bd1647a7] Surface area of a rectangular prism (cereal box)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 25,
+		    "width": 410,
+		    "height": 302,
 		    "length": 15
 		  },
-		  "width": 291,
-		  "height": 320,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "15 cm",
@@ -7791,21 +7686,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xcea16da628b390b9
-	// Question: Find the surface area of a cube
+	// Question: Surface area of a cube
 	// Widget key: image_4
-	test("polyhedron-diagram - [xcea16da628b390b9] Find the surface area of a cube", async () => {
+	test("polyhedron-diagram - [xcea16da628b390b9] Surface area of a cube", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 15,
-		    "height": 15,
+		    "width": 450,
+		    "height": 450,
 		    "length": 15
 		  },
-		  "width": 320,
-		  "height": 256,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "15 cm",
@@ -7852,8 +7747,8 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 5,
-		    "height": 30,
+		    "width": 500,
+		    "height": 300,
 		    "length": 20
 		  },
 		  "width": 304,
@@ -7895,77 +7790,29 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6f3f7f82bc485086
-	// Question: Surface area of a square pyramid model
+	// Question: Surface area of a square pyramid
 	// Widget key: image_2
-	test("polyhedron-diagram - [x6f3f7f82bc485086] Surface area of a square pyramid model", async () => {
+	test("polyhedron-diagram - [x6f3f7f82bc485086] Surface area of a square pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 4.898979486,
+		    "height": 490,
 		    "baseWidth": 10,
 		    "baseLength": 10
 		  },
-		  "width": 320,
-		  "height": 223,
+		  "width": 350,
+		  "height": 350,
 		  "labels": [
 		    {
 		      "text": "10 units",
 		      "target": "length"
 		    },
 		    {
-		      "text": "10 units",
-		      "target": "width"
-		    },
-		    {
 		      "text": "7 units",
 		      "target": "slantHeight"
-		    }
-		  ],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "baseFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xed35cc506326563c
-	// Question: Surface area of a cube
-	// Widget key: image_1
-	test("polyhedron-diagram - [xed35cc506326563c] Surface area of a cube", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 2.5,
-		    "height": 2.5,
-		    "length": 2.5
-		  },
-		  "width": 250,
-		  "height": 220,
-		  "labels": [
-		    {
-		      "text": "2 1/2 units",
-		      "target": "height"
 		    }
 		  ],
 		  "segments": null,
@@ -7990,22 +7837,66 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd85b1c890a2ddcd5
-	// Question: Surface area of a cube
-	// Widget key: image_4
-	test("polyhedron-diagram - [xd85b1c890a2ddcd5] Surface area of a cube", async () => {
+	// Extracted from question: xed35cc506326563c
+	// Question: Find the surface area of a cube
+	// Widget key: image_1
+	test("polyhedron-diagram - [xed35cc506326563c] Find the surface area of a cube", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 20,
-		    "height": 20,
+		    "width": 410,
+		    "height": 320,
+		    "length": 1
+		  },
+		  "width": 400,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "2 1/2 units",
+		      "target": "height"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": null,
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd85b1c890a2ddcd5
+	// Question: Find the surface area of a cube-shaped present
+	// Widget key: image_4
+	test("polyhedron-diagram - [xd85b1c890a2ddcd5] Find the surface area of a cube-shaped present", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 320,
+		    "height": 320,
 		    "length": 20
 		  },
 		  "width": 320,
-		  "height": 256,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "20 cm",
@@ -8043,9 +7934,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfb39038c01eceb5f
-	// Question: Find the surface area of a right triangular prism
+	// Question: Surface area of a right triangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xfb39038c01eceb5f] Find the surface area of a right triangular prism", async () => {
+	test("polyhedron-diagram - [xfb39038c01eceb5f] Surface area of a right triangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8059,8 +7950,8 @@ describe("polyhedronDiagram widget tests", () => {
 		    "type": "triangularPrism",
 		    "length": 11
 		  },
-		  "width": 300,
-		  "height": 210,
+		  "width": 380,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "11 units",
@@ -8107,12 +7998,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 1.5,
+		    "width": 410,
+		    "height": 301.5,
 		    "length": 5
 		  },
-		  "width": 325,
-		  "height": 167,
+		  "width": 400,
+		  "height": 300,
 		  "labels": [
 		    {
 		      "text": "5 units",
@@ -8159,12 +8050,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 3,
-		    "height": 20,
+		    "width": 312,
+		    "height": 302,
 		    "length": 10
 		  },
-		  "width": 269,
-		  "height": 320,
+		  "width": 380,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "10 centimeters",
@@ -8202,39 +8093,62 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x920a99b6bb5fc899
-	// Question: Find the surface area of a square pyramid
+	// Question: Surface area of a square pyramid
 	// Widget key: image_2
-	test("polyhedron-diagram - [x920a99b6bb5fc899] Find the surface area of a square pyramid", async () => {
+	test("polyhedron-diagram - [x920a99b6bb5fc899] Surface area of a square pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 3,
+		    "height": 450,
 		    "baseWidth": 4,
 		    "baseLength": 4
 		  },
-		  "width": 320,
-		  "height": 199,
+		  "width": 340,
+		  "height": 340,
 		  "labels": [
 		    {
 		      "text": "4 units",
 		      "target": "length"
-		    },
-		    {
-		      "text": "4 units",
-		      "target": "width"
-		    },
-		    {
-		      "text": "3 units",
-		      "target": "slantHeight"
 		    }
 		  ],
-		  "segments": null,
+		  "segments": [
+		    {
+		      "to": {
+		        "a": 0,
+		        "b": 1,
+		        "type": "edgeMidpoint"
+		      },
+		      "from": {
+		        "type": "vertex",
+		        "index": 4
+		      },
+		      "label": "3 units"
+		    }
+		  ],
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
-		  "angleMarkers": null,
+		  "shadedFace": "frontFace",
+		  "angleMarkers": [
+		    {
+		      "at": {
+		        "a": 0,
+		        "b": 1,
+		        "type": "edgeMidpoint"
+		      },
+		      "to": {
+		        "type": "vertex",
+		        "index": 1
+		      },
+		      "from": {
+		        "type": "vertex",
+		        "index": 4
+		      },
+		      "type": "right",
+		      "sizePx": 10
+		    }
+		  ],
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
 
@@ -8254,9 +8168,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6f8ee34f57d09299
-	// Question: Find the surface area of a triangular prism (tent)
+	// Question: Surface area of a triangular prism (tent)
 	// Widget key: image_2
-	test("polyhedron-diagram - [x6f8ee34f57d09299] Find the surface area of a triangular prism (tent)", async () => {
+	test("polyhedron-diagram - [x6f8ee34f57d09299] Surface area of a triangular prism (tent)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8270,8 +8184,8 @@ describe("polyhedronDiagram widget tests", () => {
 		    "type": "triangularPrism",
 		    "length": 5
 		  },
-		  "width": 320,
-		  "height": 259,
+		  "width": 400,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "3 m",
@@ -8318,12 +8232,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 3,
+		    "height": 317,
 		    "baseWidth": 8,
 		    "baseLength": 8
 		  },
-		  "width": 320,
-		  "height": 175,
+		  "width": 350,
+		  "height": 350,
 		  "labels": [
 		    {
 		      "text": "8 units",
@@ -8361,21 +8275,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf603ea1b3761a856
-	// Question: Find the surface area of a square pyramid
+	// Question: Surface area of a square pyramid
 	// Widget key: image_2
-	test("polyhedron-diagram - [xf603ea1b3761a856] Find the surface area of a square pyramid", async () => {
+	test("polyhedron-diagram - [xf603ea1b3761a856] Surface area of a square pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 4.472135955,
+		    "height": 450,
 		    "baseWidth": 8,
 		    "baseLength": 8
 		  },
-		  "width": 320,
-		  "height": 199,
+		  "width": 380,
+		  "height": 380,
 		  "labels": [
 		    {
 		      "text": "8 units",
@@ -8388,7 +8302,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -8426,32 +8340,32 @@ describe("polyhedronDiagram widget tests", () => {
 		    "length": 14
 		  },
 		  "width": 320,
-		  "height": 296,
+		  "height": 320,
 		  "labels": [
 		    {
-		      "text": "14",
+		      "text": "14 units",
 		      "target": "length"
 		    },
 		    {
-		      "text": "8",
+		      "text": "12 units",
+		      "target": "width"
+		    },
+		    {
+		      "text": "8 units",
 		      "target": "height"
 		    },
 		    {
-		      "text": "12",
-		      "target": "bottomFace"
-		    },
-		    {
-		      "text": "10",
+		      "text": "10 units",
 		      "target": "leftFace"
 		    },
 		    {
-		      "text": "10",
+		      "text": "10 units",
 		      "target": "rightFace"
 		    }
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "bottomFace",
+		  "shadedFace": "baseFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -8481,23 +8395,23 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 10,
-		    "height": 20.5,
+		    "width": 300,
+		    "height": 300,
 		    "length": 10
 		  },
-		  "width": 350,
-		  "height": 280,
+		  "width": 400,
+		  "height": 360,
 		  "labels": [
 		    {
-		      "text": "length: 10 cm",
+		      "text": "10 cm",
 		      "target": "length"
 		    },
 		    {
-		      "text": "width: 10 cm",
+		      "text": "10 cm",
 		      "target": "width"
 		    },
 		    {
-		      "text": "height: 20.5 cm",
+		      "text": "20.5 cm",
 		      "target": "height"
 		    }
 		  ],
@@ -8533,23 +8447,23 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 8,
-		    "height": 30,
+		    "width": 300,
+		    "height": 300,
 		    "length": 8
 		  },
-		  "width": 350,
-		  "height": 320,
+		  "width": 400,
+		  "height": 420,
 		  "labels": [
 		    {
-		      "text": "length: 8 cm",
+		      "text": "8 cm",
 		      "target": "length"
 		    },
 		    {
-		      "text": "width: 8 cm",
+		      "text": "8 cm",
 		      "target": "width"
 		    },
 		    {
-		      "text": "height: 30 cm",
+		      "text": "30 cm",
 		      "target": "height"
 		    }
 		  ],
@@ -8575,22 +8489,134 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc97e17b110c08c8b
-	// Question: How many days to drink the juice box
+	// Extracted from question: x2303e1e7ce324859
+	// Question: Find the volume of a ring by water displacement
 	// Widget key: image_1
-	test("polyhedron-diagram - [xc97e17b110c08c8b] How many days to drink the juice box", async () => {
+	test("polyhedron-diagram - [x2303e1e7ce324859] Find the volume of a ring by water displacement", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 10.5,
-		    "height": 20,
+		    "width": 320,
+		    "height": 360,
+		    "length": 3
+		  },
+		  "width": 480,
+		  "height": 360,
+		  "labels": [
+		    {
+		      "text": "3 cm",
+		      "target": "length"
+		    },
+		    {
+		      "text": "2 cm",
+		      "target": "width"
+		    },
+		    {
+		      "text": "3.1 cm",
+		      "target": "height"
+		    },
+		    {
+		      "text": "3.7 cm",
+		      "target": "height"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6ed17026d8bfe0bb
+	// Question: Find volume by water displacement
+	// Widget key: image_1
+	test("polyhedron-diagram - [x6ed17026d8bfe0bb] Find volume by water displacement", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 451,
+		    "height": 450,
+		    "length": 7
+		  },
+		  "width": 400,
+		  "height": 320,
+		  "labels": [
+		    {
+		      "text": "7 cm",
+		      "target": "length"
+		    },
+		    {
+		      "text": "4.5 cm",
+		      "target": "width"
+		    },
+		    {
+		      "text": "8.8 cm",
+		      "target": "frontFace"
+		    },
+		    {
+		      "text": "9.2 cm",
+		      "target": "rightFace"
+		    }
+		  ],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc97e17b110c08c8b
+	// Question: How many days to finish the juice box?
+	// Widget key: image_1
+	test("polyhedron-diagram - [xc97e17b110c08c8b] How many days to finish the juice box?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 310.5,
+		    "height": 320,
 		    "length": 15
 		  },
-		  "width": 205,
-		  "height": 249,
+		  "width": 420,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "15 cm",
@@ -8628,21 +8654,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x128d61479e76f540
-	// Question: Compare volumes of two popcorn boxes
+	// Question: Compare volumes of two rectangular prism popcorn boxes
 	// Widget key: image_1
-	test("polyhedron-diagram - [x128d61479e76f540] Compare volumes of two popcorn boxes (1)", async () => {
+	test("polyhedron-diagram - [x128d61479e76f540] Compare volumes of two rectangular prism popcorn boxes (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 10,
-		    "height": 13.5,
+		    "width": 453,
+		    "height": 358,
 		    "length": 10
 		  },
-		  "width": 360,
-		  "height": 280,
+		  "width": 420,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "10 cm",
@@ -8659,7 +8685,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "showHiddenEdges”: true",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -8680,21 +8706,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x128d61479e76f540
-	// Question: Compare volumes of two popcorn boxes
+	// Question: Compare volumes of two rectangular prism popcorn boxes
 	// Widget key: image_2
-	test("polyhedron-diagram - [x128d61479e76f540] Compare volumes of two popcorn boxes (2)", async () => {
+	test("polyhedron-diagram - [x128d61479e76f540] Compare volumes of two rectangular prism popcorn boxes (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 8,
-		    "height": 20,
+		    "width": 453,
+		    "height": 358,
 		    "length": 8
 		  },
-		  "width": 360,
-		  "height": 320,
+		  "width": 420,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "8 cm",
@@ -8711,7 +8737,7 @@ describe("polyhedronDiagram widget tests", () => {
 		  ],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "showHiddenEdges”: true",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -8741,12 +8767,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 10.5,
-		    "height": 30,
+		    "width": 325,
+		    "height": 302,
 		    "length": 20
 		  },
-		  "width": 150,
-		  "height": 260,
+		  "width": 420,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "10 1/2 cm",
@@ -8783,22 +8809,22 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2303e1e7ce324859
-	// Question: Find the volume of a ring from water displacement
+	// Extracted from question: xd9d03a194cdc8ae4
+	// Question: Find volume by water displacement
 	// Widget key: image_1
-	test("polyhedron-diagram - [x2303e1e7ce324859] Find the volume of a ring from water displacement", async () => {
+	test("polyhedron-diagram - [xd9d03a194cdc8ae4] Find volume by water displacement", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 2,
-		    "height": 3.7,
+		    "width": 362,
+		    "height": 468,
 		    "length": 3
 		  },
-		  "width": 502,
-		  "height": 301,
+		  "width": 440,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "3 cm",
@@ -8807,17 +8833,40 @@ describe("polyhedronDiagram widget tests", () => {
 		    {
 		      "text": "2 cm",
 		      "target": "width"
-		    },
-		    {
-		      "text": "3.7 cm",
-		      "target": "height"
-		    },
-		    {
-		      "text": "3.1 cm",
-		      "target": "frontFace"
 		    }
 		  ],
-		  "segments": null,
+		  "segments": [
+		    {
+		      "to": {
+		        "a": 1,
+		        "b": 5,
+		        "t": 0.9411764706,
+		        "type": "edgePoint"
+		      },
+		      "from": {
+		        "a": 0,
+		        "b": 4,
+		        "t": 0.9411764706,
+		        "type": "edgePoint"
+		      },
+		      "label": "4 cm"
+		    },
+		    {
+		      "to": {
+		        "a": 1,
+		        "b": 5,
+		        "t": 1,
+		        "type": "edgePoint"
+		      },
+		      "from": {
+		        "a": 0,
+		        "b": 4,
+		        "t": 1,
+		        "type": "edgePoint"
+		      },
+		      "label": "4.25 cm"
+		    }
+		  ],
 		  "diagonals": [],
 		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
@@ -8840,21 +8889,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb8111de5396058b2
-	// Question: Identify the rectangular prism net
+	// Question: Identify the net of a rectangular prism
 	// Widget key: image_1
-	test("polyhedron-diagram - [xb8111de5396058b2] Identify the rectangular prism net", async () => {
+	test("polyhedron-diagram - [xb8111de5396058b2] Identify the net of a rectangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 5,
-		    "height": 4,
+		    "width": 500,
+		    "height": 400,
 		    "length": 8
 		  },
-		  "width": 150,
-		  "height": 150,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -8890,13 +8939,13 @@ describe("polyhedronDiagram widget tests", () => {
 		    "base": {
 		      "b": 6,
 		      "h": 4,
-		      "hypotenuse": 7.2
+		      "hypotenuse": 7
 		    },
 		    "type": "triangularPrism",
-		    "length": 8
+		    "length": 10
 		  },
-		  "width": 200,
-		  "height": 200,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -8921,21 +8970,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x81677ce01e6fdaad
-	// Question: Identify the 3D shape from a net
-	// Widget key: choice_a_shape
-	test("polyhedron-diagram - [x81677ce01e6fdaad] Identify the 3D shape from a net (2)", async () => {
+	// Question: Identify the shape from a net
+	// Widget key: choice_a_figure
+	test("polyhedron-diagram - [x81677ce01e6fdaad] Identify the shape from a net (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 5,
-		    "length": 9
+		    "width": 500,
+		    "height": 300,
+		    "length": 10
 		  },
-		  "width": 220,
-		  "height": 170,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -8960,21 +9009,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x81677ce01e6fdaad
-	// Question: Identify the 3D shape from a net
-	// Widget key: choice_b_shape
-	test("polyhedron-diagram - [x81677ce01e6fdaad] Identify the 3D shape from a net (3)", async () => {
+	// Question: Identify the shape from a net
+	// Widget key: choice_b_figure
+	test("polyhedron-diagram - [x81677ce01e6fdaad] Identify the shape from a net (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 9,
-		    "baseWidth": 8,
+		    "height": 300,
+		    "baseWidth": 6,
 		    "baseLength": 8
 		  },
-		  "width": 220,
-		  "height": 180,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -8999,9 +9048,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x81677ce01e6fdaad
-	// Question: Identify the 3D shape from a net
-	// Widget key: choice_c_shape
-	test("polyhedron-diagram - [x81677ce01e6fdaad] Identify the 3D shape from a net (4)", async () => {
+	// Question: Identify the shape from a net
+	// Widget key: choice_c_figure
+	test("polyhedron-diagram - [x81677ce01e6fdaad] Identify the shape from a net (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9010,17 +9059,17 @@ describe("polyhedronDiagram widget tests", () => {
 		    "base": {
 		      "b": 6,
 		      "h": 5,
-		      "hypotenuse": 7.8
+		      "hypotenuse": 7
 		    },
 		    "type": "triangularPyramid",
-		    "height": 6
+		    "height": 320
 		  },
-		  "width": 220,
-		  "height": 180,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -9041,24 +9090,24 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x81677ce01e6fdaad
-	// Question: Identify the 3D shape from a net
-	// Widget key: choice_d_shape
-	test("polyhedron-diagram - [x81677ce01e6fdaad] Identify the 3D shape from a net (5)", async () => {
+	// Question: Identify the shape from a net
+	// Widget key: choice_d_figure
+	test("polyhedron-diagram - [x81677ce01e6fdaad] Identify the shape from a net (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "base": {
-		      "b": 3,
+		      "b": 6,
 		      "h": 4,
-		      "hypotenuse": 5
+		      "hypotenuse": 7
 		    },
 		    "type": "triangularPrism",
-		    "length": 8
+		    "length": 10
 		  },
-		  "width": 220,
-		  "height": 170,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -9084,7 +9133,7 @@ describe("polyhedronDiagram widget tests", () => {
 
 	// Extracted from question: x6a3fb181fd601eab
 	// Question: Identify the solid formed by a net
-	// Widget key: choice_a_image
+	// Widget key: choice_a_shape
 	test("polyhedron-diagram - [x6a3fb181fd601eab] Identify the solid formed by a net (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -9092,12 +9141,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 6,
+		    "width": 500,
+		    "height": 500,
 		    "length": 6
 		  },
-		  "width": 220,
-		  "height": 180,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -9123,7 +9172,7 @@ describe("polyhedronDiagram widget tests", () => {
 
 	// Extracted from question: x6a3fb181fd601eab
 	// Question: Identify the solid formed by a net
-	// Widget key: choice_b_image
+	// Widget key: choice_b_shape
 	test("polyhedron-diagram - [x6a3fb181fd601eab] Identify the solid formed by a net (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -9131,12 +9180,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 6,
+		    "height": 500,
 		    "baseWidth": 6,
 		    "baseLength": 6
 		  },
-		  "width": 220,
-		  "height": 180,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -9162,7 +9211,7 @@ describe("polyhedronDiagram widget tests", () => {
 
 	// Extracted from question: x6a3fb181fd601eab
 	// Question: Identify the solid formed by a net
-	// Widget key: choice_c_image
+	// Widget key: choice_c_shape
 	test("polyhedron-diagram - [x6a3fb181fd601eab] Identify the solid formed by a net (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -9170,15 +9219,15 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "base": {
-		      "b": 3,
-		      "h": 4,
+		      "b": 4,
+		      "h": 3,
 		      "hypotenuse": 5
 		    },
 		    "type": "triangularPyramid",
-		    "height": 4
+		    "height": 500
 		  },
-		  "width": 220,
-		  "height": 180,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -9204,7 +9253,7 @@ describe("polyhedronDiagram widget tests", () => {
 
 	// Extracted from question: x6a3fb181fd601eab
 	// Question: Identify the solid formed by a net
-	// Widget key: choice_d_image
+	// Widget key: choice_d_shape
 	test("polyhedron-diagram - [x6a3fb181fd601eab] Identify the solid formed by a net (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -9212,54 +9261,15 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "base": {
-		      "b": 3,
-		      "h": 4,
+		      "b": 4,
+		      "h": 3,
 		      "hypotenuse": 5
 		    },
 		    "type": "triangularPrism",
-		    "length": 6
+		    "length": 8
 		  },
-		  "width": 240,
-		  "height": 200,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xad911af252ca42bf
-	// Question: Identify the net of a cube
-	// Widget key: image_1
-	test("polyhedron-diagram - [xad911af252ca42bf] Identify the net of a cube", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 6,
-		    "length": 6
-		  },
-		  "width": 260,
-		  "height": 220,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -9284,9 +9294,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x033d85774a48004c
-	// Question: Identify the net of a tetrahedron
+	// Question: Identify the net of a triangular pyramid
 	// Widget key: image_1
-	test("polyhedron-diagram - [x033d85774a48004c] Identify the net of a tetrahedron", async () => {
+	test("polyhedron-diagram - [x033d85774a48004c] Identify the net of a triangular pyramid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9294,18 +9304,18 @@ describe("polyhedronDiagram widget tests", () => {
 		  "shape": {
 		    "base": {
 		      "b": 6,
-		      "h": 5,
-		      "hypotenuse": 7
+		      "h": 8,
+		      "hypotenuse": 10
 		    },
 		    "type": "triangularPyramid",
-		    "height": 6
+		    "height": 500
 		  },
-		  "width": 300,
-		  "height": 260,
+		  "width": 380,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "showHiddenEdges",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -9335,12 +9345,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 6,
+		    "width": 500,
+		    "height": 360,
 		    "length": 6
 		  },
-		  "width": 100,
-		  "height": 108,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -9365,21 +9375,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2d009ffa46ca3820
-	// Question: Identify the shape from a net of squares
-	// Widget key: choice_a_shape
-	test("polyhedron-diagram - [x2d009ffa46ca3820] Identify the shape from a net of squares (2)", async () => {
+	// Question: Identify a 3D shape from a net
+	// Widget key: choice_a_image
+	test("polyhedron-diagram - [x2d009ffa46ca3820] Identify a 3D shape from a net (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 9,
+		    "height": 300,
 		    "baseWidth": 8,
-		    "baseLength": 10
+		    "baseLength": 12
 		  },
-		  "width": 150,
-		  "height": 120,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -9404,25 +9414,25 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2d009ffa46ca3820
-	// Question: Identify the shape from a net of squares
-	// Widget key: choice_b_shape
-	test("polyhedron-diagram - [x2d009ffa46ca3820] Identify the shape from a net of squares (3)", async () => {
+	// Question: Identify a 3D shape from a net
+	// Widget key: choice_b_image
+	test("polyhedron-diagram - [x2d009ffa46ca3820] Identify a 3D shape from a net (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 5,
-		    "length": 10
+		    "width": 320,
+		    "height": 300,
+		    "length": 12
 		  },
-		  "width": 150,
-		  "height": 150,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "topFace",
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -9443,25 +9453,25 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2d009ffa46ca3820
-	// Question: Identify the shape from a net of squares
-	// Widget key: choice_d_shape
-	test("polyhedron-diagram - [x2d009ffa46ca3820] Identify the shape from a net of squares (5)", async () => {
+	// Question: Identify a 3D shape from a net
+	// Widget key: choice_d_image
+	test("polyhedron-diagram - [x2d009ffa46ca3820] Identify a 3D shape from a net (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 6,
-		    "length": 6
+		    "width": 320,
+		    "height": 320,
+		    "length": 8
 		  },
-		  "width": 150,
-		  "height": 150,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "topFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -9492,14 +9502,14 @@ describe("polyhedronDiagram widget tests", () => {
 		  "shape": {
 		    "base": {
 		      "b": 6,
-		      "h": 5,
-		      "hypotenuse": 7.81
+		      "h": 4,
+		      "hypotenuse": 7.2
 		    },
 		    "type": "triangularPrism",
 		    "length": 8
 		  },
-		  "width": 150,
-		  "height": 150,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -9524,25 +9534,25 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x29a33987cc70cc98
-	// Question: Identify the shape formed by a net
-	// Widget key: choice_cube_image
-	test("polyhedron-diagram - [x29a33987cc70cc98] Identify the shape formed by a net (2)", async () => {
+	// Question: Identify a solid from its net
+	// Widget key: choice_a_image
+	test("polyhedron-diagram - [x29a33987cc70cc98] Identify a solid from its net (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 6,
+		    "width": 500,
+		    "height": 500,
 		    "length": 6
 		  },
-		  "width": 420,
-		  "height": 340,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": null,
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -9563,48 +9573,9 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x29a33987cc70cc98
-	// Question: Identify the shape formed by a net
-	// Widget key: choice_square_pyramid_image
-	test("polyhedron-diagram - [x29a33987cc70cc98] Identify the shape formed by a net (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPyramid",
-		    "height": 7,
-		    "baseWidth": 6,
-		    "baseLength": 6
-		  },
-		  "width": 420,
-		  "height": 340,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": null,
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x29a33987cc70cc98
-	// Question: Identify the shape formed by a net
-	// Widget key: choice_triangular_pyramid_image
-	test("polyhedron-diagram - [x29a33987cc70cc98] Identify the shape formed by a net (5)", async () => {
+	// Question: Identify a solid from its net
+	// Widget key: choice_c_image
+	test("polyhedron-diagram - [x29a33987cc70cc98] Identify a solid from its net (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9616,14 +9587,53 @@ describe("polyhedronDiagram widget tests", () => {
 		      "hypotenuse": 5
 		    },
 		    "type": "triangularPyramid",
-		    "height": 5
+		    "height": 500
 		  },
-		  "width": 420,
-		  "height": 340,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": null,
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x29a33987cc70cc98
+	// Question: Identify a solid from its net
+	// Widget key: choice_d_image
+	test("polyhedron-diagram - [x29a33987cc70cc98] Identify a solid from its net (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPyramid",
+		    "height": 500,
+		    "baseWidth": 6,
+		    "baseLength": 6
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -9644,21 +9654,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1267d7f8869081ee
-	// Question: Identify the net for an octahedron
+	// Question: Identify the net of an octahedron
 	// Widget key: image_1
-	test("polyhedron-diagram - [x1267d7f8869081ee] Identify the net for an octahedron", async () => {
+	test("polyhedron-diagram - [x1267d7f8869081ee] Identify the net of an octahedron", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 6,
+		    "height": 500,
 		    "baseWidth": 6,
 		    "baseLength": 6
 		  },
-		  "width": 200,
-		  "height": 197,
+		  "width": 380,
+		  "height": 380,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -9692,12 +9702,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 6,
+		    "width": 500,
+		    "height": 500,
 		    "length": 6
 		  },
-		  "width": 200,
-		  "height": 160,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -9731,12 +9741,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 7,
-		    "baseWidth": 6,
+		    "height": 500,
+		    "baseWidth": 8,
 		    "baseLength": 8
 		  },
-		  "width": 200,
-		  "height": 160,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -9771,14 +9781,14 @@ describe("polyhedronDiagram widget tests", () => {
 		  "shape": {
 		    "base": {
 		      "b": 6,
-		      "h": 5,
-		      "hypotenuse": 7
+		      "h": 8,
+		      "hypotenuse": 10
 		    },
 		    "type": "triangularPyramid",
-		    "height": 6
+		    "height": 500
 		  },
-		  "width": 200,
-		  "height": 160,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -9812,16 +9822,16 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 5,
-		    "height": 4,
-		    "length": 9
+		    "width": 500,
+		    "height": 400,
+		    "length": 12
 		  },
-		  "width": 200,
-		  "height": 160,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "topFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -9851,90 +9861,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 5,
-		    "baseWidth": 6,
-		    "baseLength": 6
-		  },
-		  "width": 320,
-		  "height": 220,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x48e04bd47959538d
-	// Question: Identify the solid formed by the net
-	// Widget key: choice_a_shape
-	test("polyhedron-diagram - [x48e04bd47959538d] Identify the solid formed by the net (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 8,
-		    "height": 8,
-		    "length": 8
-		  },
-		  "width": 180,
-		  "height": 150,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x48e04bd47959538d
-	// Question: Identify the solid formed by the net
-	// Widget key: choice_b_shape
-	test("polyhedron-diagram - [x48e04bd47959538d] Identify the solid formed by the net (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPyramid",
-		    "height": 8,
+		    "height": 500,
 		    "baseWidth": 8,
 		    "baseLength": 8
 		  },
-		  "width": 180,
-		  "height": 150,
+		  "width": 380,
+		  "height": 340,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -9959,28 +9891,25 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x48e04bd47959538d
-	// Question: Identify the solid formed by the net
-	// Widget key: choice_c_shape
-	test("polyhedron-diagram - [x48e04bd47959538d] Identify the solid formed by the net (4)", async () => {
+	// Question: Identify the solid formed by a triangular net
+	// Widget key: choice_a_visual
+	test("polyhedron-diagram - [x48e04bd47959538d] Identify the solid formed by a triangular net (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
-		    "base": {
-		      "b": 6,
-		      "h": 4,
-		      "hypotenuse": 7.2
-		    },
-		    "type": "triangularPyramid",
-		    "height": 6
+		    "type": "rectangularPrism",
+		    "width": 420,
+		    "height": 360,
+		    "length": 8
 		  },
-		  "width": 180,
-		  "height": 150,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "showHiddenEdges",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -10001,25 +9930,25 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x48e04bd47959538d
-	// Question: Identify the solid formed by the net
-	// Widget key: choice_d_shape
-	test("polyhedron-diagram - [x48e04bd47959538d] Identify the solid formed by the net (5)", async () => {
+	// Question: Identify the solid formed by a triangular net
+	// Widget key: choice_b_visual
+	test("polyhedron-diagram - [x48e04bd47959538d] Identify the solid formed by a triangular net (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 10,
+		    "height": 360,
 		    "baseWidth": 8,
 		    "baseLength": 8
 		  },
-		  "width": 180,
-		  "height": 150,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "showHiddenEdges",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -10039,88 +9968,10 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x086f122f1f57f437
-	// Question: Identify the shape formed by a net
-	// Widget key: choice_a_shape
-	test("polyhedron-diagram - [x086f122f1f57f437] Identify the shape formed by a net (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 6,
-		    "length": 6
-		  },
-		  "width": 220,
-		  "height": 200,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x086f122f1f57f437
-	// Question: Identify the shape formed by a net
-	// Widget key: choice_b_shape
-	test("polyhedron-diagram - [x086f122f1f57f437] Identify the shape formed by a net (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPyramid",
-		    "height": 10,
-		    "baseWidth": 8,
-		    "baseLength": 8
-		  },
-		  "width": 220,
-		  "height": 200,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "baseFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x086f122f1f57f437
-	// Question: Identify the shape formed by a net
-	// Widget key: choice_c_shape
-	test("polyhedron-diagram - [x086f122f1f57f437] Identify the shape formed by a net (4)", async () => {
+	// Extracted from question: x48e04bd47959538d
+	// Question: Identify the solid formed by a triangular net
+	// Widget key: choice_c_visual
+	test("polyhedron-diagram - [x48e04bd47959538d] Identify the solid formed by a triangular net (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10128,18 +9979,57 @@ describe("polyhedronDiagram widget tests", () => {
 		  "shape": {
 		    "base": {
 		      "b": 6,
-		      "h": 4,
-		      "hypotenuse": 7.2
+		      "h": 5,
+		      "hypotenuse": 7
 		    },
 		    "type": "triangularPyramid",
-		    "height": 7
+		    "height": 360
 		  },
-		  "width": 220,
-		  "height": 200,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "showHiddenEdges",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x48e04bd47959538d
+	// Question: Identify the solid formed by a triangular net
+	// Widget key: choice_d_visual
+	test("polyhedron-diagram - [x48e04bd47959538d] Identify the solid formed by a triangular net (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPyramid",
+		    "height": 360,
+		    "baseWidth": 10,
+		    "baseLength": 10
+		  },
+		  "width": 360,
+		  "height": 320,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "showHiddenEdges",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -10160,222 +10050,102 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x086f122f1f57f437
-	// Question: Identify the shape formed by a net
-	// Widget key: choice_d_shape
-	test("polyhedron-diagram - [x086f122f1f57f437] Identify the shape formed by a net (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "base": {
-		      "b": 6,
-		      "h": 4,
-		      "hypotenuse": 7.2
-		    },
-		    "type": "triangularPrism",
-		    "length": 8
-		  },
-		  "width": 220,
-		  "height": 200,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc02491695ca51567
-	// Question: Identify the solid from a net
-	// Widget key: choice_a_shape
-	test("polyhedron-diagram - [xc02491695ca51567] Identify the solid from a net (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 4,
-		    "length": 4
-		  },
-		  "width": 260,
-		  "height": 200,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc02491695ca51567
-	// Question: Identify the solid from a net
-	// Widget key: choice_b_shape
-	test("polyhedron-diagram - [xc02491695ca51567] Identify the solid from a net (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPyramid",
-		    "height": 6,
-		    "baseWidth": 4,
-		    "baseLength": 6
-		  },
-		  "width": 260,
-		  "height": 200,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc02491695ca51567
-	// Question: Identify the solid from a net
-	// Widget key: choice_c_shape
-	test("polyhedron-diagram - [xc02491695ca51567] Identify the solid from a net (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "base": {
-		      "b": 4,
-		      "h": 4,
-		      "hypotenuse": 5.66
-		    },
-		    "type": "triangularPyramid",
-		    "height": 5
-		  },
-		  "width": 260,
-		  "height": 200,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc02491695ca51567
-	// Question: Identify the solid from a net
-	// Widget key: choice_d_shape
-	test("polyhedron-diagram - [xc02491695ca51567] Identify the solid from a net (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polyhedronDiagram",
-		  "shape": {
-		    "type": "rectangularPyramid",
-		    "height": 6,
-		    "baseWidth": 5,
-		    "baseLength": 5
-		  },
-		  "width": 260,
-		  "height": 200,
-		  "labels": [],
-		  "segments": null,
-		  "diagonals": [],
-		  "shadedFace": "frontFace",
-		  "angleMarkers": null,
-		  "showHiddenEdges": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polyhedronDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1b2d522be1ad518c
 	// Question: Identify the solid from a net
 	// Widget key: choice_a_visual
-	test("polyhedron-diagram - [x1b2d522be1ad518c] Identify the solid from a net (2)", async () => {
+	test("polyhedron-diagram - [x086f122f1f57f437] Identify the solid from a net (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 4,
-		    "length": 10
+		    "width": 445,
+		    "height": 445,
+		    "length": 6
 		  },
-		  "width": 360,
-		  "height": 300,
+		  "width": 420,
+		  "height": 320,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "topFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x086f122f1f57f437
+	// Question: Identify the solid from a net
+	// Widget key: choice_b_visual
+	test("polyhedron-diagram - [x086f122f1f57f437] Identify the solid from a net (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPyramid",
+		    "height": 445,
+		    "baseWidth": 6,
+		    "baseLength": 6
+		  },
+		  "width": 420,
+		  "height": 320,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "baseFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x086f122f1f57f437
+	// Question: Identify the solid from a net
+	// Widget key: choice_c_visual
+	test("polyhedron-diagram - [x086f122f1f57f437] Identify the solid from a net (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 6,
+		      "h": 5,
+		      "hypotenuse": 7
+		    },
+		    "type": "triangularPyramid",
+		    "height": 445
+		  },
+		  "width": 420,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -10399,10 +10169,10 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1b2d522be1ad518c
+	// Extracted from question: x086f122f1f57f437
 	// Question: Identify the solid from a net
-	// Widget key: choice_b_visual
-	test("polyhedron-diagram - [x1b2d522be1ad518c] Identify the solid from a net (3)", async () => {
+	// Widget key: choice_d_visual
+	test("polyhedron-diagram - [x086f122f1f57f437] Identify the solid from a net (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10411,13 +10181,13 @@ describe("polyhedronDiagram widget tests", () => {
 		    "base": {
 		      "b": 6,
 		      "h": 4,
-		      "hypotenuse": 7.21
+		      "hypotenuse": 7.2
 		    },
 		    "type": "triangularPrism",
 		    "length": 8
 		  },
-		  "width": 360,
-		  "height": 300,
+		  "width": 420,
+		  "height": 320,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -10441,21 +10211,183 @@ describe("polyhedronDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1b2d522be1ad518c
-	// Question: Identify the solid from a net
-	// Widget key: choice_c_visual
-	test("polyhedron-diagram - [x1b2d522be1ad518c] Identify the solid from a net (4)", async () => {
+	// Extracted from question: xc02491695ca51567
+	// Question: Identify the solid formed by a net of six squares
+	// Widget key: choice_a_shape
+	test("polyhedron-diagram - [xc02491695ca51567] Identify the solid formed by a net of six squares (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 6,
-		    "height": 6,
+		    "width": 360,
+		    "height": 320,
 		    "length": 6
 		  },
 		  "width": 360,
+		  "height": 320,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc02491695ca51567
+	// Question: Identify the solid formed by a net of six squares
+	// Widget key: choice_b_shape
+	test("polyhedron-diagram - [xc02491695ca51567] Identify the solid formed by a net of six squares (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 3,
+		      "h": 4,
+		      "hypotenuse": 5
+		    },
+		    "type": "triangularPrism",
+		    "length": 6
+		  },
+		  "width": 360,
+		  "height": 320,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc02491695ca51567
+	// Question: Identify the solid formed by a net of six squares
+	// Widget key: choice_c_shape
+	test("polyhedron-diagram - [xc02491695ca51567] Identify the solid formed by a net of six squares (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 3,
+		      "h": 4,
+		      "hypotenuse": 5
+		    },
+		    "type": "triangularPyramid",
+		    "height": 500
+		  },
+		  "width": 360,
+		  "height": 320,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc02491695ca51567
+	// Question: Identify the solid formed by a net of six squares
+	// Widget key: choice_d_shape
+	test("polyhedron-diagram - [xc02491695ca51567] Identify the solid formed by a net of six squares (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPyramid",
+		    "height": 320,
+		    "baseWidth": 6,
+		    "baseLength": 6
+		  },
+		  "width": 360,
+		  "height": 320,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1b2d522be1ad518c
+	// Question: Identify the shape from a net
+	// Widget key: choice_a_shape
+	test("polyhedron-diagram - [x1b2d522be1ad518c] Identify the shape from a net (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 500,
+		    "height": 320,
+		    "length": 10
+		  },
+		  "width": 380,
 		  "height": 300,
 		  "labels": [],
 		  "segments": null,
@@ -10481,20 +10413,101 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1b2d522be1ad518c
-	// Question: Identify the solid from a net
-	// Widget key: choice_d_visual
-	test("polyhedron-diagram - [x1b2d522be1ad518c] Identify the solid from a net (5)", async () => {
+	// Question: Identify the shape from a net
+	// Widget key: choice_b_shape
+	test("polyhedron-diagram - [x1b2d522be1ad518c] Identify the shape from a net (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "base": {
+		      "b": 6,
+		      "h": 4,
+		      "hypotenuse": 7.2
+		    },
+		    "type": "triangularPrism",
+		    "length": 10
+		  },
+		  "width": 380,
+		  "height": 300,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1b2d522be1ad518c
+	// Question: Identify the shape from a net
+	// Widget key: choice_c_shape
+	test("polyhedron-diagram - [x1b2d522be1ad518c] Identify the shape from a net (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polyhedronDiagram",
+		  "shape": {
+		    "type": "rectangularPrism",
+		    "width": 500,
+		    "height": 320,
+		    "length": 7
+		  },
+		  "width": 380,
+		  "height": 300,
+		  "labels": [],
+		  "segments": null,
+		  "diagonals": [],
+		  "shadedFace": "frontFace",
+		  "angleMarkers": null,
+		  "showHiddenEdges": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polyhedronDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1b2d522be1ad518c
+	// Question: Identify the shape from a net
+	// Widget key: choice_d_shape
+	test("polyhedron-diagram - [x1b2d522be1ad518c] Identify the shape from a net (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 7,
-		    "baseWidth": 6,
-		    "baseLength": 8
+		    "height": 320,
+		    "baseWidth": 8,
+		    "baseLength": 10
 		  },
-		  "width": 360,
+		  "width": 380,
 		  "height": 300,
 		  "labels": [],
 		  "segments": null,
@@ -10520,21 +10533,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2b03516c0180b352
-	// Question: Identify the solid formed by a net
-	// Widget key: choice_a_shape
-	test("polyhedron-diagram - [x2b03516c0180b352] Identify the solid formed by a net (2)", async () => {
+	// Question: Identify the solid from a net
+	// Widget key: choice_a_visual
+	test("polyhedron-diagram - [x2b03516c0180b352] Identify the solid from a net (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 7,
-		    "baseWidth": 6,
-		    "baseLength": 6
+		    "height": 310,
+		    "baseWidth": 8,
+		    "baseLength": 8
 		  },
-		  "width": 220,
-		  "height": 180,
+		  "width": 380,
+		  "height": 340,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -10559,21 +10572,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2b03516c0180b352
-	// Question: Identify the solid formed by a net
-	// Widget key: choice_b_shape
-	test("polyhedron-diagram - [x2b03516c0180b352] Identify the solid formed by a net (3)", async () => {
+	// Question: Identify the solid from a net
+	// Widget key: choice_b_visual
+	test("polyhedron-diagram - [x2b03516c0180b352] Identify the solid from a net (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 5,
-		    "height": 4,
-		    "length": 8
+		    "width": 320,
+		    "height": 300,
+		    "length": 12
 		  },
-		  "width": 220,
-		  "height": 180,
+		  "width": 380,
+		  "height": 340,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -10598,25 +10611,25 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2b03516c0180b352
-	// Question: Identify the solid formed by a net
-	// Widget key: choice_d_shape
-	test("polyhedron-diagram - [x2b03516c0180b352] Identify the solid formed by a net (5)", async () => {
+	// Question: Identify the solid from a net
+	// Widget key: choice_d_visual
+	test("polyhedron-diagram - [x2b03516c0180b352] Identify the solid from a net (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 5,
-		    "height": 5,
-		    "length": 5
+		    "width": 320,
+		    "height": 320,
+		    "length": 8
 		  },
-		  "width": 220,
-		  "height": 180,
+		  "width": 380,
+		  "height": 340,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": "topFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -10646,19 +10659,19 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "base": {
-		      "b": 6,
-		      "h": 4,
-		      "hypotenuse": 7.21
+		      "b": 8,
+		      "h": 8,
+		      "hypotenuse": 11.314
 		    },
 		    "type": "triangularPrism",
-		    "length": 10
+		    "length": 14
 		  },
-		  "width": 280,
-		  "height": 191,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": null,
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -10688,16 +10701,16 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 6,
+		    "height": 308,
 		    "baseWidth": 10,
 		    "baseLength": 10
 		  },
-		  "width": 196,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "baseFace",
+		  "shadedFace": "showHiddenEdges",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -10718,24 +10731,24 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0101b8a7f790d8e3
-	// Question: Identify the 3D shape
+	// Question: Identify the three-dimensional shape
 	// Widget key: image_1
-	test("polyhedron-diagram - [x0101b8a7f790d8e3] Identify the 3D shape", async () => {
+	test("polyhedron-diagram - [x0101b8a7f790d8e3] Identify the three-dimensional shape", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "base": {
-		      "b": 6,
-		      "h": 4,
-		      "hypotenuse": 7.21
+		      "b": 80,
+		      "h": 60,
+		      "hypotenuse": 100
 		    },
 		    "type": "triangularPrism",
-		    "length": 12
+		    "length": 160
 		  },
-		  "width": 280,
-		  "height": 191,
+		  "width": 360,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -10769,12 +10782,12 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPyramid",
-		    "height": 6,
+		    "height": 500,
 		    "baseWidth": 10,
 		    "baseLength": 10
 		  },
-		  "width": 240,
-		  "height": 128,
+		  "width": 400,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
@@ -10799,28 +10812,28 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x364ac476cbc6afd1
-	// Question: Identify a 3D shape
+	// Question: Identify the 3D shape
 	// Widget key: image_1
-	test("polyhedron-diagram - [x364ac476cbc6afd1] Identify a 3D shape", async () => {
+	test("polyhedron-diagram - [x364ac476cbc6afd1] Identify the 3D shape", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "base": {
-		      "b": 10,
-		      "h": 5,
-		      "hypotenuse": 11.18
+		      "b": 8,
+		      "h": 6,
+		      "hypotenuse": 10
 		    },
 		    "type": "triangularPrism",
-		    "length": 8
+		    "length": 16
 		  },
 		  "width": 360,
-		  "height": 240,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "topFace",
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -10841,25 +10854,25 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7e223f0eb5b531de
-	// Question: Identify the three-dimensional shape
+	// Question: Identify the 3D shape
 	// Widget key: image_1
-	test("polyhedron-diagram - [x7e223f0eb5b531de] Identify the three-dimensional shape", async () => {
+	test("polyhedron-diagram - [x7e223f0eb5b531de] Identify the 3D shape", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 4,
-		    "height": 8,
-		    "length": 3
+		    "width": 500,
+		    "height": 440,
+		    "length": 8
 		  },
-		  "width": 118,
-		  "height": 238,
+		  "width": 360,
+		  "height": 440,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": "frontFace",
+		  "shadedFace": null,
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -10889,16 +10902,16 @@ describe("polyhedronDiagram widget tests", () => {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 9,
-		    "height": 9,
-		    "length": 3
+		    "width": 408,
+		    "height": 360,
+		    "length": 12
 		  },
-		  "width": 230,
-		  "height": 228,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],
-		  "shadedFace": null,
+		  "shadedFace": "frontFace",
 		  "angleMarkers": null,
 		  "showHiddenEdges": true
 		} as unknown as WidgetInput
@@ -10919,21 +10932,21 @@ describe("polyhedronDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x75391658b3ac288c
-	// Question: Identify the three-dimensional shape
+	// Question: Identify the 3D shape
 	// Widget key: image_1
-	test("polyhedron-diagram - [x75391658b3ac288c] Identify the three-dimensional shape", async () => {
+	test("polyhedron-diagram - [x75391658b3ac288c] Identify the 3D shape", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polyhedronDiagram",
 		  "shape": {
 		    "type": "rectangularPrism",
-		    "width": 14,
-		    "height": 6,
-		    "length": 9
+		    "width": 308,
+		    "height": 302,
+		    "length": 14
 		  },
-		  "width": 230,
-		  "height": 146,
+		  "width": 400,
+		  "height": 300,
 		  "labels": [],
 		  "segments": null,
 		  "diagonals": [],

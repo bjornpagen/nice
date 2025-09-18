@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.941Z
+// Generated on: 2025-09-18T05:17:02.128Z
 // Widget Type: triangleDiagram
 // Source: Real questions from database
 //
@@ -25,23 +25,23 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("triangleDiagram widget tests", () => {
-	// Extracted from question: xfa3483a19f2475a8
+	// Extracted from question: x3ba316a0f429d8ac
 	// Question: Find the measure of angle x
 	// Widget key: image_1
-	test("triangle-diagram - [xfa3483a19f2475a8] Find the measure of angle x", async () => {
+	test("triangle-diagram - [x3ba316a0f429d8ac] Find the measure of angle x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": [
 		    [
-		      "pt_tri_C",
+		      "pt_tri_D",
 		      "pt_tri_A",
-		      "pt_tri_D"
+		      "pt_tri_C"
 		    ]
 		  ],
 		  "width": 462,
-		  "height": 231,
+		  "height": 350,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -64,7 +64,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#1fab54",
 		      "value": {
 		        "type": "numeric",
-		        "value": 123
+		        "value": 114
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": true,
@@ -76,7 +76,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#7854ab",
 		      "value": {
 		        "type": "numeric",
-		        "value": 58
+		        "value": 56
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": true,
@@ -86,6 +86,110 @@ describe("triangleDiagram widget tests", () => {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_B",
 		      "color": "#11accd",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": [
+		    {
+		      "id": "pt_tri_D",
+		      "label": "D"
+		    }
+		  ],
+		  "rightAngleMarks": null,
+		  "constructionLines": [
+		    {
+		      "style": "solid",
+		      "points": [
+		        "pt_tri_D",
+		        "pt_tri_A"
+		      ]
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfa3483a19f2475a8
+	// Question: Measure of an angle in a triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xfa3483a19f2475a8] Measure of an angle in a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": [
+		    [
+		      "pt_tri_C",
+		      "pt_tri_A",
+		      "pt_tri_D"
+		    ]
+		  ],
+		  "width": 420,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_D",
+		      "color": "#e07d10",
+		      "value": {
+		        "type": "numeric",
+		        "value": 123
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 58
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#7854ab",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x"
@@ -130,114 +234,10 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3ba316a0f429d8ac
+	// Extracted from question: xa1bf489902de510b
 	// Question: Find the measure of angle x
 	// Widget key: image_1
-	test("triangle-diagram - [x3ba316a0f429d8ac] Find the measure of angle x", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": [
-		    [
-		      "pt_tri_d",
-		      "pt_tri_a",
-		      "pt_tri_c"
-		    ]
-		  ],
-		  "width": 462,
-		  "height": 231,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_d",
-		      "color": "#1fab54",
-		      "value": {
-		        "type": "numeric",
-		        "value": 114
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#7854ab",
-		      "value": {
-		        "type": "numeric",
-		        "value": 56
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": true,
-		      "showLabel": true
-		    }
-		  ],
-		  "sideLabels": null,
-		  "extraPoints": [
-		    {
-		      "id": "pt_tri_d",
-		      "label": "D"
-		    }
-		  ],
-		  "rightAngleMarks": null,
-		  "constructionLines": [
-		    {
-		      "style": "solid",
-		      "points": [
-		        "pt_tri_d",
-		        "pt_tri_a"
-		      ]
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa1bf489902de510b
-	// Question: Find the measure of an angle in a triangle with an exterior angle
-	// Widget key: image_1
-	test("triangle-diagram - [xa1bf489902de510b] Find the measure of an angle in a triangle with an exterior angle", async () => {
+	test("triangle-diagram - [xa1bf489902de510b] Find the measure of angle x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -246,11 +246,11 @@ describe("triangleDiagram widget tests", () => {
 		    [
 		      "pt_tri_D",
 		      "pt_tri_A",
-		      "pt_tri_C"
+		      "pt_tri_B"
 		    ]
 		  ],
 		  "width": 462,
-		  "height": 231,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -268,9 +268,9 @@ describe("triangleDiagram widget tests", () => {
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_B",
+		      "to": "pt_tri_C",
 		      "from": "pt_tri_D",
-		      "color": "#e07d10",
+		      "color": "#1fab54",
 		      "value": {
 		        "type": "numeric",
 		        "value": 116
@@ -317,7 +317,7 @@ describe("triangleDiagram widget tests", () => {
 		      "style": "solid",
 		      "points": [
 		        "pt_tri_D",
-		        "pt_tri_C"
+		        "pt_tri_A"
 		      ]
 		    }
 		  ]
@@ -348,62 +348,62 @@ describe("triangleDiagram widget tests", () => {
 		  "type": "triangleDiagram",
 		  "lines": [
 		    [
-		      "pt_tri_D1",
-		      "pt_tri_A1",
-		      "pt_tri_C1"
+		      "pt_tri_D",
+		      "pt_tri_A",
+		      "pt_tri_C"
 		    ]
 		  ],
 		  "width": 462,
-		  "height": 231,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A1",
+		      "id": "pt_tri_A",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B1",
+		      "id": "pt_tri_B",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C1",
+		      "id": "pt_tri_C",
 		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_A1",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "color": "#7854ab",
 		      "value": {
 		        "type": "numeric",
 		        "value": 69
 		      },
-		      "vertex": "pt_tri_B1",
+		      "vertex": "pt_tri_B",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_A1",
-		      "from": "pt_tri_B1",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 66
 		      },
-		      "vertex": "pt_tri_C1",
+		      "vertex": "pt_tri_C",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_B1",
-		      "from": "pt_tri_D1",
-		      "color": "#e07d10",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_D",
+		      "color": "#28ae7b",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x"
 		      },
-		      "vertex": "pt_tri_A1",
+		      "vertex": "pt_tri_A",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -411,12 +411,20 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": null,
 		  "extraPoints": [
 		    {
-		      "id": "pt_tri_D1",
+		      "id": "pt_tri_D",
 		      "label": "D"
 		    }
 		  ],
 		  "rightAngleMarks": null,
-		  "constructionLines": null
+		  "constructionLines": [
+		    {
+		      "style": "solid",
+		      "points": [
+		        "pt_tri_D",
+		        "pt_tri_A"
+		      ]
+		    }
+		  ]
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -435,71 +443,71 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x942be985340d5572
-	// Question: Find the measure of an exterior angle of a triangle
+	// Question: Find the measure of an exterior angle
 	// Widget key: image_1
-	test("triangle-diagram - [x942be985340d5572] Find the measure of an exterior angle of a triangle", async () => {
+	test("triangle-diagram - [x942be985340d5572] Find the measure of an exterior angle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": [
 		    [
-		      "pt_tri_d",
-		      "pt_tri_a",
-		      "pt_tri_c"
+		      "pt_tri_D",
+		      "pt_tri_A",
+		      "pt_tri_C"
 		    ]
 		  ],
-		  "width": 462,
-		  "height": 231,
+		  "width": 420,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C",
 		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "color": "#7854ab",
 		      "value": {
 		        "type": "numeric",
 		        "value": 68
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_d",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_D",
 		      "color": "#1fab54",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x"
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -507,7 +515,7 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": null,
 		  "extraPoints": [
 		    {
-		      "id": "pt_tri_d",
+		      "id": "pt_tri_D",
 		      "label": "D"
 		    }
 		  ],
@@ -516,8 +524,8 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "style": "solid",
 		      "points": [
-		        "pt_tri_d",
-		        "pt_tri_a"
+		        "pt_tri_D",
+		        "pt_tri_A"
 		      ]
 		    }
 		  ]
@@ -539,9 +547,9 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3699c9898188d578
-	// Question: Measure of an angle in a triangle with an exterior angle
+	// Question: Find the measure of angle x
 	// Widget key: image_1
-	test("triangle-diagram - [x3699c9898188d578] Measure of an angle in a triangle with an exterior angle", async () => {
+	test("triangle-diagram - [x3699c9898188d578] Find the measure of angle x", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -554,7 +562,7 @@ describe("triangleDiagram widget tests", () => {
 		    ]
 		  ],
 		  "width": 462,
-		  "height": 231,
+		  "height": 301,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
@@ -643,66 +651,66 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x92b7e0165d3e95a0
+	// Extracted from question: x35a7b61a9ad03b10
 	// Question: Find the missing angle in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x92b7e0165d3e95a0] Find the missing angle in a triangle", async () => {
+	test("triangle-diagram - [x35a7b61a9ad03b10] Find the missing angle in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_b",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_c",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_a",
+		      "to": "pt_tri_b",
 		      "from": "pt_tri_c",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x°"
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 102
 		      },
 		      "vertex": "pt_tri_b",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 31
+		        "value": 48
 		      },
 		      "vertex": "pt_tri_c",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 77
-		      },
-		      "vertex": "pt_tri_a",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -728,29 +736,114 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x35a7b61a9ad03b10
-	// Question: Find the missing angle of a triangle
+	// Extracted from question: xbdb372f3c9153078
+	// Question: Find the missing angle in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x35a7b61a9ad03b10] Find the missing angle of a triangle", async () => {
+	test("triangle-diagram - [xbdb372f3c9153078] Find the missing angle in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 300,
-		  "height": 150,
+		  "height": 300,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A1",
+		      "id": "pt_tri_A",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B1",
+		      "id": "pt_tri_B",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C1",
+		      "id": "pt_tri_C",
 		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 20
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 74
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x170a52f4b0dc5e42
+	// Question: Find the value of x in a triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x170a52f4b0dc5e42] Find the value of x in a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A1",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B1",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C1",
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
@@ -760,8 +853,8 @@ describe("triangleDiagram widget tests", () => {
 		      "from": "pt_tri_C1",
 		      "color": "#1f77b4",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
+		        "type": "numeric",
+		        "value": 85
 		      },
 		      "vertex": "pt_tri_A1",
 		      "showArc": true,
@@ -770,10 +863,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C1",
 		      "from": "pt_tri_A1",
-		      "color": "#1f77b4",
+		      "color": "#d62728",
 		      "value": {
-		        "type": "numeric",
-		        "value": 102
+		        "type": "symbolic",
+		        "symbol": "x"
 		      },
 		      "vertex": "pt_tri_B1",
 		      "showArc": true,
@@ -785,7 +878,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 48
+		        "value": 67
 		      },
 		      "vertex": "pt_tri_C1",
 		      "showArc": true,
@@ -813,17 +906,442 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x62445a14f5a0e6c8
+	// Extracted from question: x4852f27f18eca865
 	// Question: Find the value of x in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x62445a14f5a0e6c8] Find the value of x in a triangle", async () => {
+	test("triangle-diagram - [x4852f27f18eca865] Find the value of x in a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#d32f2f",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1976d2",
+		      "value": {
+		        "type": "numeric",
+		        "value": 27
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#1976d2",
+		      "value": {
+		        "type": "numeric",
+		        "value": 98
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa37d765cedad743a
+	// Question: Find the value of x in a triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xa37d765cedad743a] Find the value of x in a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 48
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "color": "#d62728",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 23
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5dd1c5166d5e7031
+	// Question: Find the value of x in a triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x5dd1c5166d5e7031] Find the value of x in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 300,
-		  "height": 150,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x°"
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 33
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 103
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x92ebe1d51aad3c77
+	// Question: Find the missing angle in a triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x92ebe1d51aad3c77] Find the missing angle in a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 300,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 21
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 125
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
+		      "color": "#d62728",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x92b7e0165d3e95a0
+	// Question: Find the missing angle in a triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x92b7e0165d3e95a0] Find the missing angle in a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 300,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x°"
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 31
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_C",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 77
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x62445a14f5a0e6c8
+	// Question: Find the missing angle in a triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x62445a14f5a0e6c8] Find the missing angle in a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 300,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -870,264 +1388,9 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x°"
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": true,
-		      "showLabel": true
-		    }
-		  ],
-		  "sideLabels": null,
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4852f27f18eca865
-	// Question: Find the value of x in a triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x4852f27f18eca865] Find the value of x in a triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 300,
-		  "height": 150,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#cc0000",
-		      "value": {
-		        "type": "symbolic",
 		        "symbol": "x"
 		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "numeric",
-		        "value": 27
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_c",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "numeric",
-		        "value": 98
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": true,
-		      "showLabel": true
-		    }
-		  ],
-		  "sideLabels": null,
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x170a52f4b0dc5e42
-	// Question: Find the value of x in a triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x170a52f4b0dc5e42] Find the value of x in a triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 300,
-		  "height": 150,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 85
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x°"
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 67
-		      },
 		      "vertex": "pt_tri_C",
-		      "showArc": true,
-		      "showLabel": true
-		    }
-		  ],
-		  "sideLabels": null,
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbdb372f3c9153078
-	// Question: Find the value of x in a triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xbdb372f3c9153078] Find the value of x in a triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 300,
-		  "height": 150,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 20
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 74
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "vertex": "pt_tri_c",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -1154,48 +1417,36 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3eba7ba3ece88a27
-	// Question: Find the value of x in a triangle
+	// Question: Find the missing angle in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x3eba7ba3ece88a27] Find the value of x in a triangle", async () => {
+	test("triangle-diagram - [x3eba7ba3ece88a27] Find the missing angle in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 320,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": "A"
+		      "label": ""
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": "B"
+		      "label": ""
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": "C"
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
 		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x°"
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
+		      "from": "pt_tri_A",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 34
@@ -1205,9 +1456,9 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 50
@@ -1215,259 +1466,16 @@ describe("triangleDiagram widget tests", () => {
 		      "vertex": "pt_tri_C",
 		      "showArc": true,
 		      "showLabel": true
-		    }
-		  ],
-		  "sideLabels": null,
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa37d765cedad743a
-	// Question: Find the missing angle in a triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xa37d765cedad743a] Find the missing angle in a triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 300,
-		  "height": 150,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 48
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": true,
-		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x°"
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 23
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": true,
-		      "showLabel": true
-		    }
-		  ],
-		  "sideLabels": null,
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5dd1c5166d5e7031
-	// Question: Find the missing angle of a triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x5dd1c5166d5e7031] Find the missing angle of a triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 300,
-		  "height": 150,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a1",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_b1",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_c1",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_b1",
-		      "color": "#d9534f",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_C",
+		      "color": "#d62728",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x"
 		      },
-		      "vertex": "pt_tri_a1",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_b1",
-		      "from": "pt_tri_a1",
-		      "color": "#337ab7",
-		      "value": {
-		        "type": "numeric",
-		        "value": 33
-		      },
-		      "vertex": "pt_tri_c1",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_a1",
-		      "from": "pt_tri_c1",
-		      "color": "#337ab7",
-		      "value": {
-		        "type": "numeric",
-		        "value": 103
-		      },
-		      "vertex": "pt_tri_b1",
-		      "showArc": true,
-		      "showLabel": true
-		    }
-		  ],
-		  "sideLabels": null,
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x92ebe1d51aad3c77
-	// Question: Find the value of x in a triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x92ebe1d51aad3c77] Find the value of x in a triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 300,
-		  "height": 150,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 21
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 125
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x°"
-		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_A",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -1503,56 +1511,56 @@ describe("triangleDiagram widget tests", () => {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 300,
-		  "height": 150,
+		  "height": 300,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
-		      "label": "A"
+		      "id": "pt_tri_A",
+		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
-		      "label": "B"
+		      "id": "pt_tri_B",
+		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
-		      "label": "C"
+		      "id": "pt_tri_C",
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
 		      "color": "#000000",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x"
+		        "symbol": "x°"
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 27
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 82
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -1587,57 +1595,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 400,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_a",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_b",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_c",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 56
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_b",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 31
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_C",
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_c",
 		      "color": "#000000",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x°"
+		        "symbol": "x"
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_a",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -1673,56 +1681,56 @@ describe("triangleDiagram widget tests", () => {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 300,
-		  "height": 150,
+		  "height": 300,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_a1",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_b1",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_c1",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 45
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_a1",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_a1",
+		      "from": "pt_tri_c1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 56
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_b1",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_b1",
+		      "from": "pt_tri_a1",
+		      "color": "#d62728",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x°"
+		      },
+		      "vertex": "pt_tri_c1",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -1757,57 +1765,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_a1",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_b1",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_c1",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "color": "#d62728",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x"
+		        "symbol": "x°"
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_a1",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
+		      "to": "pt_tri_a1",
+		      "from": "pt_tri_c1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 45
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_b1",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
+		      "to": "pt_tri_b1",
+		      "from": "pt_tri_a1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 27
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_c1",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -1834,51 +1842,39 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x358e0c3dd3dc4841
-	// Question: Find the missing angle in a triangle
+	// Question: Find the missing angle of a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x358e0c3dd3dc4841] Find the missing angle in a triangle", async () => {
+	test("triangle-diagram - [x358e0c3dd3dc4841] Find the missing angle of a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
 		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "from": "pt_tri_B",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 79
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 73
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": true,
@@ -1886,11 +1882,23 @@ describe("triangleDiagram widget tests", () => {
 		    },
 		    {
 		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
+		      "from": "pt_tri_C",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 73
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
 		      "color": "#000000",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x"
+		        "symbol": "x°"
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": true,
@@ -1927,57 +1935,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a1",
-		      "label": ""
+		      "id": "pt_tri_A",
+		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b1",
-		      "label": ""
+		      "id": "pt_tri_B",
+		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c1",
-		      "label": ""
+		      "id": "pt_tri_C",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_b1",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
 		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 27
 		      },
-		      "vertex": "pt_tri_a1",
+		      "vertex": "pt_tri_A",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_a1",
-		      "from": "pt_tri_c1",
-		      "color": "#d62728",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x°"
-		      },
-		      "vertex": "pt_tri_b1",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_b1",
-		      "from": "pt_tri_a1",
-		      "color": "#2ca02c",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 68
 		      },
-		      "vertex": "pt_tri_c1",
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#d62728",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_C",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -2012,57 +2020,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A1",
-		      "label": ""
+		      "id": "pt_tri_a",
+		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B1",
-		      "label": ""
+		      "id": "pt_tri_b",
+		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C1",
-		      "label": ""
+		      "id": "pt_tri_c",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_B1",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
 		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 37
 		      },
-		      "vertex": "pt_tri_A1",
+		      "vertex": "pt_tri_a",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_A1",
-		      "from": "pt_tri_C1",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
 		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 56
 		      },
-		      "vertex": "pt_tri_B1",
+		      "vertex": "pt_tri_b",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_B1",
-		      "from": "pt_tri_A1",
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
 		      "color": "#d62728",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x"
 		      },
-		      "vertex": "pt_tri_C1",
+		      "vertex": "pt_tri_c",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -2089,16 +2097,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6dfe2b035dd88d0d
-	// Question: Find the value of x in a triangle
+	// Question: Find the missing angle in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x6dfe2b035dd88d0d] Find the value of x in a triangle", async () => {
+	test("triangle-diagram - [x6dfe2b035dd88d0d] Find the missing angle in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -2118,10 +2126,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#11accd",
+		      "color": "#000000",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x"
+		        "symbol": "x°"
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": true,
@@ -2130,7 +2138,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#ff991f",
+		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 33
@@ -2142,7 +2150,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#28a745",
+		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 114
@@ -2182,20 +2190,20 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 400,
+		  "height": 350,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": "A"
+		      "label": ""
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": "B"
+		      "label": ""
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": "C"
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
@@ -2203,10 +2211,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "color": "#d62728",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x"
+		        "symbol": "x°"
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": true,
@@ -2215,10 +2223,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 96
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": true,
@@ -2227,10 +2235,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 96
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": true,
@@ -2259,65 +2267,65 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd0e12182ec49198e
-	// Question: Find the value of x in a triangle
+	// Question: Find the missing angle in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xd0e12182ec49198e] Find the value of x in a triangle", async () => {
+	test("triangle-diagram - [xd0e12182ec49198e] Find the missing angle in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A1",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B1",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C1",
 		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 53
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A1",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_C1",
+		      "color": "#2ca02c",
 		      "value": {
 		        "type": "numeric",
 		        "value": 97
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B1",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_A1",
+		      "color": "#d62728",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x"
+		        "symbol": "x°"
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C1",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -2344,16 +2352,101 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x24c2390df4d85ad5
-	// Question: Find the value of x in a triangle
+	// Question: Find the missing angle in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x24c2390df4d85ad5] Find the value of x in a triangle", async () => {
+	test("triangle-diagram - [x24c2390df4d85ad5] Find the missing angle in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#d32f2f",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x°"
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1976d2",
+		      "value": {
+		        "type": "numeric",
+		        "value": 45
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#388e3c",
+		      "value": {
+		        "type": "numeric",
+		        "value": 98
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfb7536f5c3589452
+	// Question: Find the missing angle in a triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xfb7536f5c3589452] Find the missing angle in a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
@@ -2375,22 +2468,10 @@ describe("triangleDiagram widget tests", () => {
 		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x°"
+		        "type": "numeric",
+		        "value": 56
 		      },
 		      "vertex": "pt_tri_a",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 45
-		      },
-		      "vertex": "pt_tri_b",
 		      "showArc": true,
 		      "showLabel": true
 		    },
@@ -2400,7 +2481,104 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 98
+		        "value": 99
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
+		      "color": "#000000",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x341b2c96a3a6d53b
+	// Question: Find the missing angle in a triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x341b2c96a3a6d53b] Find the missing angle in a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 23
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 124
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#d62728",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
 		      },
 		      "vertex": "pt_tri_c",
 		      "showArc": true,
@@ -2428,187 +2606,17 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xfb7536f5c3589452
-	// Question: Find the value of x in a triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xfb7536f5c3589452] Find the value of x in a triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 300,
-		  "height": 150,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 56
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 99
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": true,
-		      "showLabel": true
-		    }
-		  ],
-		  "sideLabels": null,
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x341b2c96a3a6d53b
-	// Question: Find the value of x in a triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x341b2c96a3a6d53b] Find the value of x in a triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 300,
-		  "height": 150,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 23
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 124
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": true,
-		      "showLabel": true
-		    }
-		  ],
-		  "sideLabels": null,
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x734d5ef9475bc867
-	// Question: Find the value of x in a triangle
+	// Question: Find the missing angle in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x734d5ef9475bc867] Find the value of x in a triangle", async () => {
+	test("triangle-diagram - [x734d5ef9475bc867] Find the missing angle in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -2628,7 +2636,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#d61e1e",
+		      "color": "#d9534f",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x"
@@ -2638,26 +2646,26 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#1167b1",
-		      "value": {
-		        "type": "numeric",
-		        "value": 42
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#1167b1",
+		      "color": "#0275d8",
 		      "value": {
 		        "type": "numeric",
 		        "value": 106
 		      },
 		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#5cb85c",
+		      "value": {
+		        "type": "numeric",
+		        "value": 42
+		      },
+		      "vertex": "pt_tri_C",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -2692,20 +2700,20 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
@@ -2723,26 +2731,26 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#2ca02c",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 74
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_C",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#d62728",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x"
+		        "symbol": "x°"
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_B",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -2777,57 +2785,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 400,
+		  "height": 400,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#11accd",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_C",
+		      "color": "#d32f2f",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x"
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#ff9f00",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#1976d2",
 		      "value": {
 		        "type": "numeric",
 		        "value": 47
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#ff5b5b",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#1976d2",
 		      "value": {
 		        "type": "numeric",
 		        "value": 97
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -2854,65 +2862,65 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xfe55103f46b67c19
-	// Question: Find x in a triangle
+	// Question: Find a missing angle in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xfe55103f46b67c19] Find x in a triangle", async () => {
+	test("triangle-diagram - [xfe55103f46b67c19] Find a missing angle in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 300,
-		  "height": 150,
+		  "height": 300,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A1",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B1",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C1",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 112
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A1",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_C1",
 		      "color": "#000000",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x"
+		        "symbol": "x°"
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B1",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_A1",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 19
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C1",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -2939,65 +2947,65 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x1b63cf986c819127
-	// Question: Find the missing angle in a triangle
+	// Question: Find the value of x in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x1b63cf986c819127] Find the missing angle in a triangle", async () => {
+	test("triangle-diagram - [x1b63cf986c819127] Find the value of x in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 400,
+		  "height": 350,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 29
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 109
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#d62728",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x"
+		        "symbol": "x°"
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -3024,28 +3032,28 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc510850c42f3e537
-	// Question: Find the value of x in a triangle
+	// Question: Find the missing angle in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xc510850c42f3e537] Find the value of x in a triangle", async () => {
+	test("triangle-diagram - [xc510850c42f3e537] Find the missing angle in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 150,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
@@ -3109,39 +3117,39 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3a7bba484359fa4a
-	// Question: Find the value of x in a triangle
+	// Question: Find the missing angle in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x3a7bba484359fa4a] Find the value of x in a triangle", async () => {
+	test("triangle-diagram - [x3a7bba484359fa4a] Find the missing angle in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 300,
-		  "height": 150,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": "A"
+		      "label": ""
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": "B"
+		      "label": ""
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": "C"
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_C",
-		      "color": "#d32f2f",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#d00",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x°"
+		        "symbol": "x"
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": true,
@@ -3150,22 +3158,22 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_A",
-		      "color": "#1976d2",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 37
+		        "value": 56
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#1976d2",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 56
+		        "value": 37
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": true,
@@ -3193,29 +3201,229 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc8181889c8194cd7
+	// Extracted from question: xc7a58ae19278f258
 	// Question: Range of possible lengths for a triangle side
 	// Widget key: image_1
-	test("triangle-diagram - [xc8181889c8194cd7] Range of possible lengths for a triangle side", async () => {
+	test("triangle-diagram - [xc7a58ae19278f258] Range of possible lengths for a triangle side", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 220,
-		  "height": 180,
+		  "width": 360,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A1",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B1",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C1",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 80
+		      },
+		      "vertex": "pt_tri_A1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_C1",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_B1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_A1",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_C1",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "mathml",
+		      "value": 4,
+		      "mathml": "<mn>4.0</mn>"
+		    },
+		    "BC": {
+		      "type": "mathml",
+		      "value": 8,
+		      "mathml": "<mn>8.0</mn>"
+		    },
+		    "CA": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe1886d33da47f328
+	// Question: Range of possible lengths for a triangle side
+	// Widget key: image_1
+	test("triangle-diagram - [xe1886d33da47f328] Range of possible lengths for a triangle side", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A1",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B1",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C1",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_A1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_C1",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_B1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_A1",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_C1",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "mathml",
+		      "value": 8,
+		      "mathml": "<mn>8.0</mn>"
+		    },
+		    "BC": {
+		      "type": "mathml",
+		      "value": 8.8,
+		      "mathml": "<mn>8.8</mn>"
+		    },
+		    "CA": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc8181889c8194cd7
+	// Question: Range of possible lengths for side x
+	// Widget key: image_1
+	test("triangle-diagram - [xc8181889c8194cd7] Range of possible lengths for side x", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 330,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
@@ -3299,275 +3507,79 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2dd1602a6f6b9915
-	// Question: Range of a triangle side using the triangle inequality
+	// Question: Range of possible lengths for a triangle side
 	// Widget key: image_1
-	test("triangle-diagram - [x2dd1602a6f6b9915] Range of a triangle side using the triangle inequality", async () => {
+	test("triangle-diagram - [x2dd1602a6f6b9915] Range of possible lengths for a triangle side", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 320,
-		  "height": 140,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
-		      "label": " "
+		      "id": "pt_tri_a1",
+		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
-		      "label": " "
+		      "id": "pt_tri_b1",
+		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
-		      "label": " "
+		      "id": "pt_tri_c1",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 50
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_a1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_a1",
+		      "from": "pt_tri_c1",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_b1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b1",
+		      "from": "pt_tri_a1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
-		      "type": "numeric",
-		      "value": 5.6
+		      "type": "mathml",
+		      "value": 5.6,
+		      "mathml": "<mn>5.6</mn>"
 		    },
 		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 4
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc7a58ae19278f258
-	// Question: Range of possible lengths for a triangle side
-	// Widget key: image_1
-	test("triangle-diagram - [xc7a58ae19278f258] Range of possible lengths for a triangle side", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 240,
-		  "height": 220,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 80
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 70
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 30
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
 		      "type": "mathml",
 		      "value": 4,
 		      "mathml": "<mn>4.0</mn>"
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
-		      "type": "mathml",
-		      "value": 8,
-		      "mathml": "<mn>8.0</mn>"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe1886d33da47f328
-	// Question: Find the range of a triangle side length
-	// Widget key: image_1
-	test("triangle-diagram - [xe1886d33da47f328] Find the range of a triangle side length", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 200,
-		  "height": 180,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 70
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 8
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 8.8
 		    },
 		    "CA": {
 		      "type": "symbolic",
@@ -3595,65 +3607,65 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb77cc9caf3662e1d
-	// Question: Range of possible lengths for side x
+	// Question: Find the range of a triangle side length
 	// Widget key: image_1
-	test("triangle-diagram - [xb77cc9caf3662e1d] Range of possible lengths for side x", async () => {
+	test("triangle-diagram - [xb77cc9caf3662e1d] Find the range of a triangle side length", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 280,
-		  "height": 260,
+		  "width": 320,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_a1",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_b1",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_c1",
 		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#0000ff",
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 35
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_a1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#0000ff",
+		      "to": "pt_tri_a1",
+		      "from": "pt_tri_c1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_b1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#0000ff",
+		      "to": "pt_tri_b1",
+		      "from": "pt_tri_a1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 80
+		        "value": 85
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -3661,11 +3673,11 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
-		      "value": 1.3
+		      "value": 4.1
 		    },
 		    "BC": {
 		      "type": "numeric",
-		      "value": 4.1
+		      "value": 1.3
 		    },
 		    "CA": {
 		      "type": "symbolic",
@@ -3693,83 +3705,81 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0563d1a13da7ea06
-	// Question: Range of possible lengths for a triangle side
+	// Question: Triangle inequality: range of a side length
 	// Widget key: image_1
-	test("triangle-diagram - [x0563d1a13da7ea06] Range of possible lengths for a triangle side", async () => {
+	test("triangle-diagram - [x0563d1a13da7ea06] Triangle inequality: range of a side length", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 320,
-		  "height": 220,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a1",
+		      "id": "pt_tri_A",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b1",
+		      "id": "pt_tri_B",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c1",
+		      "id": "pt_tri_C",
 		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_b1",
-		      "color": "#555555",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 100
+		        "value": 80
 		      },
-		      "vertex": "pt_tri_a1",
+		      "vertex": "pt_tri_A",
 		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a1",
-		      "from": "pt_tri_c1",
-		      "color": "#555555",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 40
 		      },
-		      "vertex": "pt_tri_b1",
+		      "vertex": "pt_tri_B",
 		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b1",
-		      "from": "pt_tri_a1",
-		      "color": "#555555",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 30
+		        "value": 60
 		      },
-		      "vertex": "pt_tri_c1",
+		      "vertex": "pt_tri_C",
 		      "showArc": true,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "x"
+		      "type": "numeric",
+		      "value": 2.7
 		    },
 		    "BC": {
-		      "type": "mathml",
-		      "value": 4,
-		      "mathml": "<mn>4.0</mn>"
+		      "type": "numeric",
+		      "value": 4
 		    },
 		    "CA": {
-		      "type": "mathml",
-		      "value": 2.7,
-		      "mathml": "<mn>2.7</mn>"
+		      "type": "symbolic",
+		      "symbol": "x"
 		    }
 		  },
 		  "extraPoints": null,
@@ -3801,20 +3811,20 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 240,
-		  "height": 280,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": "A"
+		      "label": ""
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": "B"
+		      "label": ""
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": "C"
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
@@ -3822,10 +3832,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 30
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": false,
@@ -3834,10 +3844,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 70
+		        "value": 80
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
@@ -3846,10 +3856,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 70
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -3858,12 +3868,14 @@ describe("triangleDiagram widget tests", () => {
 		  ],
 		  "sideLabels": {
 		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "2.5"
+		      "type": "mathml",
+		      "value": 8,
+		      "mathml": "<mn>8.0</mn>"
 		    },
 		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "8.0"
+		      "type": "mathml",
+		      "value": 2.5,
+		      "mathml": "<mn>2.5</mn>"
 		    },
 		    "CA": {
 		      "type": "symbolic",
@@ -3891,81 +3903,81 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4cf004b4e4afc5f9
-	// Question: Range of possible lengths for side x
+	// Question: Range of possible lengths for a triangle side
 	// Widget key: image_1
-	test("triangle-diagram - [x4cf004b4e4afc5f9] Range of possible lengths for side x", async () => {
+	test("triangle-diagram - [x4cf004b4e4afc5f9] Range of possible lengths for a triangle side", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 160,
-		  "height": 260,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
+		      "id": "pt_tri_A",
+		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
+		      "id": "pt_tri_B",
+		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
+		      "id": "pt_tri_C",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 50
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 100
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 80
+		        "value": 30
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "showArc": false,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
-		      "type": "numeric",
-		      "value": 8.5
+		      "type": "symbolic",
+		      "symbol": "x"
 		    },
 		    "BC": {
 		      "type": "numeric",
 		      "value": 8
 		    },
 		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
+		      "type": "numeric",
+		      "value": 8.5
 		    }
 		  },
 		  "extraPoints": null,
@@ -3989,28 +4001,28 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3b85f9ac8899b2be
-	// Question: Range of side length using the triangle inequality
+	// Question: Range of possible lengths of a triangle side
 	// Widget key: image_1
-	test("triangle-diagram - [x3b85f9ac8899b2be] Range of side length using the triangle inequality", async () => {
+	test("triangle-diagram - [x3b85f9ac8899b2be] Range of possible lengths of a triangle side", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 280,
-		  "height": 140,
+		  "width": 320,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
@@ -4018,10 +4030,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#888",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 65
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": false,
@@ -4030,10 +4042,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#888",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 65
+		        "value": 60
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
@@ -4042,10 +4054,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#888",
+		      "color": "#1f77b4",
 		      "value": {
-		        "type": "numeric",
-		        "value": 50
+		        "type": "symbolic",
+		        "symbol": "θ"
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -4087,16 +4099,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc7c865b21dbdd757
-	// Question: Range of a triangle side length
+	// Question: Range of possible lengths for a triangle side
 	// Widget key: image_1
-	test("triangle-diagram - [xc7c865b21dbdd757] Range of a triangle side length", async () => {
+	test("triangle-diagram - [xc7c865b21dbdd757] Range of possible lengths for a triangle side", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 240,
-		  "height": 180,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -4116,52 +4128,54 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#3366cc",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 70
+		        "value": 72
 		      },
 		      "vertex": "pt_tri_A",
-		      "showArc": true,
+		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#3366cc",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 70
+		        "value": 42
 		      },
 		      "vertex": "pt_tri_B",
-		      "showArc": true,
+		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#3366cc",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 66
 		      },
 		      "vertex": "pt_tri_C",
-		      "showArc": true,
+		      "showArc": false,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "6.0"
+		      "type": "mathml",
+		      "value": 6,
+		      "mathml": "<mn>6.0</mn>"
 		    },
 		    "BC": {
 		      "type": "symbolic",
-		      "symbol": "5.8"
+		      "symbol": "x"
 		    },
 		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
+		      "type": "mathml",
+		      "value": 5.8,
+		      "mathml": "<mn>5.8</mn>"
 		    }
 		  },
 		  "extraPoints": null,
@@ -4193,40 +4207,28 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 185,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
-		      "label": ""
+		      "label": " "
 		    },
 		    "B": {
 		      "id": "pt_tri_b",
-		      "label": ""
+		      "label": " "
 		    },
 		    "C": {
 		      "id": "pt_tri_c",
-		      "label": ""
+		      "label": " "
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
 		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "numeric",
-		        "value": 40
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c",
 		      "from": "pt_tri_a",
-		      "color": "#d62728",
+		      "color": "#0000ff",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
@@ -4236,9 +4238,21 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": false
 		    },
 		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#0000ff",
+		      "value": {
+		        "type": "numeric",
+		        "value": 39.81
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
 		      "to": "pt_tri_a",
 		      "from": "pt_tri_b",
-		      "color": "#2ca02c",
+		      "color": "#0000ff",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "θ"
@@ -4256,111 +4270,6 @@ describe("triangleDiagram widget tests", () => {
 		    "BC": {
 		      "type": "numeric",
 		      "value": 5
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "size": null,
-		      "vertex": "pt_tri_b"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0639eaa9ca9a1b34
-	// Question: Find the value of x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x0639eaa9ca9a1b34] Find the value of x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 250,
-		  "height": 160,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 40
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "β"
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 7
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 4
 		    },
 		    "CA": {
 		      "type": "symbolic",
@@ -4403,57 +4312,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 137.19512195121953,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
+		      "id": "pt_tri_A",
+		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
+		      "id": "pt_tri_B",
+		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
+		      "id": "pt_tri_C",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 22.62
+		        "value": 67.38013505195957
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_C",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_C",
 		      "color": "#000000",
 		      "value": {
-		        "type": "numeric",
-		        "value": 67.38
+		        "type": "symbolic",
+		        "symbol": "θ"
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -4470,6 +4379,111 @@ describe("triangleDiagram widget tests", () => {
 		    "CA": {
 		      "type": "numeric",
 		      "value": 13
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "size": null,
+		      "vertex": "pt_tri_B"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6d6a54ca587cbe56
+	// Question: Find x using the Pythagorean theorem
+	// Widget key: image_1
+	test("triangle-diagram - [x6d6a54ca587cbe56] Find x using the Pythagorean theorem", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_c",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 35
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 55
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 8
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 9
 		    }
 		  },
 		  "extraPoints": null,
@@ -4499,111 +4513,6 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x6d6a54ca587cbe56
-	// Question: Find the value of x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x6d6a54ca587cbe56] Find the value of x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 250,
-		  "height": 140.1869158878505,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "numeric",
-		        "value": 45
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "θ"
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 8
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 9
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "size": null,
-		      "vertex": "pt_tri_B"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x67af269db6c58323
 	// Question: Find the value of x in a right triangle
 	// Widget key: image_1
@@ -4613,57 +4522,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 216.346,
-		  "height": 250,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_A1",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_B1",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_C1",
 		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_A1",
+		      "color": "#0000ff",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_B1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_C1",
+		      "color": "#00aa00",
 		      "value": {
 		        "type": "numeric",
-		        "value": 36.87
+		        "value": 40
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_A1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_B1",
+		      "color": "#cc0000",
 		      "value": {
-		        "type": "numeric",
-		        "value": 53.13
+		        "type": "symbolic",
+		        "symbol": "θ"
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_C1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -4685,10 +4594,10 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_A1",
 		      "size": null,
-		      "vertex": "pt_tri_B"
+		      "vertex": "pt_tri_B1"
 		    }
 		  ],
 		  "constructionLines": null
@@ -4718,57 +4627,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 192,
+		  "width": 380,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
+		      "id": "pt_tri_a",
+		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
+		      "id": "pt_tri_b",
+		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
+		      "id": "pt_tri_c",
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 34
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_c",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 56
+		        "value": 30
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -4790,10 +4699,10 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
 		      "size": null,
-		      "vertex": "pt_tri_B"
+		      "vertex": "pt_tri_b"
 		    }
 		  ],
 		  "constructionLines": null
@@ -4823,57 +4732,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 152,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a0",
+		      "id": "pt_tri_a",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b0",
+		      "id": "pt_tri_b",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c0",
+		      "id": "pt_tri_c",
 		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_b0",
-		      "from": "pt_tri_c0",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_a0",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_c0",
-		      "from": "pt_tri_a0",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 23.2
 		      },
-		      "vertex": "pt_tri_b0",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a0",
-		      "from": "pt_tri_b0",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 66.8
 		      },
-		      "vertex": "pt_tri_c0",
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -4881,7 +4790,7 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
-		      "value": 3
+		      "value": 7
 		    },
 		    "BC": {
 		      "type": "symbolic",
@@ -4889,16 +4798,16 @@ describe("triangleDiagram widget tests", () => {
 		    },
 		    "CA": {
 		      "type": "numeric",
-		      "value": 7
+		      "value": 3
 		    }
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_c0",
-		      "from": "pt_tri_b0",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
 		      "size": null,
-		      "vertex": "pt_tri_a0"
+		      "vertex": "pt_tri_a"
 		    }
 		  ],
 		  "constructionLines": null
@@ -4928,20 +4837,20 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 180,
-		  "height": 200,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
@@ -4949,7 +4858,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "color": "#d33",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
@@ -4961,22 +4870,22 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "color": "#36c",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 37
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#3a3",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "y"
+		        "symbol": "θ"
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -5025,65 +4934,65 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6a42a9843b73196f
-	// Question: Find the value of x in a right triangle
+	// Question: Find the hypotenuse of a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x6a42a9843b73196f] Find the value of x in a right triangle", async () => {
+	test("triangle-diagram - [x6a42a9843b73196f] Find the hypotenuse of a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 108,
-		  "height": 250,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_A1",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_B1",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_C1",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_A1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_A1",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 14
+		        "value": 75.964
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_B1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_B1",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 76
+		        "value": 14.036
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_C1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -5091,24 +5000,24 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
-		      "value": 4
-		    },
-		    "BC": {
-		      "type": "numeric",
 		      "value": 1
 		    },
-		    "CA": {
+		    "BC": {
 		      "type": "symbolic",
 		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 4
 		    }
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
 		      "size": null,
-		      "vertex": "pt_tri_B"
+		      "vertex": "pt_tri_A1"
 		    }
 		  ],
 		  "constructionLines": null
@@ -5131,157 +5040,52 @@ describe("triangleDiagram widget tests", () => {
 
 	// Extracted from question: xf2b4bb2cf9aaa54f
 	// Question: Find the value of x in a right triangle
-	// Widget key: image_1
+	// Widget key: triangle_image
 	test("triangle-diagram - [xf2b4bb2cf9aaa54f] Find the value of x in a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 117,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 40
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "6"
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "2"
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "size": null,
-		      "vertex": "pt_tri_B"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9db06df2439903f9
-	// Question: Find the value of x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x9db06df2439903f9] Find the value of x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 163.04347826086956,
-		  "height": 250,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_b",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_c",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
 		    {
 		      "to": "pt_tri_c",
 		      "from": "pt_tri_a",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 71.56505117707799
+		        "value": 90
 		      },
 		      "vertex": "pt_tri_b",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 18.435
+		      },
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
@@ -5301,851 +5105,11 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
-		      "value": 3
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 9
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "size": null,
-		      "vertex": "pt_tri_a"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xca98706fd92c4bf0
-	// Question: Find x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xca98706fd92c4bf0] Find x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 250,
-		  "height": 188,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 40
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 4
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 5
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "size": null,
-		      "vertex": "pt_tri_B"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xdeb578b44a2d527a
-	// Question: Find the value of x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xdeb578b44a2d527a] Find the value of x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 250,
-		  "height": 83.3333333333,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 11
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "θ"
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 10
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 2
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "size": null,
-		      "vertex": "pt_tri_a"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x082e87cb3ec2fcf4
-	// Question: Find the value of x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x082e87cb3ec2fcf4] Find the value of x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 250,
-		  "height": 169,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 30
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 5
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 3
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "size": null,
-		      "vertex": "pt_tri_a"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x37f7814762f6a8d2
-	// Question: Find the value of x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x37f7814762f6a8d2] Find the value of x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 250,
-		  "height": 208.333,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 40
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 4
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
-		      "type": "numeric",
 		      "value": 6
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "size": null,
-		      "vertex": "pt_tri_A"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc2605058b1570c4d
-	// Question: Find x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xc2605058b1570c4d] Find x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 250,
-		  "height": 85,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#888888",
-		      "value": {
-		        "type": "numeric",
-		        "value": 16
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#888888",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#888888",
-		      "value": {
-		        "type": "numeric",
-		        "value": 74
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 7
 		    },
 		    "BC": {
 		      "type": "numeric",
 		      "value": 2
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "size": null,
-		      "vertex": "pt_tri_B"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x970c5156568ff6a2
-	// Question: Find the value of x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x970c5156568ff6a2] Find the value of x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 250,
-		  "height": 141,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#555555",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#555555",
-		      "value": {
-		        "type": "numeric",
-		        "value": 26.56505117707799
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#555555",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "θ"
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 8
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 4
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "size": null,
-		      "vertex": "pt_tri_a"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x153c740a35e0e3ef
-	// Question: Find the value of x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x153c740a35e0e3ef] Find the value of x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 250,
-		  "height": 137.19512195121953,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 22.62
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 67.38
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 12
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 5
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "size": null,
-		      "vertex": "pt_tri_A"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe659ef0dda60923e
-	// Question: Find the value of x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xe659ef0dda60923e] Find the value of x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 120,
-		  "height": 250,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 76
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "?"
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 2
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 8
 		    },
 		    "CA": {
 		      "type": "symbolic",
@@ -6179,17 +5143,332 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x8d2c2f837ed23fcf
-	// Question: Find x in a right triangle
+	// Extracted from question: x9db06df2439903f9
+	// Question: Find the value of x in a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x8d2c2f837ed23fcf] Find x in a right triangle", async () => {
+	test("triangle-diagram - [x9db06df2439903f9] Find the value of x in a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 181.373,
-		  "height": 250,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#2ca02c",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#d62728",
+		      "value": {
+		        "type": "numeric",
+		        "value": 30
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 3
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 9
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "size": null,
+		      "vertex": "pt_tri_A"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xca98706fd92c4bf0
+	// Question: Find the value of x in a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xca98706fd92c4bf0] Find the value of x in a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 400,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 38.66
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 51.34
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 5
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 4
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "size": null,
+		      "vertex": "pt_tri_A"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xdeb578b44a2d527a
+	// Question: Find x in a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xdeb578b44a2d527a] Find x in a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 400,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a1",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_b1",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_c1",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_a1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_a1",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 10
+		      },
+		      "vertex": "pt_tri_b1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a1",
+		      "from": "pt_tri_b1",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 80
+		      },
+		      "vertex": "pt_tri_c1",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 10
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 2
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "size": null,
+		      "vertex": "pt_tri_a1"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x082e87cb3ec2fcf4
+	// Question: Find the value of x in a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x082e87cb3ec2fcf4] Find the value of x in a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 350,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -6209,22 +5488,127 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "color": "#0000ff",
 		      "value": {
 		        "type": "numeric",
-		        "value": 32
+		        "value": 90
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#0000ff",
+		      "value": {
+		        "type": "numeric",
+		        "value": 31
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
 		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#0000ff",
+		      "value": {
+		        "type": "numeric",
+		        "value": 59
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 5
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 3
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "size": null,
+		      "vertex": "pt_tri_A"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x37f7814762f6a8d2
+	// Question: Find x in a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x37f7814762f6a8d2] Find x in a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 33.69
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
@@ -6236,7 +5620,427 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "γ"
+		        "symbol": "θ"
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 6
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 4
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "size": null,
+		      "vertex": "pt_tri_A"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc2605058b1570c4d
+	// Question: Find the value of x in a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xc2605058b1570c4d] Find the value of x in a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 20
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 7
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 2
+		    },
+		    "CA": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "size": null,
+		      "vertex": "pt_tri_b"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x970c5156568ff6a2
+	// Question: Find the value of x in a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x970c5156568ff6a2] Find the value of x in a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a1",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_b1",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_c1",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_a1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_a1",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_b1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a1",
+		      "from": "pt_tri_b1",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_c1",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 8
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 4
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "size": null,
+		      "vertex": "pt_tri_a1"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x153c740a35e0e3ef
+	// Question: Find x in a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x153c740a35e0e3ef] Find x in a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 400,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#777777",
+		      "value": {
+		        "type": "numeric",
+		        "value": 67
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#777777",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "θ"
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 5
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 12
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "size": null,
+		      "vertex": "pt_tri_A"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe659ef0dda60923e
+	// Question: Find x in a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xe659ef0dda60923e] Find x in a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#0000ff",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#0000ff",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#0000ff",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -6250,7 +6054,112 @@ describe("triangleDiagram widget tests", () => {
 		    },
 		    "BC": {
 		      "type": "numeric",
+		      "value": 2
+		    },
+		    "CA": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "size": null,
+		      "vertex": "pt_tri_B"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8d2c2f837ed23fcf
+	// Question: Find the value of x in a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x8d2c2f837ed23fcf] Find the value of x in a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 58
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 32
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
 		      "value": 5
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 8
 		    },
 		    "CA": {
 		      "type": "symbolic",
@@ -6285,32 +6194,44 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x33f093740df2d864
-	// Question: Find the value of x in a right triangle
+	// Question: Find x in a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x33f093740df2d864] Find the value of x in a right triangle", async () => {
+	test("triangle-diagram - [x33f093740df2d864] Find x in a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 186.78,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 41.409622109
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_A",
@@ -6324,24 +6245,12 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
+		      "to": "pt_tri_A",
 		      "from": "pt_tri_B",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 55
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 35
+		        "value": 48.590377891
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -6390,65 +6299,65 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7fc145313128908e
-	// Question: Find the value of x in a right triangle
+	// Question: Find x in a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x7fc145313128908e] Find the value of x in a right triangle", async () => {
+	test("triangle-diagram - [x7fc145313128908e] Find x in a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 175,
+		  "width": 350,
+		  "height": 300,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A1",
-		      "label": "A"
+		      "id": "pt_tri_A",
+		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B1",
-		      "label": "B"
+		      "id": "pt_tri_B",
+		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C1",
-		      "label": "C"
+		      "id": "pt_tri_C",
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_B1",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_A1",
+		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_A1",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 30
+		        "value": 40
 		      },
-		      "vertex": "pt_tri_B1",
+		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A1",
-		      "from": "pt_tri_B1",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 50
 		      },
-		      "vertex": "pt_tri_C1",
+		      "vertex": "pt_tri_C",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -6470,10 +6379,10 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_B1",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
 		      "size": null,
-		      "vertex": "pt_tri_A1"
+		      "vertex": "pt_tri_A"
 		    }
 		  ],
 		  "constructionLines": null
@@ -6503,55 +6412,55 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 227,
-		  "height": 250,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
-		      "label": ""
+		      "label": " "
 		    },
 		    "B": {
 		      "id": "pt_tri_b",
-		      "label": ""
+		      "label": " "
 		    },
 		    "C": {
 		      "id": "pt_tri_c",
-		      "label": ""
+		      "label": " "
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
 		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c",
 		      "from": "pt_tri_a",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 90
 		      },
 		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "θ"
+		        "symbol": "α"
 		      },
 		      "vertex": "pt_tri_c",
 		      "showArc": false,
@@ -6564,21 +6473,21 @@ describe("triangleDiagram widget tests", () => {
 		      "value": 3
 		    },
 		    "BC": {
-		      "type": "numeric",
-		      "value": 5
-		    },
-		    "CA": {
 		      "type": "symbolic",
 		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 5
 		    }
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
 		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
+		      "from": "pt_tri_a",
 		      "size": null,
-		      "vertex": "pt_tri_a"
+		      "vertex": "pt_tri_b"
 		    }
 		  ],
 		  "constructionLines": null
@@ -6608,20 +6517,20 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 161,
-		  "height": 250,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": "A"
+		      "label": ""
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": "B"
+		      "label": ""
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": "C"
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
@@ -6632,7 +6541,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 40
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": false,
@@ -6651,12 +6560,12 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -6705,16 +6614,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xcec43f941acb19f1
-	// Question: Find a side length using the Pythagorean theorem
+	// Question: Find x in a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xcec43f941acb19f1] Find a side length using the Pythagorean theorem", async () => {
+	test("triangle-diagram - [xcec43f941acb19f1] Find x in a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 160.714,
-		  "height": 250,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -6744,12 +6653,12 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 35
+		        "value": 40
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
@@ -6761,7 +6670,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 55
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -6818,57 +6727,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 139,
-		  "height": 250,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
+		      "id": "pt_tri_a",
+		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
+		      "id": "pt_tri_b",
+		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
+		      "id": "pt_tri_c",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#0000ff",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
+		      "color": "#888888",
 		      "value": {
 		        "type": "numeric",
-		        "value": 55
+		        "value": 50
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#888888",
 		      "value": {
 		        "type": "numeric",
-		        "value": 35
+		        "value": 40
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -6890,10 +6799,10 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
 		      "size": null,
-		      "vertex": "pt_tri_A"
+		      "vertex": "pt_tri_a"
 		    }
 		  ],
 		  "constructionLines": null
@@ -6923,8 +6832,8 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 174,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
@@ -6944,7 +6853,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_c",
 		      "from": "pt_tri_a",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
@@ -6956,10 +6865,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_c",
 		      "from": "pt_tri_b",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 30
 		      },
 		      "vertex": "pt_tri_a",
 		      "showArc": false,
@@ -6968,10 +6877,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_a",
 		      "from": "pt_tri_b",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 30
+		        "value": 60
 		      },
 		      "vertex": "pt_tri_c",
 		      "showArc": false,
@@ -7020,16 +6929,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x91263abbbdfc6b6f
-	// Question: Find x in a right triangle using the Pythagorean Theorem
+	// Question: Find x in a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x91263abbbdfc6b6f] Find x in a right triangle using the Pythagorean Theorem", async () => {
+	test("triangle-diagram - [x91263abbbdfc6b6f] Find x in a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 206,
+		  "width": 360,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -7047,20 +6956,8 @@ describe("triangleDiagram widget tests", () => {
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 30
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
@@ -7076,21 +6973,33 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 40
 		      },
 		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_C",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
-		      "type": "numeric",
-		      "value": 7
-		    },
-		    "BC": {
 		      "type": "symbolic",
 		      "symbol": "x"
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 7
 		    },
 		    "CA": {
 		      "type": "numeric",
@@ -7100,8 +7009,8 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
 		      "size": null,
 		      "vertex": "pt_tri_B"
 		    }
@@ -7133,8 +7042,8 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 227.273,
-		  "height": 250,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
@@ -7153,25 +7062,25 @@ describe("triangleDiagram widget tests", () => {
 		  "angleArcs": [
 		    {
 		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
+		      "from": "pt_tri_a",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
 		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
+		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 53.13
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
@@ -7181,7 +7090,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 36.87
 		      },
 		      "vertex": "pt_tri_c",
 		      "showArc": false,
@@ -7190,222 +7099,12 @@ describe("triangleDiagram widget tests", () => {
 		  ],
 		  "sideLabels": {
 		    "AB": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "BC": {
 		      "type": "numeric",
 		      "value": 8
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 10
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "size": null,
-		      "vertex": "pt_tri_a"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x273eba3da1745d5b
-	// Question: Find the value of x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x273eba3da1745d5b] Find the value of x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 227.27272727272725,
-		  "height": 250,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 35
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 55
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 4
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 5
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "size": null,
-		      "vertex": "pt_tri_A"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8c8e54ac843613f6
-	// Question: Find x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x8c8e54ac843613f6] Find x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 208,
-		  "height": 250,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 40
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "θ"
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 6
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
 		    },
 		    "CA": {
 		      "type": "numeric",
@@ -7439,17 +7138,122 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xb601dccf7502b57d
+	// Extracted from question: x273eba3da1745d5b
 	// Question: Find the value of x in a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xb601dccf7502b57d] Find the value of x in a right triangle", async () => {
+	test("triangle-diagram - [x273eba3da1745d5b] Find the value of x in a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 164,
-		  "height": 250,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 37
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 53
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 4
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 5
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "size": null,
+		      "vertex": "pt_tri_b"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8c8e54ac843613f6
+	// Question: Find x in a right triangle using the Pythagorean theorem
+	// Widget key: image_1
+	test("triangle-diagram - [x8c8e54ac843613f6] Find x in a right triangle using the Pythagorean theorem", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 400,
+		  "height": 400,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -7468,8 +7272,20 @@ describe("triangleDiagram widget tests", () => {
 		  "angleArcs": [
 		    {
 		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C",
 		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
@@ -7479,24 +7295,12 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 36.87
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 53.13
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -7505,16 +7309,16 @@ describe("triangleDiagram widget tests", () => {
 		  ],
 		  "sideLabels": {
 		    "AB": {
+		      "type": "numeric",
+		      "value": 6
+		    },
+		    "BC": {
 		      "type": "symbolic",
 		      "symbol": "x"
 		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 1.5
-		    },
 		    "CA": {
 		      "type": "numeric",
-		      "value": 2.5
+		      "value": 10
 		    }
 		  },
 		  "extraPoints": null,
@@ -7544,66 +7348,66 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x713188095402ea96
-	// Question: Find x using the Pythagorean Theorem
+	// Extracted from question: xb601dccf7502b57d
+	// Question: Find the value of x in a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x713188095402ea96] Find x using the Pythagorean Theorem", async () => {
+	test("triangle-diagram - [xb601dccf7502b57d] Find the value of x in a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 162.5,
-		  "height": 250,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_a",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_b",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_c",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#808080",
 		      "value": {
 		        "type": "numeric",
 		        "value": 40
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#808080",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "θ"
+		        "type": "numeric",
+		        "value": 50
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -7611,7 +7415,7 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
-		      "value": 4
+		      "value": 1.5
 		    },
 		    "BC": {
 		      "type": "symbolic",
@@ -7619,16 +7423,121 @@ describe("triangleDiagram widget tests", () => {
 		    },
 		    "CA": {
 		      "type": "numeric",
-		      "value": 9
+		      "value": 2.5
 		    }
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
 		      "size": null,
-		      "vertex": "pt_tri_B"
+		      "vertex": "pt_tri_b"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x713188095402ea96
+	// Question: Find the value of x in a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x713188095402ea96] Find the value of x in a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_c",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 30
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 9
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 4
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_c",
+		      "size": null,
+		      "vertex": "pt_tri_a"
 		    }
 		  ],
 		  "constructionLines": null
@@ -7658,8 +7567,8 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 109,
-		  "height": 250,
+		  "width": 380,
+		  "height": 380,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -7677,8 +7586,8 @@ describe("triangleDiagram widget tests", () => {
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
@@ -7694,7 +7603,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 30
+		        "value": 70.528779
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": false,
@@ -7705,8 +7614,8 @@ describe("triangleDiagram widget tests", () => {
 		      "from": "pt_tri_A",
 		      "color": "#000000",
 		      "value": {
-		        "type": "numeric",
-		        "value": 60
+		        "type": "symbolic",
+		        "symbol": "γ"
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -7715,12 +7624,12 @@ describe("triangleDiagram widget tests", () => {
 		  ],
 		  "sideLabels": {
 		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "BC": {
 		      "type": "numeric",
 		      "value": 2
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
 		    },
 		    "CA": {
 		      "type": "numeric",
@@ -7730,8 +7639,8 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "size": null,
 		      "vertex": "pt_tri_B"
 		    }
@@ -7755,16 +7664,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xe16b6bf9bf51440d
-	// Question: Find the value of x in a right triangle
+	// Question: Find x in a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xe16b6bf9bf51440d] Find the value of x in a right triangle", async () => {
+	test("triangle-diagram - [xe16b6bf9bf51440d] Find x in a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 137,
+		  "width": 380,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
@@ -7783,18 +7692,6 @@ describe("triangleDiagram widget tests", () => {
 		  "angleArcs": [
 		    {
 		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c",
 		      "from": "pt_tri_a",
 		      "color": "#000000",
 		      "value": {
@@ -7806,12 +7703,24 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": false
 		    },
 		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_c",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
 		      "to": "pt_tri_a",
 		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_c",
 		      "showArc": false,
@@ -7860,28 +7769,238 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2a9ad97479312b50
-	// Question: Find the value of x in a right triangle
+	// Question: Find the hypotenuse of a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x2a9ad97479312b50] Find the value of x in a right triangle", async () => {
+	test("triangle-diagram - [x2a9ad97479312b50] Find the hypotenuse of a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 182,
+		  "width": 350,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a1",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_b1",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_c1",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_a1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_a1",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 53.13010235
+		      },
+		      "vertex": "pt_tri_b1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b1",
+		      "from": "pt_tri_a1",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 36.86989765
+		      },
+		      "vertex": "pt_tri_c1",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 12
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 16
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "size": null,
+		      "vertex": "pt_tri_a1"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1b31c01db3d60888
+	// Question: Find x in a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x1b31c01db3d60888] Find x in a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A1",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B1",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C1",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#0000ff",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_A1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_A1",
+		      "color": "#888888",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_B1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_B1",
+		      "color": "#888888",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_C1",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 9
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 7
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "size": null,
+		      "vertex": "pt_tri_A1"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6f7ac2673ca37afe
+	// Question: Find the hypotenuse in a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x6f7ac2673ca37afe] Find the hypotenuse in a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": "A"
+		      "label": ""
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": "B"
+		      "label": ""
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": "C"
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
@@ -7917,216 +8036,6 @@ describe("triangleDiagram widget tests", () => {
 		      "value": {
 		        "type": "numeric",
 		        "value": 36.87
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 12
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 16
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "size": null,
-		      "vertex": "pt_tri_A"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1b31c01db3d60888
-	// Question: Find the value of x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x1b31c01db3d60888] Find the value of x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 250,
-		  "height": 183,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 40
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 7
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 9
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "size": null,
-		      "vertex": "pt_tri_B"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6f7ac2673ca37afe
-	// Question: Find the value of x in a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x6f7ac2673ca37afe] Find the value of x in a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 227,
-		  "height": 250,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 40
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -8175,65 +8084,65 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4ad26d345010cde1
-	// Question: Find the value of x in a right triangle
+	// Question: Find the value of x in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x4ad26d345010cde1] Find the value of x in a right triangle", async () => {
+	test("triangle-diagram - [x4ad26d345010cde1] Find the value of x in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 208,
-		  "height": 250,
+		  "width": 360,
+		  "height": 420,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A1",
+		      "id": "pt_tri_a",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B1",
+		      "id": "pt_tri_b",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C1",
+		      "id": "pt_tri_c",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_A1",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_B1",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_B1",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 53
 		      },
-		      "vertex": "pt_tri_A1",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A1",
-		      "from": "pt_tri_B1",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "θ"
 		      },
-		      "vertex": "pt_tri_C1",
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -8255,10 +8164,10 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_A1",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
 		      "size": null,
-		      "vertex": "pt_tri_B1"
+		      "vertex": "pt_tri_b"
 		    }
 		  ],
 		  "constructionLines": null
@@ -8288,82 +8197,82 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 122,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
-		      "label": "A"
+		      "label": ""
 		    },
 		    "B": {
 		      "id": "pt_tri_b",
-		      "label": "B"
+		      "label": ""
 		    },
 		    "C": {
 		      "id": "pt_tri_c",
-		      "label": "C"
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
 		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
+		      "from": "pt_tri_a",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 30
-		      },
 		      "vertex": "pt_tri_b",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
 		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
+		      "from": "pt_tri_c",
 		      "color": "#000000",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "θ"
+		        "type": "numeric",
+		        "value": 35
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 55
 		      },
 		      "vertex": "pt_tri_c",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
+		      "type": "numeric",
+		      "value": 2
+		    },
+		    "BC": {
 		      "type": "symbolic",
 		      "symbol": "x"
 		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 7
-		    },
 		    "CA": {
 		      "type": "numeric",
-		      "value": 2
+		      "value": 7
 		    }
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
 		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
+		      "from": "pt_tri_a",
 		      "size": null,
-		      "vertex": "pt_tri_a"
+		      "vertex": "pt_tri_b"
 		    }
 		  ],
 		  "constructionLines": null
@@ -8384,17 +8293,17 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa6c82f49f7993405
-	// Question: Area of a right triangle
+	// Extracted from question: x602184a3905519ba
+	// Question: Area of a triangle from base and height
 	// Widget key: image_1
-	test("triangle-diagram - [xa6c82f49f7993405] Area of a right triangle", async () => {
+	test("triangle-diagram - [x602184a3905519ba] Area of a triangle from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 320,
-		  "height": 168,
+		  "width": 400,
+		  "height": 400,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -8407,6 +8316,113 @@ describe("triangleDiagram widget tests", () => {
 		    "C": {
 		      "id": "pt_tri_C",
 		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 4
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#0c7f99",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#0c7f99",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#0c7f99",
+		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 8
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 5
+		    },
+		    "CA": null
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa6c82f49f7993405
+	// Question: Find the area of a right triangle from its base and height
+	// Widget key: image_1
+	test("triangle-diagram - [xa6c82f49f7993405] Find the area of a right triangle from its base and height", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 320,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
@@ -8424,12 +8440,12 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
@@ -8441,7 +8457,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 30
+		        "value": 40
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -8486,78 +8502,78 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x602184a3905519ba
-	// Question: Find the area of a triangle from base and height
+	// Extracted from question: xc19a22d2d4f5c650
+	// Question: Area of a triangle from base and height
 	// Widget key: image_1
-	test("triangle-diagram - [x602184a3905519ba] Find the area of a triangle from base and height", async () => {
+	test("triangle-diagram - [xc19a22d2d4f5c650] Area of a triangle from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 199,
-		  "height": 320,
+		  "width": 400,
+		  "height": 400,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C",
 		      "label": "C"
 		    }
 		  },
 		  "altitudes": [
 		    {
-		      "color": "#000",
+		      "color": "#000000",
 		      "style": "dashed",
 		      "value": {
 		        "type": "numeric",
-		        "value": 4
+		        "value": 2
 		      },
 		      "toSide": "AB",
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#888",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 45
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#888",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 55
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#888",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 70
+		        "value": 80
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -8565,11 +8581,11 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
-		      "value": 8
+		      "value": 6
 		    },
 		    "BC": {
 		      "type": "numeric",
-		      "value": 5
+		      "value": 3
 		    },
 		    "CA": null
 		  },
@@ -8593,135 +8609,28 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc19a22d2d4f5c650
-	// Question: Area of a triangle from a diagram
-	// Widget key: image_1
-	test("triangle-diagram - [xc19a22d2d4f5c650] Area of a triangle from a diagram", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 320,
-		  "height": 160,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 2
-		      },
-		      "toSide": "CA",
-		      "vertex": "pt_tri_B",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 70
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": null,
-		    "BC": {
-		      "type": "numeric",
-		      "value": 3
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 6
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x54288144ab0eac5a
-	// Question: Find the area of a triangle from base and height
+	// Question: Find the area of a triangle from a diagram
 	// Widget key: image_1
-	test("triangle-diagram - [x54288144ab0eac5a] Find the area of a triangle from base and height", async () => {
+	test("triangle-diagram - [x54288144ab0eac5a] Find the area of a triangle from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 320,
-		  "height": 163,
+		  "width": 400,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_a",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_b",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_c",
 		      "label": "C"
 		    }
 		  },
@@ -8733,45 +8642,45 @@ describe("triangleDiagram widget tests", () => {
 		        "type": "numeric",
 		        "value": 4
 		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
+		      "toSide": "BC",
+		      "vertex": "pt_tri_a",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 40
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 70
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_b",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 80
+		      },
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -8779,13 +8688,13 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
+		      "value": 9
+		    },
+		    "BC": {
+		      "type": "numeric",
 		      "value": 12
 		    },
-		    "BC": null,
-		    "CA": {
-		      "type": "numeric",
-		      "value": 9
-		    }
+		    "CA": null
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": null,
@@ -8808,27 +8717,27 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x963642b9c2eb2324
-	// Question: Find the area of a triangle from its base and height
+	// Question: Area of a triangle from an image
 	// Widget key: image_1
-	test("triangle-diagram - [x963642b9c2eb2324] Find the area of a triangle from its base and height", async () => {
+	test("triangle-diagram - [x963642b9c2eb2324] Area of a triangle from an image", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 138.86792452830187,
+		  "width": 400,
 		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_a1",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_b1",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_c1",
 		      "label": ""
 		    }
 		  },
@@ -8841,44 +8750,44 @@ describe("triangleDiagram widget tests", () => {
 		        "value": 6
 		      },
 		      "toSide": "AB",
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_c1",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#11accd",
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "color": "#888888",
 		      "value": {
 		        "type": "numeric",
-		        "value": 65
+		        "value": 50
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_a1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 55
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#11accd",
+		      "to": "pt_tri_a1",
+		      "from": "pt_tri_c1",
+		      "color": "#888888",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_b1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b1",
+		      "from": "pt_tri_a1",
+		      "color": "#888888",
+		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_c1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -8912,9 +8821,9 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9587af88ffcf3b55
-	// Question: Find the area of a triangle from a diagram
+	// Question: Find the area of a triangle from an image
 	// Widget key: image_1
-	test("triangle-diagram - [x9587af88ffcf3b55] Find the area of a triangle from a diagram", async () => {
+	test("triangle-diagram - [x9587af88ffcf3b55] Find the area of a triangle from an image", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8924,15 +8833,15 @@ describe("triangleDiagram widget tests", () => {
 		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C",
 		      "label": ""
 		    }
 		  },
@@ -8945,44 +8854,44 @@ describe("triangleDiagram widget tests", () => {
 		        "value": 15
 		      },
 		      "toSide": "AB",
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 50
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -9015,66 +8924,173 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x5c4e703d0618a532
-	// Question: Area of a right triangle from base and height
+	// Extracted from question: xf2dea2d96f2f6857
+	// Question: Find the area of a triangle from base and height
 	// Widget key: image_1
-	test("triangle-diagram - [x5c4e703d0618a532] Area of a right triangle from base and height", async () => {
+	test("triangle-diagram - [xf2dea2d96f2f6857] Find the area of a triangle from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 252,
+		  "width": 320,
 		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
+		      "id": "pt_tri_a",
+		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
+		      "id": "pt_tri_b",
+		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
+		      "id": "pt_tri_c",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 10
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_c",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 80
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 30
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 8
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 16
+		    },
+		    "CA": null
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5c4e703d0618a532
+	// Question: Area of a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x5c4e703d0618a532] Area of a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#11accd",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "color": "#0c7f99",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#11accd",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#0c7f99",
 		      "value": {
 		        "type": "numeric",
-		        "value": 53.13
+		        "value": 36.87
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#11accd",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#0c7f99",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x"
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -9086,20 +9102,20 @@ describe("triangleDiagram widget tests", () => {
 		    },
 		    "BC": {
 		      "type": "numeric",
-		      "value": 5
+		      "value": 4
 		    },
 		    "CA": {
 		      "type": "numeric",
-		      "value": 4
+		      "value": 5
 		    }
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
 		      "size": null,
-		      "vertex": "pt_tri_A"
+		      "vertex": "pt_tri_b"
 		    }
 		  ],
 		  "constructionLines": null
@@ -9129,20 +9145,20 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 198.095,
+		  "width": 360,
 		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
-		      "label": "A"
+		      "label": ""
 		    },
 		    "B": {
 		      "id": "pt_tri_b",
-		      "label": "B"
+		      "label": ""
 		    },
 		    "C": {
 		      "id": "pt_tri_c",
-		      "label": "C"
+		      "label": ""
 		    }
 		  },
 		  "altitudes": [
@@ -9162,10 +9178,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_c",
 		      "from": "pt_tri_b",
-		      "color": "#000000",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 90
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_a",
 		      "showArc": false,
@@ -9174,10 +9190,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_a",
 		      "from": "pt_tri_c",
-		      "color": "#000000",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 60
 		      },
 		      "vertex": "pt_tri_b",
 		      "showArc": false,
@@ -9186,7 +9202,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_b",
 		      "from": "pt_tri_a",
-		      "color": "#000000",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x"
@@ -9225,28 +9241,28 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6778dfc548f2f0d9
-	// Question: Find the area of a triangle from base and height
+	// Question: Find the area of a triangle from a diagram
 	// Widget key: image_1
-	test("triangle-diagram - [x6778dfc548f2f0d9] Find the area of a triangle from base and height", async () => {
+	test("triangle-diagram - [x6778dfc548f2f0d9] Find the area of a triangle from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 135,
-		  "height": 320,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": [
@@ -9266,7 +9282,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#11accd",
+		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
@@ -9278,10 +9294,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#11accd",
+		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 55
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
@@ -9290,10 +9306,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#11accd",
+		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 70
+		        "value": 65
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -9332,16 +9348,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x414b0b5ba1502e14
-	// Question: Find the area of a triangle from base and height
+	// Question: Find the area of a triangle from a diagram
 	// Widget key: image_1
-	test("triangle-diagram - [x414b0b5ba1502e14] Find the area of a triangle from base and height", async () => {
+	test("triangle-diagram - [x414b0b5ba1502e14] Find the area of a triangle from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 142.22222222222226,
-		  "height": 320,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -9358,14 +9374,14 @@ describe("triangleDiagram widget tests", () => {
 		  },
 		  "altitudes": [
 		    {
-		      "color": "#000000",
+		      "color": "#11accd",
 		      "style": "dashed",
 		      "value": {
 		        "type": "numeric",
 		        "value": 2
 		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
+		      "toSide": "BC",
+		      "vertex": "pt_tri_A",
 		      "withRightAngle": true
 		    }
 		  ],
@@ -9373,10 +9389,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#11accd",
+		      "color": "#888888",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": false,
@@ -9385,10 +9401,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#11accd",
+		      "color": "#888888",
 		      "value": {
 		        "type": "numeric",
-		        "value": 80
+		        "value": 60
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
@@ -9397,10 +9413,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#11accd",
+		      "color": "#888888",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 70
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -9408,11 +9424,11 @@ describe("triangleDiagram widget tests", () => {
 		    }
 		  ],
 		  "sideLabels": {
-		    "AB": {
+		    "AB": null,
+		    "BC": {
 		      "type": "numeric",
 		      "value": 7
 		    },
-		    "BC": null,
 		    "CA": null
 		  },
 		  "extraPoints": null,
@@ -9445,18 +9461,18 @@ describe("triangleDiagram widget tests", () => {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 320,
-		  "height": 151.209,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_a",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_b",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_c",
 		      "label": "C"
 		    }
 		  },
@@ -9467,214 +9483,6 @@ describe("triangleDiagram widget tests", () => {
 		      "value": {
 		        "type": "numeric",
 		        "value": 6
-		      },
-		      "toSide": "CA",
-		      "vertex": "pt_tri_B",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 70
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": null,
-		    "BC": null,
-		    "CA": {
-		      "type": "numeric",
-		      "value": 18
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4191e17dc1ceaa26
-	// Question: Area of a Triangle from an Image
-	// Widget key: image_1
-	test("triangle-diagram - [x4191e17dc1ceaa26] Area of a Triangle from an Image", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 320,
-		  "height": 259,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 15
-		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 45
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 65
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 70
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 6
-		    },
-		    "BC": null,
-		    "CA": null
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x54b89901f182b0ab
-	// Question: Find the area of a triangle from base and height
-	// Widget key: image_1
-	test("triangle-diagram - [x54b89901f182b0ab] Find the area of a triangle from base and height", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 291.171,
-		  "height": 320,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 10
 		      },
 		      "toSide": "AB",
 		      "vertex": "pt_tri_c",
@@ -9711,10 +9519,218 @@ describe("triangleDiagram widget tests", () => {
 		      "from": "pt_tri_a",
 		      "color": "#11accd",
 		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 18
+		    },
+		    "BC": null,
+		    "CA": null
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4191e17dc1ceaa26
+	// Question: Find the area of a triangle from base and height
+	// Widget key: image_1
+	test("triangle-diagram - [x4191e17dc1ceaa26] Find the area of a triangle from base and height", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 320,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A1",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B1",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C1",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 15
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C1",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_A1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_C1",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 65
+		      },
+		      "vertex": "pt_tri_B1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_A1",
+		      "color": "#11accd",
+		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x"
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C1",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 6
+		    },
+		    "BC": null,
+		    "CA": null
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x54b89901f182b0ab
+	// Question: Area of a triangle from base and height
+	// Widget key: image_1
+	test("triangle-diagram - [x54b89901f182b0ab] Area of a triangle from base and height", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a1",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_b1",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_c1",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 10
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_c1",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "color": "#888",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_a1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a1",
+		      "from": "pt_tri_c1",
+		      "color": "#888",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_b1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b1",
+		      "from": "pt_tri_a1",
+		      "color": "#888",
+		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_c1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -9757,56 +9773,56 @@ describe("triangleDiagram widget tests", () => {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 320,
-		  "height": 184,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_a",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_b",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_c",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 30
+		        "value": 40
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
+		        "type": "numeric",
+		        "value": 50
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -9825,10 +9841,10 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
 		      "size": null,
-		      "vertex": "pt_tri_B"
+		      "vertex": "pt_tri_b"
 		    }
 		  ],
 		  "constructionLines": null
@@ -9863,15 +9879,15 @@ describe("triangleDiagram widget tests", () => {
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": [
@@ -9889,12 +9905,12 @@ describe("triangleDiagram widget tests", () => {
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_C",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 75
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": false,
@@ -9906,7 +9922,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 55
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
@@ -9918,7 +9934,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 80
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -9969,15 +9985,15 @@ describe("triangleDiagram widget tests", () => {
 		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_A1",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_B1",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_C1",
 		      "label": "C"
 		    }
 		  },
@@ -9990,44 +10006,44 @@ describe("triangleDiagram widget tests", () => {
 		        "value": 5
 		      },
 		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_C1",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 70
+		        "value": 45
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_A1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_C1",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 55
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_B1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_A1",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 80
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_C1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -10064,28 +10080,28 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x71f92657b680e645
-	// Question: Find the area of a triangle from base and height
+	// Question: Find the area of a triangle from a diagram
 	// Widget key: image_1
-	test("triangle-diagram - [x71f92657b680e645] Find the area of a triangle from base and height", async () => {
+	test("triangle-diagram - [x71f92657b680e645] Find the area of a triangle from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 211.358,
-		  "height": 320,
+		  "width": 400,
+		  "height": 400,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
-		      "label": "A"
+		      "id": "pt_tri_A",
+		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
-		      "label": "B"
+		      "id": "pt_tri_B",
+		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
-		      "label": "C"
+		      "id": "pt_tri_C",
+		      "label": ""
 		    }
 		  },
 		  "altitudes": [
@@ -10097,44 +10113,44 @@ describe("triangleDiagram widget tests", () => {
 		        "value": 8
 		      },
 		      "toSide": "AB",
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#888888",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#888888",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#888888",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_C",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -10171,65 +10187,65 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa83b817df0bad044
-	// Question: Area of a right triangle from a diagram
+	// Question: Area of a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xa83b817df0bad044] Area of a right triangle from a diagram", async () => {
+	test("triangle-diagram - [xa83b817df0bad044] Area of a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 320,
-		  "height": 177,
+		  "width": 360,
+		  "height": 300,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_a1",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_b1",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_c1",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_a1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_a1",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 26.5650511771
+		        "value": 26.565
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_b1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_b1",
+		      "from": "pt_tri_a1",
 		      "color": "#000000",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x"
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -10239,19 +10255,19 @@ describe("triangleDiagram widget tests", () => {
 		      "type": "numeric",
 		      "value": 6
 		    },
-		    "BC": {
+		    "BC": null,
+		    "CA": {
 		      "type": "numeric",
 		      "value": 3
-		    },
-		    "CA": null
+		    }
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
 		      "size": null,
-		      "vertex": "pt_tri_B"
+		      "vertex": "pt_tri_a1"
 		    }
 		  ],
 		  "constructionLines": null
@@ -10273,16 +10289,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x049b01b9925e5e6e
-	// Question: Area of a right triangle from a diagram
+	// Question: Find the area of a right triangle from an image
 	// Widget key: image_1
-	test("triangle-diagram - [x049b01b9925e5e6e] Area of a right triangle from a diagram", async () => {
+	test("triangle-diagram - [x049b01b9925e5e6e] Find the area of a right triangle from an image", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 320,
-		  "height": 241,
+		  "width": 400,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -10328,8 +10344,8 @@ describe("triangleDiagram widget tests", () => {
 		      "from": "pt_tri_A",
 		      "color": "#000000",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
+		        "type": "numeric",
+		        "value": 53.13
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -10378,16 +10394,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x22cce352f0c05a20
-	// Question: Find the area of a triangle from a diagram
+	// Question: Find the area of a triangle from base and height
 	// Widget key: image_1
-	test("triangle-diagram - [x22cce352f0c05a20] Find the area of a triangle from a diagram", async () => {
+	test("triangle-diagram - [x22cce352f0c05a20] Find the area of a triangle from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 320,
-		  "height": 295,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -10419,7 +10435,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "color": "#0c7f99",
 		      "value": {
 		        "type": "numeric",
 		        "value": 50
@@ -10431,7 +10447,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#000000",
+		      "color": "#0c7f99",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
@@ -10443,7 +10459,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "color": "#0c7f99",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
@@ -10482,65 +10498,65 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x310adb22c4e0a6f0
-	// Question: Area of a right triangle from a diagram
+	// Question: Find the area of a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x310adb22c4e0a6f0] Area of a right triangle from a diagram", async () => {
+	test("triangle-diagram - [x310adb22c4e0a6f0] Find the area of a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 246,
-		  "height": 320,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
+		      "id": "pt_tri_A1",
+		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
+		      "id": "pt_tri_B1",
+		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
+		      "id": "pt_tri_C1",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_A1",
 		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 53.13
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#cc0000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_B1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 36.87
+		        "value": 37
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_A1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_B1",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_C1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -10562,10 +10578,10 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_A1",
 		      "size": null,
-		      "vertex": "pt_tri_B"
+		      "vertex": "pt_tri_B1"
 		    }
 		  ],
 		  "constructionLines": null
@@ -10587,28 +10603,28 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2604a541daeeb115
-	// Question: Find the area of a triangle from a diagram
+	// Question: Find the area of a triangle from base and height
 	// Widget key: image_1
-	test("triangle-diagram - [x2604a541daeeb115] Find the area of a triangle from a diagram", async () => {
+	test("triangle-diagram - [x2604a541daeeb115] Find the area of a triangle from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 320,
-		  "height": 254,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
+		      "id": "pt_tri_A1",
+		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
+		      "id": "pt_tri_B1",
+		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
+		      "id": "pt_tri_C1",
+		      "label": ""
 		    }
 		  },
 		  "altitudes": [
@@ -10620,44 +10636,44 @@ describe("triangleDiagram widget tests", () => {
 		        "value": 5
 		      },
 		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_C1",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#888",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#888",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 50
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_A1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#888",
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_C1",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_B1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_A1",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_C1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -10694,16 +10710,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xc9cdb5fd57efcf6e
-	// Question: Find the area of a triangle from base and height
+	// Question: Find the area of a triangle from a diagram
 	// Widget key: image_1
-	test("triangle-diagram - [xc9cdb5fd57efcf6e] Find the area of a triangle from base and height", async () => {
+	test("triangle-diagram - [xc9cdb5fd57efcf6e] Find the area of a triangle from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 320,
-		  "height": 242,
+		  "width": 400,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -10735,7 +10751,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#11accd",
+		      "color": "#0c7f99",
 		      "value": {
 		        "type": "numeric",
 		        "value": 40
@@ -10747,10 +10763,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#11accd",
+		      "color": "#0c7f99",
 		      "value": {
 		        "type": "numeric",
-		        "value": 80
+		        "value": 60
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
@@ -10759,10 +10775,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#11accd",
+		      "color": "#0c7f99",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 80
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -10798,27 +10814,27 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xbc510c0f9c38b091
-	// Question: Find x in an isosceles triangle
+	// Question: Find the value of x in an isosceles triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xbc510c0f9c38b091] Find x in an isosceles triangle", async () => {
+	test("triangle-diagram - [xbc510c0f9c38b091] Find the value of x in an isosceles triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 240,
-		  "height": 202,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C",
 		      "label": ""
 		    }
 		  },
@@ -10831,44 +10847,44 @@ describe("triangleDiagram widget tests", () => {
 		        "value": 3
 		      },
 		      "toSide": "AB",
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 40
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 40
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 80
+		        "value": 100
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -10916,8 +10932,1664 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 248,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 12
+		      },
+		      "toSide": "BC",
+		      "vertex": "pt_tri_A",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 65
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 65
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 13
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 13
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4e636029dad20cf2
+	// Question: Find the value of x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x4e636029dad20cf2] Find the value of x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 380,
+		  "height": 400,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "toSide": "BC",
+		      "vertex": "pt_tri_A",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 44
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 68
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 68
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 8
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 6
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 8
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd6065711fef935d1
+	// Question: Find the value of x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xd6065711fef935d1] Find the value of x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 6
+		      },
+		      "toSide": "BC",
+		      "vertex": "pt_tri_A",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 65
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 65
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 5
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 5
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf42af257828a12d1
+	// Question: Find x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xf42af257828a12d1] Find x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 380,
+		  "height": 420,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 5
+		      },
+		      "toSide": "BC",
+		      "vertex": "pt_tri_A",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#888888",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "α"
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 68.19859051364818
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 68.19859051364818
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 4
+		    },
+		    "CA": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe9d76a1bf5944eeb
+	// Question: Find x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xe9d76a1bf5944eeb] Find x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 380,
+		  "height": 400,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A1",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B1",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C1",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "toSide": "BC",
+		      "vertex": "pt_tri_A1",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 30
+		      },
+		      "vertex": "pt_tri_A1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_A1",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 75
+		      },
+		      "vertex": "pt_tri_B1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_B1",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 75
+		      },
+		      "vertex": "pt_tri_C1",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 8
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 4
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 8
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xebb03e004f3a0acb
+	// Question: Find the value of x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xebb03e004f3a0acb] Find the value of x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 420,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 6
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#555555",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 4
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x70ad8a5cd632548c
+	// Question: Find x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x70ad8a5cd632548c] Find x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
 		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 8
+		      },
+		      "toSide": "CA",
+		      "vertex": "pt_tri_B",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 53.13
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 73.74
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 53.13
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 10
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 10
+		    },
+		    "CA": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x182fc8796cae31fb
+	// Question: Find the value of x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x182fc8796cae31fb] Find the value of x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "toSide": "CA",
+		      "vertex": "pt_tri_B",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 67.38
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 45.24
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 67.38
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 13
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 13
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 10
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6212194cf8844209
+	// Question: Find the value of x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x6212194cf8844209] Find the value of x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 2
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 34
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 34
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 112
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "BC": {
+		      "type": "mathml",
+		      "value": 3.6055512755,
+		      "mathml": "<msqrt><mn>13</mn></msqrt>"
+		    },
+		    "CA": {
+		      "type": "mathml",
+		      "value": 3.6055512755,
+		      "mathml": "<msqrt><mn>13</mn></msqrt>"
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0704224416f3c369
+	// Question: Find x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x0704224416f3c369] Find x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 5
+		      },
+		      "toSide": "CA",
+		      "vertex": "pt_tri_b",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 51.34
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
+		      "color": "#e07d10",
+		      "value": {
+		        "type": "numeric",
+		        "value": 77.32
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#28ae7b",
+		      "value": {
+		        "type": "numeric",
+		        "value": 51.34
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 8
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcb2231cec8c9d8fa
+	// Question: Find the value of x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xcb2231cec8c9d8fa] Find the value of x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 8
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 8
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 8
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xca016de67c56c0c6
+	// Question: Find the value of x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xca016de67c56c0c6] Find the value of x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 4
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 53.13
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 53.13
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 73.74
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 6
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x87eca2c858cf45b5
+	// Question: Find the value of x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x87eca2c858cf45b5] Find the value of x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 330,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 7
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 80
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "BC": {
+		      "type": "mathml",
+		      "value": 8.602325267,
+		      "mathml": "<msqrt><mn>74</mn></msqrt>"
+		    },
+		    "CA": {
+		      "type": "mathml",
+		      "value": 8.602325267,
+		      "mathml": "<msqrt><mn>74</mn></msqrt>"
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4a12bc07aeb94bc2
+	// Question: Find the value of x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x4a12bc07aeb94bc2] Find the value of x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 12
+		      },
+		      "toSide": "BC",
+		      "vertex": "pt_tri_A",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 15
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 15
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa7db199ea7832174
+	// Question: Find the value of x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xa7db199ea7832174] Find the value of x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_c",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 56.309932474
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 56.309932474
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#000000",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": ""
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 8
+		    },
+		    "BC": {
+		      "type": "mathml",
+		      "value": 7.211102551,
+		      "mathml": "<msqrt><mn>52</mn></msqrt>"
+		    },
+		    "CA": {
+		      "type": "mathml",
+		      "value": 7.211102551,
+		      "mathml": "<msqrt><mn>52</mn></msqrt>"
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0d0981304c71c43f
+	// Question: Find the value of x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x0d0981304c71c43f] Find the value of x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
@@ -10955,7 +12627,7 @@ describe("triangleDiagram widget tests", () => {
 		        "value": 67.38
 		      },
 		      "vertex": "pt_tri_a",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
@@ -10967,7 +12639,7 @@ describe("triangleDiagram widget tests", () => {
 		        "value": 67.38
 		      },
 		      "vertex": "pt_tri_b",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
@@ -10976,25 +12648,25 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#1f77b4",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "γ"
+		        "symbol": "θ"
 		      },
 		      "vertex": "pt_tri_c",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
+		      "type": "numeric",
+		      "value": 10
+		    },
+		    "BC": {
 		      "type": "symbolic",
 		      "symbol": "x"
 		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 13
-		    },
 		    "CA": {
-		      "type": "numeric",
-		      "value": 13
+		      "type": "symbolic",
+		      "symbol": "x"
 		    }
 		  },
 		  "extraPoints": null,
@@ -11017,138 +12689,17 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4e636029dad20cf2
-	// Question: Find x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x4e636029dad20cf2] Find x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": [
-		    [
-		      "pt_tri_A",
-		      "pt_tri_D",
-		      "pt_tri_B"
-		    ]
-		  ],
-		  "width": 146.286,
-		  "height": 240,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "numeric",
-		        "value": 68
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": true,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "numeric",
-		        "value": 68
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": true,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#888888",
-		      "value": {
-		        "type": "numeric",
-		        "value": 44
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 6
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 8
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 8
-		    }
-		  },
-		  "extraPoints": [
-		    {
-		      "id": "pt_tri_D",
-		      "label": ""
-		    }
-		  ],
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd6065711fef935d1
+	// Extracted from question: x391432083880899b
 	// Question: Find the value of x in an isosceles triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xd6065711fef935d1] Find the value of x in an isosceles triangle", async () => {
+	test("triangle-diagram - [x391432083880899b] Find the value of x in an isosceles triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 240,
-		  "height": 203,
+		  "width": 360,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -11168,8 +12719,8 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "style": "dashed",
 		      "value": {
-		        "type": "numeric",
-		        "value": 6
+		        "type": "symbolic",
+		        "symbol": "x"
 		      },
 		      "toSide": "AB",
 		      "vertex": "pt_tri_C",
@@ -11216,1555 +12767,8 @@ describe("triangleDiagram widget tests", () => {
 		  ],
 		  "sideLabels": {
 		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 5
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 5
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf42af257828a12d1
-	// Question: Find the value of x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xf42af257828a12d1] Find the value of x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 162.462,
-		  "height": 240,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 5
-		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 68.1985905
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 68.1985905
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 43.602819
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 4
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe9d76a1bf5944eeb
-	// Question: Find the value of x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xe9d76a1bf5944eeb] Find the value of x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 124,
-		  "height": 240,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a1",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_b1",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_c1",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_c1",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_b1",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 75
-		      },
-		      "vertex": "pt_tri_a1",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a1",
-		      "from": "pt_tri_c1",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 75
-		      },
-		      "vertex": "pt_tri_b1",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b1",
-		      "from": "pt_tri_a1",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "θ"
-		      },
-		      "vertex": "pt_tri_c1",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 4
-		    },
-		    "BC": {
 		      "type": "numeric",
 		      "value": 8
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 8
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xebb03e004f3a0acb
-	// Question: Find the value of x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xebb03e004f3a0acb] Find the value of x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 151,
-		  "height": 240,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 6
-		      },
-		      "toSide": "BC",
-		      "vertex": "pt_tri_A",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 70
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 55
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 55
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 4
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x70ad8a5cd632548c
-	// Question: Find x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x70ad8a5cd632548c] Find x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 240,
-		  "height": 203,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 8
-		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_C",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "numeric",
-		        "value": 53.13010235415598
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "numeric",
-		        "value": 53.13010235415598
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "θ"
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 10
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 10
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x182fc8796cae31fb
-	// Question: Find x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x182fc8796cae31fb] Find x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 248,
-		  "height": 300,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 67.38013505195957
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 67.38013505195957
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "θ"
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 10
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 13
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 13
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6212194cf8844209
-	// Question: Find x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x6212194cf8844209] Find x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 240,
-		  "height": 131.25,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 2
-		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_c",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 65
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 65
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "BC": {
-		      "type": "mathml",
-		      "value": 3.6055512755,
-		      "mathml": "<msqrt><mn>13</mn></msqrt>"
-		    },
-		    "CA": {
-		      "type": "mathml",
-		      "value": 3.6055512755,
-		      "mathml": "<msqrt><mn>13</mn></msqrt>"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0704224416f3c369
-	// Question: Find the value of x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x0704224416f3c369] Find the value of x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 240,
-		  "height": 186,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 5
-		      },
-		      "toSide": "BC",
-		      "vertex": "pt_tri_a",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 51.3401917459
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": true,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 51.3401917459
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": true,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "θ"
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 8
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcb2231cec8c9d8fa
-	// Question: Find the value of x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xcb2231cec8c9d8fa] Find the value of x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 212,
-		  "height": 240,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 8
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 8
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 8
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xca016de67c56c0c6
-	// Question: Find x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xca016de67c56c0c6] Find x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 240,
-		  "height": 203,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 4
-		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 53.1301023542
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 53.1301023542
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "α"
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 6
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x87eca2c858cf45b5
-	// Question: Find x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x87eca2c858cf45b5] Find x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 240,
-		  "height": 219,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 7
-		      },
-		      "toSide": "CA",
-		      "vertex": "pt_tri_b",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 54.462322
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 71.075356
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "?"
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "mathml",
-		      "value": 8.602325267,
-		      "mathml": "<msqrt><mn>74</mn></msqrt>"
-		    },
-		    "BC": {
-		      "type": "mathml",
-		      "value": 8.602325267,
-		      "mathml": "<msqrt><mn>74</mn></msqrt>"
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4a12bc07aeb94bc2
-	// Question: Find the value of x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x4a12bc07aeb94bc2] Find the value of x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 240,
-		  "height": 203,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 12
-		      },
-		      "toSide": "BC",
-		      "vertex": "pt_tri_A",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 73.73979529168804
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 53.13010235415598
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 53.13010235415598
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 15
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 15
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa7db199ea7832174
-	// Question: Find x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xa7db199ea7832174] Find x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 240,
-		  "height": 214.286,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "toSide": "CA",
-		      "vertex": "pt_tri_b",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 56.30993247402
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": true,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "θ"
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 56.30993247402
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": true,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "mathml",
-		      "value": 7.211102551,
-		      "mathml": "<msqrt><mn>52</mn></msqrt>"
-		    },
-		    "BC": {
-		      "type": "mathml",
-		      "value": 7.211102551,
-		      "mathml": "<msqrt><mn>52</mn></msqrt>"
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 8
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0d0981304c71c43f
-	// Question: Find the value of x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x0d0981304c71c43f] Find the value of x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 248,
-		  "height": 300,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A1",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B1",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C1",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 12
-		      },
-		      "toSide": "BC",
-		      "vertex": "pt_tri_A1",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_B1",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "α"
-		      },
-		      "vertex": "pt_tri_A1",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A1",
-		      "from": "pt_tri_C1",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 67.38013505195957
-		      },
-		      "vertex": "pt_tri_B1",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B1",
-		      "from": "pt_tri_A1",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 67.38013505195957
-		      },
-		      "vertex": "pt_tri_C1",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 10
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x391432083880899b
-	// Question: Find the value of x in an isosceles triangle
-	// Widget key: image_1
-	test("triangle-diagram - [x391432083880899b] Find the value of x in an isosceles triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 240,
-		  "height": 100,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "toSide": "CA",
-		      "vertex": "pt_tri_b",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_c",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "numeric",
-		        "value": 26.565051
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "numeric",
-		        "value": 126.869898
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#1f77b4",
-		      "value": {
-		        "type": "numeric",
-		        "value": 26.565051
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "mathml",
-		      "value": 4.472135955,
-		      "mathml": "<msqrt><mn>20</mn></msqrt>"
 		    },
 		    "BC": {
 		      "type": "mathml",
@@ -12772,8 +12776,9 @@ describe("triangleDiagram widget tests", () => {
 		      "mathml": "<msqrt><mn>20</mn></msqrt>"
 		    },
 		    "CA": {
-		      "type": "numeric",
-		      "value": 8
+		      "type": "mathml",
+		      "value": 4.472135955,
+		      "mathml": "<msqrt><mn>20</mn></msqrt>"
 		    }
 		  },
 		  "extraPoints": null,
@@ -12797,27 +12802,27 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x16ee633daf39c1bc
-	// Question: Find the value of x in an isosceles triangle
+	// Question: Find the side length of an isosceles triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x16ee633daf39c1bc] Find the value of x in an isosceles triangle", async () => {
+	test("triangle-diagram - [x16ee633daf39c1bc] Find the side length of an isosceles triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 240,
-		  "height": 203.226,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A1",
+		      "id": "pt_tri_A",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B1",
+		      "id": "pt_tri_B",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C1",
+		      "id": "pt_tri_C",
 		      "label": ""
 		    }
 		  },
@@ -12826,64 +12831,64 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "style": "dashed",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "8 units"
+		        "type": "numeric",
+		        "value": 8
 		      },
-		      "toSide": "BC",
-		      "vertex": "pt_tri_A1",
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_B1",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_C",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 73.74
+		        "value": 55
 		      },
-		      "vertex": "pt_tri_A1",
-		      "showArc": false,
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_A1",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 53.13
+		        "value": 55
 		      },
-		      "vertex": "pt_tri_B1",
-		      "showArc": false,
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A1",
-		      "from": "pt_tri_B1",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 53.13
+		        "value": 70
 		      },
-		      "vertex": "pt_tri_C1",
+		      "vertex": "pt_tri_C",
 		      "showArc": false,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "x units"
+		      "type": "numeric",
+		      "value": 12
 		    },
 		    "BC": {
 		      "type": "symbolic",
-		      "symbol": "12 units"
+		      "symbol": "x"
 		    },
 		    "CA": {
 		      "type": "symbolic",
-		      "symbol": "x units"
+		      "symbol": "x"
 		    }
 		  },
 		  "extraPoints": null,
@@ -12907,16 +12912,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xad317a7bf849a66a
-	// Question: Find x in an isosceles triangle
+	// Question: Find the value of x in an isosceles triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xad317a7bf849a66a] Find x in an isosceles triangle", async () => {
+	test("triangle-diagram - [xad317a7bf849a66a] Find the value of x in an isosceles triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 192,
-		  "height": 240,
+		  "width": 360,
+		  "height": 400,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A1",
@@ -12939,8 +12944,8 @@ describe("triangleDiagram widget tests", () => {
 		        "type": "numeric",
 		        "value": 8
 		      },
-		      "toSide": "BC",
-		      "vertex": "pt_tri_A1",
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C1",
 		      "withRightAngle": true
 		    }
 		  ],
@@ -12948,34 +12953,34 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C1",
 		      "from": "pt_tri_B1",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 53.1301023542
+		        "value": 70
 		      },
 		      "vertex": "pt_tri_A1",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
 		      "to": "pt_tri_A1",
 		      "from": "pt_tri_C1",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 63.4349488229
+		        "value": 70
 		      },
 		      "vertex": "pt_tri_B1",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
 		      "to": "pt_tri_B1",
 		      "from": "pt_tri_A1",
-		      "color": "#000000",
+		      "color": "#888888",
 		      "value": {
 		        "type": "numeric",
-		        "value": 63.4349488229
+		        "value": 40
 		      },
 		      "vertex": "pt_tri_C1",
 		      "showArc": false,
@@ -12984,13 +12989,13 @@ describe("triangleDiagram widget tests", () => {
 		  ],
 		  "sideLabels": {
 		    "AB": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "BC": {
 		      "type": "mathml",
 		      "value": 8.94427191,
 		      "mathml": "<msqrt><mn>80</mn></msqrt>"
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
 		    },
 		    "CA": {
 		      "type": "mathml",
@@ -13019,27 +13024,27 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5470d495782a6dc0
-	// Question: Find the value of x in an isosceles triangle
+	// Question: Find x in an isosceles triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x5470d495782a6dc0] Find the value of x in an isosceles triangle", async () => {
+	test("triangle-diagram - [x5470d495782a6dc0] Find x in an isosceles triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 240,
-		  "height": 106,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_A1",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_B1",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_C1",
 		      "label": ""
 		    }
 		  },
@@ -13051,46 +13056,46 @@ describe("triangleDiagram widget tests", () => {
 		        "type": "numeric",
 		        "value": 3
 		      },
-		      "toSide": "BC",
-		      "vertex": "pt_tri_A",
+		      "toSide": "CA",
+		      "vertex": "pt_tri_B1",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 70
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_A1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_A1",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 70
+		        "value": 40
 		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": true,
+		      "vertex": "pt_tri_B1",
+		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_A1",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
 		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": true,
+		      "vertex": "pt_tri_C1",
+		      "showArc": false,
 		      "showLabel": false
 		    }
 		  ],
@@ -13101,13 +13106,13 @@ describe("triangleDiagram widget tests", () => {
 		      "mathml": "<msqrt><mn>45</mn></msqrt>"
 		    },
 		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "CA": {
 		      "type": "mathml",
 		      "value": 6.7082039325,
 		      "mathml": "<msqrt><mn>45</mn></msqrt>"
+		    },
+		    "CA": {
+		      "type": "symbolic",
+		      "symbol": "x"
 		    }
 		  },
 		  "extraPoints": null,
@@ -13131,16 +13136,328 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x27b55299588df302
-	// Question: Find the missing length in a triangle from its area
+	// Question: Find a missing length from the area of a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x27b55299588df302] Find the missing length in a triangle from its area", async () => {
+	test("triangle-diagram - [x27b55299588df302] Find a missing length from the area of a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 195,
+		  "width": 380,
+		  "height": 380,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "toSide": "BC",
+		      "vertex": "pt_tri_a",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 65
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 75
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": null,
+		    "BC": {
+		      "type": "numeric",
+		      "value": 10
+		    },
+		    "CA": null
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf3382df647c6fca5
+	// Question: Find a missing length from triangle area
+	// Widget key: image_1
+	test("triangle-diagram - [xf3382df647c6fca5] Find a missing length from triangle area", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 320,
 		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 5
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#ff7f0e",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#2ca02c",
+		      "value": {
+		        "type": "numeric",
+		        "value": 80
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "symbolic",
+		      "symbol": "x"
+		    },
+		    "BC": null,
+		    "CA": null
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc2447957e8fc9097
+	// Question: Find the missing length from a triangle's area
+	// Widget key: image_1
+	test("triangle-diagram - [xc2447957e8fc9097] Find the missing length from a triangle's area", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 306,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_c",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 4
+		    },
+		    "BC": null,
+		    "CA": null
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x55d73d0703fa6ed6
+	// Question: Find the missing length from the area of a triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x55d73d0703fa6ed6] Find the missing length from the area of a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -13160,8 +13477,8 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "style": "dashed",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
+		        "type": "numeric",
+		        "value": 4
 		      },
 		      "toSide": "CA",
 		      "vertex": "pt_tri_B",
@@ -13172,10 +13489,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 35
+		        "value": 40
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": false,
@@ -13184,10 +13501,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#000000",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 100
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
@@ -13196,10 +13513,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 85
+		        "value": 40
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -13210,8 +13527,8 @@ describe("triangleDiagram widget tests", () => {
 		    "AB": null,
 		    "BC": null,
 		    "CA": {
-		      "type": "numeric",
-		      "value": 10
+		      "type": "symbolic",
+		      "symbol": "x"
 		    }
 		  },
 		  "extraPoints": null,
@@ -13243,20 +13560,20 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 320,
-		  "height": 150,
+		  "width": 400,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": [
@@ -13339,27 +13656,27 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x85d74df61a7b6b5c
-	// Question: Find the missing length of a triangle
+	// Question: Find a missing length from triangle area
 	// Widget key: image_1
-	test("triangle-diagram - [x85d74df61a7b6b5c] Find the missing length of a triangle", async () => {
+	test("triangle-diagram - [x85d74df61a7b6b5c] Find a missing length from triangle area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 256.842,
+		  "width": 400,
 		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_a1",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_b1",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_c1",
 		      "label": ""
 		    }
 		  },
@@ -13372,44 +13689,44 @@ describe("triangleDiagram widget tests", () => {
 		        "value": 10
 		      },
 		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c1",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_a1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_a1",
+		      "from": "pt_tri_c1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 70
+		        "value": 40
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_b1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b1",
+		      "from": "pt_tri_a1",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 80
+		      },
+		      "vertex": "pt_tri_c1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -13445,29 +13762,29 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xf3382df647c6fca5
-	// Question: Find the missing length in a triangle
+	// Extracted from question: xed981b8cee41a930
+	// Question: Find a missing length from a triangle's area
 	// Widget key: image_1
-	test("triangle-diagram - [xf3382df647c6fca5] Find the missing length in a triangle", async () => {
+	test("triangle-diagram - [xed981b8cee41a930] Find a missing length from a triangle's area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 320,
-		  "height": 291,
+		  "width": 400,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_b",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_c",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": [
@@ -13476,7 +13793,7 @@ describe("triangleDiagram widget tests", () => {
 		      "style": "dashed",
 		      "value": {
 		        "type": "numeric",
-		        "value": 5
+		        "value": 4
 		      },
 		      "toSide": "AB",
 		      "vertex": "pt_tri_c",
@@ -13499,336 +13816,24 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_a",
 		      "from": "pt_tri_c",
-		      "color": "#2ca02c",
-		      "value": {
-		        "type": "numeric",
-		        "value": 30
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#d62728",
-		      "value": {
-		        "type": "numeric",
-		        "value": 100
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "BC": null,
-		    "CA": null
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x55d73d0703fa6ed6
-	// Question: Find the base length of a triangle from its area
-	// Widget key: image_1
-	test("triangle-diagram - [x55d73d0703fa6ed6] Find the base length of a triangle from its area", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 150,
-		  "height": 320,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 4
-		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_c",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 70
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 70
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 40
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "x"
-		    },
-		    "BC": null,
-		    "CA": null
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc2447957e8fc9097
-	// Question: Find a missing length from a triangle's area
-	// Widget key: image_1
-	test("triangle-diagram - [xc2447957e8fc9097] Find a missing length from a triangle's area", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 306,
-		  "height": 320,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_c",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 30
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 100
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 4
-		    },
-		    "BC": null,
-		    "CA": null
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xed981b8cee41a930
-	// Question: Find a missing length in a triangle from its area
-	// Widget key: image_1
-	test("triangle-diagram - [xed981b8cee41a930] Find a missing length in a triangle from its area", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 320,
-		  "height": 240,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#000000",
-		      "style": "dashed",
-		      "value": {
-		        "type": "numeric",
-		        "value": 4
-		      },
-		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#11accd",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#11accd",
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -13862,40 +13867,40 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5b77650b1ffd23c9
-	// Question: Find the missing length of a triangle
+	// Question: Find the missing length of a triangle from its area
 	// Widget key: image_1
-	test("triangle-diagram - [x5b77650b1ffd23c9] Find the missing length of a triangle", async () => {
+	test("triangle-diagram - [x5b77650b1ffd23c9] Find the missing length of a triangle from its area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 279,
-		  "height": 320,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": [
 		    {
-		      "color": "#000",
+		      "color": "#000000",
 		      "style": "dashed",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x"
 		      },
-		      "toSide": "CA",
-		      "vertex": "pt_tri_B",
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C",
 		      "withRightAngle": true
 		    }
 		  ],
@@ -13903,7 +13908,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#888",
+		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 50
@@ -13915,7 +13920,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#888",
+		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
@@ -13927,7 +13932,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#888",
+		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
@@ -13940,7 +13945,114 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
+		      "value": 10
+		    },
+		    "BC": null,
+		    "CA": {
+		      "type": "numeric",
 		      "value": 11
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9aca09fe9399f66a
+	// Question: Find the missing length from a triangle's area
+	// Widget key: image_1
+	test("triangle-diagram - [x9aca09fe9399f66a] Find the missing length from a triangle's area", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 320,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a1",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_b1",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_c1",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_c1",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_a1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a1",
+		      "from": "pt_tri_c1",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_b1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b1",
+		      "from": "pt_tri_a1",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_c1",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 6
 		    },
 		    "BC": null,
 		    "CA": {
@@ -13969,16 +14081,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x798f9e184496cc9f
-	// Question: Find a missing side length from triangle area
+	// Question: Find a missing length from triangle area
 	// Widget key: image_1
-	test("triangle-diagram - [x798f9e184496cc9f] Find a missing side length from triangle area", async () => {
+	test("triangle-diagram - [x798f9e184496cc9f] Find a missing length from triangle area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 320,
-		  "height": 240,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
@@ -13998,7 +14110,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_c",
 		      "from": "pt_tri_b",
-		      "color": "#000000",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
@@ -14010,22 +14122,22 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_c",
 		      "from": "pt_tri_a",
-		      "color": "#000000",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 36.87
+		        "value": 40
 		      },
 		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "θ"
+		        "symbol": "γ"
 		      },
 		      "vertex": "pt_tri_c",
 		      "showArc": false,
@@ -14074,65 +14186,65 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9ab3674cdac1422a
-	// Question: Find the missing length of a triangle
+	// Question: Find the missing length using triangle area
 	// Widget key: image_1
-	test("triangle-diagram - [x9ab3674cdac1422a] Find the missing length of a triangle", async () => {
+	test("triangle-diagram - [x9ab3674cdac1422a] Find the missing length using triangle area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 320,
-		  "height": 215,
+		  "width": 400,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_a",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_b",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_c",
 		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 30
+		        "value": 50
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 40
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -14151,10 +14263,10 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
 		      "size": null,
-		      "vertex": "pt_tri_B"
+		      "vertex": "pt_tri_b"
 		    }
 		  ],
 		  "constructionLines": null
@@ -14175,17 +14287,124 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xf08417975aeb695f
-	// Question: Find a missing length from triangle area
+	// Extracted from question: x5c6908d3ddb35165
+	// Question: Find the missing length of a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xf08417975aeb695f] Find a missing length from triangle area", async () => {
+	test("triangle-diagram - [x5c6908d3ddb35165] Find the missing length of a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 320,
-		  "height": 289,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 80
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#000000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 4
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 7
+		    },
+		    "CA": null
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf08417975aeb695f
+	// Question: Find a triangle's base from its area
+	// Widget key: image_1
+	test("triangle-diagram - [xf08417975aeb695f] Find a triangle's base from its area", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 320,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -14208,16 +14427,16 @@ describe("triangleDiagram widget tests", () => {
 		        "type": "numeric",
 		        "value": 8
 		      },
-		      "toSide": "CA",
-		      "vertex": "pt_tri_B",
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_C",
-		      "color": "#0000ff",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 50
@@ -14228,38 +14447,38 @@ describe("triangleDiagram widget tests", () => {
 		    },
 		    {
 		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#0000ff",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
+		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#0000ff",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_C",
 		      "showArc": false,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
-		      "type": "numeric",
-		      "value": 9
+		      "type": "symbolic",
+		      "symbol": "x"
 		    },
 		    "BC": null,
 		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "x"
+		      "type": "numeric",
+		      "value": 9
 		    }
 		  },
 		  "extraPoints": null,
@@ -14283,27 +14502,27 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7fa9d79770763990
-	// Question: Find a missing length from a triangle's area
+	// Question: Find a missing length from triangle area
 	// Widget key: image_1
-	test("triangle-diagram - [x7fa9d79770763990] Find a missing length from a triangle's area", async () => {
+	test("triangle-diagram - [x7fa9d79770763990] Find a missing length from triangle area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 320,
-		  "height": 285,
+		  "width": 400,
+		  "height": 350,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a1",
+		      "id": "pt_tri_A1",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b1",
+		      "id": "pt_tri_B1",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c1",
+		      "id": "pt_tri_C1",
 		      "label": "C"
 		    }
 		  },
@@ -14316,44 +14535,44 @@ describe("triangleDiagram widget tests", () => {
 		        "symbol": "x"
 		      },
 		      "toSide": "AB",
-		      "vertex": "pt_tri_c1",
+		      "vertex": "pt_tri_C1",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_b1",
-		      "color": "#11accd",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 50
 		      },
-		      "vertex": "pt_tri_a1",
+		      "vertex": "pt_tri_A1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a1",
-		      "from": "pt_tri_c1",
-		      "color": "#11accd",
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_C1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
 		      },
-		      "vertex": "pt_tri_b1",
+		      "vertex": "pt_tri_B1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b1",
-		      "from": "pt_tri_a1",
-		      "color": "#11accd",
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_A1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
 		      },
-		      "vertex": "pt_tri_c1",
+		      "vertex": "pt_tri_C1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -14390,28 +14609,28 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5c5e991e1f10e5b6
-	// Question: Find the missing length from a triangle's area
+	// Question: Find the missing length of a right triangle from its area
 	// Widget key: image_1
-	test("triangle-diagram - [x5c5e991e1f10e5b6] Find the missing length from a triangle's area", async () => {
+	test("triangle-diagram - [x5c5e991e1f10e5b6] Find the missing length of a right triangle from its area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 320,
-		  "height": 164,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A1",
-		      "label": "A"
+		      "label": ""
 		    },
 		    "B": {
 		      "id": "pt_tri_B1",
-		      "label": "B"
+		      "label": ""
 		    },
 		    "C": {
 		      "id": "pt_tri_C1",
-		      "label": "C"
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
@@ -14491,17 +14710,17 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4139736ff42aefd2
-	// Question: Cross section of a block of butter
-	// Widget key: choice_d_shape
-	test("triangle-diagram - [x4139736ff42aefd2] Cross section of a block of butter", async () => {
+	// Extracted from question: x728cd6c47f90fd12
+	// Question: Identify a solid that produces a triangular vertical slice
+	// Widget key: stimulus_triangle
+	test("triangle-diagram - [x728cd6c47f90fd12] Identify a solid that produces a triangular vertical slice", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 120,
-		  "height": 120,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -14521,128 +14740,36 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "color": "#444",
 		      "value": {
 		        "type": "numeric",
-		        "value": 45
+		        "value": 60
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#444",
 		      "value": {
 		        "type": "numeric",
-		        "value": 90
+		        "value": 60
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#444",
 		      "value": {
 		        "type": "numeric",
-		        "value": 45
+		        "value": 60
 		      },
 		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": null,
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "size": null,
-		      "vertex": "pt_tri_B"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb0b26af2552ebf85
-	// Question: Identify a solid from a triangular vertical slice
-	// Widget key: stimulus_triangle
-	test("triangle-diagram - [xb0b26af2552ebf85] Identify a solid from a triangular vertical slice", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 200,
-		  "height": 200,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#333333",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#333333",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#333333",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -14669,77 +14796,77 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7c120e3f24093a5b
-	// Question: Identify the cross-section of a triangular prism (tent)
+	// Question: Identify the cross-section of a triangular prism
 	// Widget key: choice_d_shape
-	test("triangle-diagram - [x7c120e3f24093a5b] Identify the cross-section of a triangular prism (tent)", async () => {
+	test("triangle-diagram - [x7c120e3f24093a5b] Identify the cross-section of a triangular prism", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 100,
-		  "height": 100,
+		  "width": 320,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a1",
+		      "id": "pt_tri_a",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b1",
+		      "id": "pt_tri_b",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c1",
+		      "id": "pt_tri_c",
 		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_b1",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 40
-		      },
-		      "vertex": "pt_tri_a1",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a1",
-		      "from": "pt_tri_c1",
-		      "color": "#000000",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#e53935",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_b1",
-		      "showArc": false,
-		      "showLabel": false
+		      "vertex": "pt_tri_a",
+		      "showArc": true,
+		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_b1",
-		      "from": "pt_tri_a1",
-		      "color": "#000000",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
+		      "color": "#1e88e5",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 45
 		      },
-		      "vertex": "pt_tri_c1",
-		      "showArc": false,
-		      "showLabel": false
+		      "vertex": "pt_tri_b",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#43a047",
+		      "value": {
+		        "type": "numeric",
+		        "value": 45
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": true,
+		      "showLabel": true
 		    }
 		  ],
 		  "sideLabels": null,
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_a1",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
 		      "size": null,
-		      "vertex": "pt_tri_b1"
+		      "vertex": "pt_tri_a"
 		    }
 		  ],
 		  "constructionLines": null
@@ -14769,57 +14896,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 200,
-		  "height": 191,
+		  "width": 400,
+		  "height": 350,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A1",
-		      "label": ""
+		      "id": "pt_tri_a",
+		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B1",
-		      "label": ""
+		      "id": "pt_tri_b",
+		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C1",
-		      "label": ""
+		      "id": "pt_tri_c",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_B1",
-		      "color": "#000000",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#0000ff",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_A1",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_A1",
-		      "color": "#000000",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "color": "#0000ff",
 		      "value": {
 		        "type": "numeric",
-		        "value": 38
+		        "value": 30
 		      },
-		      "vertex": "pt_tri_B1",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B1",
-		      "from": "pt_tri_A1",
-		      "color": "#000000",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#0000ff",
 		      "value": {
 		        "type": "numeric",
-		        "value": 52
+		        "value": 60
 		      },
-		      "vertex": "pt_tri_C1",
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -14827,21 +14954,21 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
-		      "value": 4
+		      "value": 5
 		    },
 		    "BC": null,
 		    "CA": {
 		      "type": "numeric",
-		      "value": 5
+		      "value": 4
 		    }
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_B1",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
 		      "size": null,
-		      "vertex": "pt_tri_A1"
+		      "vertex": "pt_tri_a"
 		    }
 		  ],
 		  "constructionLines": null
@@ -14863,9 +14990,9 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x0a0b9aeb50bdca7d
-	// Question: Find the value of x in the triangle
+	// Question: Find the value of x in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x0a0b9aeb50bdca7d] Find the value of x in the triangle", async () => {
+	test("triangle-diagram - [x0a0b9aeb50bdca7d] Find the value of x in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -14892,7 +15019,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#cc0000",
+		      "color": "#d32f2f",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x°"
@@ -14904,7 +15031,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#1f77b4",
+		      "color": "#1976d2",
 		      "value": {
 		        "type": "numeric",
 		        "value": 61
@@ -14916,7 +15043,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#1f77b4",
+		      "color": "#1976d2",
 		      "value": {
 		        "type": "numeric",
 		        "value": 61
@@ -14961,9 +15088,9 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8868acb6dc029bb2
-	// Question: Find x in an isosceles triangle
+	// Question: Find the value of x in an isosceles triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x8868acb6dc029bb2] Find x in an isosceles triangle", async () => {
+	test("triangle-diagram - [x8868acb6dc029bb2] Find the value of x in an isosceles triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -14973,53 +15100,53 @@ describe("triangleDiagram widget tests", () => {
 		  "height": 300,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
-		      "label": "A"
+		      "id": "pt_tri_A",
+		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
-		      "label": "B"
+		      "id": "pt_tri_B",
+		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
-		      "label": "C"
+		      "id": "pt_tri_C",
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
 		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 62
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
 		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 62
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
 		      "color": "#d62728",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x°"
+		        "symbol": "x"
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "showArc": true,
 		      "showLabel": true
 		    }
@@ -15058,17 +15185,17 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x496ecd43c12cf220
-	// Question: Find the value of x in a triangle
+	// Extracted from question: xa897fc2f93a02487
+	// Question: Find the value of x in an isosceles triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x496ecd43c12cf220] Find the value of x in a triangle", async () => {
+	test("triangle-diagram - [xa897fc2f93a02487] Find the value of x in an isosceles triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 191,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -15088,10 +15215,108 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 32
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#d62728",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#2ca02c",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 7.2
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 4
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 7.2
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x496ecd43c12cf220
+	// Question: Find the value of x in a triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x496ecd43c12cf220] Find the value of x in a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": true,
@@ -15100,22 +15325,22 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 50
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": true,
-		      "showLabel": false
+		      "showLabel": true
 		    },
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
+		        "type": "numeric",
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": true,
@@ -15125,11 +15350,11 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
-		      "value": 18
+		      "value": 14
 		    },
 		    "BC": {
 		      "type": "numeric",
-		      "value": 14
+		      "value": 18
 		    },
 		    "CA": {
 		      "type": "numeric",
@@ -15157,16 +15382,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xabd47ef4868ee529
-	// Question: Find the value of x in a triangle
+	// Question: Find the angle in an isosceles triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xabd47ef4868ee529] Find the value of x in a triangle", async () => {
+	test("triangle-diagram - [xabd47ef4868ee529] Find the angle in an isosceles triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 206,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -15185,38 +15410,38 @@ describe("triangleDiagram widget tests", () => {
 		  "angleArcs": [
 		    {
 		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "from": "pt_tri_A",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#d62728",
+		      "value": {
+		        "type": "numeric",
+		        "value": 55
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "color": "#d62728",
 		      "value": {
 		        "type": "numeric",
 		        "value": 55
 		      },
 		      "vertex": "pt_tri_C",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    }
 		  ],
@@ -15227,11 +15452,109 @@ describe("triangleDiagram widget tests", () => {
 		    },
 		    "BC": {
 		      "type": "numeric",
-		      "value": 5.7
+		      "value": 5
 		    },
 		    "CA": {
 		      "type": "numeric",
-		      "value": 5
+		      "value": 5.7
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7b235660e5cfa522
+	// Question: Find the value of x in a triangle
+	// Widget key: image_1
+	test("triangle-diagram - [x7b235660e5cfa522] Find the value of x in a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 300,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#d32f2f",
+		      "value": {
+		        "type": "numeric",
+		        "value": 56
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_C",
+		      "color": "#1976d2",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#616161",
+		      "value": {
+		        "type": "numeric",
+		        "value": 62
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 5.7
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 6
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 6
 		    }
 		  },
 		  "extraPoints": null,
@@ -15255,16 +15578,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9de8b27c720e24c7
-	// Question: Find the value of x in an isosceles triangle
+	// Question: Find the value of x in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x9de8b27c720e24c7] Find the value of x in an isosceles triangle", async () => {
+	test("triangle-diagram - [x9de8b27c720e24c7] Find the value of x in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 240,
-		  "height": 300,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -15284,19 +15607,19 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
+		        "type": "numeric",
+		        "value": 56
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 56
@@ -15306,12 +15629,12 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#1f77b4",
 		      "value": {
-		        "type": "numeric",
-		        "value": 56
+		        "type": "symbolic",
+		        "symbol": "x"
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": true,
@@ -15321,11 +15644,11 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
-		      "value": 4
+		      "value": 4.5
 		    },
 		    "BC": {
 		      "type": "numeric",
-		      "value": 4.5
+		      "value": 4
 		    },
 		    "CA": {
 		      "type": "numeric",
@@ -15353,39 +15676,51 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xccabd151c9d6e33e
-	// Question: Find the value of x in a triangle
+	// Question: Find the value of x in the triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xccabd151c9d6e33e] Find the value of x in a triangle", async () => {
+	test("triangle-diagram - [xccabd151c9d6e33e] Find the value of x in the triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 200,
-		  "height": 300,
+		  "width": 360,
+		  "height": 420,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
-		      "label": "A"
+		      "label": ""
 		    },
 		    "B": {
 		      "id": "pt_tri_b",
-		      "label": "B"
+		      "label": ""
 		    },
 		    "C": {
 		      "id": "pt_tri_c",
-		      "label": "C"
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
 		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000",
+		      "from": "pt_tri_a",
+		      "color": "#d9534f",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#337ab7",
+		      "value": {
+		        "type": "numeric",
+		        "value": 39
 		      },
 		      "vertex": "pt_tri_a",
 		      "showArc": true,
@@ -15393,20 +15728,8 @@ describe("triangleDiagram widget tests", () => {
 		    },
 		    {
 		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 39
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": true,
-		      "showLabel": true
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000",
+		      "from": "pt_tri_b",
+		      "color": "#337ab7",
 		      "value": {
 		        "type": "numeric",
 		        "value": 39
@@ -15423,11 +15746,11 @@ describe("triangleDiagram widget tests", () => {
 		    },
 		    "BC": {
 		      "type": "numeric",
-		      "value": 5.1
+		      "value": 3.3
 		    },
 		    "CA": {
 		      "type": "numeric",
-		      "value": 3.3
+		      "value": 5.1
 		    }
 		  },
 		  "extraPoints": null,
@@ -15451,9 +15774,9 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x995cfff0544e5e5e
-	// Question: Find the value of x in a triangle
+	// Question: Find the value of x in the triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x995cfff0544e5e5e] Find the value of x in a triangle", async () => {
+	test("triangle-diagram - [x995cfff0544e5e5e] Find the value of x in the triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15464,22 +15787,22 @@ describe("triangleDiagram widget tests", () => {
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
-		      "label": "A"
+		      "label": ""
 		    },
 		    "B": {
 		      "id": "pt_tri_B",
-		      "label": "B"
+		      "label": ""
 		    },
 		    "C": {
 		      "id": "pt_tri_C",
-		      "label": "C"
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_C",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
 		      "color": "#000000",
 		      "value": {
 		        "type": "symbolic",
@@ -15490,9 +15813,9 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 55
@@ -15502,16 +15825,16 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 55
 		      },
 		      "vertex": "pt_tri_C",
-		      "showArc": true,
-		      "showLabel": true
+		      "showArc": false,
+		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
@@ -15549,16 +15872,212 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xca9fcd96b9c53324
-	// Question: Find the value of x in a triangle
+	// Question: Find the missing angle in an isosceles triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xca9fcd96b9c53324] Find the value of x in a triangle", async () => {
+	test("triangle-diagram - [xca9fcd96b9c53324] Find the missing angle in an isosceles triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 300,
-		  "height": 281,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 66
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 66
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#d62728",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 5.7
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 7
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 7
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb3811b6d1ef6b4f7
+	// Question: Find the value of x in a triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xb3811b6d1ef6b4f7] Find the value of x in a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 300,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 116
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#888888",
+		      "value": {
+		        "type": "numeric",
+		        "value": 32
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#d62728",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 10
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 17
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 10
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf3237304857a6d7e
+	// Question: Find the value of x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xf3237304857a6d7e] Find the value of x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 300,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -15581,7 +16100,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 66
+		        "value": 88
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": true,
@@ -15593,29 +16112,127 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#000000",
 		      "value": {
 		        "type": "symbolic",
-		        "symbol": "x"
+		        "symbol": "x°"
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": true,
 		      "showLabel": true
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 66
+		        "value": 46
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": true,
-		      "showLabel": true
+		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
-		      "value": 7
+		      "value": 5
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 6.9
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 5
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc394760b09d07d8b
+	// Question: Find the value of x in an isosceles triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xc394760b09d07d8b] Find the value of x in an isosceles triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 80
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_C",
+		      "color": "#d62728",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x°"
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#2ca02c",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 9
 		    },
 		    "BC": {
 		      "type": "numeric",
@@ -15623,7 +16240,7 @@ describe("triangleDiagram widget tests", () => {
 		    },
 		    "CA": {
 		      "type": "numeric",
-		      "value": 5.7
+		      "value": 7
 		    }
 		  },
 		  "extraPoints": null,
@@ -15647,76 +16264,77 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5fc6b4c771cb6569
-	// Question: Scaled copy base length with scale factor less than 1
+	// Question: Possible base length for a scaled triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x5fc6b4c771cb6569] Scaled copy base length with scale factor less than 1", async () => {
+	test("triangle-diagram - [x5fc6b4c771cb6569] Possible base length for a scaled triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 171,
-		  "height": 200,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
+		      "id": "pt_tri_A",
+		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
+		      "id": "pt_tri_B",
+		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
+		      "id": "pt_tri_C",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 50
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 60
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 80
+		        "value": 70
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "showArc": false,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "5 units"
-		    },
+		    "AB": null,
 		    "BC": null,
-		    "CA": null
+		    "CA": {
+		      "type": "mathml",
+		      "value": 5,
+		      "mathml": "<mn>5</mn><mtext> units</mtext>"
+		    }
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": null,
@@ -15738,17 +16356,114 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x512f447980e2aa2f
-	// Question: Scaled copy: base length with scale factor greater than 1
+	// Extracted from question: xcf7da959366f3ae8
+	// Question: Heights after scaling a triangle up
 	// Widget key: image_1
-	test("triangle-diagram - [x512f447980e2aa2f] Scaled copy: base length with scale factor greater than 1", async () => {
+	test("triangle-diagram - [xcf7da959366f3ae8] Heights after scaling a triangle up", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 200,
-		  "height": 100,
+		  "width": 360,
+		  "height": 330,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#000000",
+		      "style": "dashed",
+		      "value": {
+		        "type": "numeric",
+		        "value": 11
+		      },
+		      "toSide": "BC",
+		      "vertex": "pt_tri_A",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 120
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 30
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 30
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x512f447980e2aa2f
+	// Question: Select a possible base length for a scaled triangle (scale factor greater than 1)
+	// Widget key: image_1
+	test("triangle-diagram - [x512f447980e2aa2f] Select a possible base length for a scaled triangle (scale factor greater than 1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 400,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -15778,12 +16493,12 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
 		      "color": "#11accd",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
+		        "type": "numeric",
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
@@ -15795,7 +16510,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 30
+		        "value": 40
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -15803,13 +16518,12 @@ describe("triangleDiagram widget tests", () => {
 		    }
 		  ],
 		  "sideLabels": {
-		    "AB": null,
+		    "AB": {
+		      "type": "numeric",
+		      "value": 10
+		    },
 		    "BC": null,
-		    "CA": {
-		      "type": "mathml",
-		      "value": 10,
-		      "mathml": "<mn>10</mn><mtext> units</mtext>"
-		    }
+		    "CA": null
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
@@ -15839,65 +16553,65 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2894ec408698d8e2
-	// Question: Area of a right triangle
+	// Question: Find the area of a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x2894ec408698d8e2] Area of a right triangle", async () => {
+	test("triangle-diagram - [x2894ec408698d8e2] Find the area of a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 192,
-		  "height": 288,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
+		      "id": "pt_tri_a",
+		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
+		      "id": "pt_tri_b",
+		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
+		      "id": "pt_tri_c",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 40
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 50
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -15916,10 +16630,10 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
 		      "size": null,
-		      "vertex": "pt_tri_A"
+		      "vertex": "pt_tri_a"
 		    }
 		  ],
 		  "constructionLines": null
@@ -15941,15 +16655,15 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x71f0910e8d8d329e
-	// Question: Area of a right triangle
+	// Question: Area of a right triangle from base and hypotenuse
 	// Widget key: image_1
-	test("triangle-diagram - [x71f0910e8d8d329e] Area of a right triangle", async () => {
+	test("triangle-diagram - [x71f0910e8d8d329e] Area of a right triangle from base and hypotenuse", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
+		  "width": 300,
 		  "height": 300,
 		  "points": {
 		    "A": {
@@ -16051,57 +16765,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 252,
-		  "height": 288,
+		  "width": 360,
+		  "height": 420,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A1",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B1",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C1",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_C1",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 67.38
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A1",
 		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_A1",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 67.38
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B1",
 		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_B1",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 45.24
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C1",
 		      "showArc": true,
 		      "showLabel": false
 		    }
@@ -16149,58 +16863,58 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 240,
-		  "height": 203,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#11accd",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 53.130102354156
+		        "value": 53.13
 		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#11accd",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 53.130102354156
+		        "value": 53.13
 		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#11accd",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#888888",
 		      "value": {
-		        "type": "numeric",
-		        "value": 73.739795291688
+		        "type": "symbolic",
+		        "symbol": "x"
 		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
 		      "showLabel": false
 		    }
 		  ],
@@ -16239,16 +16953,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x497ebe27a5ca04a3
-	// Question: Area of a right triangle
+	// Question: Area of a right triangle from side lengths
 	// Widget key: image_1
-	test("triangle-diagram - [x497ebe27a5ca04a3] Area of a right triangle", async () => {
+	test("triangle-diagram - [x497ebe27a5ca04a3] Area of a right triangle from side lengths", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 200,
-		  "height": 300,
+		  "width": 300,
+		  "height": 400,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -16268,7 +16982,7 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
@@ -16278,24 +16992,24 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 67.38
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#11accd",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "θ"
+		        "type": "numeric",
+		        "value": 22.62
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -16349,58 +17063,58 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 240,
-		  "height": 132,
+		  "width": 360,
+		  "height": 418,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
-		      "label": "A"
+		      "id": "pt_tri_A1",
+		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
-		      "label": "B"
+		      "id": "pt_tri_B1",
+		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
-		      "label": "C"
+		      "id": "pt_tri_C1",
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#28ae7b",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 36.87
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A1",
 		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#28ae7b",
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_C1",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 36.87
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B1",
 		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#28ae7b",
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_A1",
+		      "color": "#11accd",
 		      "value": {
-		        "type": "numeric",
-		        "value": 80
+		        "type": "symbolic",
+		        "symbol": ""
 		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": true,
+		      "vertex": "pt_tri_C1",
+		      "showArc": false,
 		      "showLabel": false
 		    }
 		  ],
@@ -16439,293 +17153,22 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x47365ede15825ef1
-	// Question: Identify a dilation image with scale factor 3/2
+	// Question: Identify the image of a triangle under a dilation
 	// Widget key: image_1
-	test("triangle-diagram - [x47365ede15825ef1] Identify a dilation image with scale factor 3/2", async () => {
+	test("triangle-diagram - [x47365ede15825ef1] Identify the image of a triangle under a dilation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": [
 		    [
-		      "pt_tri_a",
-		      "pt_tri_p",
-		      "pt_tri_b"
-		    ]
-		  ],
-		  "width": 170,
-		  "height": 170,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#999999",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#999999",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#999999",
-		      "value": {
-		        "type": "numeric",
-		        "value": 70
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": null,
-		  "extraPoints": [
-		    {
-		      "id": "pt_tri_p",
-		      "label": "P"
-		    }
-		  ],
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6654329a81441075
-	// Question: Identify a dilated triangle with a given center and scale factor
-	// Widget key: image_1
-	test("triangle-diagram - [x6654329a81441075] Identify a dilated triangle with a given center and scale factor", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 170,
-		  "height": 170,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#666666",
-		      "value": {
-		        "type": "numeric",
-		        "value": 49
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#666666",
-		      "value": {
-		        "type": "numeric",
-		        "value": 63
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#666666",
-		      "value": {
-		        "type": "numeric",
-		        "value": 68
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": null,
-		  "extraPoints": null,
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x42af57ec523a07d4
-	// Question: Identify the image of a triangle under dilation (scale factor 1/3)
-	// Widget key: image_1
-	test("triangle-diagram - [x42af57ec523a07d4] Identify the image of a triangle under dilation (scale factor 1/3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 170,
-		  "height": 170,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": true,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": true,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 70
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": true,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": null,
-		  "extraPoints": [
-		    {
-		      "id": "pt_tri_p",
-		      "label": "P"
-		    }
-		  ],
-		  "rightAngleMarks": null,
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbc50b5a72210c4cc
-	// Question: Dilation of a triangle with center P and scale factor 2/3
-	// Widget key: image_1
-	test("triangle-diagram - [xbc50b5a72210c4cc] Dilation of a triangle with center P and scale factor 2/3", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": [
-		    [
-		      "pt_tri_C",
 		      "pt_tri_A",
-		      "pt_tri_P"
+		      "pt_tri_P",
+		      "pt_tri_B"
 		    ]
 		  ],
-		  "width": 170,
-		  "height": 170,
+		  "width": 400,
+		  "height": 400,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -16745,37 +17188,37 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#11accd",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 40
 		      },
 		      "vertex": "pt_tri_A",
-		      "showArc": true,
+		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#11accd",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 70
+		        "value": 80
 		      },
 		      "vertex": "pt_tri_B",
-		      "showArc": true,
+		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#11accd",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 70
+		        "value": 60
 		      },
 		      "vertex": "pt_tri_C",
-		      "showArc": true,
+		      "showArc": false,
 		      "showLabel": false
 		    }
 		  ],
@@ -16805,17 +17248,282 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa2d61c0964bd49c8
-	// Question: Area of a triangle
+	// Extracted from question: x604c7c450eb40990
+	// Question: Identify the image of a triangle under dilation
 	// Widget key: image_1
-	test("triangle-diagram - [xa2d61c0964bd49c8] Area of a triangle", async () => {
+	test("triangle-diagram - [x604c7c450eb40990] Identify the image of a triangle under dilation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 182,
+		  "width": 340,
+		  "height": 340,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A1",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B1",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C1",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 65
+		      },
+		      "vertex": "pt_tri_A1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_C1",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 78
+		      },
+		      "vertex": "pt_tri_B1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_A1",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 37
+		      },
+		      "vertex": "pt_tri_C1",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": [
+		    {
+		      "id": "pt_tri_P",
+		      "label": "P"
+		    }
+		  ],
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6654329a81441075
+	// Question: Identify the dilated image of a triangle (center A, scale factor 3/4)
+	// Widget key: image_1
+	test("triangle-diagram - [x6654329a81441075] Identify the dilated image of a triangle (center A, scale factor 3/4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 400,
+		  "height": 400,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 80
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x42af57ec523a07d4
+	// Question: Identify the image of a dilation (scale factor 1/3)
+	// Widget key: image_1
+	test("triangle-diagram - [x42af57ec523a07d4] Identify the image of a dilation (scale factor 1/3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 340,
+		  "height": 340,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a1",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_b1",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_c1",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_a1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a1",
+		      "from": "pt_tri_c1",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_b1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_b1",
+		      "from": "pt_tri_a1",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 70
+		      },
+		      "vertex": "pt_tri_c1",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": [
+		    {
+		      "id": "pt_tri_p1",
+		      "label": "P"
+		    }
+		  ],
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xaaec5892e720c7a3
+	// Question: Area of a right triangle
+	// Widget key: image_1
+	test("triangle-diagram - [xaaec5892e720c7a3] Area of a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -16850,7 +17558,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 45
+		        "value": 38.66
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
@@ -16862,7 +17570,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 45
+		        "value": 51.34
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -16872,15 +17580,15 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
-		      "value": 3
+		      "value": 10
 		    },
 		    "BC": {
 		      "type": "numeric",
-		      "value": 4.24
+		      "value": 12.8
 		    },
 		    "CA": {
 		      "type": "numeric",
-		      "value": 3
+		      "value": 8
 		    }
 		  },
 		  "extraPoints": null,
@@ -16911,16 +17619,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x342e138f1f62005b
-	// Question: Find the area of a triangle
+	// Question: Area of a triangle from base and height
 	// Widget key: image_1
-	test("triangle-diagram - [x342e138f1f62005b] Find the area of a triangle", async () => {
+	test("triangle-diagram - [x342e138f1f62005b] Area of a triangle from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 183,
+		  "width": 360,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -16955,15 +17663,15 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 33.6900675
+		        "value": 33.69
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "symbolic",
@@ -17012,29 +17720,127 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9158eb0f2ed0f3d0
-	// Question: Area of a right triangle
+	// Extracted from question: xa2d61c0964bd49c8
+	// Question: Find the area of a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x9158eb0f2ed0f3d0] Area of a right triangle", async () => {
+	test("triangle-diagram - [xa2d61c0964bd49c8] Find the area of a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 173.077,
-		  "height": 250,
+		  "width": 360,
+		  "height": 300,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C",
 		      "label": ""
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 45
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 45
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 3
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 3
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 4.24
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9158eb0f2ed0f3d0
+	// Question: Area of a right triangle from base and height
+	// Widget key: image_1
+	test("triangle-diagram - [x9158eb0f2ed0f3d0] Area of a right triangle from base and height", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
@@ -17057,19 +17863,19 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 59.0362434679
+		        "value": 60
 		      },
 		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 30.9637565321
+		        "value": 30
 		      },
 		      "vertex": "pt_tri_c",
 		      "showArc": false,
@@ -17114,111 +17920,6 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xaaec5892e720c7a3
-	// Question: Area of a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xaaec5892e720c7a3] Area of a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 250,
-		  "height": 212,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A1",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_B1",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_C1",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_B1",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_A1",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_A1",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 38.65980825409009
-		      },
-		      "vertex": "pt_tri_B1",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A1",
-		      "from": "pt_tri_B1",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "vertex": "pt_tri_C1",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 10
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 12.8
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 8
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_B1",
-		      "size": null,
-		      "vertex": "pt_tri_A1"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x68ecc99bc28c6cc9
 	// Question: Area of a right triangle
 	// Widget key: image_1
@@ -17228,57 +17929,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 250,
+		  "width": 350,
+		  "height": 350,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A1",
-		      "label": ""
+		      "id": "pt_tri_a1",
+		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B1",
-		      "label": ""
+		      "id": "pt_tri_b1",
+		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C1",
-		      "label": ""
+		      "id": "pt_tri_c1",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_A1",
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_a1",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_B1",
+		      "vertex": "pt_tri_b1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_B1",
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_b1",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 45
 		      },
-		      "vertex": "pt_tri_A1",
+		      "vertex": "pt_tri_a1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A1",
-		      "from": "pt_tri_B1",
+		      "to": "pt_tri_a1",
+		      "from": "pt_tri_b1",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 45
 		      },
-		      "vertex": "pt_tri_C1",
+		      "vertex": "pt_tri_c1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -17297,10 +17998,10 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_A1",
+		      "to": "pt_tri_c1",
+		      "from": "pt_tri_a1",
 		      "size": null,
-		      "vertex": "pt_tri_B1"
+		      "vertex": "pt_tri_b1"
 		    }
 		  ],
 		  "constructionLines": null
@@ -17330,8 +18031,8 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 132,
+		  "width": 400,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -17354,27 +18055,27 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 22.61986495
+		        "value": 90
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 90
+		        "value": 22.62
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "symbolic",
@@ -17392,20 +18093,20 @@ describe("triangleDiagram widget tests", () => {
 		    },
 		    "BC": {
 		      "type": "numeric",
-		      "value": 5
+		      "value": 13
 		    },
 		    "CA": {
 		      "type": "numeric",
-		      "value": 13
+		      "value": 5
 		    }
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
 		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "from": "pt_tri_B",
 		      "size": null,
-		      "vertex": "pt_tri_B"
+		      "vertex": "pt_tri_A"
 		    }
 		  ],
 		  "constructionLines": null
@@ -17435,20 +18136,20 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 179,
+		  "width": 360,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
-		      "label": ""
+		      "label": "A"
 		    },
 		    "B": {
 		      "id": "pt_tri_b",
-		      "label": ""
+		      "label": "B"
 		    },
 		    "C": {
 		      "id": "pt_tri_c",
-		      "label": ""
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
@@ -17462,7 +18163,7 @@ describe("triangleDiagram widget tests", () => {
 		        "value": 90
 		      },
 		      "vertex": "pt_tri_a",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
@@ -17471,7 +18172,7 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 30
 		      },
 		      "vertex": "pt_tri_b",
 		      "showArc": false,
@@ -17482,8 +18183,8 @@ describe("triangleDiagram widget tests", () => {
 		      "from": "pt_tri_a",
 		      "color": "#11accd",
 		      "value": {
-		        "type": "numeric",
-		        "value": 50
+		        "type": "symbolic",
+		        "symbol": "x"
 		      },
 		      "vertex": "pt_tri_c",
 		      "showArc": false,
@@ -17540,57 +18241,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 181,
+		  "width": 360,
+		  "height": 300,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
+		      "id": "pt_tri_A",
+		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
+		      "id": "pt_tri_B",
+		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
+		      "id": "pt_tri_C",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 56
+		        "value": 40
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 34
+		        "value": 50
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -17598,21 +18299,21 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
+		      "value": 12
+		    },
+		    "BC": {
+		      "type": "numeric",
 		      "value": 8
 		    },
-		    "BC": null,
-		    "CA": {
-		      "type": "numeric",
-		      "value": 12
-		    }
+		    "CA": null
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "size": null,
-		      "vertex": "pt_tri_a"
+		      "vertex": "pt_tri_B"
 		    }
 		  ],
 		  "constructionLines": null
@@ -17634,16 +18335,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7e1ffbdf55b27931
-	// Question: Find the area of a triangle from its base and height
+	// Question: Find the area of a right triangle from base and height
 	// Widget key: image_1
-	test("triangle-diagram - [x7e1ffbdf55b27931] Find the area of a triangle from its base and height", async () => {
+	test("triangle-diagram - [x7e1ffbdf55b27931] Find the area of a right triangle from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 123.457,
+		  "width": 360,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -17673,8 +18374,8 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
@@ -17685,12 +18386,12 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
 		      "color": "#11accd",
 		      "value": {
-		        "type": "numeric",
-		        "value": 22.62
+		        "type": "symbolic",
+		        "symbol": "x"
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -17739,65 +18440,65 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x555453456ae203ba
-	// Question: Find the area of a right triangle from its base and height
+	// Question: Area of a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x555453456ae203ba] Find the area of a right triangle from its base and height", async () => {
+	test("triangle-diagram - [x555453456ae203ba] Area of a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 250,
-		  "height": 129,
+		  "width": 400,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_a",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_b",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_c",
 		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_c",
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 73.73979529168804
+		        "value": 16
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "θ"
+		      },
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -17814,216 +18515,6 @@ describe("triangleDiagram widget tests", () => {
 		    "CA": {
 		      "type": "numeric",
 		      "value": 25
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "size": null,
-		      "vertex": "pt_tri_B"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xae85b91fad7199f2
-	// Question: Area of a triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xae85b91fad7199f2] Area of a triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 182.432,
-		  "height": 250,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 61.9275
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 8
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 17
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 15
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "size": null,
-		      "vertex": "pt_tri_a"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc52534a2c3ccff33
-	// Question: Area of a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xc52534a2c3ccff33] Area of a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 166.667,
-		  "height": 250,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 63.435
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 3
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 6
-		    },
-		    "CA": {
-		      "type": "numeric",
-		      "value": 6.7
 		    }
 		  },
 		  "extraPoints": null,
@@ -18053,17 +18544,17 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9526f5735a51e66c
-	// Question: Area of a right triangle
+	// Extracted from question: xae85b91fad7199f2
+	// Question: Area of a Right Triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x9526f5735a51e66c] Area of a right triangle", async () => {
+	test("triangle-diagram - [xae85b91fad7199f2] Area of a Right Triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 197,
-		  "height": 250,
+		  "width": 400,
+		  "height": 350,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -18086,154 +18577,49 @@ describe("triangleDiagram widget tests", () => {
 		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 90
+		        "value": 61.9275
 		      },
 		      "vertex": "pt_tri_A",
-		      "showArc": true,
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
 		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
+		      "from": "pt_tri_B",
 		      "color": "#11accd",
 		      "value": {
-		        "type": "numeric",
-		        "value": 36.87
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": true,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 53.13
+		        "type": "symbolic",
+		        "symbol": "x"
 		      },
 		      "vertex": "pt_tri_C",
-		      "showArc": true,
+		      "showArc": false,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
-		      "type": "numeric",
-		      "value": 6
-		    },
-		    "BC": {
-		      "type": "numeric",
-		      "value": 10
-		    },
-		    "CA": {
 		      "type": "numeric",
 		      "value": 8
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "size": null,
-		      "vertex": "pt_tri_A"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa682d49966d3f645
-	// Question: Area of a right triangle
-	// Widget key: image_1
-	test("triangle-diagram - [xa682d49966d3f645] Area of a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 250,
-		  "height": 162.281,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_B",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 53.13010235415598
-		      },
-		      "vertex": "pt_tri_A",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#11accd",
-		      "value": {
-		        "type": "numeric",
-		        "value": 36.86989764584402
-		      },
-		      "vertex": "pt_tri_C",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "numeric",
-		      "value": 3
 		    },
 		    "BC": {
 		      "type": "numeric",
-		      "value": 4
+		      "value": 15
 		    },
 		    "CA": {
 		      "type": "numeric",
-		      "value": 5
+		      "value": 17
 		    }
 		  },
 		  "extraPoints": null,
@@ -18263,590 +18649,83 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa8b16b53226fc876
-	// Question: Scale drawing of a right triangle
-	// Widget key: triangle_choice_a
-	test("triangle-diagram - [xa8b16b53226fc876] Scale drawing of a right triangle (1)", async () => {
+	// Extracted from question: xc52534a2c3ccff33
+	// Question: Area of a right triangle from base and height
+	// Widget key: image_1
+	test("triangle-diagram - [xc52534a2c3ccff33] Area of a right triangle from base and height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 260,
+		  "width": 360,
+		  "height": 400,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_aA",
-		      "label": "A"
+		      "id": "pt_tri_a",
+		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_aB",
-		      "label": "B"
+		      "id": "pt_tri_b",
+		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_aC",
-		      "label": "C"
+		      "id": "pt_tri_c",
+		      "label": ""
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_aC",
-		      "from": "pt_tri_aB",
-		      "color": "#888888",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_aA",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_aA",
-		      "from": "pt_tri_aC",
-		      "color": "#888888",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 45
+		        "value": 26.5650511771
 		      },
-		      "vertex": "pt_tri_aB",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_aB",
-		      "from": "pt_tri_aA",
-		      "color": "#888888",
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#11accd",
 		      "value": {
-		        "type": "numeric",
-		        "value": 45
+		        "type": "symbolic",
+		        "symbol": "x"
 		      },
-		      "vertex": "pt_tri_aC",
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "5 units"
+		      "type": "numeric",
+		      "value": 6
 		    },
 		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "5 units"
+		      "type": "numeric",
+		      "value": 6.7
 		    },
-		    "CA": null
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_aC",
-		      "from": "pt_tri_aB",
-		      "size": null,
-		      "vertex": "pt_tri_aA"
+		    "CA": {
+		      "type": "numeric",
+		      "value": 3
 		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa8b16b53226fc876
-	// Question: Scale drawing of a right triangle
-	// Widget key: triangle_choice_b
-	test("triangle-diagram - [xa8b16b53226fc876] Scale drawing of a right triangle (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 300,
-		  "height": 260,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_bA",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_bB",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_bC",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_bC",
-		      "from": "pt_tri_bB",
-		      "color": "#888888",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_bA",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_bA",
-		      "from": "pt_tri_bC",
-		      "color": "#888888",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_bB",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_bB",
-		      "from": "pt_tri_bA",
-		      "color": "#888888",
-		      "value": {
-		        "type": "numeric",
-		        "value": 40
-		      },
-		      "vertex": "pt_tri_bC",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "5 units"
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "6 units"
-		    },
-		    "CA": null
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_bC",
-		      "from": "pt_tri_bB",
-		      "size": null,
-		      "vertex": "pt_tri_bA"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa8b16b53226fc876
-	// Question: Scale drawing of a right triangle
-	// Widget key: triangle_choice_c
-	test("triangle-diagram - [xa8b16b53226fc876] Scale drawing of a right triangle (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 300,
-		  "height": 260,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_cA",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_cB",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_cC",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_cC",
-		      "from": "pt_tri_cB",
-		      "color": "#888888",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_cA",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_cA",
-		      "from": "pt_tri_cC",
-		      "color": "#888888",
-		      "value": {
-		        "type": "numeric",
-		        "value": 56
-		      },
-		      "vertex": "pt_tri_cB",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_cB",
-		      "from": "pt_tri_cA",
-		      "color": "#888888",
-		      "value": {
-		        "type": "numeric",
-		        "value": 34
-		      },
-		      "vertex": "pt_tri_cC",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "4 units"
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "6 units"
-		    },
-		    "CA": null
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_cC",
-		      "from": "pt_tri_cB",
-		      "size": null,
-		      "vertex": "pt_tri_cA"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe6c4fc015fff1124
-	// Question: Create a scale drawing of a right triangle
-	// Widget key: triangle_choice_a
-	test("triangle-diagram - [xe6c4fc015fff1124] Create a scale drawing of a right triangle (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 260,
-		  "height": 220,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a1",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_b1",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_c1",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_b1",
-		      "color": "#666",
-		      "value": {
-		        "type": "numeric",
-		        "value": 40
-		      },
-		      "vertex": "pt_tri_a1",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_a1",
-		      "color": "#666",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_b1",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a1",
-		      "from": "pt_tri_b1",
-		      "color": "#666",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_c1",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "10 units"
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "15 units"
-		    },
-		    "CA": null
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_a1",
-		      "size": null,
-		      "vertex": "pt_tri_b1"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe6c4fc015fff1124
-	// Question: Create a scale drawing of a right triangle
-	// Widget key: triangle_choice_b
-	test("triangle-diagram - [xe6c4fc015fff1124] Create a scale drawing of a right triangle (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 260,
-		  "height": 220,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a2",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_b2",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_c2",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c2",
-		      "from": "pt_tri_b2",
-		      "color": "#666",
-		      "value": {
-		        "type": "numeric",
-		        "value": 40
-		      },
-		      "vertex": "pt_tri_a2",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c2",
-		      "from": "pt_tri_a2",
-		      "color": "#666",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_b2",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a2",
-		      "from": "pt_tri_b2",
-		      "color": "#666",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_c2",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "5 units"
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "7.5 units"
-		    },
-		    "CA": null
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_c2",
-		      "from": "pt_tri_a2",
-		      "size": null,
-		      "vertex": "pt_tri_b2"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe6c4fc015fff1124
-	// Question: Create a scale drawing of a right triangle
-	// Widget key: triangle_choice_c
-	test("triangle-diagram - [xe6c4fc015fff1124] Create a scale drawing of a right triangle (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 260,
-		  "height": 220,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a3",
-		      "label": "A"
-		    },
-		    "B": {
-		      "id": "pt_tri_b3",
-		      "label": "B"
-		    },
-		    "C": {
-		      "id": "pt_tri_c3",
-		      "label": "C"
-		    }
-		  },
-		  "altitudes": null,
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c3",
-		      "from": "pt_tri_b3",
-		      "color": "#666",
-		      "value": {
-		        "type": "numeric",
-		        "value": 70
-		      },
-		      "vertex": "pt_tri_a3",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c3",
-		      "from": "pt_tri_a3",
-		      "color": "#666",
-		      "value": {
-		        "type": "numeric",
-		        "value": 60
-		      },
-		      "vertex": "pt_tri_b3",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a3",
-		      "from": "pt_tri_b3",
-		      "color": "#666",
-		      "value": {
-		        "type": "numeric",
-		        "value": 50
-		      },
-		      "vertex": "pt_tri_c3",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "5 units"
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "7.5 units"
-		    },
-		    "CA": null
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": null,
@@ -18868,88 +18747,91 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xad49f6039ad52aa4
-	// Question: Maximum width of the mail slot
+	// Extracted from question: x9526f5735a51e66c
+	// Question: Area of a right triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xad49f6039ad52aa4] Maximum width of the mail slot", async () => {
+	test("triangle-diagram - [x9526f5735a51e66c] Area of a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 115,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a1",
-		      "label": ""
+		      "id": "pt_tri_A",
+		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b1",
-		      "label": ""
+		      "id": "pt_tri_B",
+		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c1",
-		      "label": ""
+		      "id": "pt_tri_C",
+		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_a1",
-		      "color": "#000000",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 53.13
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_b1",
-		      "showArc": false,
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_b1",
-		      "color": "#000000",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 16.2602047083
+		        "value": 36.87
 		      },
-		      "vertex": "pt_tri_a1",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a1",
-		      "from": "pt_tri_b1",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
-		      },
-		      "vertex": "pt_tri_c1",
-		      "showArc": false,
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
-		      "value": 24
+		      "value": 6
 		    },
 		    "BC": {
 		      "type": "numeric",
-		      "value": 7
+		      "value": 8
 		    },
-		    "CA": null
+		    "CA": {
+		      "type": "numeric",
+		      "value": 10
+		    }
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_a1",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "size": null,
-		      "vertex": "pt_tri_b1"
+		      "vertex": "pt_tri_B"
 		    }
 		  ],
 		  "constructionLines": null
@@ -18970,17 +18852,377 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xce9d3c2f6242a138
-	// Question: Find the eastward distance using the Pythagorean theorem
+	// Extracted from question: xa682d49966d3f645
+	// Question: Area of a right triangle (base 3, height 4)
 	// Widget key: image_1
-	test("triangle-diagram - [xce9d3c2f6242a138] Find the eastward distance using the Pythagorean theorem", async () => {
+	test("triangle-diagram - [xa682d49966d3f645] Area of a right triangle (base 3, height 4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 200,
+		  "width": 350,
+		  "height": 350,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_a",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_b",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_c",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 53.130102
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "numeric",
+		      "value": 3
+		    },
+		    "BC": {
+		      "type": "numeric",
+		      "value": 4
+		    },
+		    "CA": {
+		      "type": "numeric",
+		      "value": 5
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_a",
+		      "size": null,
+		      "vertex": "pt_tri_b"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc9187daacca72603
+	// Question: Select the triangle with given vertices
+	// Widget key: triangle_choice_a
+	test("triangle-diagram - [xc9187daacca72603] Select the triangle with given vertices (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_C",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_B",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 80
+		      },
+		      "vertex": "pt_tri_C",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc9187daacca72603
+	// Question: Select the triangle with given vertices
+	// Widget key: triangle_choice_b
+	test("triangle-diagram - [xc9187daacca72603] Select the triangle with given vertices (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A2",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B2",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C2",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C2",
+		      "from": "pt_tri_B2",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_A2",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_A2",
+		      "from": "pt_tri_C2",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_B2",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B2",
+		      "from": "pt_tri_A2",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 80
+		      },
+		      "vertex": "pt_tri_C2",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc9187daacca72603
+	// Question: Select the triangle with given vertices
+	// Widget key: triangle_choice_c
+	test("triangle-diagram - [xc9187daacca72603] Select the triangle with given vertices (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 360,
+		  "height": 360,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A3",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B3",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C3",
+		      "label": "C"
+		    }
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C3",
+		      "from": "pt_tri_B3",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 30
+		      },
+		      "vertex": "pt_tri_A3",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_A3",
+		      "from": "pt_tri_C3",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_B3",
+		      "showArc": true,
+		      "showLabel": true
+		    },
+		    {
+		      "to": "pt_tri_B3",
+		      "from": "pt_tri_A3",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_C3",
+		      "showArc": true,
+		      "showLabel": true
+		    }
+		  ],
+		  "sideLabels": null,
+		  "extraPoints": null,
+		  "rightAngleMarks": null,
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xce9d3c2f6242a138
+	// Question: Find the eastward distance using the Pythagorean Theorem
+	// Widget key: image_1
+	test("triangle-diagram - [xce9d3c2f6242a138] Find the eastward distance using the Pythagorean Theorem", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 450,
+		  "height": 300,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_a",
@@ -18999,20 +19241,8 @@ describe("triangleDiagram widget tests", () => {
 		  "angleArcs": [
 		    {
 		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 35
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c",
 		      "from": "pt_tri_a",
-		      "color": "#000000",
+		      "color": "#000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
@@ -19022,12 +19252,24 @@ describe("triangleDiagram widget tests", () => {
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a",
+		      "to": "pt_tri_c",
 		      "from": "pt_tri_b",
-		      "color": "#000000",
+		      "color": "#000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 55
+		        "value": 60
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_b",
+		      "color": "#000",
+		      "value": {
+		        "type": "numeric",
+		        "value": 30
 		      },
 		      "vertex": "pt_tri_c",
 		      "showArc": false,
@@ -19057,15 +19299,111 @@ describe("triangleDiagram widget tests", () => {
 		      "vertex": "pt_tri_b"
 		    }
 		  ],
-		  "constructionLines": [
-		    {
-		      "style": "dashed",
-		      "points": [
-		        "pt_tri_a",
-		        "pt_tri_c"
-		      ]
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xad49f6039ad52aa4
+	// Question: Maximum width of a mail slot
+	// Widget key: image_1
+	test("triangle-diagram - [xad49f6039ad52aa4] Maximum width of a mail slot", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 400,
+		  "height": 300,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A1",
+		      "label": "A"
+		    },
+		    "B": {
+		      "id": "pt_tri_B1",
+		      "label": "B"
+		    },
+		    "C": {
+		      "id": "pt_tri_C1",
+		      "label": "C"
 		    }
-		  ]
+		  },
+		  "altitudes": null,
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_A1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_C1",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 16.26
+		      },
+		      "vertex": "pt_tri_B1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_A1",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "x"
+		      },
+		      "vertex": "pt_tri_C1",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "mathml",
+		      "value": 24,
+		      "mathml": "<mn>24</mn><mtext> cm</mtext>"
+		    },
+		    "BC": null,
+		    "CA": {
+		      "type": "mathml",
+		      "value": 7,
+		      "mathml": "<mn>7</mn><mtext> cm</mtext>"
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "size": null,
+		      "vertex": "pt_tri_A1"
+		    }
+		  ],
+		  "constructionLines": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -19084,16 +19422,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x6e938fda4e417bd2
-	// Question: Length of a zip line
+	// Question: Find the length of a zip line
 	// Widget key: image_1
-	test("triangle-diagram - [x6e938fda4e417bd2] Length of a zip line", async () => {
+	test("triangle-diagram - [x6e938fda4e417bd2] Find the length of a zip line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 102,
+		  "width": 380,
+		  "height": 320,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -19113,37 +19451,37 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 11.5
+		        "value": 11
 		      },
 		      "vertex": "pt_tri_A",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
 		      "vertex": "pt_tri_B",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#000",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 78.5
+		        "value": 79
 		      },
 		      "vertex": "pt_tri_C",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    }
 		  ],
@@ -19186,74 +19524,73 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x49e53a5803ddaf2b
-	// Question: Height reached by a ladder against a tree
+	// Question: How high will the ladder reach?
 	// Widget key: image_1
-	test("triangle-diagram - [x49e53a5803ddaf2b] Height reached by a ladder against a tree", async () => {
+	test("triangle-diagram - [x49e53a5803ddaf2b] How high will the ladder reach?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 200,
-		  "height": 300,
+		  "width": 300,
+		  "height": 450,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A1",
 		      "label": "A"
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B1",
 		      "label": "B"
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C1",
 		      "label": "C"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_A1",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#1f77b4",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 70
+		        "value": 70.5
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#2ca02c",
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_B1",
+		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 20
+		        "value": 19.5
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
-		      "type": "mathml",
-		      "value": 2,
-		      "mathml": "<mn>2</mn><mtext> m</mtext>"
+		      "type": "numeric",
+		      "value": 2
 		    },
 		    "BC": {
 		      "type": "symbolic",
@@ -19262,16 +19599,16 @@ describe("triangleDiagram widget tests", () => {
 		    "CA": {
 		      "type": "mathml",
 		      "value": 6,
-		      "mathml": "<mtext>Ladder </mtext><mn>6</mn><mtext> m</mtext>"
+		      "mathml": "<mrow><mtext>Ladder</mtext><mo> </mo><mn>6</mn></mrow>"
 		    }
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_A1",
 		      "size": null,
-		      "vertex": "pt_tri_b"
+		      "vertex": "pt_tri_B1"
 		    }
 		  ],
 		  "constructionLines": null
@@ -19301,57 +19638,57 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 284,
-		  "height": 300,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a1",
+		      "id": "pt_tri_A",
 		      "label": "Aurora"
 		    },
 		    "B": {
-		      "id": "pt_tri_b1",
+		      "id": "pt_tri_B",
 		      "label": "Burlington"
 		    },
 		    "C": {
-		      "id": "pt_tri_c1",
+		      "id": "pt_tri_C",
 		      "label": "Clifton"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_a1",
-		      "color": "#000000",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_C",
+		      "color": "#11accd",
+		      "value": {
+		        "type": "numeric",
+		        "value": 48
+		      },
+		      "vertex": "pt_tri_A",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_b1",
+		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_b1",
-		      "color": "#000000",
+		      "to": "pt_tri_A",
+		      "from": "pt_tri_B",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 40
+		        "value": 42
 		      },
-		      "vertex": "pt_tri_a1",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a1",
-		      "from": "pt_tri_b1",
-		      "color": "#000000",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "y"
-		      },
-		      "vertex": "pt_tri_c1",
+		      "vertex": "pt_tri_C",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -19373,10 +19710,10 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_c1",
-		      "from": "pt_tri_a1",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "size": null,
-		      "vertex": "pt_tri_b1"
+		      "vertex": "pt_tri_B"
 		    }
 		  ],
 		  "constructionLines": null
@@ -19398,9 +19735,9 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x3e817b460991138e
-	// Question: Distance between Hawick and Kelso
+	// Question: Find the distance between Hawick and Kelso
 	// Widget key: image_1
-	test("triangle-diagram - [x3e817b460991138e] Distance between Hawick and Kelso", async () => {
+	test("triangle-diagram - [x3e817b460991138e] Find the distance between Hawick and Kelso", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -19410,53 +19747,53 @@ describe("triangleDiagram widget tests", () => {
 		  "height": 328,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
-		      "label": "Abbotsford"
+		      "id": "pt_tri_hawick",
+		      "label": "Hawick"
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
-		      "label": "Kelso"
+		      "id": "pt_tri_abbotsford",
+		      "label": "Abbotsford"
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
-		      "label": "Hawick"
+		      "id": "pt_tri_kelso",
+		      "label": "Kelso"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_kelso",
+		      "from": "pt_tri_hawick",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_abbotsford",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_hawick",
+		      "from": "pt_tri_abbotsford",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 41.2
+		        "value": 41.186
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_kelso",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_abbotsford",
+		      "from": "pt_tri_kelso",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "θ"
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_hawick",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -19464,32 +19801,32 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "numeric",
-		      "value": 17
+		      "value": 15
 		    },
 		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "x"
+		      "type": "numeric",
+		      "value": 17
 		    },
 		    "CA": {
-		      "type": "numeric",
-		      "value": 15
+		      "type": "symbolic",
+		      "symbol": "x"
 		    }
 		  },
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_kelso",
+		      "from": "pt_tri_hawick",
 		      "size": null,
-		      "vertex": "pt_tri_A"
+		      "vertex": "pt_tri_abbotsford"
 		    }
 		  ],
 		  "constructionLines": [
 		    {
 		      "style": "dashed",
 		      "points": [
-		        "pt_tri_B",
-		        "pt_tri_C"
+		        "pt_tri_hawick",
+		        "pt_tri_kelso"
 		      ]
 		    }
 		  ]
@@ -19511,65 +19848,65 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x87af79406168d1f4
-	// Question: Horizontal distance of a ramp (Pythagorean Theorem)
+	// Question: Find the horizontal distance of a ramp
 	// Widget key: image_1
-	test("triangle-diagram - [x87af79406168d1f4] Horizontal distance of a ramp (Pythagorean Theorem)", async () => {
+	test("triangle-diagram - [x87af79406168d1f4] Find the horizontal distance of a ramp", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 300,
-		  "height": 159,
+		  "width": 400,
+		  "height": 350,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C",
 		      "label": "back of truck"
 		    }
 		  },
 		  "altitudes": null,
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
-		      "vertex": "pt_tri_b",
+		      "vertex": "pt_tri_B",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_B",
+		      "color": "#11accd",
 		      "value": {
 		        "type": "numeric",
-		        "value": 31.7
+		        "value": 50
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
+		      "to": "pt_tri_B",
+		      "from": "pt_tri_A",
+		      "color": "#11accd",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "?"
+		        "type": "numeric",
+		        "value": 40
 		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -19591,10 +19928,10 @@ describe("triangleDiagram widget tests", () => {
 		  "extraPoints": null,
 		  "rightAngleMarks": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
 		      "size": null,
-		      "vertex": "pt_tri_b"
+		      "vertex": "pt_tri_B"
 		    }
 		  ],
 		  "constructionLines": null
@@ -19616,9 +19953,9 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd8a09ab5d79af52a
-	// Question: Identify the height corresponding to a triangle's base
+	// Question: Identify the height corresponding to a given base in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xd8a09ab5d79af52a] Identify the height corresponding to a triangle's base", async () => {
+	test("triangle-diagram - [xd8a09ab5d79af52a] Identify the height corresponding to a given base in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -19628,15 +19965,15 @@ describe("triangleDiagram widget tests", () => {
 		  "height": 315,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_a",
+		      "id": "pt_tri_A1",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_b",
+		      "id": "pt_tri_B1",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_c",
+		      "id": "pt_tri_C1",
 		      "label": ""
 		    }
 		  },
@@ -19649,44 +19986,44 @@ describe("triangleDiagram widget tests", () => {
 		        "symbol": "C"
 		      },
 		      "toSide": "AB",
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C1",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#cccccc",
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_C1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 65
 		      },
-		      "vertex": "pt_tri_a",
+		      "vertex": "pt_tri_A1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_c",
-		      "color": "#cccccc",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_A1",
+		      "color": "#1f77b4",
+		      "value": {
+		        "type": "numeric",
+		        "value": 55
+		      },
+		      "vertex": "pt_tri_B1",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_B1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
 		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_b",
-		      "from": "pt_tri_a",
-		      "color": "#cccccc",
-		      "value": {
-		        "type": "numeric",
-		        "value": 70
-		      },
-		      "vertex": "pt_tri_c",
+		      "vertex": "pt_tri_C1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -19698,11 +20035,11 @@ describe("triangleDiagram widget tests", () => {
 		    },
 		    "BC": {
 		      "type": "symbolic",
-		      "symbol": "A"
+		      "symbol": "B"
 		    },
 		    "CA": {
 		      "type": "symbolic",
-		      "symbol": "B"
+		      "symbol": "A"
 		    }
 		  },
 		  "extraPoints": null,
@@ -19726,16 +20063,16 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xf49885bd8acb0a4e
-	// Question: Identify the base corresponding to a given height in a triangle
+	// Question: Identify the base corresponding to a given height
 	// Widget key: image_1
-	test("triangle-diagram - [xf49885bd8acb0a4e] Identify the base corresponding to a given height in a triangle", async () => {
+	test("triangle-diagram - [xf49885bd8acb0a4e] Identify the base corresponding to a given height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 203,
-		  "height": 320,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
 		      "id": "pt_tri_A",
@@ -19767,10 +20104,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#0000ff",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 60
+		        "value": 70
 		      },
 		      "vertex": "pt_tri_A",
 		      "showArc": false,
@@ -19779,10 +20116,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_A",
 		      "from": "pt_tri_C",
-		      "color": "#0000ff",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 50
+		        "value": 60
 		      },
 		      "vertex": "pt_tri_B",
 		      "showArc": false,
@@ -19791,10 +20128,10 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#0000ff",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
-		        "value": 70
+		        "value": 50
 		      },
 		      "vertex": "pt_tri_C",
 		      "showArc": false,
@@ -19836,27 +20173,27 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xb7ed60e9816e6d64
-	// Question: Identify the base corresponding to a given height in a triangle
+	// Question: Identify the base corresponding to a height in a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [xb7ed60e9816e6d64] Identify the base corresponding to a given height in a triangle", async () => {
+	test("triangle-diagram - [xb7ed60e9816e6d64] Identify the base corresponding to a height in a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
 		  "width": 320,
-		  "height": 253,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A1",
+		      "id": "pt_tri_a",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B1",
+		      "id": "pt_tri_b",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C1",
+		      "id": "pt_tri_c",
 		      "label": ""
 		    }
 		  },
@@ -19869,44 +20206,44 @@ describe("triangleDiagram widget tests", () => {
 		        "symbol": "height"
 		      },
 		      "toSide": "AB",
-		      "vertex": "pt_tri_C1",
+		      "vertex": "pt_tri_c",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C1",
-		      "from": "pt_tri_B1",
-		      "color": "#8888ff",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#999999",
 		      "value": {
 		        "type": "numeric",
 		        "value": 50
 		      },
-		      "vertex": "pt_tri_A1",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A1",
-		      "from": "pt_tri_C1",
-		      "color": "#8888ff",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
+		      "color": "#999999",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
 		      },
-		      "vertex": "pt_tri_B1",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B1",
-		      "from": "pt_tri_A1",
-		      "color": "#8888ff",
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#999999",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
 		      },
-		      "vertex": "pt_tri_C1",
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -19946,28 +20283,28 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7a13895bff90e42f
-	// Question: Identify the base corresponding to a given height in a triangle
+	// Question: Identify the base corresponding to a given height
 	// Widget key: image_1
-	test("triangle-diagram - [x7a13895bff90e42f] Identify the base corresponding to a given height in a triangle", async () => {
+	test("triangle-diagram - [x7a13895bff90e42f] Identify the base corresponding to a given height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 320,
-		  "height": 184,
+		  "width": 400,
+		  "height": 350,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
-		      "label": " "
+		      "id": "pt_tri_a",
+		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
-		      "label": " "
+		      "id": "pt_tri_b",
+		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
-		      "label": " "
+		      "id": "pt_tri_c",
+		      "label": ""
 		    }
 		  },
 		  "altitudes": [
@@ -19978,6 +20315,123 @@ describe("triangleDiagram widget tests", () => {
 		        "type": "symbolic",
 		        "symbol": "height"
 		      },
+		      "toSide": "AB",
+		      "vertex": "pt_tri_c",
+		      "withRightAngle": true
+		    }
+		  ],
+		  "angleArcs": [
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "color": "#0c7f99",
+		      "value": {
+		        "type": "numeric",
+		        "value": 90
+		      },
+		      "vertex": "pt_tri_c",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
+		      "color": "#7854ab",
+		      "value": {
+		        "type": "numeric",
+		        "value": 40
+		      },
+		      "vertex": "pt_tri_a",
+		      "showArc": false,
+		      "showLabel": false
+		    },
+		    {
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
+		      "color": "#a75a05",
+		      "value": {
+		        "type": "numeric",
+		        "value": 50
+		      },
+		      "vertex": "pt_tri_b",
+		      "showArc": false,
+		      "showLabel": false
+		    }
+		  ],
+		  "sideLabels": {
+		    "AB": {
+		      "type": "symbolic",
+		      "symbol": "C"
+		    },
+		    "BC": {
+		      "type": "symbolic",
+		      "symbol": "B"
+		    },
+		    "CA": {
+		      "type": "symbolic",
+		      "symbol": "A"
+		    }
+		  },
+		  "extraPoints": null,
+		  "rightAngleMarks": [
+		    {
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
+		      "size": null,
+		      "vertex": "pt_tri_c"
+		    }
+		  ],
+		  "constructionLines": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for triangleDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa367ddc85a195db9
+	// Question: Identify the height corresponding to a labeled base
+	// Widget key: image_1
+	test("triangle-diagram - [xa367ddc85a195db9] Identify the height corresponding to a labeled base", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "triangleDiagram",
+		  "lines": null,
+		  "width": 320,
+		  "height": 320,
+		  "points": {
+		    "A": {
+		      "id": "pt_tri_A",
+		      "label": ""
+		    },
+		    "B": {
+		      "id": "pt_tri_B",
+		      "label": ""
+		    },
+		    "C": {
+		      "id": "pt_tri_C",
+		      "label": ""
+		    }
+		  },
+		  "altitudes": [
+		    {
+		      "color": "#7854ab",
+		      "style": "dashed",
+		      "value": {
+		        "type": "symbolic",
+		        "symbol": "C"
+		      },
 		      "toSide": "CA",
 		      "vertex": "pt_tri_B",
 		      "withRightAngle": true
@@ -19987,44 +20441,44 @@ describe("triangleDiagram widget tests", () => {
 		    {
 		      "to": "pt_tri_C",
 		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "color": "#999999",
 		      "value": {
 		        "type": "numeric",
-		        "value": 35
+		        "value": 30
 		      },
 		      "vertex": "pt_tri_A",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
+		      "to": "pt_tri_C",
+		      "from": "pt_tri_A",
+		      "color": "#999999",
 		      "value": {
 		        "type": "numeric",
 		        "value": 90
 		      },
 		      "vertex": "pt_tri_B",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    },
 		    {
 		      "to": "pt_tri_B",
 		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "color": "#999999",
 		      "value": {
 		        "type": "numeric",
-		        "value": 55
+		        "value": 60
 		      },
 		      "vertex": "pt_tri_C",
-		      "showArc": false,
+		      "showArc": true,
 		      "showLabel": false
 		    }
 		  ],
 		  "sideLabels": {
 		    "AB": {
 		      "type": "symbolic",
-		      "symbol": "A"
+		      "symbol": "base"
 		    },
 		    "BC": {
 		      "type": "symbolic",
@@ -20032,7 +20486,7 @@ describe("triangleDiagram widget tests", () => {
 		    },
 		    "CA": {
 		      "type": "symbolic",
-		      "symbol": "C"
+		      "symbol": "A"
 		    }
 		  },
 		  "extraPoints": null,
@@ -20062,146 +20516,29 @@ describe("triangleDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa367ddc85a195db9
-	// Question: Identify the height corresponding to a given base
-	// Widget key: image_1
-	test("triangle-diagram - [xa367ddc85a195db9] Identify the height corresponding to a given base", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "triangleDiagram",
-		  "lines": null,
-		  "width": 320,
-		  "height": 276,
-		  "points": {
-		    "A": {
-		      "id": "pt_tri_a",
-		      "label": ""
-		    },
-		    "B": {
-		      "id": "pt_tri_b",
-		      "label": ""
-		    },
-		    "C": {
-		      "id": "pt_tri_c",
-		      "label": ""
-		    }
-		  },
-		  "altitudes": [
-		    {
-		      "color": "#7854ab",
-		      "style": "dashed",
-		      "value": {
-		        "type": "symbolic",
-		        "symbol": "C"
-		      },
-		      "toSide": "CA",
-		      "vertex": "pt_tri_b",
-		      "withRightAngle": true
-		    }
-		  ],
-		  "angleArcs": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 90
-		      },
-		      "vertex": "pt_tri_b",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 35
-		      },
-		      "vertex": "pt_tri_a",
-		      "showArc": false,
-		      "showLabel": false
-		    },
-		    {
-		      "to": "pt_tri_a",
-		      "from": "pt_tri_b",
-		      "color": "#000000",
-		      "value": {
-		        "type": "numeric",
-		        "value": 55
-		      },
-		      "vertex": "pt_tri_c",
-		      "showArc": false,
-		      "showLabel": false
-		    }
-		  ],
-		  "sideLabels": {
-		    "AB": {
-		      "type": "symbolic",
-		      "symbol": "base"
-		    },
-		    "BC": {
-		      "type": "symbolic",
-		      "symbol": "B"
-		    },
-		    "CA": {
-		      "type": "symbolic",
-		      "symbol": "A"
-		    }
-		  },
-		  "extraPoints": null,
-		  "rightAngleMarks": [
-		    {
-		      "to": "pt_tri_c",
-		      "from": "pt_tri_a",
-		      "size": null,
-		      "vertex": "pt_tri_b"
-		    }
-		  ],
-		  "constructionLines": null
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for triangleDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xc8e7ed01e99d4e7a
-	// Question: Identify the base corresponding to a given height in a triangle
+	// Question: Identify the base corresponding to a triangle's height
 	// Widget key: image_1
-	test("triangle-diagram - [xc8e7ed01e99d4e7a] Identify the base corresponding to a given height in a triangle", async () => {
+	test("triangle-diagram - [xc8e7ed01e99d4e7a] Identify the base corresponding to a triangle's height", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 320,
-		  "height": 136,
+		  "width": 400,
+		  "height": 320,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
-		      "label": ""
+		      "id": "pt_tri_L",
+		      "label": "L"
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
-		      "label": ""
+		      "id": "pt_tri_R",
+		      "label": "R"
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
-		      "label": ""
+		      "id": "pt_tri_T",
+		      "label": "T"
 		    }
 		  },
 		  "altitudes": [
@@ -20213,44 +20550,44 @@ describe("triangleDiagram widget tests", () => {
 		        "symbol": "height"
 		      },
 		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_T",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_T",
+		      "from": "pt_tri_R",
 		      "color": "#888888",
 		      "value": {
 		        "type": "numeric",
-		        "value": 26.565051
+		        "value": 70
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_L",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_L",
+		      "from": "pt_tri_T",
 		      "color": "#888888",
 		      "value": {
 		        "type": "numeric",
-		        "value": 45
+		        "value": 50
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_R",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_R",
+		      "from": "pt_tri_L",
 		      "color": "#888888",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
+		        "type": "numeric",
+		        "value": 60
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_T",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -20298,69 +20635,69 @@ describe("triangleDiagram widget tests", () => {
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 202,
-		  "height": 320,
+		  "width": 360,
+		  "height": 360,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_A1",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_B1",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_C1",
 		      "label": ""
 		    }
 		  },
 		  "altitudes": [
 		    {
-		      "color": "#ca337c",
+		      "color": "#7854ab",
 		      "style": "dashed",
 		      "value": {
 		        "type": "symbolic",
 		        "symbol": "B"
 		      },
-		      "toSide": "BC",
-		      "vertex": "pt_tri_A",
+		      "toSide": "AB",
+		      "vertex": "pt_tri_C1",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_B",
-		      "color": "#000000",
+		      "to": "pt_tri_C1",
+		      "from": "pt_tri_B1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 50
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_A1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_C",
-		      "color": "#000000",
+		      "to": "pt_tri_A1",
+		      "from": "pt_tri_C1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 60
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_B1",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_A",
-		      "color": "#000000",
+		      "to": "pt_tri_B1",
+		      "from": "pt_tri_A1",
+		      "color": "#1f77b4",
 		      "value": {
 		        "type": "numeric",
 		        "value": 70
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_C1",
 		      "showArc": false,
 		      "showLabel": false
 		    }
@@ -20368,11 +20705,11 @@ describe("triangleDiagram widget tests", () => {
 		  "sideLabels": {
 		    "AB": {
 		      "type": "symbolic",
-		      "symbol": "A"
+		      "symbol": "base"
 		    },
 		    "BC": {
 		      "type": "symbolic",
-		      "symbol": "base"
+		      "symbol": "A"
 		    },
 		    "CA": {
 		      "type": "symbolic",
@@ -20400,27 +20737,27 @@ describe("triangleDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x101c93fb961c9628
-	// Question: Identify the height corresponding to a given base
+	// Question: Identify the height of a triangle
 	// Widget key: image_1
-	test("triangle-diagram - [x101c93fb961c9628] Identify the height corresponding to a given base", async () => {
+	test("triangle-diagram - [x101c93fb961c9628] Identify the height of a triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "triangleDiagram",
 		  "lines": null,
-		  "width": 320,
-		  "height": 156,
+		  "width": 400,
+		  "height": 350,
 		  "points": {
 		    "A": {
-		      "id": "pt_tri_A",
+		      "id": "pt_tri_a",
 		      "label": ""
 		    },
 		    "B": {
-		      "id": "pt_tri_B",
+		      "id": "pt_tri_b",
 		      "label": ""
 		    },
 		    "C": {
-		      "id": "pt_tri_C",
+		      "id": "pt_tri_c",
 		      "label": ""
 		    }
 		  },
@@ -20433,44 +20770,44 @@ describe("triangleDiagram widget tests", () => {
 		        "symbol": "A"
 		      },
 		      "toSide": "AB",
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c",
 		      "withRightAngle": true
 		    }
 		  ],
 		  "angleArcs": [
 		    {
-		      "to": "pt_tri_B",
-		      "from": "pt_tri_C",
+		      "to": "pt_tri_c",
+		      "from": "pt_tri_b",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 26
+		        "value": 50
 		      },
-		      "vertex": "pt_tri_A",
+		      "vertex": "pt_tri_a",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_C",
-		      "from": "pt_tri_A",
+		      "to": "pt_tri_a",
+		      "from": "pt_tri_c",
 		      "color": "#000000",
 		      "value": {
 		        "type": "numeric",
-		        "value": 45
+		        "value": 70
 		      },
-		      "vertex": "pt_tri_B",
+		      "vertex": "pt_tri_b",
 		      "showArc": false,
 		      "showLabel": false
 		    },
 		    {
-		      "to": "pt_tri_A",
-		      "from": "pt_tri_B",
+		      "to": "pt_tri_b",
+		      "from": "pt_tri_a",
 		      "color": "#000000",
 		      "value": {
-		        "type": "symbolic",
-		        "symbol": "x"
+		        "type": "numeric",
+		        "value": 60
 		      },
-		      "vertex": "pt_tri_C",
+		      "vertex": "pt_tri_c",
 		      "showArc": false,
 		      "showLabel": false
 		    }

@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.963Z
+// Generated on: 2025-09-18T05:17:02.162Z
 // Widget Type: boxPlot
 // Source: Real questions from database
 //
@@ -26,9 +26,9 @@ import * as logger from "@superbuilders/slog"
 
 describe("boxPlot widget tests", () => {
 	// Extracted from question: xbb6a2bdd4885505a
-	// Question: Compare dot plot and box plot: median and mode
+	// Question: Median and mode: dot plot vs. box plot
 	// Widget key: image_2
-	test("box-plot - [xbb6a2bdd4885505a] Compare dot plot and box plot: median and mode", async () => {
+	test("box-plot - [xbb6a2bdd4885505a] Median and mode: dot plot vs. box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -50,78 +50,14 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 180,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 9,
 		    "q3": 13,
 		    "max": 16,
 		    "min": 7,
 		    "median": 10
-		  },
-		  "boxColor": "#E8F4FD",
-		  "medianColor": "#0c7f99"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for boxPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe2f8841804b6fb91
-	// Question: Dot plot vs. box plot: quartiles and counts
-	// Widget key: image_2
-	test("box-plot - [xe2f8841804b6fb91] Dot plot vs. box plot: quartiles and counts", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "axis": {
-		    "max": 20,
-		    "min": 0,
-		    "label": "Temperature in degrees Celsius",
-		    "tickLabels": [
-		      0,
-		      1,
-		      2,
-		      3,
-		      4,
-		      5,
-		      6,
-		      7,
-		      8,
-		      9,
-		      10,
-		      11,
-		      12,
-		      13,
-		      14,
-		      15,
-		      16,
-		      17,
-		      18,
-		      19,
-		      20
-		    ]
-		  },
-		  "type": "boxPlot",
-		  "width": 320,
-		  "height": 107,
-		  "summary": {
-		    "q1": 9,
-		    "q3": 14,
-		    "max": 19,
-		    "min": 6,
-		    "median": 11
 		  },
 		  "boxColor": "#E8F4FD",
 		  "medianColor": "#0C7F99"
@@ -142,10 +78,10 @@ describe("boxPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xbab2bf42865b4f25
-	// Question: Choose the appropriate display: dot plot vs. box plot
+	// Extracted from question: xe2f8841804b6fb91
+	// Question: Dot plot vs. box plot: quartile visibility and counting
 	// Widget key: image_2
-	test("box-plot - [xbab2bf42865b4f25] Choose the appropriate display: dot plot vs. box plot", async () => {
+	test("box-plot - [xe2f8841804b6fb91] Dot plot vs. box plot: quartile visibility and counting", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -178,8 +114,72 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 320,
-		  "height": 107,
+		  "width": 400,
+		  "height": 320,
+		  "summary": {
+		    "q1": 9,
+		    "q3": 14,
+		    "max": 19,
+		    "min": 6,
+		    "median": 11
+		  },
+		  "boxColor": "#E8F4FD",
+		  "medianColor": "#0c7f99"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for boxPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbab2bf42865b4f25
+	// Question: Compare dot plot and box plot
+	// Widget key: image_2
+	test("box-plot - [xbab2bf42865b4f25] Compare dot plot and box plot", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 20,
+		    "min": 0,
+		    "label": "Temperature in degrees Celsius",
+		    "tickLabels": [
+		      0,
+		      1,
+		      2,
+		      3,
+		      4,
+		      5,
+		      6,
+		      7,
+		      8,
+		      9,
+		      10,
+		      11,
+		      12,
+		      13,
+		      14,
+		      15,
+		      16,
+		      17,
+		      18,
+		      19,
+		      20
+		    ]
+		  },
+		  "type": "boxPlot",
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 9,
 		    "q3": 14,
@@ -207,9 +207,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x31466f8bec7efbee
-	// Question: Identify information from a histogram and a box plot
+	// Question: Interpreting a histogram and a box plot
 	// Widget key: image_2
-	test("box-plot - [x31466f8bec7efbee] Identify information from a histogram and a box plot", async () => {
+	test("box-plot - [x31466f8bec7efbee] Interpreting a histogram and a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -237,8 +237,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 150,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 4,
 		    "q3": 9,
@@ -266,9 +266,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9c61ff00df94cabb
-	// Question: Histogram vs. box plot: identify information
+	// Question: Compare information from a histogram and a box plot
 	// Widget key: image_2
-	test("box-plot - [x9c61ff00df94cabb] Histogram vs. box plot: identify information", async () => {
+	test("box-plot - [x9c61ff00df94cabb] Compare information from a histogram and a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -297,7 +297,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 320,
-		  "height": 120,
+		  "height": 320,
 		  "summary": {
 		    "q1": 4,
 		    "q3": 9,
@@ -325,9 +325,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x2d3d2522a483ff94
-	// Question: Identify what histograms and box plots show
+	// Question: Histograms vs. box plots: choose the display
 	// Widget key: image_2
-	test("box-plot - [x2d3d2522a483ff94] Identify what histograms and box plots show", async () => {
+	test("box-plot - [x2d3d2522a483ff94] Histograms vs. box plots: choose the display", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -347,7 +347,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 320,
-		  "height": 85,
+		  "height": 300,
 		  "summary": {
 		    "q1": 62,
 		    "q3": 175,
@@ -375,9 +375,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x532581f0c3a0f52e
-	// Question: Dot plot vs. box plot: interpret features
+	// Question: Dot plot versus box plot: identifying display features
 	// Widget key: image_2
-	test("box-plot - [x532581f0c3a0f52e] Dot plot vs. box plot: interpret features", async () => {
+	test("box-plot - [x532581f0c3a0f52e] Dot plot versus box plot: identifying display features", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -399,8 +399,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 300,
-		  "height": 180,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 9,
 		    "q3": 13,
@@ -428,16 +428,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x673291a23b728108
-	// Question: Histogram vs. box plot: minimum and total count
+	// Question: Comparing a histogram and a box plot
 	// Widget key: image_2
-	test("box-plot - [x673291a23b728108] Histogram vs. box plot: minimum and total count", async () => {
+	test("box-plot - [x673291a23b728108] Comparing a histogram and a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 300,
 		    "min": 0,
-		    "label": null,
+		    "label": "Distance (thousands of kilometers)",
 		    "tickLabels": [
 		      0,
 		      50,
@@ -449,10 +449,10 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 150,
+		  "width": 400,
+		  "height": 360,
 		  "summary": {
-		    "q1": 65,
+		    "q1": 62,
 		    "q3": 175,
 		    "max": 285,
 		    "min": 10,
@@ -478,33 +478,39 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x14e12de20298cdfe
-	// Question: Interpret information from two box plots
+	// Question: Interpret July temperatures from box plots
 	// Widget key: image_1
-	test("box-plot - [x14e12de20298cdfe] Interpret information from two box plots", async () => {
+	test("box-plot - [x14e12de20298cdfe] Interpret July temperatures from box plots", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 36,
 		    "min": 20,
-		    "label": "Temperature (degrees Celsius)",
+		    "label": "Temperature, in Degrees Celsius",
 		    "tickLabels": [
 		      20,
-		      25,
+		      24.5,
+		      28,
+		      29,
+		      29.5,
 		      30,
-		      35,
+		      30.67,
+		      33.33,
+		      34,
+		      35.5,
 		      36
 		    ]
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 144,
+		  "height": 320,
 		  "summary": {
-		    "q1": 29,
-		    "q3": 33.33,
-		    "max": 36,
-		    "min": 24.5,
-		    "median": 30.67
+		    "q1": 28,
+		    "q3": 34,
+		    "max": 35.5,
+		    "min": 20,
+		    "median": 29.5
 		  },
 		  "boxColor": "#E8F4FD",
 		  "medianColor": "#FF6B6B"
@@ -526,9 +532,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7bd1b167bacb5bee
-	// Question: Interpret box plots of macaw life spans
+	// Question: Interpret box plots of macaw lifespans
 	// Widget key: image_1
-	test("box-plot - [x7bd1b167bacb5bee] Interpret box plots of macaw life spans", async () => {
+	test("box-plot - [x7bd1b167bacb5bee] Interpret box plots of macaw lifespans", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -538,73 +544,30 @@ describe("boxPlot widget tests", () => {
 		    "label": "Life Span, in years",
 		    "tickLabels": [
 		      30,
+		      32,
 		      40,
-		      50,
+		      48,
+		      54,
 		      60,
+		      62,
+		      66,
 		      70,
+		      73,
+		      77,
 		      80,
+		      84,
 		      90
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 477,
-		  "height": 144,
+		  "width": 480,
+		  "height": 320,
 		  "summary": {
 		    "q1": 48,
 		    "q3": 62,
 		    "max": 77,
 		    "min": 32,
 		    "median": 54
-		  },
-		  "boxColor": "#E8F4FD",
-		  "medianColor": "#333333"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for boxPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5bc8b7385a25dc55
-	// Question: Interpret information from box plots
-	// Widget key: image_1
-	test("box-plot - [x5bc8b7385a25dc55] Interpret information from box plots", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "axis": {
-		    "max": 210,
-		    "min": 150,
-		    "label": "Height (in centimeters)",
-		    "tickLabels": [
-		      150,
-		      160,
-		      170,
-		      180,
-		      190,
-		      200,
-		      210
-		    ]
-		  },
-		  "type": "boxPlot",
-		  "width": 480,
-		  "height": 144,
-		  "summary": {
-		    "q1": 173,
-		    "q3": 191,
-		    "max": 203,
-		    "min": 165,
-		    "median": 188
 		  },
 		  "boxColor": "#E8F4FD",
 		  "medianColor": "#FF6B6B"
@@ -625,10 +588,63 @@ describe("boxPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x173d999a33a18c53
-	// Question: Interpret information from box plots
+	// Extracted from question: x5bc8b7385a25dc55
+	// Question: Interpret information from box plots of player heights
 	// Widget key: image_1
-	test("box-plot - [x173d999a33a18c53] Interpret information from box plots", async () => {
+	test("box-plot - [x5bc8b7385a25dc55] Interpret information from box plots of player heights", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 205,
+		    "min": 155,
+		    "label": "Height (cm)",
+		    "tickLabels": [
+		      155,
+		      160,
+		      165,
+		      168,
+		      173,
+		      178,
+		      188,
+		      191,
+		      203,
+		      205
+		    ]
+		  },
+		  "type": "boxPlot",
+		  "width": 480,
+		  "height": 320,
+		  "summary": {
+		    "q1": 173,
+		    "q3": 191,
+		    "max": 203,
+		    "min": 165,
+		    "median": 188
+		  },
+		  "boxColor": "#E8F4FD",
+		  "medianColor": "#000000"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for boxPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x173d999a33a18c53
+	// Question: Interpret box plots: U.S. qualifier vs. Olympics
+	// Widget key: image_1
+	test("box-plot - [x173d999a33a18c53] Interpret box plots: U.S. qualifier vs. Olympics", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -638,15 +654,22 @@ describe("boxPlot widget tests", () => {
 		    "label": "Distance, in meters",
 		    "tickLabels": [
 		      7.6,
-		      7.8,
+		      7.68,
+		      7.7,
+		      7.74,
+		      7.83,
+		      7.89,
+		      7.9,
 		      8,
-		      8.2,
+		      8.04,
+		      8.12,
+		      8.31,
 		      8.4
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 481,
-		  "height": 144,
+		  "width": 480,
+		  "height": 320,
 		  "summary": {
 		    "q1": 7.83,
 		    "q3": 8.12,
@@ -674,9 +697,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x000463496ba0a6a3
-	// Question: Interpret information from box plots: Olympic qualifier vs. final
+	// Question: Interpret box plots for discus throw distances
 	// Widget key: image_1
-	test("box-plot - [x000463496ba0a6a3] Interpret information from box plots: Olympic qualifier vs. final", async () => {
+	test("box-plot - [x000463496ba0a6a3] Interpret box plots for discus throw distances", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -686,24 +709,25 @@ describe("boxPlot widget tests", () => {
 		    "label": "Distance, in meters",
 		    "tickLabels": [
 		      54,
-		      54.5,
+		      56,
 		      58,
 		      60,
-		      61.5,
+		      62,
 		      64,
 		      66,
+		      68,
 		      69
 		    ]
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 144,
+		  "height": 320,
 		  "summary": {
-		    "q1": 61.5,
-		    "q3": 66,
-		    "max": 69,
-		    "min": 60,
-		    "median": 64
+		    "q1": 54.5,
+		    "q3": 60,
+		    "max": 63,
+		    "min": 54,
+		    "median": 58
 		  },
 		  "boxColor": "#E8F4FD",
 		  "medianColor": "#FF6B6B"
@@ -761,7 +785,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 114,
+		  "height": 320,
 		  "summary": {
 		    "q1": 5,
 		    "q3": 11,
@@ -770,7 +794,57 @@ describe("boxPlot widget tests", () => {
 		    "median": 8
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for boxPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x63e9045840f84fe7
+	// Question: Estimate percentage below the first quartile on a box plot
+	// Widget key: image_1
+	test("box-plot - [x63e9045840f84fe7] Estimate percentage below the first quartile on a box plot", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 20,
+		    "min": 0,
+		    "label": "Number of teams",
+		    "tickLabels": [
+		      0,
+		      4,
+		      7,
+		      10,
+		      14,
+		      18,
+		      20
+		    ]
+		  },
+		  "type": "boxPlot",
+		  "width": 480,
+		  "height": 320,
+		  "summary": {
+		    "q1": 7,
+		    "q3": 14,
+		    "max": 18,
+		    "min": 4,
+		    "median": 10
+		  },
+		  "boxColor": "#E8F4FD",
+		  "medianColor": "#222222"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -789,9 +863,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9fdf3ffdc6acf814
-	// Question: Percent of salons at or below a value on a box plot
+	// Question: Percent at or below a value from a box plot
 	// Widget key: image_1
-	test("box-plot - [x9fdf3ffdc6acf814] Percent of salons at or below a value on a box plot", async () => {
+	test("box-plot - [x9fdf3ffdc6acf814] Percent at or below a value from a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -825,7 +899,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 114,
+		  "height": 320,
 		  "summary": {
 		    "q1": 9,
 		    "q3": 15,
@@ -852,74 +926,10 @@ describe("boxPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x63e9045840f84fe7
-	// Question: Percent below a value from a box plot
-	// Widget key: image_1
-	test("box-plot - [x63e9045840f84fe7] Percent below a value from a box plot", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "axis": {
-		    "max": 20,
-		    "min": 0,
-		    "label": "Number of teams",
-		    "tickLabels": [
-		      0,
-		      1,
-		      2,
-		      3,
-		      4,
-		      5,
-		      6,
-		      7,
-		      8,
-		      9,
-		      10,
-		      11,
-		      12,
-		      13,
-		      14,
-		      15,
-		      16,
-		      17,
-		      18,
-		      19,
-		      20
-		    ]
-		  },
-		  "type": "boxPlot",
-		  "width": 480,
-		  "height": 114,
-		  "summary": {
-		    "q1": 7,
-		    "q3": 14,
-		    "max": 18,
-		    "min": 4,
-		    "median": 10
-		  },
-		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for boxPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xa5efc39e695e29a1
-	// Question: Interpret a box plot (third quartile)
+	// Question: Interpret a box plot: 25 percent above which value
 	// Widget key: image_1
-	test("box-plot - [xa5efc39e695e29a1] Interpret a box plot (third quartile)", async () => {
+	test("box-plot - [xa5efc39e695e29a1] Interpret a box plot: 25 percent above which value", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -953,7 +963,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 114,
+		  "height": 300,
 		  "summary": {
 		    "q1": 56,
 		    "q3": 70,
@@ -961,7 +971,7 @@ describe("boxPlot widget tests", () => {
 		    "min": 50,
 		    "median": 64
 		  },
-		  "boxColor": "#e6e6e6",
+		  "boxColor": "#E8F4FD",
 		  "medianColor": "#000000"
 		} as unknown as WidgetInput
 
@@ -981,16 +991,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf03b02bfca5708aa
-	// Question: Interpret a box plot: third quartile
+	// Question: Interpret a box plot (third quartile)
 	// Widget key: image_1
-	test("box-plot - [xf03b02bfca5708aa] Interpret a box plot: third quartile", async () => {
+	test("box-plot - [xf03b02bfca5708aa] Interpret a box plot (third quartile)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 20,
 		    "min": 0,
-		    "label": "Number of aces",
+		    "label": "Aces per match",
 		    "tickLabels": [
 		      0,
 		      1,
@@ -1017,7 +1027,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 114,
+		  "height": 300,
 		  "summary": {
 		    "q1": 3,
 		    "q3": 10,
@@ -1026,7 +1036,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 6
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#222222"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1045,9 +1055,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa5177a69ef37750e
-	// Question: About what number do 75% exceed on a box plot?
+	// Question: Interpret a box plot: proportion above a value
 	// Widget key: image_1
-	test("box-plot - [xa5177a69ef37750e] About what number do 75% exceed on a box plot?", async () => {
+	test("box-plot - [xa5177a69ef37750e] Interpret a box plot: proportion above a value", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1081,7 +1091,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 114,
+		  "height": 320,
 		  "summary": {
 		    "q1": 8,
 		    "q3": 15,
@@ -1109,9 +1119,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x5de2adf046cba23b
-	// Question: Interpret a box plot: median comparison
+	// Question: Interpret a box plot: median threshold
 	// Widget key: image_1
-	test("box-plot - [x5de2adf046cba23b] Interpret a box plot: median comparison", async () => {
+	test("box-plot - [x5de2adf046cba23b] Interpret a box plot: median threshold", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1141,7 +1151,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 141,
+		  "height": 320,
 		  "summary": {
 		    "q1": 90,
 		    "q3": 115,
@@ -1150,7 +1160,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 105
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1169,16 +1179,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x88dac43beb00218a
-	// Question: Interpret a box plot: quarterbacks' touchdowns
+	// Question: Interpret a box plot: first quartile
 	// Widget key: image_1
-	test("box-plot - [x88dac43beb00218a] Interpret a box plot: quarterbacks' touchdowns", async () => {
+	test("box-plot - [x88dac43beb00218a] Interpret a box plot: first quartile", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 20,
 		    "min": 0,
-		    "label": "Number of touchdowns",
+		    "label": "Touchdowns",
 		    "tickLabels": [
 		      0,
 		      1,
@@ -1205,7 +1215,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 114,
+		  "height": 320,
 		  "summary": {
 		    "q1": 7,
 		    "q3": 13,
@@ -1214,7 +1224,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 10
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#222222"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1233,9 +1243,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x6c4d03f4c30aea57
-	// Question: Percent below a value in a box plot
+	// Question: Percent below a value on a box plot
 	// Widget key: image_1
-	test("box-plot - [x6c4d03f4c30aea57] Percent below a value in a box plot", async () => {
+	test("box-plot - [x6c4d03f4c30aea57] Percent below a value on a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1263,7 +1273,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 450,
-		  "height": 150,
+		  "height": 300,
 		  "summary": {
 		    "q1": 45,
 		    "q3": 65,
@@ -1272,7 +1282,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 50
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1291,9 +1301,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x538b9e4e3fe54133
-	// Question: Percent of lakes below a value from a box plot
+	// Question: Interpret a box plot: percent below a value
 	// Widget key: image_1
-	test("box-plot - [x538b9e4e3fe54133] Percent of lakes below a value from a box plot", async () => {
+	test("box-plot - [x538b9e4e3fe54133] Interpret a box plot: percent below a value", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1303,20 +1313,31 @@ describe("boxPlot widget tests", () => {
 		    "label": "Number of houseboats",
 		    "tickLabels": [
 		      10,
+		      11,
 		      12,
+		      13,
+		      14,
 		      15,
+		      16,
+		      17,
 		      18,
+		      19,
 		      20,
+		      21,
+		      22,
 		      23,
+		      24,
 		      25,
 		      26,
+		      27,
+		      28,
 		      29,
 		      30
 		    ]
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 114,
+		  "height": 320,
 		  "summary": {
 		    "q1": 18,
 		    "q3": 26,
@@ -1325,6 +1346,70 @@ describe("boxPlot widget tests", () => {
 		    "median": 23
 		  },
 		  "boxColor": "#E8F4FD",
+		  "medianColor": "#FF6B6B"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for boxPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1e00424ce8c664b1
+	// Question: Select a data set from a box plot
+	// Widget key: image_1
+	test("box-plot - [x1e00424ce8c664b1] Select a data set from a box plot", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 20,
+		    "min": 0,
+		    "label": " ",
+		    "tickLabels": [
+		      0,
+		      1,
+		      2,
+		      3,
+		      4,
+		      5,
+		      6,
+		      7,
+		      8,
+		      9,
+		      10,
+		      11,
+		      12,
+		      13,
+		      14,
+		      15,
+		      16,
+		      17,
+		      18,
+		      19,
+		      20
+		    ]
+		  },
+		  "type": "boxPlot",
+		  "width": 480,
+		  "height": 300,
+		  "summary": {
+		    "q1": 7,
+		    "q3": 13,
+		    "max": 18,
+		    "min": 3,
+		    "median": 10
+		  },
+		  "boxColor": "#E8F4FD",
 		  "medianColor": "#000000"
 		} as unknown as WidgetInput
 
@@ -1344,16 +1429,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7f70dd43106640db
-	// Question: Choose the box plot that summarizes the data set
+	// Question: Select the box plot that summarizes the data
 	// Widget key: boxplot_choice_a
-	test("box-plot - [x7f70dd43106640db] Choose the box plot that summarizes the data set (1)", async () => {
+	test("box-plot - [x7f70dd43106640db] Select the box plot that summarizes the data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 29,
 		    "min": 15,
-		    "label": "Pages read",
+		    "label": null,
 		    "tickLabels": [
 		      15,
 		      16,
@@ -1373,8 +1458,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 150,
+		  "width": 420,
+		  "height": 320,
 		  "summary": {
 		    "q1": 18,
 		    "q3": 26,
@@ -1383,7 +1468,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 22
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1402,16 +1487,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7f70dd43106640db
-	// Question: Choose the box plot that summarizes the data set
+	// Question: Select the box plot that summarizes the data
 	// Widget key: boxplot_choice_b
-	test("box-plot - [x7f70dd43106640db] Choose the box plot that summarizes the data set (2)", async () => {
+	test("box-plot - [x7f70dd43106640db] Select the box plot that summarizes the data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 29,
 		    "min": 15,
-		    "label": "Pages read",
+		    "label": null,
 		    "tickLabels": [
 		      15,
 		      16,
@@ -1431,8 +1516,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 150,
+		  "width": 420,
+		  "height": 320,
 		  "summary": {
 		    "q1": 18,
 		    "q3": 25,
@@ -1441,7 +1526,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 21
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1460,16 +1545,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x7f70dd43106640db
-	// Question: Choose the box plot that summarizes the data set
+	// Question: Select the box plot that summarizes the data
 	// Widget key: boxplot_choice_c
-	test("box-plot - [x7f70dd43106640db] Choose the box plot that summarizes the data set (3)", async () => {
+	test("box-plot - [x7f70dd43106640db] Select the box plot that summarizes the data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 29,
 		    "min": 15,
-		    "label": "Pages read",
+		    "label": null,
 		    "tickLabels": [
 		      15,
 		      16,
@@ -1489,8 +1574,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 150,
+		  "width": 420,
+		  "height": 320,
 		  "summary": {
 		    "q1": 18,
 		    "q3": 26,
@@ -1499,7 +1584,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 23
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1519,7 +1604,7 @@ describe("boxPlot widget tests", () => {
 
 	// Extracted from question: x25261540063da485
 	// Question: Select the box plot that summarizes the data
-	// Widget key: boxplot_choice_a
+	// Widget key: choice_a_boxplot
 	test("box-plot - [x25261540063da485] Select the box plot that summarizes the data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -1527,7 +1612,7 @@ describe("boxPlot widget tests", () => {
 		  "axis": {
 		    "max": 40,
 		    "min": 24,
-		    "label": "Number of practices attended",
+		    "label": "Practices attended",
 		    "tickLabels": [
 		      24,
 		      25,
@@ -1549,8 +1634,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 500,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 29,
 		    "q3": 35,
@@ -1558,8 +1643,8 @@ describe("boxPlot widget tests", () => {
 		    "min": 25,
 		    "median": 32
 		  },
-		  "boxColor": "#EAEAEA",
-		  "medianColor": "#000000"
+		  "boxColor": "#E8F4FD",
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1579,7 +1664,7 @@ describe("boxPlot widget tests", () => {
 
 	// Extracted from question: x25261540063da485
 	// Question: Select the box plot that summarizes the data
-	// Widget key: boxplot_choice_b
+	// Widget key: choice_b_boxplot
 	test("box-plot - [x25261540063da485] Select the box plot that summarizes the data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -1587,7 +1672,7 @@ describe("boxPlot widget tests", () => {
 		  "axis": {
 		    "max": 40,
 		    "min": 24,
-		    "label": "Number of practices attended",
+		    "label": "Practices attended",
 		    "tickLabels": [
 		      24,
 		      25,
@@ -1609,8 +1694,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 500,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 29,
 		    "q3": 35,
@@ -1618,8 +1703,8 @@ describe("boxPlot widget tests", () => {
 		    "min": 25,
 		    "median": 34
 		  },
-		  "boxColor": "#EAEAEA",
-		  "medianColor": "#000000"
+		  "boxColor": "#E8F4FD",
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1639,7 +1724,7 @@ describe("boxPlot widget tests", () => {
 
 	// Extracted from question: x25261540063da485
 	// Question: Select the box plot that summarizes the data
-	// Widget key: boxplot_choice_c
+	// Widget key: choice_c_boxplot
 	test("box-plot - [x25261540063da485] Select the box plot that summarizes the data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -1647,7 +1732,7 @@ describe("boxPlot widget tests", () => {
 		  "axis": {
 		    "max": 40,
 		    "min": 24,
-		    "label": "Number of practices attended",
+		    "label": "Practices attended",
 		    "tickLabels": [
 		      24,
 		      25,
@@ -1669,8 +1754,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 500,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 29,
 		    "q3": 35,
@@ -1678,7 +1763,131 @@ describe("boxPlot widget tests", () => {
 		    "min": 25,
 		    "median": 30
 		  },
-		  "boxColor": "#EAEAEA",
+		  "boxColor": "#E8F4FD",
+		  "medianColor": "#FF6B6B"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for boxPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x84fc32d0352d1cd6
+	// Question: Identify a data set from a box plot
+	// Widget key: image_1
+	test("box-plot - [x84fc32d0352d1cd6] Identify a data set from a box plot", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "Values",
+		    "tickLabels": [
+		      0,
+		      1,
+		      2,
+		      3,
+		      4,
+		      5,
+		      6,
+		      7,
+		      8,
+		      9,
+		      10,
+		      11,
+		      12,
+		      13,
+		      14,
+		      15,
+		      16
+		    ]
+		  },
+		  "type": "boxPlot",
+		  "width": 450,
+		  "height": 300,
+		  "summary": {
+		    "q1": 7,
+		    "q3": 12,
+		    "max": 14,
+		    "min": 4,
+		    "median": 9
+		  },
+		  "boxColor": "#E8F4FD",
+		  "medianColor": "#FF6B6B"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for boxPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x229995e23eaa3f47
+	// Question: Select the data set represented by a box plot
+	// Widget key: image_1
+	test("box-plot - [x229995e23eaa3f47] Select the data set represented by a box plot", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 20,
+		    "min": 0,
+		    "label": "Values",
+		    "tickLabels": [
+		      0,
+		      1,
+		      2,
+		      3,
+		      4,
+		      5,
+		      6,
+		      7,
+		      8,
+		      9,
+		      10,
+		      11,
+		      12,
+		      13,
+		      14,
+		      15,
+		      16,
+		      17,
+		      18,
+		      19,
+		      20
+		    ]
+		  },
+		  "type": "boxPlot",
+		  "width": 480,
+		  "height": 300,
+		  "summary": {
+		    "q1": 6,
+		    "q3": 16,
+		    "max": 19,
+		    "min": 1,
+		    "median": 12
+		  },
+		  "boxColor": "#E8F4FD",
 		  "medianColor": "#000000"
 		} as unknown as WidgetInput
 
@@ -1707,7 +1916,7 @@ describe("boxPlot widget tests", () => {
 		  "axis": {
 		    "max": 30,
 		    "min": 14,
-		    "label": null,
+		    "label": "Values",
 		    "tickLabels": [
 		      14,
 		      15,
@@ -1730,7 +1939,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 450,
-		  "height": 166,
+		  "height": 300,
 		  "summary": {
 		    "q1": 18,
 		    "q3": 26,
@@ -1739,131 +1948,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 22
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for boxPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x84fc32d0352d1cd6
-	// Question: Identify a data set from a box plot
-	// Widget key: image_1
-	test("box-plot - [x84fc32d0352d1cd6] Identify a data set from a box plot", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "axis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": null,
-		    "tickLabels": [
-		      0,
-		      1,
-		      2,
-		      3,
-		      4,
-		      5,
-		      6,
-		      7,
-		      8,
-		      9,
-		      10,
-		      11,
-		      12,
-		      13,
-		      14,
-		      15,
-		      16
-		    ]
-		  },
-		  "type": "boxPlot",
-		  "width": 450,
-		  "height": 166,
-		  "summary": {
-		    "q1": 7,
-		    "q3": 12,
-		    "max": 14,
-		    "min": 4,
-		    "median": 9
-		  },
-		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for boxPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x229995e23eaa3f47
-	// Question: Select a data set that matches a box plot
-	// Widget key: image_1
-	test("box-plot - [x229995e23eaa3f47] Select a data set that matches a box plot", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "axis": {
-		    "max": 20,
-		    "min": 0,
-		    "label": "Values",
-		    "tickLabels": [
-		      0,
-		      1,
-		      2,
-		      3,
-		      4,
-		      5,
-		      6,
-		      7,
-		      8,
-		      9,
-		      10,
-		      11,
-		      12,
-		      13,
-		      14,
-		      15,
-		      16,
-		      17,
-		      18,
-		      19,
-		      20
-		    ]
-		  },
-		  "type": "boxPlot",
-		  "width": 480,
-		  "height": 175,
-		  "summary": {
-		    "q1": 6,
-		    "q3": 16,
-		    "max": 19,
-		    "min": 1,
-		    "median": 12
-		  },
-		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1882,9 +1967,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x6b28d85b5e059275
-	// Question: Choose the box plot that summarizes the data
+	// Question: Select the correct box plot for a data set
 	// Widget key: choice_a_boxplot
-	test("box-plot - [x6b28d85b5e059275] Choose the box plot that summarizes the data (1)", async () => {
+	test("box-plot - [x6b28d85b5e059275] Select the correct box plot for a data set (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1894,19 +1979,27 @@ describe("boxPlot widget tests", () => {
 		    "label": "Number of customers",
 		    "tickLabels": [
 		      20,
+		      21,
 		      22,
+		      23,
 		      24,
+		      25,
 		      26,
+		      27,
 		      28,
+		      29,
 		      30,
+		      31,
 		      32,
+		      33,
 		      34,
+		      35,
 		      36
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 140,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 27,
 		    "q3": 33,
@@ -1934,9 +2027,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x6b28d85b5e059275
-	// Question: Choose the box plot that summarizes the data
+	// Question: Select the correct box plot for a data set
 	// Widget key: choice_b_boxplot
-	test("box-plot - [x6b28d85b5e059275] Choose the box plot that summarizes the data (2)", async () => {
+	test("box-plot - [x6b28d85b5e059275] Select the correct box plot for a data set (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1946,19 +2039,27 @@ describe("boxPlot widget tests", () => {
 		    "label": "Number of customers",
 		    "tickLabels": [
 		      20,
+		      21,
 		      22,
+		      23,
 		      24,
+		      25,
 		      26,
+		      27,
 		      28,
+		      29,
 		      30,
+		      31,
 		      32,
+		      33,
 		      34,
+		      35,
 		      36
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 140,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 27,
 		    "q3": 32,
@@ -1986,9 +2087,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x6b28d85b5e059275
-	// Question: Choose the box plot that summarizes the data
+	// Question: Select the correct box plot for a data set
 	// Widget key: choice_c_boxplot
-	test("box-plot - [x6b28d85b5e059275] Choose the box plot that summarizes the data (3)", async () => {
+	test("box-plot - [x6b28d85b5e059275] Select the correct box plot for a data set (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1998,19 +2099,27 @@ describe("boxPlot widget tests", () => {
 		    "label": "Number of customers",
 		    "tickLabels": [
 		      20,
+		      21,
 		      22,
+		      23,
 		      24,
+		      25,
 		      26,
+		      27,
 		      28,
+		      29,
 		      30,
+		      31,
 		      32,
+		      33,
 		      34,
+		      35,
 		      36
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 140,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 29,
 		    "q3": 32,
@@ -2038,9 +2147,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x64fb303508ab0ba1
-	// Question: Select the box plot that summarizes a data set
-	// Widget key: choice_a_boxplot
-	test("box-plot - [x64fb303508ab0ba1] Select the box plot that summarizes a data set (1)", async () => {
+	// Question: Choose the box plot that summarizes the data
+	// Widget key: boxplot_choice_a
+	test("box-plot - [x64fb303508ab0ba1] Choose the box plot that summarizes the data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2050,21 +2159,41 @@ describe("boxPlot widget tests", () => {
 		    "label": null,
 		    "tickLabels": [
 		      50,
+		      51,
+		      52,
 		      53,
+		      54,
+		      55,
 		      56,
+		      57,
+		      58,
 		      59,
+		      60,
+		      61,
 		      62,
+		      63,
+		      64,
 		      65,
+		      66,
+		      67,
 		      68,
+		      69,
+		      70,
 		      71,
+		      72,
+		      73,
 		      74,
+		      75,
+		      76,
 		      77,
+		      78,
+		      79,
 		      80
 		    ]
 		  },
 		  "type": "boxPlot",
 		  "width": 440,
-		  "height": 114,
+		  "height": 320,
 		  "summary": {
 		    "q1": 65,
 		    "q3": 73,
@@ -2092,9 +2221,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x64fb303508ab0ba1
-	// Question: Select the box plot that summarizes a data set
-	// Widget key: choice_b_boxplot
-	test("box-plot - [x64fb303508ab0ba1] Select the box plot that summarizes a data set (2)", async () => {
+	// Question: Choose the box plot that summarizes the data
+	// Widget key: boxplot_choice_b
+	test("box-plot - [x64fb303508ab0ba1] Choose the box plot that summarizes the data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2104,21 +2233,41 @@ describe("boxPlot widget tests", () => {
 		    "label": null,
 		    "tickLabels": [
 		      50,
+		      51,
+		      52,
 		      53,
+		      54,
+		      55,
 		      56,
+		      57,
+		      58,
 		      59,
+		      60,
+		      61,
 		      62,
+		      63,
+		      64,
 		      65,
+		      66,
+		      67,
 		      68,
+		      69,
+		      70,
 		      71,
+		      72,
+		      73,
 		      74,
+		      75,
+		      76,
 		      77,
+		      78,
+		      79,
 		      80
 		    ]
 		  },
 		  "type": "boxPlot",
 		  "width": 440,
-		  "height": 114,
+		  "height": 320,
 		  "summary": {
 		    "q1": 67,
 		    "q3": 73,
@@ -2146,9 +2295,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x64fb303508ab0ba1
-	// Question: Select the box plot that summarizes a data set
-	// Widget key: choice_c_boxplot
-	test("box-plot - [x64fb303508ab0ba1] Select the box plot that summarizes a data set (3)", async () => {
+	// Question: Choose the box plot that summarizes the data
+	// Widget key: boxplot_choice_c
+	test("box-plot - [x64fb303508ab0ba1] Choose the box plot that summarizes the data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2158,21 +2307,41 @@ describe("boxPlot widget tests", () => {
 		    "label": null,
 		    "tickLabels": [
 		      50,
+		      51,
+		      52,
 		      53,
+		      54,
+		      55,
 		      56,
+		      57,
+		      58,
 		      59,
+		      60,
+		      61,
 		      62,
+		      63,
+		      64,
 		      65,
+		      66,
+		      67,
 		      68,
+		      69,
+		      70,
 		      71,
+		      72,
+		      73,
 		      74,
+		      75,
+		      76,
 		      77,
+		      78,
+		      79,
 		      80
 		    ]
 		  },
 		  "type": "boxPlot",
 		  "width": 440,
-		  "height": 114,
+		  "height": 320,
 		  "summary": {
 		    "q1": 67,
 		    "q3": 72,
@@ -2200,16 +2369,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x893b21d145d7ce37
-	// Question: Select a data set represented by a box plot
+	// Question: Select the data set represented by a box plot
 	// Widget key: image_1
-	test("box-plot - [x893b21d145d7ce37] Select a data set represented by a box plot", async () => {
+	test("box-plot - [x893b21d145d7ce37] Select the data set represented by a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 36,
 		    "min": 20,
-		    "label": "Values",
+		    "label": null,
 		    "tickLabels": [
 		      20,
 		      21,
@@ -2232,7 +2401,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 450,
-		  "height": 166,
+		  "height": 300,
 		  "summary": {
 		    "q1": 27,
 		    "q3": 33,
@@ -2241,71 +2410,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 31
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for boxPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1e00424ce8c664b1
-	// Question: Identify a data set from a box plot
-	// Widget key: image_1
-	test("box-plot - [x1e00424ce8c664b1] Identify a data set from a box plot", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "axis": {
-		    "max": 20,
-		    "min": 0,
-		    "label": "Values",
-		    "tickLabels": [
-		      0,
-		      1,
-		      2,
-		      3,
-		      4,
-		      5,
-		      6,
-		      7,
-		      8,
-		      9,
-		      10,
-		      11,
-		      12,
-		      13,
-		      14,
-		      15,
-		      16,
-		      17,
-		      18,
-		      19,
-		      20
-		    ]
-		  },
-		  "type": "boxPlot",
-		  "width": 480,
-		  "height": 137,
-		  "summary": {
-		    "q1": 7,
-		    "q3": 13,
-		    "max": 18,
-		    "min": 3,
-		    "median": 10
-		  },
-		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2324,16 +2429,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf7b916a6587a17c7
-	// Question: Select the data set represented by a box plot
-	// Widget key: boxplot_image
-	test("box-plot - [xf7b916a6587a17c7] Select the data set represented by a box plot", async () => {
+	// Question: Identify a data set from a box plot
+	// Widget key: box_plot_image
+	test("box-plot - [xf7b916a6587a17c7] Identify a data set from a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 15,
 		    "min": 0,
-		    "label": " ",
+		    "label": "Value",
 		    "tickLabels": [
 		      0,
 		      1,
@@ -2355,7 +2460,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 486,
-		  "height": 138.889,
+		  "height": 320,
 		  "summary": {
 		    "q1": 4,
 		    "q3": 8,
@@ -2383,9 +2488,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xfe503d0cac995e40
-	// Question: Choose the box plot that summarizes the data
-	// Widget key: boxplot_choice_a
-	test("box-plot - [xfe503d0cac995e40] Choose the box plot that summarizes the data (1)", async () => {
+	// Question: Select the box plot that summarizes the data set
+	// Widget key: choice_a_boxplot
+	test("box-plot - [xfe503d0cac995e40] Select the box plot that summarizes the data set (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2413,7 +2518,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 465,
-		  "height": 113,
+		  "height": 320,
 		  "summary": {
 		    "q1": 4,
 		    "q3": 8,
@@ -2421,7 +2526,7 @@ describe("boxPlot widget tests", () => {
 		    "min": 2,
 		    "median": 6
 		  },
-		  "boxColor": "#E6E6E6",
+		  "boxColor": "#E8F4FD",
 		  "medianColor": "#000000"
 		} as unknown as WidgetInput
 
@@ -2441,9 +2546,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xfe503d0cac995e40
-	// Question: Choose the box plot that summarizes the data
-	// Widget key: boxplot_choice_b
-	test("box-plot - [xfe503d0cac995e40] Choose the box plot that summarizes the data (2)", async () => {
+	// Question: Select the box plot that summarizes the data set
+	// Widget key: choice_b_boxplot
+	test("box-plot - [xfe503d0cac995e40] Select the box plot that summarizes the data set (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2471,7 +2576,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 465,
-		  "height": 113,
+		  "height": 320,
 		  "summary": {
 		    "q1": 3,
 		    "q3": 7,
@@ -2479,7 +2584,7 @@ describe("boxPlot widget tests", () => {
 		    "min": 2,
 		    "median": 6
 		  },
-		  "boxColor": "#E6E6E6",
+		  "boxColor": "#E8F4FD",
 		  "medianColor": "#000000"
 		} as unknown as WidgetInput
 
@@ -2499,9 +2604,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xfe503d0cac995e40
-	// Question: Choose the box plot that summarizes the data
-	// Widget key: boxplot_choice_c
-	test("box-plot - [xfe503d0cac995e40] Choose the box plot that summarizes the data (3)", async () => {
+	// Question: Select the box plot that summarizes the data set
+	// Widget key: choice_c_boxplot
+	test("box-plot - [xfe503d0cac995e40] Select the box plot that summarizes the data set (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2529,7 +2634,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 465,
-		  "height": 113,
+		  "height": 320,
 		  "summary": {
 		    "q1": 4,
 		    "q3": 9,
@@ -2537,7 +2642,7 @@ describe("boxPlot widget tests", () => {
 		    "min": 2,
 		    "median": 6
 		  },
-		  "boxColor": "#E6E6E6",
+		  "boxColor": "#E8F4FD",
 		  "medianColor": "#000000"
 		} as unknown as WidgetInput
 
@@ -2557,33 +2662,53 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xbb62b0ad03abb7e7
-	// Question: Select the data set represented by a box plot
+	// Question: Match a data set to a box plot
 	// Widget key: image_1
-	test("box-plot - [xbb62b0ad03abb7e7] Select the data set represented by a box plot", async () => {
+	test("box-plot - [xbb62b0ad03abb7e7] Match a data set to a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 80,
 		    "min": 50,
-		    "label": null,
+		    "label": "Values",
 		    "tickLabels": [
 		      50,
+		      51,
+		      52,
 		      53,
+		      54,
+		      55,
 		      56,
+		      57,
+		      58,
 		      59,
+		      60,
+		      61,
 		      62,
+		      63,
+		      64,
 		      65,
+		      66,
+		      67,
 		      68,
+		      69,
+		      70,
 		      71,
+		      72,
+		      73,
 		      74,
+		      75,
+		      76,
 		      77,
+		      78,
+		      79,
 		      80
 		    ]
 		  },
 		  "type": "boxPlot",
 		  "width": 440,
-		  "height": 190,
+		  "height": 300,
 		  "summary": {
 		    "q1": 65,
 		    "q3": 73,
@@ -2611,16 +2736,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9ee75db91aabc34e
-	// Question: Choose a data set for a box plot
+	// Question: Select a data set that matches a box plot
 	// Widget key: image_1
-	test("box-plot - [x9ee75db91aabc34e] Choose a data set for a box plot", async () => {
+	test("box-plot - [x9ee75db91aabc34e] Select a data set that matches a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 50,
 		    "min": 40,
-		    "label": "Value",
+		    "label": "/",
 		    "tickLabels": [
 		      40,
 		      41,
@@ -2637,7 +2762,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 430,
-		  "height": 195,
+		  "height": 300,
 		  "summary": {
 		    "q1": 43,
 		    "q3": 48,
@@ -2646,7 +2771,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 44
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2665,16 +2790,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xb23fe5ed4f58f34e
-	// Question: Select the data set represented by a box plot
+	// Question: Choose a data set from a box plot
 	// Widget key: image_1
-	test("box-plot - [xb23fe5ed4f58f34e] Select the data set represented by a box plot", async () => {
+	test("box-plot - [xb23fe5ed4f58f34e] Choose a data set from a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 26,
 		    "min": 10,
-		    "label": "Values",
+		    "label": null,
 		    "tickLabels": [
 		      10,
 		      11,
@@ -2697,7 +2822,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 187.5,
+		  "height": 300,
 		  "summary": {
 		    "q1": 15,
 		    "q3": 21,
@@ -2706,7 +2831,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 19
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2725,9 +2850,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x06a66c487c2898e6
-	// Question: Which data set matches the box plot?
+	// Question: Select the data set for a box plot
 	// Widget key: image_1
-	test("box-plot - [x06a66c487c2898e6] Which data set matches the box plot?", async () => {
+	test("box-plot - [x06a66c487c2898e6] Select the data set for a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2756,7 +2881,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 200,
+		  "height": 300,
 		  "summary": {
 		    "q1": 29,
 		    "q3": 35,
@@ -2784,16 +2909,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x2e85bc372d183601
-	// Question: Choose the correct box plot for runners per team
+	// Question: Choose the box plot that summarizes the data
 	// Widget key: boxplot_choice_a
-	test("box-plot - [x2e85bc372d183601] Choose the correct box plot for runners per team (1)", async () => {
+	test("box-plot - [x2e85bc372d183601] Choose the box plot that summarizes the data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 25,
 		    "min": 11,
-		    "label": null,
+		    "label": "Number of runners",
 		    "tickLabels": [
 		      11,
 		      12,
@@ -2813,8 +2938,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 150,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 15,
 		    "q3": 21,
@@ -2823,7 +2948,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 19
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2842,16 +2967,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x2e85bc372d183601
-	// Question: Choose the correct box plot for runners per team
+	// Question: Choose the box plot that summarizes the data
 	// Widget key: boxplot_choice_b
-	test("box-plot - [x2e85bc372d183601] Choose the correct box plot for runners per team (2)", async () => {
+	test("box-plot - [x2e85bc372d183601] Choose the box plot that summarizes the data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 25,
 		    "min": 11,
-		    "label": null,
+		    "label": "Number of runners",
 		    "tickLabels": [
 		      11,
 		      12,
@@ -2871,8 +2996,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 150,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 15,
 		    "q3": 22,
@@ -2881,7 +3006,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 19
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2900,16 +3025,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x2e85bc372d183601
-	// Question: Choose the correct box plot for runners per team
+	// Question: Choose the box plot that summarizes the data
 	// Widget key: boxplot_choice_c
-	test("box-plot - [x2e85bc372d183601] Choose the correct box plot for runners per team (3)", async () => {
+	test("box-plot - [x2e85bc372d183601] Choose the box plot that summarizes the data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 25,
 		    "min": 11,
-		    "label": null,
+		    "label": "Number of runners",
 		    "tickLabels": [
 		      11,
 		      12,
@@ -2929,8 +3054,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 150,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 16,
 		    "q3": 22,
@@ -2939,7 +3064,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 19
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2958,9 +3083,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf577e4a86d145f1a
-	// Question: Choose the box plot for ice cream cone sales
+	// Question: Select the box plot that summarizes a data set
 	// Widget key: boxplot_choice_a
-	test("box-plot - [xf577e4a86d145f1a] Choose the box plot for ice cream cone sales (1)", async () => {
+	test("box-plot - [xf577e4a86d145f1a] Select the box plot that summarizes a data set (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2984,7 +3109,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 440,
-		  "height": 136,
+		  "height": 320,
 		  "summary": {
 		    "q1": 43,
 		    "q3": 48,
@@ -2993,7 +3118,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 44
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3012,9 +3137,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf577e4a86d145f1a
-	// Question: Choose the box plot for ice cream cone sales
+	// Question: Select the box plot that summarizes a data set
 	// Widget key: boxplot_choice_b
-	test("box-plot - [xf577e4a86d145f1a] Choose the box plot for ice cream cone sales (2)", async () => {
+	test("box-plot - [xf577e4a86d145f1a] Select the box plot that summarizes a data set (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3038,7 +3163,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 440,
-		  "height": 136,
+		  "height": 320,
 		  "summary": {
 		    "q1": 43,
 		    "q3": 48,
@@ -3047,7 +3172,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 45
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3066,9 +3191,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xf577e4a86d145f1a
-	// Question: Choose the box plot for ice cream cone sales
+	// Question: Select the box plot that summarizes a data set
 	// Widget key: boxplot_choice_c
-	test("box-plot - [xf577e4a86d145f1a] Choose the box plot for ice cream cone sales (3)", async () => {
+	test("box-plot - [xf577e4a86d145f1a] Select the box plot that summarizes a data set (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3092,7 +3217,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 440,
-		  "height": 136,
+		  "height": 320,
 		  "summary": {
 		    "q1": 43,
 		    "q3": 47,
@@ -3101,7 +3226,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 45
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3120,16 +3245,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa6b91700a81dcb4e
-	// Question: Select the box plot that summarizes gym workouts
-	// Widget key: choice_a_boxplot
-	test("box-plot - [xa6b91700a81dcb4e] Select the box plot that summarizes gym workouts (1)", async () => {
+	// Question: Choose the box plot that summarizes the data
+	// Widget key: boxplot_choice_a
+	test("box-plot - [xa6b91700a81dcb4e] Choose the box plot that summarizes the data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": null,
+		    "label": "Workouts attended",
 		    "tickLabels": [
 		      0,
 		      1,
@@ -3151,8 +3276,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 7,
 		    "q3": 12,
@@ -3180,16 +3305,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa6b91700a81dcb4e
-	// Question: Select the box plot that summarizes gym workouts
-	// Widget key: choice_b_boxplot
-	test("box-plot - [xa6b91700a81dcb4e] Select the box plot that summarizes gym workouts (2)", async () => {
+	// Question: Choose the box plot that summarizes the data
+	// Widget key: boxplot_choice_b
+	test("box-plot - [xa6b91700a81dcb4e] Choose the box plot that summarizes the data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": null,
+		    "label": "Workouts attended",
 		    "tickLabels": [
 		      0,
 		      1,
@@ -3211,8 +3336,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 7,
 		    "q3": 13,
@@ -3240,16 +3365,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xa6b91700a81dcb4e
-	// Question: Select the box plot that summarizes gym workouts
-	// Widget key: choice_c_boxplot
-	test("box-plot - [xa6b91700a81dcb4e] Select the box plot that summarizes gym workouts (3)", async () => {
+	// Question: Choose the box plot that summarizes the data
+	// Widget key: boxplot_choice_c
+	test("box-plot - [xa6b91700a81dcb4e] Choose the box plot that summarizes the data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": null,
+		    "label": "Workouts attended",
 		    "tickLabels": [
 		      0,
 		      1,
@@ -3271,8 +3396,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 600,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 7,
 		    "q3": 13,
@@ -3300,16 +3425,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9062f3a170fabe89
-	// Question: Select the box plot that summarizes the data
-	// Widget key: boxplot_choice_a
-	test("box-plot - [x9062f3a170fabe89] Select the box plot that summarizes the data (1)", async () => {
+	// Question: Choose the box plot that summarizes the data
+	// Widget key: choice_a_boxplot
+	test("box-plot - [x9062f3a170fabe89] Choose the box plot that summarizes the data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 20,
 		    "min": 0,
-		    "label": null,
+		    "label": "Number of strikes",
 		    "tickLabels": [
 		      0,
 		      1,
@@ -3335,8 +3460,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 440,
-		  "height": 113,
+		  "width": 480,
+		  "height": 320,
 		  "summary": {
 		    "q1": 6,
 		    "q3": 16,
@@ -3345,7 +3470,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 12
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3364,16 +3489,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9062f3a170fabe89
-	// Question: Select the box plot that summarizes the data
-	// Widget key: boxplot_choice_b
-	test("box-plot - [x9062f3a170fabe89] Select the box plot that summarizes the data (2)", async () => {
+	// Question: Choose the box plot that summarizes the data
+	// Widget key: choice_b_boxplot
+	test("box-plot - [x9062f3a170fabe89] Choose the box plot that summarizes the data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 20,
 		    "min": 0,
-		    "label": null,
+		    "label": "Number of strikes",
 		    "tickLabels": [
 		      0,
 		      1,
@@ -3399,8 +3524,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 440,
-		  "height": 113,
+		  "width": 480,
+		  "height": 320,
 		  "summary": {
 		    "q1": 8,
 		    "q3": 16,
@@ -3409,7 +3534,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 12
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3428,16 +3553,16 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x9062f3a170fabe89
-	// Question: Select the box plot that summarizes the data
-	// Widget key: boxplot_choice_c
-	test("box-plot - [x9062f3a170fabe89] Select the box plot that summarizes the data (3)", async () => {
+	// Question: Choose the box plot that summarizes the data
+	// Widget key: choice_c_boxplot
+	test("box-plot - [x9062f3a170fabe89] Choose the box plot that summarizes the data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
 		    "max": 20,
 		    "min": 0,
-		    "label": null,
+		    "label": "Number of strikes",
 		    "tickLabels": [
 		      0,
 		      1,
@@ -3463,8 +3588,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 440,
-		  "height": 113,
+		  "width": 480,
+		  "height": 320,
 		  "summary": {
 		    "q1": 8,
 		    "q3": 16,
@@ -3473,7 +3598,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 13
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3523,7 +3648,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 109,
+		  "height": 320,
 		  "summary": {
 		    "q1": 5,
 		    "q3": 11,
@@ -3532,7 +3657,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 9
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3582,7 +3707,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 109,
+		  "height": 320,
 		  "summary": {
 		    "q1": 3,
 		    "q3": 11,
@@ -3591,7 +3716,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 9
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3641,7 +3766,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 480,
-		  "height": 109,
+		  "height": 320,
 		  "summary": {
 		    "q1": 3,
 		    "q3": 13,
@@ -3650,7 +3775,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 9
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3696,8 +3821,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 325,
-		  "height": 156,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 3,
 		    "q3": 8,
@@ -3706,7 +3831,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 6
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3724,49 +3849,43 @@ describe("boxPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd4b8b38bc9251967
-	// Question: Find the median from a box plot
+	// Extracted from question: x8de1209e3f21a58a
+	// Question: Find the interquartile range from a box plot
 	// Widget key: image_2
-	test("box-plot - [xd4b8b38bc9251967] Find the median from a box plot", async () => {
+	test("box-plot - [x8de1209e3f21a58a] Find the interquartile range from a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "axis": {
-		    "max": 10,
-		    "min": 2,
-		    "label": "Mass (kilograms)",
+		    "max": 1,
+		    "min": 0,
+		    "label": "Price (dollars)",
 		    "tickLabels": [
-		      2,
-		      2.5,
-		      3,
-		      3.5,
-		      4,
-		      4.5,
-		      5,
-		      5.5,
-		      6,
-		      6.5,
-		      7,
-		      7.5,
-		      8,
-		      8.5,
-		      9,
-		      9.5,
-		      10
+		      0,
+		      0.1,
+		      0.2,
+		      0.3,
+		      0.4,
+		      0.5,
+		      0.6,
+		      0.7,
+		      0.8,
+		      0.9,
+		      1
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 324,
-		  "height": 136,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
-		    "q1": 6,
-		    "q3": 8.5,
-		    "max": 10,
-		    "min": 4.5,
-		    "median": 7
+		    "q1": 0.6,
+		    "q3": 0.8,
+		    "max": 1,
+		    "min": 0.1,
+		    "median": 0.7
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3785,9 +3904,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xda7c31be677e89ea
-	// Question: Find the range from a box plot
-	// Widget key: image_2
-	test("box-plot - [xda7c31be677e89ea] Find the range from a box plot", async () => {
+	// Question: Find the range from a box plot of rainfall
+	// Widget key: image_1
+	test("box-plot - [xda7c31be677e89ea] Find the range from a box plot of rainfall", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3816,8 +3935,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 324,
-		  "height": 113,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 5.5,
 		    "q3": 7,
@@ -3872,8 +3991,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 325,
-		  "height": 134,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 5.5,
 		    "q3": 7.5,
@@ -3930,8 +4049,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 323,
-		  "height": 131,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 2,
 		    "q3": 6,
@@ -3958,64 +4077,10 @@ describe("boxPlot widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x8de1209e3f21a58a
-	// Question: Find the interquartile range from a box plot
-	// Widget key: image_2
-	test("box-plot - [x8de1209e3f21a58a] Find the interquartile range from a box plot", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "axis": {
-		    "max": 1,
-		    "min": 0,
-		    "label": "Price (dollars)",
-		    "tickLabels": [
-		      0,
-		      0.1,
-		      0.2,
-		      0.3,
-		      0.4,
-		      0.5,
-		      0.6,
-		      0.7,
-		      0.8,
-		      0.9,
-		      1
-		    ]
-		  },
-		  "type": "boxPlot",
-		  "width": 330,
-		  "height": 148,
-		  "summary": {
-		    "q1": 0.6,
-		    "q3": 0.8,
-		    "max": 1,
-		    "min": 0.1,
-		    "median": 0.7
-		  },
-		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for boxPlot", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xc33995f4fcd9df55
-	// Question: Find the interquartile range from a box plot
+	// Question: Interquartile range from a box plot
 	// Widget key: image_2
-	test("box-plot - [xc33995f4fcd9df55] Find the interquartile range from a box plot", async () => {
+	test("box-plot - [xc33995f4fcd9df55] Interquartile range from a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4044,7 +4109,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 330,
-		  "height": 158,
+		  "height": 330,
 		  "summary": {
 		    "q1": 8,
 		    "q3": 11,
@@ -4054,6 +4119,66 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "boxColor": "#E8F4FD",
 		  "medianColor": "#000000"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for boxPlot", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd4b8b38bc9251967
+	// Question: Find the median from a box plot
+	// Widget key: image_2
+	test("box-plot - [xd4b8b38bc9251967] Find the median from a box plot", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "axis": {
+		    "max": 10,
+		    "min": 2,
+		    "label": "Mass (kilograms)",
+		    "tickLabels": [
+		      2,
+		      2.5,
+		      3,
+		      3.5,
+		      4,
+		      4.5,
+		      5,
+		      5.5,
+		      6,
+		      6.5,
+		      7,
+		      7.5,
+		      8,
+		      8.5,
+		      9,
+		      9.5,
+		      10
+		    ]
+		  },
+		  "type": "boxPlot",
+		  "width": 400,
+		  "height": 300,
+		  "summary": {
+		    "q1": 6,
+		    "q3": 8.5,
+		    "max": 10,
+		    "min": 4.5,
+		    "median": 7
+		  },
+		  "boxColor": "#E8F4FD",
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4081,7 +4206,7 @@ describe("boxPlot widget tests", () => {
 		  "axis": {
 		    "max": 15,
 		    "min": 0,
-		    "label": "Number of rebounds per game",
+		    "label": "Number of rebounds per game.",
 		    "tickLabels": [
 		      0,
 		      1,
@@ -4103,7 +4228,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 330,
-		  "height": 158,
+		  "height": 330,
 		  "summary": {
 		    "q1": 8,
 		    "q3": 11,
@@ -4160,8 +4285,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 322.5,
-		  "height": 131.467,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 2,
 		    "q3": 6,
@@ -4201,33 +4326,22 @@ describe("boxPlot widget tests", () => {
 		    "label": "Number of cupcakes",
 		    "tickLabels": [
 		      4,
-		      5,
 		      6,
-		      7,
 		      8,
-		      9,
 		      10,
-		      11,
 		      12,
-		      13,
 		      14,
-		      15,
 		      16,
-		      17,
 		      18,
-		      19,
 		      20,
-		      21,
 		      22,
-		      23,
 		      24,
-		      25,
 		      26
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 320,
-		  "height": 104,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 6,
 		    "q3": 22,
@@ -4236,7 +4350,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 8
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4255,9 +4369,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xbb16095ab6a4e921
-	// Question: Find the range from a box plot
+	// Question: Find the range from a box plot (vending machine prices)
 	// Widget key: image_2
-	test("box-plot - [xbb16095ab6a4e921] Find the range from a box plot", async () => {
+	test("box-plot - [xbb16095ab6a4e921] Find the range from a box plot (vending machine prices)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4280,8 +4394,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 330,
-		  "height": 148,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 0.6,
 		    "q3": 0.8,
@@ -4290,7 +4404,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 0.7
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4310,7 +4424,7 @@ describe("boxPlot widget tests", () => {
 
 	// Extracted from question: x415f5250b04e2209
 	// Question: Find the median from a box plot
-	// Widget key: image_2
+	// Widget key: image_1
 	test("box-plot - [x415f5250b04e2209] Find the median from a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -4334,8 +4448,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 330,
-		  "height": 148,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 0.6,
 		    "q3": 0.8,
@@ -4395,7 +4509,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 324,
-		  "height": 113,
+		  "height": 300,
 		  "summary": {
 		    "q1": 5.5,
 		    "q3": 7,
@@ -4449,7 +4563,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 330,
-		  "height": 158,
+		  "height": 300,
 		  "summary": {
 		    "q1": 5.5,
 		    "q3": 7,
@@ -4504,8 +4618,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 325,
-		  "height": 156,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 3,
 		    "q3": 8,
@@ -4569,7 +4683,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 330,
-		  "height": 119,
+		  "height": 330,
 		  "summary": {
 		    "q1": 4,
 		    "q3": 7,
@@ -4578,7 +4692,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 6.5
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4628,8 +4742,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 324,
-		  "height": 136,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 6,
 		    "q3": 8.5,
@@ -4685,7 +4799,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 325,
-		  "height": 156,
+		  "height": 300,
 		  "summary": {
 		    "q1": 3,
 		    "q3": 8,
@@ -4694,7 +4808,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 6
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4749,7 +4863,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 330,
-		  "height": 119,
+		  "height": 300,
 		  "summary": {
 		    "q1": 4,
 		    "q3": 7,
@@ -4814,8 +4928,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 320,
-		  "height": 104,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 6,
 		    "q3": 22,
@@ -4843,9 +4957,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xd18e1b8950a9ef71
-	// Question: Find the interquartile range (IQR) from a box plot
+	// Question: Find the interquartile range from a box plot
 	// Widget key: image_2
-	test("box-plot - [xd18e1b8950a9ef71] Find the interquartile range (IQR) from a box plot", async () => {
+	test("box-plot - [xd18e1b8950a9ef71] Find the interquartile range from a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4878,8 +4992,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 330,
-		  "height": 148,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 9,
 		    "q3": 14,
@@ -4888,7 +5002,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 11
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -4934,8 +5048,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 325,
-		  "height": 134,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 5.5,
 		    "q3": 7.5,
@@ -4975,27 +5089,16 @@ describe("boxPlot widget tests", () => {
 		    "label": "Mass (kilograms)",
 		    "tickLabels": [
 		      2,
-		      2.5,
-		      3,
-		      3.5,
 		      4,
-		      4.5,
-		      5,
-		      5.5,
 		      6,
-		      6.5,
 		      7,
-		      7.5,
-		      8,
 		      8.5,
-		      9,
-		      9.5,
 		      10
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 324,
-		  "height": 136,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 6,
 		    "q3": 8.5,
@@ -5004,7 +5107,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 7
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5023,9 +5126,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x6e6c1c0144b4df84
-	// Question: Find the range from a box plot of earthquake magnitudes
+	// Question: Find the range from a box plot
 	// Widget key: image_2
-	test("box-plot - [x6e6c1c0144b4df84] Find the range from a box plot of earthquake magnitudes", async () => {
+	test("box-plot - [x6e6c1c0144b4df84] Find the range from a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5059,7 +5162,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 330,
-		  "height": 119,
+		  "height": 300,
 		  "summary": {
 		    "q1": 4,
 		    "q3": 7,
@@ -5068,7 +5171,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 6.5
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5124,8 +5227,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 320,
-		  "height": 104,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 6,
 		    "q3": 22,
@@ -5134,7 +5237,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 8
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5189,7 +5292,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 330,
-		  "height": 148,
+		  "height": 330,
 		  "summary": {
 		    "q1": 9,
 		    "q3": 14,
@@ -5198,7 +5301,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 11
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5248,7 +5351,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 330,
-		  "height": 158,
+		  "height": 300,
 		  "summary": {
 		    "q1": 8,
 		    "q3": 11,
@@ -5257,7 +5360,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 10
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5311,8 +5414,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 330,
-		  "height": 148,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 9,
 		    "q3": 14,
@@ -5321,7 +5424,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 11
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5369,8 +5472,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 323,
-		  "height": 131,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 2,
 		    "q3": 6,
@@ -5379,7 +5482,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 4
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5426,7 +5529,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 325,
-		  "height": 134,
+		  "height": 300,
 		  "summary": {
 		    "q1": 5.5,
 		    "q3": 7.5,
@@ -5435,7 +5538,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 6
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5490,7 +5593,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 336,
-		  "height": 109,
+		  "height": 300,
 		  "summary": {
 		    "q1": 6,
 		    "q3": 13,
@@ -5518,9 +5621,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x801e0511bffbc0a0
-	// Question: Describe the shape of a distribution from a box plot
+	// Question: Identify the distribution shape from a box plot
 	// Widget key: image_2
-	test("box-plot - [x801e0511bffbc0a0] Describe the shape of a distribution from a box plot", async () => {
+	test("box-plot - [x801e0511bffbc0a0] Identify the distribution shape from a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5549,8 +5652,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 323,
-		  "height": 191,
+		  "width": 400,
+		  "height": 340,
 		  "summary": {
 		    "q1": 17,
 		    "q3": 23,
@@ -5559,7 +5662,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 21
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5609,7 +5712,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 330,
-		  "height": 158,
+		  "height": 300,
 		  "summary": {
 		    "q1": 29,
 		    "q3": 35,
@@ -5618,7 +5721,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 32
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#FF6B6B"
+		  "medianColor": "#000000"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5668,8 +5771,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 323,
-		  "height": 171,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 27,
 		    "q3": 33,
@@ -5728,8 +5831,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 270,
-		  "height": 136,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 29,
 		    "q3": 32,
@@ -5788,7 +5891,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 330,
-		  "height": 172,
+		  "height": 300,
 		  "summary": {
 		    "q1": 18,
 		    "q3": 22,
@@ -5816,9 +5919,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xe4bbe5f36201819c
-	// Question: Describe the distribution shape from a box plot
+	// Question: Describe the shape of a distribution from a box plot
 	// Widget key: image_2
-	test("box-plot - [xe4bbe5f36201819c] Describe the distribution shape from a box plot", async () => {
+	test("box-plot - [xe4bbe5f36201819c] Describe the shape of a distribution from a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5842,7 +5945,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 330,
-		  "height": 185,
+		  "height": 300,
 		  "summary": {
 		    "q1": 41,
 		    "q3": 45,
@@ -5870,9 +5973,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: xd4b86f3f2a0e7d4a
-	// Question: Identify the shape of a distribution from a box plot
+	// Question: Describe the shape of a distribution from a box plot
 	// Widget key: image_2
-	test("box-plot - [xd4b86f3f2a0e7d4a] Identify the shape of a distribution from a box plot", async () => {
+	test("box-plot - [xd4b86f3f2a0e7d4a] Describe the shape of a distribution from a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5905,8 +6008,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 329,
-		  "height": 178,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 4,
 		    "q3": 12,
@@ -5915,7 +6018,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 8
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -5934,9 +6037,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x1b172708314af5a8
-	// Question: Describe the distribution's shape from a box plot
+	// Question: Describe the shape of a distribution from a box plot
 	// Widget key: image_2
-	test("box-plot - [x1b172708314af5a8] Describe the distribution's shape from a box plot", async () => {
+	test("box-plot - [x1b172708314af5a8] Describe the shape of a distribution from a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5979,8 +6082,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 326,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "summary": {
 		    "q1": 67,
 		    "q3": 73,
@@ -6043,8 +6146,8 @@ describe("boxPlot widget tests", () => {
 		    ]
 		  },
 		  "type": "boxPlot",
-		  "width": 326,
-		  "height": 150,
+		  "width": 400,
+		  "height": 320,
 		  "summary": {
 		    "q1": 6,
 		    "q3": 16,
@@ -6104,7 +6207,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 323,
-		  "height": 156.941,
+		  "height": 320,
 		  "summary": {
 		    "q1": 29,
 		    "q3": 35,
@@ -6132,9 +6235,9 @@ describe("boxPlot widget tests", () => {
 	})
 
 	// Extracted from question: x546f86a578185580
-	// Question: Describe the distribution's shape from a box plot
+	// Question: Describe the shape of a distribution from a box plot
 	// Widget key: image_2
-	test("box-plot - [x546f86a578185580] Describe the distribution's shape from a box plot", async () => {
+	test("box-plot - [x546f86a578185580] Describe the shape of a distribution from a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6163,7 +6266,7 @@ describe("boxPlot widget tests", () => {
 		  },
 		  "type": "boxPlot",
 		  "width": 324,
-		  "height": 150,
+		  "height": 300,
 		  "summary": {
 		    "q1": 4,
 		    "q3": 8,
@@ -6172,7 +6275,7 @@ describe("boxPlot widget tests", () => {
 		    "median": 5
 		  },
 		  "boxColor": "#E8F4FD",
-		  "medianColor": "#000000"
+		  "medianColor": "#FF6B6B"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)

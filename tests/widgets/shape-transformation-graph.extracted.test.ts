@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.969Z
+// Generated on: 2025-09-18T05:17:02.157Z
 // Widget Type: shapeTransformationGraph
 // Source: Real questions from database
 //
@@ -25,6 +25,1181 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("shapeTransformationGraph widget tests", () => {
+	// Extracted from question: x9575a78de643d48e
+	// Question: Sequences of transformations mapping WXYZ onto ABCD
+	// Widget key: image_1
+	test("shape-transformation-graph - [x9575a78de643d48e] Sequences of transformations mapping WXYZ onto ABCD", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 14,
+		      "y": 8,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 11,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 13,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 13,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 9,
+		      "id": "W",
+		      "label": "W",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 6,
+		      "id": "X",
+		      "label": "X",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 4,
+		      "id": "Y",
+		      "label": "Y",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 4,
+		      "id": "Z",
+		      "label": "Z",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "WXYZ",
+		    "vertices": [
+		      {
+		        "x": 8,
+		        "y": 9
+		      },
+		      {
+		        "x": 8,
+		        "y": 6
+		      },
+		      {
+		        "x": 6,
+		        "y": 4
+		      },
+		      {
+		        "x": 4,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6e3470c47435e9fa
+	// Question: Sequences of transformations mapping one triangle onto another
+	// Widget key: image_1
+	test("shape-transformation-graph - [x6e3470c47435e9fa] Sequences of transformations mapping one triangle onto another", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_AB",
+		      "color": "#999",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -1,
+		        "yIntercept": 16
+		      }
+		    },
+		    {
+		      "id": "line_BC",
+		      "color": "#999",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 6
+		      }
+		    },
+		    {
+		      "id": "line_CA",
+		      "color": "#999",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.5,
+		        "yIntercept": 4
+		      }
+		    }
+		  ],
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 8,
+		      "y": 8,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 6,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 9,
+		      "id": "K",
+		      "label": "K",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 13,
+		      "y": 7,
+		      "id": "L",
+		      "label": "L",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 13,
+		      "y": 13,
+		      "id": "M",
+		      "label": "M",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": null,
+		    "vertices": [
+		      {
+		        "x": 11,
+		        "y": 9
+		      },
+		      {
+		        "x": 13,
+		        "y": 7
+		      },
+		      {
+		        "x": 13,
+		        "y": 13
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbf1372110ce18255
+	// Question: Map congruent quadrilaterals using transformations
+	// Widget key: image_1
+	test("shape-transformation-graph - [xbf1372110ce18255] Map congruent quadrilaterals using transformations", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 14,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 13,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 10,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 11,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 4,
+		      "id": "S",
+		      "label": "S",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 5,
+		      "id": "T",
+		      "label": "T",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 13,
+		      "y": 8,
+		      "id": "U",
+		      "label": "U",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 15,
+		      "y": 7,
+		      "id": "V",
+		      "label": "V",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "STUV",
+		    "vertices": [
+		      {
+		        "x": 14,
+		        "y": 4
+		      },
+		      {
+		        "x": 8,
+		        "y": 5
+		      },
+		      {
+		        "x": 13,
+		        "y": 8
+		      },
+		      {
+		        "x": 15,
+		        "y": 7
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 180,
+		    "center": {
+		      "x": 9.5,
+		      "y": 9
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x285b6e240cbb955a
+	// Question: Select the sequence of transformations that maps one triangle to another
+	// Widget key: image_1
+	test("shape-transformation-graph - [x285b6e240cbb955a] Select the sequence of transformations that maps one triangle to another", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 10,
+		      "y": 10,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 8,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 10,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "X",
+		      "label": "X",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "Y",
+		      "label": "Y",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 0,
+		      "id": "Z",
+		      "label": "Z",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "XYZ",
+		    "vertices": [
+		      {
+		        "x": 0,
+		        "y": 0
+		      },
+		      {
+		        "x": 2,
+		        "y": 2
+		      },
+		      {
+		        "x": 8,
+		        "y": 0
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb1e69b6ffffe0069
+	// Question: Which transformation sequence maps HIJK onto ABCD?
+	// Widget key: image_1
+	test("shape-transformation-graph - [xb1e69b6ffffe0069] Which transformation sequence maps HIJK onto ABCD?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 9,
+		      "y": 4,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 6,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 4,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 7,
+		      "id": "H",
+		      "label": "H",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 9,
+		      "id": "I",
+		      "label": "I",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 12,
+		      "id": "J",
+		      "label": "J",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 12,
+		      "id": "K",
+		      "label": "K",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "HIJK",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": 7
+		      },
+		      {
+		        "x": 5,
+		        "y": 9
+		      },
+		      {
+		        "x": 5,
+		        "y": 12
+		      },
+		      {
+		        "x": 3,
+		        "y": 12
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb7add968d51ed18b
+	// Question: Choose the sequence that maps one quadrilateral to another
+	// Widget key: image_1
+	test("shape-transformation-graph - [xb7add968d51ed18b] Choose the sequence that maps one quadrilateral to another", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 13,
+		      "id": "E",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 13,
+		      "id": "F",
+		      "label": "F",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 10,
+		      "id": "G",
+		      "label": "G",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 10,
+		      "id": "H",
+		      "label": "H",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 9,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 2,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 5,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "EFGH",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 13
+		      },
+		      {
+		        "x": 5,
+		        "y": 13
+		      },
+		      {
+		        "x": 9,
+		        "y": 10
+		      },
+		      {
+		        "x": 6,
+		        "y": 10
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": -90,
+		    "center": {
+		      "x": 6,
+		      "y": 5
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4591caa2ecef2ac9
+	// Question: Identify the corresponding point in a scaled copy
+	// Widget key: image_1
+	test("shape-transformation-graph - [x4591caa2ecef2ac9] Identify the corresponding point in a scaled copy", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 20,
+		    "min": -6,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 20,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 14,
+		      "id": "pt_m",
+		      "label": "M",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 5,
+		      "id": "pt_a",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 16,
+		      "y": 11,
+		      "id": "pt_b",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 5,
+		      "id": "pt_c",
+		      "label": "C",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "Figure 1",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 11
+		      },
+		      {
+		        "x": 5,
+		        "y": 11
+		      },
+		      {
+		        "x": 6,
+		        "y": 14
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": -4,
+		      "y": 17
+		    },
+		    "scaleFactor": 2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9d03948ea1994cb6
+	// Question: Find the scale factor from Figure A to Figure B
+	// Widget key: image_1
+	test("shape-transformation-graph - [x9d03948ea1994cb6] Find the scale factor from Figure A to Figure B", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "preImage": {
+		    "color": "#1fab54",
+		    "label": "Figure A",
+		    "vertices": [
+		      {
+		        "x": 1,
+		        "y": 4
+		      },
+		      {
+		        "x": 7,
+		        "y": 4
+		      },
+		      {
+		        "x": 4,
+		        "y": 8
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 13,
+		      "y": 0
+		    },
+		    "scaleFactor": 0.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2cdaf3a22988513b
+	// Question: Scale factor from Figure A to Figure B
+	// Widget key: image_1
+	test("shape-transformation-graph - [x2cdaf3a22988513b] Scale factor from Figure A to Figure B", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 3.5,
+		      "y": 2.5,
+		      "id": "figure_b_label",
+		      "label": "Figure B",
+		      "style": "open"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#1fab54",
+		    "label": "Figure A",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 2
+		      },
+		      {
+		        "x": 6,
+		        "y": 2
+		      },
+		      {
+		        "x": 6,
+		        "y": 4
+		      },
+		      {
+		        "x": 4,
+		        "y": 6
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 3,
+		      "y": 2
+		    },
+		    "scaleFactor": 0.3333333333333333
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x520307e92f1ac41c
+	// Question: Find the scale factor from Figure A to Figure B
+	// Widget key: image_1
+	test("shape-transformation-graph - [x520307e92f1ac41c] Find the scale factor from Figure A to Figure B", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "preImage": {
+		    "color": "#1fab54",
+		    "label": "Figure A",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 2
+		      },
+		      {
+		        "x": 4,
+		        "y": 2
+		      },
+		      {
+		        "x": 2,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 2,
+		      "y": 2
+		    },
+		    "scaleFactor": 2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9872498e67ef8b2a
+	// Question: Find the scale factor from Figure A to Figure B
+	// Widget key: image_1
+	test("shape-transformation-graph - [x9872498e67ef8b2a] Find the scale factor from Figure A to Figure B", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [],
+		  "preImage": {
+		    "color": "#1fab54",
+		    "label": "Figure A",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 2
+		      },
+		      {
+		        "x": 6,
+		        "y": 2
+		      },
+		      {
+		        "x": 8,
+		        "y": 4
+		      },
+		      {
+		        "x": 4,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 8,
+		      "y": 2
+		    },
+		    "scaleFactor": 0.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: xe6cacb86284df85d
 	// Question: Reflect a quadrilateral across the y-axis
 	// Widget key: graph_choice_a
@@ -52,8 +1227,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
+		    "color": "#11accd55",
+		    "label": null,
 		    "vertices": [
 		      {
 		        "x": 2,
@@ -122,8 +1297,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
+		    "color": "#11accd55",
+		    "label": null,
 		    "vertices": [
 		      {
 		        "x": 2,
@@ -192,8 +1367,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
+		    "color": "#11accd55",
+		    "label": null,
 		    "vertices": [
 		      {
 		        "x": 2,
@@ -240,9 +1415,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x990879e7218e4680
-	// Question: Reflect a triangle across a horizontal line
+	// Question: Reflect a triangle across a line
 	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x990879e7218e4680] Reflect a triangle across a horizontal line (1)", async () => {
+	test("shape-transformation-graph - [x990879e7218e4680] Reflect a triangle across a line (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -251,7 +1426,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    {
 		      "id": "line_l",
 		      "color": "#000000",
-		      "label": "ℓ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -278,20 +1453,20 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd33",
-		    "label": "ABC",
+		    "color": "#11accd55",
+		    "label": null,
 		    "vertices": [
 		      {
-		        "x": -1,
-		        "y": 6
+		        "x": -4,
+		        "y": 1
 		      },
 		      {
 		        "x": -2,
-		        "y": 7
+		        "y": 5
 		      },
 		      {
-		        "x": -4,
-		        "y": 3
+		        "x": -1,
+		        "y": 4
 		      }
 		    ]
 		  },
@@ -318,9 +1493,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x990879e7218e4680
-	// Question: Reflect a triangle across a horizontal line
+	// Question: Reflect a triangle across a line
 	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x990879e7218e4680] Reflect a triangle across a horizontal line (2)", async () => {
+	test("shape-transformation-graph - [x990879e7218e4680] Reflect a triangle across a line (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -329,7 +1504,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    {
 		      "id": "line_l",
 		      "color": "#000000",
-		      "label": "ℓ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -356,20 +1531,20 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd33",
-		    "label": "ABC",
+		    "color": "#11accd55",
+		    "label": null,
 		    "vertices": [
 		      {
-		        "x": -1,
-		        "y": 6
+		        "x": -4,
+		        "y": 1
 		      },
 		      {
 		        "x": -2,
-		        "y": 7
+		        "y": 5
 		      },
 		      {
-		        "x": -4,
-		        "y": 3
+		        "x": -1,
+		        "y": 4
 		      }
 		    ]
 		  },
@@ -396,9 +1571,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x990879e7218e4680
-	// Question: Reflect a triangle across a horizontal line
+	// Question: Reflect a triangle across a line
 	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x990879e7218e4680] Reflect a triangle across a horizontal line (3)", async () => {
+	test("shape-transformation-graph - [x990879e7218e4680] Reflect a triangle across a line (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -407,7 +1582,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    {
 		      "id": "line_l",
 		      "color": "#000000",
-		      "label": "ℓ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -434,20 +1609,272 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd33",
-		    "label": "ABC",
+		    "color": "#11accd55",
+		    "label": null,
 		    "vertices": [
 		      {
-		        "x": -1,
-		        "y": 6
+		        "x": -4,
+		        "y": 1
 		      },
 		      {
 		        "x": -2,
-		        "y": 7
+		        "y": 5
+		      },
+		      {
+		        "x": -1,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": -2
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xeda9c8c09b2abd9f
+	// Question: Reflect a quadrilateral across line ℓ
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [xeda9c8c09b2abd9f] Reflect a quadrilateral across line ℓ (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_l",
+		      "color": "#000000",
+		      "label": "ℓ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 0,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd55",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -4,
+		        "y": 0
+		      },
+		      {
+		        "x": -3,
+		        "y": 5
+		      },
+		      {
+		        "x": -5,
+		        "y": 6
 		      },
 		      {
 		        "x": -4,
-		        "y": 3
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "x",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xeda9c8c09b2abd9f
+	// Question: Reflect a quadrilateral across line ℓ
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [xeda9c8c09b2abd9f] Reflect a quadrilateral across line ℓ (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_l",
+		      "color": "#000000",
+		      "label": "ℓ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 0,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd55",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -4,
+		        "y": 0
+		      },
+		      {
+		        "x": -3,
+		        "y": 5
+		      },
+		      {
+		        "x": -5,
+		        "y": 6
+		      },
+		      {
+		        "x": -4,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "y",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xeda9c8c09b2abd9f
+	// Question: Reflect a quadrilateral across line ℓ
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [xeda9c8c09b2abd9f] Reflect a quadrilateral across line ℓ (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_l",
+		      "color": "#000000",
+		      "label": "ℓ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 0,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd55",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -4,
+		        "y": 0
+		      },
+		      {
+		        "x": -3,
+		        "y": 5
+		      },
+		      {
+		        "x": -5,
+		        "y": 6
+		      },
+		      {
+		        "x": -4,
+		        "y": 4
 		      }
 		    ]
 		  },
@@ -477,10 +1904,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xeda9c8c09b2abd9f
-	// Question: Reflect a quadrilateral across a vertical line
+	// Extracted from question: xbb2ccb0c1af54b82
+	// Question: Select the reflected image of a triangle
 	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [xeda9c8c09b2abd9f] Reflect a quadrilateral across a vertical line (1)", async () => {
+	test("shape-transformation-graph - [xbb2ccb0c1af54b82] Select the reflected image of a triangle (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -494,7 +1921,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		      "equation": {
 		        "A": 1,
 		        "B": 0,
-		        "C": 0,
+		        "C": -3,
 		        "type": "standard"
 		      }
 		    }
@@ -521,193 +1948,23 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "label": "Pre-image",
 		    "vertices": [
 		      {
-		        "x": -4,
-		        "y": 4
-		      },
-		      {
 		        "x": -3,
-		        "y": 6
+		        "y": -4
 		      },
 		      {
-		        "x": -5,
-		        "y": 5
+		        "x": 0,
+		        "y": -7
 		      },
 		      {
-		        "x": -4,
-		        "y": 0
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "axis": "x",
-		    "type": "reflection"
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xeda9c8c09b2abd9f
-	// Question: Reflect a quadrilateral across a vertical line
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [xeda9c8c09b2abd9f] Reflect a quadrilateral across a vertical line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_l",
-		      "color": "#000000",
-		      "label": "ℓ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": 0,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "Pre-image",
-		    "vertices": [
-		      {
-		        "x": -4,
-		        "y": 4
-		      },
-		      {
-		        "x": -3,
-		        "y": 6
-		      },
-		      {
-		        "x": -5,
-		        "y": 5
-		      },
-		      {
-		        "x": -4,
-		        "y": 0
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "axis": "y",
-		    "type": "reflection"
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xeda9c8c09b2abd9f
-	// Question: Reflect a quadrilateral across a vertical line
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [xeda9c8c09b2abd9f] Reflect a quadrilateral across a vertical line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_l",
-		      "color": "#000000",
-		      "label": "ℓ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": 0,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "Pre-image",
-		    "vertices": [
-		      {
-		        "x": -4,
-		        "y": 4
-		      },
-		      {
-		        "x": -3,
-		        "y": 6
-		      },
-		      {
-		        "x": -5,
-		        "y": 5
-		      },
-		      {
-		        "x": -4,
-		        "y": 0
+		        "x": -7,
+		        "y": -4
 		      }
 		    ]
 		  },
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": 8,
+		      "x": -3,
 		      "y": 0
 		    }
 		  },
@@ -730,110 +1987,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xbb2ccb0c1af54b82
-	// Question: Reflect a triangle across a vertical line
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [xbb2ccb0c1af54b82] Reflect a triangle across a vertical line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_l",
-		      "color": "#000000",
-		      "label": "ℓ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": -3,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": -4,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -7,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": -4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "Pre-image",
-		    "vertices": [
-		      {
-		        "x": -3,
-		        "y": -4
-		      },
-		      {
-		        "x": 0,
-		        "y": -7
-		      },
-		      {
-		        "x": -7,
-		        "y": -4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "axis": "x",
-		    "type": "reflection"
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbb2ccb0c1af54b82
-	// Question: Reflect a triangle across a vertical line
+	// Question: Select the reflected image of a triangle
 	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [xbb2ccb0c1af54b82] Reflect a triangle across a vertical line (2)", async () => {
+	test("shape-transformation-graph - [xbb2ccb0c1af54b82] Select the reflected image of a triangle (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -868,29 +2024,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 400,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": -4,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -7,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": -4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "preImage": {
 		    "color": "#11accd",
 		    "label": "Pre-image",
@@ -932,9 +2066,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xbb2ccb0c1af54b82
-	// Question: Reflect a triangle across a vertical line
+	// Question: Select the reflected image of a triangle
 	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [xbb2ccb0c1af54b82] Reflect a triangle across a vertical line (3)", async () => {
+	test("shape-transformation-graph - [xbb2ccb0c1af54b82] Select the reflected image of a triangle (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -969,29 +2103,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 400,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": -4,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -7,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": -4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "preImage": {
 		    "color": "#11accd",
 		    "label": "Pre-image",
@@ -1007,6 +2119,325 @@ describe("shapeTransformationGraph widget tests", () => {
 		      {
 		        "x": -7,
 		        "y": -4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "x",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbb2ccb0c1af54b82
+	// Question: Select the reflected image of a triangle
+	// Widget key: stimulus_graph
+	test("shape-transformation-graph - [xbb2ccb0c1af54b82] Select the reflected image of a triangle (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_l",
+		      "color": "#000000",
+		      "label": "ℓ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": -3,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -3,
+		        "y": -4
+		      },
+		      {
+		        "x": 0,
+		        "y": -7
+		      },
+		      {
+		        "x": -7,
+		        "y": -4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5d9b4e12439737be
+	// Question: Reflect a triangle across a line
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x5d9b4e12439737be] Reflect a triangle across a line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_l",
+		      "color": "#000000",
+		      "label": "ℓ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 5,
+		        "y": 5
+		      },
+		      {
+		        "x": 4,
+		        "y": 2
+		      },
+		      {
+		        "x": 2,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": -10
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5d9b4e12439737be
+	// Question: Reflect a triangle across a line
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x5d9b4e12439737be] Reflect a triangle across a line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_l",
+		      "color": "#000000",
+		      "label": "ℓ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 5,
+		        "y": 5
+		      },
+		      {
+		        "x": 4,
+		        "y": 2
+		      },
+		      {
+		        "x": 2,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "x",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5d9b4e12439737be
+	// Question: Reflect a triangle across a line
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x5d9b4e12439737be] Reflect a triangle across a line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_l",
+		      "color": "#000000",
+		      "label": "ℓ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 5,
+		        "y": 5
+		      },
+		      {
+		        "x": 4,
+		        "y": 2
+		      },
+		      {
+		        "x": 2,
+		        "y": 4
 		      }
 		    ]
 		  },
@@ -1016,309 +2447,6 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "center": {
 		      "x": 0,
 		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5d9b4e12439737be
-	// Question: Reflect a triangle across a horizontal line
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x5d9b4e12439737be] Reflect a triangle across a horizontal line (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_l",
-		      "color": "#000000",
-		      "label": "ℓ",
-		      "style": "dashed",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 500,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": 5,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 5,
-		        "y": 5
-		      },
-		      {
-		        "x": 4,
-		        "y": 2
-		      },
-		      {
-		        "x": 2,
-		        "y": 4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "axis": "y",
-		    "type": "reflection"
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5d9b4e12439737be
-	// Question: Reflect a triangle across a horizontal line
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x5d9b4e12439737be] Reflect a triangle across a horizontal line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_l",
-		      "color": "#000000",
-		      "label": "ℓ",
-		      "style": "dashed",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 500,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": 5,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 5,
-		        "y": 5
-		      },
-		      {
-		        "x": 4,
-		        "y": 2
-		      },
-		      {
-		        "x": 2,
-		        "y": 4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "axis": "x",
-		    "type": "reflection"
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5d9b4e12439737be
-	// Question: Reflect a triangle across a horizontal line
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x5d9b4e12439737be] Reflect a triangle across a horizontal line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_l",
-		      "color": "#000000",
-		      "label": "ℓ",
-		      "style": "dashed",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 500,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": 5,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 5,
-		        "y": 5
-		      },
-		      {
-		        "x": 4,
-		        "y": 2
-		      },
-		      {
-		        "x": 2,
-		        "y": 4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": -3
 		    }
 		  },
 		  "showQuadrantLabels": false
@@ -1366,7 +2494,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd26",
 		    "label": "Pre-image",
 		    "vertices": [
 		      {
@@ -1436,7 +2564,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd26",
 		    "label": "Pre-image",
 		    "vertices": [
 		      {
@@ -1506,7 +2634,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd26",
 		    "label": "Pre-image",
 		    "vertices": [
 		      {
@@ -1580,7 +2708,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd33",
 		    "label": "Pre-image",
 		    "vertices": [
 		      {
@@ -1602,7 +2730,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    ]
 		  },
 		  "transformation": {
-		    "axis": "x",
+		    "axis": "y",
 		    "type": "reflection"
 		  },
 		  "showQuadrantLabels": false
@@ -1650,7 +2778,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd33",
 		    "label": "Pre-image",
 		    "vertices": [
 		      {
@@ -1672,7 +2800,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    ]
 		  },
 		  "transformation": {
-		    "axis": "y",
+		    "axis": "x",
 		    "type": "reflection"
 		  },
 		  "showQuadrantLabels": false
@@ -1720,7 +2848,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd33",
 		    "label": "Pre-image",
 		    "vertices": [
 		      {
@@ -1743,7 +2871,209 @@ describe("shapeTransformationGraph widget tests", () => {
 		  },
 		  "transformation": {
 		    "type": "rotation",
-		    "angle": 90,
+		    "angle": 180,
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbc86d86e5153be53
+	// Question: Reflect a triangle across the x-axis
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [xbc86d86e5153be53] Reflect a triangle across the x-axis (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd66",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -2,
+		        "y": 0
+		      },
+		      {
+		        "x": -6,
+		        "y": 5
+		      },
+		      {
+		        "x": -4,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "y",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbc86d86e5153be53
+	// Question: Reflect a triangle across the x-axis
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [xbc86d86e5153be53] Reflect a triangle across the x-axis (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd66",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -2,
+		        "y": 0
+		      },
+		      {
+		        "x": -6,
+		        "y": 5
+		      },
+		      {
+		        "x": -4,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "x",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbc86d86e5153be53
+	// Question: Reflect a triangle across the x-axis
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [xbc86d86e5153be53] Reflect a triangle across the x-axis (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd66",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -2,
+		        "y": 0
+		      },
+		      {
+		        "x": -6,
+		        "y": 5
+		      },
+		      {
+		        "x": -4,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 180,
 		    "center": {
 		      "x": 0,
 		      "y": 0
@@ -1794,8 +3124,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd44",
-		    "label": "Pre-image",
+		    "color": "#11accd4d",
+		    "label": " ",
 		    "vertices": [
 		      {
 		        "x": 2,
@@ -1860,8 +3190,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd44",
-		    "label": "Pre-image",
+		    "color": "#11accd4d",
+		    "label": " ",
 		    "vertices": [
 		      {
 		        "x": 2,
@@ -1926,8 +3256,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd44",
-		    "label": "Pre-image",
+		    "color": "#11accd4d",
+		    "label": " ",
 		    "vertices": [
 		      {
 		        "x": 2,
@@ -1940,6 +3270,255 @@ describe("shapeTransformationGraph widget tests", () => {
 		      {
 		        "x": 5,
 		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": -4,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2d8403cb0e9efd36
+	// Question: Reflect a quadrilateral across a line
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x2d8403cb0e9efd36] Reflect a quadrilateral across a line (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_l",
+		      "color": "#000000",
+		      "label": "l",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 4,
+		        "y": 2
+		      },
+		      {
+		        "x": 4,
+		        "y": -2
+		      },
+		      {
+		        "x": 0,
+		        "y": 1
+		      },
+		      {
+		        "x": 3,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "x",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2d8403cb0e9efd36
+	// Question: Reflect a quadrilateral across a line
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x2d8403cb0e9efd36] Reflect a quadrilateral across a line (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_l",
+		      "color": "#000000",
+		      "label": "l",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 4,
+		        "y": 2
+		      },
+		      {
+		        "x": 4,
+		        "y": -2
+		      },
+		      {
+		        "x": 0,
+		        "y": 1
+		      },
+		      {
+		        "x": 3,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "y",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2d8403cb0e9efd36
+	// Question: Reflect a quadrilateral across a line
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x2d8403cb0e9efd36] Reflect a quadrilateral across a line (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_l",
+		      "color": "#000000",
+		      "label": "l",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 4,
+		        "y": 2
+		      },
+		      {
+		        "x": 4,
+		        "y": -2
+		      },
+		      {
+		        "x": 0,
+		        "y": 1
+		      },
+		      {
+		        "x": 3,
+		        "y": 4
 		      }
 		    ]
 		  },
@@ -1970,9 +3549,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2d8403cb0e9efd36
-	// Question: Reflect a quadrilateral across a horizontal line
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x2d8403cb0e9efd36] Reflect a quadrilateral across a horizontal line (1)", async () => {
+	// Question: Reflect a quadrilateral across a line
+	// Widget key: coordinate_plane_initial
+	test("shape-transformation-graph - [x2d8403cb0e9efd36] Reflect a quadrilateral across a line (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1981,12 +3560,12 @@ describe("shapeTransformationGraph widget tests", () => {
 		    {
 		      "id": "line_l",
 		      "color": "#000000",
-		      "label": "ℓ",
+		      "label": "l",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": 0,
-		        "yIntercept": -2
+		        "yIntercept": 0
 		      }
 		    }
 		  ],
@@ -2012,190 +3591,20 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "label": "ABCD",
 		    "vertices": [
 		      {
-		        "x": 3,
-		        "y": 0
+		        "x": 4,
+		        "y": 2
 		      },
 		      {
 		        "x": 4,
 		        "y": -2
 		      },
 		      {
-		        "x": 4,
-		        "y": -6
-		      },
-		      {
 		        "x": 0,
-		        "y": -3
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2d8403cb0e9efd36
-	// Question: Reflect a quadrilateral across a horizontal line
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x2d8403cb0e9efd36] Reflect a quadrilateral across a horizontal line (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_l",
-		      "color": "#000000",
-		      "label": "ℓ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": -2
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "preImage": {
-		    "color": "#1fab54",
-		    "label": "Image",
-		    "vertices": [
+		        "y": 1
+		      },
 		      {
 		        "x": 3,
-		        "y": -4
-		      },
-		      {
-		        "x": 4,
-		        "y": -2
-		      },
-		      {
-		        "x": 4,
-		        "y": 2
-		      },
-		      {
-		        "x": 0,
-		        "y": -1
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2d8403cb0e9efd36
-	// Question: Reflect a quadrilateral across a horizontal line
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x2d8403cb0e9efd36] Reflect a quadrilateral across a horizontal line (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_l",
-		      "color": "#000000",
-		      "label": "ℓ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": -2
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD (reflected across x-axis)",
-		    "vertices": [
-		      {
-		        "x": 3,
-		        "y": 0
-		      },
-		      {
-		        "x": 4,
-		        "y": 2
-		      },
-		      {
-		        "x": 4,
-		        "y": 6
-		      },
-		      {
-		        "x": 0,
-		        "y": 3
+		        "y": 4
 		      }
 		    ]
 		  },
@@ -2236,7 +3645,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    {
 		      "id": "line_l",
 		      "color": "#000000",
-		      "label": "ℓ",
+		      "label": "l",
 		      "style": "solid",
 		      "equation": {
 		        "A": 1,
@@ -2264,15 +3673,15 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#1fab5400",
-		    "label": null,
+		    "color": "#11accd",
+		    "label": "ABCD",
 		    "vertices": [
 		      {
-		        "x": 6,
+		        "x": 2,
 		        "y": -5
 		      },
 		      {
-		        "x": 7,
+		        "x": 1,
 		        "y": -1
 		      },
 		      {
@@ -2280,17 +3689,14 @@ describe("shapeTransformationGraph widget tests", () => {
 		        "y": -1
 		      },
 		      {
-		        "x": 5,
+		        "x": 3,
 		        "y": -4
 		      }
 		    ]
 		  },
 		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
+		    "axis": "y",
+		    "type": "reflection"
 		  },
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -2322,7 +3728,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    {
 		      "id": "line_l",
 		      "color": "#000000",
-		      "label": "ℓ",
+		      "label": "l",
 		      "style": "solid",
 		      "equation": {
 		        "A": 1,
@@ -2350,33 +3756,30 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#1fab5400",
-		    "label": null,
+		    "color": "#11accd",
+		    "label": "ABCD",
 		    "vertices": [
 		      {
-		        "x": -2,
+		        "x": 2,
 		        "y": -5
 		      },
 		      {
-		        "x": -1,
+		        "x": 1,
 		        "y": -1
 		      },
 		      {
-		        "x": -4,
+		        "x": 4,
 		        "y": -1
 		      },
 		      {
-		        "x": -3,
+		        "x": 3,
 		        "y": -4
 		      }
 		    ]
 		  },
 		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
+		    "axis": "x",
+		    "type": "reflection"
 		  },
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -2408,7 +3811,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    {
 		      "id": "line_l",
 		      "color": "#000000",
-		      "label": "ℓ",
+		      "label": "l",
 		      "style": "solid",
 		      "equation": {
 		        "A": 1,
@@ -2436,23 +3839,23 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#1fab5400",
-		    "label": null,
+		    "color": "#11accd",
+		    "label": "ABCD",
 		    "vertices": [
 		      {
-		        "x": 8,
+		        "x": 2,
 		        "y": -5
 		      },
 		      {
-		        "x": 9,
+		        "x": 1,
 		        "y": -1
 		      },
 		      {
-		        "x": 6,
+		        "x": 4,
 		        "y": -1
 		      },
 		      {
-		        "x": 7,
+		        "x": 3,
 		        "y": -4
 		      }
 		    ]
@@ -2460,6 +3863,93 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
+		      "x": 4,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc1a897e916cad874
+	// Question: Reflect a quadrilateral across a vertical line
+	// Widget key: reflection_stimulus
+	test("shape-transformation-graph - [xc1a897e916cad874] Reflect a quadrilateral across a vertical line (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_l",
+		      "color": "#000000",
+		      "label": "l",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 4,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": -5
+		      },
+		      {
+		        "x": 1,
+		        "y": -1
+		      },
+		      {
+		        "x": 4,
+		        "y": -1
+		      },
+		      {
+		        "x": 3,
+		        "y": -4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 0,
+		    "center": {
 		      "x": 0,
 		      "y": 0
 		    }
@@ -2483,9 +3973,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7e4845592be474cf
-	// Question: Scale factor of a dilation
+	// Question: Find the scale factor of a dilation
 	// Widget key: image_1
-	test("shape-transformation-graph - [x7e4845592be474cf] Scale factor of a dilation", async () => {
+	test("shape-transformation-graph - [x7e4845592be474cf] Find the scale factor of a dilation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2495,14 +3985,14 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -2510,7 +4000,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "points": [],
 		  "preImage": {
 		    "color": "#11accd",
-		    "label": null,
+		    "label": "ABC",
 		    "vertices": [
 		      {
 		        "x": 10,
@@ -2552,10 +4042,380 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xb8d0967199ff86aa
-	// Question: Angles of rotation for a triangle about the origin
+	// Extracted from question: x806b8ec70681a762
+	// Question: Find the scale factor of a dilation
 	// Widget key: image_1
-	test("shape-transformation-graph - [xb8d0967199ff86aa] Angles of rotation for a triangle about the origin", async () => {
+	test("shape-transformation-graph - [x806b8ec70681a762] Find the scale factor of a dilation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABCDE",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 8
+		      },
+		      {
+		        "x": 2,
+		        "y": 11
+		      },
+		      {
+		        "x": 5,
+		        "y": 14
+		      },
+		      {
+		        "x": 11,
+		        "y": 14
+		      },
+		      {
+		        "x": 5,
+		        "y": 8
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 20,
+		      "y": -10
+		    },
+		    "scaleFactor": 0.6666666666666666
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x251967a30cb399c4
+	// Question: Find the scale factor of a dilation from triangles
+	// Widget key: image_1
+	test("shape-transformation-graph - [x251967a30cb399c4] Find the scale factor of a dilation from triangles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": null,
+		    "vertices": [
+		      {
+		        "x": 4.375,
+		        "y": 5
+		      },
+		      {
+		        "x": 5,
+		        "y": 5
+		      },
+		      {
+		        "x": 4.375,
+		        "y": 2.5
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 3.125,
+		      "y": 3.125
+		    },
+		    "scaleFactor": 3
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x21a87373ad7f622f
+	// Question: Find the scale factor of a dilation
+	// Widget key: image_1
+	test("shape-transformation-graph - [x21a87373ad7f622f] Find the scale factor of a dilation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 9,
+		        "y": 5
+		      },
+		      {
+		        "x": 9,
+		        "y": 1
+		      },
+		      {
+		        "x": 13,
+		        "y": 5
+		      },
+		      {
+		        "x": 1,
+		        "y": 13
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 13,
+		      "y": 13
+		    },
+		    "scaleFactor": 0.25
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf2673111cd2127af
+	// Question: Find the length of a dilated segment using a scale factor
+	// Widget key: image_1
+	test("shape-transformation-graph - [xf2673111cd2127af] Find the length of a dilated segment using a scale factor", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABCDE",
+		    "vertices": [
+		      {
+		        "x": 10,
+		        "y": 3
+		      },
+		      {
+		        "x": 14,
+		        "y": 3
+		      },
+		      {
+		        "x": 14,
+		        "y": 5
+		      },
+		      {
+		        "x": 12,
+		        "y": 7
+		      },
+		      {
+		        "x": 10,
+		        "y": 5
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 26,
+		      "y": -7
+		    },
+		    "scaleFactor": 1.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x393571b59ef84393
+	// Question: Find a segment length from a dilation
+	// Widget key: image_1
+	test("shape-transformation-graph - [x393571b59ef84393] Find a segment length from a dilation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [],
+		  "preImage": {
+		    "color": "#ca337c",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 7,
+		        "y": 9
+		      },
+		      {
+		        "x": 9,
+		        "y": 5
+		      },
+		      {
+		        "x": 7,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 14,
+		      "y": 8
+		    },
+		    "scaleFactor": 2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7c2e5040df30a8ad
+	// Question: Angles of rotation about the origin
+	// Widget key: image_1
+	test("shape-transformation-graph - [x7c2e5040df30a8ad] Angles of rotation about the origin", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2565,14 +4425,127 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -5,
+		      "y": 2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": -3,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": 1,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": -5,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": -6,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": -4,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": -5,
+		        "y": 2
+		      },
+		      {
+		        "x": -6,
+		        "y": -3
+		      },
+		      {
+		        "x": -4,
+		        "y": 1
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 90,
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0221b018312c63fa
+	// Question: Identify the angle of rotation about the origin
+	// Widget key: image_1
+	test("shape-transformation-graph - [x0221b018312c63fa] Identify the angle of rotation about the origin", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -2580,7 +4553,81 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "points": [],
 		  "preImage": {
 		    "color": "#11accd",
-		    "label": "ABC",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 4
+		      },
+		      {
+		        "x": 1,
+		        "y": 5
+		      },
+		      {
+		        "x": -4,
+		        "y": 5
+		      },
+		      {
+		        "x": 2,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 180,
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb8d0967199ff86aa
+	// Question: Angles of rotation about the origin
+	// Widget key: image_1
+	test("shape-transformation-graph - [xb8d0967199ff86aa] Angles of rotation about the origin", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "Pre-image",
 		    "vertices": [
 		      {
 		        "x": 0,
@@ -2622,10 +4669,84 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x466801060b13ca44
-	// Question: Identify an error in a congruence conclusion
+	// Extracted from question: xd0b5a2a5ca921a52
+	// Question: Angles of rotation about the origin
 	// Widget key: image_1
-	test("shape-transformation-graph - [x466801060b13ca44] Identify an error in a congruence conclusion", async () => {
+	test("shape-transformation-graph - [xd0b5a2a5ca921a52] Angles of rotation about the origin", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": -2,
+		        "y": -6
+		      },
+		      {
+		        "x": -3,
+		        "y": -6
+		      },
+		      {
+		        "x": -4,
+		        "y": -3
+		      },
+		      {
+		        "x": 1,
+		        "y": -4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 90,
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xba87e92ab1a41f32
+	// Question: Identify the error in a congruence conclusion
+	// Widget key: image_1
+	test("shape-transformation-graph - [xba87e92ab1a41f32] Identify the error in a congruence conclusion", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2635,14 +4756,368 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 15,
+		      "y": 10,
+		      "id": "pt_A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 9,
+		      "id": "pt_B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 3,
+		      "id": "pt_C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 3,
+		      "id": "pt_D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 3,
+		      "id": "pt_E",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 11,
+		      "id": "pt_F",
+		      "label": "F",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 11,
+		      "id": "pt_Ap",
+		      "label": "A'",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 3,
+		      "id": "pt_Bp",
+		      "label": "B'",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 3,
+		      "id": "pt_Cp",
+		      "label": "C'",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 15,
+		        "y": 10
+		      },
+		      {
+		        "x": 5,
+		        "y": 9
+		      },
+		      {
+		        "x": 11,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 45,
+		    "center": {
+		      "x": 11,
+		      "y": 3
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc39320dd4f6c8cb3
+	// Question: Congruence via rigid transformations
+	// Widget key: image_1
+	test("shape-transformation-graph - [xc39320dd4f6c8cb3] Congruence via rigid transformations", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 320,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 12,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 10,
+		      "id": "E",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 14,
+		      "id": "F",
+		      "label": "F",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 9,
+		        "y": 6
+		      },
+		      {
+		        "x": 9,
+		        "y": 2
+		      },
+		      {
+		        "x": 14,
+		        "y": 5
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": -2,
+		      "y": 8
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf805d0aeffc595f5
+	// Question: Evaluate a conclusion about segment congruence using rigid transformations
+	// Widget key: image_1
+	test("shape-transformation-graph - [xf805d0aeffc595f5] Evaluate a conclusion about segment congruence using rigid transformations", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_yz",
+		      "color": "#ca337c",
+		      "label": "YZ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 12,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": 13,
+		      "id": "X",
+		      "label": "X",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 13,
+		      "id": "W",
+		      "label": "W",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 8,
+		      "id": "Y",
+		      "label": "Y",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 2,
+		      "id": "Z",
+		      "label": "Z",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 8,
+		      "id": "X_prime",
+		      "label": "X′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 8,
+		      "id": "W_prime",
+		      "label": "W′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "XW",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": 13
+		      },
+		      {
+		        "x": 8,
+		        "y": 13
+		      },
+		      {
+		        "x": 8,
+		        "y": 13.1
+		      },
+		      {
+		        "x": 3,
+		        "y": 13.1
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 4,
+		      "y": -5
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x466801060b13ca44
+	// Question: Error analysis: congruence of quadrilaterals
+	// Widget key: image_1
+	test("shape-transformation-graph - [x466801060b13ca44] Error analysis: congruence of quadrilaterals", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -2651,62 +5126,62 @@ describe("shapeTransformationGraph widget tests", () => {
 		    {
 		      "x": 5,
 		      "y": 4,
-		      "id": "A",
+		      "id": "pt_A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 6,
-		      "id": "B",
+		      "id": "pt_B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 2,
-		      "id": "C",
+		      "id": "pt_C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": 2,
-		      "id": "D",
+		      "id": "pt_D",
 		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 11,
 		      "y": 11,
-		      "id": "E",
+		      "id": "pt_E",
 		      "label": "E",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 14,
 		      "y": 14,
-		      "id": "F",
+		      "id": "pt_F",
 		      "label": "F",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 14,
 		      "y": 9,
-		      "id": "G",
+		      "id": "pt_G",
 		      "label": "G",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 11,
 		      "y": 9,
-		      "id": "H",
+		      "id": "pt_H",
 		      "label": "H",
 		      "style": "closed"
 		    }
 		  ],
 		  "preImage": {
-		    "color": "#0c7f99",
+		    "color": "#0c7f9950",
 		    "label": "ABCD",
 		    "vertices": [
 		      {
@@ -2753,26 +5228,71 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xff61e62b0b9cb446
-	// Question: Evaluate Helena’s conclusion about congruence
+	// Question: Identify an error about congruence under rigid transformations
 	// Widget key: image_1
-	test("shape-transformation-graph - [xff61e62b0b9cb446] Evaluate Helena’s conclusion about congruence", async () => {
+	test("shape-transformation-graph - [xff61e62b0b9cb446] Identify an error about congruence under rigid transformations", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
-		  "lines": null,
+		  "lines": [
+		    {
+		      "id": "line_WX",
+		      "color": "#ca337c",
+		      "label": "WX",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 10
+		      }
+		    },
+		    {
+		      "id": "line_XY",
+		      "color": "#ca337c",
+		      "label": "XY",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -2,
+		        "yIntercept": 38
+		      }
+		    },
+		    {
+		      "id": "line_YZ",
+		      "color": "#ca337c",
+		      "label": "YZ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 14
+		      }
+		    },
+		    {
+		      "id": "line_ZW",
+		      "color": "#ca337c",
+		      "label": "ZW",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -2,
+		        "yIntercept": 22
+		      }
+		    }
+		  ],
 		  "width": 300,
 		  "xAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -2811,28 +5331,28 @@ describe("shapeTransformationGraph widget tests", () => {
 		      "y": 10,
 		      "id": "W",
 		      "label": "W",
-		      "style": "open"
+		      "style": "closed"
 		    },
 		    {
 		      "x": 14,
 		      "y": 10,
 		      "id": "X",
 		      "label": "X",
-		      "style": "open"
+		      "style": "closed"
 		    },
 		    {
 		      "x": 12,
 		      "y": 14,
 		      "id": "Y",
 		      "label": "Y",
-		      "style": "open"
+		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 14,
 		      "id": "Z",
 		      "label": "Z",
-		      "style": "open"
+		      "style": "closed"
 		    }
 		  ],
 		  "preImage": {
@@ -2884,9 +5404,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6060ea7c02a2046c
-	// Question: Identify the error about congruence and rigid transformations
+	// Question: Congruence and rigid transformations with circles
 	// Widget key: image_1
-	test("shape-transformation-graph - [x6060ea7c02a2046c] Identify the error about congruence and rigid transformations", async () => {
+	test("shape-transformation-graph - [x6060ea7c02a2046c] Congruence and rigid transformations with circles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2894,111 +5414,136 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "lines": null,
 		  "width": 300,
 		  "xAxis": {
-		    "max": 16,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 16,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 300,
 		  "points": [
 		    {
-		      "x": 8,
-		      "y": 8,
-		      "id": "center_N",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 12,
+		      "x": 5,
 		      "y": 5,
-		      "id": "center_M_initial",
+		      "id": "center",
 		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
 		  "preImage": {
 		    "color": "#0c7f99",
-		    "label": null,
+		    "label": " ",
 		    "vertices": [
 		      {
-		        "x": 10,
-		        "y": 8
+		        "x": 6.25,
+		        "y": 5
 		      },
 		      {
-		        "x": 9.8479,
-		        "y": 8.7654
+		        "x": 6.207407,
+		        "y": 5.323524
 		      },
 		      {
-		        "x": 9.4142,
-		        "y": 9.4142
+		        "x": 6.082532,
+		        "y": 5.625
 		      },
 		      {
-		        "x": 8.7654,
-		        "y": 9.8478
+		        "x": 5.883884,
+		        "y": 5.883884
 		      },
 		      {
-		        "x": 8,
-		        "y": 10
+		        "x": 5.625,
+		        "y": 6.082532
 		      },
 		      {
-		        "x": 7.2346,
-		        "y": 9.8478
+		        "x": 5.323524,
+		        "y": 6.207407
 		      },
 		      {
-		        "x": 6.5858,
-		        "y": 9.4142
+		        "x": 5,
+		        "y": 6.25
 		      },
 		      {
-		        "x": 6.1522,
-		        "y": 8.7654
+		        "x": 4.676476,
+		        "y": 6.207407
 		      },
 		      {
-		        "x": 6,
-		        "y": 8
+		        "x": 4.375,
+		        "y": 6.082532
 		      },
 		      {
-		        "x": 6.1522,
-		        "y": 7.2346
+		        "x": 4.116117,
+		        "y": 5.883884
 		      },
 		      {
-		        "x": 6.5858,
-		        "y": 6.5858
+		        "x": 3.917468,
+		        "y": 5.625
 		      },
 		      {
-		        "x": 7.2346,
-		        "y": 6.1522
+		        "x": 3.792593,
+		        "y": 5.323524
 		      },
 		      {
-		        "x": 8,
-		        "y": 6
+		        "x": 3.75,
+		        "y": 5
 		      },
 		      {
-		        "x": 8.7654,
-		        "y": 6.1522
+		        "x": 3.792593,
+		        "y": 4.676476
 		      },
 		      {
-		        "x": 9.4142,
-		        "y": 6.5858
+		        "x": 3.917468,
+		        "y": 4.375
 		      },
 		      {
-		        "x": 9.8478,
-		        "y": 7.2346
+		        "x": 4.116117,
+		        "y": 4.116117
+		      },
+		      {
+		        "x": 4.375,
+		        "y": 3.917468
+		      },
+		      {
+		        "x": 4.676476,
+		        "y": 3.792593
+		      },
+		      {
+		        "x": 5,
+		        "y": 3.75
+		      },
+		      {
+		        "x": 5.323524,
+		        "y": 3.792593
+		      },
+		      {
+		        "x": 5.625,
+		        "y": 3.917468
+		      },
+		      {
+		        "x": 5.883884,
+		        "y": 4.116117
+		      },
+		      {
+		        "x": 6.082532,
+		        "y": 4.375
+		      },
+		      {
+		        "x": 6.207407,
+		        "y": 4.676476
 		      }
 		    ]
 		  },
 		  "transformation": {
 		    "type": "dilation",
 		    "center": {
-		      "x": 8,
-		      "y": 8
+		      "x": 5,
+		      "y": 5
 		    },
 		    "scaleFactor": 3.5
 		  },
@@ -3020,10 +5565,942 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7e51d4802a64528d
-	// Question: Plot the image of a point under a translation
+	// Extracted from question: xc3ef802c15591a32
+	// Question: Triangle congruence via rigid transformations
+	// Widget key: image_1
+	test("shape-transformation-graph - [xc3ef802c15591a32] Triangle congruence via rigid transformations", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_reflect_x_eq_7",
+		      "color": "#888888",
+		      "label": "x = 7",
+		      "style": "dashed",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 7,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 300,
+		  "xAxis": {
+		    "max": 13,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 13,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 7,
+		      "y": 6,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 3.5,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8.5,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 6,
+		      "id": "D",
+		      "label": "D",
+		      "style": "open"
+		    },
+		    {
+		      "x": 7,
+		      "y": 6,
+		      "id": "E",
+		      "label": "E",
+		      "style": "open"
+		    },
+		    {
+		      "x": 10,
+		      "y": 12,
+		      "id": "F",
+		      "label": "F",
+		      "style": "open"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "Triangle ABC",
+		    "vertices": [
+		      {
+		        "x": 7,
+		        "y": 6
+		      },
+		      {
+		        "x": 11,
+		        "y": 3.5
+		      },
+		      {
+		        "x": 8.5,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 90,
+		    "center": {
+		      "x": 7,
+		      "y": 6
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xceb7e5649e93a458
+	// Question: Identify the error about rigid transformations and congruence
+	// Widget key: image_1
+	test("shape-transformation-graph - [xceb7e5649e93a458] Identify the error about rigid transformations and congruence", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_qr",
+		      "color": "#ca337c",
+		      "label": "QR",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 12,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 3,
+		      "id": "p_s",
+		      "label": "S",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 3,
+		      "id": "p_t",
+		      "label": "T",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 10,
+		      "id": "p_s1",
+		      "label": "S′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 13,
+		      "id": "p_q",
+		      "label": "Q",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "ST",
+		    "vertices": [
+		      {
+		        "x": 5,
+		        "y": 3
+		      },
+		      {
+		        "x": 12,
+		        "y": 3
+		      },
+		      {
+		        "x": 12,
+		        "y": 3.2
+		      },
+		      {
+		        "x": 5,
+		        "y": 3.2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": -90,
+		    "center": {
+		      "x": 12,
+		      "y": 3
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2883558fd4a3b76b
+	// Question: Identify the error in a triangle congruence conclusion
+	// Widget key: image_1
+	test("shape-transformation-graph - [x2883558fd4a3b76b] Identify the error in a triangle congruence conclusion", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 13,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 4,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 2,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 12,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 10,
+		      "id": "E",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 12,
+		      "id": "F",
+		      "label": "F",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 2
+		      },
+		      {
+		        "x": 5,
+		        "y": 4
+		      },
+		      {
+		        "x": 11,
+		        "y": 2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 4,
+		      "y": 6
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3e70fea369768126
+	// Question: Identify the error about congruent quadrilaterals
+	// Widget key: image_1
+	test("shape-transformation-graph - [x3e70fea369768126] Identify the error about congruent quadrilaterals", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_GF",
+		      "color": "#000000",
+		      "label": "",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 12
+		      }
+		    }
+		  ],
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 10,
+		      "y": 8,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 8,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 6,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 6,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 14,
+		      "id": "E",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 12,
+		      "id": "F",
+		      "label": "F",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 12,
+		      "id": "G",
+		      "label": "G",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 14,
+		      "id": "H",
+		      "label": "H",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 10,
+		        "y": 8
+		      },
+		      {
+		        "x": 14,
+		        "y": 8
+		      },
+		      {
+		        "x": 14,
+		        "y": 6
+		      },
+		      {
+		        "x": 11,
+		        "y": 6
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": -8,
+		      "y": 4
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe676c8e5c9f458d4
+	// Question: Check for an error in a congruence conclusion
+	// Widget key: image_1
+	test("shape-transformation-graph - [xe676c8e5c9f458d4] Check for an error in a congruence conclusion", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_y_5",
+		      "color": "#a75a05",
+		      "label": null,
+		      "style": "dashed",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 5
+		      }
+		    }
+		  ],
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 5,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 5,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 2,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 14,
+		      "id": "E",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 11,
+		      "id": "F",
+		      "label": "F",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 13,
+		      "y": 11,
+		      "id": "G",
+		      "label": "G",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 14,
+		      "id": "H",
+		      "label": "H",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": null,
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 5
+		      },
+		      {
+		        "x": 6,
+		        "y": 5
+		      },
+		      {
+		        "x": 7,
+		        "y": 8
+		      },
+		      {
+		        "x": 3,
+		        "y": 8
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 7,
+		      "y": 6
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6fe401d7cfa9338c
+	// Question: Identify an error about congruence and rigid transformations
+	// Widget key: image_1
+	test("shape-transformation-graph - [x6fe401d7cfa9338c] Identify an error about congruence and rigid transformations", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_DC",
+		      "color": "#a75a05",
+		      "label": "D to C",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 12
+		      }
+		    }
+		  ],
+		  "width": 300,
+		  "xAxis": {
+		    "max": 14,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 14,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": 3,
+		      "id": "pt_A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 3,
+		      "id": "pt_B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 12,
+		      "id": "pt_C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 12,
+		      "id": "pt_D",
+		      "label": "D",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#ca337c",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": 3
+		      },
+		      {
+		        "x": 9,
+		        "y": 3
+		      },
+		      {
+		        "x": 3,
+		        "y": 12
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3d8ea11ea9a05f44
+	// Question: Identify the error about congruence and rigid transformations
+	// Widget key: image_1
+	test("shape-transformation-graph - [x3d8ea11ea9a05f44] Identify the error about congruence and rigid transformations", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 320,
+		  "xAxis": {
+		    "max": 16,
+		    "min": -6,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": -4,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 320,
+		  "points": [],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 14,
+		        "y": 10
+		      },
+		      {
+		        "x": 10,
+		        "y": 10
+		      },
+		      {
+		        "x": 8,
+		        "y": 14
+		      },
+		      {
+		        "x": 12,
+		        "y": 14
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": -4,
+		      "y": -2
+		    },
+		    "scaleFactor": 0.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcc1979e181c52e92
+	// Question: Identify the error in a congruence conclusion
+	// Widget key: image_1
+	test("shape-transformation-graph - [xcc1979e181c52e92] Identify the error in a congruence conclusion", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_nm",
+		      "color": "#ca337c",
+		      "label": "NM",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -1,
+		        "yIntercept": 17
+		      }
+		    }
+		  ],
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 7,
+		      "y": 3,
+		      "id": "J",
+		      "label": "J",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 8,
+		      "id": "K",
+		      "label": "K",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 14,
+		      "id": "M",
+		      "label": "M",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 9,
+		      "id": "N",
+		      "label": "N",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "JK",
+		    "vertices": [
+		      {
+		        "x": 7,
+		        "y": 3
+		      },
+		      {
+		        "x": 12,
+		        "y": 8
+		      },
+		      {
+		        "x": 7,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 1,
+		      "y": 6
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x25751e4741cc427e
+	// Question: Translate a point on the coordinate plane
 	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x7e51d4802a64528d] Plot the image of a point under a translation (1)", async () => {
+	test("shape-transformation-graph - [x25751e4741cc427e] Translate a point on the coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3045,44 +6522,29 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 325,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": 2,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 2,
-		      "id": "P_prime",
-		      "label": "P'",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "preImage": {
-		    "color": "#ffffff00",
-		    "label": null,
+		    "color": "#11accd",
+		    "label": " ",
 		    "vertices": [
 		      {
-		        "x": 0,
-		        "y": 0
+		        "x": -1,
+		        "y": 5
 		      },
 		      {
-		        "x": 0,
-		        "y": 0
+		        "x": -1.2,
+		        "y": 4.8
 		      },
 		      {
-		        "x": 0,
-		        "y": 0
+		        "x": -0.8,
+		        "y": 4.8
 		      }
 		    ]
 		  },
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": 0,
+		      "x": 5,
 		      "y": 0
 		    }
 		  },
@@ -3104,10 +6566,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7e51d4802a64528d
-	// Question: Plot the image of a point under a translation
+	// Extracted from question: x25751e4741cc427e
+	// Question: Translate a point on the coordinate plane
 	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x7e51d4802a64528d] Plot the image of a point under a translation (2)", async () => {
+	test("shape-transformation-graph - [x25751e4741cc427e] Translate a point on the coordinate plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3129,45 +6591,30 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 325,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": 2,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": -4,
-		      "id": "P_prime",
-		      "label": "P'",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "preImage": {
-		    "color": "#ffffff00",
-		    "label": null,
+		    "color": "#11accd",
+		    "label": " ",
 		    "vertices": [
 		      {
-		        "x": 0,
-		        "y": 0
+		        "x": -1,
+		        "y": 5
 		      },
 		      {
-		        "x": 0,
-		        "y": 0
+		        "x": -1.2,
+		        "y": 4.8
 		      },
 		      {
-		        "x": 0,
-		        "y": 0
+		        "x": -0.8,
+		        "y": 4.8
 		      }
 		    ]
 		  },
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": 0,
-		      "y": 0
+		      "x": 5,
+		      "y": -7
 		    }
 		  },
 		  "showQuadrantLabels": false
@@ -3188,10 +6635,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7e51d4802a64528d
-	// Question: Plot the image of a point under a translation
+	// Extracted from question: x25751e4741cc427e
+	// Question: Translate a point on the coordinate plane
 	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x7e51d4802a64528d] Plot the image of a point under a translation (3)", async () => {
+	test("shape-transformation-graph - [x25751e4741cc427e] Translate a point on the coordinate plane (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3213,37 +6660,22 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 325,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": 2,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -4,
-		      "id": "P_prime",
-		      "label": "P'",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "preImage": {
-		    "color": "#ffffff00",
-		    "label": null,
+		    "color": "#11accd",
+		    "label": " ",
 		    "vertices": [
 		      {
-		        "x": 0,
-		        "y": 0
+		        "x": -1,
+		        "y": 5
 		      },
 		      {
-		        "x": 0,
-		        "y": 0
+		        "x": -1.2,
+		        "y": 4.8
 		      },
 		      {
-		        "x": 0,
-		        "y": 0
+		        "x": -0.8,
+		        "y": 4.8
 		      }
 		    ]
 		  },
@@ -3251,7 +6683,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "type": "translation",
 		    "vector": {
 		      "x": 0,
-		      "y": 0
+		      "y": -7
 		    }
 		  },
 		  "showQuadrantLabels": false
@@ -3274,38 +6706,34 @@ describe("shapeTransformationGraph widget tests", () => {
 
 	// Extracted from question: x68c4ac78c13d1ffe
 	// Question: Identify the image after a 90° counterclockwise rotation
-	// Widget key: choice_a_figure
+	// Widget key: choice_a_image
 	test("shape-transformation-graph - [x68c4ac78c13d1ffe] Identify the image after a 90° counterclockwise rotation (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": null,
-		  "width": 340,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 340,
+		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd33",
-		    "label": null,
+		    "color": "#11accd66",
+		    "label": "P",
 		    "vertices": [
-		      {
-		        "x": -6,
-		        "y": -2
-		      },
 		      {
 		        "x": -2,
 		        "y": -2
@@ -3313,6 +6741,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		      {
 		        "x": -3,
 		        "y": -7
+		      },
+		      {
+		        "x": -6,
+		        "y": -2
 		      }
 		    ]
 		  },
@@ -3344,38 +6776,34 @@ describe("shapeTransformationGraph widget tests", () => {
 
 	// Extracted from question: x68c4ac78c13d1ffe
 	// Question: Identify the image after a 90° counterclockwise rotation
-	// Widget key: choice_b_figure
+	// Widget key: choice_b_image
 	test("shape-transformation-graph - [x68c4ac78c13d1ffe] Identify the image after a 90° counterclockwise rotation (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": null,
-		  "width": 340,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 340,
+		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd33",
-		    "label": null,
+		    "color": "#11accd66",
+		    "label": "P",
 		    "vertices": [
-		      {
-		        "x": -6,
-		        "y": -2
-		      },
 		      {
 		        "x": -2,
 		        "y": -2
@@ -3383,6 +6811,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		      {
 		        "x": -3,
 		        "y": -7
+		      },
+		      {
+		        "x": -6,
+		        "y": -2
 		      }
 		    ]
 		  },
@@ -3414,38 +6846,34 @@ describe("shapeTransformationGraph widget tests", () => {
 
 	// Extracted from question: x68c4ac78c13d1ffe
 	// Question: Identify the image after a 90° counterclockwise rotation
-	// Widget key: choice_c_figure
+	// Widget key: choice_c_image
 	test("shape-transformation-graph - [x68c4ac78c13d1ffe] Identify the image after a 90° counterclockwise rotation (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": null,
-		  "width": 340,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 340,
+		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd33",
-		    "label": null,
+		    "color": "#11accd66",
+		    "label": "P",
 		    "vertices": [
-		      {
-		        "x": -6,
-		        "y": -2
-		      },
 		      {
 		        "x": -2,
 		        "y": -2
@@ -3453,6 +6881,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		      {
 		        "x": -3,
 		        "y": -7
+		      },
+		      {
+		        "x": -6,
+		        "y": -2
 		      }
 		    ]
 		  },
@@ -3480,38 +6912,34 @@ describe("shapeTransformationGraph widget tests", () => {
 
 	// Extracted from question: x68c4ac78c13d1ffe
 	// Question: Identify the image after a 90° counterclockwise rotation
-	// Widget key: choice_d_figure
+	// Widget key: choice_d_image
 	test("shape-transformation-graph - [x68c4ac78c13d1ffe] Identify the image after a 90° counterclockwise rotation (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": null,
-		  "width": 340,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 340,
+		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd33",
-		    "label": null,
+		    "color": "#11accd66",
+		    "label": "P",
 		    "vertices": [
-		      {
-		        "x": -6,
-		        "y": -2
-		      },
 		      {
 		        "x": -2,
 		        "y": -2
@@ -3519,6 +6947,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		      {
 		        "x": -3,
 		        "y": -7
+		      },
+		      {
+		        "x": -6,
+		        "y": -2
 		      }
 		    ]
 		  },
@@ -3548,9 +6980,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc3fd56f021953d67
-	// Question: Identify the image after a 270-degree rotation
-	// Widget key: choice_a_image
-	test("shape-transformation-graph - [xc3fd56f021953d67] Identify the image after a 270-degree rotation (2)", async () => {
+	// Question: Identify the image after a 270° counterclockwise rotation about the origin
+	// Widget key: choice_a_visual
+	test("shape-transformation-graph - [xc3fd56f021953d67] Identify the image after a 270° counterclockwise rotation about the origin (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3560,21 +6992,21 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd40",
 		    "label": "Q",
 		    "vertices": [
 		      {
@@ -3622,9 +7054,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc3fd56f021953d67
-	// Question: Identify the image after a 270-degree rotation
-	// Widget key: choice_b_image
-	test("shape-transformation-graph - [xc3fd56f021953d67] Identify the image after a 270-degree rotation (3)", async () => {
+	// Question: Identify the image after a 270° counterclockwise rotation about the origin
+	// Widget key: choice_b_visual
+	test("shape-transformation-graph - [xc3fd56f021953d67] Identify the image after a 270° counterclockwise rotation about the origin (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3634,21 +7066,21 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd40",
 		    "label": "Q",
 		    "vertices": [
 		      {
@@ -3670,7 +7102,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    ]
 		  },
 		  "transformation": {
-		    "axis": "x",
+		    "axis": "y",
 		    "type": "reflection"
 		  },
 		  "showQuadrantLabels": false
@@ -3692,9 +7124,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc3fd56f021953d67
-	// Question: Identify the image after a 270-degree rotation
-	// Widget key: choice_c_image
-	test("shape-transformation-graph - [xc3fd56f021953d67] Identify the image after a 270-degree rotation (4)", async () => {
+	// Question: Identify the image after a 270° counterclockwise rotation about the origin
+	// Widget key: choice_c_visual
+	test("shape-transformation-graph - [xc3fd56f021953d67] Identify the image after a 270° counterclockwise rotation about the origin (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3704,21 +7136,21 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd40",
 		    "label": "Q",
 		    "vertices": [
 		      {
@@ -3766,9 +7198,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc3fd56f021953d67
-	// Question: Identify the image after a 270-degree rotation
-	// Widget key: choice_d_image
-	test("shape-transformation-graph - [xc3fd56f021953d67] Identify the image after a 270-degree rotation (5)", async () => {
+	// Question: Identify the image after a 270° counterclockwise rotation about the origin
+	// Widget key: choice_d_visual
+	test("shape-transformation-graph - [xc3fd56f021953d67] Identify the image after a 270° counterclockwise rotation about the origin (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3778,21 +7210,21 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd40",
 		    "label": "Q",
 		    "vertices": [
 		      {
@@ -3841,7 +7273,7 @@ describe("shapeTransformationGraph widget tests", () => {
 
 	// Extracted from question: xf23ca9b08a9c0418
 	// Question: Identify the image after a 180° rotation about the origin
-	// Widget key: choice_a_visual
+	// Widget key: choice_a_image
 	test("shape-transformation-graph - [xf23ca9b08a9c0418] Identify the image after a 180° rotation about the origin (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -3852,21 +7284,21 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#00000022",
+		    "color": "#11accd26",
 		    "label": "P",
 		    "vertices": [
 		      {
@@ -3911,7 +7343,7 @@ describe("shapeTransformationGraph widget tests", () => {
 
 	// Extracted from question: xf23ca9b08a9c0418
 	// Question: Identify the image after a 180° rotation about the origin
-	// Widget key: choice_b_visual
+	// Widget key: choice_b_image
 	test("shape-transformation-graph - [xf23ca9b08a9c0418] Identify the image after a 180° rotation about the origin (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -3922,21 +7354,21 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#00000022",
+		    "color": "#11accd26",
 		    "label": "P",
 		    "vertices": [
 		      {
@@ -3981,7 +7413,7 @@ describe("shapeTransformationGraph widget tests", () => {
 
 	// Extracted from question: xf23ca9b08a9c0418
 	// Question: Identify the image after a 180° rotation about the origin
-	// Widget key: choice_c_visual
+	// Widget key: choice_c_image
 	test("shape-transformation-graph - [xf23ca9b08a9c0418] Identify the image after a 180° rotation about the origin (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -3992,21 +7424,21 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#00000022",
+		    "color": "#11accd26",
 		    "label": "P",
 		    "vertices": [
 		      {
@@ -4051,7 +7483,7 @@ describe("shapeTransformationGraph widget tests", () => {
 
 	// Extracted from question: xf23ca9b08a9c0418
 	// Question: Identify the image after a 180° rotation about the origin
-	// Widget key: choice_d_visual
+	// Widget key: choice_d_image
 	test("shape-transformation-graph - [xf23ca9b08a9c0418] Identify the image after a 180° rotation about the origin (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -4062,21 +7494,21 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#00000022",
+		    "color": "#11accd26",
 		    "label": "P",
 		    "vertices": [
 		      {
@@ -4119,946 +7551,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x5974dce5cb570372
-	// Question: Dilation of a triangle about point P (scale factor 1/2)
-	// Widget key: dilation_choice_a
-	test("shape-transformation-graph - [x5974dce5cb570372] Dilation of a triangle about point P (scale factor 1/2) (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 26,
-		    "min": -2,
-		    "label": "x",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 2,
-		    "min": -26,
-		    "label": "y",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 8,
-		        "y": -8
-		      },
-		      {
-		        "x": 12,
-		        "y": -12
-		      },
-		      {
-		        "x": 0,
-		        "y": -10
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 0,
-		      "y": 0
-		    },
-		    "scaleFactor": 0.5
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5974dce5cb570372
-	// Question: Dilation of a triangle about point P (scale factor 1/2)
-	// Widget key: dilation_choice_b
-	test("shape-transformation-graph - [x5974dce5cb570372] Dilation of a triangle about point P (scale factor 1/2) (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 26,
-		    "min": -2,
-		    "label": "x",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 2,
-		    "min": -26,
-		    "label": "y",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 8,
-		        "y": -8
-		      },
-		      {
-		        "x": 12,
-		        "y": -12
-		      },
-		      {
-		        "x": 0,
-		        "y": -10
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 0,
-		      "y": 0
-		    },
-		    "scaleFactor": 2
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5974dce5cb570372
-	// Question: Dilation of a triangle about point P (scale factor 1/2)
-	// Widget key: dilation_choice_c
-	test("shape-transformation-graph - [x5974dce5cb570372] Dilation of a triangle about point P (scale factor 1/2) (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 26,
-		    "min": -2,
-		    "label": "x",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 2,
-		    "min": -26,
-		    "label": "y",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 8,
-		        "y": -8
-		      },
-		      {
-		        "x": 12,
-		        "y": -12
-		      },
-		      {
-		        "x": 0,
-		        "y": -10
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 2,
-		      "y": -2
-		    },
-		    "scaleFactor": 0.5
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x76ba5af1174bd25d
-	// Question: Dilation of a Triangle with Scale Factor 1/4
-	// Widget key: dilation_choice_a
-	test("shape-transformation-graph - [x76ba5af1174bd25d] Dilation of a Triangle with Scale Factor 1/4 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 500,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [
-		    {
-		      "x": 6,
-		      "y": -1,
-		      "id": "centerP",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "Triangle ABC",
-		    "vertices": [
-		      {
-		        "x": 6,
-		        "y": 3
-		      },
-		      {
-		        "x": 6,
-		        "y": -5
-		      },
-		      {
-		        "x": -6,
-		        "y": -5
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 6,
-		      "y": -1
-		    },
-		    "scaleFactor": 0.5
-		  },
-		  "showQuadrantLabels": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x76ba5af1174bd25d
-	// Question: Dilation of a Triangle with Scale Factor 1/4
-	// Widget key: dilation_choice_b
-	test("shape-transformation-graph - [x76ba5af1174bd25d] Dilation of a Triangle with Scale Factor 1/4 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 500,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [
-		    {
-		      "x": 6,
-		      "y": -1,
-		      "id": "centerP",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "Triangle ABC",
-		    "vertices": [
-		      {
-		        "x": 6,
-		        "y": 3
-		      },
-		      {
-		        "x": 6,
-		        "y": -5
-		      },
-		      {
-		        "x": -6,
-		        "y": -5
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 6,
-		      "y": -1
-		    },
-		    "scaleFactor": 0.25
-		  },
-		  "showQuadrantLabels": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x76ba5af1174bd25d
-	// Question: Dilation of a Triangle with Scale Factor 1/4
-	// Widget key: dilation_choice_c
-	test("shape-transformation-graph - [x76ba5af1174bd25d] Dilation of a Triangle with Scale Factor 1/4 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 500,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [
-		    {
-		      "x": 6,
-		      "y": -1,
-		      "id": "centerP",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "Triangle ABC",
-		    "vertices": [
-		      {
-		        "x": 6,
-		        "y": 3
-		      },
-		      {
-		        "x": 6,
-		        "y": -5
-		      },
-		      {
-		        "x": -6,
-		        "y": -5
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 6,
-		      "y": -1
-		    },
-		    "scaleFactor": -0.25
-		  },
-		  "showQuadrantLabels": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x699e3b16cdc81fe7
-	// Question: Dilate a triangle about a point (multiple choice)
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x699e3b16cdc81fe7] Dilate a triangle about a point (multiple choice) (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 0,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f994D",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 4,
-		        "y": 2
-		      },
-		      {
-		        "x": -2,
-		        "y": 3
-		      },
-		      {
-		        "x": 1,
-		        "y": -2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 0,
-		      "y": 0
-		    },
-		    "scaleFactor": 2
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x699e3b16cdc81fe7
-	// Question: Dilate a triangle about a point (multiple choice)
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x699e3b16cdc81fe7] Dilate a triangle about a point (multiple choice) (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 0,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f994D",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 4,
-		        "y": 2
-		      },
-		      {
-		        "x": -2,
-		        "y": 3
-		      },
-		      {
-		        "x": 1,
-		        "y": -2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 1,
-		      "y": 0
-		    },
-		    "scaleFactor": 2
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x699e3b16cdc81fe7
-	// Question: Dilate a triangle about a point (multiple choice)
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x699e3b16cdc81fe7] Dilate a triangle about a point (multiple choice) (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 0,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f994D",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 4,
-		        "y": 2
-		      },
-		      {
-		        "x": -2,
-		        "y": 3
-		      },
-		      {
-		        "x": 1,
-		        "y": -2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 1,
-		      "y": 0
-		    },
-		    "scaleFactor": 0.5
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xfc3b5b3a7130e8f8
-	// Question: Dilate a triangle with center P and scale factor 1/3
-	// Widget key: dilation_choice_a
-	test("shape-transformation-graph - [xfc3b5b3a7130e8f8] Dilate a triangle with center P and scale factor 1/3 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 9,
-		      "y": 4,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 3,
-		        "y": 4
-		      },
-		      {
-		        "x": 15,
-		        "y": 1
-		      },
-		      {
-		        "x": 6,
-		        "y": 10
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 9,
-		      "y": 4
-		    },
-		    "scaleFactor": 0.5
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xfc3b5b3a7130e8f8
-	// Question: Dilate a triangle with center P and scale factor 1/3
-	// Widget key: dilation_choice_b
-	test("shape-transformation-graph - [xfc3b5b3a7130e8f8] Dilate a triangle with center P and scale factor 1/3 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 9,
-		      "y": 4,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 3,
-		        "y": 4
-		      },
-		      {
-		        "x": 15,
-		        "y": 1
-		      },
-		      {
-		        "x": 6,
-		        "y": 10
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 9,
-		      "y": 4
-		    },
-		    "scaleFactor": 0.3333333333
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xfc3b5b3a7130e8f8
-	// Question: Dilate a triangle with center P and scale factor 1/3
-	// Widget key: dilation_choice_c
-	test("shape-transformation-graph - [xfc3b5b3a7130e8f8] Dilate a triangle with center P and scale factor 1/3 (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 9,
-		      "y": 4,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 3,
-		        "y": 4
-		      },
-		      {
-		        "x": 15,
-		        "y": 1
-		      },
-		      {
-		        "x": 6,
-		        "y": 10
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 9,
-		      "y": 4
-		    },
-		    "scaleFactor": 2
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x30be93715276ca16
-	// Question: Dilation of a triangle with center A and scale factor 4
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x30be93715276ca16] Dilation of a triangle with center A and scale factor 4 (1)", async () => {
+	// Extracted from question: x6d6bef66301a787b
+	// Question: Identify the image after a 270° clockwise rotation
+	// Widget key: choice_a_visual
+	test("shape-transformation-graph - [x6d6bef66301a787b] Identify the image after a 270° clockwise rotation (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5066,788 +7562,114 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "lines": null,
 		  "width": 400,
 		  "xAxis": {
-		    "max": 14,
-		    "min": -2,
-		    "label": "x",
+		    "max": 10,
+		    "min": -10,
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
+		    "max": 10,
 		    "min": -10,
-		    "label": "y",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -2,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "preImage": {
-		    "color": "#0c7f9933",
-		    "label": "ABC",
+		    "color": "#11accd33",
+		    "label": "R",
 		    "vertices": [
 		      {
 		        "x": 0,
-		        "y": 0
+		        "y": 7
 		      },
 		      {
-		        "x": 3,
-		        "y": -2
+		        "x": 7,
+		        "y": 4
 		      },
-		      {
-		        "x": 0,
-		        "y": -2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 0,
-		      "y": 0
-		    },
-		    "scaleFactor": 3
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x30be93715276ca16
-	// Question: Dilation of a triangle with center A and scale factor 4
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x30be93715276ca16] Dilation of a triangle with center A and scale factor 4 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 400,
-		  "xAxis": {
-		    "max": 14,
-		    "min": -2,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -2,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f9933",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 0,
-		        "y": 0
-		      },
-		      {
-		        "x": 3,
-		        "y": -2
-		      },
-		      {
-		        "x": 0,
-		        "y": -2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 0,
-		      "y": 0
-		    },
-		    "scaleFactor": 4
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x30be93715276ca16
-	// Question: Dilation of a triangle with center A and scale factor 4
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x30be93715276ca16] Dilation of a triangle with center A and scale factor 4 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 400,
-		  "xAxis": {
-		    "max": 14,
-		    "min": -2,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -2,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f9933",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 0,
-		        "y": 0
-		      },
-		      {
-		        "x": 3,
-		        "y": -2
-		      },
-		      {
-		        "x": 0,
-		        "y": -2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 3,
-		      "y": -2
-		    },
-		    "scaleFactor": 4
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd42b7764d3ba9f30
-	// Question: Dilation of a triangle about a point
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [xd42b7764d3ba9f30] Dilation of a triangle about a point (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": -3,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f9933",
-		    "label": "Pre-image",
-		    "vertices": [
-		      {
-		        "x": -3,
-		        "y": 1
-		      },
-		      {
-		        "x": 2,
-		        "y": 2
-		      },
-		      {
-		        "x": -2,
-		        "y": -3
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 0,
-		      "y": 0
-		    },
-		    "scaleFactor": 2
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd42b7764d3ba9f30
-	// Question: Dilation of a triangle about a point
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [xd42b7764d3ba9f30] Dilation of a triangle about a point (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": -3,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f9933",
-		    "label": "Pre-image",
-		    "vertices": [
-		      {
-		        "x": -3,
-		        "y": 1
-		      },
-		      {
-		        "x": 2,
-		        "y": 2
-		      },
-		      {
-		        "x": -2,
-		        "y": -3
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": -2,
-		      "y": -3
-		    },
-		    "scaleFactor": 2
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd42b7764d3ba9f30
-	// Question: Dilation of a triangle about a point
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [xd42b7764d3ba9f30] Dilation of a triangle about a point (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": -3,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f9933",
-		    "label": "Pre-image",
-		    "vertices": [
-		      {
-		        "x": -3,
-		        "y": 1
-		      },
-		      {
-		        "x": 2,
-		        "y": 2
-		      },
-		      {
-		        "x": -2,
-		        "y": -3
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": -2,
-		      "y": -3
-		    },
-		    "scaleFactor": 0.5
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0719781bab05e601
-	// Question: Dilate a triangle centered at P with scale factor 3
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x0719781bab05e601] Dilate a triangle centered at P with scale factor 3 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 500,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [
-		    {
-		      "x": 6,
-		      "y": 5,
-		      "id": "center",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "Pre-image",
-		    "vertices": [
-		      {
-		        "x": 2,
-		        "y": 5
-		      },
-		      {
-		        "x": 2,
-		        "y": 2
-		      },
-		      {
-		        "x": 6,
-		        "y": 2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 6,
-		      "y": 5
-		    },
-		    "scaleFactor": 2
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0719781bab05e601
-	// Question: Dilate a triangle centered at P with scale factor 3
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x0719781bab05e601] Dilate a triangle centered at P with scale factor 3 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 500,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [
-		    {
-		      "x": 6,
-		      "y": 5,
-		      "id": "center",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "Pre-image",
-		    "vertices": [
-		      {
-		        "x": 2,
-		        "y": 5
-		      },
-		      {
-		        "x": 2,
-		        "y": 2
-		      },
-		      {
-		        "x": 6,
-		        "y": 2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 6,
-		      "y": 5
-		    },
-		    "scaleFactor": 3
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0719781bab05e601
-	// Question: Dilate a triangle centered at P with scale factor 3
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x0719781bab05e601] Dilate a triangle centered at P with scale factor 3 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 500,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [
-		    {
-		      "x": 6,
-		      "y": 5,
-		      "id": "center",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "Pre-image",
-		    "vertices": [
-		      {
-		        "x": 2,
-		        "y": 5
-		      },
-		      {
-		        "x": 2,
-		        "y": 2
-		      },
-		      {
-		        "x": 6,
-		        "y": 2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 0,
-		      "y": 0
-		    },
-		    "scaleFactor": 3
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x58e6b39062d09854
-	// Question: Dilate a triangle by a factor of 1/2 centered at P
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x58e6b39062d09854] Dilate a triangle by a factor of 1/2 centered at P (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": 1,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f9933",
-		    "label": "Original",
-		    "vertices": [
 		      {
 		        "x": 5,
-		        "y": -3
+		        "y": 4
 		      },
 		      {
-		        "x": -5,
-		        "y": -1
+		        "x": 5,
+		        "y": 2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 270,
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6d6bef66301a787b
+	// Question: Identify the image after a 270° clockwise rotation
+	// Widget key: choice_b_visual
+	test("shape-transformation-graph - [x6d6bef66301a787b] Identify the image after a 270° clockwise rotation (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd33",
+		    "label": "R",
+		    "vertices": [
+		      {
+		        "x": 0,
+		        "y": 7
 		      },
 		      {
-		        "x": 1,
-		        "y": 5
+		        "x": 7,
+		        "y": 4
+		      },
+		      {
+		        "x": 5,
+		        "y": 4
+		      },
+		      {
+		        "x": 5,
+		        "y": 2
 		      }
 		    ]
 		  },
@@ -5873,166 +7695,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x58e6b39062d09854
-	// Question: Dilate a triangle by a factor of 1/2 centered at P
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x58e6b39062d09854] Dilate a triangle by a factor of 1/2 centered at P (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": 1,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f9933",
-		    "label": "Original",
-		    "vertices": [
-		      {
-		        "x": 5,
-		        "y": -3
-		      },
-		      {
-		        "x": -5,
-		        "y": -1
-		      },
-		      {
-		        "x": 1,
-		        "y": 5
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": -3,
-		      "y": 1
-		    },
-		    "scaleFactor": 0.5
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x58e6b39062d09854
-	// Question: Dilate a triangle by a factor of 1/2 centered at P
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x58e6b39062d09854] Dilate a triangle by a factor of 1/2 centered at P (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": 1,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f9933",
-		    "label": "Original",
-		    "vertices": [
-		      {
-		        "x": 5,
-		        "y": -3
-		      },
-		      {
-		        "x": -5,
-		        "y": -1
-		      },
-		      {
-		        "x": 1,
-		        "y": 5
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "rotation",
-		    "angle": 90,
-		    "center": {
-		      "x": -3,
-		      "y": 1
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc1f5b98db014905e
-	// Question: Dilate a triangle from a center point
-	// Widget key: dilation_choice_a
-	test("shape-transformation-graph - [xc1f5b98db014905e] Dilate a triangle from a center point (1)", async () => {
+	// Extracted from question: x6d6bef66301a787b
+	// Question: Identify the image after a 270° clockwise rotation
+	// Widget key: choice_c_visual
+	test("shape-transformation-graph - [x6d6bef66301a787b] Identify the image after a 270° clockwise rotation (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6040,786 +7706,110 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "lines": null,
 		  "width": 400,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": -6,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -6,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -6,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 3,
-		        "y": -6
-		      },
-		      {
-		        "x": 0,
-		        "y": -6
-		      },
-		      {
-		        "x": 2,
-		        "y": -4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 2,
-		      "y": -6
-		    },
-		    "scaleFactor": 2
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc1f5b98db014905e
-	// Question: Dilate a triangle from a center point
-	// Widget key: dilation_choice_b
-	test("shape-transformation-graph - [xc1f5b98db014905e] Dilate a triangle from a center point (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": -6,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -6,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -6,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 3,
-		        "y": -6
-		      },
-		      {
-		        "x": 0,
-		        "y": -6
-		      },
-		      {
-		        "x": 2,
-		        "y": -4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 2,
-		      "y": -6
-		    },
-		    "scaleFactor": 4
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc1f5b98db014905e
-	// Question: Dilate a triangle from a center point
-	// Widget key: dilation_choice_c
-	test("shape-transformation-graph - [xc1f5b98db014905e] Dilate a triangle from a center point (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": -6,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -6,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -6,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 3,
-		        "y": -6
-		      },
-		      {
-		        "x": 0,
-		        "y": -6
-		      },
-		      {
-		        "x": 2,
-		        "y": -4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "rotation",
-		    "angle": 90,
-		    "center": {
-		      "x": 2,
-		      "y": -6
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0333813884c1be31
-	// Question: Dilation of a triangle with center A and scale factor 1/4
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x0333813884c1be31] Dilation of a triangle with center A and scale factor 1/4 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 400,
-		  "xAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "x",
+		    "max": 10,
+		    "min": -10,
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "y",
+		    "max": 10,
+		    "min": -10,
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [],
 		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "Original",
+		    "color": "#11accd33",
+		    "label": "R",
 		    "vertices": [
 		      {
-		        "x": 2,
-		        "y": 10
-		      },
-		      {
-		        "x": 14,
-		        "y": 14
-		      },
-		      {
-		        "x": 10,
-		        "y": 2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 3,
-		      "y": 1
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0333813884c1be31
-	// Question: Dilation of a triangle with center A and scale factor 1/4
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x0333813884c1be31] Dilation of a triangle with center A and scale factor 1/4 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 400,
-		  "xAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "Original",
-		    "vertices": [
-		      {
-		        "x": 2,
-		        "y": 10
-		      },
-		      {
-		        "x": 14,
-		        "y": 14
-		      },
-		      {
-		        "x": 10,
-		        "y": 2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 2,
-		      "y": 10
-		    },
-		    "scaleFactor": 0.25
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0333813884c1be31
-	// Question: Dilation of a triangle with center A and scale factor 1/4
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x0333813884c1be31] Dilation of a triangle with center A and scale factor 1/4 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 400,
-		  "xAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "preImage": {
-		    "color": "#0c7f99",
-		    "label": "Original",
-		    "vertices": [
-		      {
-		        "x": 2,
-		        "y": 10
-		      },
-		      {
-		        "x": 14,
-		        "y": 14
-		      },
-		      {
-		        "x": 10,
-		        "y": 2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 2,
-		      "y": 10
-		    },
-		    "scaleFactor": 0.5
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x19d65eff59f631fa
-	// Question: Dilation of a triangle by a factor of 1/3 about P
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x19d65eff59f631fa] Dilation of a triangle by a factor of 1/3 about P (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 4,
-		      "y": -4,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f9933",
-		    "label": " ",
-		    "vertices": [
-		      {
-		        "x": -2,
-		        "y": -7
-		      },
-		      {
-		        "x": -5,
-		        "y": 2
+		        "x": 0,
+		        "y": 7
 		      },
 		      {
 		        "x": 7,
-		        "y": 5
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "axis": "x",
-		    "type": "reflection"
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x19d65eff59f631fa
-	// Question: Dilation of a triangle by a factor of 1/3 about P
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x19d65eff59f631fa] Dilation of a triangle by a factor of 1/3 about P (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 4,
-		      "y": -4,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f9933",
-		    "label": " ",
-		    "vertices": [
-		      {
-		        "x": -2,
-		        "y": -7
-		      },
-		      {
-		        "x": -5,
-		        "y": 2
-		      },
-		      {
-		        "x": 7,
-		        "y": 5
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "dilation",
-		    "center": {
-		      "x": 4,
-		      "y": -4
-		    },
-		    "scaleFactor": 0.3333333333
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x19d65eff59f631fa
-	// Question: Dilation of a triangle by a factor of 1/3 about P
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x19d65eff59f631fa] Dilation of a triangle by a factor of 1/3 about P (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 4,
-		      "y": -4,
-		      "id": "P",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#0c7f9933",
-		    "label": " ",
-		    "vertices": [
-		      {
-		        "x": -2,
-		        "y": -7
-		      },
-		      {
-		        "x": -5,
-		        "y": 2
-		      },
-		      {
-		        "x": 7,
-		        "y": 5
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 1,
-		      "y": 3
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3d869072f72e4658
-	// Question: Identify the single transformation between quadrilaterals
-	// Widget key: image_1
-	test("shape-transformation-graph - [x3d869072f72e4658] Identify the single transformation between quadrilaterals", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 300,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -6,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 2.5,
-		      "y": 2.25,
-		      "id": "centroid_A",
-		      "label": "A",
-		      "style": "open"
-		    },
-		    {
-		      "x": -2.5,
-		      "y": 2.25,
-		      "id": "centroid_B",
-		      "label": "B",
-		      "style": "open"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#4472C459",
-		    "label": "A",
-		    "vertices": [
-		      {
-		        "x": 2,
 		        "y": 4
 		      },
 		      {
-		        "x": 1,
-		        "y": 1
+		        "x": 5,
+		        "y": 4
 		      },
 		      {
-		        "x": 2,
+		        "x": 5,
 		        "y": 2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": -270,
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6d6bef66301a787b
+	// Question: Identify the image after a 270° clockwise rotation
+	// Widget key: choice_d_visual
+	test("shape-transformation-graph - [x6d6bef66301a787b] Identify the image after a 270° clockwise rotation (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd33",
+		    "label": "R",
+		    "vertices": [
+		      {
+		        "x": 0,
+		        "y": 7
+		      },
+		      {
+		        "x": 7,
+		        "y": 4
+		      },
+		      {
+		        "x": 5,
+		        "y": 4
 		      },
 		      {
 		        "x": 5,
@@ -6849,77 +7839,2820 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x671a0de8ba89212f
-	// Question: Unchanged properties under a rotation
-	// Widget key: image_1
-	test("shape-transformation-graph - [x671a0de8ba89212f] Unchanged properties under a rotation", async () => {
+	// Extracted from question: x5974dce5cb570372
+	// Question: Dilate a triangle about point P with scale factor 1/2
+	// Widget key: dilation_choice_a
+	test("shape-transformation-graph - [x5974dce5cb570372] Dilate a triangle about point P with scale factor 1/2 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": null,
-		  "width": 216,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 3,
-		    "min": -8,
-		    "label": "",
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 9,
-		    "min": -8,
-		    "label": "",
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 325,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": -3,
-		      "y": 1,
+		      "x": 2,
+		      "y": 2,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9944",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 10,
+		        "y": 10
+		      },
+		      {
+		        "x": 14,
+		        "y": 14
+		      },
+		      {
+		        "x": 2,
+		        "y": 12
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 2,
+		      "y": 2
+		    },
+		    "scaleFactor": 2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5974dce5cb570372
+	// Question: Dilate a triangle about point P with scale factor 1/2
+	// Widget key: dilation_choice_b
+	test("shape-transformation-graph - [x5974dce5cb570372] Dilate a triangle about point P with scale factor 1/2 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9944",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 10,
+		        "y": 10
+		      },
+		      {
+		        "x": 14,
+		        "y": 14
+		      },
+		      {
+		        "x": 2,
+		        "y": 12
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 2,
+		      "y": 2
+		    },
+		    "scaleFactor": 0.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5974dce5cb570372
+	// Question: Dilate a triangle about point P with scale factor 1/2
+	// Widget key: dilation_choice_c
+	test("shape-transformation-graph - [x5974dce5cb570372] Dilate a triangle about point P with scale factor 1/2 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9944",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 10,
+		        "y": 10
+		      },
+		      {
+		        "x": 14,
+		        "y": 14
+		      },
+		      {
+		        "x": 2,
+		        "y": 12
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    },
+		    "scaleFactor": 0.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x76ba5af1174bd25d
+	// Question: Dilate a triangle about point P by factor 1/4
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x76ba5af1174bd25d] Dilate a triangle about point P by factor 1/4 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": -1,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9933",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 6,
+		        "y": 3
+		      },
+		      {
+		        "x": 6,
+		        "y": -5
+		      },
+		      {
+		        "x": -6,
+		        "y": -5
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 6,
+		      "y": -1
+		    },
+		    "scaleFactor": 0.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x76ba5af1174bd25d
+	// Question: Dilate a triangle about point P by factor 1/4
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x76ba5af1174bd25d] Dilate a triangle about point P by factor 1/4 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": -1,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9933",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 6,
+		        "y": 3
+		      },
+		      {
+		        "x": 6,
+		        "y": -5
+		      },
+		      {
+		        "x": -6,
+		        "y": -5
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 6,
+		      "y": -1
+		    },
+		    "scaleFactor": 0.25
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x76ba5af1174bd25d
+	// Question: Dilate a triangle about point P by factor 1/4
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x76ba5af1174bd25d] Dilate a triangle about point P by factor 1/4 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": -1,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9933",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 6,
+		        "y": 3
+		      },
+		      {
+		        "x": 6,
+		        "y": -5
+		      },
+		      {
+		        "x": -6,
+		        "y": -5
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 6,
+		      "y": -1
+		    },
+		    "scaleFactor": -0.25
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd1b9b05e0b909aa4
+	// Question: Dilation of a Triangle with Center P and Scale Factor 3
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [xd1b9b05e0b909aa4] Dilation of a Triangle with Center P and Scale Factor 3 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -1,
+		      "y": -2,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9940",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": -2,
+		        "y": 0
+		      },
+		      {
+		        "x": -3,
+		        "y": -3
+		      },
+		      {
+		        "x": 1,
+		        "y": -2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": -1,
+		      "y": -2
+		    },
+		    "scaleFactor": 2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd1b9b05e0b909aa4
+	// Question: Dilation of a Triangle with Center P and Scale Factor 3
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [xd1b9b05e0b909aa4] Dilation of a Triangle with Center P and Scale Factor 3 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -1,
+		      "y": -2,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9940",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": -2,
+		        "y": 0
+		      },
+		      {
+		        "x": -3,
+		        "y": -3
+		      },
+		      {
+		        "x": 1,
+		        "y": -2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": -1,
+		      "y": -2
+		    },
+		    "scaleFactor": 3
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd1b9b05e0b909aa4
+	// Question: Dilation of a Triangle with Center P and Scale Factor 3
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [xd1b9b05e0b909aa4] Dilation of a Triangle with Center P and Scale Factor 3 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -1,
+		      "y": -2,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9940",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": -2,
+		        "y": 0
+		      },
+		      {
+		        "x": -3,
+		        "y": -3
+		      },
+		      {
+		        "x": 1,
+		        "y": -2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "x",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x699e3b16cdc81fe7
+	// Question: Dilation of a triangle with center P and scale factor 2
+	// Widget key: choice_a_visual
+	test("shape-transformation-graph - [x699e3b16cdc81fe7] Dilation of a triangle with center P and scale factor 2 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 0,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9930",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 4,
+		        "y": 2
+		      },
+		      {
+		        "x": -2,
+		        "y": 3
+		      },
+		      {
+		        "x": 1,
+		        "y": -2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    },
+		    "scaleFactor": 2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x699e3b16cdc81fe7
+	// Question: Dilation of a triangle with center P and scale factor 2
+	// Widget key: choice_b_visual
+	test("shape-transformation-graph - [x699e3b16cdc81fe7] Dilation of a triangle with center P and scale factor 2 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_AP",
+		      "color": "#888",
+		      "label": null,
+		      "style": "dashed",
+		      "equation": {
+		        "x1": 1,
+		        "y1": 0,
+		        "type": "pointSlope",
+		        "slope": 0.6666666667
+		      }
+		    },
+		    {
+		      "id": "line_BP",
+		      "color": "#888",
+		      "label": null,
+		      "style": "dashed",
+		      "equation": {
+		        "x1": 1,
+		        "y1": 0,
+		        "type": "pointSlope",
+		        "slope": -1
+		      }
+		    },
+		    {
+		      "id": "line_CP",
+		      "color": "#888",
+		      "label": null,
+		      "style": "dashed",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 1,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 300,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 0,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9930",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 4,
+		        "y": 2
+		      },
+		      {
+		        "x": -2,
+		        "y": 3
+		      },
+		      {
+		        "x": 1,
+		        "y": -2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 1,
+		      "y": 0
+		    },
+		    "scaleFactor": 2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x699e3b16cdc81fe7
+	// Question: Dilation of a triangle with center P and scale factor 2
+	// Widget key: choice_c_visual
+	test("shape-transformation-graph - [x699e3b16cdc81fe7] Dilation of a triangle with center P and scale factor 2 (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 0,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9930",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 4,
+		        "y": 2
+		      },
+		      {
+		        "x": -2,
+		        "y": 3
+		      },
+		      {
+		        "x": 1,
+		        "y": -2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "y",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfc3b5b3a7130e8f8
+	// Question: Dilate a triangle with a given center and scale factor
+	// Widget key: dilation_choice_a
+	test("shape-transformation-graph - [xfc3b5b3a7130e8f8] Dilate a triangle with a given center and scale factor (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 9,
+		      "y": 12,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9940",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": 12
+		      },
+		      {
+		        "x": 15,
+		        "y": 15
+		      },
+		      {
+		        "x": 6,
+		        "y": 6
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 9,
+		      "y": 12
+		    },
+		    "scaleFactor": 0.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfc3b5b3a7130e8f8
+	// Question: Dilate a triangle with a given center and scale factor
+	// Widget key: dilation_choice_b
+	test("shape-transformation-graph - [xfc3b5b3a7130e8f8] Dilate a triangle with a given center and scale factor (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 9,
+		      "y": 12,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9940",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": 12
+		      },
+		      {
+		        "x": 15,
+		        "y": 15
+		      },
+		      {
+		        "x": 6,
+		        "y": 6
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 9,
+		      "y": 12
+		    },
+		    "scaleFactor": 0.3333333333
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfc3b5b3a7130e8f8
+	// Question: Dilate a triangle with a given center and scale factor
+	// Widget key: dilation_choice_c
+	test("shape-transformation-graph - [xfc3b5b3a7130e8f8] Dilate a triangle with a given center and scale factor (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 9,
+		      "y": 12,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9940",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": 12
+		      },
+		      {
+		        "x": 15,
+		        "y": 15
+		      },
+		      {
+		        "x": 6,
+		        "y": 6
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 9,
+		      "y": 12
+		    },
+		    "scaleFactor": 3
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x30be93715276ca16
+	// Question: Dilate a triangle about a point (multiple choice)
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x30be93715276ca16] Dilate a triangle about a point (multiple choice) (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 6,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
-		    },
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0C7F994D",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": -6,
+		        "y": 6
+		      },
+		      {
+		        "x": -3,
+		        "y": 4
+		      },
+		      {
+		        "x": -6,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 12,
+		      "y": -8
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x30be93715276ca16
+	// Question: Dilate a triangle about a point (multiple choice)
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x30be93715276ca16] Dilate a triangle about a point (multiple choice) (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
 		    {
-		      "x": -5,
-		      "y": -6,
-		      "id": "B",
-		      "label": "B",
+		      "x": -6,
+		      "y": 6,
+		      "id": "A",
+		      "label": "A",
 		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0C7F994D",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": -6,
+		        "y": 6
+		      },
+		      {
+		        "x": -3,
+		        "y": 4
+		      },
+		      {
+		        "x": -6,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": -6,
+		      "y": 6
 		    },
+		    "scaleFactor": 4
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x30be93715276ca16
+	// Question: Dilate a triangle about a point (multiple choice)
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x30be93715276ca16] Dilate a triangle about a point (multiple choice) (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 6,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0C7F994D",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": -6,
+		        "y": 6
+		      },
+		      {
+		        "x": -3,
+		        "y": 4
+		      },
+		      {
+		        "x": -6,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": -6,
+		      "y": 6
+		    },
+		    "scaleFactor": 2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd42b7764d3ba9f30
+	// Question: Dilate a triangle with center C and scale factor 2
+	// Widget key: triangle_choice_a
+	test("shape-transformation-graph - [xd42b7764d3ba9f30] Dilate a triangle with center C and scale factor 2 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
 		    {
 		      "x": -2,
-		      "y": -2,
+		      "y": -3,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    }
 		  ],
 		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABC",
+		    "color": "#0c7f9933",
+		    "label": null,
 		    "vertices": [
 		      {
 		        "x": -3,
 		        "y": 1
 		      },
 		      {
-		        "x": -5,
-		        "y": -6
+		        "x": 2,
+		        "y": 2
 		      },
 		      {
 		        "x": -2,
-		        "y": -2
+		        "y": -3
 		      }
 		    ]
 		  },
 		  "transformation": {
-		    "type": "rotation",
-		    "angle": -135,
+		    "type": "dilation",
 		    "center": {
-		      "x": -3,
+		      "x": 0,
+		      "y": 0
+		    },
+		    "scaleFactor": 2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd42b7764d3ba9f30
+	// Question: Dilate a triangle with center C and scale factor 2
+	// Widget key: triangle_choice_b
+	test("shape-transformation-graph - [xd42b7764d3ba9f30] Dilate a triangle with center C and scale factor 2 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": -3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9933",
+		    "label": null,
+		    "vertices": [
+		      {
+		        "x": -3,
+		        "y": 1
+		      },
+		      {
+		        "x": 2,
+		        "y": 2
+		      },
+		      {
+		        "x": -2,
+		        "y": -3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": -2,
+		      "y": -3
+		    },
+		    "scaleFactor": 2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd42b7764d3ba9f30
+	// Question: Dilate a triangle with center C and scale factor 2
+	// Widget key: triangle_choice_c
+	test("shape-transformation-graph - [xd42b7764d3ba9f30] Dilate a triangle with center C and scale factor 2 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": -3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9933",
+		    "label": null,
+		    "vertices": [
+		      {
+		        "x": -3,
+		        "y": 1
+		      },
+		      {
+		        "x": 2,
+		        "y": 2
+		      },
+		      {
+		        "x": -2,
+		        "y": -3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": -2,
+		      "y": -3
+		    },
+		    "scaleFactor": 1.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0719781bab05e601
+	// Question: Identify the image of a triangle under a dilation
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x0719781bab05e601] Identify the image of a triangle under a dilation (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 5,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9940",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 5
+		      },
+		      {
+		        "x": 6,
+		        "y": 2
+		      },
+		      {
+		        "x": 2,
+		        "y": 2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "x",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0719781bab05e601
+	// Question: Identify the image of a triangle under a dilation
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x0719781bab05e601] Identify the image of a triangle under a dilation (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 5,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9940",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 5
+		      },
+		      {
+		        "x": 6,
+		        "y": 2
+		      },
+		      {
+		        "x": 2,
+		        "y": 2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 6,
+		      "y": 5
+		    },
+		    "scaleFactor": 3
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0719781bab05e601
+	// Question: Identify the image of a triangle under a dilation
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x0719781bab05e601] Identify the image of a triangle under a dilation (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 5,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9940",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 5
+		      },
+		      {
+		        "x": 6,
+		        "y": 2
+		      },
+		      {
+		        "x": 2,
+		        "y": 2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    },
+		    "scaleFactor": 3
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x58e6b39062d09854
+	// Question: Select the image of a triangle under dilation (center P, scale factor 1/2)
+	// Widget key: dilation_choice_a
+	test("shape-transformation-graph - [x58e6b39062d09854] Select the image of a triangle under dilation (center P, scale factor 1/2) (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 13,
+		      "y": 11,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 9,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 7,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 13,
+		        "y": 11
+		      },
+		      {
+		        "x": 3,
+		        "y": 9
+		      },
+		      {
+		        "x": 9,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 5,
+		      "y": 7
+		    },
+		    "scaleFactor": 2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x58e6b39062d09854
+	// Question: Select the image of a triangle under dilation (center P, scale factor 1/2)
+	// Widget key: dilation_choice_b
+	test("shape-transformation-graph - [x58e6b39062d09854] Select the image of a triangle under dilation (center P, scale factor 1/2) (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 13,
+		      "y": 11,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 9,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 7,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 13,
+		        "y": 11
+		      },
+		      {
+		        "x": 3,
+		        "y": 9
+		      },
+		      {
+		        "x": 9,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 5,
+		      "y": 7
+		    },
+		    "scaleFactor": 0.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x58e6b39062d09854
+	// Question: Select the image of a triangle under dilation (center P, scale factor 1/2)
+	// Widget key: dilation_choice_c
+	test("shape-transformation-graph - [x58e6b39062d09854] Select the image of a triangle under dilation (center P, scale factor 1/2) (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 13,
+		      "y": 11,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 9,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 7,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 13,
+		        "y": 11
+		      },
+		      {
+		        "x": 3,
+		        "y": 9
+		      },
+		      {
+		        "x": 9,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    },
+		    "scaleFactor": 0.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x58e6b39062d09854
+	// Question: Select the image of a triangle under dilation (center P, scale factor 1/2)
+	// Widget key: dilation_stimulus
+	test("shape-transformation-graph - [x58e6b39062d09854] Select the image of a triangle under dilation (center P, scale factor 1/2) (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 13,
+		      "y": 11,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 9,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 7,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 13,
+		        "y": 11
+		      },
+		      {
+		        "x": 3,
+		        "y": 9
+		      },
+		      {
+		        "x": 9,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc1f5b98db014905e
+	// Question: Select the image of a triangle under a dilation (center P, scale factor 4)
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [xc1f5b98db014905e] Select the image of a triangle under a dilation (center P, scale factor 4) (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": -6,
+		      "id": "centerP",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": " ",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": -6
+		      },
+		      {
+		        "x": 0,
+		        "y": -6
+		      },
+		      {
+		        "x": 2,
+		        "y": -4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 2,
+		      "y": -6
+		    },
+		    "scaleFactor": 4
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc1f5b98db014905e
+	// Question: Select the image of a triangle under a dilation (center P, scale factor 4)
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [xc1f5b98db014905e] Select the image of a triangle under a dilation (center P, scale factor 4) (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": -6,
+		      "id": "centerP",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": " ",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": -6
+		      },
+		      {
+		        "x": 0,
+		        "y": -6
+		      },
+		      {
+		        "x": 2,
+		        "y": -4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 2,
+		      "y": -6
+		    },
+		    "scaleFactor": 2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc1f5b98db014905e
+	// Question: Select the image of a triangle under a dilation (center P, scale factor 4)
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [xc1f5b98db014905e] Select the image of a triangle under a dilation (center P, scale factor 4) (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": -6,
+		      "id": "centerP",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": " ",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": -6
+		      },
+		      {
+		        "x": 0,
+		        "y": -6
+		      },
+		      {
+		        "x": 2,
+		        "y": -4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 0,
+		      "y": -6
+		    },
+		    "scaleFactor": 4
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc1f5b98db014905e
+	// Question: Select the image of a triangle under a dilation (center P, scale factor 4)
+	// Widget key: dilation_stimulus
+	test("shape-transformation-graph - [xc1f5b98db014905e] Select the image of a triangle under a dilation (center P, scale factor 4) (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": -6,
+		      "id": "centerP",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": " ",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": -6
+		      },
+		      {
+		        "x": 0,
+		        "y": -6
+		      },
+		      {
+		        "x": 2,
+		        "y": -4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0333813884c1be31
+	// Question: Dilate a triangle with center A and scale factor 1/4
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x0333813884c1be31] Dilate a triangle with center A and scale factor 1/4 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9940",
+		    "label": null,
+		    "vertices": [
+		      {
+		        "x": -6,
+		        "y": 2
+		      },
+		      {
+		        "x": 6,
+		        "y": 6
+		      },
+		      {
+		        "x": 2,
+		        "y": -6
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    },
+		    "scaleFactor": 0.25
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0333813884c1be31
+	// Question: Dilate a triangle with center A and scale factor 1/4
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x0333813884c1be31] Dilate a triangle with center A and scale factor 1/4 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9940",
+		    "label": null,
+		    "vertices": [
+		      {
+		        "x": -6,
+		        "y": 2
+		      },
+		      {
+		        "x": 6,
+		        "y": 6
+		      },
+		      {
+		        "x": 2,
+		        "y": -6
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": -6,
+		      "y": 2
+		    },
+		    "scaleFactor": 0.25
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0333813884c1be31
+	// Question: Dilate a triangle with center A and scale factor 1/4
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x0333813884c1be31] Dilate a triangle with center A and scale factor 1/4 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": 2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9940",
+		    "label": null,
+		    "vertices": [
+		      {
+		        "x": -6,
+		        "y": 2
+		      },
+		      {
+		        "x": 6,
+		        "y": 6
+		      },
+		      {
+		        "x": 2,
+		        "y": -6
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 3,
 		      "y": 1
 		    }
 		  },
@@ -6941,19 +10674,1534 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x6055d1dc136681e5
-	// Question: Identify an error in a similarity conclusion
+	// Extracted from question: x19d65eff59f631fa
+	// Question: Dilate a triangle about point P with scale factor 1/3
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x19d65eff59f631fa] Dilate a triangle about point P with scale factor 1/3 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 380,
+		  "xAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 380,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "centerP",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -6,
+		        "y": -3
+		      },
+		      {
+		        "x": -9,
+		        "y": 6
+		      },
+		      {
+		        "x": 3,
+		        "y": 9
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    },
+		    "scaleFactor": 0.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x19d65eff59f631fa
+	// Question: Dilate a triangle about point P with scale factor 1/3
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x19d65eff59f631fa] Dilate a triangle about point P with scale factor 1/3 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 380,
+		  "xAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 380,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "centerP",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -6,
+		        "y": -3
+		      },
+		      {
+		        "x": -9,
+		        "y": 6
+		      },
+		      {
+		        "x": 3,
+		        "y": 9
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    },
+		    "scaleFactor": 0.3333333333
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x19d65eff59f631fa
+	// Question: Dilate a triangle about point P with scale factor 1/3
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x19d65eff59f631fa] Dilate a triangle about point P with scale factor 1/3 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 380,
+		  "xAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 380,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "centerP",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -6,
+		        "y": -3
+		      },
+		      {
+		        "x": -9,
+		        "y": 6
+		      },
+		      {
+		        "x": 3,
+		        "y": 9
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    },
+		    "scaleFactor": 0.6666666667
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x19d65eff59f631fa
+	// Question: Dilate a triangle about point P with scale factor 1/3
+	// Widget key: stimulus_graph
+	test("shape-transformation-graph - [x19d65eff59f631fa] Dilate a triangle about point P with scale factor 1/3 (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "centerP",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -6,
+		        "y": -3
+		      },
+		      {
+		        "x": -9,
+		        "y": 6
+		      },
+		      {
+		        "x": 3,
+		        "y": 9
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2a05aef7d58f713d
+	// Question: Identify the transformation from triangle A to triangle B
 	// Widget key: image_1
-	test("shape-transformation-graph - [x6055d1dc136681e5] Identify an error in a similarity conclusion", async () => {
+	test("shape-transformation-graph - [x2a05aef7d58f713d] Identify the transformation from triangle A to triangle B", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 360,
+		  "xAxis": {
+		    "max": 5,
+		    "min": -5,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 3.6666666667,
+		      "id": "label_A",
+		      "label": "A",
+		      "style": "open"
+		    },
+		    {
+		      "x": 2,
+		      "y": 3.6666666667,
+		      "id": "label_B",
+		      "label": "B",
+		      "style": "open"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#4472C466",
+		    "label": "A",
+		    "vertices": [
+		      {
+		        "x": -2,
+		        "y": 1
+		      },
+		      {
+		        "x": -4,
+		        "y": 1
+		      },
+		      {
+		        "x": 0,
+		        "y": 9
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "y",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x14c86c900c1536d9
+	// Question: Identify the transformation of a quadrilateral
+	// Widget key: image_1
+	test("shape-transformation-graph - [x14c86c900c1536d9] Identify the transformation of a quadrilateral", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 7.5,
+		      "y": 7.5,
+		      "id": "label_b",
+		      "label": "B",
+		      "style": "open"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#4472C4",
+		    "label": "A",
+		    "vertices": [
+		      {
+		        "x": 5,
+		        "y": 4
+		      },
+		      {
+		        "x": 1,
+		        "y": 2
+		      },
+		      {
+		        "x": 5,
+		        "y": 1
+		      },
+		      {
+		        "x": 7,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 3,
+		      "y": 5
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbc4536eb94996677
+	// Question: Identify the single transformation of congruent triangles
+	// Widget key: image_1
+	test("shape-transformation-graph - [xbc4536eb94996677] Identify the single transformation of congruent triangles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 360,
+		  "xAxis": {
+		    "max": 8,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 2.6666666667,
+		      "id": "label_b",
+		      "label": "B",
+		      "style": "open"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#000000",
+		    "label": "A",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": 2
+		      },
+		      {
+		        "x": 2,
+		        "y": 4
+		      },
+		      {
+		        "x": 1,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 180,
+		    "center": {
+		      "x": 4,
+		      "y": 3
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x245fce02d82d7298
+	// Question: Identify the single transformation of a quadrilateral
+	// Widget key: image_1
+	test("shape-transformation-graph - [x245fce02d82d7298] Identify the single transformation of a quadrilateral", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [],
+		  "preImage": {
+		    "color": "#4472C466",
+		    "label": "A",
+		    "vertices": [
+		      {
+		        "x": 8,
+		        "y": 6
+		      },
+		      {
+		        "x": 6,
+		        "y": 7.5
+		      },
+		      {
+		        "x": 4.5,
+		        "y": 6
+		      },
+		      {
+		        "x": 6,
+		        "y": 4.5
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 90,
+		    "center": {
+		      "x": 6,
+		      "y": 6
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xadbb0108cb3afed4
+	// Question: Identify the transformation of a triangle
+	// Widget key: image_1
+	test("shape-transformation-graph - [xadbb0108cb3afed4] Identify the transformation of a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 350,
+		  "xAxis": {
+		    "max": 12,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 350,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 5,
+		      "id": "label_B",
+		      "label": "B",
+		      "style": "open"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#4472C4",
+		    "label": "A",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 5
+		      },
+		      {
+		        "x": 2,
+		        "y": 11
+		      },
+		      {
+		        "x": 5,
+		        "y": 11
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 3,
+		      "y": -4
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3d869072f72e4658
+	// Question: Identify the transformation between quadrilaterals
+	// Widget key: image_1
+	test("shape-transformation-graph - [x3d869072f72e4658] Identify the transformation between quadrilaterals", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 300,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": -3.125,
+		      "y": 7.1875,
+		      "id": "label_b",
+		      "label": "B",
+		      "style": "open"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#4472C4",
+		    "label": "A",
+		    "vertices": [
+		      {
+		        "x": 2.5,
+		        "y": 5
+		      },
+		      {
+		        "x": 1.25,
+		        "y": 8.75
+		      },
+		      {
+		        "x": 2.5,
+		        "y": 7.5
+		      },
+		      {
+		        "x": 6.25,
+		        "y": 7.5
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "y",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5102ddcb286530f5
+	// Question: Identify the single transformation between quadrilaterals
+	// Widget key: image_1
+	test("shape-transformation-graph - [x5102ddcb286530f5] Identify the single transformation between quadrilaterals", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 360,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [],
+		  "preImage": {
+		    "color": "#000000",
+		    "label": "A",
+		    "vertices": [
+		      {
+		        "x": 1.5,
+		        "y": 7
+		      },
+		      {
+		        "x": 4.5,
+		        "y": 7
+		      },
+		      {
+		        "x": 2.5,
+		        "y": 3
+		      },
+		      {
+		        "x": 0.5,
+		        "y": 5
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": -6.5,
+		      "y": 8
+		    },
+		    "scaleFactor": 1.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8e8b4267d51710c8
+	// Question: Identify the single transformation
+	// Widget key: image_1
+	test("shape-transformation-graph - [x8e8b4267d51710c8] Identify the single transformation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 13,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 9.5,
+		      "id": "labelB",
+		      "label": "B",
+		      "style": "open"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#4472C4",
+		    "label": "A",
+		    "vertices": [
+		      {
+		        "x": 1,
+		        "y": 1
+		      },
+		      {
+		        "x": 1,
+		        "y": 7
+		      },
+		      {
+		        "x": 9,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 9,
+		      "y": 27
+		    },
+		    "scaleFactor": 0.75
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9e40263ee610f27e
+	// Question: Unchanged properties after a rotation (quadrilateral)
+	// Widget key: image_1
+	test("shape-transformation-graph - [x9e40263ee610f27e] Unchanged properties after a rotation (quadrilateral)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "origin",
+		      "label": "(0, 0)",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": -2
+		      },
+		      {
+		        "x": 5,
+		        "y": 4
+		      },
+		      {
+		        "x": 5,
+		        "y": 1
+		      },
+		      {
+		        "x": 4,
+		        "y": -1
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 60,
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8dfbd30c9f083331
+	// Question: Properties preserved by a reflection
+	// Widget key: image_1
+	test("shape-transformation-graph - [x8dfbd30c9f083331] Properties preserved by a reflection", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": [
 		    {
-		      "id": "line_reflection",
+		      "id": "line_l",
+		      "color": "#7854ab",
+		      "label": "ℓ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -1.5,
+		        "yIntercept": -6
+		      }
+		    }
+		  ],
+		  "width": 325,
+		  "xAxis": {
+		    "max": 6,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": -2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": -7,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -7,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 0,
+		        "y": -2
+		      },
+		      {
+		        "x": -5,
+		        "y": -7
+		      },
+		      {
+		        "x": -3,
+		        "y": -7
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "rotation",
+		    "angle": 0,
+		    "center": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4d70c347c1ee53fc
+	// Question: Error in similarity conclusion after a vertical stretch
+	// Widget key: image_1
+	test("shape-transformation-graph - [x4d70c347c1ee53fc] Error in similarity conclusion after a vertical stretch", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_EJ",
+		      "color": "#ed5fa6",
+		      "label": "EJ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.3333333333,
+		        "yIntercept": 6
+		      }
+		    },
+		    {
+		      "id": "line_JG",
+		      "color": "#ed5fa6",
+		      "label": "JG",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -0.3333333333,
+		        "yIntercept": 10
+		      }
+		    },
+		    {
+		      "id": "line_GK",
+		      "color": "#ed5fa6",
+		      "label": "GK",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.3333333333,
+		        "yIntercept": 2
+		      }
+		    },
+		    {
+		      "id": "line_KE",
+		      "color": "#ed5fa6",
+		      "label": "KE",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -0.3333333333,
+		        "yIntercept": 6
+		      }
+		    }
+		  ],
+		  "width": 300,
+		  "xAxis": {
+		    "max": 12,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 6,
+		      "id": "E",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 12,
+		      "id": "F",
+		      "label": "F",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 6,
+		      "id": "G",
+		      "label": "G",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 0,
+		      "id": "H",
+		      "label": "H",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 8,
+		      "id": "J",
+		      "label": "J",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 4,
+		      "id": "K",
+		      "label": "K",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9933",
+		    "label": "EFGH",
+		    "vertices": [
+		      {
+		        "x": 0,
+		        "y": 6
+		      },
+		      {
+		        "x": 6,
+		        "y": 12
+		      },
+		      {
+		        "x": 12,
+		        "y": 6
+		      },
+		      {
+		        "x": 6,
+		        "y": 0
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8940139038c0cd45
+	// Question: Identify the error in a similarity conclusion
+	// Widget key: image_1
+	test("shape-transformation-graph - [x8940139038c0cd45] Identify the error in a similarity conclusion", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 320,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 4,
+		      "id": "E",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 0,
+		      "id": "F",
+		      "label": "F",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 5,
+		      "id": "G",
+		      "label": "G",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 7,
+		      "id": "H",
+		      "label": "H",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 5,
+		      "id": "I",
+		      "label": "I",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "DEF",
+		    "vertices": [
+		      {
+		        "x": 0,
+		        "y": 0
+		      },
+		      {
+		        "x": 2,
+		        "y": 4
+		      },
+		      {
+		        "x": 6,
+		        "y": 0
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 4,
+		      "y": 5
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7f2367e30897353d
+	// Question: Similarity of two quadrilaterals under transformations
+	// Widget key: image_1
+	test("shape-transformation-graph - [x7f2367e30897353d] Similarity of two quadrilaterals under transformations", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 320,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 5,
+		      "id": "L",
+		      "label": "L",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 6,
+		      "id": "M",
+		      "label": "M",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 5,
+		      "id": "N",
+		      "label": "N",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 2,
+		      "id": "R",
+		      "label": "R",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 5,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 2,
+		      "id": "Q",
+		      "label": "Q",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 11,
+		      "id": "O",
+		      "label": "O",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "LMNR",
+		    "vertices": [
+		      {
+		        "x": 6,
+		        "y": 5
+		      },
+		      {
+		        "x": 4,
+		        "y": 6
+		      },
+		      {
+		        "x": 2,
+		        "y": 5
+		      },
+		      {
+		        "x": 4,
+		        "y": 2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 6,
+		      "y": 5
+		    },
+		    "scaleFactor": -2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6055d1dc136681e5
+	// Question: Evaluate a similarity conclusion from transformations
+	// Widget key: image_1
+	test("shape-transformation-graph - [x6055d1dc136681e5] Evaluate a similarity conclusion from transformations", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_reflect",
 		      "color": "#888888",
-		      "label": "",
+		      "label": " ",
 		      "style": "dashed",
 		      "equation": {
 		        "A": 1,
@@ -6967,14 +12215,14 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -7032,7 +12280,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  ],
 		  "preImage": {
 		    "color": "#0c7f99",
-		    "label": null,
+		    "label": "Pre-image",
 		    "vertices": [
 		      {
 		        "x": 7,
@@ -7078,28 +12326,453 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x26d626e7ed56808d
-	// Question: Identify the error about congruent vs. similar segments
+	// Extracted from question: x3a864aa7fa5fe2df
+	// Question: Assess a similarity conclusion using transformations and dilation
 	// Widget key: image_1
-	test("shape-transformation-graph - [x26d626e7ed56808d] Identify the error about congruent vs. similar segments", async () => {
+	test("shape-transformation-graph - [x3a864aa7fa5fe2df] Assess a similarity conclusion using transformations and dilation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 320,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 320,
+		  "points": [
+		    {
+		      "x": 7,
+		      "y": 5,
+		      "id": "center_O",
+		      "label": "O",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f9980",
+		    "label": "OPQR (after reflection)",
+		    "vertices": [
+		      {
+		        "x": 7,
+		        "y": 5
+		      },
+		      {
+		        "x": 6,
+		        "y": 3
+		      },
+		      {
+		        "x": 4,
+		        "y": 6
+		      },
+		      {
+		        "x": 5,
+		        "y": 7
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 7,
+		      "y": 5
+		    },
+		    "scaleFactor": 2
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1e933749229faeba
+	// Question: Identify the error about similar circles
+	// Widget key: image_1
+	test("shape-transformation-graph - [x1e933749229faeba] Identify the error about similar circles", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 320,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 301,
+		  "points": [
+		    {
+		      "x": 7,
+		      "y": 3,
+		      "id": "A_center",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 3,
+		      "id": "X_on_A",
+		      "label": "X",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 7,
+		      "id": "B_center",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 8,
+		      "id": "Y_on_B",
+		      "label": "Y",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#0c7f99",
+		    "label": "A",
+		    "vertices": [
+		      {
+		        "x": 9,
+		        "y": 3
+		      },
+		      {
+		        "x": 8.931851652,
+		        "y": 3.51763809
+		      },
+		      {
+		        "x": 8.732050808,
+		        "y": 4
+		      },
+		      {
+		        "x": 8.414213562,
+		        "y": 4.414213562
+		      },
+		      {
+		        "x": 8,
+		        "y": 4.732050808
+		      },
+		      {
+		        "x": 7.51763809,
+		        "y": 4.931851652
+		      },
+		      {
+		        "x": 7,
+		        "y": 5
+		      },
+		      {
+		        "x": 6.48236191,
+		        "y": 4.931851652
+		      },
+		      {
+		        "x": 6,
+		        "y": 4.732050808
+		      },
+		      {
+		        "x": 5.585786438,
+		        "y": 4.414213562
+		      },
+		      {
+		        "x": 5.267949192,
+		        "y": 4
+		      },
+		      {
+		        "x": 5.068148348,
+		        "y": 3.51763809
+		      },
+		      {
+		        "x": 5,
+		        "y": 3
+		      },
+		      {
+		        "x": 5.068148348,
+		        "y": 2.48236191
+		      },
+		      {
+		        "x": 5.267949192,
+		        "y": 2
+		      },
+		      {
+		        "x": 5.585786438,
+		        "y": 1.585786438
+		      },
+		      {
+		        "x": 6,
+		        "y": 1.267949192
+		      },
+		      {
+		        "x": 6.48236191,
+		        "y": 1.068148348
+		      },
+		      {
+		        "x": 7,
+		        "y": 1
+		      },
+		      {
+		        "x": 7.51763809,
+		        "y": 1.068148348
+		      },
+		      {
+		        "x": 8,
+		        "y": 1.267949192
+		      },
+		      {
+		        "x": 8.414213562,
+		        "y": 1.585786438
+		      },
+		      {
+		        "x": 8.732050808,
+		        "y": 2
+		      },
+		      {
+		        "x": 8.931851652,
+		        "y": 2.48236191
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": -4,
+		      "y": 4
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xac318092a63d4a07
+	// Question: Evaluate a triangle similarity conclusion
+	// Widget key: image_1
+	test("shape-transformation-graph - [xac318092a63d4a07] Evaluate a triangle similarity conclusion", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": [
 		    {
-		      "id": "line_st",
+		      "id": "line_AB",
 		      "color": "#ca337c",
-		      "label": " ",
+		      "label": "AB",
 		      "style": "solid",
 		      "equation": {
-		        "x1": 1,
-		        "y1": 3,
-		        "type": "pointSlope",
-		        "slope": -0.6666666667
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 4
+		      }
+		    },
+		    {
+		      "id": "line_BE",
+		      "color": "#ca337c",
+		      "label": "BE",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 6,
+		        "type": "standard"
+		      }
+		    },
+		    {
+		      "id": "line_AE",
+		      "color": "#ca337c",
+		      "label": "AE",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -0.8,
+		        "yIntercept": 4.8
+		      }
+		    },
+		    {
+		      "id": "line_DC",
+		      "color": "#0c7f99",
+		      "label": "DC",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 2
+		      }
+		    },
+		    {
+		      "id": "line_CE",
+		      "color": "#0c7f99",
+		      "label": "CE",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 6,
+		        "type": "standard"
+		      }
+		    },
+		    {
+		      "id": "line_DE",
+		      "color": "#0c7f99",
+		      "label": "DE",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.6666666667,
+		        "yIntercept": -4
 		      }
 		    }
 		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 4,
+		      "id": "pt_A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 4,
+		      "id": "pt_B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 0,
+		      "id": "pt_E",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 2,
+		      "id": "pt_C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 2,
+		      "id": "pt_D",
+		      "label": "D",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#ca337c55",
+		    "label": "ABE",
+		    "vertices": [
+		      {
+		        "x": 1,
+		        "y": 4
+		      },
+		      {
+		        "x": 6,
+		        "y": 4
+		      },
+		      {
+		        "x": 6,
+		        "y": 0
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x26d626e7ed56808d
+	// Question: Identify the error about congruence and similarity
+	// Widget key: image_1
+	test("shape-transformation-graph - [x26d626e7ed56808d] Identify the error about congruence and similarity", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
 		  "width": 320,
 		  "xAxis": {
 		    "max": 10,
@@ -7148,23 +12821,23 @@ describe("shapeTransformationGraph widget tests", () => {
 		  ],
 		  "preImage": {
 		    "color": "#0c7f99",
-		    "label": " ",
+		    "label": "UV",
 		    "vertices": [
 		      {
-		        "x": 4.9792,
-		        "y": 4.0139
+		        "x": 4.933436,
+		        "y": 4.044376
 		      },
 		      {
-		        "x": 6.9792,
-		        "y": 7.0139
+		        "x": 6.933436,
+		        "y": 7.044376
 		      },
 		      {
-		        "x": 7.0208,
-		        "y": 6.9861
+		        "x": 7.066564,
+		        "y": 6.955624
 		      },
 		      {
-		        "x": 5.0208,
-		        "y": 3.9861
+		        "x": 5.066564,
+		        "y": 3.955624
 		      }
 		    ]
 		  },
@@ -7194,27 +12867,15 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x644aa8d359cd9664
-	// Question: Select the line of reflection for a quadrilateral and its image
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x644aa8d359cd9664] Select the line of reflection for a quadrilateral and its image (1)", async () => {
+	// Question: Identify the line of reflection for a quadrilateral
+	// Widget key: reflection_stimulus
+	test("shape-transformation-graph - [x644aa8d359cd9664] Identify the line of reflection for a quadrilateral", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_candidate_a",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": -2
-		      }
-		    }
-		  ],
-		  "width": 425,
+		  "lines": null,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -7229,7 +12890,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0,
@@ -7263,28 +12924,28 @@ describe("shapeTransformationGraph widget tests", () => {
 		      "x": -4,
 		      "y": -2,
 		      "id": "Aprime",
-		      "label": "A'",
+		      "label": "A′",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -4,
 		      "y": -6,
 		      "id": "Bprime",
-		      "label": "B'",
+		      "label": "B′",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
 		      "y": -7,
 		      "id": "Cprime",
-		      "label": "C'",
+		      "label": "C′",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
 		      "y": -4,
 		      "id": "Dprime",
-		      "label": "D'",
+		      "label": "D′",
 		      "style": "closed"
 		    }
 		  ],
@@ -7311,11 +12972,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		    ]
 		  },
 		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
+		    "axis": "y",
+		    "type": "reflection"
 		  },
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -7335,24 +12993,24 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x644aa8d359cd9664
-	// Question: Select the line of reflection for a quadrilateral and its image
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x644aa8d359cd9664] Select the line of reflection for a quadrilateral and its image (2)", async () => {
+	// Extracted from question: x3e8518fc8fe1164c
+	// Question: Identify the line of reflection for a quadrilateral
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x3e8518fc8fe1164c] Identify the line of reflection for a quadrilateral (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": [
 		    {
-		      "id": "line_candidate_b",
+		      "id": "line_candidate",
 		      "color": "#1fab54",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "A": 1,
 		        "B": 0,
-		        "C": -2,
+		        "C": -3,
 		        "type": "standard"
 		      }
 		    }
@@ -7375,81 +13033,81 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 0,
-		      "y": -2,
+		      "x": -2,
+		      "y": 1,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 0,
-		      "y": -6,
+		      "x": -2,
+		      "y": -2,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -4,
-		      "y": -7,
+		      "x": -3,
+		      "y": -6,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -4,
-		      "y": -4,
+		      "x": -1,
+		      "y": -2,
 		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -4,
-		      "y": -2,
+		      "x": -6,
+		      "y": 1,
 		      "id": "Aprime",
-		      "label": "A'",
+		      "label": "A′",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -4,
-		      "y": -6,
+		      "x": -6,
+		      "y": -2,
 		      "id": "Bprime",
-		      "label": "B'",
+		      "label": "B′",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 0,
-		      "y": -7,
+		      "x": -5,
+		      "y": -6,
 		      "id": "Cprime",
-		      "label": "C'",
+		      "label": "C′",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 0,
-		      "y": -4,
+		      "x": -7,
+		      "y": -2,
 		      "id": "Dprime",
-		      "label": "D'",
+		      "label": "D′",
 		      "style": "closed"
 		    }
 		  ],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd33",
 		    "label": "ABCD",
 		    "vertices": [
 		      {
-		        "x": 0,
+		        "x": -2,
+		        "y": 1
+		      },
+		      {
+		        "x": -2,
 		        "y": -2
 		      },
 		      {
-		        "x": 0,
+		        "x": -3,
 		        "y": -6
 		      },
 		      {
-		        "x": -4,
-		        "y": -7
-		      },
-		      {
-		        "x": -4,
-		        "y": -4
+		        "x": -1,
+		        "y": -2
 		      }
 		    ]
 		  },
@@ -7478,18 +13136,3609 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x644aa8d359cd9664
-	// Question: Select the line of reflection for a quadrilateral and its image
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x644aa8d359cd9664] Select the line of reflection for a quadrilateral and its image (3)", async () => {
+	// Extracted from question: x3e8518fc8fe1164c
+	// Question: Identify the line of reflection for a quadrilateral
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x3e8518fc8fe1164c] Identify the line of reflection for a quadrilateral (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": [
 		    {
-		      "id": "line_candidate_c",
+		      "id": "line_candidate",
 		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": -4,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 1,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": -2,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -6,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": -2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": 1,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": -2,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": -6,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": -2,
+		      "id": "Dprime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd33",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": -2,
+		        "y": 1
+		      },
+		      {
+		        "x": -2,
+		        "y": -2
+		      },
+		      {
+		        "x": -3,
+		        "y": -6
+		      },
+		      {
+		        "x": -1,
+		        "y": -2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3e8518fc8fe1164c
+	// Question: Identify the line of reflection for a quadrilateral
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x3e8518fc8fe1164c] Identify the line of reflection for a quadrilateral (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_candidate",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": -5,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 1,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": -2,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -6,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": -2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": 1,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": -2,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": -6,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": -2,
+		      "id": "Dprime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd33",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": -2,
+		        "y": 1
+		      },
+		      {
+		        "x": -2,
+		        "y": -2
+		      },
+		      {
+		        "x": -3,
+		        "y": -6
+		      },
+		      {
+		        "x": -1,
+		        "y": -2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3e8518fc8fe1164c
+	// Question: Identify the line of reflection for a quadrilateral
+	// Widget key: stimulus_graph
+	test("shape-transformation-graph - [x3e8518fc8fe1164c] Identify the line of reflection for a quadrilateral (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 1,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": -2,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -6,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": -2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": 1,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": -2,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": -6,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": -2,
+		      "id": "Dprime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd33",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": -2,
+		        "y": 1
+		      },
+		      {
+		        "x": -2,
+		        "y": -2
+		      },
+		      {
+		        "x": -3,
+		        "y": -6
+		      },
+		      {
+		        "x": -1,
+		        "y": -2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcf809ac1b9e9f62a
+	// Question: Identify the line of reflection on a coordinate plane
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [xcf809ac1b9e9f62a] Identify the line of reflection on a coordinate plane (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_vert_x_neg5",
+		      "color": "#1fab54",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": -5,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 0,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 1,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 6,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 5,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 1,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 4,
+		      "id": "Dprime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd55",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 1,
+		        "y": 0
+		      },
+		      {
+		        "x": -5,
+		        "y": 1
+		      },
+		      {
+		        "x": -3,
+		        "y": 5
+		      },
+		      {
+		        "x": 0,
+		        "y": 2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcf809ac1b9e9f62a
+	// Question: Identify the line of reflection on a coordinate plane
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [xcf809ac1b9e9f62a] Identify the line of reflection on a coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_y_3",
+		      "color": "#1fab54",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 3
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 0,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 1,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 6,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 5,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 1,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 4,
+		      "id": "Dprime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd55",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 1,
+		        "y": 0
+		      },
+		      {
+		        "x": -5,
+		        "y": 1
+		      },
+		      {
+		        "x": -3,
+		        "y": 5
+		      },
+		      {
+		        "x": 0,
+		        "y": 2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcf809ac1b9e9f62a
+	// Question: Identify the line of reflection on a coordinate plane
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [xcf809ac1b9e9f62a] Identify the line of reflection on a coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_y_4",
+		      "color": "#1fab54",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 4
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 0,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 1,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 6,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 5,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 1,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 4,
+		      "id": "Dprime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd55",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 1,
+		        "y": 0
+		      },
+		      {
+		        "x": -5,
+		        "y": 1
+		      },
+		      {
+		        "x": -3,
+		        "y": 5
+		      },
+		      {
+		        "x": 0,
+		        "y": 2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcf809ac1b9e9f62a
+	// Question: Identify the line of reflection on a coordinate plane
+	// Widget key: coordinate_plane_quadrilaterals
+	test("shape-transformation-graph - [xcf809ac1b9e9f62a] Identify the line of reflection on a coordinate plane (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 0,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 1,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 6,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 5,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 1,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 4,
+		      "id": "Dprime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd55",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 1,
+		        "y": 0
+		      },
+		      {
+		        "x": -5,
+		        "y": 1
+		      },
+		      {
+		        "x": -3,
+		        "y": 5
+		      },
+		      {
+		        "x": 0,
+		        "y": 2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa7b00dbf617b9115
+	// Question: Identify the line of reflection on a coordinate plane
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [xa7b00dbf617b9115] Identify the line of reflection on a coordinate plane (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_choice_a",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": -1
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 6,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 7,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 4,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": -4,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": -5,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": -2,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 6
+		      },
+		      {
+		        "x": 5,
+		        "y": 7
+		      },
+		      {
+		        "x": 4,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "x",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa7b00dbf617b9115
+	// Question: Identify the line of reflection on a coordinate plane
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [xa7b00dbf617b9115] Identify the line of reflection on a coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_choice_b",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 1
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 6,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 7,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 4,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": -4,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": -5,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": -2,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 6
+		      },
+		      {
+		        "x": 5,
+		        "y": 7
+		      },
+		      {
+		        "x": 4,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "x",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa7b00dbf617b9115
+	// Question: Identify the line of reflection on a coordinate plane
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [xa7b00dbf617b9115] Identify the line of reflection on a coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_choice_c",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 4,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 6,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 7,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 4,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": -4,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": -5,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": -2,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 6
+		      },
+		      {
+		        "x": 5,
+		        "y": 7
+		      },
+		      {
+		        "x": 4,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "x",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa7b00dbf617b9115
+	// Question: Identify the line of reflection on a coordinate plane
+	// Widget key: triangles_graph
+	test("shape-transformation-graph - [xa7b00dbf617b9115] Identify the line of reflection on a coordinate plane (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 6,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 7,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 4,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": -4,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": -5,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": -2,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": 6
+		      },
+		      {
+		        "x": 5,
+		        "y": 7
+		      },
+		      {
+		        "x": 4,
+		        "y": 4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "axis": "x",
+		    "type": "reflection"
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3dfbe830c807017f
+	// Question: Identify the line of reflection
+	// Widget key: reflection_stimulus
+	test("shape-transformation-graph - [x3dfbe830c807017f] Identify the line of reflection", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 1,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 1,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 6,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 3,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": -2,
+		      "id": "Dprime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#4472C4",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": -2,
+		        "y": 1
+		      },
+		      {
+		        "x": -2,
+		        "y": 6
+		      },
+		      {
+		        "x": -3,
+		        "y": 3
+		      },
+		      {
+		        "x": -3,
+		        "y": -2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb6eb207331f48e40
+	// Question: Select the line of reflection for a triangle
+	// Widget key: coordinate_plane_initial
+	test("shape-transformation-graph - [xb6eb207331f48e40] Select the line of reflection for a triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 0,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": -4,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": -4,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 0,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": -7,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": -2,
+		        "y": 0
+		      },
+		      {
+		        "x": 3,
+		        "y": -4
+		      },
+		      {
+		        "x": -2,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa71d91314ee761c9
+	// Question: Draw the line of reflection
+	// Widget key: reflection_choice_a
+	test("shape-transformation-graph - [xa71d91314ee761c9] Draw the line of reflection (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_candidate",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": -3,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": -4,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -7,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 2,
+		      "id": "Aprime",
+		      "label": "A'",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 5,
+		      "id": "Bprime",
+		      "label": "B'",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 3,
+		      "id": "Cprime",
+		      "label": "C'",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": -3,
+		        "y": -4
+		      },
+		      {
+		        "x": 1,
+		        "y": -7
+		      },
+		      {
+		        "x": 0,
+		        "y": -5
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa71d91314ee761c9
+	// Question: Draw the line of reflection
+	// Widget key: reflection_choice_b
+	test("shape-transformation-graph - [xa71d91314ee761c9] Draw the line of reflection (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_candidate",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": -1
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": -4,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -7,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 2,
+		      "id": "Aprime",
+		      "label": "A'",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 5,
+		      "id": "Bprime",
+		      "label": "B'",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 3,
+		      "id": "Cprime",
+		      "label": "C'",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": -3,
+		        "y": -4
+		      },
+		      {
+		        "x": 1,
+		        "y": -7
+		      },
+		      {
+		        "x": 0,
+		        "y": -5
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa71d91314ee761c9
+	// Question: Draw the line of reflection
+	// Widget key: reflection_choice_c
+	test("shape-transformation-graph - [xa71d91314ee761c9] Draw the line of reflection (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_candidate",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": -4,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -7,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 2,
+		      "id": "Aprime",
+		      "label": "A'",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 5,
+		      "id": "Bprime",
+		      "label": "B'",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 3,
+		      "id": "Cprime",
+		      "label": "C'",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": -3,
+		        "y": -4
+		      },
+		      {
+		        "x": 1,
+		        "y": -7
+		      },
+		      {
+		        "x": 0,
+		        "y": -5
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa71d91314ee761c9
+	// Question: Draw the line of reflection
+	// Widget key: reflection_graph_initial
+	test("shape-transformation-graph - [xa71d91314ee761c9] Draw the line of reflection (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": -4,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -7,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 2,
+		      "id": "Aprime",
+		      "label": "A'",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 5,
+		      "id": "Bprime",
+		      "label": "B'",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 3,
+		      "id": "Cprime",
+		      "label": "C'",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": -3,
+		        "y": -4
+		      },
+		      {
+		        "x": 1,
+		        "y": -7
+		      },
+		      {
+		        "x": 0,
+		        "y": -5
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x746eb9cc8664a33c
+	// Question: Identify the line of reflection for two triangles
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x746eb9cc8664a33c] Identify the line of reflection for two triangles (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_reflection_candidate",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": -5,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 5,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": 5,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": -6,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -3,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 1,
+		        "y": 5
+		      },
+		      {
+		        "x": 1,
+		        "y": -6
+		      },
+		      {
+		        "x": -3,
+		        "y": -3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x746eb9cc8664a33c
+	// Question: Identify the line of reflection for two triangles
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x746eb9cc8664a33c] Identify the line of reflection for two triangles (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_reflection_candidate",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": -3,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 5,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": 5,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": -6,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -3,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 1,
+		        "y": 5
+		      },
+		      {
+		        "x": 1,
+		        "y": -6
+		      },
+		      {
+		        "x": -3,
+		        "y": -3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x746eb9cc8664a33c
+	// Question: Identify the line of reflection for two triangles
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x746eb9cc8664a33c] Identify the line of reflection for two triangles (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_reflection_candidate",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": -1,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 5,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": 5,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": -6,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -3,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 1,
+		        "y": 5
+		      },
+		      {
+		        "x": 1,
+		        "y": -6
+		      },
+		      {
+		        "x": -3,
+		        "y": -3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x560c1963ac95c962
+	// Question: Identify the line of reflection on a coordinate plane
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x560c1963ac95c962] Identify the line of reflection on a coordinate plane (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_reflect_a",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": -1,
+		      "id": "A_a",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "B_a",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 0,
+		      "id": "C_a",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": -1,
+		      "id": "D_a",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 5,
+		      "id": "Aprime_a",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "Bprime_a",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 4,
+		      "id": "Cprime_a",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 5,
+		      "id": "Dprime_a",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd55",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": -1
+		      },
+		      {
+		        "x": 2,
+		        "y": 2
+		      },
+		      {
+		        "x": -2,
+		        "y": 0
+		      },
+		      {
+		        "x": -1,
+		        "y": -1
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x560c1963ac95c962
+	// Question: Identify the line of reflection on a coordinate plane
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x560c1963ac95c962] Identify the line of reflection on a coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_reflect_b",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 2
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": -1,
+		      "id": "A_b",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "B_b",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 0,
+		      "id": "C_b",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": -1,
+		      "id": "D_b",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 5,
+		      "id": "Aprime_b",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "Bprime_b",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 4,
+		      "id": "Cprime_b",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 5,
+		      "id": "Dprime_b",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd55",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": -1
+		      },
+		      {
+		        "x": 2,
+		        "y": 2
+		      },
+		      {
+		        "x": -2,
+		        "y": 0
+		      },
+		      {
+		        "x": -1,
+		        "y": -1
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x560c1963ac95c962
+	// Question: Identify the line of reflection on a coordinate plane
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x560c1963ac95c962] Identify the line of reflection on a coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_reflect_c",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": 4
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": -1,
+		      "id": "A_c",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "B_c",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 0,
+		      "id": "C_c",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": -1,
+		      "id": "D_c",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 5,
+		      "id": "Aprime_c",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "Bprime_c",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 4,
+		      "id": "Cprime_c",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 5,
+		      "id": "Dprime_c",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd55",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": -1
+		      },
+		      {
+		        "x": 2,
+		        "y": 2
+		      },
+		      {
+		        "x": -2,
+		        "y": 0
+		      },
+		      {
+		        "x": -1,
+		        "y": -1
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x560c1963ac95c962
+	// Question: Identify the line of reflection on a coordinate plane
+	// Widget key: reflection_graph_initial
+	test("shape-transformation-graph - [x560c1963ac95c962] Identify the line of reflection on a coordinate plane (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": -1,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 0,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": -1,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 5,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 4,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 5,
+		      "id": "Dprime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd55",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": -1
+		      },
+		      {
+		        "x": 2,
+		        "y": 2
+		      },
+		      {
+		        "x": -2,
+		        "y": 0
+		      },
+		      {
+		        "x": -1,
+		        "y": -1
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfe39a2e981bbb69b
+	// Question: Identify the line of reflection for two triangles
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [xfe39a2e981bbb69b] Identify the line of reflection for two triangles (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_candidate",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 2,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 7,
+		      "y": 6,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 6,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 5,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 3,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 7,
+		        "y": 6
+		      },
+		      {
+		        "x": 5,
+		        "y": 5
+		      },
+		      {
+		        "x": 4,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfe39a2e981bbb69b
+	// Question: Identify the line of reflection for two triangles
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [xfe39a2e981bbb69b] Identify the line of reflection for two triangles (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_candidate",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 3,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 7,
+		      "y": 6,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 6,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 5,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 3,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 7,
+		        "y": 6
+		      },
+		      {
+		        "x": 5,
+		        "y": 5
+		      },
+		      {
+		        "x": 4,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfe39a2e981bbb69b
+	// Question: Identify the line of reflection for two triangles
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [xfe39a2e981bbb69b] Identify the line of reflection for two triangles (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_candidate",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 4,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 7,
+		      "y": 6,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 6,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 5,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 3,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 7,
+		        "y": 6
+		      },
+		      {
+		        "x": 5,
+		        "y": 5
+		      },
+		      {
+		        "x": 4,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfe39a2e981bbb69b
+	// Question: Identify the line of reflection for two triangles
+	// Widget key: triangles_graph
+	test("shape-transformation-graph - [xfe39a2e981bbb69b] Identify the line of reflection for two triangles (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 7,
+		      "y": 6,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 6,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 5,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 3,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 7,
+		        "y": 6
+		      },
+		      {
+		        "x": 5,
+		        "y": 5
+		      },
+		      {
+		        "x": 4,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x51b60bfce8805713
+	// Question: Select the line of reflection for a triangle
+	// Widget key: reflection_choice_a
+	test("shape-transformation-graph - [x51b60bfce8805713] Select the line of reflection for a triangle (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_candidate",
+		      "color": "#666666",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -7518,1346 +16767,43 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 0,
-		      "y": -2,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
+		      "x": 6,
 		      "y": -6,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": -7,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": -4,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": -2,
-		      "id": "Aprime",
-		      "label": "A'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": -6,
-		      "id": "Bprime",
-		      "label": "B'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -7,
-		      "id": "Cprime",
-		      "label": "C'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -4,
-		      "id": "Dprime",
-		      "label": "D'",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 0,
-		        "y": -2
-		      },
-		      {
-		        "x": 0,
-		        "y": -6
-		      },
-		      {
-		        "x": -4,
-		        "y": -7
-		      },
-		      {
-		        "x": -4,
-		        "y": -4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x644aa8d359cd9664
-	// Question: Select the line of reflection for a quadrilateral and its image
-	// Widget key: stimulus_graph
-	test("shape-transformation-graph - [x644aa8d359cd9664] Select the line of reflection for a quadrilateral and its image (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": -2,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -6,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": -7,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": -4,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": -2,
-		      "id": "Aprime",
-		      "label": "A'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": -6,
-		      "id": "Bprime",
-		      "label": "B'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -7,
-		      "id": "Cprime",
-		      "label": "C'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -4,
-		      "id": "Dprime",
-		      "label": "D'",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 0,
-		        "y": -2
-		      },
-		      {
-		        "x": 0,
-		        "y": -6
-		      },
-		      {
-		        "x": -4,
-		        "y": -7
-		      },
-		      {
-		        "x": -4,
-		        "y": -4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcf809ac1b9e9f62a
-	// Question: Select the line of reflection
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [xcf809ac1b9e9f62a] Select the line of reflection (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_candidate",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": 2
-		      }
-		    }
-		  ],
-		  "width": 320,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 320,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 0,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 1,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 5,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 2,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 6,
-		      "id": "A_prime",
-		      "label": "A'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 5,
-		      "id": "B_prime",
-		      "label": "B'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 1,
-		      "id": "C_prime",
-		      "label": "C'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 4,
-		      "id": "D_prime",
-		      "label": "D'",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 1,
-		        "y": 0
-		      },
-		      {
-		        "x": -5,
-		        "y": 1
-		      },
-		      {
-		        "x": -3,
-		        "y": 5
-		      },
-		      {
-		        "x": 0,
-		        "y": 2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcf809ac1b9e9f62a
-	// Question: Select the line of reflection
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [xcf809ac1b9e9f62a] Select the line of reflection (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_candidate",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": 3
-		      }
-		    }
-		  ],
-		  "width": 320,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 320,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 0,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 1,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 5,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 2,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 6,
-		      "id": "A_prime",
-		      "label": "A'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 5,
-		      "id": "B_prime",
-		      "label": "B'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 1,
-		      "id": "C_prime",
-		      "label": "C'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 4,
-		      "id": "D_prime",
-		      "label": "D'",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 1,
-		        "y": 0
-		      },
-		      {
-		        "x": -5,
-		        "y": 1
-		      },
-		      {
-		        "x": -3,
-		        "y": 5
-		      },
-		      {
-		        "x": 0,
-		        "y": 2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcf809ac1b9e9f62a
-	// Question: Select the line of reflection
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [xcf809ac1b9e9f62a] Select the line of reflection (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_candidate",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": -3,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 320,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 320,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 0,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 1,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 5,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 2,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 6,
-		      "id": "A_prime",
-		      "label": "A'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 5,
-		      "id": "B_prime",
-		      "label": "B'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 1,
-		      "id": "C_prime",
-		      "label": "C'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 4,
-		      "id": "D_prime",
-		      "label": "D'",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 1,
-		        "y": 0
-		      },
-		      {
-		        "x": -5,
-		        "y": 1
-		      },
-		      {
-		        "x": -3,
-		        "y": 5
-		      },
-		      {
-		        "x": 0,
-		        "y": 2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcf809ac1b9e9f62a
-	// Question: Select the line of reflection
-	// Widget key: coordinate_plane_shapes
-	test("shape-transformation-graph - [xcf809ac1b9e9f62a] Select the line of reflection (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 0,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 1,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 5,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 2,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 6,
-		      "id": "A_prime",
-		      "label": "A'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 5,
-		      "id": "B_prime",
-		      "label": "B'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 1,
-		      "id": "C_prime",
-		      "label": "C'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 4,
-		      "id": "D_prime",
-		      "label": "D'",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 1,
-		        "y": 0
-		      },
-		      {
-		        "x": -5,
-		        "y": 1
-		      },
-		      {
-		        "x": -3,
-		        "y": 5
-		      },
-		      {
-		        "x": 0,
-		        "y": 2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa7b00dbf617b9115
-	// Question: Select the line of reflection for two congruent triangles
-	// Widget key: stimulus_graph
-	test("shape-transformation-graph - [xa7b00dbf617b9115] Select the line of reflection for two congruent triangles (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 6,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 7,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -4,
-		      "id": "Aprime",
-		      "label": "A′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": -5,
-		      "id": "Bprime",
-		      "label": "B′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": -2,
-		      "id": "Cprime",
-		      "label": "C′",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 2,
-		        "y": 6
-		      },
-		      {
-		        "x": 5,
-		        "y": 7
-		      },
-		      {
-		        "x": 4,
-		        "y": 4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "axis": "x",
-		    "type": "reflection"
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa7b00dbf617b9115
-	// Question: Select the line of reflection for two congruent triangles
-	// Widget key: reflection_choice_a
-	test("shape-transformation-graph - [xa7b00dbf617b9115] Select the line of reflection for two congruent triangles (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_candidate",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": -1
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 6,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 7,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -4,
-		      "id": "Aprime",
-		      "label": "A′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": -5,
-		      "id": "Bprime",
-		      "label": "B′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": -2,
-		      "id": "Cprime",
-		      "label": "C′",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 2,
-		        "y": 6
-		      },
-		      {
-		        "x": 5,
-		        "y": 7
-		      },
-		      {
-		        "x": 4,
-		        "y": 4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "axis": "x",
-		    "type": "reflection"
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa7b00dbf617b9115
-	// Question: Select the line of reflection for two congruent triangles
-	// Widget key: reflection_choice_b
-	test("shape-transformation-graph - [xa7b00dbf617b9115] Select the line of reflection for two congruent triangles (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_candidate",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": 1
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 6,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 7,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -4,
-		      "id": "Aprime",
-		      "label": "A′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": -5,
-		      "id": "Bprime",
-		      "label": "B′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": -2,
-		      "id": "Cprime",
-		      "label": "C′",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 2,
-		        "y": 6
-		      },
-		      {
-		        "x": 5,
-		        "y": 7
-		      },
-		      {
-		        "x": 4,
-		        "y": 4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "axis": "x",
-		    "type": "reflection"
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa7b00dbf617b9115
-	// Question: Select the line of reflection for two congruent triangles
-	// Widget key: reflection_choice_c
-	test("shape-transformation-graph - [xa7b00dbf617b9115] Select the line of reflection for two congruent triangles (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_candidate",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": 4,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 6,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 7,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -4,
-		      "id": "Aprime",
-		      "label": "A′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": -5,
-		      "id": "Bprime",
-		      "label": "B′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": -2,
-		      "id": "Cprime",
-		      "label": "C′",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 2,
-		        "y": 6
-		      },
-		      {
-		        "x": 5,
-		        "y": 7
-		      },
-		      {
-		        "x": 4,
-		        "y": 4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "axis": "x",
-		    "type": "reflection"
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb6eb207331f48e40
-	// Question: Identify the line of reflection from a triangle and its image
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [xb6eb207331f48e40] Identify the line of reflection from a triangle and its image (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_vertical_x_equals_minus2",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": -2,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": 0,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
-		      "y": -4,
+		      "y": 2,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -2,
-		      "y": 3,
+		      "x": 0,
+		      "y": -2,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -2,
-		      "y": -4,
+		      "x": -4,
+		      "y": -6,
 		      "id": "A_prime",
 		      "label": "A′",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": 0,
+		      "x": -1,
+		      "y": 2,
 		      "id": "B_prime",
 		      "label": "B′",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -2,
-		      "y": -7,
+		      "x": 2,
+		      "y": -2,
 		      "id": "C_prime",
 		      "label": "C′",
 		      "style": "closed"
@@ -8868,16 +16814,16 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "label": "ABC",
 		    "vertices": [
 		      {
-		        "x": -2,
-		        "y": 0
+		        "x": 6,
+		        "y": -6
 		      },
 		      {
 		        "x": 3,
-		        "y": -4
+		        "y": 2
 		      },
 		      {
-		        "x": -2,
-		        "y": 3
+		        "x": 0,
+		        "y": -2
 		      }
 		    ]
 		  },
@@ -8906,18 +16852,143 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xb6eb207331f48e40
-	// Question: Identify the line of reflection from a triangle and its image
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [xb6eb207331f48e40] Identify the line of reflection from a triangle and its image (2)", async () => {
+	// Extracted from question: x51b60bfce8805713
+	// Question: Select the line of reflection for a triangle
+	// Widget key: reflection_choice_b
+	test("shape-transformation-graph - [x51b60bfce8805713] Select the line of reflection for a triangle (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": [
 		    {
-		      "id": "line_horizontal_y_equals_minus2",
-		      "color": "#1fab54",
+		      "id": "line_candidate",
+		      "color": "#666666",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 1,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": -6,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 2,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -2,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": -6,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 2,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": -2,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 6,
+		        "y": -6
+		      },
+		      {
+		        "x": 3,
+		        "y": 2
+		      },
+		      {
+		        "x": 0,
+		        "y": -2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x51b60bfce8805713
+	// Question: Select the line of reflection for a triangle
+	// Widget key: reflection_choice_c
+	test("shape-transformation-graph - [x51b60bfce8805713] Select the line of reflection for a triangle (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": [
+		    {
+		      "id": "line_candidate",
+		      "color": "#666666",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -8945,43 +17016,43 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": -2,
-		      "y": 0,
+		      "x": 6,
+		      "y": -6,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
-		      "y": -4,
+		      "y": 2,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -2,
-		      "y": 3,
+		      "x": 0,
+		      "y": -2,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -2,
-		      "y": -4,
+		      "x": -4,
+		      "y": -6,
 		      "id": "A_prime",
 		      "label": "A′",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": 0,
+		      "x": -1,
+		      "y": 2,
 		      "id": "B_prime",
 		      "label": "B′",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -2,
-		      "y": -7,
+		      "x": 2,
+		      "y": -2,
 		      "id": "C_prime",
 		      "label": "C′",
 		      "style": "closed"
@@ -8992,16 +17063,16 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "label": "ABC",
 		    "vertices": [
 		      {
-		        "x": -2,
-		        "y": 0
+		        "x": 6,
+		        "y": -6
 		      },
 		      {
 		        "x": 3,
-		        "y": -4
+		        "y": 2
 		      },
 		      {
-		        "x": -2,
-		        "y": 3
+		        "x": 0,
+		        "y": -2
 		      }
 		    ]
 		  },
@@ -9030,134 +17101,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xb6eb207331f48e40
-	// Question: Identify the line of reflection from a triangle and its image
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [xb6eb207331f48e40] Identify the line of reflection from a triangle and its image (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_horizontal_y_equals_0",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": 0,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -4,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 3,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -4,
-		      "id": "A_prime",
-		      "label": "A′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 0,
-		      "id": "B_prime",
-		      "label": "B′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -7,
-		      "id": "C_prime",
-		      "label": "C′",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": -2,
-		        "y": 0
-		      },
-		      {
-		        "x": 3,
-		        "y": -4
-		      },
-		      {
-		        "x": -2,
-		        "y": 3
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb6eb207331f48e40
-	// Question: Identify the line of reflection from a triangle and its image
-	// Widget key: stimulus_graph
-	test("shape-transformation-graph - [xb6eb207331f48e40] Identify the line of reflection from a triangle and its image (4)", async () => {
+	// Extracted from question: x51b60bfce8805713
+	// Question: Select the line of reflection for a triangle
+	// Widget key: reflection_stimulus
+	test("shape-transformation-graph - [x51b60bfce8805713] Select the line of reflection for a triangle (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9181,43 +17128,43 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": -2,
-		      "y": 0,
+		      "x": 6,
+		      "y": -6,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
-		      "y": -4,
+		      "y": 2,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -2,
-		      "y": 3,
+		      "x": 0,
+		      "y": -2,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -2,
-		      "y": -4,
+		      "x": -4,
+		      "y": -6,
 		      "id": "A_prime",
 		      "label": "A′",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": 0,
+		      "x": -1,
+		      "y": 2,
 		      "id": "B_prime",
 		      "label": "B′",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -2,
-		      "y": -7,
+		      "x": 2,
+		      "y": -2,
 		      "id": "C_prime",
 		      "label": "C′",
 		      "style": "closed"
@@ -9228,573 +17175,16 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "label": "ABC",
 		    "vertices": [
 		      {
-		        "x": -2,
-		        "y": 0
+		        "x": 6,
+		        "y": -6
 		      },
 		      {
 		        "x": 3,
-		        "y": -4
-		      },
-		      {
-		        "x": -2,
-		        "y": 3
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x560c1963ac95c962
-	// Question: Identify the line of reflection for a quadrilateral and its image
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x560c1963ac95c962] Identify the line of reflection for a quadrilateral and its image (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_vertical_x_eq_2",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": 2,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": -1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 0,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -1,
-		      "y": -1,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 5,
-		      "id": "A_prime",
-		      "label": "A′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "id": "B_prime",
-		      "label": "B′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 4,
-		      "id": "C_prime",
-		      "label": "C′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -1,
-		      "y": 5,
-		      "id": "D_prime",
-		      "label": "D′",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 3,
-		        "y": -1
-		      },
-		      {
-		        "x": 2,
 		        "y": 2
 		      },
 		      {
-		        "x": -2,
-		        "y": 0
-		      },
-		      {
-		        "x": -1,
-		        "y": -1
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x560c1963ac95c962
-	// Question: Identify the line of reflection for a quadrilateral and its image
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x560c1963ac95c962] Identify the line of reflection for a quadrilateral and its image (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_y_eq_2",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": 2
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": -1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 0,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -1,
-		      "y": -1,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 5,
-		      "id": "A_prime",
-		      "label": "A′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "id": "B_prime",
-		      "label": "B′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 4,
-		      "id": "C_prime",
-		      "label": "C′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -1,
-		      "y": 5,
-		      "id": "D_prime",
-		      "label": "D′",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 3,
-		        "y": -1
-		      },
-		      {
-		        "x": 2,
-		        "y": 2
-		      },
-		      {
-		        "x": -2,
-		        "y": 0
-		      },
-		      {
-		        "x": -1,
-		        "y": -1
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x560c1963ac95c962
-	// Question: Identify the line of reflection for a quadrilateral and its image
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x560c1963ac95c962] Identify the line of reflection for a quadrilateral and its image (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": [
-		    {
-		      "id": "line_y_eq_0",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": -1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 0,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -1,
-		      "y": -1,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 5,
-		      "id": "A_prime",
-		      "label": "A′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "id": "B_prime",
-		      "label": "B′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 4,
-		      "id": "C_prime",
-		      "label": "C′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -1,
-		      "y": 5,
-		      "id": "D_prime",
-		      "label": "D′",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 3,
-		        "y": -1
-		      },
-		      {
-		        "x": 2,
-		        "y": 2
-		      },
-		      {
-		        "x": -2,
-		        "y": 0
-		      },
-		      {
-		        "x": -1,
-		        "y": -1
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x560c1963ac95c962
-	// Question: Identify the line of reflection for a quadrilateral and its image
-	// Widget key: stimulus_graph
-	test("shape-transformation-graph - [x560c1963ac95c962] Identify the line of reflection for a quadrilateral and its image (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": -1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 0,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -1,
-		      "y": -1,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 5,
-		      "id": "A_prime",
-		      "label": "A′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "id": "B_prime",
-		      "label": "B′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 4,
-		      "id": "C_prime",
-		      "label": "C′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -1,
-		      "y": 5,
-		      "id": "D_prime",
-		      "label": "D′",
-		      "style": "closed"
-		    }
-		  ],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 3,
-		        "y": -1
-		      },
-		      {
-		        "x": 2,
-		        "y": 2
-		      },
-		      {
-		        "x": -2,
-		        "y": 0
-		      },
-		      {
-		        "x": -1,
-		        "y": -1
+		        "x": 0,
+		        "y": -2
 		      }
 		    ]
 		  },
@@ -9836,11 +17226,11 @@ describe("shapeTransformationGraph widget tests", () => {
 		      "id": "line_candidate",
 		      "color": "#1fab54",
 		      "label": " ",
-		      "style": "solid",
+		      "style": "dashed",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": 0,
-		        "yIntercept": 3
+		        "yIntercept": -2
 		      }
 		    }
 		  ],
@@ -9893,28 +17283,28 @@ describe("shapeTransformationGraph widget tests", () => {
 		      "x": -3,
 		      "y": -6,
 		      "id": "A_prime",
-		      "label": "A′",
+		      "label": "A'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
 		      "y": -7,
 		      "id": "B_prime",
-		      "label": "B′",
+		      "label": "B'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -3,
 		      "y": -5,
 		      "id": "C_prime",
-		      "label": "C′",
+		      "label": "C'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": -7,
 		      "id": "D_prime",
-		      "label": "D′",
+		      "label": "D'",
 		      "style": "closed"
 		    }
 		  ],
@@ -9975,7 +17365,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		      "id": "line_candidate",
 		      "color": "#1fab54",
 		      "label": " ",
-		      "style": "solid",
+		      "style": "dashed",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": 0,
@@ -10032,28 +17422,28 @@ describe("shapeTransformationGraph widget tests", () => {
 		      "x": -3,
 		      "y": -6,
 		      "id": "A_prime",
-		      "label": "A′",
+		      "label": "A'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
 		      "y": -7,
 		      "id": "B_prime",
-		      "label": "B′",
+		      "label": "B'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -3,
 		      "y": -5,
 		      "id": "C_prime",
-		      "label": "C′",
+		      "label": "C'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": -7,
 		      "id": "D_prime",
-		      "label": "D′",
+		      "label": "D'",
 		      "style": "closed"
 		    }
 		  ],
@@ -10114,11 +17504,11 @@ describe("shapeTransformationGraph widget tests", () => {
 		      "id": "line_candidate",
 		      "color": "#1fab54",
 		      "label": " ",
-		      "style": "solid",
+		      "style": "dashed",
 		      "equation": {
 		        "A": 1,
 		        "B": 0,
-		        "C": -3,
+		        "C": -6,
 		        "type": "standard"
 		      }
 		    }
@@ -10172,28 +17562,28 @@ describe("shapeTransformationGraph widget tests", () => {
 		      "x": -3,
 		      "y": -6,
 		      "id": "A_prime",
-		      "label": "A′",
+		      "label": "A'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
 		      "y": -7,
 		      "id": "B_prime",
-		      "label": "B′",
+		      "label": "B'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -3,
 		      "y": -5,
 		      "id": "C_prime",
-		      "label": "C′",
+		      "label": "C'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": -7,
 		      "id": "D_prime",
-		      "label": "D′",
+		      "label": "D'",
 		      "style": "closed"
 		    }
 		  ],
@@ -10243,7 +17633,7 @@ describe("shapeTransformationGraph widget tests", () => {
 
 	// Extracted from question: xfca089f1f1675363
 	// Question: Identify the line of reflection for a quadrilateral
-	// Widget key: coordinate_plane_shapes
+	// Widget key: coordinate_plane
 	test("shape-transformation-graph - [xfca089f1f1675363] Identify the line of reflection for a quadrilateral (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -10299,28 +17689,28 @@ describe("shapeTransformationGraph widget tests", () => {
 		      "x": -3,
 		      "y": -6,
 		      "id": "A_prime",
-		      "label": "A′",
+		      "label": "A'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
 		      "y": -7,
 		      "id": "B_prime",
-		      "label": "B′",
+		      "label": "B'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -3,
 		      "y": -5,
 		      "id": "C_prime",
-		      "label": "C′",
+		      "label": "C'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": -7,
 		      "id": "D_prime",
-		      "label": "D′",
+		      "label": "D'",
 		      "style": "closed"
 		    }
 		  ],
@@ -10368,10 +17758,140 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x8d2b25ce24b1b73a
+	// Extracted from question: x721e1a8afe5e89cb
+	// Question: Determine a translation from a coordinate grid
+	// Widget key: image_1
+	test("shape-transformation-graph - [x721e1a8afe5e89cb] Determine a translation from a coordinate grid", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 5,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -5,
+		      "y": 3,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 4,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": -2,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": 1,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -2,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": -1,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": -7,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": -4,
+		      "id": "D_prime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": -5,
+		        "y": 3
+		      },
+		      {
+		        "x": 1,
+		        "y": 4
+		      },
+		      {
+		        "x": -7,
+		        "y": -2
+		      },
+		      {
+		        "x": -7,
+		        "y": 1
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 2,
+		      "y": -5
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xca58bf8270389281
 	// Question: Determine a translation from a coordinate diagram
 	// Widget key: image_1
-	test("shape-transformation-graph - [x8d2b25ce24b1b73a] Determine a translation from a coordinate diagram", async () => {
+	test("shape-transformation-graph - [xca58bf8270389281] Determine a translation from a coordinate diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10381,14 +17901,14 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -10396,7 +17916,192 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "points": [],
 		  "preImage": {
 		    "color": "#11accd",
-		    "label": " ",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 6,
+		        "y": 2
+		      },
+		      {
+		        "x": 5,
+		        "y": 1
+		      },
+		      {
+		        "x": -5,
+		        "y": -4
+		      },
+		      {
+		        "x": 3,
+		        "y": 6
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": -1,
+		      "y": -3
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x29c0f77964873fe8
+	// Question: Determine a translation from a coordinate diagram
+	// Widget key: image_1
+	test("shape-transformation-graph - [x29c0f77964873fe8] Determine a translation from a coordinate diagram", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": 3,
+		        "y": -4
+		      },
+		      {
+		        "x": 5,
+		        "y": -2
+		      },
+		      {
+		        "x": 6,
+		        "y": -6
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": -8,
+		      "y": 5
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8d2b25ce24b1b73a
+	// Question: Describe a translation on the coordinate plane
+	// Widget key: image_1
+	test("shape-transformation-graph - [x8d2b25ce24b1b73a] Describe a translation on the coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": 5,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": -4,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": -1,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 7,
+		      "id": "Aprime",
+		      "label": "A'",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": -2,
+		      "id": "Bprime",
+		      "label": "B'",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 1,
+		      "id": "Cprime",
+		      "label": "C'",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
 		    "vertices": [
 		      {
 		        "x": 3,
@@ -10437,6 +18142,118 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x4f2e024eee40c5ab
+	// Question: Determine a translation from a triangle image
+	// Widget key: image_1
+	test("shape-transformation-graph - [x4f2e024eee40c5ab] Determine a translation from a triangle image", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 6,
+		    "min": -4,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "min": -3,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -1,
+		      "y": 5,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 4,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -2,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 5,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 4,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -2,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABC",
+		    "vertices": [
+		      {
+		        "x": -1,
+		        "y": 5
+		      },
+		      {
+		        "x": 2,
+		        "y": 4
+		      },
+		      {
+		        "x": -3,
+		        "y": -2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 3,
+		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: x03c658467e63f578
 	// Question: Determine the translation of a quadrilateral
 	// Widget key: image_1
@@ -10450,14 +18267,14 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -10495,33 +18312,33 @@ describe("shapeTransformationGraph widget tests", () => {
 		      "x": -6,
 		      "y": 4,
 		      "id": "A_prime",
-		      "label": "A′",
+		      "label": "A'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -2,
 		      "y": 3,
 		      "id": "B_prime",
-		      "label": "B′",
+		      "label": "B'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 6,
 		      "id": "C_prime",
-		      "label": "C′",
+		      "label": "C'",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -2,
 		      "y": 0,
 		      "id": "D_prime",
-		      "label": "D′",
+		      "label": "D'",
 		      "style": "closed"
 		    }
 		  ],
 		  "preImage": {
-		    "color": "#ca337c",
+		    "color": "#11accd",
 		    "label": "ABCD",
 		    "vertices": [
 		      {
@@ -10547,6 +18364,225 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "vector": {
 		      "x": 0,
 		      "y": 6
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x35fd9563b0336f27
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x35fd9563b0336f27] Translate a quadrilateral on the coordinate plane (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd4D",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 0,
+		        "y": 0
+		      },
+		      {
+		        "x": 5,
+		        "y": 2
+		      },
+		      {
+		        "x": 0,
+		        "y": 3
+		      },
+		      {
+		        "x": 1,
+		        "y": 1
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 2,
+		      "y": -6
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x35fd9563b0336f27
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x35fd9563b0336f27] Translate a quadrilateral on the coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd4D",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 0,
+		        "y": 0
+		      },
+		      {
+		        "x": 5,
+		        "y": 2
+		      },
+		      {
+		        "x": 0,
+		        "y": 3
+		      },
+		      {
+		        "x": 1,
+		        "y": 1
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": -2,
+		      "y": -6
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x35fd9563b0336f27
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x35fd9563b0336f27] Translate a quadrilateral on the coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd4D",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 0,
+		        "y": 0
+		      },
+		      {
+		        "x": 5,
+		        "y": 2
+		      },
+		      {
+		        "x": 0,
+		        "y": 3
+		      },
+		      {
+		        "x": 1,
+		        "y": 1
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 0,
+		      "y": -6
 		    }
 		  },
 		  "showQuadrantLabels": false
@@ -10594,8 +18630,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 325,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd55",
-		    "label": "ABCD",
+		    "color": "#11accd33",
+		    "label": "Pre-image",
 		    "vertices": [
 		      {
 		        "x": -2,
@@ -10618,8 +18654,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": 4,
-		      "y": 1
+		      "x": 1,
+		      "y": -4
 		    }
 		  },
 		  "showQuadrantLabels": false
@@ -10667,8 +18703,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 325,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd55",
-		    "label": "ABCD",
+		    "color": "#11accd33",
+		    "label": "Pre-image",
 		    "vertices": [
 		      {
 		        "x": -2,
@@ -10740,8 +18776,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 325,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd55",
-		    "label": "ABCD",
+		    "color": "#11accd33",
+		    "label": "Pre-image",
 		    "vertices": [
 		      {
 		        "x": -2,
@@ -10764,8 +18800,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": 1,
-		      "y": -4
+		      "x": -1,
+		      "y": 4
 		    }
 		  },
 		  "showQuadrantLabels": false
@@ -10787,15 +18823,15 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2130676b11201508
-	// Question: Translate a triangle left on a coordinate plane
-	// Widget key: choice_a_graph
-	test("shape-transformation-graph - [x2130676b11201508] Translate a triangle left on a coordinate plane (1)", async () => {
+	// Question: Translate a triangle left by 5 units
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x2130676b11201508] Translate a triangle left by 5 units (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": null,
-		  "width": 325,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -10810,33 +18846,11 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -1,
-		      "y": 1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -3,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 0,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 400,
+		  "points": [],
 		  "preImage": {
-		    "color": "#11accd33",
-		    "label": "ABC",
+		    "color": "#11accd66",
+		    "label": " ",
 		    "vertices": [
 		      {
 		        "x": -1,
@@ -10878,15 +18892,15 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2130676b11201508
-	// Question: Translate a triangle left on a coordinate plane
-	// Widget key: choice_b_graph
-	test("shape-transformation-graph - [x2130676b11201508] Translate a triangle left on a coordinate plane (2)", async () => {
+	// Question: Translate a triangle left by 5 units
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x2130676b11201508] Translate a triangle left by 5 units (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": null,
-		  "width": 325,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -10901,33 +18915,11 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -1,
-		      "y": 1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -3,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 0,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 400,
+		  "points": [],
 		  "preImage": {
-		    "color": "#11accd33",
-		    "label": "ABC",
+		    "color": "#11accd66",
+		    "label": " ",
 		    "vertices": [
 		      {
 		        "x": -1,
@@ -10969,15 +18961,15 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2130676b11201508
-	// Question: Translate a triangle left on a coordinate plane
-	// Widget key: choice_c_graph
-	test("shape-transformation-graph - [x2130676b11201508] Translate a triangle left on a coordinate plane (3)", async () => {
+	// Question: Translate a triangle left by 5 units
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x2130676b11201508] Translate a triangle left by 5 units (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": null,
-		  "width": 325,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -10992,33 +18984,11 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -1,
-		      "y": 1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -3,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 0,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 400,
+		  "points": [],
 		  "preImage": {
-		    "color": "#11accd33",
-		    "label": "ABC",
+		    "color": "#11accd66",
+		    "label": " ",
 		    "vertices": [
 		      {
 		        "x": -1,
@@ -11060,88 +19030,15 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8c0fd855955cee06
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: graph_initial
-	test("shape-transformation-graph - [x8c0fd855955cee06] Translate a quadrilateral on the coordinate plane (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 2,
-		        "y": -3
-		      },
-		      {
-		        "x": -1,
-		        "y": 3
-		      },
-		      {
-		        "x": -1,
-		        "y": -3
-		      },
-		      {
-		        "x": -4,
-		        "y": -4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8c0fd855955cee06
-	// Question: Translate a quadrilateral on the coordinate plane
+	// Question: Translate a quadrilateral on a coordinate plane
 	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x8c0fd855955cee06] Translate a quadrilateral on the coordinate plane (2)", async () => {
+	test("shape-transformation-graph - [x8c0fd855955cee06] Translate a quadrilateral on a coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": null,
-		  "width": 425,
+		  "width": 325,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -11156,84 +19053,11 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 325,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 2,
-		        "y": -3
-		      },
-		      {
-		        "x": -1,
-		        "y": 3
-		      },
-		      {
-		        "x": -1,
-		        "y": -3
-		      },
-		      {
-		        "x": -4,
-		        "y": -4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 2,
-		      "y": 3
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8c0fd855955cee06
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x8c0fd855955cee06] Translate a quadrilateral on the coordinate plane (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
+		    "color": "#11accd33",
+		    "label": "Pre-image",
 		    "vertices": [
 		      {
 		        "x": 2,
@@ -11279,15 +19103,15 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8c0fd855955cee06
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x8c0fd855955cee06] Translate a quadrilateral on the coordinate plane (4)", async () => {
+	// Question: Translate a quadrilateral on a coordinate plane
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x8c0fd855955cee06] Translate a quadrilateral on a coordinate plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "shapeTransformationGraph",
 		  "lines": null,
-		  "width": 425,
+		  "width": 325,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -11302,11 +19126,84 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 325,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
+		    "color": "#11accd33",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": -3
+		      },
+		      {
+		        "x": -1,
+		        "y": 3
+		      },
+		      {
+		        "x": -1,
+		        "y": -3
+		      },
+		      {
+		        "x": -4,
+		        "y": -4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 2,
+		      "y": 3
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8c0fd855955cee06
+	// Question: Translate a quadrilateral on a coordinate plane
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x8c0fd855955cee06] Translate a quadrilateral on a coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd33",
+		    "label": "Pre-image",
 		    "vertices": [
 		      {
 		        "x": 2,
@@ -11351,10 +19248,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x35fd9563b0336f27
-	// Question: Translate a quadrilateral: 2 left and 6 down
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x35fd9563b0336f27] Translate a quadrilateral: 2 left and 6 down (1)", async () => {
+	// Extracted from question: xcb5a5663d6f5f688
+	// Question: Translate a triangle up by 2 units
+	// Widget key: triangle_plane
+	test("shape-transformation-graph - [xcb5a5663d6f5f688] Translate a triangle up by 2 units", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11376,225 +19273,31 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 0,
-		        "y": 0
-		      },
-		      {
-		        "x": 5,
-		        "y": 2
-		      },
-		      {
-		        "x": 0,
-		        "y": 3
-		      },
-		      {
-		        "x": 1,
-		        "y": 1
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "axis": "x",
-		    "type": "reflection"
-		  },
-		  "showQuadrantLabels": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x35fd9563b0336f27
-	// Question: Translate a quadrilateral: 2 left and 6 down
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x35fd9563b0336f27] Translate a quadrilateral: 2 left and 6 down (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 0,
-		        "y": 0
-		      },
-		      {
-		        "x": 5,
-		        "y": 2
-		      },
-		      {
-		        "x": 0,
-		        "y": 3
-		      },
-		      {
-		        "x": 1,
-		        "y": 1
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": -5,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
 		      "x": -2,
-		      "y": -6
+		      "y": 4,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": -5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
 		    }
-		  },
-		  "showQuadrantLabels": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x35fd9563b0336f27
-	// Question: Translate a quadrilateral: 2 left and 6 down
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x35fd9563b0336f27] Translate a quadrilateral: 2 left and 6 down (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
+		  ],
 		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 0,
-		        "y": 0
-		      },
-		      {
-		        "x": 5,
-		        "y": 2
-		      },
-		      {
-		        "x": 0,
-		        "y": 3
-		      },
-		      {
-		        "x": 1,
-		        "y": 1
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 2,
-		      "y": -6
-		    }
-		  },
-		  "showQuadrantLabels": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcb5a5663d6f5f688
-	// Question: Translate a triangle up by 2 units
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [xcb5a5663d6f5f688] Translate a triangle up by 2 units (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 325,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd55",
+		    "color": "#11accd26",
 		    "label": "ABC",
 		    "vertices": [
 		      {
@@ -11615,145 +19318,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "type": "translation",
 		    "vector": {
 		      "x": 0,
-		      "y": -2
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcb5a5663d6f5f688
-	// Question: Translate a triangle up by 2 units
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [xcb5a5663d6f5f688] Translate a triangle up by 2 units (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 325,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd55",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 6,
-		        "y": -5
-		      },
-		      {
-		        "x": -2,
-		        "y": 4
-		      },
-		      {
-		        "x": -7,
-		        "y": -5
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 2
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcb5a5663d6f5f688
-	// Question: Translate a triangle up by 2 units
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [xcb5a5663d6f5f688] Translate a triangle up by 2 units (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 325,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd55",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 6,
-		        "y": -5
-		      },
-		      {
-		        "x": -2,
-		        "y": 4
-		      },
-		      {
-		        "x": -7,
-		        "y": -5
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 3
+		      "y": 0
 		    }
 		  },
 		  "showQuadrantLabels": false
@@ -11843,8 +19408,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": -6,
-		      "y": -5
+		      "x": -7,
+		      "y": -6
 		    }
 		  },
 		  "showQuadrantLabels": false
@@ -12025,8 +19590,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": -7,
-		      "y": -6
+		      "x": -6,
+		      "y": -5
 		    }
 		  },
 		  "showQuadrantLabels": false
@@ -12048,9 +19613,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x932e5e1f88cd26c0
-	// Question: Select the translated image of a triangle (2 units down)
-	// Widget key: triangle_choice_a
-	test("shape-transformation-graph - [x932e5e1f88cd26c0] Select the translated image of a triangle (2 units down) (1)", async () => {
+	// Question: Translate a triangle down on the coordinate plane
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x932e5e1f88cd26c0] Translate a triangle down on the coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12074,77 +19639,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd55",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": 2,
-		        "y": -4
-		      },
-		      {
-		        "x": 0,
-		        "y": -5
-		      },
-		      {
-		        "x": 6,
-		        "y": 2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 0,
-		      "y": 2
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x932e5e1f88cd26c0
-	// Question: Select the translated image of a triangle (2 units down)
-	// Widget key: triangle_choice_b
-	test("shape-transformation-graph - [x932e5e1f88cd26c0] Select the translated image of a triangle (2 units down) (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd55",
-		    "label": "ABC",
+		    "color": "#11accd4D",
+		    "label": " ",
 		    "vertices": [
 		      {
 		        "x": 2,
@@ -12186,9 +19682,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x932e5e1f88cd26c0
-	// Question: Select the translated image of a triangle (2 units down)
-	// Widget key: triangle_choice_c
-	test("shape-transformation-graph - [x932e5e1f88cd26c0] Select the translated image of a triangle (2 units down) (3)", async () => {
+	// Question: Translate a triangle down on the coordinate plane
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x932e5e1f88cd26c0] Translate a triangle down on the coordinate plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12212,8 +19708,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd55",
-		    "label": "ABC",
+		    "color": "#11accd4D",
+		    "label": " ",
 		    "vertices": [
 		      {
 		        "x": 2,
@@ -12232,8 +19728,284 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": -2,
+		      "x": 0,
+		      "y": 2
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x932e5e1f88cd26c0
+	// Question: Translate a triangle down on the coordinate plane
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x932e5e1f88cd26c0] Translate a triangle down on the coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd4D",
+		    "label": " ",
+		    "vertices": [
+		      {
+		        "x": 2,
+		        "y": -4
+		      },
+		      {
+		        "x": 0,
+		        "y": -5
+		      },
+		      {
+		        "x": 6,
+		        "y": 2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 2,
 		      "y": 0
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x622210c259822d46
+	// Question: Translate a triangle left and down on a coordinate plane
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [x622210c259822d46] Translate a triangle left and down on a coordinate plane (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": " ",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": " ",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd33",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -4,
+		        "y": 3
+		      },
+		      {
+		        "x": -2,
+		        "y": 4
+		      },
+		      {
+		        "x": 6,
+		        "y": -4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": -3,
+		      "y": 3
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x622210c259822d46
+	// Question: Translate a triangle left and down on a coordinate plane
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [x622210c259822d46] Translate a triangle left and down on a coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": " ",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": " ",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd33",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -4,
+		        "y": 3
+		      },
+		      {
+		        "x": -2,
+		        "y": 4
+		      },
+		      {
+		        "x": 6,
+		        "y": -4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": -3,
+		      "y": -3
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x622210c259822d46
+	// Question: Translate a triangle left and down on a coordinate plane
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [x622210c259822d46] Translate a triangle left and down on a coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": " ",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": " ",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd33",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -4,
+		        "y": 3
+		      },
+		      {
+		        "x": -2,
+		        "y": 4
+		      },
+		      {
+		        "x": 6,
+		        "y": -4
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 3,
+		      "y": -3
 		    }
 		  },
 		  "showQuadrantLabels": false
@@ -12256,8 +20028,8 @@ describe("shapeTransformationGraph widget tests", () => {
 
 	// Extracted from question: x1d176c1baecde342
 	// Question: Translate a triangle on the coordinate plane
-	// Widget key: choice_a_graph
-	test("shape-transformation-graph - [x1d176c1baecde342] Translate a triangle on the coordinate plane (1)", async () => {
+	// Widget key: translation_choice_a
+	test("shape-transformation-graph - [x1d176c1baecde342] Translate a triangle on the coordinate plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12281,7 +20053,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd40",
 		    "label": null,
 		    "vertices": [
 		      {
@@ -12325,8 +20097,8 @@ describe("shapeTransformationGraph widget tests", () => {
 
 	// Extracted from question: x1d176c1baecde342
 	// Question: Translate a triangle on the coordinate plane
-	// Widget key: choice_b_graph
-	test("shape-transformation-graph - [x1d176c1baecde342] Translate a triangle on the coordinate plane (2)", async () => {
+	// Widget key: translation_choice_b
+	test("shape-transformation-graph - [x1d176c1baecde342] Translate a triangle on the coordinate plane (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12350,7 +20122,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd40",
 		    "label": null,
 		    "vertices": [
 		      {
@@ -12394,8 +20166,8 @@ describe("shapeTransformationGraph widget tests", () => {
 
 	// Extracted from question: x1d176c1baecde342
 	// Question: Translate a triangle on the coordinate plane
-	// Widget key: choice_c_graph
-	test("shape-transformation-graph - [x1d176c1baecde342] Translate a triangle on the coordinate plane (3)", async () => {
+	// Widget key: translation_choice_c
+	test("shape-transformation-graph - [x1d176c1baecde342] Translate a triangle on the coordinate plane (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12419,7 +20191,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd40",
 		    "label": null,
 		    "vertices": [
 		      {
@@ -12461,10 +20233,229 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc0eece1841e195e0
-	// Question: Translate a quadrilateral 5 units to the right
+	// Extracted from question: xac5edfba8adcc82a
+	// Question: Translate a quadrilateral on the coordinate plane
 	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [xc0eece1841e195e0] Translate a quadrilateral 5 units to the right (1)", async () => {
+	test("shape-transformation-graph - [xac5edfba8adcc82a] Translate a quadrilateral on the coordinate plane (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd26",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -4,
+		        "y": 1
+		      },
+		      {
+		        "x": 3,
+		        "y": -1
+		      },
+		      {
+		        "x": 4,
+		        "y": 1
+		      },
+		      {
+		        "x": -5,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 2,
+		      "y": -5
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xac5edfba8adcc82a
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [xac5edfba8adcc82a] Translate a quadrilateral on the coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd26",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -4,
+		        "y": 1
+		      },
+		      {
+		        "x": 3,
+		        "y": -1
+		      },
+		      {
+		        "x": 4,
+		        "y": 1
+		      },
+		      {
+		        "x": -5,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": 2,
+		      "y": 5
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xac5edfba8adcc82a
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [xac5edfba8adcc82a] Translate a quadrilateral on the coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 325,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd26",
+		    "label": "Pre-image",
+		    "vertices": [
+		      {
+		        "x": -4,
+		        "y": 1
+		      },
+		      {
+		        "x": 3,
+		        "y": -1
+		      },
+		      {
+		        "x": 4,
+		        "y": 1
+		      },
+		      {
+		        "x": -5,
+		        "y": 3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": -2,
+		      "y": -5
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc0eece1841e195e0
+	// Question: Translate a quadrilateral to the right
+	// Widget key: choice_a_graph
+	test("shape-transformation-graph - [xc0eece1841e195e0] Translate a quadrilateral to the right (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12488,7 +20479,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd33",
 		    "label": "Pre-image",
 		    "vertices": [
 		      {
@@ -12512,8 +20503,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": -5,
-		      "y": 0
+		      "x": 0,
+		      "y": 5
 		    }
 		  },
 		  "showQuadrantLabels": false
@@ -12535,9 +20526,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc0eece1841e195e0
-	// Question: Translate a quadrilateral 5 units to the right
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [xc0eece1841e195e0] Translate a quadrilateral 5 units to the right (2)", async () => {
+	// Question: Translate a quadrilateral to the right
+	// Widget key: choice_b_graph
+	test("shape-transformation-graph - [xc0eece1841e195e0] Translate a quadrilateral to the right (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12561,7 +20552,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd33",
 		    "label": "Pre-image",
 		    "vertices": [
 		      {
@@ -12608,9 +20599,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc0eece1841e195e0
-	// Question: Translate a quadrilateral 5 units to the right
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [xc0eece1841e195e0] Translate a quadrilateral 5 units to the right (3)", async () => {
+	// Question: Translate a quadrilateral to the right
+	// Widget key: choice_c_graph
+	test("shape-transformation-graph - [xc0eece1841e195e0] Translate a quadrilateral to the right (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12634,7 +20625,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
+		    "color": "#11accd33",
 		    "label": "Pre-image",
 		    "vertices": [
 		      {
@@ -12678,9 +20669,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xcf519d006338bb59
-	// Question: Translate a triangle on the coordinate plane
-	// Widget key: choice_a_graph
-	test("shape-transformation-graph - [xcf519d006338bb59] Translate a triangle on the coordinate plane (1)", async () => {
+	// Question: Translate triangle ABC by 1 unit left and 5 units up
+	// Widget key: triangle_choice_a
+	test("shape-transformation-graph - [xcf519d006338bb59] Translate triangle ABC by 1 unit left and 5 units up (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12704,8 +20695,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
-		    "label": " ",
+		    "color": "#11accd33",
+		    "label": "ABC",
 		    "vertices": [
 		      {
 		        "x": 0,
@@ -12747,9 +20738,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xcf519d006338bb59
-	// Question: Translate a triangle on the coordinate plane
-	// Widget key: choice_c_graph
-	test("shape-transformation-graph - [xcf519d006338bb59] Translate a triangle on the coordinate plane (3)", async () => {
+	// Question: Translate triangle ABC by 1 unit left and 5 units up
+	// Widget key: triangle_choice_b
+	test("shape-transformation-graph - [xcf519d006338bb59] Translate triangle ABC by 1 unit left and 5 units up (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12773,8 +20764,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
-		    "label": " ",
+		    "color": "#11accd33",
+		    "label": "ABC",
 		    "vertices": [
 		      {
 		        "x": 0,
@@ -12794,7 +20785,7 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "type": "translation",
 		    "vector": {
 		      "x": -1,
-		      "y": -5
+		      "y": 5
 		    }
 		  },
 		  "showQuadrantLabels": false
@@ -12815,10 +20806,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4b6bef69f89b1100
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x4b6bef69f89b1100] Translate a quadrilateral on the coordinate plane (1)", async () => {
+	// Extracted from question: xcf519d006338bb59
+	// Question: Translate triangle ABC by 1 unit left and 5 units up
+	// Widget key: triangle_choice_c
+	test("shape-transformation-graph - [xcf519d006338bb59] Translate triangle ABC by 1 unit left and 5 units up (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12842,97 +20833,20 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
+		    "color": "#11accd33",
+		    "label": "ABC",
 		    "vertices": [
 		      {
-		        "x": 1,
-		        "y": -2
+		        "x": 0,
+		        "y": -5
 		      },
 		      {
 		        "x": 2,
-		        "y": -4
-		      },
-		      {
-		        "x": 5,
 		        "y": 2
 		      },
 		      {
-		        "x": 3,
-		        "y": -1
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 5,
-		      "y": 0
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4b6bef69f89b1100
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x4b6bef69f89b1100] Translate a quadrilateral on the coordinate plane (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 1,
-		        "y": -2
-		      },
-		      {
-		        "x": 2,
-		        "y": -4
-		      },
-		      {
-		        "x": 5,
-		        "y": 2
-		      },
-		      {
-		        "x": 3,
-		        "y": -1
+		        "x": 7,
+		        "y": 0
 		      }
 		    ]
 		  },
@@ -12940,282 +20854,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "type": "translation",
 		    "vector": {
 		      "x": -5,
-		      "y": 0
+		      "y": 1
 		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4b6bef69f89b1100
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x4b6bef69f89b1100] Translate a quadrilateral on the coordinate plane (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 1,
-		        "y": -2
-		      },
-		      {
-		        "x": 2,
-		        "y": -4
-		      },
-		      {
-		        "x": 5,
-		        "y": 2
-		      },
-		      {
-		        "x": 3,
-		        "y": -1
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "axis": "y",
-		    "type": "reflection"
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7604bc20e45baaa5
-	// Question: Translate a triangle on the coordinate plane
-	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [x7604bc20e45baaa5] Translate a triangle on the coordinate plane (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": -2,
-		        "y": 2
-		      },
-		      {
-		        "x": -5,
-		        "y": -2
-		      },
-		      {
-		        "x": -6,
-		        "y": 4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 2,
-		      "y": -2
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7604bc20e45baaa5
-	// Question: Translate a triangle on the coordinate plane
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [x7604bc20e45baaa5] Translate a triangle on the coordinate plane (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": -2,
-		        "y": 2
-		      },
-		      {
-		        "x": -5,
-		        "y": -2
-		      },
-		      {
-		        "x": -6,
-		        "y": 4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 2,
-		      "y": 2
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7604bc20e45baaa5
-	// Question: Translate a triangle on the coordinate plane
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [x7604bc20e45baaa5] Translate a triangle on the coordinate plane (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABC",
-		    "vertices": [
-		      {
-		        "x": -2,
-		        "y": 2
-		      },
-		      {
-		        "x": -5,
-		        "y": -2
-		      },
-		      {
-		        "x": -6,
-		        "y": 4
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "axis": "x",
-		    "type": "reflection"
 		  },
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -13236,9 +20876,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xfd9f142d6c27eec3
-	// Question: Translate a quadrilateral by a vector
-	// Widget key: choice_a_graph
-	test("shape-transformation-graph - [xfd9f142d6c27eec3] Translate a quadrilateral by a vector (1)", async () => {
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: graph_choice_a
+	test("shape-transformation-graph - [xfd9f142d6c27eec3] Translate a quadrilateral on the coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13262,8 +20902,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
-		    "label": null,
+		    "color": "#11accd33",
+		    "label": "ABCD",
 		    "vertices": [
 		      {
 		        "x": 6,
@@ -13309,9 +20949,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xfd9f142d6c27eec3
-	// Question: Translate a quadrilateral by a vector
-	// Widget key: choice_b_graph
-	test("shape-transformation-graph - [xfd9f142d6c27eec3] Translate a quadrilateral by a vector (2)", async () => {
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [xfd9f142d6c27eec3] Translate a quadrilateral on the coordinate plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13335,8 +20975,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
-		    "label": null,
+		    "color": "#11accd33",
+		    "label": "ABCD",
 		    "vertices": [
 		      {
 		        "x": 6,
@@ -13382,9 +21022,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xfd9f142d6c27eec3
-	// Question: Translate a quadrilateral by a vector
-	// Widget key: choice_c_graph
-	test("shape-transformation-graph - [xfd9f142d6c27eec3] Translate a quadrilateral by a vector (3)", async () => {
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [xfd9f142d6c27eec3] Translate a quadrilateral on the coordinate plane (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13408,8 +21048,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "height": 425,
 		  "points": [],
 		  "preImage": {
-		    "color": "#11accd",
-		    "label": null,
+		    "color": "#11accd33",
+		    "label": "ABCD",
 		    "vertices": [
 		      {
 		        "x": 6,
@@ -13432,8 +21072,8 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": -6,
-		      "y": 1
+		      "x": 0,
+		      "y": 0
 		    }
 		  },
 		  "showQuadrantLabels": false
@@ -13455,9 +21095,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe244fa846fc76401
-	// Question: Translate a quadrilateral on the coordinate plane
+	// Question: Image of a quadrilateral under a translation
 	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [xe244fa846fc76401] Translate a quadrilateral on the coordinate plane (2)", async () => {
+	test("shape-transformation-graph - [xe244fa846fc76401] Image of a quadrilateral under a translation (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13479,39 +21119,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 0,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": 1,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 1,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "preImage": {
-		    "color": "#11accd55",
-		    "label": "ABCD",
+		    "color": "#11accd33",
+		    "label": "Pre-image",
 		    "vertices": [
 		      {
 		        "x": 2,
@@ -13557,9 +21168,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe244fa846fc76401
-	// Question: Translate a quadrilateral on the coordinate plane
+	// Question: Image of a quadrilateral under a translation
 	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [xe244fa846fc76401] Translate a quadrilateral on the coordinate plane (3)", async () => {
+	test("shape-transformation-graph - [xe244fa846fc76401] Image of a quadrilateral under a translation (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13581,39 +21192,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 0,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": 1,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 1,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "preImage": {
-		    "color": "#11accd55",
-		    "label": "ABCD",
+		    "color": "#11accd33",
+		    "label": "Pre-image",
 		    "vertices": [
 		      {
 		        "x": 2,
@@ -13659,9 +21241,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe244fa846fc76401
-	// Question: Translate a quadrilateral on the coordinate plane
+	// Question: Image of a quadrilateral under a translation
 	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [xe244fa846fc76401] Translate a quadrilateral on the coordinate plane (4)", async () => {
+	test("shape-transformation-graph - [xe244fa846fc76401] Image of a quadrilateral under a translation (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13683,39 +21265,10 @@ describe("shapeTransformationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": 0,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -2,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": 1,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 1,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "preImage": {
-		    "color": "#11accd55",
-		    "label": "ABCD",
+		    "color": "#11accd33",
+		    "label": "Pre-image",
 		    "vertices": [
 		      {
 		        "x": 2,
@@ -13761,155 +21314,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xf0760a2809822a64
-	// Question: Translate a quadrilateral on the coordinate plane
+	// Question: Image of a quadrilateral under a translation
 	// Widget key: graph_choice_a
-	test("shape-transformation-graph - [xf0760a2809822a64] Translate a quadrilateral on the coordinate plane (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 1,
-		        "y": -4
-		      },
-		      {
-		        "x": -7,
-		        "y": -2
-		      },
-		      {
-		        "x": -5,
-		        "y": 1
-		      },
-		      {
-		        "x": 1,
-		        "y": -2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": 1,
-		      "y": 6
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf0760a2809822a64
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: graph_choice_b
-	test("shape-transformation-graph - [xf0760a2809822a64] Translate a quadrilateral on the coordinate plane (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "shapeTransformationGraph",
-		  "lines": null,
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "preImage": {
-		    "color": "#11accd",
-		    "label": "ABCD",
-		    "vertices": [
-		      {
-		        "x": 1,
-		        "y": -4
-		      },
-		      {
-		        "x": -7,
-		        "y": -2
-		      },
-		      {
-		        "x": -5,
-		        "y": 1
-		      },
-		      {
-		        "x": 1,
-		        "y": -2
-		      }
-		    ]
-		  },
-		  "transformation": {
-		    "type": "translation",
-		    "vector": {
-		      "x": -1,
-		      "y": 6
-		    }
-		  },
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for shapeTransformationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf0760a2809822a64
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: graph_choice_c
-	test("shape-transformation-graph - [xf0760a2809822a64] Translate a quadrilateral on the coordinate plane (3)", async () => {
+	test("shape-transformation-graph - [xf0760a2809822a64] Image of a quadrilateral under a translation (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13980,9 +21387,9 @@ describe("shapeTransformationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xf0760a2809822a64
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: stimulus_quadrilateral
-	test("shape-transformation-graph - [xf0760a2809822a64] Translate a quadrilateral on the coordinate plane (4)", async () => {
+	// Question: Image of a quadrilateral under a translation
+	// Widget key: graph_choice_b
+	test("shape-transformation-graph - [xf0760a2809822a64] Image of a quadrilateral under a translation (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -14030,9 +21437,412 @@ describe("shapeTransformationGraph widget tests", () => {
 		  "transformation": {
 		    "type": "translation",
 		    "vector": {
-		      "x": 0,
-		      "y": 0
+		      "x": 1,
+		      "y": 6
 		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf0760a2809822a64
+	// Question: Image of a quadrilateral under a translation
+	// Widget key: graph_choice_c
+	test("shape-transformation-graph - [xf0760a2809822a64] Image of a quadrilateral under a translation (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "preImage": {
+		    "color": "#11accd",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 1,
+		        "y": -4
+		      },
+		      {
+		        "x": -7,
+		        "y": -2
+		      },
+		      {
+		        "x": -5,
+		        "y": 1
+		      },
+		      {
+		        "x": 1,
+		        "y": -2
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "translation",
+		    "vector": {
+		      "x": -1,
+		      "y": 6
+		    }
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x97c96356134d8d5f
+	// Question: True or false about dilation: perimeter and angle measure
+	// Widget key: image_1
+	test("shape-transformation-graph - [x97c96356134d8d5f] True or false about dilation: perimeter and angle measure", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 12,
+		    "min": -6,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 13,
+		    "min": -6,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -4,
+		      "y": -3,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": -1,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 3,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 1,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 0,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#00000020",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": -1,
+		        "y": -1
+		      },
+		      {
+		        "x": 0,
+		        "y": 3
+		      },
+		      {
+		        "x": 2,
+		        "y": 1
+		      },
+		      {
+		        "x": 2,
+		        "y": 0
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": -4,
+		      "y": -3
+		    },
+		    "scaleFactor": 2.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x397d8791b00c4934
+	// Question: Dilations: assess lengths and coordinates
+	// Widget key: image_1
+	test("shape-transformation-graph - [x397d8791b00c4934] Dilations: assess lengths and coordinates", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -6,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "min": -7,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -1,
+		      "y": 2,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#00000022",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": -3,
+		        "y": -3
+		      },
+		      {
+		        "x": -3,
+		        "y": 3
+		      },
+		      {
+		        "x": 4,
+		        "y": 4
+		      },
+		      {
+		        "x": 0,
+		        "y": -3
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": -1,
+		      "y": 2
+		    },
+		    "scaleFactor": 1.5
+		  },
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for shapeTransformationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe8641e3d98b5f653
+	// Question: Dilations: lines through the center and parallels
+	// Widget key: image_1
+	test("shape-transformation-graph - [xe8641e3d98b5f653] Dilations: lines through the center and parallels", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "shapeTransformationGraph",
+		  "lines": null,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 7,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 1,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 7,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 7,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 7,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "open"
+		    },
+		    {
+		      "x": 3,
+		      "y": 2.5,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "open"
+		    },
+		    {
+		      "x": 7.5,
+		      "y": 4,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "open"
+		    },
+		    {
+		      "x": 4.5,
+		      "y": 7,
+		      "id": "D_prime",
+		      "label": "D′",
+		      "style": "open"
+		    }
+		  ],
+		  "preImage": {
+		    "color": "#11accd66",
+		    "label": "ABCD",
+		    "vertices": [
+		      {
+		        "x": 1,
+		        "y": 7
+		      },
+		      {
+		        "x": 1,
+		        "y": 1
+		      },
+		      {
+		        "x": 7,
+		        "y": 3
+		      },
+		      {
+		        "x": 3,
+		        "y": 7
+		      }
+		    ]
+		  },
+		  "transformation": {
+		    "type": "dilation",
+		    "center": {
+		      "x": 9,
+		      "y": 7
+		    },
+		    "scaleFactor": 0.75
 		  },
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput

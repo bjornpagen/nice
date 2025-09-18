@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.968Z
+// Generated on: 2025-09-18T05:17:02.167Z
 // Widget Type: boxGrid
 // Source: Real questions from database
 //
@@ -26,9 +26,9 @@ import * as logger from "@superbuilders/slog"
 
 describe("boxGrid widget tests", () => {
 	// Extracted from question: xd6cfcf381227e31a
-	// Question: Create a frequency table from room window counts
+	// Question: Create a frequency table from window counts
 	// Widget key: image_1
-	test("box-grid - [xd6cfcf381227e31a] Create a frequency table from room window counts", async () => {
+	test("box-grid - [xd6cfcf381227e31a] Create a frequency table from window counts", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -36,25 +36,22 @@ describe("boxGrid widget tests", () => {
 		    [
 		      {
 		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 2
+		          "type": "math",
+		          "mathml": "<mn>2</mn>"
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 2
+		          "type": "math",
+		          "mathml": "<mn>2</mn>"
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 2
+		          "type": "math",
+		          "mathml": "<mn>2</mn>"
 		        },
 		        "backgroundColor": null
 		      }
@@ -62,25 +59,22 @@ describe("boxGrid widget tests", () => {
 		    [
 		      {
 		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 2
+		          "type": "math",
+		          "mathml": "<mn>2</mn>"
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 0
+		          "type": "math",
+		          "mathml": "<mn>0</mn>"
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 2
+		          "type": "math",
+		          "mathml": "<mn>2</mn>"
 		        },
 		        "backgroundColor": null
 		      }
@@ -88,33 +82,30 @@ describe("boxGrid widget tests", () => {
 		    [
 		      {
 		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 2
+		          "type": "math",
+		          "mathml": "<mn>2</mn>"
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 3
+		          "type": "math",
+		          "mathml": "<mn>3</mn>"
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 2
+		          "type": "math",
+		          "mathml": "<mn>2</mn>"
 		        },
 		        "backgroundColor": null
 		      }
 		    ]
 		  ],
 		  "type": "boxGrid",
-		  "width": 240,
-		  "height": 240,
+		  "width": 320,
+		  "height": 320,
 		  "showGridLines": true
 		} as unknown as WidgetInput
 
@@ -134,9 +125,9 @@ describe("boxGrid widget tests", () => {
 	})
 
 	// Extracted from question: xf66ab2278e4a05f2
-	// Question: Create a frequency table from ages at kindergarten start
+	// Question: Create a frequency table from ages
 	// Widget key: image_1
-	test("box-grid - [xf66ab2278e4a05f2] Create a frequency table from ages at kindergarten start", async () => {
+	test("box-grid - [xf66ab2278e4a05f2] Create a frequency table from ages", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -211,8 +202,8 @@ describe("boxGrid widget tests", () => {
 		    ]
 		  ],
 		  "type": "boxGrid",
-		  "width": 200,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "showGridLines": true
 		} as unknown as WidgetInput
 
@@ -242,22 +233,25 @@ describe("boxGrid widget tests", () => {
 		    [
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>2</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 2
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>1</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 1
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>4</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 4
 		        },
 		        "backgroundColor": null
 		      }
@@ -265,22 +259,25 @@ describe("boxGrid widget tests", () => {
 		    [
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>4</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 4
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>4</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 4
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>4</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 4
 		        },
 		        "backgroundColor": null
 		      }
@@ -288,120 +285,33 @@ describe("boxGrid widget tests", () => {
 		    [
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>2</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 2
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>3</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 3
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>3</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 3
 		        },
 		        "backgroundColor": null
 		      }
 		    ]
 		  ],
 		  "type": "boxGrid",
-		  "width": 160,
-		  "height": 160,
-		  "showGridLines": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for boxGrid", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3db7c3b90ed3ad95
-	// Question: Create a frequency table from bag counts
-	// Widget key: image_1
-	test("box-grid - [x3db7c3b90ed3ad95] Create a frequency table from bag counts", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "data": [
-		    [
-		      {
-		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>1</mn>"
-		        },
-		        "backgroundColor": null
-		      },
-		      {
-		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>4</mn>"
-		        },
-		        "backgroundColor": null
-		      },
-		      {
-		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>4</mn>"
-		        },
-		        "backgroundColor": null
-		      },
-		      {
-		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>4</mn>"
-		        },
-		        "backgroundColor": null
-		      }
-		    ],
-		    [
-		      {
-		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>3</mn>"
-		        },
-		        "backgroundColor": null
-		      },
-		      {
-		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>2</mn>"
-		        },
-		        "backgroundColor": null
-		      },
-		      {
-		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>2</mn>"
-		        },
-		        "backgroundColor": null
-		      },
-		      {
-		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>5</mn>"
-		        },
-		        "backgroundColor": null
-		      }
-		    ]
-		  ],
-		  "type": "boxGrid",
-		  "width": 200,
-		  "height": 120,
+		  "width": 320,
+		  "height": 320,
 		  "showGridLines": true
 		} as unknown as WidgetInput
 
@@ -421,9 +331,9 @@ describe("boxGrid widget tests", () => {
 	})
 
 	// Extracted from question: x4a4b94ca18ce390e
-	// Question: Create a frequency table from monthly car sales
+	// Question: Create a frequency table from sales data
 	// Widget key: image_1
-	test("box-grid - [x4a4b94ca18ce390e] Create a frequency table from monthly car sales", async () => {
+	test("box-grid - [x4a4b94ca18ce390e] Create a frequency table from sales data", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -431,22 +341,25 @@ describe("boxGrid widget tests", () => {
 		    [
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>29</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 29
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>30</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 30
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>29</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 29
 		        },
 		        "backgroundColor": null
 		      }
@@ -454,22 +367,25 @@ describe("boxGrid widget tests", () => {
 		    [
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>29</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 29
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>31</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 31
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>28</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 28
 		        },
 		        "backgroundColor": null
 		      }
@@ -477,30 +393,33 @@ describe("boxGrid widget tests", () => {
 		    [
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>28</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 28
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>31</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 31
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>28</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 28
 		        },
 		        "backgroundColor": null
 		      }
 		    ]
 		  ],
 		  "type": "boxGrid",
-		  "width": 160,
-		  "height": 160,
+		  "width": 320,
+		  "height": 320,
 		  "showGridLines": true
 		} as unknown as WidgetInput
 
@@ -520,9 +439,9 @@ describe("boxGrid widget tests", () => {
 	})
 
 	// Extracted from question: xa6e2c6d2dc1d379b
-	// Question: Create a frequency table from shift data
+	// Question: Create a frequency table for dish counts
 	// Widget key: image_1
-	test("box-grid - [xa6e2c6d2dc1d379b] Create a frequency table from shift data", async () => {
+	test("box-grid - [xa6e2c6d2dc1d379b] Create a frequency table for dish counts", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -598,8 +517,8 @@ describe("boxGrid widget tests", () => {
 		    ]
 		  ],
 		  "type": "boxGrid",
-		  "width": 160,
-		  "height": 160,
+		  "width": 320,
+		  "height": 320,
 		  "showGridLines": true
 		} as unknown as WidgetInput
 
@@ -619,9 +538,9 @@ describe("boxGrid widget tests", () => {
 	})
 
 	// Extracted from question: x591a9b8b66bfa58f
-	// Question: Create a frequency table from a data set
+	// Question: Create a frequency table from a data grid
 	// Widget key: image_1
-	test("box-grid - [x591a9b8b66bfa58f] Create a frequency table from a data set", async () => {
+	test("box-grid - [x591a9b8b66bfa58f] Create a frequency table from a data grid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -688,8 +607,8 @@ describe("boxGrid widget tests", () => {
 		    ]
 		  ],
 		  "type": "boxGrid",
-		  "width": 200,
-		  "height": 120,
+		  "width": 400,
+		  "height": 400,
 		  "showGridLines": true
 		} as unknown as WidgetInput
 
@@ -787,106 +706,8 @@ describe("boxGrid widget tests", () => {
 		    ]
 		  ],
 		  "type": "boxGrid",
-		  "width": 160,
-		  "height": 160,
-		  "showGridLines": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for boxGrid", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcd238a6049d42cac
-	// Question: Create a frequency table from a data set
-	// Widget key: image_1
-	test("box-grid - [xcd238a6049d42cac] Create a frequency table from a data set", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "data": [
-		    [
-		      {
-		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 4
-		        },
-		        "backgroundColor": null
-		      },
-		      {
-		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 7
-		        },
-		        "backgroundColor": null
-		      },
-		      {
-		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 6
-		        },
-		        "backgroundColor": null
-		      },
-		      {
-		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 5
-		        },
-		        "backgroundColor": null
-		      }
-		    ],
-		    [
-		      {
-		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 4
-		        },
-		        "backgroundColor": null
-		      },
-		      {
-		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 7
-		        },
-		        "backgroundColor": null
-		      },
-		      {
-		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 5
-		        },
-		        "backgroundColor": null
-		      },
-		      {
-		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 5
-		        },
-		        "backgroundColor": null
-		      }
-		    ]
-		  ],
-		  "type": "boxGrid",
-		  "width": 200,
-		  "height": 120,
+		  "width": 320,
+		  "height": 320,
 		  "showGridLines": true
 		} as unknown as WidgetInput
 
@@ -906,9 +727,9 @@ describe("boxGrid widget tests", () => {
 	})
 
 	// Extracted from question: xf94a0567ec8843f2
-	// Question: Create a frequency table from sleep data
+	// Question: Create a frequency table from a sleep-hours data set
 	// Widget key: image_1
-	test("box-grid - [xf94a0567ec8843f2] Create a frequency table from sleep data", async () => {
+	test("box-grid - [xf94a0567ec8843f2] Create a frequency table from a sleep-hours data set", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -916,29 +737,33 @@ describe("boxGrid widget tests", () => {
 		    [
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>6</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 6
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>7</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 7
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>8</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 8
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>7</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 7
 		        },
 		        "backgroundColor": null
 		      }
@@ -946,37 +771,41 @@ describe("boxGrid widget tests", () => {
 		    [
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>7</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 7
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>8</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 8
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>7</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 7
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "type": "math",
-		          "mathml": "<mn>6</mn>"
+		          "sign": "+",
+		          "type": "whole",
+		          "value": 6
 		        },
 		        "backgroundColor": null
 		      }
 		    ]
 		  ],
 		  "type": "boxGrid",
-		  "width": 200,
-		  "height": 120,
+		  "width": 400,
+		  "height": 300,
 		  "showGridLines": true
 		} as unknown as WidgetInput
 
@@ -996,9 +825,9 @@ describe("boxGrid widget tests", () => {
 	})
 
 	// Extracted from question: x3e62815647fd99bc
-	// Question: Which diagrams show all possible plant–pot outcomes?
+	// Question: Which diagram shows all possible plant–pot outcomes?
 	// Widget key: image_1
-	test("box-grid - [x3e62815647fd99bc] Which diagrams show all possible plant–pot outcomes? (1)", async () => {
+	test("box-grid - [x3e62815647fd99bc] Which diagram shows all possible plant–pot outcomes? (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1060,21 +889,21 @@ describe("boxGrid widget tests", () => {
 		          "type": "math",
 		          "mathml": "<mtext>Plastic pot, Tulip</mtext>"
 		        },
-		        "backgroundColor": "#9d38bd"
+		        "backgroundColor": "#6495ed"
 		      },
 		      {
 		        "content": {
 		          "type": "math",
 		          "mathml": "<mtext>Metal pot, Tulip</mtext>"
 		        },
-		        "backgroundColor": "#9d38bd"
+		        "backgroundColor": "#FFA500"
 		      },
 		      {
 		        "content": {
 		          "type": "math",
 		          "mathml": "<mtext>Wood pot, Tulip</mtext>"
 		        },
-		        "backgroundColor": "#9d38bd"
+		        "backgroundColor": "#28ae7b"
 		      }
 		    ],
 		    [
@@ -1090,7 +919,7 @@ describe("boxGrid widget tests", () => {
 		          "type": "math",
 		          "mathml": "<mtext>Clay pot, Fern</mtext>"
 		        },
-		        "backgroundColor": "#6495ed"
+		        "backgroundColor": "#9d38bd"
 		      },
 		      {
 		        "content": {
@@ -1104,14 +933,14 @@ describe("boxGrid widget tests", () => {
 		          "type": "math",
 		          "mathml": "<mtext>Metal pot, Fern</mtext>"
 		        },
-		        "backgroundColor": "#6495ed"
+		        "backgroundColor": "#FFA500"
 		      },
 		      {
 		        "content": {
 		          "type": "math",
 		          "mathml": "<mtext>Wood pot, Fern</mtext>"
 		        },
-		        "backgroundColor": "#6495ed"
+		        "backgroundColor": "#28ae7b"
 		      }
 		    ],
 		    [
@@ -1127,14 +956,14 @@ describe("boxGrid widget tests", () => {
 		          "type": "math",
 		          "mathml": "<mtext>Clay pot, Cactus</mtext>"
 		        },
-		        "backgroundColor": "#FFA500"
+		        "backgroundColor": "#9d38bd"
 		      },
 		      {
 		        "content": {
 		          "type": "math",
 		          "mathml": "<mtext>Plastic pot, Cactus</mtext>"
 		        },
-		        "backgroundColor": "#FFA500"
+		        "backgroundColor": "#6495ed"
 		      },
 		      {
 		        "content": {
@@ -1148,7 +977,7 @@ describe("boxGrid widget tests", () => {
 		          "type": "math",
 		          "mathml": "<mtext>Wood pot, Cactus</mtext>"
 		        },
-		        "backgroundColor": "#FFA500"
+		        "backgroundColor": "#28ae7b"
 		      }
 		    ],
 		    [
@@ -1164,21 +993,21 @@ describe("boxGrid widget tests", () => {
 		          "type": "math",
 		          "mathml": "<mtext>Clay pot, Ficus</mtext>"
 		        },
-		        "backgroundColor": "#28ae7b"
+		        "backgroundColor": "#9d38bd"
 		      },
 		      {
 		        "content": {
 		          "type": "math",
 		          "mathml": "<mtext>Plastic pot, Ficus</mtext>"
 		        },
-		        "backgroundColor": "#28ae7b"
+		        "backgroundColor": "#6495ed"
 		      },
 		      {
 		        "content": {
 		          "type": "math",
 		          "mathml": "<mtext>Metal pot, Ficus</mtext>"
 		        },
-		        "backgroundColor": "#28ae7b"
+		        "backgroundColor": "#FFA500"
 		      },
 		      {
 		        "content": {
@@ -1211,9 +1040,9 @@ describe("boxGrid widget tests", () => {
 	})
 
 	// Extracted from question: x3e62815647fd99bc
-	// Question: Which diagrams show all possible plant–pot outcomes?
+	// Question: Which diagram shows all possible plant–pot outcomes?
 	// Widget key: image_2
-	test("box-grid - [x3e62815647fd99bc] Which diagrams show all possible plant–pot outcomes? (2)", async () => {
+	test("box-grid - [x3e62815647fd99bc] Which diagram shows all possible plant–pot outcomes? (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1275,21 +1104,21 @@ describe("boxGrid widget tests", () => {
 		          "type": "math",
 		          "mathml": "<mtext>Clay pot, Fern</mtext>"
 		        },
-		        "backgroundColor": "#6495ed"
+		        "backgroundColor": "#9d38bd"
 		      },
 		      {
 		        "content": {
 		          "type": "math",
 		          "mathml": "<mtext>Clay pot, Cactus</mtext>"
 		        },
-		        "backgroundColor": "#FFA500"
+		        "backgroundColor": "#9d38bd"
 		      },
 		      {
 		        "content": {
 		          "type": "math",
 		          "mathml": "<mtext>Clay pot, Ficus</mtext>"
 		        },
-		        "backgroundColor": "#28ae7b"
+		        "backgroundColor": "#9d38bd"
 		      }
 		    ],
 		    [
@@ -1305,7 +1134,7 @@ describe("boxGrid widget tests", () => {
 		          "type": "math",
 		          "mathml": "<mtext>Plastic pot, Tulip</mtext>"
 		        },
-		        "backgroundColor": "#9d38bd"
+		        "backgroundColor": "#6495ed"
 		      },
 		      {
 		        "content": {
@@ -1319,14 +1148,14 @@ describe("boxGrid widget tests", () => {
 		          "type": "math",
 		          "mathml": "<mtext>Plastic pot, Cactus</mtext>"
 		        },
-		        "backgroundColor": "#FFA500"
+		        "backgroundColor": "#6495ed"
 		      },
 		      {
 		        "content": {
 		          "type": "math",
 		          "mathml": "<mtext>Plastic pot, Ficus</mtext>"
 		        },
-		        "backgroundColor": "#28ae7b"
+		        "backgroundColor": "#6495ed"
 		      }
 		    ],
 		    [
@@ -1342,14 +1171,14 @@ describe("boxGrid widget tests", () => {
 		          "type": "math",
 		          "mathml": "<mtext>Metal pot, Tulip</mtext>"
 		        },
-		        "backgroundColor": "#9d38bd"
+		        "backgroundColor": "#FFA500"
 		      },
 		      {
 		        "content": {
 		          "type": "math",
 		          "mathml": "<mtext>Metal pot, Fern</mtext>"
 		        },
-		        "backgroundColor": "#6495ed"
+		        "backgroundColor": "#FFA500"
 		      },
 		      {
 		        "content": {
@@ -1363,7 +1192,7 @@ describe("boxGrid widget tests", () => {
 		          "type": "math",
 		          "mathml": "<mtext>Metal pot, Ficus</mtext>"
 		        },
-		        "backgroundColor": "#28ae7b"
+		        "backgroundColor": "#FFA500"
 		      }
 		    ],
 		    [
@@ -1379,21 +1208,21 @@ describe("boxGrid widget tests", () => {
 		          "type": "math",
 		          "mathml": "<mtext>Wood pot, Tulip</mtext>"
 		        },
-		        "backgroundColor": "#9d38bd"
+		        "backgroundColor": "#28ae7b"
 		      },
 		      {
 		        "content": {
 		          "type": "math",
 		          "mathml": "<mtext>Wood pot, Fern</mtext>"
 		        },
-		        "backgroundColor": "#6495ed"
+		        "backgroundColor": "#28ae7b"
 		      },
 		      {
 		        "content": {
 		          "type": "math",
 		          "mathml": "<mtext>Wood pot, Cactus</mtext>"
 		        },
-		        "backgroundColor": "#FFA500"
+		        "backgroundColor": "#28ae7b"
 		      },
 		      {
 		        "content": {
@@ -1407,6 +1236,366 @@ describe("boxGrid widget tests", () => {
 		  "type": "boxGrid",
 		  "width": 480,
 		  "height": 370,
+		  "showGridLines": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for boxGrid", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfd212b8f6e8f8ebf
+	// Question: Which diagrams show all possible outcomes for clothing and color?
+	// Widget key: image_1
+	test("box-grid - [xfd212b8f6e8f8ebf] Which diagrams show all possible outcomes for clothing and color? (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "data": [
+		    [
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext></mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Blue</mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Orange</mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Purple</mtext>"
+		        },
+		        "backgroundColor": null
+		      }
+		    ],
+		    [
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Socks</mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Blue Socks</mtext>"
+		        },
+		        "backgroundColor": "#6495ED4D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Orange Socks</mtext>"
+		        },
+		        "backgroundColor": "#FFA5004D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Purple Socks</mtext>"
+		        },
+		        "backgroundColor": "#9D38BD4D"
+		      }
+		    ],
+		    [
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Hat</mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Blue Hat</mtext>"
+		        },
+		        "backgroundColor": "#6495ED4D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Orange Hat</mtext>"
+		        },
+		        "backgroundColor": "#FFA5004D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Purple Hat</mtext>"
+		        },
+		        "backgroundColor": "#9D38BD4D"
+		      }
+		    ],
+		    [
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Pants</mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Blue Pants</mtext>"
+		        },
+		        "backgroundColor": "#6495ED4D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Orange Pants</mtext>"
+		        },
+		        "backgroundColor": "#FFA5004D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Purple Pants</mtext>"
+		        },
+		        "backgroundColor": "#9D38BD4D"
+		      }
+		    ],
+		    [
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Shirt</mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Blue Shirt</mtext>"
+		        },
+		        "backgroundColor": "#6495ED4D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Orange Shirt</mtext>"
+		        },
+		        "backgroundColor": "#FFA5004D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Purple Shirt</mtext>"
+		        },
+		        "backgroundColor": "#9D38BD4D"
+		      }
+		    ]
+		  ],
+		  "type": "boxGrid",
+		  "width": 440,
+		  "height": 350,
+		  "showGridLines": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for boxGrid", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfd212b8f6e8f8ebf
+	// Question: Which diagrams show all possible outcomes for clothing and color?
+	// Widget key: image_2
+	test("box-grid - [xfd212b8f6e8f8ebf] Which diagrams show all possible outcomes for clothing and color? (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "data": [
+		    [
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext></mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Purple</mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Blue</mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Orange</mtext>"
+		        },
+		        "backgroundColor": null
+		      }
+		    ],
+		    [
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Shirt</mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Purple Shirt</mtext>"
+		        },
+		        "backgroundColor": "#9D38BD4D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Blue Shirt</mtext>"
+		        },
+		        "backgroundColor": "#6495ED4D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Orange Shirt</mtext>"
+		        },
+		        "backgroundColor": "#FFA5004D"
+		      }
+		    ],
+		    [
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Pants</mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Purple Pants</mtext>"
+		        },
+		        "backgroundColor": "#9D38BD4D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Blue Pants</mtext>"
+		        },
+		        "backgroundColor": "#6495ED4D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Orange Pants</mtext>"
+		        },
+		        "backgroundColor": "#FFA5004D"
+		      }
+		    ],
+		    [
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Socks</mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Purple Socks</mtext>"
+		        },
+		        "backgroundColor": "#9D38BD4D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Blue Socks</mtext>"
+		        },
+		        "backgroundColor": "#6495ED4D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Orange Socks</mtext>"
+		        },
+		        "backgroundColor": "#FFA5004D"
+		      }
+		    ],
+		    [
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Hat</mtext>"
+		        },
+		        "backgroundColor": null
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Purple Hat</mtext>"
+		        },
+		        "backgroundColor": "#9D38BD4D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Blue Hat</mtext>"
+		        },
+		        "backgroundColor": "#6495ED4D"
+		      },
+		      {
+		        "content": {
+		          "type": "math",
+		          "mathml": "<mtext>Orange Hat</mtext>"
+		        },
+		        "backgroundColor": "#FFA5004D"
+		      }
+		    ]
+		  ],
+		  "type": "boxGrid",
+		  "width": 440,
+		  "height": 350,
 		  "showGridLines": true
 		} as unknown as WidgetInput
 
@@ -1426,9 +1615,9 @@ describe("boxGrid widget tests", () => {
 	})
 
 	// Extracted from question: x6a594efc6ea1795f
-	// Question: Mean absolute deviation (MAD) of a small data set
+	// Question: Mean absolute deviation (corn dogs)
 	// Widget key: image_1
-	test("box-grid - [x6a594efc6ea1795f] Mean absolute deviation (MAD) of a small data set", async () => {
+	test("box-grid - [x6a594efc6ea1795f] Mean absolute deviation (corn dogs)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1436,37 +1625,29 @@ describe("boxGrid widget tests", () => {
 		    [
 		      {
 		        "content": {
-		          "sign": "+",
-		          "type": "mixed",
-		          "whole": 1,
-		          "numerator": 1,
-		          "denominator": 2
+		          "type": "math",
+		          "mathml": "<mrow><mn>1</mn><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow>"
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 0
+		          "type": "math",
+		          "mathml": "<mn>0</mn>"
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "sign": "+",
-		          "type": "whole",
-		          "value": 4
+		          "type": "math",
+		          "mathml": "<mn>4</mn>"
 		        },
 		        "backgroundColor": null
 		      },
 		      {
 		        "content": {
-		          "sign": "+",
-		          "type": "mixed",
-		          "whole": 2,
-		          "numerator": 1,
-		          "denominator": 2
+		          "type": "math",
+		          "mathml": "<mrow><mn>2</mn><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow>"
 		        },
 		        "backgroundColor": null
 		      }
@@ -1474,7 +1655,7 @@ describe("boxGrid widget tests", () => {
 		  ],
 		  "type": "boxGrid",
 		  "width": 300,
-		  "height": 120,
+		  "height": 300,
 		  "showGridLines": true
 		} as unknown as WidgetInput
 
@@ -1494,9 +1675,9 @@ describe("boxGrid widget tests", () => {
 	})
 
 	// Extracted from question: x1f878f239642c0a2
-	// Question: Mean absolute deviation of family relay distances
+	// Question: Mean absolute deviation for relay distances
 	// Widget key: image_1
-	test("box-grid - [x1f878f239642c0a2] Mean absolute deviation of family relay distances", async () => {
+	test("box-grid - [x1f878f239642c0a2] Mean absolute deviation for relay distances", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1549,8 +1730,8 @@ describe("boxGrid widget tests", () => {
 		    ]
 		  ],
 		  "type": "boxGrid",
-		  "width": 200,
-		  "height": 150,
+		  "width": 400,
+		  "height": 300,
 		  "showGridLines": true
 		} as unknown as WidgetInput
 
@@ -1611,8 +1792,8 @@ describe("boxGrid widget tests", () => {
 		    ]
 		  ],
 		  "type": "boxGrid",
-		  "width": 200,
-		  "height": 200,
+		  "width": 320,
+		  "height": 320,
 		  "showGridLines": true
 		} as unknown as WidgetInput
 

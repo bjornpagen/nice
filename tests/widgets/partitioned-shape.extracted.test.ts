@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.971Z
+// Generated on: 2025-09-18T05:17:02.169Z
 // Widget Type: partitionedShape
 // Source: Real questions from database
 //
@@ -26,15 +26,15 @@ import * as logger from "@superbuilders/slog"
 
 describe("partitionedShape widget tests", () => {
 	// Extracted from question: x386c89b730d7d1c0
-	// Question: Find a scale factor from areas of similar rectangles
+	// Question: Find the scale factor from rectangle areas
 	// Widget key: image_1
-	test("partitioned-shape - [x386c89b730d7d1c0] Find a scale factor from areas of similar rectangles", async () => {
+	test("partitioned-shape - [x386c89b730d7d1c0] Find the scale factor from rectangle areas", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "grid": {
-		    "rows": 11,
-		    "columns": 11,
+		    "rows": 12,
+		    "columns": 12,
 		    "opacity": 0.1
 		  },
 		  "mode": "geometry",
@@ -47,19 +47,19 @@ describe("partitionedShape widget tests", () => {
 		      "vertices": [
 		        {
 		          "col": 1,
-		          "row": 2
+		          "row": 1
 		        },
 		        {
 		          "col": 10,
-		          "row": 2
+		          "row": 1
 		        },
 		        {
 		          "col": 10,
-		          "row": 10
+		          "row": 9
 		        },
 		        {
 		          "col": 1,
-		          "row": 10
+		          "row": 9
 		        }
 		      ],
 		      "fillColor": null,
@@ -84,63 +84,16 @@ describe("partitionedShape widget tests", () => {
 	})
 
 	// Extracted from question: x8643061b60102d8d
-	// Question: Percent represented by the shaded area
+	// Question: Percent represented by shaded area
 	// Widget key: image_1
-	test("partitioned-shape - [x8643061b60102d8d] Percent represented by the shaded area (1)", async () => {
+	test("partitioned-shape - [x8643061b60102d8d] Percent represented by shaded area (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "mode": "partition",
 		  "type": "partitionedShape",
-		  "width": 154,
-		  "height": 62,
-		  "layout": "horizontal",
-		  "shapes": [
-		    {
-		      "rows": 1,
-		      "type": "rectangle",
-		      "columns": 5,
-		      "shadeColor": "#01a995",
-		      "totalParts": 5,
-		      "shadedCells": [
-		        0,
-		        1,
-		        2,
-		        3
-		      ],
-		      "hatchedCells": [],
-		      "shadeOpacity": 1
-		    }
-		  ],
-		  "overlays": []
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for partitionedShape", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8643061b60102d8d
-	// Question: Percent represented by the shaded area
-	// Widget key: image_2
-	test("partitioned-shape - [x8643061b60102d8d] Percent represented by the shaded area (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "mode": "partition",
-		  "type": "partitionedShape",
-		  "width": 154,
-		  "height": 62,
+		  "width": 400,
+		  "height": 300,
 		  "layout": "horizontal",
 		  "shapes": [
 		    {
@@ -178,37 +131,30 @@ describe("partitionedShape widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x42853045c8f0066e
-	// Question: Percent represented by the shaded area
-	// Widget key: image_1
-	test("partitioned-shape - [x42853045c8f0066e] Percent represented by the shaded area", async () => {
+	// Extracted from question: x8643061b60102d8d
+	// Question: Percent represented by shaded area
+	// Widget key: image_2
+	test("partitioned-shape - [x8643061b60102d8d] Percent represented by shaded area (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "mode": "partition",
 		  "type": "partitionedShape",
-		  "width": 300,
-		  "height": 240,
+		  "width": 400,
+		  "height": 300,
 		  "layout": "horizontal",
 		  "shapes": [
 		    {
-		      "rows": 5,
+		      "rows": 1,
 		      "type": "rectangle",
 		      "columns": 5,
-		      "shadeColor": "#4472C4",
-		      "totalParts": 25,
+		      "shadeColor": "#01a995",
+		      "totalParts": 5,
 		      "shadedCells": [
 		        0,
 		        1,
 		        2,
-		        3,
-		        4,
-		        5,
-		        6,
-		        7,
-		        8,
-		        9,
-		        10
+		        3
 		      ],
 		      "hatchedCells": [],
 		      "shadeOpacity": 1
@@ -232,24 +178,78 @@ describe("partitionedShape widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3a6679d1f4e59070
+	// Extracted from question: x42853045c8f0066e
 	// Question: Percent represented by a shaded area
 	// Widget key: image_1
-	test("partitioned-shape - [x3a6679d1f4e59070] Percent represented by a shaded area", async () => {
+	test("partitioned-shape - [x42853045c8f0066e] Percent represented by a shaded area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "mode": "partition",
 		  "type": "partitionedShape",
-		  "width": 154,
-		  "height": 122,
+		  "width": 380,
+		  "height": 380,
+		  "layout": "horizontal",
+		  "shapes": [
+		    {
+		      "rows": 5,
+		      "type": "rectangle",
+		      "columns": 5,
+		      "shadeColor": "#4472C4",
+		      "totalParts": 25,
+		      "shadedCells": [
+		        0,
+		        1,
+		        2,
+		        3,
+		        4,
+		        5,
+		        6,
+		        7,
+		        8,
+		        9,
+		        10
+		      ],
+		      "hatchedCells": [],
+		      "shadeOpacity": 0.85
+		    }
+		  ],
+		  "overlays": []
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for partitionedShape", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3a6679d1f4e59070
+	// Question: Percent represented by the shaded area
+	// Widget key: image_1
+	test("partitioned-shape - [x3a6679d1f4e59070] Percent represented by the shaded area", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "mode": "partition",
+		  "type": "partitionedShape",
+		  "width": 400,
+		  "height": 320,
 		  "layout": "horizontal",
 		  "shapes": [
 		    {
 		      "rows": 4,
 		      "type": "rectangle",
 		      "columns": 5,
-		      "shadeColor": "#ff9c39",
+		      "shadeColor": "#FF9C39",
 		      "totalParts": 20,
 		      "shadedCells": [
 		        6,
@@ -282,16 +282,16 @@ describe("partitionedShape widget tests", () => {
 	})
 
 	// Extracted from question: x151ce288f9b55bba
-	// Question: Percent represented by the shaded area
+	// Question: Percent represented by a shaded rectangle
 	// Widget key: image_1
-	test("partitioned-shape - [x151ce288f9b55bba] Percent represented by the shaded area", async () => {
+	test("partitioned-shape - [x151ce288f9b55bba] Percent represented by a shaded rectangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "mode": "partition",
 		  "type": "partitionedShape",
 		  "width": 400,
-		  "height": 120,
+		  "height": 300,
 		  "layout": "horizontal",
 		  "shapes": [
 		    {
@@ -305,7 +305,7 @@ describe("partitionedShape widget tests", () => {
 		        1
 		      ],
 		      "hatchedCells": [],
-		      "shadeOpacity": 1
+		      "shadeOpacity": 0.85
 		    }
 		  ],
 		  "overlays": []
@@ -327,16 +327,16 @@ describe("partitionedShape widget tests", () => {
 	})
 
 	// Extracted from question: xd35c4a9efd172f11
-	// Question: Percent represented by the shaded area
+	// Question: Percent represented by shaded area
 	// Widget key: image_1
-	test("partitioned-shape - [xd35c4a9efd172f11] Percent represented by the shaded area", async () => {
+	test("partitioned-shape - [xd35c4a9efd172f11] Percent represented by shaded area", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "mode": "partition",
 		  "type": "partitionedShape",
-		  "width": 200,
-		  "height": 200,
+		  "width": 300,
+		  "height": 300,
 		  "layout": "horizontal",
 		  "shapes": [
 		    {
@@ -376,30 +376,80 @@ describe("partitionedShape widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1bb89ad828a07c58
+	// Extracted from question: x3575372603bc68a0
 	// Question: Percent represented by shaded area
 	// Widget key: image_1
-	test("partitioned-shape - [x1bb89ad828a07c58] Percent represented by shaded area (1)", async () => {
+	test("partitioned-shape - [x3575372603bc68a0] Percent represented by shaded area (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "mode": "partition",
 		  "type": "partitionedShape",
-		  "width": 100,
-		  "height": 100,
+		  "width": 360,
+		  "height": 360,
 		  "layout": "horizontal",
 		  "shapes": [
 		    {
-		      "rows": 2,
+		      "rows": 1,
 		      "type": "rectangle",
-		      "columns": 2,
-		      "shadeColor": "#4472C4",
-		      "totalParts": 4,
+		      "columns": 10,
+		      "shadeColor": "#11accd",
+		      "totalParts": 10,
 		      "shadedCells": [
 		        0,
 		        1,
 		        2,
-		        3
+		        3,
+		        4,
+		        5,
+		        6,
+		        7,
+		        8,
+		        9
+		      ],
+		      "hatchedCells": [],
+		      "shadeOpacity": 1
+		    }
+		  ],
+		  "overlays": []
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for partitionedShape", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3575372603bc68a0
+	// Question: Percent represented by shaded area
+	// Widget key: image_2
+	test("partitioned-shape - [x3575372603bc68a0] Percent represented by shaded area (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "mode": "partition",
+		  "type": "partitionedShape",
+		  "width": 360,
+		  "height": 360,
+		  "layout": "horizontal",
+		  "shapes": [
+		    {
+		      "rows": 1,
+		      "type": "rectangle",
+		      "columns": 10,
+		      "shadeColor": "#11accd",
+		      "totalParts": 10,
+		      "shadedCells": [
+		        0
 		      ],
 		      "hatchedCells": [],
 		      "shadeOpacity": 1
@@ -424,16 +474,63 @@ describe("partitionedShape widget tests", () => {
 	})
 
 	// Extracted from question: x1bb89ad828a07c58
-	// Question: Percent represented by shaded area
-	// Widget key: image_2
-	test("partitioned-shape - [x1bb89ad828a07c58] Percent represented by shaded area (2)", async () => {
+	// Question: Find the percent represented by shaded squares
+	// Widget key: image_1
+	test("partitioned-shape - [x1bb89ad828a07c58] Find the percent represented by shaded squares (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "mode": "partition",
 		  "type": "partitionedShape",
-		  "width": 100,
-		  "height": 100,
+		  "width": 360,
+		  "height": 360,
+		  "layout": "horizontal",
+		  "shapes": [
+		    {
+		      "rows": 2,
+		      "type": "rectangle",
+		      "columns": 2,
+		      "shadeColor": "#4472C4",
+		      "totalParts": 4,
+		      "shadedCells": [
+		        0,
+		        1,
+		        2,
+		        3
+		      ],
+		      "hatchedCells": [],
+		      "shadeOpacity": 0.85
+		    }
+		  ],
+		  "overlays": []
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for partitionedShape", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1bb89ad828a07c58
+	// Question: Find the percent represented by shaded squares
+	// Widget key: image_2
+	test("partitioned-shape - [x1bb89ad828a07c58] Find the percent represented by shaded squares (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "mode": "partition",
+		  "type": "partitionedShape",
+		  "width": 360,
+		  "height": 360,
 		  "layout": "horizontal",
 		  "shapes": [
 		    {
@@ -448,7 +545,7 @@ describe("partitionedShape widget tests", () => {
 		        2
 		      ],
 		      "hatchedCells": [],
-		      "shadeOpacity": 1
+		      "shadeOpacity": 0.85
 		    }
 		  ],
 		  "overlays": []
@@ -478,18 +575,18 @@ describe("partitionedShape widget tests", () => {
 		const input = {
 		  "mode": "partition",
 		  "type": "partitionedShape",
-		  "width": 100,
-		  "height": 100,
+		  "width": 360,
+		  "height": 360,
 		  "layout": "horizontal",
 		  "shapes": [
 		    {
 		      "rows": 1,
 		      "type": "rectangle",
 		      "columns": 2,
-		      "shadeColor": "#7854ab",
+		      "shadeColor": "#7854AB",
 		      "totalParts": 2,
 		      "shadedCells": [
-		        0
+		        1
 		      ],
 		      "hatchedCells": [],
 		      "shadeOpacity": 1
@@ -522,15 +619,15 @@ describe("partitionedShape widget tests", () => {
 		const input = {
 		  "mode": "partition",
 		  "type": "partitionedShape",
-		  "width": 100,
-		  "height": 100,
+		  "width": 360,
+		  "height": 360,
 		  "layout": "horizontal",
 		  "shapes": [
 		    {
 		      "rows": 1,
 		      "type": "rectangle",
 		      "columns": 2,
-		      "shadeColor": "#7854ab",
+		      "shadeColor": "#7854AB",
 		      "totalParts": 2,
 		      "shadedCells": [
 		        0,
@@ -559,16 +656,16 @@ describe("partitionedShape widget tests", () => {
 	})
 
 	// Extracted from question: xbc6ff256385f194b
-	// Question: Percent represented by shaded area
+	// Question: Percent represented by the shaded area
 	// Widget key: image_1
-	test("partitioned-shape - [xbc6ff256385f194b] Percent represented by shaded area (1)", async () => {
+	test("partitioned-shape - [xbc6ff256385f194b] Percent represented by the shaded area (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "mode": "partition",
 		  "type": "partitionedShape",
-		  "width": 154,
-		  "height": 152,
+		  "width": 320,
+		  "height": 320,
 		  "layout": "horizontal",
 		  "shapes": [
 		    {
@@ -605,7 +702,7 @@ describe("partitionedShape widget tests", () => {
 		        24
 		      ],
 		      "hatchedCells": [],
-		      "shadeOpacity": 1
+		      "shadeOpacity": 0.9
 		    }
 		  ],
 		  "overlays": []
@@ -627,16 +724,16 @@ describe("partitionedShape widget tests", () => {
 	})
 
 	// Extracted from question: xbc6ff256385f194b
-	// Question: Percent represented by shaded area
+	// Question: Percent represented by the shaded area
 	// Widget key: image_2
-	test("partitioned-shape - [xbc6ff256385f194b] Percent represented by shaded area (2)", async () => {
+	test("partitioned-shape - [xbc6ff256385f194b] Percent represented by the shaded area (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "mode": "partition",
 		  "type": "partitionedShape",
-		  "width": 154,
-		  "height": 152,
+		  "width": 320,
+		  "height": 320,
 		  "layout": "horizontal",
 		  "shapes": [
 		    {
@@ -661,7 +758,7 @@ describe("partitionedShape widget tests", () => {
 		        12
 		      ],
 		      "hatchedCells": [],
-		      "shadeOpacity": 1
+		      "shadeOpacity": 0.9
 		    }
 		  ],
 		  "overlays": []
@@ -682,10 +779,154 @@ describe("partitionedShape widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xf16c351b547ece8d
-	// Question: Select the rectangle that matches the scale drawing
+	// Extracted from question: xbd438433898c564b
+	// Question: Select a 12 cm by 12 cm square on a grid
 	// Widget key: grid_image
-	test("partitioned-shape - [xf16c351b547ece8d] Select the rectangle that matches the scale drawing", async () => {
+	test("partitioned-shape - [xbd438433898c564b] Select a 12 cm by 12 cm square on a grid", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "grid": {
+		    "rows": 20,
+		    "columns": 20,
+		    "opacity": 0.4
+		  },
+		  "mode": "geometry",
+		  "type": "partitionedShape",
+		  "lines": [
+		    {
+		      "to": {
+		        "col": 15,
+		        "row": 2
+		      },
+		      "from": {
+		        "col": 15,
+		        "row": 1
+		      },
+		      "color": "#000000",
+		      "style": "solid"
+		    },
+		    {
+		      "to": {
+		        "col": 18,
+		        "row": 2
+		      },
+		      "from": {
+		        "col": 18,
+		        "row": 1
+		      },
+		      "color": "#000000",
+		      "style": "solid"
+		    },
+		    {
+		      "to": {
+		        "col": 18,
+		        "row": 1
+		      },
+		      "from": {
+		        "col": 15,
+		        "row": 1
+		      },
+		      "color": "#000000",
+		      "style": "solid"
+		    }
+		  ],
+		  "width": 400,
+		  "height": 400,
+		  "figures": []
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for partitionedShape", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf16c351b547ece8d
+	// Question: Recreate a scale drawing of a basketball court
+	// Widget key: grid_image
+	test("partitioned-shape - [xf16c351b547ece8d] Recreate a scale drawing of a basketball court", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "grid": {
+		    "rows": 20,
+		    "columns": 20,
+		    "opacity": 0.35
+		  },
+		  "mode": "geometry",
+		  "type": "partitionedShape",
+		  "lines": [
+		    {
+		      "to": {
+		        "col": 19,
+		        "row": 2
+		      },
+		      "from": {
+		        "col": 16,
+		        "row": 2
+		      },
+		      "color": "#000000",
+		      "style": "solid"
+		    },
+		    {
+		      "to": {
+		        "col": 16,
+		        "row": 3
+		      },
+		      "from": {
+		        "col": 16,
+		        "row": 1
+		      },
+		      "color": "#000000",
+		      "style": "solid"
+		    },
+		    {
+		      "to": {
+		        "col": 19,
+		        "row": 3
+		      },
+		      "from": {
+		        "col": 19,
+		        "row": 1
+		      },
+		      "color": "#000000",
+		      "style": "solid"
+		    }
+		  ],
+		  "width": 400,
+		  "height": 400,
+		  "figures": []
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for partitionedShape", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x02cf926ad947cfee
+	// Question: Draw a square face of a cube on a scaled grid
+	// Widget key: grid_image
+	test("partitioned-shape - [x02cf926ad947cfee] Draw a square face of a cube on a scaled grid (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -703,7 +944,7 @@ describe("partitionedShape widget tests", () => {
 		        "row": 1
 		      },
 		      "from": {
-		        "col": 16,
+		        "col": 15,
 		        "row": 1
 		      },
 		      "color": "#000000",
@@ -711,12 +952,12 @@ describe("partitionedShape widget tests", () => {
 		    },
 		    {
 		      "to": {
-		        "col": 16,
+		        "col": 15,
 		        "row": 2
 		      },
 		      "from": {
-		        "col": 16,
-		        "row": 1
+		        "col": 15,
+		        "row": 0
 		      },
 		      "color": "#000000",
 		      "style": "solid"
@@ -728,7 +969,7 @@ describe("partitionedShape widget tests", () => {
 		      },
 		      "from": {
 		        "col": 19,
-		        "row": 1
+		        "row": 0
 		      },
 		      "color": "#000000",
 		      "style": "solid"
@@ -755,16 +996,190 @@ describe("partitionedShape widget tests", () => {
 	})
 
 	// Extracted from question: x02cf926ad947cfee
-	// Question: Square face of a crystal on a grid
+	// Question: Draw a square face of a cube on a scaled grid
+	// Widget key: square_face_choice_a
+	test("partitioned-shape - [x02cf926ad947cfee] Draw a square face of a cube on a scaled grid (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "grid": {
+		    "rows": 20,
+		    "columns": 20,
+		    "opacity": 0.4
+		  },
+		  "mode": "geometry",
+		  "type": "partitionedShape",
+		  "lines": [],
+		  "width": 400,
+		  "height": 400,
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "col": 6,
+		          "row": 6
+		        },
+		        {
+		          "col": 12,
+		          "row": 6
+		        },
+		        {
+		          "col": 12,
+		          "row": 12
+		        },
+		        {
+		          "col": 6,
+		          "row": 12
+		        }
+		      ],
+		      "fillColor": "#4472C44D",
+		      "strokeColor": "#000000"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for partitionedShape", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x02cf926ad947cfee
+	// Question: Draw a square face of a cube on a scaled grid
+	// Widget key: square_face_choice_b
+	test("partitioned-shape - [x02cf926ad947cfee] Draw a square face of a cube on a scaled grid (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "grid": {
+		    "rows": 20,
+		    "columns": 20,
+		    "opacity": 0.4
+		  },
+		  "mode": "geometry",
+		  "type": "partitionedShape",
+		  "lines": [],
+		  "width": 400,
+		  "height": 400,
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "col": 6,
+		          "row": 6
+		        },
+		        {
+		          "col": 14,
+		          "row": 6
+		        },
+		        {
+		          "col": 14,
+		          "row": 14
+		        },
+		        {
+		          "col": 6,
+		          "row": 14
+		        }
+		      ],
+		      "fillColor": "#4472C44D",
+		      "strokeColor": "#000000"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for partitionedShape", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x02cf926ad947cfee
+	// Question: Draw a square face of a cube on a scaled grid
+	// Widget key: square_face_choice_c
+	test("partitioned-shape - [x02cf926ad947cfee] Draw a square face of a cube on a scaled grid (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "grid": {
+		    "rows": 20,
+		    "columns": 20,
+		    "opacity": 0.4
+		  },
+		  "mode": "geometry",
+		  "type": "partitionedShape",
+		  "lines": [],
+		  "width": 400,
+		  "height": 400,
+		  "figures": [
+		    {
+		      "vertices": [
+		        {
+		          "col": 6,
+		          "row": 6
+		        },
+		        {
+		          "col": 16,
+		          "row": 6
+		        },
+		        {
+		          "col": 16,
+		          "row": 16
+		        },
+		        {
+		          "col": 6,
+		          "row": 16
+		        }
+		      ],
+		      "fillColor": "#4472C44D",
+		      "strokeColor": "#000000"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for partitionedShape", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x614adc65676dfce8
+	// Question: Select a rectangle to model a 4 m by 6 m hut
 	// Widget key: grid_image
-	test("partitioned-shape - [x02cf926ad947cfee] Square face of a crystal on a grid (1)", async () => {
+	test("partitioned-shape - [x614adc65676dfce8] Select a rectangle to model a 4 m by 6 m hut", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "grid": {
 		    "rows": 20,
 		    "columns": 20,
-		    "opacity": 0.35
+		    "opacity": 0.3
 		  },
 		  "mode": "geometry",
 		  "type": "partitionedShape",
@@ -775,7 +1190,7 @@ describe("partitionedShape widget tests", () => {
 		        "row": 1
 		      },
 		      "from": {
-		        "col": 15,
+		        "col": 17,
 		        "row": 1
 		      },
 		      "color": "#000000",
@@ -783,12 +1198,12 @@ describe("partitionedShape widget tests", () => {
 		    },
 		    {
 		      "to": {
-		        "col": 15,
+		        "col": 17,
 		        "row": 2
 		      },
 		      "from": {
-		        "col": 15,
-		        "row": 0
+		        "col": 17,
+		        "row": 1
 		      },
 		      "color": "#000000",
 		      "style": "solid"
@@ -800,7 +1215,7 @@ describe("partitionedShape widget tests", () => {
 		      },
 		      "from": {
 		        "col": 19,
-		        "row": 0
+		        "row": 1
 		      },
 		      "color": "#000000",
 		      "style": "solid"
@@ -809,291 +1224,6 @@ describe("partitionedShape widget tests", () => {
 		  "width": 400,
 		  "height": 400,
 		  "figures": []
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for partitionedShape", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x02cf926ad947cfee
-	// Question: Square face of a crystal on a grid
-	// Widget key: square_choice_a
-	test("partitioned-shape - [x02cf926ad947cfee] Square face of a crystal on a grid (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "grid": {
-		    "rows": 20,
-		    "columns": 20,
-		    "opacity": 0.35
-		  },
-		  "mode": "geometry",
-		  "type": "partitionedShape",
-		  "lines": [
-		    {
-		      "to": {
-		        "col": 19,
-		        "row": 1
-		      },
-		      "from": {
-		        "col": 15,
-		        "row": 1
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    },
-		    {
-		      "to": {
-		        "col": 15,
-		        "row": 2
-		      },
-		      "from": {
-		        "col": 15,
-		        "row": 0
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    },
-		    {
-		      "to": {
-		        "col": 19,
-		        "row": 2
-		      },
-		      "from": {
-		        "col": 19,
-		        "row": 0
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    }
-		  ],
-		  "width": 400,
-		  "height": 400,
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "col": 4,
-		          "row": 4
-		        },
-		        {
-		          "col": 12,
-		          "row": 4
-		        },
-		        {
-		          "col": 12,
-		          "row": 12
-		        },
-		        {
-		          "col": 4,
-		          "row": 12
-		        }
-		      ],
-		      "fillColor": "#FFC8004D",
-		      "strokeColor": "#000000"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for partitionedShape", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x02cf926ad947cfee
-	// Question: Square face of a crystal on a grid
-	// Widget key: square_choice_b
-	test("partitioned-shape - [x02cf926ad947cfee] Square face of a crystal on a grid (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "grid": {
-		    "rows": 20,
-		    "columns": 20,
-		    "opacity": 0.35
-		  },
-		  "mode": "geometry",
-		  "type": "partitionedShape",
-		  "lines": [
-		    {
-		      "to": {
-		        "col": 19,
-		        "row": 1
-		      },
-		      "from": {
-		        "col": 15,
-		        "row": 1
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    },
-		    {
-		      "to": {
-		        "col": 15,
-		        "row": 2
-		      },
-		      "from": {
-		        "col": 15,
-		        "row": 0
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    },
-		    {
-		      "to": {
-		        "col": 19,
-		        "row": 2
-		      },
-		      "from": {
-		        "col": 19,
-		        "row": 0
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    }
-		  ],
-		  "width": 400,
-		  "height": 400,
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "col": 4,
-		          "row": 4
-		        },
-		        {
-		          "col": 10,
-		          "row": 4
-		        },
-		        {
-		          "col": 10,
-		          "row": 10
-		        },
-		        {
-		          "col": 4,
-		          "row": 10
-		        }
-		      ],
-		      "fillColor": "#FFC8004D",
-		      "strokeColor": "#000000"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for partitionedShape", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x02cf926ad947cfee
-	// Question: Square face of a crystal on a grid
-	// Widget key: square_choice_c
-	test("partitioned-shape - [x02cf926ad947cfee] Square face of a crystal on a grid (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "grid": {
-		    "rows": 20,
-		    "columns": 20,
-		    "opacity": 0.35
-		  },
-		  "mode": "geometry",
-		  "type": "partitionedShape",
-		  "lines": [
-		    {
-		      "to": {
-		        "col": 19,
-		        "row": 1
-		      },
-		      "from": {
-		        "col": 15,
-		        "row": 1
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    },
-		    {
-		      "to": {
-		        "col": 15,
-		        "row": 2
-		      },
-		      "from": {
-		        "col": 15,
-		        "row": 0
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    },
-		    {
-		      "to": {
-		        "col": 19,
-		        "row": 2
-		      },
-		      "from": {
-		        "col": 19,
-		        "row": 0
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    }
-		  ],
-		  "width": 400,
-		  "height": 400,
-		  "figures": [
-		    {
-		      "vertices": [
-		        {
-		          "col": 4,
-		          "row": 4
-		        },
-		        {
-		          "col": 14,
-		          "row": 4
-		        },
-		        {
-		          "col": 14,
-		          "row": 14
-		        },
-		        {
-		          "col": 4,
-		          "row": 14
-		        }
-		      ],
-		      "fillColor": "#FFC8004D",
-		      "strokeColor": "#000000"
-		    }
-		  ]
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1112,164 +1242,104 @@ describe("partitionedShape widget tests", () => {
 	})
 
 	// Extracted from question: x58729b419e278355
-	// Question: Recreate Colorado on a grid
+	// Question: Select a rectangle to represent Colorado on the grid
 	// Widget key: grid_image
-	test("partitioned-shape - [x58729b419e278355] Recreate Colorado on a grid", async () => {
+	test("partitioned-shape - [x58729b419e278355] Select a rectangle to represent Colorado on the grid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "grid": {
 		    "rows": 20,
 		    "columns": 20,
-		    "opacity": 0.35
+		    "opacity": 0.4
+		  },
+		  "mode": "geometry",
+		  "type": "partitionedShape",
+		  "lines": [
+		    {
+		      "to": {
+		        "col": 18,
+		        "row": 1
+		      },
+		      "from": {
+		        "col": 16,
+		        "row": 1
+		      },
+		      "color": "#000000",
+		      "style": "solid"
+		    },
+		    {
+		      "to": {
+		        "col": 18,
+		        "row": 3
+		      },
+		      "from": {
+		        "col": 16,
+		        "row": 3
+		      },
+		      "color": "#000000",
+		      "style": "solid"
+		    },
+		    {
+		      "to": {
+		        "col": 16,
+		        "row": 3
+		      },
+		      "from": {
+		        "col": 16,
+		        "row": 1
+		      },
+		      "color": "#000000",
+		      "style": "solid"
+		    },
+		    {
+		      "to": {
+		        "col": 18,
+		        "row": 3
+		      },
+		      "from": {
+		        "col": 18,
+		        "row": 1
+		      },
+		      "color": "#000000",
+		      "style": "solid"
+		    }
+		  ],
+		  "width": 400,
+		  "height": 400,
+		  "figures": []
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for partitionedShape", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x06acb2c026c2704a
+	// Question: Select the outline of Natalie’s house on a grid
+	// Widget key: grid_image
+	test("partitioned-shape - [x06acb2c026c2704a] Select the outline of Natalie’s house on a grid", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "grid": {
+		    "rows": 20,
+		    "columns": 20,
+		    "opacity": 0.3
 		  },
 		  "mode": "geometry",
 		  "type": "partitionedShape",
 		  "lines": [],
-		  "width": 400,
-		  "height": 400,
-		  "figures": []
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for partitionedShape", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb33fd58db9a5f93e
-	// Question: Redraw the manor's base on a scaled grid
-	// Widget key: grid_image
-	test("partitioned-shape - [xb33fd58db9a5f93e] Redraw the manor's base on a scaled grid", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "grid": {
-		    "rows": 20,
-		    "columns": 20,
-		    "opacity": 0.35
-		  },
-		  "mode": "geometry",
-		  "type": "partitionedShape",
-		  "lines": [
-		    {
-		      "to": {
-		        "col": 19,
-		        "row": 1
-		      },
-		      "from": {
-		        "col": 16,
-		        "row": 1
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    },
-		    {
-		      "to": {
-		        "col": 16,
-		        "row": 2
-		      },
-		      "from": {
-		        "col": 16,
-		        "row": 0
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    },
-		    {
-		      "to": {
-		        "col": 19,
-		        "row": 2
-		      },
-		      "from": {
-		        "col": 19,
-		        "row": 0
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    }
-		  ],
-		  "width": 400,
-		  "height": 400,
-		  "figures": []
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for partitionedShape", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5703a1475fd4e510
-	// Question: Select the rectangle representing the hut on a map
-	// Widget key: treasure_map_image
-	test("partitioned-shape - [x5703a1475fd4e510] Select the rectangle representing the hut on a map", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "grid": {
-		    "rows": 20,
-		    "columns": 20,
-		    "opacity": 0.35
-		  },
-		  "mode": "geometry",
-		  "type": "partitionedShape",
-		  "lines": [
-		    {
-		      "to": {
-		        "col": 17,
-		        "row": 3
-		      },
-		      "from": {
-		        "col": 17,
-		        "row": 1
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    },
-		    {
-		      "to": {
-		        "col": 19,
-		        "row": 3
-		      },
-		      "from": {
-		        "col": 19,
-		        "row": 1
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    },
-		    {
-		      "to": {
-		        "col": 19,
-		        "row": 1
-		      },
-		      "from": {
-		        "col": 17,
-		        "row": 1
-		      },
-		      "color": "#000000",
-		      "style": "solid"
-		    }
-		  ],
 		  "width": 400,
 		  "height": 400,
 		  "figures": []
@@ -1291,9 +1361,9 @@ describe("partitionedShape widget tests", () => {
 	})
 
 	// Extracted from question: x713bce99272c6326
-	// Question: Draw a microchip to scale on a grid
+	// Question: Draw a square microchip to scale on a grid
 	// Widget key: grid_image
-	test("partitioned-shape - [x713bce99272c6326] Draw a microchip to scale on a grid", async () => {
+	test("partitioned-shape - [x713bce99272c6326] Draw a square microchip to scale on a grid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1301,41 +1371,6 @@ describe("partitionedShape widget tests", () => {
 		    "rows": 20,
 		    "columns": 20,
 		    "opacity": 0.35
-		  },
-		  "mode": "geometry",
-		  "type": "partitionedShape",
-		  "lines": [],
-		  "width": 400,
-		  "height": 400,
-		  "figures": []
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for partitionedShape", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa20e5503075f43b9
-	// Question: Select the rectangle with given dimensions on a grid
-	// Widget key: grid_image
-	test("partitioned-shape - [xa20e5503075f43b9] Select the rectangle with given dimensions on a grid", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "grid": {
-		    "rows": 20,
-		    "columns": 20,
-		    "opacity": 0.4
 		  },
 		  "mode": "geometry",
 		  "type": "partitionedShape",

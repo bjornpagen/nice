@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.973Z
+// Generated on: 2025-09-18T05:17:02.143Z
 // Widget Type: pythagoreanProofDiagram
 // Source: Real questions from database
 //
@@ -25,89 +25,27 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("pythagoreanProofDiagram widget tests", () => {
-	// Extracted from question: x5771b36c95aef1a7
-	// Question: Area of the square adjacent to the third side
+	// Extracted from question: x0639eaa9ca9a1b34
+	// Question: Find x in a right triangle
 	// Widget key: image_1
-	test("pythagorean-proof-diagram - [x5771b36c95aef1a7] Area of the square adjacent to the third side", async () => {
+	test("pythagorean-proof-diagram - [x0639eaa9ca9a1b34] Find x in a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pythagoreanProofDiagram",
 		  "sideA": {
-		    "label": "a",
-		    "square": {
-		      "area": 33,
-		      "type": "value",
-		      "color": "#ca337c"
-		    }
+		    "label": "7",
+		    "square": null
 		  },
 		  "sideB": {
-		    "label": "b",
-		    "square": {
-		      "type": "unknown",
-		      "color": "#11accd"
-		    }
+		    "label": "4",
+		    "square": null
 		  },
 		  "sideC": {
-		    "label": "c",
-		    "square": {
-		      "area": 44,
-		      "type": "value",
-		      "color": "#1fab54"
-		    }
+		    "label": "x",
+		    "square": null
 		  },
-		  "width": 240,
-		  "height": 193
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pythagoreanProofDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1ecf301bf3e57e34
-	// Question: Determine whether a triangle is right using areas of attached squares
-	// Widget key: image_1
-	test("pythagorean-proof-diagram - [x1ecf301bf3e57e34] Determine whether a triangle is right using areas of attached squares", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pythagoreanProofDiagram",
-		  "sideA": {
-		    "label": "a",
-		    "square": {
-		      "area": 58,
-		      "type": "value",
-		      "color": "#e3f2fd"
-		    }
-		  },
-		  "sideB": {
-		    "label": "b",
-		    "square": {
-		      "area": 10,
-		      "type": "value",
-		      "color": "#fff3e0"
-		    }
-		  },
-		  "sideC": {
-		    "label": "c",
-		    "square": {
-		      "area": 64,
-		      "type": "value",
-		      "color": "#e8f5e9"
-		    }
-		  },
-		  "width": 281,
+		  "width": 400,
 		  "height": 400
 		} as unknown as WidgetInput
 
@@ -126,31 +64,90 @@ describe("pythagoreanProofDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x576c8d2a8fa0de16
-	// Question: Area of the square on the triangle's third side
+	// Extracted from question: x5771b36c95aef1a7
+	// Question: Area of the square on the third side
 	// Widget key: image_1
-	test("pythagorean-proof-diagram - [x576c8d2a8fa0de16] Area of the square on the triangle's third side", async () => {
+	test("pythagorean-proof-diagram - [x5771b36c95aef1a7] Area of the square on the third side", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pythagoreanProofDiagram",
 		  "sideA": {
-		    "label": "2",
-		    "square": null
+		    "label": " ",
+		    "square": {
+		      "area": 33,
+		      "type": "value",
+		      "color": "#ca337c"
+		    }
 		  },
 		  "sideB": {
-		    "label": "4",
-		    "square": null
-		  },
-		  "sideC": {
 		    "label": " ",
 		    "square": {
 		      "type": "unknown",
 		      "color": "#11accd"
 		    }
 		  },
-		  "width": 300,
-		  "height": 263
+		  "sideC": {
+		    "label": " ",
+		    "square": {
+		      "area": 44,
+		      "type": "value",
+		      "color": "#1fab54"
+		    }
+		  },
+		  "width": 360,
+		  "height": 360
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pythagoreanProofDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1ecf301bf3e57e34
+	// Question: Determine whether a triangle is right using square areas
+	// Widget key: image_1
+	test("pythagorean-proof-diagram - [x1ecf301bf3e57e34] Determine whether a triangle is right using square areas", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pythagoreanProofDiagram",
+		  "sideA": {
+		    "label": "a",
+		    "square": {
+		      "area": 58,
+		      "type": "value",
+		      "color": "#a0e7e5"
+		    }
+		  },
+		  "sideB": {
+		    "label": "b",
+		    "square": {
+		      "area": 10,
+		      "type": "value",
+		      "color": "#bdb2ff"
+		    }
+		  },
+		  "sideC": {
+		    "label": "c",
+		    "square": {
+		      "area": 64,
+		      "type": "value",
+		      "color": "#ffd6a5"
+		    }
+		  },
+		  "width": 400,
+		  "height": 400
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -169,9 +166,9 @@ describe("pythagoreanProofDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xffe4fe69c7ada6c6
-	// Question: Areas of squares on the sides of a right triangle
+	// Question: Areas of squares on a right triangle
 	// Widget key: image_1
-	test("pythagorean-proof-diagram - [xffe4fe69c7ada6c6] Areas of squares on the sides of a right triangle", async () => {
+	test("pythagorean-proof-diagram - [xffe4fe69c7ada6c6] Areas of squares on a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -198,8 +195,8 @@ describe("pythagoreanProofDiagram widget tests", () => {
 		      "color": "#ffbde0"
 		    }
 		  },
-		  "width": 224,
-		  "height": 240
+		  "width": 400,
+		  "height": 400
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -218,9 +215,9 @@ describe("pythagoreanProofDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x8d9bf2e7361a83d4
-	// Question: Areas of smaller squares on a right triangle
+	// Question: Areas of squares on a right triangle
 	// Widget key: image_1
-	test("pythagorean-proof-diagram - [x8d9bf2e7361a83d4] Areas of smaller squares on a right triangle", async () => {
+	test("pythagorean-proof-diagram - [x8d9bf2e7361a83d4] Areas of squares on a right triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -247,8 +244,8 @@ describe("pythagoreanProofDiagram widget tests", () => {
 		      "color": "#ffbde0"
 		    }
 		  },
-		  "width": 240,
-		  "height": 197
+		  "width": 400,
+		  "height": 340
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -296,8 +293,8 @@ describe("pythagoreanProofDiagram widget tests", () => {
 		      "color": "#ffbde0"
 		    }
 		  },
-		  "width": 218.571,
-		  "height": 240
+		  "width": 400,
+		  "height": 400
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -315,85 +312,38 @@ describe("pythagoreanProofDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3950c0fe656bd0d1
-	// Question: Find the length of the third side from square areas
+	// Extracted from question: x576c8d2a8fa0de16
+	// Question: Area of the square on the hypotenuse
 	// Widget key: image_1
-	test("pythagorean-proof-diagram - [x3950c0fe656bd0d1] Find the length of the third side from square areas", async () => {
+	test("pythagorean-proof-diagram - [x576c8d2a8fa0de16] Area of the square on the hypotenuse", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pythagoreanProofDiagram",
 		  "sideA": {
-		    "label": " ",
+		    "label": "2",
 		    "square": {
-		      "area": 32,
+		      "area": 4,
 		      "type": "value",
-		      "color": "#11accd"
+		      "color": "#c7e9ff"
 		    }
 		  },
 		  "sideB": {
+		    "label": "4",
+		    "square": {
+		      "area": 16,
+		      "type": "value",
+		      "color": "#ffe6a8"
+		    }
+		  },
+		  "sideC": {
 		    "label": " ",
-		    "square": {
-		      "area": 32,
-		      "type": "value",
-		      "color": "#ca337c"
-		    }
-		  },
-		  "sideC": {
-		    "label": "x",
-		    "square": null
-		  },
-		  "width": 300,
-		  "height": 170
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for pythagoreanProofDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd6373945f7c29ea6
-	// Question: Area of the square on the third side
-	// Widget key: image_1
-	test("pythagorean-proof-diagram - [xd6373945f7c29ea6] Area of the square on the third side", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "pythagoreanProofDiagram",
-		  "sideA": {
-		    "label": "a",
-		    "square": {
-		      "area": 35,
-		      "type": "value",
-		      "color": "#ca337c"
-		    }
-		  },
-		  "sideB": {
-		    "label": "b",
-		    "square": {
-		      "area": 50,
-		      "type": "value",
-		      "color": "#1fab54"
-		    }
-		  },
-		  "sideC": {
-		    "label": "c",
 		    "square": {
 		      "type": "unknown",
-		      "color": "#11accd"
+		      "color": "#dddddd"
 		    }
 		  },
-		  "width": 271.698,
+		  "width": 300,
 		  "height": 300
 		} as unknown as WidgetInput
 
@@ -412,10 +362,107 @@ describe("pythagoreanProofDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x03f872387a8cca62
-	// Question: Determine whether a triangle is right using square areas
+	// Extracted from question: x3950c0fe656bd0d1
+	// Question: Find the hypotenuse length from square areas
 	// Widget key: image_1
-	test("pythagorean-proof-diagram - [x03f872387a8cca62] Determine whether a triangle is right using square areas", async () => {
+	test("pythagorean-proof-diagram - [x3950c0fe656bd0d1] Find the hypotenuse length from square areas", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pythagoreanProofDiagram",
+		  "sideA": {
+		    "label": "a",
+		    "square": {
+		      "area": 32,
+		      "type": "value",
+		      "color": "#11accd"
+		    }
+		  },
+		  "sideB": {
+		    "label": "b",
+		    "square": {
+		      "area": 32,
+		      "type": "value",
+		      "color": "#ca337c"
+		    }
+		  },
+		  "sideC": {
+		    "label": "x",
+		    "square": null
+		  },
+		  "width": 300,
+		  "height": 300
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pythagoreanProofDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd6373945f7c29ea6
+	// Question: Area of the square on the third side of a right triangle
+	// Widget key: image_1
+	test("pythagorean-proof-diagram - [xd6373945f7c29ea6] Area of the square on the third side of a right triangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "pythagoreanProofDiagram",
+		  "sideA": {
+		    "label": " ",
+		    "square": {
+		      "area": 35,
+		      "type": "value",
+		      "color": "#ca337c"
+		    }
+		  },
+		  "sideB": {
+		    "label": " ",
+		    "square": {
+		      "area": 50,
+		      "type": "value",
+		      "color": "#1fab54"
+		    }
+		  },
+		  "sideC": {
+		    "label": " ",
+		    "square": {
+		      "type": "unknown",
+		      "color": "#11accd"
+		    }
+		  },
+		  "width": 360,
+		  "height": 360
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for pythagoreanProofDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x03f872387a8cca62
+	// Question: Determine if the triangle is right from square areas
+	// Widget key: image_1
+	test("pythagorean-proof-diagram - [x03f872387a8cca62] Determine if the triangle is right from square areas", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -425,7 +472,7 @@ describe("pythagoreanProofDiagram widget tests", () => {
 		    "square": {
 		      "area": 18,
 		      "type": "value",
-		      "color": "#f0f0f0"
+		      "color": "#ddddff"
 		    }
 		  },
 		  "sideB": {
@@ -433,7 +480,7 @@ describe("pythagoreanProofDiagram widget tests", () => {
 		    "square": {
 		      "area": 7,
 		      "type": "value",
-		      "color": "#f0f0f0"
+		      "color": "#ddffdd"
 		    }
 		  },
 		  "sideC": {
@@ -441,7 +488,7 @@ describe("pythagoreanProofDiagram widget tests", () => {
 		    "square": {
 		      "area": 27,
 		      "type": "value",
-		      "color": "#f0f0f0"
+		      "color": "#ffdddd"
 		    }
 		  },
 		  "width": 300,
@@ -483,11 +530,11 @@ describe("pythagoreanProofDiagram widget tests", () => {
 		    "label": " ",
 		    "square": {
 		      "type": "unknown",
-		      "color": "#e0e0e0"
+		      "color": "#11accd"
 		    }
 		  },
 		  "width": 300,
-		  "height": 255
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -506,15 +553,15 @@ describe("pythagoreanProofDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xcf1d0c79357900b1
-	// Question: Find the hypotenuse from areas of attached squares
+	// Question: Find the length of the third side from square areas
 	// Widget key: image_1
-	test("pythagorean-proof-diagram - [xcf1d0c79357900b1] Find the hypotenuse from areas of attached squares", async () => {
+	test("pythagorean-proof-diagram - [xcf1d0c79357900b1] Find the length of the third side from square areas", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pythagoreanProofDiagram",
 		  "sideA": {
-		    "label": " ",
+		    "label": "a",
 		    "square": {
 		      "area": 13,
 		      "type": "value",
@@ -522,7 +569,7 @@ describe("pythagoreanProofDiagram widget tests", () => {
 		    }
 		  },
 		  "sideB": {
-		    "label": " ",
+		    "label": "b",
 		    "square": {
 		      "area": 29.25,
 		      "type": "value",
@@ -533,8 +580,8 @@ describe("pythagoreanProofDiagram widget tests", () => {
 		    "label": "x",
 		    "square": null
 		  },
-		  "width": 300,
-		  "height": 209
+		  "width": 360,
+		  "height": 360
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -553,19 +600,19 @@ describe("pythagoreanProofDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5f138893ed28d3c3
-	// Question: Extra distance via Dayton
+	// Question: How many more kilometers through Dayton?
 	// Widget key: image_1
-	test("pythagorean-proof-diagram - [x5f138893ed28d3c3] Extra distance via Dayton", async () => {
+	test("pythagorean-proof-diagram - [x5f138893ed28d3c3] How many more kilometers through Dayton?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "pythagoreanProofDiagram",
 		  "sideA": {
-		    "label": "165",
+		    "label": "x",
 		    "square": null
 		  },
 		  "sideB": {
-		    "label": "x",
+		    "label": "165",
 		    "square": null
 		  },
 		  "sideC": {
@@ -573,7 +620,7 @@ describe("pythagoreanProofDiagram widget tests", () => {
 		    "square": null
 		  },
 		  "width": 396,
-		  "height": 162
+		  "height": 300
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)

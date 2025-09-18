@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.952Z
+// Generated on: 2025-09-18T05:17:02.145Z
 // Widget Type: lineEquationGraph
 // Source: Real questions from database
 //
@@ -25,351 +25,36 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("lineEquationGraph widget tests", () => {
-	// Extracted from question: x36fd29ba4df40abd
-	// Question: Estimate the solution to a system of linear equations
-	// Widget key: graph_visual
-	test("line-equation-graph - [x36fd29ba4df40abd] Estimate the solution to a system of linear equations", async () => {
+	// Extracted from question: x4ba2f6a1b58e0f29
+	// Question: Find the solution to the system of equations
+	// Widget key: graph_image
+	test("line-equation-graph - [x4ba2f6a1b58e0f29] Find the solution to the system of equations", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_7x_minus_y_eq_7",
+		      "id": "line_neg3x_neg9y_eq_18",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
-		        "A": 7,
-		        "B": -1,
-		        "C": 7,
+		        "A": -3,
+		        "B": -9,
+		        "C": 18,
 		        "type": "standard"
 		      }
 		    },
 		    {
-		      "id": "line_x_plus_2y_eq_6",
+		      "id": "line_4x_3y_eq_12",
 		      "color": "#ca337c",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
-		        "A": 1,
-		        "B": 2,
-		        "C": 6,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 345,
-		  "xAxis": {
-		    "max": 7,
-		    "min": -7,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 7,
-		    "min": -7,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 345,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": -7,
-		      "id": "p_7xmy_yint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 0,
-		      "id": "p_7xmy_xint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 3,
-		      "id": "p_xp2y_yint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 0,
-		      "id": "p_xp2y_xint",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x32e58b54bfcd9d8b
-	// Question: Solve a system of linear equations
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [x32e58b54bfcd9d8b] Solve a system of linear equations (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_neg7x_minus2y_eq_14",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -3.5,
-		        "yIntercept": -7
-		      }
-		    },
-		    {
-		      "id": "line_6x_plus6y_eq_18",
-		      "color": "#ca337c",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -1,
-		        "yIntercept": 3
-		      }
-		    }
-		  ],
-		  "width": 345,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 345,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x32e58b54bfcd9d8b
-	// Question: Solve a system of linear equations
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x32e58b54bfcd9d8b] Solve a system of linear equations (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_neg7x_minus2y_eq_14",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -3.5,
-		        "yIntercept": -7
-		      }
-		    },
-		    {
-		      "id": "line_6x_plus6y_eq_18",
-		      "color": "#ca337c",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -1,
-		        "yIntercept": 3
-		      }
-		    }
-		  ],
-		  "width": 345,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 345,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": 7,
-		      "id": "pt_intersection",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x32e58b54bfcd9d8b
-	// Question: Solve a system of linear equations
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x32e58b54bfcd9d8b] Solve a system of linear equations (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_neg7x_minus2y_eq_14",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -3.5,
-		        "yIntercept": -7
-		      }
-		    },
-		    {
-		      "id": "line_6x_plus6y_eq_18",
-		      "color": "#ca337c",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -1,
-		        "yIntercept": 3
-		      }
-		    }
-		  ],
-		  "width": 345,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 345,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": 6,
-		      "id": "pt_not_intersection",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6ea3c789c94de7b3
-	// Question: Find the solution to a system of linear equations
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [x6ea3c789c94de7b3] Find the solution to a system of linear equations (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_eq1",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": -8,
-		        "B": 4,
-		        "C": 24,
-		        "type": "standard"
-		      }
-		    },
-		    {
-		      "id": "line_eq2",
-		      "color": "#ca337c",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": -7,
-		        "B": 7,
-		        "C": 28,
+		        "A": 4,
+		        "B": 3,
+		        "C": 12,
 		        "type": "standard"
 		      }
 		    }
@@ -392,458 +77,31 @@ describe("lineEquationGraph widget tests", () => {
 		  "height": 345,
 		  "points": [
 		    {
-		      "x": -3,
+		      "x": -6,
 		      "y": 0,
-		      "id": "p_eq1_xint",
+		      "id": "p_neg6_0",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
-		      "y": 6,
-		      "id": "p_eq1_yint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 0,
-		      "id": "p_eq2_xint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 4,
-		      "id": "p_eq2_yint",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6ea3c789c94de7b3
-	// Question: Find the solution to a system of linear equations
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x6ea3c789c94de7b3] Find the solution to a system of linear equations (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_eq1",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": -8,
-		        "B": 4,
-		        "C": 24,
-		        "type": "standard"
-		      }
-		    },
-		    {
-		      "id": "line_eq2",
-		      "color": "#ca337c",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": -7,
-		        "B": 7,
-		        "C": 28,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 345,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 345,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": 0,
-		      "id": "p_eq1_xint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 6,
-		      "id": "p_eq1_yint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 0,
-		      "id": "p_eq2_xint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 4,
-		      "id": "p_eq2_yint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 2,
-		      "id": "p_intersection",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6ea3c789c94de7b3
-	// Question: Find the solution to a system of linear equations
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x6ea3c789c94de7b3] Find the solution to a system of linear equations (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_eq1",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": -8,
-		        "B": 4,
-		        "C": 24,
-		        "type": "standard"
-		      }
-		    },
-		    {
-		      "id": "line_eq2",
-		      "color": "#ca337c",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": -7,
-		        "B": 7,
-		        "C": 28,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 345,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 345,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": 0,
-		      "id": "p_eq1_xint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 6,
-		      "id": "p_eq1_yint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 0,
-		      "id": "p_eq2_xint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 4,
-		      "id": "p_eq2_yint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
 		      "y": -2,
-		      "id": "p_wrong_point",
+		      "id": "p_0_neg2",
 		      "label": "",
 		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcd14c41979f4e20a
-	// Question: Solve a system of linear equations in standard form
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [xcd14c41979f4e20a] Solve a system of linear equations in standard form (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#6495ED",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1,
-		        "yIntercept": -2
-		      }
 		    },
 		    {
-		      "id": "line_2",
-		      "color": "#FF00AF",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -1,
-		        "yIntercept": -6
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcd14c41979f4e20a
-	// Question: Solve a system of linear equations in standard form
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [xcd14c41979f4e20a] Solve a system of linear equations in standard form (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#6495ED",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1,
-		        "yIntercept": -2
-		      }
-		    },
-		    {
-		      "id": "line_2",
-		      "color": "#FF00AF",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -1,
-		        "yIntercept": -6
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": -4,
-		      "id": "p_intersection",
-		      "label": "P",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcd14c41979f4e20a
-	// Question: Solve a system of linear equations in standard form
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [xcd14c41979f4e20a] Solve a system of linear equations in standard form (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#6495ED",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1,
-		        "yIntercept": -2
-		      }
-		    },
-		    {
-		      "id": "line_2",
-		      "color": "#FF00AF",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -1,
-		        "yIntercept": -6
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -2,
+		      "x": 0,
 		      "y": 4,
-		      "id": "p_wrong",
-		      "label": "P",
+		      "id": "p_0_4",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 0,
+		      "id": "p_3_0",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -866,85 +124,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x17655e79f69878da
-	// Question: Solve a system of linear equations
+	// Question: Find the solution to the system of equations
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x17655e79f69878da] Solve a system of linear equations (1)", async () => {
+	test("line-equation-graph - [x17655e79f69878da] Find the solution to the system of equations (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_a1",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -7,
-		        "yIntercept": -3
-		      }
-		    },
-		    {
-		      "id": "line_a2",
-		      "color": "#ca337c",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -1,
-		        "yIntercept": -3
-		      }
-		    }
-		  ],
-		  "width": 345,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 345,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x17655e79f69878da
-	// Question: Solve a system of linear equations
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x17655e79f69878da] Solve a system of linear equations (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b1",
-		      "color": "#11accd",
-		      "label": " ",
+		      "id": "line_y_eq_neg7x_plus_3",
+		      "color": "#6495ED",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -953,9 +144,9 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "line_b2",
-		      "color": "#ca337c",
-		      "label": " ",
+		      "id": "line_y_eq_negx_minus_3",
+		      "color": "#FF00AF",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -1000,18 +191,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x17655e79f69878da
-	// Question: Solve a system of linear equations
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x17655e79f69878da] Solve a system of linear equations (3)", async () => {
+	// Question: Find the solution to the system of equations
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x17655e79f69878da] Find the solution to the system of equations (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_c1",
-		      "color": "#11accd",
-		      "label": " ",
+		      "id": "line_y_eq_pos7x_plus_3_incorrect",
+		      "color": "#6495ED",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -1020,9 +211,76 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "line_c2",
-		      "color": "#ca337c",
-		      "label": " ",
+		      "id": "line_y_eq_negx_minus_3_correct",
+		      "color": "#FF00AF",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -1,
+		        "yIntercept": -3
+		      }
+		    }
+		  ],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x17655e79f69878da
+	// Question: Find the solution to the system of equations
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x17655e79f69878da] Find the solution to the system of equations (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_y_eq_neg7x_plus_3_correct",
+		      "color": "#6495ED",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -7,
+		        "yIntercept": 3
+		      }
+		    },
+		    {
+		      "id": "line_y_eq_negx_plus_3_incorrect",
+		      "color": "#FF00AF",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -1067,38 +325,15 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x96768bb55a136d97
-	// Question: Find the solution to a system of equations
-	// Widget key: interaction_1
-	test("line-equation-graph - [x96768bb55a136d97] Find the solution to a system of equations", async () => {
+	// Question: Solve a system of equations
+	// Widget key: interactive_graph_1
+	test("line-equation-graph - [x96768bb55a136d97] Solve a system of equations", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_blue",
-		      "color": "#6495ED",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -4,
-		        "yIntercept": -3
-		      }
-		    },
-		    {
-		      "id": "line_magenta",
-		      "color": "#FF00AF",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -2,
-		        "yIntercept": 1
-		      }
-		    }
-		  ],
-		  "width": 280,
+		  "lines": [],
+		  "width": 345,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -1113,7 +348,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 280,
+		  "height": 345,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -1134,29 +369,29 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2598bb582a523acb
-	// Question: Solve a system of linear equations
+	// Question: Find the solution to the system of equations
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x2598bb582a523acb] Solve a system of linear equations (1)", async () => {
+	test("line-equation-graph - [x2598bb582a523acb] Find the solution to the system of equations (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_y_eq_x_minus_4",
+		      "id": "line_a1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": 1,
-		        "yIntercept": -4
+		        "yIntercept": 4
 		      }
 		    },
 		    {
-		      "id": "line_y_eq_4x_plus_2",
+		      "id": "line_a2",
 		      "color": "#ca337c",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -1165,7 +400,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 280,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -1180,80 +415,34 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 280,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2598bb582a523acb
-	// Question: Solve a system of linear equations
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x2598bb582a523acb] Solve a system of linear equations (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_y_eq_x_minus_4",
-		      "color": "#11accd",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1,
-		        "yIntercept": -4
-		      }
-		    },
-		    {
-		      "id": "line_y_eq_4x_plus_2",
-		      "color": "#ca337c",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 4,
-		        "yIntercept": 2
-		      }
-		    }
-		  ],
-		  "width": 280,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 280,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": -2,
-		      "y": -6,
-		      "id": "pt_intersection",
-		      "label": "",
+		      "x": 0,
+		      "y": 4,
+		      "id": "p_a1_1",
+		      "label": "(0, 4)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 5,
+		      "id": "p_a1_2",
+		      "label": "(1, 5)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 2,
+		      "id": "p_a2_1",
+		      "label": "(0, 2)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 6,
+		      "id": "p_a2_2",
+		      "label": "(1, 6)",
 		      "style": "closed"
 		    }
 		  ],
@@ -1276,18 +465,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2598bb582a523acb
-	// Question: Solve a system of linear equations
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x2598bb582a523acb] Solve a system of linear equations (3)", async () => {
+	// Question: Find the solution to the system of equations
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x2598bb582a523acb] Find the solution to the system of equations (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_y_eq_x_minus_4",
+		      "id": "line_b1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -1296,9 +485,9 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "line_y_eq_4x_plus_2",
+		      "id": "line_b2",
 		      "color": "#ca337c",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -1307,7 +496,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 280,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -1322,13 +511,130 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 280,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": -2,
+		      "x": 0,
+		      "y": -4,
+		      "id": "p_b1_1",
+		      "label": "(0, -4)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -3,
+		      "id": "p_b1_2",
+		      "label": "(1, -3)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 2,
+		      "id": "p_b2_1",
+		      "label": "(0, 2)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
 		      "y": 6,
-		      "id": "pt_wrong",
-		      "label": "",
+		      "id": "p_b2_2",
+		      "label": "(1, 6)",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2598bb582a523acb
+	// Question: Find the solution to the system of equations
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x2598bb582a523acb] Find the solution to the system of equations (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_c1",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 1,
+		        "yIntercept": -4
+		      }
+		    },
+		    {
+		      "id": "line_c2",
+		      "color": "#ca337c",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -4,
+		        "yIntercept": 2
+		      }
+		    }
+		  ],
+		  "width": 360,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": -4,
+		      "id": "p_c1_1",
+		      "label": "(0, -4)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -3,
+		      "id": "p_c1_2",
+		      "label": "(1, -3)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 2,
+		      "id": "p_c2_1",
+		      "label": "(0, 2)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -2,
+		      "id": "p_c2_2",
+		      "label": "(1, -2)",
 		      "style": "closed"
 		    }
 		  ],
@@ -1351,16 +657,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x4ef928f8ac523fdf
-	// Question: Estimate the solution to a system of linear equations
-	// Widget key: graph_helper
-	test("line-equation-graph - [x4ef928f8ac523fdf] Estimate the solution to a system of linear equations", async () => {
+	// Question: Estimate the solution to the system of equations
+	// Widget key: system_graph
+	test("line-equation-graph - [x4ef928f8ac523fdf] Estimate the solution to the system of equations", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_negative_slope",
+		      "id": "line_neg2x_minus5",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
@@ -1371,7 +677,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "line_positive_slope",
+		      "id": "line_2x_minus2",
 		      "color": "#ca337c",
 		      "label": " ",
 		      "style": "solid",
@@ -1382,7 +688,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 345,
 		  "xAxis": {
 		    "max": 7,
 		    "min": -7,
@@ -1397,7 +703,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 345,
 		  "points": [
 		    {
 		      "x": 0,
@@ -1446,34 +752,34 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3c4a3348f92002cf
-	// Question: Solve a system of equations by graphing
+	// Extracted from question: x06c6cc6cdf6491b9
+	// Question: Find the solution to a system of linear equations
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x3c4a3348f92002cf] Solve a system of equations by graphing (1)", async () => {
+	test("line-equation-graph - [x06c6cc6cdf6491b9] Find the solution to a system of linear equations (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_l1_correct",
+		      "id": "line_blue",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -3,
+		        "slope": -5,
 		        "yIntercept": 6
 		      }
 		    },
 		    {
-		      "id": "line_l2_wrong",
+		      "id": "line_magenta",
 		      "color": "#ca337c",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -1,
+		        "slope": 3,
 		        "yIntercept": 2
 		      }
 		    }
@@ -1494,36 +800,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 345,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 6,
-		      "id": "p_l1_yint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 0,
-		      "id": "p_l1_xint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 2,
-		      "id": "p_l2_yint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 0,
-		      "id": "p_l2_xint",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -1542,35 +819,35 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3c4a3348f92002cf
-	// Question: Solve a system of equations by graphing
+	// Extracted from question: x06c6cc6cdf6491b9
+	// Question: Find the solution to a system of linear equations
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x3c4a3348f92002cf] Solve a system of equations by graphing (2)", async () => {
+	test("line-equation-graph - [x06c6cc6cdf6491b9] Find the solution to a system of linear equations (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_21x7y42",
+		      "id": "line_blue",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -3,
+		        "slope": -5,
 		        "yIntercept": 6
 		      }
 		    },
 		    {
-		      "id": "line_neg5x5y10",
+		      "id": "line_magenta",
 		      "color": "#ca337c",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 1,
-		        "yIntercept": 2
+		        "slope": 3,
+		        "yIntercept": -2
 		      }
 		    }
 		  ],
@@ -1590,43 +867,74 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 345,
-		  "points": [
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x06c6cc6cdf6491b9
+	// Question: Find the solution to a system of linear equations
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x06c6cc6cdf6491b9] Find the solution to a system of linear equations (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
 		    {
-		      "x": 0,
-		      "y": 6,
-		      "id": "p1_l1_yint",
-		      "label": "",
-		      "style": "closed"
+		      "id": "line_blue",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 5,
+		        "yIntercept": 6
+		      }
 		    },
 		    {
-		      "x": 2,
-		      "y": 0,
-		      "id": "p2_l1_xint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 0,
-		      "id": "p3_l2_xint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 2,
-		      "id": "p4_l2_yint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 3,
-		      "id": "p_intersection",
-		      "label": "",
-		      "style": "closed"
+		      "id": "line_magenta",
+		      "color": "#ca337c",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 3,
+		        "yIntercept": -2
+		      }
 		    }
 		  ],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -1646,38 +954,174 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x3c4a3348f92002cf
-	// Question: Solve a system of equations by graphing
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x3c4a3348f92002cf] Solve a system of equations by graphing (3)", async () => {
+	// Question: Find the solution to the system of equations
+	// Widget key: graph_helper
+	test("line-equation-graph - [x3c4a3348f92002cf] Find the solution to the system of equations", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_l1_wrong",
+		      "id": "line_21x_7y_42",
+		      "color": "#6495ED",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "A": 21,
+		        "B": 7,
+		        "C": 42,
+		        "type": "standard"
+		      }
+		    },
+		    {
+		      "id": "line_minus5x_plus5y_10",
+		      "color": "#FF00AF",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "A": -5,
+		        "B": 5,
+		        "C": 10,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x42f372d87e77f20c
+	// Question: Solve a system of linear equations
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [x42f372d87e77f20c] Solve a system of linear equations (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_a1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 2,
+		        "yIntercept": -4
+		      }
+		    },
+		    {
+		      "id": "line_a2",
+		      "color": "#ca337c",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 2,
+		        "yIntercept": 4
+		      }
+		    }
+		  ],
+		  "width": 360,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x42f372d87e77f20c
+	// Question: Solve a system of linear equations
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x42f372d87e77f20c] Solve a system of linear equations (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b1",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 2,
+		        "yIntercept": -4
+		      }
+		    },
+		    {
+		      "id": "line_b2",
+		      "color": "#ca337c",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": -2,
-		        "yIntercept": 6
-		      }
-		    },
-		    {
-		      "id": "line_l2_correct",
-		      "color": "#ca337c",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1,
-		        "yIntercept": 2
+		        "yIntercept": 4
 		      }
 		    }
 		  ],
-		  "width": 345,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -1692,37 +1136,8 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 345,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 6,
-		      "id": "p_l1_wrong_yint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 0,
-		      "id": "p_l1_wrong_xint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 2,
-		      "id": "p_l2_yint",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 0,
-		      "id": "p_l2_xint",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 360,
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -1741,54 +1156,54 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xee3b92b9d7566088
-	// Question: Estimate the solution to a system of linear equations
-	// Widget key: graph_widget
-	test("line-equation-graph - [xee3b92b9d7566088] Estimate the solution to a system of linear equations", async () => {
+	// Extracted from question: x42f372d87e77f20c
+	// Question: Solve a system of linear equations
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x42f372d87e77f20c] Solve a system of linear equations (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_y_4x_minus_2",
+		      "id": "line_c1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 4,
-		        "yIntercept": -2
+		        "slope": -2,
+		        "yIntercept": -4
 		      }
 		    },
 		    {
-		      "id": "line_y_x_plus_3",
+		      "id": "line_c2",
 		      "color": "#ca337c",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 1,
-		        "yIntercept": 3
+		        "slope": 2,
+		        "yIntercept": 4
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 7,
-		    "min": -7,
+		    "max": 8,
+		    "min": -8,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 7,
-		    "min": -7,
+		    "max": 8,
+		    "min": -8,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -1810,7 +1225,7 @@ describe("lineEquationGraph widget tests", () => {
 
 	// Extracted from question: x9fe75197053023c6
 	// Question: Estimate the solution to a system of equations
-	// Widget key: graph_image
+	// Widget key: interaction_1
 	test("line-equation-graph - [x9fe75197053023c6] Estimate the solution to a system of equations", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -1823,9 +1238,10 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1,
-		        "yIntercept": 3
+		        "A": -3,
+		        "B": 3,
+		        "C": 9,
+		        "type": "standard"
 		      }
 		    },
 		    {
@@ -1834,54 +1250,164 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.2857142857,
-		        "yIntercept": 2
+		        "A": 2,
+		        "B": -7,
+		        "C": -14,
+		        "type": "standard"
 		      }
 		    }
 		  ],
 		  "width": 345,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
+		    "max": 7,
+		    "min": -7,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
+		    "max": 7,
+		    "min": -7,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 345,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd2acacdae4f04fdc
+	// Question: Estimate the solution to a system of linear equations
+	// Widget key: interaction_1
+	test("line-equation-graph - [xd2acacdae4f04fdc] Estimate the solution to a system of linear equations", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_1",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -1,
+		        "yIntercept": 2
+		      }
+		    },
+		    {
+		      "id": "line_2",
+		      "color": "#ca337c",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 3,
+		        "yIntercept": -4
+		      }
+		    }
+		  ],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 7,
+		    "min": -7,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 7,
+		    "min": -7,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xdd13bb45d9545349
+	// Question: Determine the intercepts of a line
+	// Widget key: image_1
+	test("line-equation-graph - [xdd13bb45d9545349] Determine the intercepts of a line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_1",
+		      "color": "#6495ed",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 2.2,
+		        "yIntercept": -55
+		      }
+		    }
+		  ],
+		  "width": 424,
+		  "xAxis": {
+		    "max": 30,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -60,
+		    "label": "y",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "height": 424,
 		  "points": [
 		    {
-		      "x": -3,
+		      "x": 25,
 		      "y": 0,
-		      "id": "p1",
+		      "id": "x_int",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
-		      "y": 3,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": 0,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 2,
-		      "id": "p4",
+		      "y": -55,
+		      "id": "y_int",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -1904,10 +1430,10 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xdd13bb45d9545349
-	// Question: Determine the intercepts of a line from its graph
+	// Extracted from question: x4ec62f1a1bd50dc0
+	// Question: Determine the intercepts from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xdd13bb45d9545349] Determine the intercepts of a line from its graph", async () => {
+	test("line-equation-graph - [x4ec62f1a1bd50dc0] Determine the intercepts from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1919,25 +1445,24 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 11,
-		        "B": -5,
-		        "C": 275,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": -0.75,
+		        "yIntercept": -6
 		      }
 		    }
 		  ],
 		  "width": 424,
 		  "xAxis": {
-		    "max": 30,
+		    "max": 10,
 		    "min": -10,
-		    "label": "x-axis",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
-		    "min": -60,
-		    "label": "y-axis",
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1961,95 +1486,25 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4ec62f1a1bd50dc0
-	// Question: Determine the intercepts of a line
+	// Extracted from question: x31f4902a8486741f
+	// Question: Determine the intercepts of a line from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x4ec62f1a1bd50dc0] Determine the intercepts of a line", async () => {
+	test("line-equation-graph - [x31f4902a8486741f] Determine the intercepts of a line from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_main",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -0.75,
-		        "yIntercept": -6
-		      }
-		    }
-		  ],
-		  "width": 424,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 424,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": -6,
-		      "id": "y_intercept",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -8,
-		      "y": 0,
-		      "id": "x_intercept",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x31f4902a8486741f
-	// Question: Determine the intercepts of a line
-	// Widget key: image_1
-	test("line-equation-graph - [x31f4902a8486741f] Determine the intercepts of a line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#6495ed",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.4,
-		        "yIntercept": 100
+		        "A": 2,
+		        "B": -5,
+		        "C": -500,
+		        "type": "standard"
 		      }
 		    }
 		  ],
@@ -2057,34 +1512,19 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 100,
 		    "min": -300,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 50,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 150,
-		    "min": -50,
-		    "label": "",
-		    "tickInterval": 25,
+		    "max": 140,
+		    "min": -20,
+		    "label": "y",
+		    "tickInterval": 20,
 		    "showGridLines": true
 		  },
 		  "height": 424,
-		  "points": [
-		    {
-		      "x": -250,
-		      "y": 0,
-		      "id": "x_intercept_point",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 100,
-		      "id": "y_intercept_point",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -2104,9 +1544,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd136a87df56932cc
-	// Question: Determine the intercepts of a line from its graph
+	// Question: Determine x- and y-intercepts from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xd136a87df56932cc] Determine the intercepts of a line from its graph", async () => {
+	test("line-equation-graph - [xd136a87df56932cc] Determine x- and y-intercepts from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2115,48 +1555,32 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#6495ed",
-		      "label": " ",
+		      "label": "Line",
 		      "style": "solid",
 		      "equation": {
-		        "A": 2,
-		        "B": -9,
-		        "C": 9,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": 0.2222222222222222,
+		        "yIntercept": -1
 		      }
 		    }
 		  ],
 		  "width": 424,
 		  "xAxis": {
 		    "max": 10,
-		    "min": 0,
-		    "label": "",
+		    "min": -2,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 6,
 		    "min": -4,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 424,
-		  "points": [
-		    {
-		      "x": 4.5,
-		      "y": 0,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -1,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -2176,16 +1600,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc28c6fb5a5af714d
-	// Question: Determine the intercepts of a line
+	// Question: Determine intercepts from a line graph
 	// Widget key: image_1
-	test("line-equation-graph - [xc28c6fb5a5af714d] Determine the intercepts of a line", async () => {
+	test("line-equation-graph - [xc28c6fb5a5af714d] Determine intercepts from a line graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_main",
+		      "id": "line_1",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -2200,14 +1624,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -2232,9 +1656,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6add2c7b865e84df
-	// Question: Determine the intercepts of a line
+	// Question: Determine the intercepts of a line from its graph
 	// Widget key: image_1
-	test("line-equation-graph - [x6add2c7b865e84df] Determine the intercepts of a line", async () => {
+	test("line-equation-graph - [x6add2c7b865e84df] Determine the intercepts of a line from its graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2242,8 +1666,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_1",
-		      "color": "#6495ed",
-		      "label": "",
+		      "color": "#6495ED",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -2256,34 +1680,19 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -50,
-		    "label": "",
-		    "tickInterval": 1,
+		    "label": null,
+		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 20,
 		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
+		    "label": null,
+		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "height": 424,
-		  "points": [
-		    {
-		      "x": -40,
-		      "y": 0,
-		      "id": "x_intercept_point",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 15,
-		      "id": "y_intercept_point",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -2303,9 +1712,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb2d16828a525ae7b
-	// Question: Determine the intercepts of a line from a graph
+	// Question: Determine the intercepts from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xb2d16828a525ae7b] Determine the intercepts of a line from a graph", async () => {
+	test("line-equation-graph - [xb2d16828a525ae7b] Determine the intercepts from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2325,17 +1734,17 @@ describe("lineEquationGraph widget tests", () => {
 		  ],
 		  "width": 424,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 1,
 		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
+		    "label": "x",
+		    "tickInterval": 0.1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 1,
 		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
+		    "label": "y",
+		    "tickInterval": 0.1,
 		    "showGridLines": true
 		  },
 		  "height": 424,
@@ -2343,15 +1752,15 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 0.4,
-		      "id": "y_intercept_point",
-		      "label": "",
+		      "id": "p_yint",
+		      "label": " ",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0.3,
 		      "y": 0,
-		      "id": "x_intercept_point",
-		      "label": "",
+		      "id": "p_xint",
+		      "label": " ",
 		      "style": "closed"
 		    }
 		  ],
@@ -2385,47 +1794,33 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -4.5,
-		        "yIntercept": -45
+		        "A": 9,
+		        "B": 2,
+		        "C": -90,
+		        "type": "standard"
 		      }
 		    }
 		  ],
 		  "width": 424,
 		  "xAxis": {
-		    "max": 12,
+		    "max": 2,
 		    "min": -12,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 5,
 		    "min": -50,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 424,
-		  "points": [
-		    {
-		      "x": -10,
-		      "y": 0,
-		      "id": "point_x_intercept",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -45,
-		      "id": "point_y_intercept",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -2445,9 +1840,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x76e706439765334f
-	// Question: Determine the intercepts of a line from its graph
+	// Question: Determine the intercepts from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x76e706439765334f] Determine the intercepts of a line from its graph", async () => {
+	test("line-equation-graph - [x76e706439765334f] Determine the intercepts from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2455,8 +1850,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_1",
-		      "color": "#6495ED",
-		      "label": "",
+		      "color": "#6495ed",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -2469,34 +1864,19 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 2,
 		    "min": -2,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 0.1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 2,
 		    "min": -2,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 0.1,
 		    "showGridLines": true
 		  },
 		  "height": 424,
-		  "points": [
-		    {
-		      "x": -1.2,
-		      "y": 0,
-		      "id": "x_intercept",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -0.7,
-		      "id": "y_intercept",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -2527,7 +1907,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -2538,21 +1918,36 @@ describe("lineEquationGraph widget tests", () => {
 		  ],
 		  "width": 424,
 		  "xAxis": {
-		    "max": 150,
+		    "max": 140,
 		    "min": 0,
-		    "label": "",
-		    "tickInterval": 25,
+		    "label": null,
+		    "tickInterval": 20,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 300,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 25,
 		    "showGridLines": true
 		  },
 		  "height": 424,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 275,
+		      "id": "y_intercept_point",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 125,
+		      "y": 0,
+		      "id": "x_intercept_point",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -2582,14 +1977,13 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_1",
-		      "color": "#6495ED",
-		      "label": "",
+		      "color": "#6495ed",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 10,
-		        "B": -3,
-		        "C": 30,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": 3.3333333333,
+		        "yIntercept": -10
 		      }
 		    }
 		  ],
@@ -2597,34 +1991,19 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
-		    "min": -14,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 424,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": 0,
-		      "id": "p_x_int",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -10,
-		      "id": "p_y_int",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -2644,9 +2023,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xf39be922f6f5ac11
-	// Question: Determine the intercepts of a line from its graph
+	// Question: Determine the intercepts of a line
 	// Widget key: image_1
-	test("line-equation-graph - [xf39be922f6f5ac11] Determine the intercepts of a line from its graph", async () => {
+	test("line-equation-graph - [xf39be922f6f5ac11] Determine the intercepts of a line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2655,7 +2034,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": "Line",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -2668,34 +2047,19 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 424,
-		  "points": [
-		    {
-		      "x": -7,
-		      "y": 0,
-		      "id": "p_x_intercept",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 2,
-		      "id": "p_y_intercept",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -2725,7 +2089,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_1",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -2771,9 +2135,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x329428b9
-	// Question: Compare speeds: space shuttle vs. weather satellite
+	// Question: Compare orbital speeds: space shuttle vs. weather satellite
 	// Widget key: image_1
-	test("line-equation-graph - [x329428b9] Compare speeds: space shuttle vs. weather satellite", async () => {
+	test("line-equation-graph - [x329428b9] Compare orbital speeds: space shuttle vs. weather satellite", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2781,7 +2145,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_satellite",
-		      "color": "#d00000",
+		      "color": "#d62728",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -2812,7 +2176,7 @@ describe("lineEquationGraph widget tests", () => {
 		      "x": 0,
 		      "y": 0,
 		      "id": "p0",
-		      "label": "(0, 0)",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
@@ -2842,9 +2206,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x55fa5600
-	// Question: Compare Raquel's resting heart rate to an ideal rate
+	// Question: Compare resting heart rate to an ideal rate
 	// Widget key: image_1
-	test("line-equation-graph - [x55fa5600] Compare Raquel's resting heart rate to an ideal rate", async () => {
+	test("line-equation-graph - [x55fa5600] Compare resting heart rate to an ideal rate", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2853,7 +2217,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_ideal_rate",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -2866,14 +2230,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 4,
 		    "min": 0,
-		    "label": "Minutes",
+		    "label": " ",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 200,
 		    "min": 0,
-		    "label": "Beats",
+		    "label": " ",
 		    "tickInterval": 20,
 		    "showGridLines": true
 		  },
@@ -2898,9 +2262,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xbade191b
-	// Question: Whose cookies are saltier?
+	// Question: Compare saltiness of two cookie recipes
 	// Widget key: image_1
-	test("line-equation-graph - [xbade191b] Whose cookies are saltier?", async () => {
+	test("line-equation-graph - [xbade191b] Compare saltiness of two cookie recipes", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2908,8 +2272,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_deepak",
-		      "color": "#4da6ff",
-		      "label": " ",
+		      "color": "#1f77b4",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -2954,9 +2318,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x03918fd1
-	// Question: Compare store discounts from a graph and an equation
+	// Question: Which store’s sale is better?
 	// Widget key: image_1
-	test("line-equation-graph - [x03918fd1] Compare store discounts from a graph and an equation", async () => {
+	test("line-equation-graph - [x03918fd1] Which store’s sale is better?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2964,8 +2328,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_big_deal",
-		      "color": "#4A90E2",
-		      "label": " ",
+		      "color": "#1f77b4",
+		      "label": "Big Deal",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -2985,7 +2349,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "yAxis": {
 		    "max": 1000,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 100,
 		    "showGridLines": true
 		  },
@@ -3010,9 +2374,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xef1fe9b0
-	// Question: Compare speed from a distance–time graph to a peregrine falcon
+	// Question: Compare a speed from a graph to the Peregrine Falcon
 	// Widget key: image_1
-	test("line-equation-graph - [xef1fe9b0] Compare speed from a distance–time graph to a peregrine falcon", async () => {
+	test("line-equation-graph - [xef1fe9b0] Compare a speed from a graph to the Peregrine Falcon", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3020,7 +2384,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_1",
-		      "color": "#3b7dd8",
+		      "color": "#4A90E2",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -3066,18 +2430,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6513feb6
-	// Question: Compare unit rates: equation versus graph
+	// Question: Compare unit rates from an equation and a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x6513feb6] Compare unit rates: equation versus graph", async () => {
+	test("line-equation-graph - [x6513feb6] Compare unit rates from an equation and a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
-		      "color": "#4F8BFF",
-		      "label": "",
+		      "id": "line_graph",
+		      "color": "#5B9BD5",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -3122,9 +2486,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x49a93624
-	// Question: Compare two store sales using a graph and an equation
+	// Question: Compare two store sales
 	// Widget key: image_1
-	test("line-equation-graph - [x49a93624] Compare two store sales using a graph and an equation", async () => {
+	test("line-equation-graph - [x49a93624] Compare two store sales", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3132,8 +2496,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_dollar_city",
-		      "color": "#5B8FD9",
-		      "label": "",
+		      "color": "#5a8bd6",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -3153,7 +2517,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "{y}",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -3178,17 +2542,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x02ecc45c
-	// Question: Compare unit rates of change: equation vs. graph
+	// Question: Compare unit rates: equation vs. graph
 	// Widget key: image_1
-	test("line-equation-graph - [x02ecc45c] Compare unit rates of change: equation vs. graph", async () => {
+	test("line-equation-graph - [x02ecc45c] Compare unit rates: equation vs. graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
-		      "color": "#d62020",
+		      "id": "line_graph",
+		      "color": "#ff0000",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -3244,7 +2608,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_1",
-		      "color": "#2bb673",
+		      "color": "#0aa3a3",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -3299,7 +2663,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_proportional",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -3314,14 +2678,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 200,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 50,
 		    "showGridLines": true
 		  },
@@ -3331,77 +2695,13 @@ describe("lineEquationGraph widget tests", () => {
 		      "x": 0,
 		      "y": 0,
 		      "id": "origin",
-		      "label": " ",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": 40,
-		      "id": "point_1",
-		      "label": " ",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4c44cfc145bb5a97
-	// Question: Constant of proportionality from a graph
-	// Widget key: image_1
-	test("line-equation-graph - [x4c44cfc145bb5a97] Constant of proportionality from a graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#11accd",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.6666666666666666,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 325,
-		  "xAxis": {
-		    "max": 6,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": 2,
-		      "id": "p1",
+		      "id": "point_1_40",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3449,14 +2749,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
@@ -3465,7 +2765,71 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 1,
 		      "y": 4,
-		      "id": "p1",
+		      "id": "pt_1_4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4c44cfc145bb5a97
+	// Question: Find the constant of proportionality from a graph
+	// Widget key: image_1
+	test("line-equation-graph - [x4c44cfc145bb5a97] Find the constant of proportionality from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_1",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.6666666667,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": 2,
+		      "id": "pt_1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3500,7 +2864,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -3511,16 +2875,16 @@ describe("lineEquationGraph widget tests", () => {
 		  ],
 		  "width": 325,
 		  "xAxis": {
-		    "max": 6,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -3529,8 +2893,8 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 4,
-		      "id": "p_2_4",
-		      "label": "",
+		      "id": "p1",
+		      "label": " ",
 		      "style": "closed"
 		    }
 		  ],
@@ -3564,7 +2928,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_proportional",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -3577,14 +2941,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 4.5,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 4.5,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
@@ -3624,9 +2988,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xf633aec0b5b729d7
-	// Question: Identify the line with constant of proportionality 1/2
+	// Question: Identify the constant of proportionality from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xf633aec0b5b729d7] Identify the line with constant of proportionality 1/2", async () => {
+	test("line-equation-graph - [xf633aec0b5b729d7] Identify the constant of proportionality from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3639,7 +3003,7 @@ describe("lineEquationGraph widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 3,
+		        "slope": 4,
 		        "yIntercept": 0
 		      }
 		    },
@@ -3670,14 +3034,92 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8cf37b9b4a054c4c
+	// Question: Identify a constant of proportionality from a graph
+	// Widget key: image_1
+	test("line-equation-graph - [x8cf37b9b4a054c4c] Identify a constant of proportionality from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_a",
+		      "color": "#11accd",
+		      "label": "A",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 2,
+		        "yIntercept": 0
+		      }
+		    },
+		    {
+		      "id": "line_b",
+		      "color": "#1fab54",
+		      "label": "B",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 1.3333333333,
+		        "yIntercept": 0
+		      }
+		    },
+		    {
+		      "id": "line_c",
+		      "color": "#7854ab",
+		      "label": "C",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.5,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
@@ -3702,9 +3144,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6839b7848d2781d3
-	// Question: Identify the constant of proportionality from a graph
+	// Question: Identify a line with constant of proportionality 1
 	// Widget key: image_1
-	test("line-equation-graph - [x6839b7848d2781d3] Identify the constant of proportionality from a graph", async () => {
+	test("line-equation-graph - [x6839b7848d2781d3] Identify a line with constant of proportionality 1", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3779,10 +3221,10 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc2b8391207cd5e35
-	// Question: Select the line with constant of proportionality 5/4
+	// Extracted from question: x0900b2b0fb1e708b
+	// Question: Identify a line with a given constant of proportionality
 	// Widget key: image_1
-	test("line-equation-graph - [xc2b8391207cd5e35] Select the line with constant of proportionality 5/4", async () => {
+	test("line-equation-graph - [x0900b2b0fb1e708b] Identify a line with a given constant of proportionality", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3795,7 +3237,7 @@ describe("lineEquationGraph widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 2.5,
+		        "slope": 6,
 		        "yIntercept": 0
 		      }
 		    },
@@ -3806,12 +3248,90 @@ describe("lineEquationGraph widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 1.25,
+		        "slope": 1.6666666667,
 		        "yIntercept": 0
 		      }
 		    },
 		    {
 		      "id": "line_C",
+		      "color": "#7854ab",
+		      "label": "C",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.5,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc2b8391207cd5e35
+	// Question: Identify the constant of proportionality from a graph
+	// Widget key: image_1
+	test("line-equation-graph - [xc2b8391207cd5e35] Identify the constant of proportionality from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_a",
+		      "color": "#11accd",
+		      "label": "A",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 2,
+		        "yIntercept": 0
+		      }
+		    },
+		    {
+		      "id": "line_b",
+		      "color": "#1fab54",
+		      "label": "B",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 1.25,
+		        "yIntercept": 0
+		      }
+		    },
+		    {
+		      "id": "line_c",
 		      "color": "#7854ab",
 		      "label": "C",
 		      "style": "solid",
@@ -3826,14 +3346,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
@@ -3872,25 +3392,24 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 3,
-		        "B": -4,
-		        "C": 0,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": 0.75,
+		        "yIntercept": 0
 		      }
 		    }
 		  ],
 		  "width": 325,
 		  "xAxis": {
-		    "max": 6,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -3899,7 +3418,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 4,
 		      "y": 3,
-		      "id": "pt_4_3",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3932,15 +3451,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_p",
+		      "id": "line_1",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 3,
-		        "B": -1,
-		        "C": 0,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": 3,
+		        "yIntercept": 0
 		      }
 		    }
 		  ],
@@ -3948,14 +3466,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 6,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 6,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -3988,74 +3506,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xdd4e0f01b23524ed
-	// Question: Constant of proportionality from a graph
-	// Widget key: image_1
-	test("line-equation-graph - [xdd4e0f01b23524ed] Constant of proportionality from a graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#11accd",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "A": 3,
-		        "B": -2,
-		        "C": 0,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 325,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 4,
-		      "y": 6,
-		      "id": "pt_1",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xaa8ed5f8c55d2ae7
 	// Question: Find the constant of proportionality from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xaa8ed5f8c55d2ae7] Find the constant of proportionality from a graph", async () => {
+	test("line-equation-graph - [xdd4e0f01b23524ed] Find the constant of proportionality from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4068,7 +3521,7 @@ describe("lineEquationGraph widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 1,
+		        "slope": 1.5,
 		        "yIntercept": 0
 		      }
 		    }
@@ -4077,23 +3530,23 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "height": 325,
 		  "points": [
 		    {
-		      "x": 6,
+		      "x": 4,
 		      "y": 6,
-		      "id": "point_1",
+		      "id": "pt_4_6",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -4128,13 +3581,12 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 1,
-		        "B": -5,
-		        "C": 0,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": 0.2,
+		        "yIntercept": 0
 		      }
 		    }
 		  ],
@@ -4142,14 +3594,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
@@ -4158,7 +3610,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 5,
 		      "y": 1,
-		      "id": "pt_5_1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -4182,9 +3634,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xa211619590fadf54
-	// Question: Identify the line with constant of proportionality 3
+	// Question: Identify the constant of proportionality from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xa211619590fadf54] Identify the line with constant of proportionality 3", async () => {
+	test("line-equation-graph - [xa211619590fadf54] Identify the constant of proportionality from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4228,14 +3680,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
@@ -4269,9 +3721,9 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_proportional",
+		      "id": "line_1",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -4282,16 +3734,16 @@ describe("lineEquationGraph widget tests", () => {
 		  ],
 		  "width": 425,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 5,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4300,14 +3752,14 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "origin_point",
+		      "id": "origin",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": 3.5,
-		      "id": "key_point",
+		      "id": "pt_1_3_5",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -4331,16 +3783,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x4192f28983e86e43
-	// Question: Identify a constant of proportionality from a graph
+	// Question: Identify the constant of proportionality from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x4192f28983e86e43] Identify a constant of proportionality from a graph", async () => {
+	test("line-equation-graph - [x4192f28983e86e43] Identify the constant of proportionality from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_a",
+		      "id": "line_A",
 		      "color": "#11accd",
 		      "label": "A",
 		      "style": "solid",
@@ -4351,24 +3803,24 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "line_b",
+		      "id": "line_B",
 		      "color": "#1fab54",
 		      "label": "B",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 3,
+		        "slope": 1.6666667,
 		        "yIntercept": 0
 		      }
 		    },
 		    {
-		      "id": "line_c",
+		      "id": "line_C",
 		      "color": "#7854ab",
 		      "label": "C",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 2,
+		        "slope": 0.7,
 		        "yIntercept": 0
 		      }
 		    }
@@ -4420,7 +3872,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_proportional",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -4433,14 +3885,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 30,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
@@ -4479,10 +3931,10 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x05fa71b4c8d684e3
-	// Question: Find the slope of a line from its graph
+	// Extracted from question: x0cabd72e437e0552
+	// Question: Find the slope from a line graph
 	// Widget key: image_1
-	test("line-equation-graph - [x05fa71b4c8d684e3] Find the slope of a line from its graph", async () => {
+	test("line-equation-graph - [x0cabd72e437e0552] Find the slope from a line graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4494,10 +3946,9 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "x1": 3,
-		        "y1": 0,
-		        "type": "pointSlope",
-		        "slope": 1.5
+		        "type": "slopeIntercept",
+		        "slope": -1,
+		        "yIntercept": -2
 		      }
 		    }
 		  ],
@@ -4505,14 +3956,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4537,9 +3988,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x484261f4e21f2f2c
-	// Question: Find the slope of a line from a graph
+	// Question: Find the slope of a line from its graph
 	// Widget key: image_1
-	test("line-equation-graph - [x484261f4e21f2f2c] Find the slope of a line from a graph", async () => {
+	test("line-equation-graph - [x484261f4e21f2f2c] Find the slope of a line from its graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4548,7 +3999,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "A": 4,
@@ -4560,16 +4011,16 @@ describe("lineEquationGraph widget tests", () => {
 		  ],
 		  "width": 345,
 		  "xAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "",
+		    "max": 5,
+		    "min": -5,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "",
+		    "max": 5,
+		    "min": -5,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4594,9 +4045,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xf70c6a311c1d2d3d
-	// Question: Find the slope of the line from its graph
+	// Question: Find the slope from a line graph
 	// Widget key: image_1
-	test("line-equation-graph - [xf70c6a311c1d2d3d] Find the slope of the line from its graph", async () => {
+	test("line-equation-graph - [xf70c6a311c1d2d3d] Find the slope from a line graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4618,14 +4069,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4649,10 +4100,10 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x0cabd72e437e0552
-	// Question: Find the slope of the graphed line
+	// Extracted from question: x05fa71b4c8d684e3
+	// Question: Find the slope from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x0cabd72e437e0552] Find the slope of the graphed line", async () => {
+	test("line-equation-graph - [x05fa71b4c8d684e3] Find the slope from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4664,9 +4115,10 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -1,
-		        "yIntercept": -2
+		        "A": 3,
+		        "B": -2,
+		        "C": 9,
+		        "type": "standard"
 		      }
 		    }
 		  ],
@@ -4674,14 +4126,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4706,24 +4158,23 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x3e546bd35d788d33
-	// Question: Find the slope of a line from its graph
+	// Question: Find the slope of a line from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x3e546bd35d788d33] Find the slope of a line from its graph", async () => {
+	test("line-equation-graph - [x3e546bd35d788d33] Find the slope of a line from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_main",
+		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 4,
-		        "B": 5,
-		        "C": -7,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": -0.8,
+		        "yIntercept": -1.4
 		      }
 		    }
 		  ],
@@ -4731,14 +4182,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4763,9 +4214,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5d5970f3f166cce3
-	// Question: Find the slope from a line graph
+	// Question: Find the slope from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x5d5970f3f166cce3] Find the slope from a line graph", async () => {
+	test("line-equation-graph - [x5d5970f3f166cce3] Find the slope from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4774,7 +4225,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -4787,14 +4238,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4830,13 +4281,12 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 2,
-		        "B": 3,
-		        "C": 9,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": -0.6666666666666666,
+		        "yIntercept": 3
 		      }
 		    }
 		  ],
@@ -4844,14 +4294,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -4876,9 +4326,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xbedecb984c803c5e
-	// Question: Find the slope from a graph
+	// Question: Find the slope of a line from its graph
 	// Widget key: image_1
-	test("line-equation-graph - [xbedecb984c803c5e] Find the slope from a graph", async () => {
+	test("line-equation-graph - [xbedecb984c803c5e] Find the slope of a line from its graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4887,47 +4337,33 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.75,
-		        "yIntercept": -1
+		        "A": 3,
+		        "B": -4,
+		        "C": 4,
+		        "type": "standard"
 		      }
 		    }
 		  ],
 		  "width": 345,
 		  "xAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
+		    "max": 6,
+		    "min": -2,
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
+		    "max": 4,
+		    "min": -3,
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 345,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": -1,
-		      "id": "p_left",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 4,
-		      "y": 2,
-		      "id": "p_right",
-		      "label": "",
-		      "style": "open"
-		    }
-		  ],
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -4947,9 +4383,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5320f53f34ff6465
-	// Question: Find the slope of the line from a graph
+	// Question: Find the slope from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x5320f53f34ff6465] Find the slope of the line from a graph", async () => {
+	test("line-equation-graph - [x5320f53f34ff6465] Find the slope from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4958,7 +4394,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "A": 3,
@@ -4972,14 +4408,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5015,7 +4451,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "A": 8,
@@ -5029,34 +4465,19 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 345,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": -4,
-		      "id": "p_left",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 4,
-		      "id": "p_right",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -5076,9 +4497,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xa6167533bb90b36c
-	// Question: Find the slope from a line graph
+	// Question: Find the slope from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xa6167533bb90b36c] Find the slope from a line graph", async () => {
+	test("line-equation-graph - [xa6167533bb90b36c] Find the slope from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5100,14 +4521,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5132,18 +4553,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x58a4a8a7189bbfe2
-	// Question: Find the slope of a line from its graph
+	// Question: Find the slope from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x58a4a8a7189bbfe2] Find the slope of a line from its graph", async () => {
+	test("line-equation-graph - [x58a4a8a7189bbfe2] Find the slope from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_main",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -5156,71 +4577,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 345,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb74eb2192a8afd98
-	// Question: Find the slope of a line from a graph
-	// Widget key: image_1
-	test("line-equation-graph - [xb74eb2192a8afd98] Find the slope of a line from a graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "x1": -2,
-		        "y1": 0,
-		        "type": "pointSlope",
-		        "slope": 3
-		      }
-		    }
-		  ],
-		  "width": 345,
-		  "xAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5245,9 +4609,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc99bebce1ab4431f
-	// Question: Find the slope of a line from a graph
+	// Question: Find the slope of a graphed line
 	// Widget key: image_1
-	test("line-equation-graph - [xc99bebce1ab4431f] Find the slope of a line from a graph", async () => {
+	test("line-equation-graph - [xc99bebce1ab4431f] Find the slope of a graphed line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5256,7 +4620,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -5269,14 +4633,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5301,9 +4665,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x3b306265b6edd217
-	// Question: Find the slope from a graphed line
+	// Question: Find the slope from a graph of a line
 	// Widget key: image_1
-	test("line-equation-graph - [x3b306265b6edd217] Find the slope from a graphed line", async () => {
+	test("line-equation-graph - [x3b306265b6edd217] Find the slope from a graph of a line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5312,7 +4676,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -5325,14 +4689,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5366,9 +4730,9 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_main",
+		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -5381,14 +4745,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5413,9 +4777,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x43262bda1448cb86
-	// Question: Find the slope from a graph
+	// Question: Find the slope of the line from its graph
 	// Widget key: image_1
-	test("line-equation-graph - [x43262bda1448cb86] Find the slope from a graph", async () => {
+	test("line-equation-graph - [x43262bda1448cb86] Find the slope of the line from its graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5424,7 +4788,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -5437,14 +4801,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5469,23 +4833,24 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x619def2702347fe0
-	// Question: Find the slope of a line from its graph
+	// Question: Find the slope from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x619def2702347fe0] Find the slope of a line from its graph", async () => {
+	test("line-equation-graph - [x619def2702347fe0] Find the slope from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_main",
+		      "id": "line_1",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.6666666667,
-		        "yIntercept": 1.3333333333
+		        "A": 2,
+		        "B": -3,
+		        "C": -4,
+		        "type": "standard"
 		      }
 		    }
 		  ],
@@ -5493,14 +4858,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5525,23 +4890,24 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2c45da6ae644dade
-	// Question: Find the slope of a graphed line
+	// Question: Find the slope from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x2c45da6ae644dade] Find the slope of a graphed line", async () => {
+	test("line-equation-graph - [x2c45da6ae644dade] Find the slope from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_main",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -0.3333333333333333,
-		        "yIntercept": 0.6666666666666666
+		        "A": 1,
+		        "B": 3,
+		        "C": 2,
+		        "type": "standard"
 		      }
 		    }
 		  ],
@@ -5549,14 +4915,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5581,9 +4947,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x932ac86d2324280c
-	// Question: Find the slope of a line from a graph
+	// Question: Find the slope from a graphed line
 	// Widget key: image_1
-	test("line-equation-graph - [x932ac86d2324280c] Find the slope of a line from a graph", async () => {
+	test("line-equation-graph - [x932ac86d2324280c] Find the slope from a graphed line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5595,24 +4961,25 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -1.75,
-		        "yIntercept": -1.25
+		        "A": 7,
+		        "B": 4,
+		        "C": -5,
+		        "type": "standard"
 		      }
 		    }
 		  ],
 		  "width": 345,
 		  "xAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "",
+		    "max": 5,
+		    "min": -5,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "",
+		    "max": 5,
+		    "min": -5,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5637,24 +5004,23 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x991d8a9be0e11c9b
-	// Question: Find the slope of a line from its graph
+	// Question: Find the slope of a line from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x991d8a9be0e11c9b] Find the slope of a line from its graph", async () => {
+	test("line-equation-graph - [x991d8a9be0e11c9b] Find the slope of a line from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_main",
+		      "id": "line_1",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 1,
-		        "B": -3,
-		        "C": 5,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": 0.3333333333333333,
+		        "yIntercept": -1.6666666666666667
 		      }
 		    }
 		  ],
@@ -5662,14 +5028,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5694,9 +5060,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xa878768c99f4f5bc
-	// Question: Find the slope of a line from its graph
+	// Question: Find the slope from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xa878768c99f4f5bc] Find the slope of a line from its graph", async () => {
+	test("line-equation-graph - [xa878768c99f4f5bc] Find the slope from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5705,12 +5071,13 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_main",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -2.6666666666666665,
-		        "yIntercept": 6.666666666666667
+		        "A": 8,
+		        "B": 3,
+		        "C": 20,
+		        "type": "standard"
 		      }
 		    }
 		  ],
@@ -5718,70 +5085,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 345,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5081fa2ea349aca3
-	// Question: Find the slope from a graph
-	// Widget key: image_1
-	test("line-equation-graph - [x5081fa2ea349aca3] Find the slope from a graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.5,
-		        "yIntercept": 3.5
-		      }
-		    }
-		  ],
-		  "width": 345,
-		  "xAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5806,9 +5117,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x62e488ee8e3190da
-	// Question: Find the slope of a line from a graph
+	// Question: Find the slope of a line from its graph
 	// Widget key: image_1
-	test("line-equation-graph - [x62e488ee8e3190da] Find the slope of a line from a graph", async () => {
+	test("line-equation-graph - [x62e488ee8e3190da] Find the slope of a line from its graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5830,14 +5141,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5862,9 +5173,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0cd23e143e6d0a71
-	// Question: Find the slope of a line from its graph
+	// Question: Find the slope from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x0cd23e143e6d0a71] Find the slope of a line from its graph", async () => {
+	test("line-equation-graph - [x0cd23e143e6d0a71] Find the slope from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5873,13 +5184,12 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 3,
-		        "B": 1,
-		        "C": -3,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": -3,
+		        "yIntercept": -3
 		      }
 		    }
 		  ],
@@ -5887,19 +5197,34 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -5,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 345,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 3,
+		      "id": "pt_left",
+		      "label": " ",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -3,
+		      "id": "pt_right",
+		      "label": " ",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -5928,9 +5253,9 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_main",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -5941,16 +5266,16 @@ describe("lineEquationGraph widget tests", () => {
 		  ],
 		  "width": 345,
 		  "xAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
+		    "max": 6,
+		    "min": -6,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
+		    "max": 6,
+		    "min": -6,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -5975,9 +5300,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6dfe44dd74d739f9
-	// Question: Find the slope of a line from its graph
+	// Question: Find the slope of a line from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x6dfe44dd74d739f9] Find the slope of a line from its graph", async () => {
+	test("line-equation-graph - [x6dfe44dd74d739f9] Find the slope of a line from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5986,28 +5311,27 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#11accd",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
-		        "A": 8,
-		        "B": 5,
-		        "C": 12,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": -1.6,
+		        "yIntercept": 2.4
 		      }
 		    }
 		  ],
 		  "width": 345,
 		  "xAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
+		    "max": 6,
+		    "min": -6,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
+		    "max": 6,
+		    "min": -6,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -6016,14 +5340,14 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": -1,
 		      "y": 4,
-		      "id": "p_left",
+		      "id": "pt_left",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
 		      "x": 4,
 		      "y": -4,
-		      "id": "p_right",
+		      "id": "pt_right",
 		      "label": "",
 		      "style": "open"
 		    }
@@ -6056,8 +5380,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_a1",
-		      "color": "#000000",
+		      "id": "line_a",
+		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -6073,14 +5397,14 @@ describe("lineEquationGraph widget tests", () => {
 		    "min": 0,
 		    "label": "x",
 		    "tickInterval": 2,
-		    "showGridLines": true
+		    "showGridLines": false
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": 0,
 		    "label": "y",
 		    "tickInterval": 2,
-		    "showGridLines": true
+		    "showGridLines": false
 		  },
 		  "height": 400,
 		  "points": [
@@ -6120,8 +5444,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_b1",
-		      "color": "#000000",
+		      "id": "line_b",
+		      "color": "#8a2be2",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -6137,14 +5461,14 @@ describe("lineEquationGraph widget tests", () => {
 		    "min": 0,
 		    "label": "x",
 		    "tickInterval": 2,
-		    "showGridLines": true
+		    "showGridLines": false
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": 0,
 		    "label": "y",
 		    "tickInterval": 2,
-		    "showGridLines": true
+		    "showGridLines": false
 		  },
 		  "height": 400,
 		  "points": [
@@ -6184,7 +5508,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_choice_a",
+		      "id": "line_a",
 		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
@@ -6215,8 +5539,8 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "origin_a",
-		      "label": "",
+		      "id": "origin",
+		      "label": " ",
 		      "style": "closed"
 		    }
 		  ],
@@ -6248,7 +5572,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_choice_b",
+		      "id": "line_b",
 		      "color": "#9467bd",
 		      "label": " ",
 		      "style": "solid",
@@ -6279,8 +5603,8 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "origin_b",
-		      "label": "",
+		      "id": "origin",
+		      "label": " ",
 		      "style": "closed"
 		    }
 		  ],
@@ -6312,13 +5636,13 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_a1",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "id": "line_a",
+		      "color": "#000000",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 1,
+		        "slope": 4,
 		        "yIntercept": 0
 		      }
 		    }
@@ -6327,14 +5651,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
@@ -6343,7 +5667,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "origin_dot",
+		      "id": "p_origin",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -6376,13 +5700,13 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_b1",
-		      "color": "#8e44ad",
-		      "label": " ",
+		      "id": "line_b",
+		      "color": "#000000",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.75,
+		        "slope": 0.5,
 		        "yIntercept": 2
 		      }
 		    }
@@ -6391,14 +5715,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
@@ -6407,7 +5731,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 2,
-		      "id": "y_intercept_dot",
+		      "id": "p_intercept",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -6430,10 +5754,10 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x6d27fb41885a7a77
-	// Question: Select the graph of a line in slope-intercept form
+	// Extracted from question: xa793847e4c597904
+	// Question: Graph the line y=4x-9
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x6d27fb41885a7a77] Select the graph of a line in slope-intercept form (1)", async () => {
+	test("line-equation-graph - [xa793847e4c597904] Graph the line y=4x-9 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6441,18 +5765,17 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 1,
-		        "B": -3,
-		        "C": -15,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": -4,
+		        "yIntercept": -9
 		      }
 		    }
 		  ],
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -6467,7 +5790,163 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 500,
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa793847e4c597904
+	// Question: Graph the line y=4x-9
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [xa793847e4c597904] Graph the line y=4x-9 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 4,
+		        "yIntercept": -9
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa793847e4c597904
+	// Question: Graph the line y=4x-9
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [xa793847e4c597904] Graph the line y=4x-9 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_c",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 4,
+		        "yIntercept": 9
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa793847e4c597904
+	// Question: Graph the line y=4x-9
+	// Widget key: coordinate_plane_empty
+	test("line-equation-graph - [xa793847e4c597904] Graph the line y=4x-9 (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -6488,9 +5967,66 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6d27fb41885a7a77
-	// Question: Select the graph of a line in slope-intercept form
+	// Question: Select the graph of y = -1/3x + 5
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [x6d27fb41885a7a77] Select the graph of y = -1/3x + 5 (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_a",
+		      "color": "#333333",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 3,
+		        "C": -15,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6d27fb41885a7a77
+	// Question: Select the graph of y = -1/3x + 5
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x6d27fb41885a7a77] Select the graph of a line in slope-intercept form (2)", async () => {
+	test("line-equation-graph - [x6d27fb41885a7a77] Select the graph of y = -1/3x + 5 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6498,7 +6034,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#000000",
+		      "color": "#333333",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -6509,7 +6045,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -6524,7 +6060,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 500,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -6545,9 +6081,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6d27fb41885a7a77
-	// Question: Select the graph of a line in slope-intercept form
+	// Question: Select the graph of y = -1/3x + 5
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x6d27fb41885a7a77] Select the graph of a line in slope-intercept form (3)", async () => {
+	test("line-equation-graph - [x6d27fb41885a7a77] Select the graph of y = -1/3x + 5 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6555,18 +6091,18 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#000000",
+		      "color": "#333333",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 1,
+		        "A": -1,
 		        "B": 3,
-		        "C": 12,
+		        "C": 15,
 		        "type": "standard"
 		      }
 		    }
 		  ],
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -6581,175 +6117,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 500,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa793847e4c597904
-	// Question: Graph the line y = 4x − 9
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [xa793847e4c597904] Graph the line y = 4x − 9 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_a",
-		      "color": "#000000",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 4,
-		        "yIntercept": -5
-		      }
-		    }
-		  ],
-		  "width": 428,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 428,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa793847e4c597904
-	// Question: Graph the line y = 4x − 9
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [xa793847e4c597904] Graph the line y = 4x − 9 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#000000",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 4,
-		        "yIntercept": -9
-		      }
-		    }
-		  ],
-		  "width": 428,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 428,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa793847e4c597904
-	// Question: Graph the line y = 4x − 9
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [xa793847e4c597904] Graph the line y = 4x − 9 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_c",
-		      "color": "#000000",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -4,
-		        "yIntercept": -9
-		      }
-		    }
-		  ],
-		  "width": 428,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -6770,9 +6138,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x4e0548d22e1822b2
-	// Question: Identify the correct graph of y = -2x + 5
+	// Question: Select the graph of y = -2x + 5
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x4e0548d22e1822b2] Identify the correct graph of y = -2x + 5 (1)", async () => {
+	test("line-equation-graph - [x4e0548d22e1822b2] Select the graph of y = -2x + 5 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6780,8 +6148,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#11accd",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -6790,7 +6158,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -6805,7 +6173,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -6826,9 +6194,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x4e0548d22e1822b2
-	// Question: Identify the correct graph of y = -2x + 5
+	// Question: Select the graph of y = -2x + 5
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x4e0548d22e1822b2] Identify the correct graph of y = -2x + 5 (2)", async () => {
+	test("line-equation-graph - [x4e0548d22e1822b2] Select the graph of y = -2x + 5 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6836,8 +6204,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#11accd",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -6846,7 +6214,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -6861,7 +6229,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -6882,9 +6250,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x4e0548d22e1822b2
-	// Question: Identify the correct graph of y = -2x + 5
+	// Question: Select the graph of y = -2x + 5
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x4e0548d22e1822b2] Identify the correct graph of y = -2x + 5 (3)", async () => {
+	test("line-equation-graph - [x4e0548d22e1822b2] Select the graph of y = -2x + 5 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6892,17 +6260,17 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#11accd",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": -2,
-		        "yIntercept": 3
+		        "yIntercept": -5
 		      }
 		    }
 		  ],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -6917,7 +6285,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -6938,9 +6306,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0343717eb1ad23e9
-	// Question: Identify the graph of y = 4/5x − 7
+	// Question: Select the graph of a line in slope-intercept form
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x0343717eb1ad23e9] Identify the graph of y = 4/5x − 7 (1)", async () => {
+	test("line-equation-graph - [x0343717eb1ad23e9] Select the graph of a line in slope-intercept form (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6948,7 +6316,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#000000",
+		      "color": "#333333",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -6958,7 +6326,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -6973,7 +6341,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -6994,9 +6362,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0343717eb1ad23e9
-	// Question: Identify the graph of y = 4/5x − 7
+	// Question: Select the graph of a line in slope-intercept form
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x0343717eb1ad23e9] Identify the graph of y = 4/5x − 7 (2)", async () => {
+	test("line-equation-graph - [x0343717eb1ad23e9] Select the graph of a line in slope-intercept form (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7004,7 +6372,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#000000",
+		      "color": "#333333",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -7014,7 +6382,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -7029,7 +6397,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -7050,9 +6418,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0343717eb1ad23e9
-	// Question: Identify the graph of y = 4/5x − 7
+	// Question: Select the graph of a line in slope-intercept form
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x0343717eb1ad23e9] Identify the graph of y = 4/5x − 7 (3)", async () => {
+	test("line-equation-graph - [x0343717eb1ad23e9] Select the graph of a line in slope-intercept form (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7060,7 +6428,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#000000",
+		      "color": "#333333",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -7070,7 +6438,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -7085,7 +6453,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -7106,9 +6474,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x47c880aebb2dca5c
-	// Question: Select the graph of y = (5/3)x - 9
+	// Question: Graph a line in slope-intercept form
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x47c880aebb2dca5c] Select the graph of y = (5/3)x - 9 (1)", async () => {
+	test("line-equation-graph - [x47c880aebb2dca5c] Graph a line in slope-intercept form (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7120,14 +6488,14 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 3,
-		        "B": -5,
-		        "C": 45,
+		        "A": 5,
+		        "B": -3,
+		        "C": -27,
 		        "type": "standard"
 		      }
 		    }
 		  ],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -7142,7 +6510,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -7163,9 +6531,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x47c880aebb2dca5c
-	// Question: Select the graph of y = (5/3)x - 9
+	// Question: Graph a line in slope-intercept form
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x47c880aebb2dca5c] Select the graph of y = (5/3)x - 9 (2)", async () => {
+	test("line-equation-graph - [x47c880aebb2dca5c] Graph a line in slope-intercept form (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7184,7 +6552,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -7199,7 +6567,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -7220,9 +6588,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x47c880aebb2dca5c
-	// Question: Select the graph of y = (5/3)x - 9
+	// Question: Graph a line in slope-intercept form
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x47c880aebb2dca5c] Select the graph of y = (5/3)x - 9 (3)", async () => {
+	test("line-equation-graph - [x47c880aebb2dca5c] Graph a line in slope-intercept form (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7234,14 +6602,14 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 5,
-		        "B": -3,
-		        "C": -27,
+		        "A": 3,
+		        "B": 5,
+		        "C": -45,
 		        "type": "standard"
 		      }
 		    }
 		  ],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -7256,7 +6624,51 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x47c880aebb2dca5c
+	// Question: Graph a line in slope-intercept form
+	// Widget key: coordinate_plane_empty
+	test("line-equation-graph - [x47c880aebb2dca5c] Graph a line in slope-intercept form (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -7277,9 +6689,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xfa5da5fce35b3433
-	// Question: Select the graph of y = x + 4
+	// Question: Graph the line y = x + 4
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xfa5da5fce35b3433] Select the graph of y = x + 4 (1)", async () => {
+	test("line-equation-graph - [xfa5da5fce35b3433] Graph the line y = x + 4 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7287,7 +6699,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -7297,7 +6709,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 428,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -7312,7 +6724,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 428,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -7333,9 +6745,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xfa5da5fce35b3433
-	// Question: Select the graph of y = x + 4
+	// Question: Graph the line y = x + 4
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xfa5da5fce35b3433] Select the graph of y = x + 4 (2)", async () => {
+	test("line-equation-graph - [xfa5da5fce35b3433] Graph the line y = x + 4 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7343,7 +6755,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -7353,7 +6765,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 428,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -7368,7 +6780,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 428,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -7389,9 +6801,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xfa5da5fce35b3433
-	// Question: Select the graph of y = x + 4
+	// Question: Graph the line y = x + 4
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xfa5da5fce35b3433] Select the graph of y = x + 4 (3)", async () => {
+	test("line-equation-graph - [xfa5da5fce35b3433] Graph the line y = x + 4 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7399,17 +6811,17 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#000000",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 2,
+		        "slope": -1,
 		        "yIntercept": 4
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 428,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -7424,7 +6836,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 428,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -7445,129 +6857,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x41b096b42d1050b4
-	// Question: Graph the line y = -3x + 7
+	// Question: Select the graph of y = -3x + 7
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x41b096b42d1050b4] Graph the line y = -3x + 7 (1)", async () => {
+	test("line-equation-graph - [x41b096b42d1050b4] Select the graph of y = -3x + 7 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_a1",
-		      "color": "#000000",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -3,
-		        "yIntercept": -7
-		      }
-		    }
-		  ],
-		  "width": 428,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 428,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x41b096b42d1050b4
-	// Question: Graph the line y = -3x + 7
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x41b096b42d1050b4] Graph the line y = -3x + 7 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b1",
-		      "color": "#000000",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -3,
-		        "yIntercept": 7
-		      }
-		    }
-		  ],
-		  "width": 428,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 428,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x41b096b42d1050b4
-	// Question: Graph the line y = -3x + 7
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x41b096b42d1050b4] Graph the line y = -3x + 7 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_c1",
-		      "color": "#000000",
+		      "id": "line_a",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -7577,6 +6877,174 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x41b096b42d1050b4
+	// Question: Select the graph of y = -3x + 7
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x41b096b42d1050b4] Select the graph of y = -3x + 7 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -3,
+		        "yIntercept": 7
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x41b096b42d1050b4
+	// Question: Select the graph of y = -3x + 7
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x41b096b42d1050b4] Select the graph of y = -3x + 7 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_c",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -3,
+		        "yIntercept": -7
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x57216f94cb401439
+	// Question: Select the graph of a line from its equation
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [x57216f94cb401439] Select the graph of a line from its equation (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_a",
+		      "color": "#2d70b3",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 1.3333333333333333,
+		        "yIntercept": 8
+		      }
+		    }
+		  ],
 		  "width": 428,
 		  "xAxis": {
 		    "max": 10,
@@ -7613,65 +7081,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x57216f94cb401439
-	// Question: Select the graph of y = -4/3 x + 8
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [x57216f94cb401439] Select the graph of y = -4/3 x + 8 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_a",
-		      "color": "#2252C1",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1.3333333333333333,
-		        "yIntercept": 8
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x57216f94cb401439
-	// Question: Select the graph of y = -4/3 x + 8
+	// Question: Select the graph of a line from its equation
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x57216f94cb401439] Select the graph of y = -4/3 x + 8 (2)", async () => {
+	test("line-equation-graph - [x57216f94cb401439] Select the graph of a line from its equation (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7679,7 +7091,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#2252C1",
+		      "color": "#2d70b3",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -7689,7 +7101,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 428,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -7704,7 +7116,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 428,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -7725,9 +7137,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x57216f94cb401439
-	// Question: Select the graph of y = -4/3 x + 8
+	// Question: Select the graph of a line from its equation
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x57216f94cb401439] Select the graph of y = -4/3 x + 8 (3)", async () => {
+	test("line-equation-graph - [x57216f94cb401439] Select the graph of a line from its equation (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7735,17 +7147,17 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#2252C1",
+		      "color": "#2d70b3",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": -1.3333333333333333,
-		        "yIntercept": 6
+		        "yIntercept": 5
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 428,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -7760,7 +7172,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 428,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -7781,17 +7193,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xcfbafcbbbbadec5f
-	// Question: Select the graph of y = 3/4 x + 2
+	// Question: Graph the line y = 3/4 x + 2
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xcfbafcbbbbadec5f] Select the graph of y = 3/4 x + 2 (1)", async () => {
+	test("line-equation-graph - [xcfbafcbbbbadec5f] Graph the line y = 3/4 x + 2 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_a1",
-		      "color": "#1f77b4",
+		      "id": "line_a",
+		      "color": "#000000",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -7837,17 +7249,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xcfbafcbbbbadec5f
-	// Question: Select the graph of y = 3/4 x + 2
+	// Question: Graph the line y = 3/4 x + 2
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xcfbafcbbbbadec5f] Select the graph of y = 3/4 x + 2 (2)", async () => {
+	test("line-equation-graph - [xcfbafcbbbbadec5f] Graph the line y = 3/4 x + 2 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_b1",
-		      "color": "#1f77b4",
+		      "id": "line_b",
+		      "color": "#000000",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -7893,17 +7305,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xcfbafcbbbbadec5f
-	// Question: Select the graph of y = 3/4 x + 2
+	// Question: Graph the line y = 3/4 x + 2
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xcfbafcbbbbadec5f] Select the graph of y = 3/4 x + 2 (3)", async () => {
+	test("line-equation-graph - [xcfbafcbbbbadec5f] Graph the line y = 3/4 x + 2 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_c1",
-		      "color": "#1f77b4",
+		      "id": "line_c",
+		      "color": "#000000",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -7959,8 +7371,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#000000",
-		      "label": " ",
+		      "color": "#11accd",
+		      "label": "A",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -8015,8 +7427,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#000000",
-		      "label": " ",
+		      "color": "#11accd",
+		      "label": "B",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -8071,8 +7483,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#000000",
-		      "label": " ",
+		      "color": "#11accd",
+		      "label": "C",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -8117,9 +7529,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe103ffec7ab888e3
-	// Question: Identify the graph of a line from slope-intercept form
+	// Question: Select the graph of a linear equation
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xe103ffec7ab888e3] Identify the graph of a line from slope-intercept form (1)", async () => {
+	test("line-equation-graph - [xe103ffec7ab888e3] Select the graph of a linear equation (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8127,8 +7539,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#11accd",
-		      "label": " ",
+		      "color": "#000000",
+		      "label": "A",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -8137,7 +7549,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -8152,7 +7564,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -8173,9 +7585,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe103ffec7ab888e3
-	// Question: Identify the graph of a line from slope-intercept form
+	// Question: Select the graph of a linear equation
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xe103ffec7ab888e3] Identify the graph of a line from slope-intercept form (2)", async () => {
+	test("line-equation-graph - [xe103ffec7ab888e3] Select the graph of a linear equation (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8183,8 +7595,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#11accd",
-		      "label": " ",
+		      "color": "#000000",
+		      "label": "B",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -8193,7 +7605,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -8208,7 +7620,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -8229,9 +7641,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe103ffec7ab888e3
-	// Question: Identify the graph of a line from slope-intercept form
+	// Question: Select the graph of a linear equation
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xe103ffec7ab888e3] Identify the graph of a line from slope-intercept form (3)", async () => {
+	test("line-equation-graph - [xe103ffec7ab888e3] Select the graph of a linear equation (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8239,8 +7651,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#11accd",
-		      "label": " ",
+		      "color": "#000000",
+		      "label": "C",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -8249,7 +7661,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 428,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -8264,7 +7676,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 428,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -8285,9 +7697,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xfe5ac51c24aed858
-	// Question: Select the graph of y = -x - 6
+	// Question: Graph the line y = -x - 6
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xfe5ac51c24aed858] Select the graph of y = -x - 6 (1)", async () => {
+	test("line-equation-graph - [xfe5ac51c24aed858] Graph the line y = -x - 6 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8296,7 +7708,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_a",
 		      "color": "#000000",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -8341,9 +7753,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xfe5ac51c24aed858
-	// Question: Select the graph of y = -x - 6
+	// Question: Graph the line y = -x - 6
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xfe5ac51c24aed858] Select the graph of y = -x - 6 (2)", async () => {
+	test("line-equation-graph - [xfe5ac51c24aed858] Graph the line y = -x - 6 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8352,7 +7764,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_b",
 		      "color": "#000000",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -8397,9 +7809,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xfe5ac51c24aed858
-	// Question: Select the graph of y = -x - 6
+	// Question: Graph the line y = -x - 6
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xfe5ac51c24aed858] Select the graph of y = -x - 6 (3)", async () => {
+	test("line-equation-graph - [xfe5ac51c24aed858] Graph the line y = -x - 6 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8408,7 +7820,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_c",
 		      "color": "#000000",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -8453,23 +7865,24 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xa82a01dabb65f81c
-	// Question: Select the graph of y = (2/3)x − 4
+	// Question: Graph a line from slope–intercept form
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xa82a01dabb65f81c] Select the graph of y = (2/3)x − 4 (1)", async () => {
+	test("line-equation-graph - [xa82a01dabb65f81c] Graph a line from slope–intercept form (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_a",
-		      "color": "#000000",
+		      "id": "line_a1",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -0.6666666667,
-		        "yIntercept": -4
+		        "A": 2,
+		        "B": -3,
+		        "C": -12,
+		        "type": "standard"
 		      }
 		    }
 		  ],
@@ -8509,17 +7922,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xa82a01dabb65f81c
-	// Question: Select the graph of y = (2/3)x − 4
+	// Question: Graph a line from slope–intercept form
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xa82a01dabb65f81c] Select the graph of y = (2/3)x − 4 (2)", async () => {
+	test("line-equation-graph - [xa82a01dabb65f81c] Graph a line from slope–intercept form (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_b",
-		      "color": "#000000",
+		      "id": "line_b1",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -8566,23 +7979,24 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xa82a01dabb65f81c
-	// Question: Select the graph of y = (2/3)x − 4
+	// Question: Graph a line from slope–intercept form
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xa82a01dabb65f81c] Select the graph of y = (2/3)x − 4 (3)", async () => {
+	test("line-equation-graph - [xa82a01dabb65f81c] Graph a line from slope–intercept form (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_c",
-		      "color": "#000000",
+		      "id": "line_c1",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.6666666667,
-		        "yIntercept": 4
+		        "A": 2,
+		        "B": 3,
+		        "C": -12,
+		        "type": "standard"
 		      }
 		    }
 		  ],
@@ -8622,9 +8036,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xafbb6f34200c6a60
-	// Question: Graph a line from slope-intercept form
+	// Question: Graph the line y = 6/5 x + 1
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xafbb6f34200c6a60] Graph a line from slope-intercept form (1)", async () => {
+	test("line-equation-graph - [xafbb6f34200c6a60] Graph the line y = 6/5 x + 1 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8678,9 +8092,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xafbb6f34200c6a60
-	// Question: Graph a line from slope-intercept form
+	// Question: Graph the line y = 6/5 x + 1
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xafbb6f34200c6a60] Graph a line from slope-intercept form (2)", async () => {
+	test("line-equation-graph - [xafbb6f34200c6a60] Graph the line y = 6/5 x + 1 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8734,9 +8148,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xafbb6f34200c6a60
-	// Question: Graph a line from slope-intercept form
+	// Question: Graph the line y = 6/5 x + 1
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xafbb6f34200c6a60] Graph a line from slope-intercept form (3)", async () => {
+	test("line-equation-graph - [xafbb6f34200c6a60] Graph the line y = 6/5 x + 1 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8749,8 +8163,8 @@ describe("lineEquationGraph widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -1.2,
-		        "yIntercept": 1
+		        "slope": 1.2,
+		        "yIntercept": -1
 		      }
 		    }
 		  ],
@@ -8790,9 +8204,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xae1f52d54ca20e1c
-	// Question: Select the graph of y = -1/4 x + 6
+	// Question: Select the graph of a line in slope-intercept form
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xae1f52d54ca20e1c] Select the graph of y = -1/4 x + 6 (1)", async () => {
+	test("line-equation-graph - [xae1f52d54ca20e1c] Select the graph of a line in slope-intercept form (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8800,7 +8214,119 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#000000",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -0.25,
+		        "yIntercept": 4
+		      }
+		    }
+		  ],
+		  "width": 428,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 428,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xae1f52d54ca20e1c
+	// Question: Select the graph of a line in slope-intercept form
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [xae1f52d54ca20e1c] Select the graph of a line in slope-intercept form (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
+		      "color": "#d62728",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -0.25,
+		        "yIntercept": 6
+		      }
+		    }
+		  ],
+		  "width": 428,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 428,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xae1f52d54ca20e1c
+	// Question: Select the graph of a line in slope-intercept form
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [xae1f52d54ca20e1c] Select the graph of a line in slope-intercept form (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_c",
+		      "color": "#2ca02c",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -8810,7 +8336,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 428,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -8825,242 +8351,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xae1f52d54ca20e1c
-	// Question: Select the graph of y = -1/4 x + 6
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [xae1f52d54ca20e1c] Select the graph of y = -1/4 x + 6 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#000000",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -0.25,
-		        "yIntercept": 6
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xae1f52d54ca20e1c
-	// Question: Select the graph of y = -1/4 x + 6
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [xae1f52d54ca20e1c] Select the graph of y = -1/4 x + 6 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_c",
-		      "color": "#000000",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -0.25,
-		        "yIntercept": -6
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x906998f8
-	// Question: Complete sentences using a profit graph
-	// Widget key: image_1
-	test("line-equation-graph - [x906998f8] Complete sentences using a profit graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_profit",
-		      "color": "#3b82f6",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1,
-		        "yIntercept": -8
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 21,
-		    "min": -2,
-		    "label": "n",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 13,
-		    "min": -9,
-		    "label": "P",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd53997a12fc2d3d3
-	// Question: How many solutions does the system have?
-	// Widget key: interaction_1
-	test("line-equation-graph - [xd53997a12fc2d3d3] How many solutions does the system have?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#6495ED",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -5,
-		        "yIntercept": -1
-		      }
-		    },
-		    {
-		      "id": "line_2",
-		      "color": "#FF00AF",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -5,
-		        "yIntercept": 7
-		      }
-		    }
-		  ],
-		  "width": 280,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 280,
+		  "height": 428,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -9081,15 +8372,113 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x9ed7c1d417207dd7
-	// Question: Number of solutions for a system of linear equations
-	// Widget key: interaction_1_graph
-	test("line-equation-graph - [x9ed7c1d417207dd7] Number of solutions for a system of linear equations", async () => {
+	// Question: How many solutions does the system have?
+	// Widget key: graph_image
+	test("line-equation-graph - [x9ed7c1d417207dd7] How many solutions does the system have?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_2x3y",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "A": 2,
+		        "B": 3,
+		        "C": -6,
+		        "type": "standard"
+		      }
+		    },
+		    {
+		      "id": "line_3x_4y",
+		      "color": "#ca337c",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "A": 3,
+		        "B": -4,
+		        "C": -12,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": 0,
+		      "id": "p_neg3_0",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -2,
+		      "id": "p_0_neg2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": 0,
+		      "id": "p_neg4_0",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 3,
+		      "id": "p_0_3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf976b5edc9083e48
+	// Question: How many solutions does the system have?
+	// Widget key: interaction_1
+	test("line-equation-graph - [xf976b5edc9083e48] How many solutions does the system have?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [],
-		  "width": 280,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -9104,7 +8493,51 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 280,
+		  "height": 360,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2398f8c09c674fa1
+	// Question: Number of solutions for a linear system
+	// Widget key: system_graph
+	test("line-equation-graph - [x2398f8c09c674fa1] Number of solutions for a linear system", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -9125,9 +8558,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xae50b2c52e1c1b14
-	// Question: How many solutions does the system have?
-	// Widget key: graph_diagram
-	test("line-equation-graph - [xae50b2c52e1c1b14] How many solutions does the system have?", async () => {
+	// Question: How many solutions does the linear system have?
+	// Widget key: system_graph
+	test("line-equation-graph - [xae50b2c52e1c1b14] How many solutions does the linear system have?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9172,33 +8605,293 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 345,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0256d3e2e2b7f1c1
+	// Question: Number of solutions for a linear system
+	// Widget key: graph_image
+	test("line-equation-graph - [x0256d3e2e2b7f1c1] Number of solutions for a linear system", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_y_3x_plus_3",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 3,
+		        "yIntercept": 3
+		      }
+		    },
+		    {
+		      "id": "line_y_neg2x_plus_3",
+		      "color": "#ca337c",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -2,
+		        "yIntercept": 3
+		      }
+		    }
+		  ],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa4c56137a96aa008
+	// Question: How many solutions does the system have?
+	// Widget key: interaction_1
+	test("line-equation-graph - [xa4c56137a96aa008] How many solutions does the system have?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_1",
+		      "color": "#6495ED",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 4,
+		        "B": -2,
+		        "C": 8,
+		        "type": "standard"
+		      }
+		    },
+		    {
+		      "id": "line_2",
+		      "color": "#FF00AF",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 2,
+		        "B": 1,
+		        "C": 2,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xaffdfd83fb89fd38
+	// Question: How many solutions does the system have?
+	// Widget key: system_graph
+	test("line-equation-graph - [xaffdfd83fb89fd38] How many solutions does the system have?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_1",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 4,
+		        "B": -10,
+		        "C": -20,
+		        "type": "standard"
+		      }
+		    },
+		    {
+		      "id": "line_2",
+		      "color": "#ca337c",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 6,
+		        "B": -15,
+		        "C": -30,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7510ed5e616ee2f9
+	// Question: Number of solutions of a system of linear equations
+	// Widget key: graph_helper
+	test("line-equation-graph - [x7510ed5e616ee2f9] Number of solutions of a system of linear equations", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_1",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 3,
+		        "B": -5,
+		        "C": 15,
+		        "type": "standard"
+		      }
+		    },
+		    {
+		      "id": "line_2",
+		      "color": "#ca337c",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 6,
+		        "B": -10,
+		        "C": 30,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 345,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 345,
 		  "points": [
 		    {
 		      "x": 0,
-		      "y": 1,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 2,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -5,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
 		      "y": -3,
-		      "id": "p4",
-		      "label": "",
+		      "id": "p_intercept_y",
+		      "label": " ",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 0,
+		      "id": "p_intercept_x",
+		      "label": " ",
 		      "style": "closed"
 		    }
 		  ],
@@ -9220,98 +8913,10 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x0256d3e2e2b7f1c1
-	// Question: Number of solutions for a linear system
-	// Widget key: interaction_1
-	test("line-equation-graph - [x0256d3e2e2b7f1c1] Number of solutions for a linear system", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [],
-		  "width": 280,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 280,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8ac284c814375bc5
-	// Question: How many solutions does the system have?
-	// Widget key: interaction_1
-	test("line-equation-graph - [x8ac284c814375bc5] How many solutions does the system have?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [],
-		  "width": 280,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 280,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x935564d69287e18e
-	// Question: Compare plant heights and growth rates
+	// Question: Compare two plants from a table and a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x935564d69287e18e] Compare plant heights and growth rates", async () => {
+	test("line-equation-graph - [x935564d69287e18e] Compare two plants from a table and a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9320,7 +8925,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_second_plant",
 		      "color": "#6495ED",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -9365,9 +8970,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc19ebc0a5c2a2c27
-	// Question: Compare filling rates and completion times for two pools
+	// Question: Compare filling rates and completion times from an equation and a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xc19ebc0a5c2a2c27] Compare filling rates and completion times for two pools", async () => {
+	test("line-equation-graph - [xc19ebc0a5c2a2c27] Compare filling rates and completion times from an equation and a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9385,7 +8990,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 290,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -9400,30 +9005,8 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 25,
 		    "showGridLines": true
 		  },
-		  "height": 290,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "p0",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 200,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 10,
-		      "y": 250,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 400,
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -9443,16 +9026,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x79b40256eb502fad
-	// Question: Compare starting temperature and cooling rate of two stoves
+	// Question: Compare starting temperature and cooling rate from an equation and a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x79b40256eb502fad] Compare starting temperature and cooling rate of two stoves", async () => {
+	test("line-equation-graph - [x79b40256eb502fad] Compare starting temperature and cooling rate from an equation and a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_stove_2",
+		      "id": "line_second_stove",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
@@ -9463,7 +9046,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 290,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 100,
 		    "min": 0,
@@ -9478,7 +9061,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
-		  "height": 290,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -9499,18 +9082,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x1586984c0fa227a5
-	// Question: Compare rates and values from a table and a graph
+	// Question: Compare engine temperature changes from a table and a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x1586984c0fa227a5] Compare rates and values from a table and a graph", async () => {
+	test("line-equation-graph - [x1586984c0fa227a5] Compare engine temperature changes from a table and a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_engine2",
-		      "color": "#6495ED",
-		      "label": "",
+		      "id": "line_second_engine",
+		      "color": "#6495ed",
+		      "label": "Second engine",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -9555,9 +9138,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5846bddae6ebeef0
-	// Question: Compare starting weight and gain rate from a table and a graph
+	// Question: Compare starting weight and rate of change from a table and a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x5846bddae6ebeef0] Compare starting weight and gain rate from a table and a graph", async () => {
+	test("line-equation-graph - [x5846bddae6ebeef0] Compare starting weight and rate of change from a table and a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9566,7 +9149,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_second_wrestler",
 		      "color": "#6495ED",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -9610,62 +9193,6 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x849d98f5daffa001
-	// Question: Compare distance and speed from a table and a graph
-	// Widget key: image_1
-	test("line-equation-graph - [x849d98f5daffa001] Compare distance and speed from a table and a graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_mrs_smith",
-		      "color": "#6495ed",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -0.15,
-		        "yIntercept": 4.5
-		      }
-		    }
-		  ],
-		  "width": 468,
-		  "xAxis": {
-		    "max": 50,
-		    "min": 0,
-		    "label": "Time (minutes)",
-		    "tickInterval": 2.5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "min": 0,
-		    "label": "Distance (kilometers)",
-		    "tickInterval": 0.25,
-		    "showGridLines": true
-		  },
-		  "height": 456,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x8add814b277262fc
 	// Question: Compare loudness rates and values from an equation and a graph
 	// Widget key: image_1
@@ -9687,7 +9214,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 290,
+		  "width": 300,
 		  "xAxis": {
 		    "max": 50,
 		    "min": 0,
@@ -9702,7 +9229,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
-		  "height": 290,
+		  "height": 300,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -9723,9 +9250,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd2c0ba896e54f832
-	// Question: Compare sawmill pricing: per-meter rate and 5-meter cost
+	// Question: Compare pricing from two sawmills
 	// Widget key: image_1
-	test("line-equation-graph - [xd2c0ba896e54f832] Compare sawmill pricing: per-meter rate and 5-meter cost", async () => {
+	test("line-equation-graph - [xd2c0ba896e54f832] Compare pricing from two sawmills", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9733,8 +9260,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_second_sawmill",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#3366cc",
+		      "label": "Second sawmill",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -9743,7 +9270,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 290,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -9752,13 +9279,69 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 120,
+		    "max": 200,
 		    "min": 0,
 		    "label": "Price (dollars)",
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
-		  "height": 290,
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x623b9944358fc7bb
+	// Question: Compare drinking rates and finishing times from a graph
+	// Widget key: image_1
+	test("line-equation-graph - [x623b9944358fc7bb] Compare drinking rates and finishing times from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_mariana",
+		      "color": "#6495ED",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -5,
+		        "yIntercept": 250
+		      }
+		    }
+		  ],
+		  "width": 468,
+		  "xAxis": {
+		    "max": 60,
+		    "min": 0,
+		    "label": "Time (seconds)",
+		    "tickInterval": 2.5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 300,
+		    "min": 0,
+		    "label": "Slushy (milliliters)",
+		    "tickInterval": 10,
+		    "showGridLines": true
+		  },
+		  "height": 456,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -9835,9 +9418,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x499570e2c6705704
-	// Question: Compare starting balance and yearly profit
+	// Question: Compare starting balance and yearly profit from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x499570e2c6705704] Compare starting balance and yearly profit", async () => {
+	test("line-equation-graph - [x499570e2c6705704] Compare starting balance and yearly profit from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9891,17 +9474,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x93a111bf5770b09f
-	// Question: Compare fuel cost per kilometer and trip cost
+	// Question: Compare fuel cost rates and trip costs for two rental cars
 	// Widget key: image_1
-	test("line-equation-graph - [x93a111bf5770b09f] Compare fuel cost per kilometer and trip cost", async () => {
+	test("line-equation-graph - [x93a111bf5770b09f] Compare fuel cost rates and trip costs for two rental cars", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_second_car_cost",
-		      "color": "#6495ED",
+		      "id": "line_second_car",
+		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -9956,9 +9539,9 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_wage",
-		      "color": "#6495ED",
-		      "label": " ",
+		      "id": "line_earnings",
+		      "color": "#6495ed",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -10018,16 +9601,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x42b4d0df1a92c9bb
-	// Question: Find the price per kilogram from a graph
+	// Question: Find the price per kilogram of oranges from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x42b4d0df1a92c9bb] Find the price per kilogram from a graph", async () => {
+	test("line-equation-graph - [x42b4d0df1a92c9bb] Find the price per kilogram of oranges from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_price",
+		      "id": "line_oranges",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -10058,14 +9641,85 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "origin",
+		      "id": "p_origin",
 		      "label": " ",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": 3,
-		      "id": "pt_1_3",
+		      "id": "p_1_3",
+		      "label": " ",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9d793449690d400b
+	// Question: Price of gas from a graph
+	// Widget key: image_1
+	test("line-equation-graph - [x9d793449690d400b] Price of gas from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_gas_cost",
+		      "color": "#6495ed",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 1.5,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 480,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Liters of gas",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Total cost (dollars)",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 480,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "origin",
+		      "label": " ",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 1.5,
+		      "id": "unit_point",
 		      "label": " ",
 		      "style": "closed"
 		    }
@@ -10089,9 +9743,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x69f002005c348087
-	// Question: Interpret statements from a cost–area graph
+	// Question: Identify true statements from a fabric cost graph
 	// Widget key: image_1
-	test("line-equation-graph - [x69f002005c348087] Interpret statements from a cost–area graph", async () => {
+	test("line-equation-graph - [x69f002005c348087] Identify true statements from a fabric cost graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10100,7 +9754,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_cost",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -10136,78 +9790,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 4,
 		      "y": 24,
-		      "id": "point_4_24",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9d793449690d400b
-	// Question: Price of gas from a graph
-	// Widget key: image_1
-	test("line-equation-graph - [x9d793449690d400b] Price of gas from a graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_price",
-		      "color": "#6495ed",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1.5,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 480,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Liters of gas",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Total cost (dollars)",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 480,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "origin",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 1.5,
-		      "id": "unit_rate_point",
+		      "id": "p_4_24",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10231,9 +9814,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2a51eb844cc29b88
-	// Question: Find the car's speed from a graph
+	// Question: Find the speed from a distance–time graph
 	// Widget key: image_1
-	test("line-equation-graph - [x2a51eb844cc29b88] Find the car's speed from a graph", async () => {
+	test("line-equation-graph - [x2a51eb844cc29b88] Find the speed from a distance–time graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10272,14 +9855,14 @@ describe("lineEquationGraph widget tests", () => {
 		      "x": 0,
 		      "y": 0,
 		      "id": "origin",
-		      "label": "",
+		      "label": " ",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": 80,
 		      "id": "point_1_80",
-		      "label": "",
+		      "label": " ",
 		      "style": "closed"
 		    }
 		  ],
@@ -10302,16 +9885,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5b47b0fc3817b601
-	// Question: Identify true statements from a proportional graph
+	// Question: True statements about a proportional relationship graph
 	// Widget key: image_1
-	test("line-equation-graph - [x5b47b0fc3817b601] Identify true statements from a proportional graph", async () => {
+	test("line-equation-graph - [x5b47b0fc3817b601] True statements about a proportional relationship graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_proportional",
+		      "id": "line_fill_rate",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -10365,6 +9948,70 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x8dc1da390aff75c9
+	// Question: Interpret statements about a proportional graph (phone call cost)
+	// Widget key: image_1
+	test("line-equation-graph - [x8dc1da390aff75c9] Interpret statements about a proportional graph (phone call cost)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_cost_rate",
+		      "color": "#6495ed",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.25,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 360,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Duration (minutes)",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Total cost (dollars)",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 8,
+		      "y": 2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: x78e9a6c865bd0a8b
 	// Question: Interpret statements about a proportional relationship graph
 	// Widget key: image_1
@@ -10375,7 +10022,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_cost",
+		      "id": "line_1",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -10429,81 +10076,17 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xadcb80a8c6fed5ff
-	// Question: True statements about a time–distance graph
-	// Widget key: image_1
-	test("line-equation-graph - [xadcb80a8c6fed5ff] True statements about a time–distance graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_proportional",
-		      "color": "#6495ed",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 2.5,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 360,
-		  "xAxis": {
-		    "max": 5,
-		    "min": 0,
-		    "label": "Time (hours)",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 15,
-		    "min": 0,
-		    "label": "Distance (kilometers)",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": 7.5,
-		      "id": "pt_3_7_5",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x9fc95d75ef41e7cb
-	// Question: Identify true statements from a time–length graph
+	// Question: Identify true statements from a time vs. necklace length graph
 	// Widget key: image_1
-	test("line-equation-graph - [x9fc95d75ef41e7cb] Identify true statements from a time–length graph", async () => {
+	test("line-equation-graph - [x9fc95d75ef41e7cb] Identify true statements from a time vs. necklace length graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_relationship",
+		      "id": "line_relation",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -10518,14 +10101,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 3,
 		    "min": 0,
-		    "label": "Time open parenthesis hours close parenthesis",
+		    "label": "Time (hours)",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 40,
 		    "min": 0,
-		    "label": "Length of necklace open parenthesis centimeters close parenthesis",
+		    "label": "Length of necklace (centimeters)",
 		    "tickInterval": 4,
 		    "showGridLines": true
 		  },
@@ -10534,14 +10117,14 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "origin",
+		      "id": "origin_point",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 24,
-		      "id": "p_2_24",
+		      "id": "point_2_24",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10565,16 +10148,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe4872b36f59da093
-	// Question: Interpret statements from a mass–cost graph
+	// Question: Interpret points on a mass–cost graph
 	// Widget key: image_1
-	test("line-equation-graph - [xe4872b36f59da093] Interpret statements from a mass–cost graph", async () => {
+	test("line-equation-graph - [xe4872b36f59da093] Interpret points on a mass–cost graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_cashews",
+		      "id": "line_cost",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -10605,14 +10188,14 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "origin",
+		      "id": "origin_point",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 60,
-		      "id": "p_2_60",
+		      "id": "point_2_60",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10636,16 +10219,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x4766b39f42528fe1
-	// Question: True statements about a taxi-ride cost graph
+	// Question: Interpret statements from a proportional relationship on a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x4766b39f42528fe1] True statements about a taxi-ride cost graph", async () => {
+	test("line-equation-graph - [x4766b39f42528fe1] Interpret statements from a proportional relationship on a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_cost",
+		      "id": "line_proportional_cost",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -10700,17 +10283,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x9888c49fa56a36a9
-	// Question: Interpret a graph relating tomato sauce and tomato paste
+	// Question: Tomato sauce and paste graph: true statements
 	// Widget key: image_1
-	test("line-equation-graph - [x9888c49fa56a36a9] Interpret a graph relating tomato sauce and tomato paste", async () => {
+	test("line-equation-graph - [x9888c49fa56a36a9] Tomato sauce and paste graph: true statements", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_recipe",
-		      "color": "#6495ed",
+		      "id": "line_recipe_ratio",
+		      "color": "#6495ED",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -10740,221 +10323,15 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "p_origin",
-		      "label": " ",
+		      "id": "origin",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 8,
 		      "y": 4,
-		      "id": "p_8_4",
-		      "label": " ",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x928ba2b79602a17a
-	// Question: Interpret statements about a fencing installation graph
-	// Widget key: image_1
-	test("line-equation-graph - [x928ba2b79602a17a] Interpret statements about a fencing installation graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_through_origin",
-		      "color": "#6495ed",
+		      "id": "point_8_4",
 		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 15,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 360,
-		  "xAxis": {
-		    "max": 5,
-		    "min": 0,
-		    "label": "Time (hours)",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 100,
-		    "min": 0,
-		    "label": "Length of fencing (meters)",
-		    "tickInterval": 20,
-		    "showGridLines": true
-		  },
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "origin",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 60,
-		      "id": "point_A",
-		      "label": "A",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xeb75a762fbcdbb41
-	// Question: Interpret statements about a height–time graph
-	// Widget key: image_1
-	test("line-equation-graph - [xeb75a762fbcdbb41] Interpret statements about a height–time graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_balloon",
-		      "color": "#6495ed",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 20,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 360,
-		  "xAxis": {
-		    "max": 5,
-		    "min": 0,
-		    "label": "Time (minutes)",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 120,
-		    "min": 0,
-		    "label": "Height (meters)",
-		    "tickInterval": 20,
-		    "showGridLines": true
-		  },
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "origin",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 40,
-		      "id": "p_2_40",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9c946afd631afdea
-	// Question: Select true statements about a proportional relationship on a graph
-	// Widget key: image_1
-	test("line-equation-graph - [x9c946afd631afdea] Select true statements about a proportional relationship on a graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_rental_cost",
-		      "color": "#6495ed",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 40,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 360,
-		  "xAxis": {
-		    "max": 7,
-		    "min": 1,
-		    "label": "Rental days",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 350,
-		    "min": 50,
-		    "label": "Total cost (dollars)",
-		    "tickInterval": 50,
-		    "showGridLines": true
-		  },
-		  "height": 360,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": 200,
-		      "id": "A",
-		      "label": "A",
 		      "style": "closed"
 		    }
 		  ],
@@ -10977,72 +10354,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x14b06f01627567dc
-	// Question: Select the graph of Amir's altitude over time
+	// Question: Graph Amir's altitude over time
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x14b06f01627567dc] Select the graph of Amir's altitude over time (1)", async () => {
+	test("line-equation-graph - [x14b06f01627567dc] Graph Amir's altitude over time (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_a",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 12,
-		        "yIntercept": -360
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 65,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 420,
-		    "min": -360,
-		    "label": "",
-		    "tickInterval": 60,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x14b06f01627567dc
-	// Question: Select the graph of Amir's altitude over time
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x14b06f01627567dc] Select the graph of Amir's altitude over time (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
+		      "id": "line_altitude_correct",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
@@ -11053,22 +10374,22 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 65,
 		    "min": 0,
-		    "label": "",
+		    "label": "Time in minutes",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 420,
 		    "min": -360,
-		    "label": "",
+		    "label": "Altitude in meters",
 		    "tickInterval": 60,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 432,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -11089,42 +10410,98 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x14b06f01627567dc
-	// Question: Select the graph of Amir's altitude over time
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x14b06f01627567dc] Select the graph of Amir's altitude over time (3)", async () => {
+	// Question: Graph Amir's altitude over time
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x14b06f01627567dc] Graph Amir's altitude over time (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_c",
+		      "id": "line_altitude_positive_slope",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -12,
-		        "yIntercept": 300
+		        "slope": 12,
+		        "yIntercept": -360
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 65,
 		    "min": 0,
-		    "label": "",
+		    "label": "Time in minutes",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 420,
 		    "min": -360,
-		    "label": "",
+		    "label": "Altitude in meters",
 		    "tickInterval": 60,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 432,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x14b06f01627567dc
+	// Question: Graph Amir's altitude over time
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x14b06f01627567dc] Graph Amir's altitude over time (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_altitude_wrong_intercept",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -12,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 420,
+		  "xAxis": {
+		    "max": 65,
+		    "min": 0,
+		    "label": "Time in minutes",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 420,
+		    "min": -360,
+		    "label": "Altitude in meters",
+		    "tickInterval": 60,
+		    "showGridLines": true
+		  },
+		  "height": 432,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -11145,9 +10522,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xdc28743e11ab4f10
-	// Question: Graph the relationship between file size and time
+	// Question: Graph the relationship between files and time
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xdc28743e11ab4f10] Graph the relationship between file size and time (1)", async () => {
+	test("line-equation-graph - [xdc28743e11ab4f10] Graph the relationship between files and time (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11155,149 +10532,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#cc3333",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 4,
-		        "yIntercept": 30
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 100,
-		    "min": 0,
-		    "label": "Time (seconds)",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 400,
-		    "min": 0,
-		    "label": "Files (megabytes)",
-		    "tickInterval": 20,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 30,
-		      "id": "a_pt1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 10,
-		      "y": 70,
-		      "id": "a_pt2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xdc28743e11ab4f10
-	// Question: Graph the relationship between file size and time
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [xdc28743e11ab4f10] Graph the relationship between file size and time (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#6495ed",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 4,
-		        "yIntercept": 60
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 100,
-		    "min": 0,
-		    "label": "Time (seconds)",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 400,
-		    "min": 0,
-		    "label": "Files (megabytes)",
-		    "tickInterval": 20,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 60,
-		      "id": "b_pt1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 10,
-		      "y": 100,
-		      "id": "b_pt2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xdc28743e11ab4f10
-	// Question: Graph the relationship between file size and time
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [xdc28743e11ab4f10] Graph the relationship between file size and time (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_c",
-		      "color": "#2e8b57",
+		      "color": "#6495ED",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -11310,35 +10545,176 @@ describe("lineEquationGraph widget tests", () => {
 		  "width": 400,
 		  "xAxis": {
 		    "max": 100,
-		    "min": 0,
+		    "min": -10,
 		    "label": "Time (seconds)",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 400,
-		    "min": 0,
+		    "min": -40,
 		    "label": "Files (megabytes)",
 		    "tickInterval": 20,
 		    "showGridLines": true
 		  },
 		  "height": 400,
-		  "points": [
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xdc28743e11ab4f10
+	// Question: Graph the relationship between files and time
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [xdc28743e11ab4f10] Graph the relationship between files and time (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
 		    {
-		      "x": 0,
-		      "y": 60,
-		      "id": "c_pt1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 10,
-		      "y": 80,
-		      "id": "c_pt2",
-		      "label": "",
-		      "style": "closed"
+		      "id": "line_b",
+		      "color": "#6495ED",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 4,
+		        "yIntercept": 60
+		      }
 		    }
 		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 100,
+		    "min": -10,
+		    "label": "Time (seconds)",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 400,
+		    "min": -40,
+		    "label": "Files (megabytes)",
+		    "tickInterval": 20,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xdc28743e11ab4f10
+	// Question: Graph the relationship between files and time
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [xdc28743e11ab4f10] Graph the relationship between files and time (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_c",
+		      "color": "#6495ED",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 4,
+		        "yIntercept": 40
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 100,
+		    "min": -10,
+		    "label": "Time (seconds)",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 400,
+		    "min": -40,
+		    "label": "Files (megabytes)",
+		    "tickInterval": 20,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xdc28743e11ab4f10
+	// Question: Graph the relationship between files and time
+	// Widget key: coordinate_plane_empty
+	test("line-equation-graph - [xdc28743e11ab4f10] Graph the relationship between files and time (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 100,
+		    "min": -10,
+		    "label": "Time (seconds)",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 400,
+		    "min": -40,
+		    "label": "Files (megabytes)",
+		    "tickInterval": 20,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -11358,9 +10734,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x410b06b89adabc3c
-	// Question: Graph a linear temperature–time relationship
+	// Question: Graph temperature vs. time for heating pizza
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x410b06b89adabc3c] Graph a linear temperature–time relationship (1)", async () => {
+	test("line-equation-graph - [x410b06b89adabc3c] Graph temperature vs. time for heating pizza (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11369,7 +10745,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_a",
 		      "color": "#000000",
-		      "label": " ",
+		      "label": "A",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -11382,14 +10758,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 15,
 		    "min": -2,
-		    "label": "Time in minutes",
+		    "label": "Time (minutes)",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 85,
 		    "min": -15,
-		    "label": "Temperature in degrees Celsius",
+		    "label": "Temperature (°C)",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
@@ -11414,9 +10790,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x410b06b89adabc3c
-	// Question: Graph a linear temperature–time relationship
+	// Question: Graph temperature vs. time for heating pizza
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x410b06b89adabc3c] Graph a linear temperature–time relationship (2)", async () => {
+	test("line-equation-graph - [x410b06b89adabc3c] Graph temperature vs. time for heating pizza (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11425,7 +10801,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_b",
 		      "color": "#000000",
-		      "label": " ",
+		      "label": "B",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -11438,14 +10814,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 15,
 		    "min": -2,
-		    "label": "Time in minutes",
+		    "label": "Time (minutes)",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 85,
 		    "min": -15,
-		    "label": "Temperature in degrees Celsius",
+		    "label": "Temperature (°C)",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
@@ -11470,9 +10846,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x410b06b89adabc3c
-	// Question: Graph a linear temperature–time relationship
+	// Question: Graph temperature vs. time for heating pizza
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x410b06b89adabc3c] Graph a linear temperature–time relationship (3)", async () => {
+	test("line-equation-graph - [x410b06b89adabc3c] Graph temperature vs. time for heating pizza (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11481,7 +10857,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_c",
 		      "color": "#000000",
-		      "label": " ",
+		      "label": "C",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -11494,14 +10870,58 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 15,
 		    "min": -2,
-		    "label": "Time in minutes",
+		    "label": "Time (minutes)",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 85,
 		    "min": -15,
-		    "label": "Temperature in degrees Celsius",
+		    "label": "Temperature (°C)",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x410b06b89adabc3c
+	// Question: Graph temperature vs. time for heating pizza
+	// Widget key: coordinate_plane_empty
+	test("line-equation-graph - [x410b06b89adabc3c] Graph temperature vs. time for heating pizza (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 15,
+		    "min": -2,
+		    "label": "Time (minutes)",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 85,
+		    "min": -15,
+		    "label": "Temperature (°C)",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
@@ -11526,9 +10946,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd65a6039f2a16da1
-	// Question: Graph temperature over time with a cooling rate
+	// Question: Graph the room temperature over time
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xd65a6039f2a16da1] Graph temperature over time with a cooling rate (1)", async () => {
+	test("line-equation-graph - [xd65a6039f2a16da1] Graph the room temperature over time (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11536,8 +10956,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#cc0000",
-		      "label": " ",
+		      "color": "#cd5c5c",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -11546,22 +10966,22 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 70,
 		    "min": 0,
-		    "label": "",
+		    "label": "Time in minutes",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 50,
 		    "min": 0,
-		    "label": "",
+		    "label": "Temperature in degrees Celsius",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 432,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -11582,9 +11002,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd65a6039f2a16da1
-	// Question: Graph temperature over time with a cooling rate
+	// Question: Graph the room temperature over time
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xd65a6039f2a16da1] Graph temperature over time with a cooling rate (2)", async () => {
+	test("line-equation-graph - [xd65a6039f2a16da1] Graph the room temperature over time (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11592,8 +11012,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#6495ed",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -11602,22 +11022,22 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 70,
 		    "min": 0,
-		    "label": "",
+		    "label": "Time in minutes",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 50,
 		    "min": 0,
-		    "label": "",
+		    "label": "Temperature in degrees Celsius",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 432,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -11638,9 +11058,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd65a6039f2a16da1
-	// Question: Graph temperature over time with a cooling rate
+	// Question: Graph the room temperature over time
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xd65a6039f2a16da1] Graph temperature over time with a cooling rate (3)", async () => {
+	test("line-equation-graph - [xd65a6039f2a16da1] Graph the room temperature over time (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11648,32 +11068,32 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#2ca02c",
-		      "label": " ",
+		      "color": "#3cb371",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": -0.5,
-		        "yIntercept": 20
+		        "yIntercept": 30
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 70,
 		    "min": 0,
-		    "label": "",
+		    "label": "Time in minutes",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 50,
 		    "min": 0,
-		    "label": "",
+		    "label": "Temperature in degrees Celsius",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 432,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -11704,13 +11124,13 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#d9534f",
+		      "color": "#6495ED",
 		      "label": "A",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": 0.1,
-		        "yIntercept": 0.5
+		        "yIntercept": 0
 		      }
 		    }
 		  ],
@@ -11718,14 +11138,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 65,
 		    "min": -5,
-		    "label": "Time in seconds",
+		    "label": "Time (seconds)",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 4,
 		    "min": -4,
-		    "label": "Altitude in meters",
+		    "label": "Altitude (meters)",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
@@ -11760,7 +11180,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "label": "B",
 		      "style": "solid",
 		      "equation": {
@@ -11774,14 +11194,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 65,
 		    "min": -5,
-		    "label": "Time in seconds",
+		    "label": "Time (seconds)",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 4,
 		    "min": -4,
-		    "label": "Altitude in meters",
+		    "label": "Altitude (meters)",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
@@ -11816,13 +11236,13 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#5cb85c",
+		      "color": "#6495ED",
 		      "label": "C",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -0.1,
-		        "yIntercept": 3.5
+		        "slope": 0.2,
+		        "yIntercept": -7
 		      }
 		    }
 		  ],
@@ -11830,14 +11250,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 65,
 		    "min": -5,
-		    "label": "Time in seconds",
+		    "label": "Time (seconds)",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 4,
 		    "min": -4,
-		    "label": "Altitude in meters",
+		    "label": "Altitude (meters)",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
@@ -11863,7 +11283,7 @@ describe("lineEquationGraph widget tests", () => {
 
 	// Extracted from question: xcf83dc7e0fd84563
 	// Question: Graph the relationship between altitude and time
-	// Widget key: coordinate_plane
+	// Widget key: coordinate_plane_empty
 	test("line-equation-graph - [xcf83dc7e0fd84563] Graph the relationship between altitude and time (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -11874,14 +11294,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 65,
 		    "min": -5,
-		    "label": "Time in seconds",
+		    "label": "Time (seconds)",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 4,
 		    "min": -4,
-		    "label": "Altitude in meters",
+		    "label": "Altitude (meters)",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
@@ -11906,9 +11326,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc0a26769677f3cf5
-	// Question: Graph the battery’s capacity over time
+	// Question: Graph the relationship between battery capacity and time
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xc0a26769677f3cf5] Graph the battery’s capacity over time (1)", async () => {
+	test("line-equation-graph - [xc0a26769677f3cf5] Graph the relationship between battery capacity and time (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11916,7 +11336,119 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#6495ED",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 5,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 420,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Time (minutes)",
+		    "tickInterval": 0.5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": 0,
+		    "label": "Capacity (%)",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "height": 420,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc0a26769677f3cf5
+	// Question: Graph the relationship between battery capacity and time
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [xc0a26769677f3cf5] Graph the relationship between battery capacity and time (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 5,
+		        "yIntercept": 20
+		      }
+		    }
+		  ],
+		  "width": 420,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Time (minutes)",
+		    "tickInterval": 0.5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": 0,
+		    "label": "Capacity (%)",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "height": 420,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc0a26769677f3cf5
+	// Question: Graph the relationship between battery capacity and time
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [xc0a26769677f3cf5] Graph the relationship between battery capacity and time (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_c",
+		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -11941,165 +11473,8 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
-		  "height": 436,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 20,
-		      "id": "a_p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 24,
-		      "id": "a_p2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc0a26769677f3cf5
-	// Question: Graph the battery’s capacity over time
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [xc0a26769677f3cf5] Graph the battery’s capacity over time (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#6495ED",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 5,
-		        "yIntercept": 20
-		      }
-		    }
-		  ],
-		  "width": 420,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Time (minutes)",
-		    "tickInterval": 0.5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 100,
-		    "min": 0,
-		    "label": "Capacity (%)",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "height": 436,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 20,
-		      "id": "b_p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 25,
-		      "id": "b_p2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc0a26769677f3cf5
-	// Question: Graph the battery’s capacity over time
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [xc0a26769677f3cf5] Graph the battery’s capacity over time (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_c",
-		      "color": "#6495ED",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 5,
-		        "yIntercept": 10
-		      }
-		    }
-		  ],
-		  "width": 420,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Time (minutes)",
-		    "tickInterval": 0.5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 100,
-		    "min": 0,
-		    "label": "Capacity (%)",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "height": 436,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 10,
-		      "id": "c_p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 15,
-		      "id": "c_p2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 420,
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -12129,13 +11504,13 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 2,
-		        "yIntercept": -20
+		        "slope": 4,
+		        "yIntercept": -18
 		      }
 		    }
 		  ],
@@ -12143,14 +11518,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 6,
 		    "min": -0.5,
-		    "label": "Time (seconds)",
+		    "label": "Time in seconds",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 2,
 		    "min": -22,
-		    "label": "Elevation (meters)",
+		    "label": "Elevation in meters",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
@@ -12185,7 +11560,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -12199,14 +11574,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 6,
 		    "min": -0.5,
-		    "label": "Time (seconds)",
+		    "label": "Time in seconds",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 2,
 		    "min": -22,
-		    "label": "Elevation (meters)",
+		    "label": "Elevation in meters",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
@@ -12241,7 +11616,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -12255,14 +11630,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 6,
 		    "min": -0.5,
-		    "label": "Time (seconds)",
+		    "label": "Time in seconds",
 		    "tickInterval": 0.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 2,
 		    "min": -22,
-		    "label": "Elevation (meters)",
+		    "label": "Elevation in meters",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
@@ -12287,9 +11662,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x838dfcc95af22194
-	// Question: Select the graph of beard length over time
+	// Question: Graph a linear relationship: Rip Van Winkle's beard
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x838dfcc95af22194] Select the graph of beard length over time (1)", async () => {
+	test("line-equation-graph - [x838dfcc95af22194] Graph a linear relationship: Rip Van Winkle's beard (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12298,16 +11673,16 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_a",
 		      "color": "#6495ED",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": 2,
-		        "yIntercept": 0
+		        "yIntercept": 4
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 25,
 		    "min": 0,
@@ -12322,8 +11697,23 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 4,
 		    "showGridLines": true
 		  },
-		  "height": 400,
-		  "points": [],
+		  "height": 432,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 4,
+		      "id": "a_p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 8,
+		      "id": "a_p2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -12343,9 +11733,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x838dfcc95af22194
-	// Question: Select the graph of beard length over time
+	// Question: Graph a linear relationship: Rip Van Winkle's beard
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x838dfcc95af22194] Select the graph of beard length over time (2)", async () => {
+	test("line-equation-graph - [x838dfcc95af22194] Graph a linear relationship: Rip Van Winkle's beard (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12354,7 +11744,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_b",
 		      "color": "#6495ED",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -12363,7 +11753,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 25,
 		    "min": 0,
@@ -12378,8 +11768,23 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 4,
 		    "showGridLines": true
 		  },
-		  "height": 400,
-		  "points": [],
+		  "height": 432,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 8,
+		      "id": "b_p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 12,
+		      "id": "b_p2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -12399,9 +11804,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x838dfcc95af22194
-	// Question: Select the graph of beard length over time
+	// Question: Graph a linear relationship: Rip Van Winkle's beard
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x838dfcc95af22194] Select the graph of beard length over time (3)", async () => {
+	test("line-equation-graph - [x838dfcc95af22194] Graph a linear relationship: Rip Van Winkle's beard (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12410,16 +11815,16 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_c",
 		      "color": "#6495ED",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 1,
+		        "slope": -2,
 		        "yIntercept": 8
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 25,
 		    "min": 0,
@@ -12432,6 +11837,77 @@ describe("lineEquationGraph widget tests", () => {
 		    "min": 0,
 		    "label": "Beard in millimeters",
 		    "tickInterval": 4,
+		    "showGridLines": true
+		  },
+		  "height": 432,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 8,
+		      "id": "c_p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 4,
+		      "id": "c_p2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf3d31d6245dff323
+	// Question: Graph a linear relationship from a rate and a point
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [xf3d31d6245dff323] Graph a linear relationship from a rate and a point (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_a",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 4,
+		        "yIntercept": 100
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 30,
+		    "min": 0,
+		    "label": "Time in minutes",
+		    "tickInterval": 2.5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 250,
+		    "min": 0,
+		    "label": "Water level in centimeters",
+		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
 		  "height": 400,
@@ -12455,65 +11931,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xf3d31d6245dff323
-	// Question: Graph a linear relationship from a rate and a data point
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [xf3d31d6245dff323] Graph a linear relationship from a rate and a data point (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_a",
-		      "color": "#6495ed",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 6,
-		        "yIntercept": 80
-		      }
-		    }
-		  ],
-		  "width": 420,
-		  "xAxis": {
-		    "max": 30,
-		    "min": 0,
-		    "label": "Time (minutes)",
-		    "tickInterval": 2.5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 250,
-		    "min": 0,
-		    "label": "Water level (centimeters)",
-		    "tickInterval": 10,
-		    "showGridLines": true
-		  },
-		  "height": 432,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf3d31d6245dff323
-	// Question: Graph a linear relationship from a rate and a data point
+	// Question: Graph a linear relationship from a rate and a point
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xf3d31d6245dff323] Graph a linear relationship from a rate and a data point (2)", async () => {
+	test("line-equation-graph - [xf3d31d6245dff323] Graph a linear relationship from a rate and a point (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12521,7 +11941,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#6495ed",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -12531,22 +11951,22 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 420,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 30,
 		    "min": 0,
-		    "label": "Time (minutes)",
+		    "label": "Time in minutes",
 		    "tickInterval": 2.5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 250,
 		    "min": 0,
-		    "label": "Water level (centimeters)",
+		    "label": "Water level in centimeters",
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
-		  "height": 432,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -12567,9 +11987,207 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xf3d31d6245dff323
-	// Question: Graph a linear relationship from a rate and a data point
+	// Question: Graph a linear relationship from a rate and a point
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xf3d31d6245dff323] Graph a linear relationship from a rate and a data point (3)", async () => {
+	test("line-equation-graph - [xf3d31d6245dff323] Graph a linear relationship from a rate and a point (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_c",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 6,
+		        "yIntercept": 80
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 30,
+		    "min": 0,
+		    "label": "Time in minutes",
+		    "tickInterval": 2.5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 250,
+		    "min": 0,
+		    "label": "Water level in centimeters",
+		    "tickInterval": 10,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0e3bfaa9a115ce7d
+	// Question: Graph a linear relationship for a slushy
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [x0e3bfaa9a115ce7d] Graph a linear relationship for a slushy (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_a",
+		      "color": "#6495ed",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 5,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 420,
+		  "xAxis": {
+		    "max": 55,
+		    "min": -5,
+		    "label": "Time (seconds)",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 275,
+		    "min": -25,
+		    "label": "Slushy (milliliters)",
+		    "tickInterval": 25,
+		    "showGridLines": true
+		  },
+		  "height": 436,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "a_p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 50,
+		      "y": 250,
+		      "id": "a_p2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0e3bfaa9a115ce7d
+	// Question: Graph a linear relationship for a slushy
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x0e3bfaa9a115ce7d] Graph a linear relationship for a slushy (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
+		      "color": "#6495ed",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -5,
+		        "yIntercept": 250
+		      }
+		    }
+		  ],
+		  "width": 420,
+		  "xAxis": {
+		    "max": 55,
+		    "min": -5,
+		    "label": "Time (seconds)",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 275,
+		    "min": -25,
+		    "label": "Slushy (milliliters)",
+		    "tickInterval": 25,
+		    "showGridLines": true
+		  },
+		  "height": 436,
+		  "points": [
+		    {
+		      "x": 45,
+		      "y": 25,
+		      "id": "b_p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 50,
+		      "y": 0,
+		      "id": "b_p2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0e3bfaa9a115ce7d
+	// Question: Graph a linear relationship for a slushy
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x0e3bfaa9a115ce7d] Graph a linear relationship for a slushy (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12582,69 +12200,13 @@ describe("lineEquationGraph widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 5,
-		        "yIntercept": 120
+		        "slope": -5,
+		        "yIntercept": 200
 		      }
 		    }
 		  ],
 		  "width": 420,
 		  "xAxis": {
-		    "max": 30,
-		    "min": 0,
-		    "label": "Time (minutes)",
-		    "tickInterval": 2.5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 250,
-		    "min": 0,
-		    "label": "Water level (centimeters)",
-		    "tickInterval": 10,
-		    "showGridLines": true
-		  },
-		  "height": 432,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0e3bfaa9a115ce7d
-	// Question: Graph the relationship between slushy amount and time
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [x0e3bfaa9a115ce7d] Graph the relationship between slushy amount and time (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_a1",
-		      "color": "#cc0000",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -5,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
 		    "max": 55,
 		    "min": -5,
 		    "label": "Time (seconds)",
@@ -12658,120 +12220,23 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 25,
 		    "showGridLines": true
 		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0e3bfaa9a115ce7d
-	// Question: Graph the relationship between slushy amount and time
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x0e3bfaa9a115ce7d] Graph the relationship between slushy amount and time (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
+		  "height": 436,
+		  "points": [
 		    {
-		      "id": "line_b1",
-		      "color": "#1f77b4",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -5,
-		        "yIntercept": 250
-		      }
+		      "x": 35,
+		      "y": 25,
+		      "id": "c_p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 40,
+		      "y": 0,
+		      "id": "c_p2",
+		      "label": "",
+		      "style": "closed"
 		    }
 		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 55,
-		    "min": -5,
-		    "label": "Time (seconds)",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 275,
-		    "min": -25,
-		    "label": "Slushy (milliliters)",
-		    "tickInterval": 25,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0e3bfaa9a115ce7d
-	// Question: Graph the relationship between slushy amount and time
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x0e3bfaa9a115ce7d] Graph the relationship between slushy amount and time (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_c1",
-		      "color": "#2ca02c",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 5,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 55,
-		    "min": -5,
-		    "label": "Time (seconds)",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 275,
-		    "min": -25,
-		    "label": "Slushy (milliliters)",
-		    "tickInterval": 25,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -12791,53 +12256,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe817bd1743196be9
-	// Question: Graph the relationship between water remaining and time
-	// Widget key: tub_plane
-	test("line-equation-graph - [xe817bd1743196be9] Graph the relationship between water remaining and time (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "Time in minutes",
-		    "tickInterval": 0.5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 500,
-		    "min": 0,
-		    "label": "Water in liters",
-		    "tickInterval": 25,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe817bd1743196be9
-	// Question: Graph the relationship between water remaining and time
+	// Question: Graph the relationship of water drained over time
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xe817bd1743196be9] Graph the relationship between water remaining and time (2)", async () => {
+	test("line-equation-graph - [xe817bd1743196be9] Graph the relationship of water drained over time (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12845,7 +12266,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#1f77b4",
+		      "color": "#000000",
 		      "label": "A",
 		      "style": "solid",
 		      "equation": {
@@ -12855,7 +12276,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -12870,7 +12291,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 25,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 420,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -12891,9 +12312,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe817bd1743196be9
-	// Question: Graph the relationship between water remaining and time
+	// Question: Graph the relationship of water drained over time
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xe817bd1743196be9] Graph the relationship between water remaining and time (3)", async () => {
+	test("line-equation-graph - [xe817bd1743196be9] Graph the relationship of water drained over time (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12901,7 +12322,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#1f77b4",
+		      "color": "#000000",
 		      "label": "B",
 		      "style": "solid",
 		      "equation": {
@@ -12911,7 +12332,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -12926,7 +12347,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 25,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 420,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -12947,9 +12368,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe817bd1743196be9
-	// Question: Graph the relationship between water remaining and time
+	// Question: Graph the relationship of water drained over time
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xe817bd1743196be9] Graph the relationship between water remaining and time (4)", async () => {
+	test("line-equation-graph - [xe817bd1743196be9] Graph the relationship of water drained over time (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12957,7 +12378,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#1f77b4",
+		      "color": "#000000",
 		      "label": "C",
 		      "style": "solid",
 		      "equation": {
@@ -12967,7 +12388,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 420,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -12982,7 +12403,51 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 25,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 420,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe817bd1743196be9
+	// Question: Graph the relationship of water drained over time
+	// Widget key: coordinate_plane_empty
+	test("line-equation-graph - [xe817bd1743196be9] Graph the relationship of water drained over time (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
+		  "width": 420,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "Time in minutes",
+		    "tickInterval": 0.5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 500,
+		    "min": 0,
+		    "label": "Water in liters",
+		    "tickInterval": 25,
+		    "showGridLines": true
+		  },
+		  "height": 420,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -13003,9 +12468,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x33f26168fd454ba7
-	// Question: Graph Mr. Mole's elevation over time
+	// Question: Graph Mr. Mole’s elevation over time
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x33f26168fd454ba7] Graph Mr. Mole's elevation over time (1)", async () => {
+	test("line-equation-graph - [x33f26168fd454ba7] Graph Mr. Mole’s elevation over time (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13013,120 +12478,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#d62728",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 3,
-		        "yIntercept": -5
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 20,
-		    "min": -2,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "min": -50,
-		    "label": "",
-		    "tickInterval": 2.5,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x33f26168fd454ba7
-	// Question: Graph Mr. Mole's elevation over time
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x33f26168fd454ba7] Graph Mr. Mole's elevation over time (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#1f77b4",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -3,
-		        "yIntercept": -5
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 20,
-		    "min": -2,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "min": -50,
-		    "label": "",
-		    "tickInterval": 2.5,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x33f26168fd454ba7
-	// Question: Graph Mr. Mole's elevation over time
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x33f26168fd454ba7] Graph Mr. Mole's elevation over time (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_c",
-		      "color": "#2ca02c",
-		      "label": " ",
+		      "color": "#6495ed",
+		      "label": "A",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -13139,14 +12492,170 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 20,
 		    "min": -2,
-		    "label": "",
+		    "label": "Time (minutes)",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 5,
 		    "min": -50,
-		    "label": "",
+		    "label": "Elevation (meters)",
+		    "tickInterval": 2.5,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x33f26168fd454ba7
+	// Question: Graph Mr. Mole’s elevation over time
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x33f26168fd454ba7] Graph Mr. Mole’s elevation over time (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
+		      "color": "#6495ed",
+		      "label": "B",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -3,
+		        "yIntercept": -5
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 20,
+		    "min": -2,
+		    "label": "Time (minutes)",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "min": -50,
+		    "label": "Elevation (meters)",
+		    "tickInterval": 2.5,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x33f26168fd454ba7
+	// Question: Graph Mr. Mole’s elevation over time
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x33f26168fd454ba7] Graph Mr. Mole’s elevation over time (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_c",
+		      "color": "#6495ed",
+		      "label": "C",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -2,
+		        "yIntercept": -5
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 20,
+		    "min": -2,
+		    "label": "Time (minutes)",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "min": -50,
+		    "label": "Elevation (meters)",
+		    "tickInterval": 2.5,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x33f26168fd454ba7
+	// Question: Graph Mr. Mole’s elevation over time
+	// Widget key: coordinate_plane_empty
+	test("line-equation-graph - [x33f26168fd454ba7] Graph Mr. Mole’s elevation over time (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 20,
+		    "min": -2,
+		    "label": "Time (minutes)",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "min": -50,
+		    "label": "Elevation (meters)",
 		    "tickInterval": 2.5,
 		    "showGridLines": true
 		  },
@@ -13171,18 +12680,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8f8d832158f61603
-	// Question: Graph the relationship between fuel and distance
+	// Question: Graph fuel remaining versus distance driven
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x8f8d832158f61603] Graph the relationship between fuel and distance (1)", async () => {
+	test("line-equation-graph - [x8f8d832158f61603] Graph fuel remaining versus distance driven (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_wrong_positive_slope",
-		      "color": "#cc0000",
-		      "label": "",
+		      "id": "line_a",
+		      "color": "#6495ED",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -13227,18 +12736,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8f8d832158f61603
-	// Question: Graph the relationship between fuel and distance
+	// Question: Graph fuel remaining versus distance driven
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x8f8d832158f61603] Graph the relationship between fuel and distance (2)", async () => {
+	test("line-equation-graph - [x8f8d832158f61603] Graph fuel remaining versus distance driven (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_correct",
-		      "color": "#1f77b4",
-		      "label": "",
+		      "id": "line_b",
+		      "color": "#6495ED",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -13283,26 +12792,70 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8f8d832158f61603
-	// Question: Graph the relationship between fuel and distance
+	// Question: Graph fuel remaining versus distance driven
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x8f8d832158f61603] Graph the relationship between fuel and distance (3)", async () => {
+	test("line-equation-graph - [x8f8d832158f61603] Graph fuel remaining versus distance driven (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_wrong_slope_magnitude",
-		      "color": "#2ca02c",
-		      "label": "",
+		      "id": "line_c",
+		      "color": "#6495ED",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -0.4,
+		        "slope": -0.6,
 		        "yIntercept": 400
 		      }
 		    }
 		  ],
+		  "width": 420,
+		  "xAxis": {
+		    "max": 600,
+		    "min": 0,
+		    "label": "Distance in kilometers",
+		    "tickInterval": 50,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 440,
+		    "min": 0,
+		    "label": "Fuel in liters",
+		    "tickInterval": 40,
+		    "showGridLines": true
+		  },
+		  "height": 432,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8f8d832158f61603
+	// Question: Graph fuel remaining versus distance driven
+	// Widget key: coordinate_plane_empty
+	test("line-equation-graph - [x8f8d832158f61603] Graph fuel remaining versus distance driven (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
 		  "width": 420,
 		  "xAxis": {
 		    "max": 600,
@@ -13350,12 +12903,12 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_a",
 		      "color": "#000000",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": -0.2,
-		        "yIntercept": 3
+		        "yIntercept": 0
 		      }
 		    }
 		  ],
@@ -13363,14 +12916,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 20,
 		    "min": -2,
-		    "label": "",
+		    "label": "Time (minutes)",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 4,
 		    "min": -0.5,
-		    "label": "",
+		    "label": "Elevation (kilometers)",
 		    "tickInterval": 0.25,
 		    "showGridLines": true
 		  },
@@ -13406,12 +12959,12 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_b",
 		      "color": "#000000",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.2,
-		        "yIntercept": -3
+		        "slope": -0.2,
+		        "yIntercept": 3
 		      }
 		    }
 		  ],
@@ -13419,14 +12972,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 20,
 		    "min": -2,
-		    "label": "",
+		    "label": "Time (minutes)",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 4,
 		    "min": -0.5,
-		    "label": "",
+		    "label": "Elevation (kilometers)",
 		    "tickInterval": 0.25,
 		    "showGridLines": true
 		  },
@@ -13462,12 +13015,12 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_c",
 		      "color": "#000000",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": -0.2,
-		        "yIntercept": 2
+		        "yIntercept": 4
 		      }
 		    }
 		  ],
@@ -13475,14 +13028,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 20,
 		    "min": -2,
-		    "label": "",
+		    "label": "Time (minutes)",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 4,
 		    "min": -0.5,
-		    "label": "",
+		    "label": "Elevation (kilometers)",
 		    "tickInterval": 0.25,
 		    "showGridLines": true
 		  },
@@ -13507,18 +13060,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8efc3f31a398950a
-	// Question: Find the equation of a line from its graph (slope-intercept form)
+	// Question: Find the equation of the line
 	// Widget key: image_1
-	test("line-equation-graph - [x8efc3f31a398950a] Find the equation of a line from its graph (slope-intercept form)", async () => {
+	test("line-equation-graph - [x8efc3f31a398950a] Find the equation of the line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_main",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -13530,143 +13083,15 @@ describe("lineEquationGraph widget tests", () => {
 		  "width": 424,
 		  "xAxis": {
 		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "min": -2,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 424,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": -2,
-		      "id": "pt_y_intercept",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 1,
-		      "id": "pt_second",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x11c489de0a584b2c
-	// Question: Find the equation of a line from a graph
-	// Widget key: image_1
-	test("line-equation-graph - [x11c489de0a584b2c] Find the equation of a line from a graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#6495ed",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": -2,
-		        "C": 6,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 424,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 424,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x52444715339adf05
-	// Question: Find the equation of a line from a graph (slope–intercept form)
-	// Widget key: image_1
-	test("line-equation-graph - [x52444715339adf05] Find the equation of a line from a graph (slope–intercept form)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#6495ED",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 4,
-		        "yIntercept": -9
-		      }
-		    }
-		  ],
-		  "width": 424,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 6,
+		    "min": -6,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -13715,14 +13140,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -13746,10 +13171,137 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd7fa42897bfe3c7f
-	// Question: Find the equation of a line from its graph
+	// Extracted from question: x11c489de0a584b2c
+	// Question: Find the equation of a line from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xd7fa42897bfe3c7f] Find the equation of a line from its graph", async () => {
+	test("line-equation-graph - [x11c489de0a584b2c] Find the equation of a line from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_1",
+		      "color": "#6495ed",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.5,
+		        "yIntercept": -3
+		      }
+		    }
+		  ],
+		  "width": 424,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 424,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x52444715339adf05
+	// Question: Find the equation of a line from a graph
+	// Widget key: image_1
+	test("line-equation-graph - [x52444715339adf05] Find the equation of a line from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_1",
+		      "color": "#6495ed",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 4,
+		        "yIntercept": -9
+		      }
+		    }
+		  ],
+		  "width": 424,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 424,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": -9,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -5,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd7fa42897bfe3c7f
+	// Question: Find the equation of the line
+	// Widget key: image_1
+	test("line-equation-graph - [xd7fa42897bfe3c7f] Find the equation of the line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13771,14 +13323,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -13803,9 +13355,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x75ff5d1c253a0359
-	// Question: Find the equation of the line
+	// Question: Find the equation of a line from a graph (slope-intercept form)
 	// Widget key: image_1
-	test("line-equation-graph - [x75ff5d1c253a0359] Find the equation of the line", async () => {
+	test("line-equation-graph - [x75ff5d1c253a0359] Find the equation of a line from a graph (slope-intercept form)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13827,14 +13379,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -13859,9 +13411,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7286ac26b8d0e019
-	// Question: Find the equation of a line from its graph
+	// Question: Find the equation of a line from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x7286ac26b8d0e019] Find the equation of a line from its graph", async () => {
+	test("line-equation-graph - [x7286ac26b8d0e019] Find the equation of a line from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13869,13 +13421,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_1",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -0.25,
-		        "yIntercept": -6
+		        "A": 1,
+		        "B": 4,
+		        "C": -24,
+		        "type": "standard"
 		      }
 		    }
 		  ],
@@ -13883,14 +13436,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -13915,16 +13468,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x98e7cbde44170477
-	// Question: Find the equation of a line from its graph
+	// Question: Find the equation of a line from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x98e7cbde44170477] Find the equation of a line from its graph", async () => {
+	test("line-equation-graph - [x98e7cbde44170477] Find the equation of a line from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_main",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -13938,15 +13491,15 @@ describe("lineEquationGraph widget tests", () => {
 		  "width": 424,
 		  "xAxis": {
 		    "max": 10,
-		    "min": 0,
-		    "label": "",
+		    "min": -10,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
-		    "min": 0,
-		    "label": "",
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -13971,9 +13524,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x70707f23fbf7ccbf
-	// Question: Find the equation of a line from its graph
+	// Question: Find the equation of the line from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x70707f23fbf7ccbf] Find the equation of a line from its graph", async () => {
+	test("line-equation-graph - [x70707f23fbf7ccbf] Find the equation of the line from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13995,19 +13548,34 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 424,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 3,
+		      "id": "pt_y_intercept",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 0,
+		      "id": "pt_x_intercept",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -14027,9 +13595,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x06dc3f06651cfe7c
-	// Question: Find the equation of the line from its graph
+	// Question: Find the equation of a line from its graph
 	// Widget key: image_1
-	test("line-equation-graph - [x06dc3f06651cfe7c] Find the equation of the line from its graph", async () => {
+	test("line-equation-graph - [x06dc3f06651cfe7c] Find the equation of a line from its graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -14037,8 +13605,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_1",
-		      "color": "#6495ED",
-		      "label": " ",
+		      "color": "#6495ed",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -14051,34 +13619,19 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 424,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 5,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 4,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -14122,14 +13675,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -14154,18 +13707,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0c124b13065fa63c
-	// Question: Find the equation of the line from a graph
+	// Question: Find the equation of a line from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x0c124b13065fa63c] Find the equation of the line from a graph", async () => {
+	test("line-equation-graph - [x0c124b13065fa63c] Find the equation of a line from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_main",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -14178,14 +13731,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -14209,49 +13762,49 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9c87373749dd5e04
-	// Question: Interpret 16 on a knitting time graph
+	// Extracted from question: xdee96853cfcd1db9
+	// Question: Interpret 30 on a proportional hamster food graph
 	// Widget key: image_1
-	test("line-equation-graph - [x9c87373749dd5e04] Interpret 16 on a knitting time graph", async () => {
+	test("line-equation-graph - [xdee96853cfcd1db9] Interpret 30 on a proportional hamster food graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_knitting",
+		      "id": "line_food",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 16,
+		        "slope": 30,
 		        "yIntercept": 0
 		      }
 		    }
 		  ],
-		  "width": 223,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 4,
+		    "max": 3,
 		    "min": 0,
-		    "label": "scarves",
+		    "label": "Days",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 80,
 		    "min": 0,
-		    "label": "hours",
+		    "label": "Grams",
 		    "tickInterval": 20,
 		    "showGridLines": true
 		  },
-		  "height": 196,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 1,
-		      "y": 16,
-		      "id": "p1",
-		      "label": "(1, 16)",
+		      "y": 30,
+		      "id": "pt_1_30",
+		      "label": "(1,30)",
 		      "style": "closed"
 		    }
 		  ],
@@ -14274,16 +13827,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x9188e3c22422d780
-	// Question: Which tank is filling most quickly?
+	// Question: Identify the fastest-filling tank from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x9188e3c22422d780] Which tank is filling most quickly?", async () => {
+	test("line-equation-graph - [x9188e3c22422d780] Identify the fastest-filling tank from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_A",
+		      "id": "line_a",
 		      "color": "#11accd",
 		      "label": "A",
 		      "style": "solid",
@@ -14294,7 +13847,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "line_B",
+		      "id": "line_b",
 		      "color": "#1fab54",
 		      "label": "B",
 		      "style": "solid",
@@ -14305,13 +13858,13 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "line_C",
+		      "id": "line_c",
 		      "color": "#7854ab",
 		      "label": "C",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.4,
+		        "slope": 0.3,
 		        "yIntercept": 0
 		      }
 		    }
@@ -14352,16 +13905,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x27aa65a9edd555a8
-	// Question: Interpret the value 4.5 in a graph of eggs collected
+	// Question: Interpret a value on a proportional graph (eggs per day)
 	// Widget key: image_1
-	test("line-equation-graph - [x27aa65a9edd555a8] Interpret the value 4.5 in a graph of eggs collected", async () => {
+	test("line-equation-graph - [x27aa65a9edd555a8] Interpret a value on a proportional graph (eggs per day)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_eggs",
+		      "id": "line_1",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
@@ -14372,7 +13925,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 209,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -14387,7 +13940,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 209,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 1,
@@ -14415,106 +13968,28 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd612e1faf58b8d94
-	// Question: Identify the slowest eating rate from a line graph
-	// Widget key: image_1
-	test("line-equation-graph - [xd612e1faf58b8d94] Identify the slowest eating rate from a line graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_k",
-		      "color": "#1fab54",
-		      "label": "K",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 3.75,
-		        "yIntercept": 0
-		      }
-		    },
-		    {
-		      "id": "line_j",
-		      "color": "#11accd",
-		      "label": "J",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 5,
-		        "yIntercept": 0
-		      }
-		    },
-		    {
-		      "id": "line_l",
-		      "color": "#7854ab",
-		      "label": "L",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 6,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 456,
-		  "xAxis": {
-		    "max": 6,
-		    "min": 0,
-		    "label": "Minutes",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 30,
-		    "min": 0,
-		    "label": "Hot dogs",
-		    "tickInterval": 10,
-		    "showGridLines": true
-		  },
-		  "height": 348,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xfd2418a027f864f2
-	// Question: Find unit rates from a graph (flour and water)
+	// Question: Find unit rates from a flour–water graph
 	// Widget key: image_1
-	test("line-equation-graph - [xfd2418a027f864f2] Find unit rates from a graph (flour and water)", async () => {
+	test("line-equation-graph - [xfd2418a027f864f2] Find unit rates from a flour–water graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_rate",
+		      "id": "line_bao",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.3333333333333333,
+		        "slope": 0.3333333333,
 		        "yIntercept": 0
 		      }
 		    }
 		  ],
-		  "width": 223,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 4,
 		    "min": 0,
@@ -14529,12 +14004,12 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 223,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 3,
 		      "y": 1,
-		      "id": "p_3_1",
+		      "id": "pt_3_1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -14557,17 +14032,81 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7af3fae50fa6a379
-	// Question: Interpret 50 on a volume–time graph
+	// Extracted from question: x9c87373749dd5e04
+	// Question: Interpret 16 from a proportional graph
 	// Widget key: image_1
-	test("line-equation-graph - [x7af3fae50fa6a379] Interpret 50 on a volume–time graph", async () => {
+	test("line-equation-graph - [x9c87373749dd5e04] Interpret 16 from a proportional graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_p",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 16,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 4,
+		    "min": 0,
+		    "label": "scarves",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 80,
+		    "min": 0,
+		    "label": "hours",
+		    "tickInterval": 20,
+		    "showGridLines": true
+		  },
+		  "height": 350,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 16,
+		      "id": "p1",
+		      "label": "(1, 16)",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7af3fae50fa6a379
+	// Question: Interpret the meaning of 50 in the coffee graph
+	// Widget key: image_1
+	test("line-equation-graph - [x7af3fae50fa6a379] Interpret the meaning of 50 in the coffee graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_coffee",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
@@ -14578,7 +14117,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 229,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 3,
 		    "min": 0,
@@ -14593,13 +14132,13 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 50,
 		    "showGridLines": true
 		  },
-		  "height": 196,
+		  "height": 350,
 		  "points": [
 		    {
 		      "x": 1,
 		      "y": 50,
 		      "id": "p1",
-		      "label": "(1,50)",
+		      "label": "(1, 50)",
 		      "style": "closed"
 		    }
 		  ],
@@ -14622,16 +14161,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7790058701facfb2
-	// Question: Find unit rates from a graph: popcorn and cereal
+	// Question: Unit rates from a proportional graph
 	// Widget key: image_1
-	test("line-equation-graph - [x7790058701facfb2] Find unit rates from a graph: popcorn and cereal", async () => {
+	test("line-equation-graph - [x7790058701facfb2] Unit rates from a proportional graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_snack",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
@@ -14642,7 +14181,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 209,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -14657,12 +14196,12 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 209,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 1,
 		      "y": 2,
-		      "id": "pt_1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -14686,22 +14225,22 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x57f1c72ce9a21885
-	// Question: Identify the most expensive chocolate brand from a graph
+	// Question: Identify the most expensive brand of chocolate bar
 	// Widget key: image_1
-	test("line-equation-graph - [x57f1c72ce9a21885] Identify the most expensive chocolate brand from a graph", async () => {
+	test("line-equation-graph - [x57f1c72ce9a21885] Identify the most expensive brand of chocolate bar", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_y",
-		      "color": "#1fab54",
-		      "label": "Y",
+		      "id": "line_z",
+		      "color": "#7854ab",
+		      "label": "Z",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 4,
+		        "slope": 6,
 		        "yIntercept": 0
 		      }
 		    },
@@ -14717,20 +14256,20 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    },
 		    {
-		      "id": "line_z",
-		      "color": "#7854ab",
-		      "label": "Z",
+		      "id": "line_y",
+		      "color": "#1fab54",
+		      "label": "Y",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 6,
+		        "slope": 4,
 		        "yIntercept": 0
 		      }
 		    }
 		  ],
 		  "width": 420,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 8,
 		    "min": 0,
 		    "label": "Bars",
 		    "tickInterval": 2,
@@ -14764,16 +14303,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6367713b02cfd968
-	// Question: Determine walking rate and time from a graph
+	// Question: Determine walking rate and unit time from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x6367713b02cfd968] Determine walking rate and time from a graph", async () => {
+	test("line-equation-graph - [x6367713b02cfd968] Determine walking rate and unit time from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_rate",
+		      "id": "line_kendrick",
 		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
@@ -14784,7 +14323,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 223,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 4,
 		    "min": 0,
@@ -14799,12 +14338,12 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
-		  "height": 202,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 1,
 		      "y": 5,
-		      "id": "pt_1_5",
+		      "id": "pt_one_five",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -14827,17 +14366,151 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4a4ad37461438ac3
-	// Question: Read profit from a graph
+	// Extracted from question: x8f552846bfca0afc
+	// Question: Choose the nut Clark can buy the most of
 	// Widget key: image_1
-	test("line-equation-graph - [x4a4ad37461438ac3] Read profit from a graph", async () => {
+	test("line-equation-graph - [x8f552846bfca0afc] Choose the nut Clark can buy the most of", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_profit",
+		      "id": "line_walnuts",
+		      "color": "#7854ab",
+		      "label": "Walnuts",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 9,
+		        "yIntercept": 0
+		      }
+		    },
+		    {
+		      "id": "line_pecans",
+		      "color": "#1fab54",
+		      "label": "Pecans",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 8,
+		        "yIntercept": 0
+		      }
+		    },
+		    {
+		      "id": "line_peanuts",
+		      "color": "#11accd",
+		      "label": "Peanuts",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 4,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 355,
+		  "xAxis": {
+		    "max": 2,
+		    "min": 0,
+		    "label": "Kilograms",
+		    "tickInterval": 0.5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": 0,
+		    "label": "Cost (dollars)",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 333,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1fa66fc018937aa3
+	// Question: Determine the draining rate from a graph
+	// Widget key: image_1
+	test("line-equation-graph - [x1fa66fc018937aa3] Determine the draining rate from a graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_1",
+		      "color": "#6495ed",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -72,
+		        "yIntercept": 360
+		      }
+		    }
+		  ],
+		  "width": 375,
+		  "xAxis": {
+		    "max": 5.5,
+		    "min": 0,
+		    "label": "Time in minutes",
+		    "tickInterval": 0.5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 400,
+		    "min": 0,
+		    "label": "Water in liters",
+		    "tickInterval": 40,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4a4ad37461438ac3
+	// Question: Profit from a linear graph
+	// Widget key: image_1
+	test("line-equation-graph - [x4a4ad37461438ac3] Profit from a linear graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_1",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -14883,118 +14556,6 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x754fbe263c46168d
-	// Question: Slushy consumption rate from a graph
-	// Widget key: image_1
-	test("line-equation-graph - [x754fbe263c46168d] Slushy consumption rate from a graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#6495ed",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -8,
-		        "yIntercept": 600
-		      }
-		    }
-		  ],
-		  "width": 375,
-		  "xAxis": {
-		    "max": 80,
-		    "min": 0,
-		    "label": "Time in seconds",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 600,
-		    "min": 0,
-		    "label": "Slushy in milliliters",
-		    "tickInterval": 50,
-		    "showGridLines": true
-		  },
-		  "height": 375,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa25a4a459f44d28e
-	// Question: Find the finish time from a graph
-	// Widget key: image_1
-	test("line-equation-graph - [xa25a4a459f44d28e] Find the finish time from a graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#6495ed",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -8,
-		        "yIntercept": 600
-		      }
-		    }
-		  ],
-		  "width": 375,
-		  "xAxis": {
-		    "max": 80,
-		    "min": 0,
-		    "label": "Time in seconds",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 600,
-		    "min": 0,
-		    "label": "Slushy in milliliters",
-		    "tickInterval": 50,
-		    "showGridLines": true
-		  },
-		  "height": 375,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x29c8eda58a13275a
 	// Question: Time to reach sea level from a graph
 	// Widget key: image_1
@@ -15005,7 +14566,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_amir_altitude",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -15051,10 +14612,66 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9b229f61fa58aaf5
-	// Question: Time for Rip Van Winkle's beard to reach 35 mm
+	// Extracted from question: x754fbe263c46168d
+	// Question: Determine a drinking rate from a linear graph
 	// Widget key: image_1
-	test("line-equation-graph - [x9b229f61fa58aaf5] Time for Rip Van Winkle's beard to reach 35 mm", async () => {
+	test("line-equation-graph - [x754fbe263c46168d] Determine a drinking rate from a linear graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_1",
+		      "color": "#6495ed",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -8,
+		        "yIntercept": 600
+		      }
+		    }
+		  ],
+		  "width": 375,
+		  "xAxis": {
+		    "max": 80,
+		    "min": 0,
+		    "label": "Time in seconds",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 600,
+		    "min": 0,
+		    "label": "Slushy in milliliters",
+		    "tickInterval": 50,
+		    "showGridLines": true
+		  },
+		  "height": 375,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9b229f61fa58aaf5
+	// Question: Time for Rip Van Winkle's beard to reach a given length
+	// Widget key: image_1
+	test("line-equation-graph - [x9b229f61fa58aaf5] Time for Rip Van Winkle's beard to reach a given length", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15062,7 +14679,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_beard_growth",
-		      "color": "#6495ed",
+		      "color": "#6495ED",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -15108,9 +14725,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xf43c6e98930e3f59
-	// Question: Find the initial amount of water from a graph
+	// Question: Initial water in a tub from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xf43c6e98930e3f59] Find the initial amount of water from a graph", async () => {
+	test("line-equation-graph - [xf43c6e98930e3f59] Initial water in a tub from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15119,7 +14736,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_1",
 		      "color": "#6495ed",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -15163,43 +14780,43 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1fa66fc018937aa3
-	// Question: How fast did the water drain?
+	// Extracted from question: xa25a4a459f44d28e
+	// Question: Time to finish a slushy from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x1fa66fc018937aa3] How fast did the water drain?", async () => {
+	test("line-equation-graph - [xa25a4a459f44d28e] Time to finish a slushy from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_drain_rate",
+		      "id": "line_slushy",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -72,
-		        "yIntercept": 360
+		        "slope": -8,
+		        "yIntercept": 600
 		      }
 		    }
 		  ],
 		  "width": 375,
 		  "xAxis": {
-		    "max": 5.5,
+		    "max": 80,
 		    "min": 0,
-		    "label": "Time in minutes",
-		    "tickInterval": 0.5,
+		    "label": "Time in seconds",
+		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 400,
+		    "max": 600,
 		    "min": 0,
-		    "label": "Water in liters",
-		    "tickInterval": 40,
+		    "label": "Slushy in milliliters",
+		    "tickInterval": 50,
 		    "showGridLines": true
 		  },
-		  "height": 360,
+		  "height": 375,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -15220,17 +14837,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0c31e9d6a8f6b7fc
-	// Question: Identify Jada's rate from a graph
+	// Question: Determine the rate of change from a profit graph
 	// Widget key: image_1
-	test("line-equation-graph - [x0c31e9d6a8f6b7fc] Identify Jada's rate from a graph", async () => {
+	test("line-equation-graph - [x0c31e9d6a8f6b7fc] Determine the rate of change from a profit graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
-		      "color": "#6495ed",
+		      "id": "line_profit",
+		      "color": "#6495ED",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -15276,18 +14893,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x9aa0800a9237403a
-	// Question: Time for the tub to drain from a graph
+	// Question: Determine draining time from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x9aa0800a9237403a] Time for the tub to drain from a graph", async () => {
+	test("line-equation-graph - [x9aa0800a9237403a] Determine draining time from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_water_drain",
+		      "id": "line_1",
 		      "color": "#6495ed",
-		      "label": " ",
+		      "label": "-",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -15332,18 +14949,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xa599c23a1f64a9dd
-	// Question: Time for the pizza to reach 0 °C
+	// Question: Read a graph: time to reach 0°C
 	// Widget key: image_1
-	test("line-equation-graph - [xa599c23a1f64a9dd] Time for the pizza to reach 0 °C", async () => {
+	test("line-equation-graph - [xa599c23a1f64a9dd] Read a graph: time to reach 0°C", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_temperature",
 		      "color": "#6495ed",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -15363,7 +14980,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "yAxis": {
 		    "max": 40,
 		    "min": -10,
-		    "label": "Temperature in degrees Celsius",
+		    "label": "temperature in degrees Celsius",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
@@ -15388,9 +15005,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xfd7dd32c5ddfd429
-	// Question: Distance from the edge at the start
+	// Question: Distance from the edge at the start of the climb
 	// Widget key: image_1
-	test("line-equation-graph - [xfd7dd32c5ddfd429] Distance from the edge at the start", async () => {
+	test("line-equation-graph - [xfd7dd32c5ddfd429] Distance from the edge at the start of the climb", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15402,10 +15019,9 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 5,
-		        "B": -7,
-		        "C": 175,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": 0.7142857142857143,
+		        "yIntercept": -25
 		      }
 		    }
 		  ],
@@ -15445,16 +15061,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6e67e4eb85c55365
-	// Question: Time to reach the edge of the volcano
+	// Question: Time to reach the volcano edge from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x6e67e4eb85c55365] Time to reach the edge of the volcano", async () => {
+	test("line-equation-graph - [x6e67e4eb85c55365] Time to reach the volcano edge from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_zane_elevation",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -15501,17 +15117,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x426fcde5575152b0
-	// Question: Time for each 50-meter descent
+	// Question: Time for each 50-meter descent from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x426fcde5575152b0] Time for each 50-meter descent", async () => {
+	test("line-equation-graph - [x426fcde5575152b0] Time for each 50-meter descent from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
-		      "color": "#6495ed",
+		      "id": "line_plane_elevation",
+		      "color": "#6495ED",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -15557,18 +15173,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x9aa9e250dd182b7d
-	// Question: Find the plane's rate of descent from a graph
+	// Question: Plane descent rate from a line graph
 	// Widget key: image_1
-	test("line-equation-graph - [x9aa9e250dd182b7d] Find the plane's rate of descent from a graph", async () => {
+	test("line-equation-graph - [x9aa9e250dd182b7d] Plane descent rate from a line graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_plane_descent",
-		      "color": "#6495ED",
-		      "label": " ",
+		      "id": "line_plane",
+		      "color": "#6495ed",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -15613,9 +15229,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x12389a15f59cc2da
-	// Question: Rate of temperature increase from a graph
+	// Question: Find the heating rate from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x12389a15f59cc2da] Rate of temperature increase from a graph", async () => {
+	test("line-equation-graph - [x12389a15f59cc2da] Find the heating rate from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15644,7 +15260,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "yAxis": {
 		    "max": 40,
 		    "min": -10,
-		    "label": "Temperature in degrees Celsius",
+		    "label": "temperature in degrees Celsius",
 		    "tickInterval": 5,
 		    "showGridLines": true
 		  },
@@ -15668,66 +15284,10 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1d2dc119ea6b53c8
-	// Question: Battery charging time from a graph
-	// Widget key: image_1
-	test("line-equation-graph - [x1d2dc119ea6b53c8] Battery charging time from a graph", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_charging",
-		      "color": "#6495ed",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 2,
-		        "yIntercept": 40
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 32.5,
-		    "min": 0,
-		    "label": "Time in minutes",
-		    "tickInterval": 2.5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 100,
-		    "min": 0,
-		    "label": "Capacity, percent charged",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x789050378b5c7ac0
-	// Question: Distance traveled at 200 liters remaining
+	// Question: Distance traveled when 200 liters remain
 	// Widget key: image_1
-	test("line-equation-graph - [x789050378b5c7ac0] Distance traveled at 200 liters remaining", async () => {
+	test("line-equation-graph - [x789050378b5c7ac0] Distance traveled when 200 liters remain", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15739,10 +15299,9 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 3,
-		        "B": 5,
-		        "C": 2500,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": -0.6,
+		        "yIntercept": 500
 		      }
 		    }
 		  ],
@@ -15782,17 +15341,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x79ef0adad657000e
-	// Question: Time for 18 liters to drain from a tub
+	// Question: Time to drain 18 liters of water from a tub
 	// Widget key: image_1
-	test("line-equation-graph - [x79ef0adad657000e] Time for 18 liters to drain from a tub", async () => {
+	test("line-equation-graph - [x79ef0adad657000e] Time to drain 18 liters of water from a tub", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_drain",
-		      "color": "#6495ed",
+		      "id": "line_water_drain",
+		      "color": "#6495ED",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -15838,9 +15397,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x457579273c73db40
-	// Question: Break-even paprika sales from a graph
+	// Question: How much paprika to break even
 	// Widget key: image_1
-	test("line-equation-graph - [x457579273c73db40] Break-even paprika sales from a graph", async () => {
+	test("line-equation-graph - [x457579273c73db40] How much paprika to break even", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -15849,7 +15408,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_profit",
 		      "color": "#6495ed",
-		      "label": " ",
+		      "label": "y = 8x - 280",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -15894,17 +15453,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xa661d7b2addaa377
-	// Question: Initial beard length from a graph
+	// Question: Find the initial beard length from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xa661d7b2addaa377] Initial beard length from a graph", async () => {
+	test("line-equation-graph - [xa661d7b2addaa377] Find the initial beard length from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_beard",
-		      "color": "#6495ED",
+		      "id": "line_beard_growth",
+		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -15950,16 +15509,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x4a3152d0897bc913
-	// Question: Plane elevation after a given time
+	// Question: Read elevation from a linear graph
 	// Widget key: image_1
-	test("line-equation-graph - [x4a3152d0897bc913] Plane elevation after a given time", async () => {
+	test("line-equation-graph - [x4a3152d0897bc913] Read elevation from a linear graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_elevation",
+		      "id": "line_1",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -16006,16 +15565,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x55306f988c724367
-	// Question: Find the fuel consumption rate from a graph
+	// Question: Fuel consumption rate from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x55306f988c724367] Find the fuel consumption rate from a graph", async () => {
+	test("line-equation-graph - [x55306f988c724367] Fuel consumption rate from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_fuel_distance",
+		      "id": "line_1",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -16062,9 +15621,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd12260af1d814c0f
-	// Question: Find the climb rate from a graph
+	// Question: Rate of climb from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xd12260af1d814c0f] Find the climb rate from a graph", async () => {
+	test("line-equation-graph - [xd12260af1d814c0f] Rate of climb from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -16072,7 +15631,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_zane",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -16118,9 +15677,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0fe76c8a0a06e6d1
-	// Question: Find the initial fuel from a distance–fuel graph
+	// Question: Initial fuel from a distance–fuel graph
 	// Widget key: image_1
-	test("line-equation-graph - [x0fe76c8a0a06e6d1] Find the initial fuel from a distance–fuel graph", async () => {
+	test("line-equation-graph - [x0fe76c8a0a06e6d1] Initial fuel from a distance–fuel graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -16174,9 +15733,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x04ff66e3cea31204
-	// Question: Find the pizza's temperature from a graph
+	// Question: Read a value from a linear graph
 	// Widget key: image_1
-	test("line-equation-graph - [x04ff66e3cea31204] Find the pizza's temperature from a graph", async () => {
+	test("line-equation-graph - [x04ff66e3cea31204] Read a value from a linear graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -16230,9 +15789,65 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x38bd079bf2455d4c
-	// Question: Determine a growth rate from a line graph
+	// Question: Rate of beard growth from a linear graph
 	// Widget key: image_1
-	test("line-equation-graph - [x38bd079bf2455d4c] Determine a growth rate from a line graph", async () => {
+	test("line-equation-graph - [x38bd079bf2455d4c] Rate of beard growth from a linear graph", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_beard_growth",
+		      "color": "#6495ED",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 2.5,
+		        "yIntercept": 10
+		      }
+		    }
+		  ],
+		  "width": 375,
+		  "xAxis": {
+		    "max": 35,
+		    "min": 0,
+		    "label": "Time in weeks",
+		    "tickInterval": 5,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 90,
+		    "min": 0,
+		    "label": "Beard length in millimeters",
+		    "tickInterval": 10,
+		    "showGridLines": true
+		  },
+		  "height": 375,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8750886f8a89cacf
+	// Question: Beard growth rate from a linear graph
+	// Widget key: image_1
+	test("line-equation-graph - [x8750886f8a89cacf] Beard growth rate from a linear graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -16285,66 +15900,10 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x8750886f8a89cacf
-	// Question: Time for each 5-mm beard growth
-	// Widget key: image_1
-	test("line-equation-graph - [x8750886f8a89cacf] Time for each 5-mm beard growth", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_beard",
-		      "color": "#6495ed",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 2.5,
-		        "yIntercept": 10
-		      }
-		    }
-		  ],
-		  "width": 375,
-		  "xAxis": {
-		    "max": 35,
-		    "min": 0,
-		    "label": "Time in weeks",
-		    "tickInterval": 5,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 90,
-		    "min": 0,
-		    "label": "Beard length in millimeters",
-		    "tickInterval": 10,
-		    "showGridLines": true
-		  },
-		  "height": 375,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: x85c3b6a73f6ad00c
-	// Question: Time to descend 88 meters from a graph
+	// Question: Time for an 88-meter descent
 	// Widget key: image_1
-	test("line-equation-graph - [x85c3b6a73f6ad00c] Time to descend 88 meters from a graph", async () => {
+	test("line-equation-graph - [x85c3b6a73f6ad00c] Time for an 88-meter descent", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -16352,7 +15911,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_descent",
-		      "color": "#6495ED",
+		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -16463,7 +16022,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_plane",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -16510,18 +16069,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xda979f7f43a21b42
-	// Question: Find the initial charging level from a graph
+	// Question: Initial battery charge from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xda979f7f43a21b42] Find the initial charging level from a graph", async () => {
+	test("line-equation-graph - [xda979f7f43a21b42] Initial battery charge from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
-		      "color": "#6495ED",
-		      "label": " ",
+		      "id": "line_charge",
+		      "color": "#6495ed",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -16566,9 +16125,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x4dfa7334208ffacc
-	// Question: Find the initial slushy amount from a graph
+	// Question: Initial slushy amount from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x4dfa7334208ffacc] Find the initial slushy amount from a graph", async () => {
+	test("line-equation-graph - [x4dfa7334208ffacc] Initial slushy amount from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -16622,16 +16181,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x504763572f9396bc
-	// Question: Altitude at the beginning of the drive
+	// Question: Altitude at the beginning of a drive
 	// Widget key: image_1
-	test("line-equation-graph - [x504763572f9396bc] Altitude at the beginning of the drive", async () => {
+	test("line-equation-graph - [x504763572f9396bc] Altitude at the beginning of a drive", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_altitude",
+		      "id": "line_1",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -16678,16 +16237,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x36fb36a069bd303d
-	// Question: Find the charging rate from a linear graph
+	// Question: Find the charging rate from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x36fb36a069bd303d] Find the charging rate from a linear graph", async () => {
+	test("line-equation-graph - [x36fb36a069bd303d] Find the charging rate from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_battery",
+		      "id": "line_battery_charge",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -16734,16 +16293,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x972581ee5e6946b6
-	// Question: Fuel consumption rate from a linear graph
+	// Question: Fuel consumption every 100 kilometers from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x972581ee5e6946b6] Fuel consumption rate from a linear graph", async () => {
+	test("line-equation-graph - [x972581ee5e6946b6] Fuel consumption every 100 kilometers from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_fuel",
+		      "id": "line_1",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -16790,9 +16349,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xcbee19fe52c25c20
-	// Question: Battery charge increase over 6 minutes
+	// Question: Determine the percent added every 6 minutes
 	// Widget key: image_1
-	test("line-equation-graph - [xcbee19fe52c25c20] Battery charge increase over 6 minutes", async () => {
+	test("line-equation-graph - [xcbee19fe52c25c20] Determine the percent added every 6 minutes", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -16801,7 +16360,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_charge",
 		      "color": "#6495ed",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -16846,17 +16405,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0f800d29a6c460b2
-	// Question: Determine a descent rate from a line graph
+	// Question: Determine the rate of descent from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x0f800d29a6c460b2] Determine a descent rate from a line graph", async () => {
+	test("line-equation-graph - [x0f800d29a6c460b2] Determine the rate of descent from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
-		      "color": "#6495ED",
+		      "id": "line_descent",
+		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -16902,17 +16461,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7cedbb18434a5013
-	// Question: Time for each 4-degree increase from a line graph
+	// Question: Time for a 4-degree temperature increase from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x7cedbb18434a5013] Time for each 4-degree increase from a line graph", async () => {
+	test("line-equation-graph - [x7cedbb18434a5013] Time for a 4-degree temperature increase from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_p",
-		      "color": "#6495ed",
+		      "id": "line_1",
+		      "color": "#6495ED",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -16958,16 +16517,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xbb2d6ced43f53550
-	// Question: Find the drinking rate from a line graph
+	// Question: Find the drinking rate from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xbb2d6ced43f53550] Find the drinking rate from a line graph", async () => {
+	test("line-equation-graph - [xbb2d6ced43f53550] Find the drinking rate from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_slushy",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
@@ -17014,22 +16573,22 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd86f14ca164bf957
-	// Question: Interpret rate of climb from a graph
+	// Question: Determine a climbing rate from a graph
 	// Widget key: image_1
-	test("line-equation-graph - [xd86f14ca164bf957] Interpret rate of climb from a graph", async () => {
+	test("line-equation-graph - [xd86f14ca164bf957] Determine a climbing rate from a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_zane",
 		      "color": "#6495ed",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.7142857142857143,
+		        "slope": 0.7142857142857,
 		        "yIntercept": -25
 		      }
 		    }
@@ -17080,13 +16639,13 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#7A3E9D",
+		      "color": "#3b7ddd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 2.5,
-		        "yIntercept": 0
+		        "slope": 0.4,
+		        "yIntercept": 2
 		      }
 		    }
 		  ],
@@ -17106,23 +16665,8 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "A1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 5,
-		      "id": "A2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
+		  "points": [],
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -17151,7 +16695,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#1E90FF",
+		      "color": "#3b7ddd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -17177,23 +16721,8 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "B1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 2,
-		      "id": "B2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
+		  "points": [],
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -17222,139 +16751,12 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#2E8B57",
+		      "color": "#3b7ddd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.4,
-		        "yIntercept": 1
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 1,
-		      "id": "C1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 3,
-		      "id": "C2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1d1aa0d0
-	// Question: Graph y = 0.4x and identify true statements
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [x1d1aa0d0] Graph y = 0.4x and identify true statements (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_a",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.4,
-		        "yIntercept": 2
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1d1aa0d0
-	// Question: Graph y = 0.4x and identify true statements
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x1d1aa0d0] Graph y = 0.4x and identify true statements (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.4,
+		        "slope": 2,
 		        "yIntercept": 0
 		      }
 		    }
@@ -17376,7 +16778,7 @@ describe("lineEquationGraph widget tests", () => {
 		  },
 		  "height": 425,
 		  "points": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -17395,17 +16797,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x1d1aa0d0
-	// Question: Graph y = 0.4x and identify true statements
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x1d1aa0d0] Graph y = 0.4x and identify true statements (3)", async () => {
+	// Question: Graph y = 0.4x and select true statements
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [x1d1aa0d0] Graph y = 0.4x and select true statements (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_c",
-		      "color": "#11accd",
+		      "id": "line_neg_slope",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -17415,7 +16817,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -17430,7 +16832,119 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1d1aa0d0
+	// Question: Graph y = 0.4x and select true statements
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x1d1aa0d0] Graph y = 0.4x and select true statements (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_correct",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.4,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1d1aa0d0
+	// Question: Graph y = 0.4x and select true statements
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x1d1aa0d0] Graph y = 0.4x and select true statements (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_wrong_intercept",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.4,
+		        "yIntercept": 1
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -17451,9 +16965,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb5bcdb04
-	// Question: Graph a proportional relationship and select its equation
+	// Question: Graph a proportional relationship and write its equation
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xb5bcdb04] Graph a proportional relationship and select its equation (1)", async () => {
+	test("line-equation-graph - [xb5bcdb04] Graph a proportional relationship and write its equation (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -17465,9 +16979,10 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.7,
-		        "yIntercept": 0
+		        "A": 7,
+		        "B": -10,
+		        "C": 0,
+		        "type": "standard"
 		      }
 		    }
 		  ],
@@ -17488,7 +17003,7 @@ describe("lineEquationGraph widget tests", () => {
 		  },
 		  "height": 425,
 		  "points": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -17507,9 +17022,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb5bcdb04
-	// Question: Graph a proportional relationship and select its equation
+	// Question: Graph a proportional relationship and write its equation
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xb5bcdb04] Graph a proportional relationship and select its equation (2)", async () => {
+	test("line-equation-graph - [xb5bcdb04] Graph a proportional relationship and write its equation (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -17521,9 +17036,10 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1.4285714285714286,
-		        "yIntercept": 0
+		        "A": 10,
+		        "B": -7,
+		        "C": 0,
+		        "type": "standard"
 		      }
 		    }
 		  ],
@@ -17544,7 +17060,7 @@ describe("lineEquationGraph widget tests", () => {
 		  },
 		  "height": 425,
 		  "points": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -17563,9 +17079,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb5bcdb04
-	// Question: Graph a proportional relationship and select its equation
+	// Question: Graph a proportional relationship and write its equation
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xb5bcdb04] Graph a proportional relationship and select its equation (3)", async () => {
+	test("line-equation-graph - [xb5bcdb04] Graph a proportional relationship and write its equation (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -17577,9 +17093,10 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1.4285714285714286,
-		        "yIntercept": 1
+		        "A": 10,
+		        "B": -7,
+		        "C": -7,
+		        "type": "standard"
 		      }
 		    }
 		  ],
@@ -17600,7 +17117,7 @@ describe("lineEquationGraph widget tests", () => {
 		  },
 		  "height": 425,
 		  "points": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -17619,9 +17136,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x9bf41aad
-	// Question: Graph a proportional relationship and select its equation (unit rate 4/3)
+	// Question: Graph a proportional relationship and select its equation
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x9bf41aad] Graph a proportional relationship and select its equation (unit rate 4/3) (1)", async () => {
+	test("line-equation-graph - [x9bf41aad] Graph a proportional relationship and select its equation (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -17639,7 +17156,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -17654,7 +17171,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 360,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -17675,9 +17192,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x9bf41aad
-	// Question: Graph a proportional relationship and select its equation (unit rate 4/3)
+	// Question: Graph a proportional relationship and select its equation
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x9bf41aad] Graph a proportional relationship and select its equation (unit rate 4/3) (2)", async () => {
+	test("line-equation-graph - [x9bf41aad] Graph a proportional relationship and select its equation (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -17690,12 +17207,12 @@ describe("lineEquationGraph widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 1.3333333333,
+		        "slope": 1.3333333333333333,
 		        "yIntercept": 0
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -17710,7 +17227,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 360,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -17731,9 +17248,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x9bf41aad
-	// Question: Graph a proportional relationship and select its equation (unit rate 4/3)
+	// Question: Graph a proportional relationship and select its equation
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x9bf41aad] Graph a proportional relationship and select its equation (unit rate 4/3) (3)", async () => {
+	test("line-equation-graph - [x9bf41aad] Graph a proportional relationship and select its equation (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -17746,12 +17263,12 @@ describe("lineEquationGraph widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 1.3333333333,
-		        "yIntercept": 1
+		        "slope": -1.3333333333333333,
+		        "yIntercept": 0
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -17766,51 +17283,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9bf41aad
-	// Question: Graph a proportional relationship and select its equation (unit rate 4/3)
-	// Widget key: coordinate_plane_empty
-	test("line-equation-graph - [x9bf41aad] Graph a proportional relationship and select its equation (unit rate 4/3) (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
+		  "height": 360,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -17841,17 +17314,17 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#11accd",
+		      "color": "#cc3340",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.4,
-		        "yIntercept": 0
+		        "slope": 0.2,
+		        "yIntercept": 1
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -17866,7 +17339,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -17907,7 +17380,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -17922,7 +17395,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -17953,17 +17426,17 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#11accd",
+		      "color": "#3caa3c",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.2,
-		        "yIntercept": 1
+		        "slope": -0.2,
+		        "yIntercept": 0
 		      }
 		    }
 		  ],
-		  "width": 400,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -17978,7 +17451,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -17998,10 +17471,54 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x153f73c1
+	// Question: Find the slope from a table and select the corresponding graph
+	// Widget key: coordinate_plane_empty
+	test("line-equation-graph - [x153f73c1] Find the slope from a table and select the corresponding graph (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": true
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: x8828345c
-	// Question: Graph a proportional relationship and write its equation
+	// Question: Graph a proportional relationship and choose its equation
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x8828345c] Graph a proportional relationship and write its equation (1)", async () => {
+	test("line-equation-graph - [x8828345c] Graph a proportional relationship and choose its equation (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -18009,8 +17526,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#11accd",
+		      "label": "A",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -18055,9 +17572,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8828345c
-	// Question: Graph a proportional relationship and write its equation
+	// Question: Graph a proportional relationship and choose its equation
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x8828345c] Graph a proportional relationship and write its equation (2)", async () => {
+	test("line-equation-graph - [x8828345c] Graph a proportional relationship and choose its equation (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -18065,8 +17582,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#11accd",
+		      "label": "B",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -18111,9 +17628,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x8828345c
-	// Question: Graph a proportional relationship and write its equation
+	// Question: Graph a proportional relationship and choose its equation
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x8828345c] Graph a proportional relationship and write its equation (3)", async () => {
+	test("line-equation-graph - [x8828345c] Graph a proportional relationship and choose its equation (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -18121,13 +17638,13 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#11accd",
+		      "label": "C",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": 0.375,
-		        "yIntercept": 1
+		        "yIntercept": 2
 		      }
 		    }
 		  ],
@@ -18166,61 +17683,17 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x8828345c
-	// Question: Graph a proportional relationship and write its equation
-	// Widget key: coordinate_plane_empty
-	test("line-equation-graph - [x8828345c] Graph a proportional relationship and write its equation (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xc74fd0cd
-	// Question: Graph a proportional relationship and select its equation
+	// Question: Graph a proportional relationship and write its equation
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xc74fd0cd] Graph a proportional relationship and select its equation (1)", async () => {
+	test("line-equation-graph - [xc74fd0cd] Graph a proportional relationship and write its equation (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_a",
+		      "id": "line_a1",
 		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
@@ -18267,16 +17740,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc74fd0cd
-	// Question: Graph a proportional relationship and select its equation
+	// Question: Graph a proportional relationship and write its equation
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xc74fd0cd] Graph a proportional relationship and select its equation (2)", async () => {
+	test("line-equation-graph - [xc74fd0cd] Graph a proportional relationship and write its equation (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_b",
+		      "id": "line_b1",
 		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
@@ -18323,16 +17796,16 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc74fd0cd
-	// Question: Graph a proportional relationship and select its equation
+	// Question: Graph a proportional relationship and write its equation
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xc74fd0cd] Graph a proportional relationship and select its equation (3)", async () => {
+	test("line-equation-graph - [xc74fd0cd] Graph a proportional relationship and write its equation (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_c",
+		      "id": "line_c1",
 		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
@@ -18378,10 +17851,54 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: xc74fd0cd
+	// Question: Graph a proportional relationship and write its equation
+	// Widget key: coordinate_plane_empty
+	test("line-equation-graph - [xc74fd0cd] Graph a proportional relationship and write its equation (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: x078d72cc
-	// Question: Unit rate and graph of a proportional relationship
+	// Question: Unit rate and graph of a proportional relationship (sugar and flour)
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x078d72cc] Unit rate and graph of a proportional relationship (2)", async () => {
+	test("line-equation-graph - [x078d72cc] Unit rate and graph of a proportional relationship (sugar and flour) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -18389,48 +17906,33 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#1f77b4",
+		      "color": "#4C78A8",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.4444444444444444,
+		        "slope": 2,
 		        "yIntercept": 0
 		      }
 		    }
 		  ],
-		  "width": 450,
+		  "width": 380,
 		  "xAxis": {
-		    "max": 11,
+		    "max": 10,
 		    "min": 0,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 11,
+		    "max": 10,
 		    "min": 0,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 450,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "p1",
-		      "label": "(0, 0)",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 9,
-		      "id": "p2",
-		      "label": "(4, 9)",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 380,
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -18450,9 +17952,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x078d72cc
-	// Question: Unit rate and graph of a proportional relationship
+	// Question: Unit rate and graph of a proportional relationship (sugar and flour)
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x078d72cc] Unit rate and graph of a proportional relationship (3)", async () => {
+	test("line-equation-graph - [x078d72cc] Unit rate and graph of a proportional relationship (sugar and flour) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -18460,7 +17962,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#1f77b4",
+		      "color": "#4C78A8",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -18470,38 +17972,23 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 450,
+		  "width": 380,
 		  "xAxis": {
-		    "max": 11,
+		    "max": 10,
 		    "min": 0,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 11,
+		    "max": 10,
 		    "min": 0,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 450,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "p1",
-		      "label": "(0, 0)",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 9,
-		      "id": "p2",
-		      "label": "(4, 9)",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 380,
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -18521,9 +18008,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x078d72cc
-	// Question: Unit rate and graph of a proportional relationship
+	// Question: Unit rate and graph of a proportional relationship (sugar and flour)
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x078d72cc] Unit rate and graph of a proportional relationship (4)", async () => {
+	test("line-equation-graph - [x078d72cc] Unit rate and graph of a proportional relationship (sugar and flour) (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -18531,48 +18018,33 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#1f77b4",
+		      "color": "#4C78A8",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": 2.25,
-		        "yIntercept": 2
+		        "yIntercept": 1
 		      }
 		    }
 		  ],
-		  "width": 450,
+		  "width": 380,
 		  "xAxis": {
-		    "max": 11,
+		    "max": 10,
 		    "min": 0,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 11,
+		    "max": 10,
 		    "min": 0,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 450,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "p1",
-		      "label": "(0, 0)",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 9,
-		      "id": "p2",
-		      "label": "(4, 9)",
-		      "style": "closed"
-		    }
-		  ],
+		  "height": 380,
+		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -18592,9 +18064,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xaae82f5e
-	// Question: Graph a proportional relationship and select its equation
+	// Question: Graph a proportional relationship and write its equation
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xaae82f5e] Graph a proportional relationship and select its equation (1)", async () => {
+	test("line-equation-graph - [xaae82f5e] Graph a proportional relationship and write its equation (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -18602,7 +18074,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#11accd",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -18629,7 +18101,7 @@ describe("lineEquationGraph widget tests", () => {
 		  },
 		  "height": 425,
 		  "points": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -18648,9 +18120,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xaae82f5e
-	// Question: Graph a proportional relationship and select its equation
+	// Question: Graph a proportional relationship and write its equation
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xaae82f5e] Graph a proportional relationship and select its equation (2)", async () => {
+	test("line-equation-graph - [xaae82f5e] Graph a proportional relationship and write its equation (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -18658,7 +18130,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#11accd",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -18685,7 +18157,7 @@ describe("lineEquationGraph widget tests", () => {
 		  },
 		  "height": 425,
 		  "points": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -18704,9 +18176,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xaae82f5e
-	// Question: Graph a proportional relationship and select its equation
+	// Question: Graph a proportional relationship and write its equation
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xaae82f5e] Graph a proportional relationship and select its equation (3)", async () => {
+	test("line-equation-graph - [xaae82f5e] Graph a proportional relationship and write its equation (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -18714,7 +18186,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#11accd",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -18741,7 +18213,7 @@ describe("lineEquationGraph widget tests", () => {
 		  },
 		  "height": 425,
 		  "points": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -18760,27 +18232,27 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xcccb2293
-	// Question: Find the slope from a proportional table and select the matching graph
+	// Question: Find the slope from a table and select the matching graph
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xcccb2293] Find the slope from a proportional table and select the matching graph (1)", async () => {
+	test("line-equation-graph - [xcccb2293] Find the slope from a table and select the matching graph (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_neg_5_7",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "id": "line_a",
+		      "color": "#2b6cb0",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -0.7142857142857143,
+		        "slope": 1.4,
 		        "yIntercept": 0
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -18795,20 +18267,20 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "O",
-		      "label": " ",
+		      "id": "pa1",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 7,
-		      "y": 5,
-		      "id": "P",
-		      "label": " ",
+		      "x": 5,
+		      "y": 7,
+		      "id": "pa2",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -18831,18 +18303,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xcccb2293
-	// Question: Find the slope from a proportional table and select the matching graph
+	// Question: Find the slope from a table and select the matching graph
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xcccb2293] Find the slope from a proportional table and select the matching graph (2)", async () => {
+	test("line-equation-graph - [xcccb2293] Find the slope from a table and select the matching graph (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_5_7",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "id": "line_b",
+		      "color": "#2b6cb0",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -18851,7 +18323,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -18866,20 +18338,20 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "O",
-		      "label": " ",
+		      "id": "pb1",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 7,
 		      "y": 5,
-		      "id": "P",
-		      "label": " ",
+		      "id": "pb2",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -18902,18 +18374,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xcccb2293
-	// Question: Find the slope from a proportional table and select the matching graph
+	// Question: Find the slope from a table and select the matching graph
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xcccb2293] Find the slope from a proportional table and select the matching graph (3)", async () => {
+	test("line-equation-graph - [xcccb2293] Find the slope from a table and select the matching graph (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_5_7_b1",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "id": "line_c",
+		      "color": "#2b6cb0",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -18922,7 +18394,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -18937,20 +18409,20 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0,
-		      "y": 0,
-		      "id": "O",
-		      "label": " ",
+		      "y": 1,
+		      "id": "pc1",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 7,
-		      "y": 5,
-		      "id": "P",
-		      "label": " ",
+		      "y": 6,
+		      "id": "pc2",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -18973,73 +18445,17 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd4107869
-	// Question: Find the slope from a proportional table and select the graph
+	// Question: Find the slope from a table and select its graph
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xd4107869] Find the slope from a proportional table and select the graph (1)", async () => {
+	test("line-equation-graph - [xd4107869] Find the slope from a table and select its graph (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_a",
-		      "color": "#1f77b4",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.3,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 11,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd4107869
-	// Question: Find the slope from a proportional table and select the graph
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [xd4107869] Find the slope from a proportional table and select the graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#1f77b4",
+		      "id": "line_correct",
+		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -19065,7 +18481,22 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "p_origin",
+		      "label": "(0, 0)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 10,
+		      "id": "p_three_ten",
+		      "label": "(3, 10)",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -19085,22 +18516,22 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd4107869
-	// Question: Find the slope from a proportional table and select the graph
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [xd4107869] Find the slope from a proportional table and select the graph (3)", async () => {
+	// Question: Find the slope from a table and select its graph
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [xd4107869] Find the slope from a table and select its graph (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_c",
-		      "color": "#1f77b4",
+		      "id": "line_lower_slope",
+		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -3.3333333333333335,
+		        "slope": 3,
 		        "yIntercept": 0
 		      }
 		    }
@@ -19121,7 +18552,93 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "p_origin_b",
+		      "label": "(0, 0)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 9,
+		      "id": "p_three_nine_b",
+		      "label": "(3, 9)",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd4107869
+	// Question: Find the slope from a table and select its graph
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [xd4107869] Find the slope from a table and select its graph (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_wrong_intercept",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 3.3333333333333335,
+		        "yIntercept": 1
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 11,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 1,
+		      "id": "p_intercept_c",
+		      "label": "(0, 1)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 11,
+		      "id": "p_three_eleven_c",
+		      "label": "(3, 11)",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -19151,33 +18668,48 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#3366cc",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 5,
+		        "slope": 9.5,
 		        "yIntercept": 0
 		      }
 		    }
 		  ],
 		  "width": 450,
 		  "xAxis": {
-		    "max": 11,
-		    "min": 0,
+		    "max": 10,
+		    "min": -1,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 11,
-		    "min": 0,
+		    "min": -1,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 450,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "pa0",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 9.5,
+		      "id": "pa1",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -19207,33 +18739,48 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#3366cc",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 9.5,
+		        "slope": 6,
 		        "yIntercept": 0
 		      }
 		    }
 		  ],
 		  "width": 450,
 		  "xAxis": {
-		    "max": 11,
-		    "min": 0,
+		    "max": 10,
+		    "min": -1,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 11,
-		    "min": 0,
+		    "min": -1,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 450,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "pb0",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 6,
+		      "id": "pb1",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -19263,7 +18810,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#3366cc",
+		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -19275,15 +18822,74 @@ describe("lineEquationGraph widget tests", () => {
 		  ],
 		  "width": 450,
 		  "xAxis": {
-		    "max": 11,
-		    "min": 0,
+		    "max": 10,
+		    "min": -1,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 11,
-		    "min": 0,
+		    "min": -1,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 450,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 1,
+		      "id": "pc0",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 10.5,
+		      "id": "pc1",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x97f9a47d
+	// Question: Unit rate and graph of a proportional relationship
+	// Widget key: coordinate_plane_empty
+	test("line-equation-graph - [x97f9a47d] Unit rate and graph of a proportional relationship (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
+		  "width": 450,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -1,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 11,
+		    "min": -1,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
@@ -19319,14 +18925,13 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#3A80E0",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
-		        "A": 3,
-		        "B": -2,
-		        "C": 0,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": 0.6666666667,
+		        "yIntercept": 1
 		      }
 		    }
 		  ],
@@ -19346,7 +18951,22 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 1,
+		      "id": "a_p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 3,
+		      "id": "a_p2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -19376,14 +18996,13 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#3A80E0",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
-		        "A": 2,
-		        "B": -3,
-		        "C": 0,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": 0.6666666667,
+		        "yIntercept": 0
 		      }
 		    }
 		  ],
@@ -19403,7 +19022,22 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "b_p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 2,
+		      "id": "b_p2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -19433,14 +19067,13 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#3A80E0",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
-		        "A": 2,
-		        "B": -3,
-		        "C": -6,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": -0.6666666667,
+		        "yIntercept": 0
 		      }
 		    }
 		  ],
@@ -19460,7 +19093,22 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "c_p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": -2,
+		      "id": "c_p2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -19539,8 +19187,8 @@ describe("lineEquationGraph widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.11764705882352941,
-		        "yIntercept": 0
+		        "slope": 8.5,
+		        "yIntercept": 2
 		      }
 		    }
 		  ],
@@ -19561,7 +19209,7 @@ describe("lineEquationGraph widget tests", () => {
 		  },
 		  "height": 425,
 		  "points": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -19617,7 +19265,7 @@ describe("lineEquationGraph widget tests", () => {
 		  },
 		  "height": 425,
 		  "points": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -19651,8 +19299,8 @@ describe("lineEquationGraph widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 8.5,
-		        "yIntercept": 1
+		        "slope": 0.11764705882352941,
+		        "yIntercept": 0
 		      }
 		    }
 		  ],
@@ -19673,7 +19321,7 @@ describe("lineEquationGraph widget tests", () => {
 		  },
 		  "height": 425,
 		  "points": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -19692,9 +19340,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x30b0fdf3
-	// Question: Find the slope from a table and select the graph
+	// Question: Slope from a proportional relationship
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x30b0fdf3] Find the slope from a table and select the graph (2)", async () => {
+	test("line-equation-graph - [x30b0fdf3] Slope from a proportional relationship (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -19702,17 +19350,17 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#3366cc",
-		      "label": " ",
+		      "color": "#1f77b4",
+		      "label": "A",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -3,
+		        "slope": 2,
 		        "yIntercept": 0
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -19727,7 +19375,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -19748,9 +19396,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x30b0fdf3
-	// Question: Find the slope from a table and select the graph
+	// Question: Slope from a proportional relationship
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x30b0fdf3] Find the slope from a table and select the graph (3)", async () => {
+	test("line-equation-graph - [x30b0fdf3] Slope from a proportional relationship (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -19758,8 +19406,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#2a9d8f",
-		      "label": " ",
+		      "color": "#1f77b4",
+		      "label": "B",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -19768,7 +19416,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -19783,7 +19431,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -19804,9 +19452,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x30b0fdf3
-	// Question: Find the slope from a table and select the graph
+	// Question: Slope from a proportional relationship
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x30b0fdf3] Find the slope from a table and select the graph (4)", async () => {
+	test("line-equation-graph - [x30b0fdf3] Slope from a proportional relationship (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -19814,8 +19462,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#e76f51",
-		      "label": " ",
+		      "color": "#1f77b4",
+		      "label": "C",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -19824,7 +19472,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -19839,7 +19487,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -19871,7 +19519,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_a",
 		      "color": "#1f77b4",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -19882,17 +19530,17 @@ describe("lineEquationGraph widget tests", () => {
 		  ],
 		  "width": 425,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 14,
 		    "min": -10,
 		    "label": "t",
-		    "tickInterval": 1,
+		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 14,
 		    "min": -10,
 		    "label": "d",
-		    "tickInterval": 1,
+		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "height": 425,
@@ -19927,7 +19575,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_b",
 		      "color": "#1f77b4",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -19938,17 +19586,17 @@ describe("lineEquationGraph widget tests", () => {
 		  ],
 		  "width": 425,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 14,
 		    "min": -10,
 		    "label": "t",
-		    "tickInterval": 1,
+		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 14,
 		    "min": -10,
 		    "label": "d",
-		    "tickInterval": 1,
+		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "height": 425,
@@ -19983,28 +19631,28 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_c",
 		      "color": "#1f77b4",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": 1.6,
-		        "yIntercept": 2
+		        "yIntercept": 3
 		      }
 		    }
 		  ],
 		  "width": 425,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 14,
 		    "min": -10,
 		    "label": "t",
-		    "tickInterval": 1,
+		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 14,
 		    "min": -10,
 		    "label": "d",
-		    "tickInterval": 1,
+		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "height": 425,
@@ -20028,9 +19676,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xcdb1d41b
-	// Question: Unit rate and graph of a proportional relationship
+	// Question: Graph a proportional relationship and find the unit rate
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xcdb1d41b] Unit rate and graph of a proportional relationship (1)", async () => {
+	test("line-equation-graph - [xcdb1d41b] Graph a proportional relationship and find the unit rate (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -20038,7 +19686,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#1f77b4",
+		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -20048,7 +19696,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -20063,7 +19711,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -20084,9 +19732,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xcdb1d41b
-	// Question: Unit rate and graph of a proportional relationship
+	// Question: Graph a proportional relationship and find the unit rate
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xcdb1d41b] Unit rate and graph of a proportional relationship (2)", async () => {
+	test("line-equation-graph - [xcdb1d41b] Graph a proportional relationship and find the unit rate (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -20094,7 +19742,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#1f77b4",
+		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -20104,7 +19752,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -20119,7 +19767,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -20140,9 +19788,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xcdb1d41b
-	// Question: Unit rate and graph of a proportional relationship
+	// Question: Graph a proportional relationship and find the unit rate
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xcdb1d41b] Unit rate and graph of a proportional relationship (3)", async () => {
+	test("line-equation-graph - [xcdb1d41b] Graph a proportional relationship and find the unit rate (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -20150,7 +19798,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#1f77b4",
+		      "color": "#11accd",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -20160,7 +19808,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -20172,6 +19820,62 @@ describe("lineEquationGraph widget tests", () => {
 		    "max": 10,
 		    "min": -10,
 		    "label": "d",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x30084d6f
+	// Question: Graph and analyze y = (2/7)x
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [x30084d6f] Graph and analyze y = (2/7)x (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_a",
+		      "color": "#1976D2",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -0.2857142857,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -20196,65 +19900,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x30084d6f
-	// Question: Select the correct graph and the true statements about a linear relationship
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [x30084d6f] Select the correct graph and the true statements about a linear relationship (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_a",
-		      "color": "#1f77b4",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 3.5,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x30084d6f
-	// Question: Select the correct graph and the true statements about a linear relationship
+	// Question: Graph and analyze y = (2/7)x
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x30084d6f] Select the correct graph and the true statements about a linear relationship (2)", async () => {
+	test("line-equation-graph - [x30084d6f] Graph and analyze y = (2/7)x (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -20262,12 +19910,12 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#1f77b4",
+		      "color": "#1976D2",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.2857142857142857,
+		        "slope": 0.2857142857,
 		        "yIntercept": 0
 		      }
 		    }
@@ -20289,7 +19937,7 @@ describe("lineEquationGraph widget tests", () => {
 		  },
 		  "height": 425,
 		  "points": [],
-		  "showQuadrantLabels": true
+		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -20308,9 +19956,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x30084d6f
-	// Question: Select the correct graph and the true statements about a linear relationship
+	// Question: Graph and analyze y = (2/7)x
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x30084d6f] Select the correct graph and the true statements about a linear relationship (3)", async () => {
+	test("line-equation-graph - [x30084d6f] Graph and analyze y = (2/7)x (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -20318,13 +19966,13 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#1f77b4",
+		      "color": "#1976D2",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.2857142857142857,
-		        "yIntercept": 3
+		        "slope": 0.2857142857,
+		        "yIntercept": 1
 		      }
 		    }
 		  ],
@@ -20345,51 +19993,7 @@ describe("lineEquationGraph widget tests", () => {
 		  },
 		  "height": 425,
 		  "points": [],
-		  "showQuadrantLabels": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x30084d6f
-	// Question: Select the correct graph and the true statements about a linear relationship
-	// Widget key: coordinate_plane_empty
-	test("line-equation-graph - [x30084d6f] Select the correct graph and the true statements about a linear relationship (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": true
+		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -20408,9 +20012,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x03ff0c0e
-	// Question: Select the graph of y = 2.5x and choose true statements
+	// Question: Graph a line and identify true statements about y = 2.5x
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x03ff0c0e] Select the graph of y = 2.5x and choose true statements (1)", async () => {
+	test("line-equation-graph - [x03ff0c0e] Graph a line and identify true statements about y = 2.5x (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -20444,7 +20048,22 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "a_p1",
+		      "label": "(0, 0)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 4,
+		      "id": "a_p2",
+		      "label": "(2, 4)",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -20464,9 +20083,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x03ff0c0e
-	// Question: Select the graph of y = 2.5x and choose true statements
+	// Question: Graph a line and identify true statements about y = 2.5x
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [x03ff0c0e] Select the graph of y = 2.5x and choose true statements (2)", async () => {
+	test("line-equation-graph - [x03ff0c0e] Graph a line and identify true statements about y = 2.5x (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -20500,7 +20119,22 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "b_p1",
+		      "label": "(0, 0)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 5,
+		      "id": "b_p2",
+		      "label": "(2, 5)",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -20520,9 +20154,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x03ff0c0e
-	// Question: Select the graph of y = 2.5x and choose true statements
+	// Question: Graph a line and identify true statements about y = 2.5x
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x03ff0c0e] Select the graph of y = 2.5x and choose true statements (3)", async () => {
+	test("line-equation-graph - [x03ff0c0e] Graph a line and identify true statements about y = 2.5x (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -20540,6 +20174,65 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 1,
+		      "id": "c_p1",
+		      "label": "(0, 1)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 6,
+		      "id": "c_p2",
+		      "label": "(2, 6)",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x03ff0c0e
+	// Question: Graph a line and identify true statements about y = 2.5x
+	// Widget key: coordinate_plane_empty
+	test("line-equation-graph - [x03ff0c0e] Graph a line and identify true statements about y = 2.5x (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
 		  "width": 425,
 		  "xAxis": {
 		    "max": 10,
@@ -20585,9 +20278,9 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_a1",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "id": "line_a",
+		      "color": "#2e86de",
+		      "label": "A",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -20596,7 +20289,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -20611,7 +20304,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -20641,9 +20334,9 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_b1",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "id": "line_b",
+		      "color": "#2e86de",
+		      "label": "B",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -20652,7 +20345,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -20667,7 +20360,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -20697,808 +20390,9 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_c1",
-		      "color": "#1f77b4",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.6,
-		        "yIntercept": 2
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7c5f8a51
-	// Question: Find a unit rate from a table and select the matching graph
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [x7c5f8a51] Find a unit rate from a table and select the matching graph (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_correct",
-		      "color": "#1f77b4",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 60,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 450,
-		  "xAxis": {
-		    "max": 5,
-		    "min": -1,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 100,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 10,
-		    "showGridLines": true
-		  },
-		  "height": 450,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7c5f8a51
-	// Question: Find a unit rate from a table and select the matching graph
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x7c5f8a51] Find a unit rate from a table and select the matching graph (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_wrong_slope",
-		      "color": "#d62728",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 40,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 450,
-		  "xAxis": {
-		    "max": 5,
-		    "min": -1,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 100,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 10,
-		    "showGridLines": true
-		  },
-		  "height": 450,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7c5f8a51
-	// Question: Find a unit rate from a table and select the matching graph
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x7c5f8a51] Find a unit rate from a table and select the matching graph (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_wrong_intercept",
-		      "color": "#2ca02c",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 60,
-		        "yIntercept": 20
-		      }
-		    }
-		  ],
-		  "width": 450,
-		  "xAxis": {
-		    "max": 5,
-		    "min": -1,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 100,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 10,
-		    "showGridLines": true
-		  },
-		  "height": 450,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x02a21c4b
-	// Question: Graph y = 1.4x and select true statements
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [x02a21c4b] Graph y = 1.4x and select true statements (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_a",
-		      "color": "#1f77b4",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1.4,
-		        "yIntercept": 2
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x02a21c4b
-	// Question: Graph y = 1.4x and select true statements
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x02a21c4b] Graph y = 1.4x and select true statements (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#1f77b4",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1.4,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x02a21c4b
-	// Question: Graph y = 1.4x and select true statements
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x02a21c4b] Graph y = 1.4x and select true statements (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
 		      "id": "line_c",
-		      "color": "#1f77b4",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -1.4,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x199977df
-	// Question: Find the slope and select the graph of a proportional relationship
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [x199977df] Find the slope and select the graph of a proportional relationship (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_a",
-		      "color": "#4A90E2",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1.3,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 14,
-		    "min": -14,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 14,
-		    "min": -14,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x199977df
-	// Question: Find the slope and select the graph of a proportional relationship
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x199977df] Find the slope and select the graph of a proportional relationship (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#4A90E2",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.7692307692307693,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 14,
-		    "min": -14,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 14,
-		    "min": -14,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x199977df
-	// Question: Find the slope and select the graph of a proportional relationship
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x199977df] Find the slope and select the graph of a proportional relationship (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_c",
-		      "color": "#4A90E2",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.7692307692307693,
-		        "yIntercept": 2
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 14,
-		    "min": -14,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 14,
-		    "min": -14,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x618f7065
-	// Question: Unit rate and graph of a proportional relationship
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [x618f7065] Unit rate and graph of a proportional relationship (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_a",
-		      "color": "#2b8cbe",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 9,
-		        "yIntercept": 2
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "t",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "d",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x618f7065
-	// Question: Unit rate and graph of a proportional relationship
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x618f7065] Unit rate and graph of a proportional relationship (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#2ca25f",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 9,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "t",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "d",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x618f7065
-	// Question: Unit rate and graph of a proportional relationship
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x618f7065] Unit rate and graph of a proportional relationship (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_c",
-		      "color": "#de2d26",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 5,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "t",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "d",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x533fdef2
-	// Question: Unit rate and graphing a proportional savings relationship
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [x533fdef2] Unit rate and graphing a proportional savings relationship (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_a",
-		      "color": "#555555",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 5,
-		    "min": 0,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "p_a1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "id": "p_a2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x533fdef2
-	// Question: Unit rate and graphing a proportional savings relationship
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x533fdef2] Unit rate and graphing a proportional savings relationship (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#2e86de",
+		      "label": "C",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -21507,152 +20401,22 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 5,
-		    "min": 0,
+		    "max": 10,
+		    "min": -10,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
-		    "min": 0,
+		    "min": -10,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "p_b1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 3,
-		      "id": "p_b2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x533fdef2
-	// Question: Unit rate and graphing a proportional savings relationship
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x533fdef2] Unit rate and graphing a proportional savings relationship (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_c",
-		      "color": "#A23E2C",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1.5,
-		        "yIntercept": 1
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 5,
-		    "min": 0,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 1,
-		      "id": "p_c1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 4,
-		      "id": "p_c2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x533fdef2
-	// Question: Unit rate and graphing a proportional savings relationship
-	// Widget key: coordinate_plane
-	test("line-equation-graph - [x533fdef2] Unit rate and graphing a proportional savings relationship (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 5,
-		    "min": 0,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -21672,19 +20436,75 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x05c8fae7
-	// Question: Graph a proportional relationship from a heart-rate table
+	// Extracted from question: x7c5f8a51
+	// Question: Painter's unit rate and graphing a proportional relationship
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x05c8fae7] Graph a proportional relationship from a heart-rate table (2)", async () => {
+	test("line-equation-graph - [x7c5f8a51] Painter's unit rate and graphing a proportional relationship (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_correct",
-		      "color": "#11accd",
-		      "label": "",
+		      "id": "line_a",
+		      "color": "#2b6cb0",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 30,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 360,
+		  "xAxis": {
+		    "max": 5,
+		    "min": -1,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 10,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7c5f8a51
+	// Question: Painter's unit rate and graphing a proportional relationship
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x7c5f8a51] Painter's unit rate and graphing a proportional relationship (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
+		      "color": "#2b6cb0",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -21693,22 +20513,22 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 450,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 8,
-		    "min": 0,
+		    "max": 5,
+		    "min": -1,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 100,
-		    "min": 0,
+		    "min": -10,
 		    "label": "y",
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
-		  "height": 450,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 0,
@@ -21743,90 +20563,19 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x05c8fae7
-	// Question: Graph a proportional relationship from a heart-rate table
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x05c8fae7] Graph a proportional relationship from a heart-rate table (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_slope30",
-		      "color": "#11accd",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 30,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 450,
-		  "xAxis": {
-		    "max": 8,
-		    "min": 0,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 100,
-		    "min": 0,
-		    "label": "y",
-		    "tickInterval": 10,
-		    "showGridLines": true
-		  },
-		  "height": 450,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "b_p0",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 30,
-		      "id": "b_p1",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x05c8fae7
-	// Question: Graph a proportional relationship from a heart-rate table
+	// Extracted from question: x7c5f8a51
+	// Question: Painter's unit rate and graphing a proportional relationship
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x05c8fae7] Graph a proportional relationship from a heart-rate table (4)", async () => {
+	test("line-equation-graph - [x7c5f8a51] Painter's unit rate and graphing a proportional relationship (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_intercept10",
-		      "color": "#11accd",
-		      "label": "",
+		      "id": "line_c",
+		      "color": "#2b6cb0",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -21835,35 +20584,639 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 450,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 8,
-		    "min": 0,
+		    "max": 5,
+		    "min": -1,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 100,
-		    "min": 0,
+		    "min": -10,
 		    "label": "y",
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
-		  "height": 450,
+		  "height": 360,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x02a21c4b
+	// Question: Graph y = 1.4x and identify true statements
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [x02a21c4b] Graph y = 1.4x and identify true statements (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_a",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 1.4,
+		        "yIntercept": 1
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x02a21c4b
+	// Question: Graph y = 1.4x and identify true statements
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x02a21c4b] Graph y = 1.4x and identify true statements (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 1.4,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x02a21c4b
+	// Question: Graph y = 1.4x and identify true statements
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x02a21c4b] Graph y = 1.4x and identify true statements (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_c",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.7,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x02a21c4b
+	// Question: Graph y = 1.4x and identify true statements
+	// Widget key: coordinate_plane_empty
+	test("line-equation-graph - [x02a21c4b] Graph y = 1.4x and identify true statements (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x199977df
+	// Question: Slope and graph of a proportional relationship
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [x199977df] Slope and graph of a proportional relationship (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_a",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.7692307692307693,
+		        "yIntercept": 2
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 14,
+		    "min": -14,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 14,
+		    "min": -14,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x199977df
+	// Question: Slope and graph of a proportional relationship
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x199977df] Slope and graph of a proportional relationship (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.7692307692307693,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 14,
+		    "min": -14,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 14,
+		    "min": -14,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x199977df
+	// Question: Slope and graph of a proportional relationship
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x199977df] Slope and graph of a proportional relationship (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_c",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.75,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 14,
+		    "min": -14,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 14,
+		    "min": -14,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x618f7065
+	// Question: Graph a proportional relationship and find the unit rate
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [x618f7065] Graph a proportional relationship and find the unit rate (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_a",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 9,
+		        "yIntercept": 2
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "t",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "d",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x618f7065
+	// Question: Graph a proportional relationship and find the unit rate
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x618f7065] Graph a proportional relationship and find the unit rate (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 9,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "t",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "d",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x618f7065
+	// Question: Graph a proportional relationship and find the unit rate
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x618f7065] Graph a proportional relationship and find the unit rate (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_c",
+		      "color": "#1f77b4",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": -9,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "t",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "d",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x533fdef2
+	// Question: Unit rate and graph of Keith's savings
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [x533fdef2] Unit rate and graph of Keith's savings (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_a",
+		      "color": "#4A90E2",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 1,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 5,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 0,
-		      "y": 10,
-		      "id": "c_p0",
-		      "label": "",
+		      "y": 0,
+		      "id": "p0",
+		      "label": "(0, 0)",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 1,
-		      "y": 70,
-		      "id": "c_p1",
-		      "label": "",
+		      "x": 2,
+		      "y": 2,
+		      "id": "p1",
+		      "label": "(2, 2)",
 		      "style": "closed"
 		    }
 		  ],
@@ -21885,10 +21238,320 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x722dad66
-	// Question: Slope and graph of d = 60t
+	// Extracted from question: x533fdef2
+	// Question: Unit rate and graph of Keith's savings
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x533fdef2] Unit rate and graph of Keith's savings (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
+		      "color": "#4A90E2",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 1.5,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 5,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "q0",
+		      "label": "(0, 0)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 3,
+		      "id": "q1",
+		      "label": "(2, 3)",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x533fdef2
+	// Question: Unit rate and graph of Keith's savings
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x533fdef2] Unit rate and graph of Keith's savings (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_c",
+		      "color": "#4A90E2",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 1.5,
+		        "yIntercept": 1
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 5,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 1,
+		      "id": "r0",
+		      "label": "(0, 1)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 4,
+		      "id": "r1",
+		      "label": "(2, 4)",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x05c8fae7
+	// Question: Graph a proportional relationship from a table (heart rate)
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x722dad66] Slope and graph of d = 60t (1)", async () => {
+	test("line-equation-graph - [x05c8fae7] Graph a proportional relationship from a table (heart rate) (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_correct",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 60,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 11,
+		    "min": -1,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 10,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x05c8fae7
+	// Question: Graph a proportional relationship from a table (heart rate)
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x05c8fae7] Graph a proportional relationship from a table (heart rate) (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_low_slope",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 30,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 11,
+		    "min": -1,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 10,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x05c8fae7
+	// Question: Graph a proportional relationship from a table (heart rate)
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x05c8fae7] Graph a proportional relationship from a table (heart rate) (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_wrong_intercept",
+		      "color": "#11accd",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 60,
+		        "yIntercept": 10
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 11,
+		    "min": -1,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 10,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x722dad66
+	// Question: Slope and graph of a proportional relationship (distance vs. time)
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [x722dad66] Slope and graph of a proportional relationship (distance vs. time) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -21896,6 +21559,62 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
+		      "color": "#cc4c02",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 30,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": 0,
+		    "label": "t",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 100,
+		    "min": 0,
+		    "label": "d",
+		    "tickInterval": 10,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x722dad66
+	// Question: Slope and graph of a proportional relationship (distance vs. time)
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x722dad66] Slope and graph of a proportional relationship (distance vs. time) (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
 		      "color": "#1f77b4",
 		      "label": " ",
 		      "style": "solid",
@@ -21906,22 +21625,22 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 450,
+		  "width": 425,
 		  "xAxis": {
 		    "max": 8,
-		    "min": -1,
+		    "min": 0,
 		    "label": "t",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 100,
-		    "min": -10,
+		    "min": 0,
 		    "label": "d",
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
-		  "height": 450,
+		  "height": 425,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -21942,65 +21661,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x722dad66
-	// Question: Slope and graph of d = 60t
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x722dad66] Slope and graph of d = 60t (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#1f77b4",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": 60
-		      }
-		    }
-		  ],
-		  "width": 450,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -1,
-		    "label": "t",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 100,
-		    "min": -10,
-		    "label": "d",
-		    "tickInterval": 10,
-		    "showGridLines": true
-		  },
-		  "height": 450,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x722dad66
-	// Question: Slope and graph of d = 60t
+	// Question: Slope and graph of a proportional relationship (distance vs. time)
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [x722dad66] Slope and graph of d = 60t (3)", async () => {
+	test("line-equation-graph - [x722dad66] Slope and graph of a proportional relationship (distance vs. time) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -22008,32 +21671,32 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#1f77b4",
+		      "color": "#2ca02c",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 30,
-		        "yIntercept": 0
+		        "slope": 60,
+		        "yIntercept": 10
 		      }
 		    }
 		  ],
-		  "width": 450,
+		  "width": 425,
 		  "xAxis": {
 		    "max": 8,
-		    "min": -1,
+		    "min": 0,
 		    "label": "t",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 100,
-		    "min": -10,
+		    "min": 0,
 		    "label": "d",
 		    "tickInterval": 10,
 		    "showGridLines": true
 		  },
-		  "height": 450,
+		  "height": 425,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -22054,9 +21717,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xbd05a232
-	// Question: Find the unit rate and select the graph for a proportional relationship
+	// Question: Graph a proportional relationship and find the unit rate
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [xbd05a232] Find the unit rate and select the graph for a proportional relationship (1)", async () => {
+	test("line-equation-graph - [xbd05a232] Graph a proportional relationship and find the unit rate (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -22064,12 +21727,180 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_a",
-		      "color": "#1f77b4",
+		      "color": "#4A90E2",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 3,
-		        "B": -8,
+		        "type": "slopeIntercept",
+		        "slope": 0.375,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "t",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "d",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbd05a232
+	// Question: Graph a proportional relationship and find the unit rate
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [xbd05a232] Graph a proportional relationship and find the unit rate (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
+		      "color": "#4A90E2",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 2.6666666667,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "t",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "d",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbd05a232
+	// Question: Graph a proportional relationship and find the unit rate
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [xbd05a232] Graph a proportional relationship and find the unit rate (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_c",
+		      "color": "#4A90E2",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 2.6666666667,
+		        "yIntercept": 2
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "t",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "d",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5becdef5
+	// Question: Graph a proportional relationship and find the unit rate
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [x5becdef5] Graph a proportional relationship and find the unit rate (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_a",
+		      "color": "#FF8C00",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "A": 6,
+		        "B": -7,
 		        "C": 0,
 		        "type": "standard"
 		      }
@@ -22110,10 +21941,10 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xbd05a232
-	// Question: Find the unit rate and select the graph for a proportional relationship
+	// Extracted from question: x5becdef5
+	// Question: Graph a proportional relationship and find the unit rate
 	// Widget key: graph_choice_b
-	test("line-equation-graph - [xbd05a232] Find the unit rate and select the graph for a proportional relationship (2)", async () => {
+	test("line-equation-graph - [x5becdef5] Graph a proportional relationship and find the unit rate (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -22121,12 +21952,12 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#1E90FF",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
-		        "A": 8,
-		        "B": -3,
+		        "A": 7,
+		        "B": -6,
 		        "C": 0,
 		        "type": "standard"
 		      }
@@ -22167,10 +21998,10 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xbd05a232
-	// Question: Find the unit rate and select the graph for a proportional relationship
+	// Extracted from question: x5becdef5
+	// Question: Graph a proportional relationship and find the unit rate
 	// Widget key: graph_choice_c
-	test("line-equation-graph - [xbd05a232] Find the unit rate and select the graph for a proportional relationship (3)", async () => {
+	test("line-equation-graph - [x5becdef5] Graph a proportional relationship and find the unit rate (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -22178,13 +22009,13 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#1f77b4",
-		      "label": " ",
+		      "color": "#8A2BE2",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
-		        "A": 8,
-		        "B": -3,
-		        "C": -6,
+		        "A": 7,
+		        "B": -6,
+		        "C": -12,
 		        "type": "standard"
 		      }
 		    }
@@ -22205,174 +22036,6 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5becdef5
-	// Question: Unit rate and graph of a proportional relationship
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [x5becdef5] Unit rate and graph of a proportional relationship (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_a",
-		      "color": "#1f77b4",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1.1666666666666667,
-		        "yIntercept": 1
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "t",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "d",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5becdef5
-	// Question: Unit rate and graph of a proportional relationship
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x5becdef5] Unit rate and graph of a proportional relationship (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#1f77b4",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1.1666666666666667,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "t",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "d",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5becdef5
-	// Question: Unit rate and graph of a proportional relationship
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x5becdef5] Unit rate and graph of a proportional relationship (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_c",
-		      "color": "#1f77b4",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -1.1666666666666667,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "t",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "d",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -22402,18 +22065,18 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_a",
-		      "color": "#1f77b4",
+		      "id": "line_correct",
+		      "color": "#2171b5",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.75,
+		        "slope": 1.3333333333333333,
 		        "yIntercept": 0
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -22428,7 +22091,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -22458,18 +22121,18 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_b",
-		      "color": "#1f77b4",
+		      "id": "line_slope_3_over_4",
+		      "color": "#2ca25f",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 1.3333333333333333,
+		        "slope": 0.75,
 		        "yIntercept": 0
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -22484,7 +22147,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -22514,8 +22177,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_c",
-		      "color": "#1f77b4",
+		      "id": "line_wrong_intercept",
+		      "color": "#cb181d",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -22525,6 +22188,50 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "t",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "d",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xebf38548
+	// Question: Graph a proportional relationship and find the unit rate
+	// Widget key: coordinate_plane_empty
+	test("line-equation-graph - [xebf38548] Graph a proportional relationship and find the unit rate (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [],
 		  "width": 425,
 		  "xAxis": {
 		    "max": 10,
@@ -22572,7 +22279,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_c",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -22581,27 +22288,27 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 195,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 2,
 		      "y": 5,
-		      "id": "p_c",
+		      "id": "pt_c_1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -22636,7 +22343,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_d",
 		      "color": "#7854ab",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -22645,71 +22352,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 195,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 195,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": 2,
-		      "id": "p_d",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7ac72c677eaf8daf
-	// Question: Identify relationships with the same constant of proportionality
-	// Widget key: choice_B_graph
-	test("line-equation-graph - [x7ac72c677eaf8daf] Identify relationships with the same constant of proportionality (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_b",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.6,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 195,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -22724,12 +22367,12 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 5,
-		      "y": 3,
-		      "id": "pt_b",
+		      "y": 2,
+		      "id": "pt_d_1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -22753,9 +22396,73 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7ac72c677eaf8daf
-	// Question: Identify relationships with the same constant of proportionality
-	// Widget key: choice_C_graph
-	test("line-equation-graph - [x7ac72c677eaf8daf] Identify relationships with the same constant of proportionality (3)", async () => {
+	// Question: Relationships with the same constant of proportionality
+	// Widget key: choice_b_graph
+	test("line-equation-graph - [x7ac72c677eaf8daf] Relationships with the same constant of proportionality (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_b",
+		      "color": "#7854ab",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 0.6,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x-axis",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y-axis",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 3,
+		      "id": "p_b",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7ac72c677eaf8daf
+	// Question: Relationships with the same constant of proportionality
+	// Widget key: choice_c_graph
+	test("line-equation-graph - [x7ac72c677eaf8daf] Relationships with the same constant of proportionality (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -22773,28 +22480,28 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 195,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "x",
+		    "label": "x-axis",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "y",
+		    "label": "y-axis",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 1,
 		      "y": 8,
-		      "id": "pt_c",
-		      "label": "",
+		      "id": "p_c",
+		      "label": "(1, 8)",
 		      "style": "closed"
 		    }
 		  ],
@@ -22817,9 +22524,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6c49c2db14e9fcfb
-	// Question: Select relationships with the same constant of proportionality
+	// Question: Identify relationships with the same constant of proportionality
 	// Widget key: image_1
-	test("line-equation-graph - [x6c49c2db14e9fcfb] Select relationships with the same constant of proportionality (1)", async () => {
+	test("line-equation-graph - [x6c49c2db14e9fcfb] Identify relationships with the same constant of proportionality (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -22828,7 +22535,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_main",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -22837,28 +22544,28 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 195,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": " ",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": " ",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 8,
 		      "y": 6,
 		      "id": "pt_8_6",
-		      "label": "",
+		      "label": " ",
 		      "style": "closed"
 		    }
 		  ],
@@ -22881,18 +22588,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6c49c2db14e9fcfb
-	// Question: Select relationships with the same constant of proportionality
+	// Question: Identify relationships with the same constant of proportionality
 	// Widget key: choice_c_graph
-	test("line-equation-graph - [x6c49c2db14e9fcfb] Select relationships with the same constant of proportionality (2)", async () => {
+	test("line-equation-graph - [x6c49c2db14e9fcfb] Identify relationships with the same constant of proportionality (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_choice_c",
+		      "id": "line_half",
 		      "color": "#7854ab",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -22901,28 +22608,28 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 195,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": " ",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": " ",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 2,
 		      "y": 1,
 		      "id": "pt_2_1",
-		      "label": "",
+		      "label": " ",
 		      "style": "closed"
 		    }
 		  ],
@@ -22945,9 +22652,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x25f94137bd4fbd6b
-	// Question: Select the car with the best fuel efficiency
+	// Question: Select the car with the greatest fuel efficiency
 	// Widget key: choice_a_graph
-	test("line-equation-graph - [x25f94137bd4fbd6b] Select the car with the best fuel efficiency", async () => {
+	test("line-equation-graph - [x25f94137bd4fbd6b] Select the car with the greatest fuel efficiency", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -22956,7 +22663,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_car_a",
 		      "color": "#7854ab",
-		      "label": " ",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -22965,9 +22672,9 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 8,
+		    "max": 6,
 		    "min": 0,
 		    "label": "L",
 		    "tickInterval": 2,
@@ -22980,12 +22687,12 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 20,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 380,
 		  "points": [
 		    {
 		      "x": 4,
 		      "y": 40,
-		      "id": "p1",
+		      "id": "pt_car_a_4_40",
 		      "label": "(4, 40)",
 		      "style": "closed"
 		    }
@@ -23009,9 +22716,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2cfe5b72e34cc471
-	// Question: Select relationships with the same constant of proportionality
-	// Widget key: choice_c_visual
-	test("line-equation-graph - [x2cfe5b72e34cc471] Select relationships with the same constant of proportionality (2)", async () => {
+	// Question: Identify relationships with the same constant of proportionality
+	// Widget key: choice_c_graph
+	test("line-equation-graph - [x2cfe5b72e34cc471] Identify relationships with the same constant of proportionality (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -23020,7 +22727,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_c",
 		      "color": "#7854ab",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -23029,22 +22736,22 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 195,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 4,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 20,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 4,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 1,
@@ -23073,9 +22780,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2cfe5b72e34cc471
-	// Question: Select relationships with the same constant of proportionality
-	// Widget key: choice_d_visual
-	test("line-equation-graph - [x2cfe5b72e34cc471] Select relationships with the same constant of proportionality (3)", async () => {
+	// Question: Identify relationships with the same constant of proportionality
+	// Widget key: choice_d_graph
+	test("line-equation-graph - [x2cfe5b72e34cc471] Identify relationships with the same constant of proportionality (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -23083,8 +22790,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_d",
-		      "color": "#e07d10",
-		      "label": "",
+		      "color": "#7854ab",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -23093,22 +22800,22 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 195,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 2,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 2,
@@ -23137,9 +22844,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2cfe5b72e34cc471
-	// Question: Select relationships with the same constant of proportionality
-	// Widget key: choice_e_visual
-	test("line-equation-graph - [x2cfe5b72e34cc471] Select relationships with the same constant of proportionality (4)", async () => {
+	// Question: Identify relationships with the same constant of proportionality
+	// Widget key: choice_e_graph
+	test("line-equation-graph - [x2cfe5b72e34cc471] Identify relationships with the same constant of proportionality (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -23148,7 +22855,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_e",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -23157,22 +22864,22 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 195,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 4,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 20,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 4,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 4,
@@ -23201,9 +22908,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x61f9f0d25a53c77e
-	// Question: Least expensive ice cream per scoop
+	// Question: Select the least expensive store per scoop
 	// Widget key: choice_c_graph
-	test("line-equation-graph - [x61f9f0d25a53c77e] Least expensive ice cream per scoop", async () => {
+	test("line-equation-graph - [x61f9f0d25a53c77e] Select the least expensive store per scoop", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -23212,7 +22919,7 @@ describe("lineEquationGraph widget tests", () => {
 		    {
 		      "id": "line_store_c",
 		      "color": "#1fab54",
-		      "label": "",
+		      "label": "Store C",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -23221,27 +22928,27 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 220,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "Scoops",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "Dollars",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 4,
 		      "y": 6,
-		      "id": "pt_4_6",
+		      "id": "point_4_6",
 		      "label": "(4, 6)",
 		      "style": "closed"
 		    }
@@ -23264,49 +22971,49 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x04db8b621cc1126a
-	// Question: Select the fastest reader (words per minute)
-	// Widget key: choice_c_image
-	test("line-equation-graph - [x04db8b621cc1126a] Select the fastest reader (words per minute)", async () => {
+	// Extracted from question: x4514dd37435e76ee
+	// Question: Select the employee who earns the most per hour
+	// Widget key: choice_b_graph
+	test("line-equation-graph - [x4514dd37435e76ee] Select the employee who earns the most per hour", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_ariel",
-		      "color": "#208170",
-		      "label": " ",
+		      "id": "line_giorgio",
+		      "color": "#11accd",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 150,
+		        "slope": 12,
 		        "yIntercept": 0
 		      }
 		    }
 		  ],
-		  "width": 220,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 6,
+		    "max": 10,
 		    "min": 0,
-		    "label": "Minutes",
-		    "tickInterval": 1,
+		    "label": "hours",
+		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 800,
+		    "max": 64,
 		    "min": 0,
-		    "label": "words",
-		    "tickInterval": 50,
+		    "label": "dollars",
+		    "tickInterval": 16,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 320,
 		  "points": [
 		    {
-		      "x": 2,
-		      "y": 300,
-		      "id": "p1",
-		      "label": "(2, 300)",
+		      "x": 4,
+		      "y": 48,
+		      "id": "pt_4_48",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -23338,9 +23045,9 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_main",
-		      "color": "#000000",
-		      "label": "",
+		      "id": "line_given",
+		      "color": "#11accd",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -23349,28 +23056,28 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 195,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 8,
 		      "y": 2,
 		      "id": "pt_8_2",
-		      "label": "",
+		      "label": "(8, 2)",
 		      "style": "closed"
 		    }
 		  ],
@@ -23403,8 +23110,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_choice_c",
-		      "color": "#000000",
-		      "label": "",
+		      "color": "#7854ab",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -23413,28 +23120,28 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 195,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 4,
 		      "y": 1,
 		      "id": "pt_4_1",
-		      "label": "",
+		      "label": " ",
 		      "style": "closed"
 		    }
 		  ],
@@ -23466,9 +23173,9 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_y_9x",
+		      "id": "line_c1",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -23477,27 +23184,27 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 195,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 3,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 1,
 		      "y": 9,
-		      "id": "p_1_9",
+		      "id": "pt_c1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -23521,9 +23228,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2ce66595a1e6880a
-	// Question: Select relationships with the same constant of proportionality
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x2ce66595a1e6880a] Select relationships with the same constant of proportionality (1)", async () => {
+	// Question: Identify relationships with the same constant of proportionality
+	// Widget key: choice_b_graph
+	test("line-equation-graph - [x2ce66595a1e6880a] Identify relationships with the same constant of proportionality (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -23531,8 +23238,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_b",
-		      "color": "#7854ab",
-		      "label": "",
+		      "color": "#11accd",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -23541,23 +23248,31 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 195,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 195,
-		  "points": [],
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 4,
+		      "y": 2,
+		      "id": "p_b_1",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -23577,9 +23292,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2ce66595a1e6880a
-	// Question: Select relationships with the same constant of proportionality
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x2ce66595a1e6880a] Select relationships with the same constant of proportionality (2)", async () => {
+	// Question: Identify relationships with the same constant of proportionality
+	// Widget key: choice_c_graph
+	test("line-equation-graph - [x2ce66595a1e6880a] Identify relationships with the same constant of proportionality (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -23587,8 +23302,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_c",
-		      "color": "#11accd",
-		      "label": "",
+		      "color": "#7854ab",
+		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -23597,63 +23312,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 195,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 195,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe9b552c04187b694
-	// Question: Relationships with the same constant of proportionality
-	// Widget key: image_1
-	test("line-equation-graph - [xe9b552c04187b694] Relationships with the same constant of proportionality (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_main",
-		      "color": "#11accd",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 3,
-		        "yIntercept": 0
-		      }
-		    }
-		  ],
-		  "width": 195,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -23668,12 +23327,12 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 2,
-		      "y": 6,
-		      "id": "p_main",
+		      "x": 4,
+		      "y": 8,
+		      "id": "p_c_1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -23697,27 +23356,27 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe9b552c04187b694
-	// Question: Relationships with the same constant of proportionality
-	// Widget key: choice_c_graph
-	test("line-equation-graph - [xe9b552c04187b694] Relationships with the same constant of proportionality (2)", async () => {
+	// Question: Select relationships with the same constant of proportionality
+	// Widget key: image_1
+	test("line-equation-graph - [xe9b552c04187b694] Select relationships with the same constant of proportionality (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_choice_c",
-		      "color": "#7854ab",
-		      "label": " ",
+		      "id": "line_main",
+		      "color": "#11accd",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 6,
+		        "slope": 3,
 		        "yIntercept": 0
 		      }
 		    }
 		  ],
-		  "width": 195,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
@@ -23732,12 +23391,76 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 2,
 		    "showGridLines": true
 		  },
-		  "height": 195,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 1,
+		      "x": 2,
 		      "y": 6,
-		      "id": "p_choice_c",
+		      "id": "pt_main_2_6",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe9b552c04187b694
+	// Question: Select relationships with the same constant of proportionality
+	// Widget key: choice_c_graph
+	test("line-equation-graph - [xe9b552c04187b694] Select relationships with the same constant of proportionality (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_choice_c",
+		      "color": "#11accd",
+		      "label": null,
+		      "style": "solid",
+		      "equation": {
+		        "type": "slopeIntercept",
+		        "slope": 3,
+		        "yIntercept": 0
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 6,
+		      "id": "pt_choice_c_2_6",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -23771,8 +23494,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_1",
-		      "color": "#3b82f6",
-		      "label": " ",
+		      "color": "#3b78e7",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -23827,8 +23550,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_1",
-		      "color": "#4da3ff",
-		      "label": "",
+		      "color": "#4A90E2",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -23853,81 +23576,25 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc242e81e1706e84a
-	// Question: Determine if a graph represents a linear function
-	// Widget key: image_1
-	test("line-equation-graph - [xc242e81e1706e84a] Determine if a graph represents a linear function", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#3B82F6",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": -2
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
 		  "points": [
 		    {
-		      "x": -5,
-		      "y": -2,
-		      "id": "pt1",
+		      "x": -1,
+		      "y": -6,
+		      "id": "pt_neg1_neg6",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
-		      "y": -2,
-		      "id": "pt2",
+		      "y": -1,
+		      "id": "pt_0_neg1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": -2,
-		      "id": "pt3",
+		      "x": 1,
+		      "y": 4,
+		      "id": "pt_1_4",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -23951,9 +23618,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb1218f261ae1ee46
-	// Question: Determine if a graph represents a linear function
+	// Question: Does the graph represent a linear function?
 	// Widget key: image_1
-	test("line-equation-graph - [xb1218f261ae1ee46] Determine if a graph represents a linear function", async () => {
+	test("line-equation-graph - [xb1218f261ae1ee46] Does the graph represent a linear function?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -23961,12 +23628,12 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_1",
-		      "color": "#5fa0ff",
-		      "label": " ",
+		      "color": "#6FA8DC",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.6666666666666666,
+		        "slope": 0.6666666667,
 		        "yIntercept": 0
 		      }
 		    }
@@ -24007,9 +23674,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5a1b207f66c13606
-	// Question: Does the graph represent y as a linear function of x?
+	// Question: Does the graph represent a linear function?
 	// Widget key: image_1
-	test("line-equation-graph - [x5a1b207f66c13606] Does the graph represent y as a linear function of x?", async () => {
+	test("line-equation-graph - [x5a1b207f66c13606] Does the graph represent a linear function?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -24017,8 +23684,8 @@ describe("lineEquationGraph widget tests", () => {
 		  "lines": [
 		    {
 		      "id": "line_1",
-		      "color": "#3b82f6",
-		      "label": " ",
+		      "color": "#4da6ff",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -24062,303 +23729,18 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x3e8518fc8fe1164c
-	// Question: Identify the line of reflection for a quadrilateral reflection
+	// Extracted from question: x644aa8d359cd9664
+	// Question: Identify the line of reflection for a quadrilateral
 	// Widget key: graph_choice_a
-	test("line-equation-graph - [x3e8518fc8fe1164c] Identify the line of reflection for a quadrilateral reflection (1)", async () => {
+	test("line-equation-graph - [x644aa8d359cd9664] Identify the line of reflection for a quadrilateral (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_vertical_x_eq_neg2",
-		      "color": "#000000",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": -2,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3e8518fc8fe1164c
-	// Question: Identify the line of reflection for a quadrilateral reflection
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x3e8518fc8fe1164c] Identify the line of reflection for a quadrilateral reflection (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_vertical_x_eq_neg4",
-		      "color": "#000000",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": -4,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3e8518fc8fe1164c
-	// Question: Identify the line of reflection for a quadrilateral reflection
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x3e8518fc8fe1164c] Identify the line of reflection for a quadrilateral reflection (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_vertical_x_eq_neg6",
-		      "color": "#000000",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": -6,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3dfbe830c807017f
-	// Question: Identify the line of reflection for a quadrilateral and its image
-	// Widget key: graph_choice_a
-	test("line-equation-graph - [x3dfbe830c807017f] Identify the line of reflection for a quadrilateral and its image (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_y_eq_1",
-		      "color": "#000000",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 0,
-		        "B": 1,
-		        "C": 1,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": 1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 6,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 3,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": -2,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 1,
-		      "id": "Aprime",
-		      "label": "A'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 6,
-		      "id": "Bprime",
-		      "label": "B'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": 3,
-		      "id": "Cprime",
-		      "label": "C'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": -2,
-		      "id": "Dprime",
-		      "label": "D'",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3dfbe830c807017f
-	// Question: Identify the line of reflection for a quadrilateral and its image
-	// Widget key: graph_choice_b
-	test("line-equation-graph - [x3dfbe830c807017f] Identify the line of reflection for a quadrilateral and its image (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_x_eq_2",
-		      "color": "#000000",
+		      "id": "line_candidate",
+		      "color": "#1fab54",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -24369,7 +23751,7 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -24384,234 +23766,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": 1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 6,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 3,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": -2,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 1,
-		      "id": "Aprime",
-		      "label": "A'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 6,
-		      "id": "Bprime",
-		      "label": "B'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": 3,
-		      "id": "Cprime",
-		      "label": "C'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": -2,
-		      "id": "Dprime",
-		      "label": "D'",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3dfbe830c807017f
-	// Question: Identify the line of reflection for a quadrilateral and its image
-	// Widget key: graph_choice_c
-	test("line-equation-graph - [x3dfbe830c807017f] Identify the line of reflection for a quadrilateral and its image (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_x_eq_1",
-		      "color": "#000000",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": 1,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": 1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 6,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 3,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": -2,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 1,
-		      "id": "Aprime",
-		      "label": "A'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 6,
-		      "id": "Bprime",
-		      "label": "B'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": 3,
-		      "id": "Cprime",
-		      "label": "C'",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": -2,
-		      "id": "Dprime",
-		      "label": "D'",
-		      "style": "closed"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa71d91314ee761c9
-	// Question: Identify the line of reflection on a coordinate plane
-	// Widget key: line_choice_a
-	test("line-equation-graph - [xa71d91314ee761c9] Identify the line of reflection on a coordinate plane (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_reflection",
-		      "color": "#1fab54",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": -1
-		      }
-		    }
-		  ],
-		  "width": 400,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -24631,18 +23786,132 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa71d91314ee761c9
-	// Question: Identify the line of reflection on a coordinate plane
-	// Widget key: line_choice_b
-	test("line-equation-graph - [xa71d91314ee761c9] Identify the line of reflection on a coordinate plane (2)", async () => {
+	// Extracted from question: x644aa8d359cd9664
+	// Question: Identify the line of reflection for a quadrilateral
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x644aa8d359cd9664] Identify the line of reflection for a quadrilateral (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_parallel_wrong",
-		      "color": "#cc0000",
+		      "id": "line_candidate",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": -2,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 360,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x644aa8d359cd9664
+	// Question: Identify the line of reflection for a quadrilateral
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x644aa8d359cd9664] Identify the line of reflection for a quadrilateral (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_candidate",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 0,
+		        "B": 1,
+		        "C": -2,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 360,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3dfbe830c807017f
+	// Question: Identify the line of reflection
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [x3dfbe830c807017f] Identify the line of reflection (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_horizontal_y1",
+		      "color": "#1fab54",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
@@ -24668,7 +23937,64 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 400,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 1,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 1,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 6,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 3,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": -2,
+		      "id": "Dprime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -24687,24 +24013,24 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa71d91314ee761c9
-	// Question: Identify the line of reflection on a coordinate plane
-	// Widget key: line_choice_c
-	test("line-equation-graph - [xa71d91314ee761c9] Identify the line of reflection on a coordinate plane (3)", async () => {
+	// Extracted from question: x3dfbe830c807017f
+	// Question: Identify the line of reflection
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [x3dfbe830c807017f] Identify the line of reflection (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_vertical_wrong",
-		      "color": "#0066cc",
+		      "id": "line_x_eq_2",
+		      "color": "#1fab54",
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
 		        "A": 1,
 		        "B": 0,
-		        "C": -1,
+		        "C": 2,
 		        "type": "standard"
 		      }
 		    }
@@ -24725,7 +24051,64 @@ describe("lineEquationGraph widget tests", () => {
 		    "showGridLines": true
 		  },
 		  "height": 400,
-		  "points": [],
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 1,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 1,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 6,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 3,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": -2,
+		      "id": "Dprime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
 
@@ -24744,10 +24127,124 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x746eb9cc8664a33c
+	// Extracted from question: x3dfbe830c807017f
 	// Question: Identify the line of reflection
-	// Widget key: line_choice_a
-	test("line-equation-graph - [x746eb9cc8664a33c] Identify the line of reflection (1)", async () => {
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [x3dfbe830c807017f] Identify the line of reflection (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_x_eq_0",
+		      "color": "#1fab54",
+		      "label": " ",
+		      "style": "solid",
+		      "equation": {
+		        "A": 1,
+		        "B": 0,
+		        "C": 0,
+		        "type": "standard"
+		      }
+		    }
+		  ],
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 1,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 1,
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 6,
+		      "id": "Bprime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 3,
+		      "id": "Cprime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": -2,
+		      "id": "Dprime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb6eb207331f48e40
+	// Question: Select the line of reflection for a triangle
+	// Widget key: graph_choice_a
+	test("line-equation-graph - [xb6eb207331f48e40] Select the line of reflection for a triangle (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -24761,11 +24258,11 @@ describe("lineEquationGraph widget tests", () => {
 		      "equation": {
 		        "type": "slopeIntercept",
 		        "slope": 0,
-		        "yIntercept": 5
+		        "yIntercept": 2
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -24780,9 +24277,9 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -24800,10 +24297,10 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x746eb9cc8664a33c
-	// Question: Identify the line of reflection
-	// Widget key: line_choice_b
-	test("line-equation-graph - [x746eb9cc8664a33c] Identify the line of reflection (2)", async () => {
+	// Extracted from question: xb6eb207331f48e40
+	// Question: Select the line of reflection for a triangle
+	// Widget key: graph_choice_b
+	test("line-equation-graph - [xb6eb207331f48e40] Select the line of reflection for a triangle (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -24815,14 +24312,13 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": -3,
-		        "type": "standard"
+		        "type": "slopeIntercept",
+		        "slope": 0,
+		        "yIntercept": -2
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -24837,9 +24333,9 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
-		  "showQuadrantLabels": false
+		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -24857,10 +24353,10 @@ describe("lineEquationGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x746eb9cc8664a33c
-	// Question: Identify the line of reflection
-	// Widget key: line_choice_c
-	test("line-equation-graph - [x746eb9cc8664a33c] Identify the line of reflection (3)", async () => {
+	// Extracted from question: xb6eb207331f48e40
+	// Question: Select the line of reflection for a triangle
+	// Widget key: graph_choice_c
+	test("line-equation-graph - [xb6eb207331f48e40] Select the line of reflection for a triangle (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -24872,126 +24368,14 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": " ",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": -6
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x51b60bfce8805713
-	// Question: Identify the line of reflection on a coordinate plane
-	// Widget key: reflection_choice_a
-	test("line-equation-graph - [x51b60bfce8805713] Identify the line of reflection on a coordinate plane (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_y_eq_1",
-		      "color": "#000000",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0,
-		        "yIntercept": 1
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x51b60bfce8805713
-	// Question: Identify the line of reflection on a coordinate plane
-	// Widget key: reflection_choice_b
-	test("line-equation-graph - [x51b60bfce8805713] Identify the line of reflection on a coordinate plane (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_x_eq_1",
-		      "color": "#000000",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
 		        "A": 1,
 		        "B": 0,
-		        "C": 1,
+		        "C": -2,
 		        "type": "standard"
 		      }
 		    }
 		  ],
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -25006,64 +24390,7 @@ describe("lineEquationGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
-		  "points": [],
-		  "showQuadrantLabels": true
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x51b60bfce8805713
-	// Question: Identify the line of reflection on a coordinate plane
-	// Widget key: reflection_choice_c
-	test("line-equation-graph - [x51b60bfce8805713] Identify the line of reflection on a coordinate plane (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_x_eq_neg1",
-		      "color": "#000000",
-		      "label": " ",
-		      "style": "solid",
-		      "equation": {
-		        "A": 1,
-		        "B": 0,
-		        "C": -1,
-		        "type": "standard"
-		      }
-		    }
-		  ],
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": true
 		} as unknown as WidgetInput
@@ -25093,9 +24420,9 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_horizontal_neg5",
+		      "id": "line_y_eq_neg5",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "y = -5",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -25106,16 +24433,16 @@ describe("lineEquationGraph widget tests", () => {
 		  ],
 		  "width": 345,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -25140,18 +24467,18 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x47373e92
-	// Question: Does the graph represent a function?
+	// Question: Determine whether the graph represents a function
 	// Widget key: image_1
-	test("line-equation-graph - [x47373e92] Does the graph represent a function?", async () => {
+	test("line-equation-graph - [x47373e92] Determine whether the graph represents a function", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_1",
+		      "id": "line_h",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": "y = -3",
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -25164,14 +24491,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -8,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -25205,9 +24532,9 @@ describe("lineEquationGraph widget tests", () => {
 		  "type": "lineEquationGraph",
 		  "lines": [
 		    {
-		      "id": "line_horizontal_y_7",
+		      "id": "line_y_7",
 		      "color": "#11accd",
-		      "label": "",
+		      "label": null,
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
@@ -25220,70 +24547,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 345,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd39f914b
-	// Question: Does the graph represent a function?
-	// Widget key: image_1
-	test("line-equation-graph - [xd39f914b] Does the graph represent a function?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_1",
-		      "color": "#11accd",
-		      "label": "",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -0.5,
-		        "yIntercept": 4
-		      }
-		    }
-		  ],
-		  "width": 345,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -25308,9 +24579,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc74f1b99aab5812a
-	// Question: Compare y-intercepts from a table and a graph
-	// Widget key: image_1
-	test("line-equation-graph - [xc74f1b99aab5812a] Compare y-intercepts from a table and a graph", async () => {
+	// Question: Compare y-intercepts from a table and a line
+	// Widget key: graph_image
+	test("line-equation-graph - [xc74f1b99aab5812a] Compare y-intercepts from a table and a line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -25331,15 +24602,15 @@ describe("lineEquationGraph widget tests", () => {
 		  "width": 328,
 		  "xAxis": {
 		    "max": 10,
-		    "min": -5,
-		    "label": "",
+		    "min": -10,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
-		    "min": -5,
-		    "label": "",
+		    "min": -25,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -25364,9 +24635,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x069efd99f16fa0e5
-	// Question: Compare slopes from a table and a line
+	// Question: Compare slopes: table vs. line
 	// Widget key: image_1
-	test("line-equation-graph - [x069efd99f16fa0e5] Compare slopes from a table and a line", async () => {
+	test("line-equation-graph - [x069efd99f16fa0e5] Compare slopes: table vs. line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -25386,14 +24657,14 @@ describe("lineEquationGraph widget tests", () => {
 		  ],
 		  "width": 328,
 		  "xAxis": {
-		    "max": 6,
-		    "min": -6,
+		    "max": 8,
+		    "min": -2,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
+		    "max": 4,
 		    "min": -6,
 		    "label": "y",
 		    "tickInterval": 1,
@@ -25442,16 +24713,73 @@ describe("lineEquationGraph widget tests", () => {
 		  ],
 		  "width": 328,
 		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 5,
+		    "min": -5,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 12,
+		    "min": -5,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 328,
+		  "points": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for lineEquationGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5a85e20510de2b33
+	// Question: Compare slopes from a table and a line
+	// Widget key: image_1
+	test("line-equation-graph - [x5a85e20510de2b33] Compare slopes from a table and a line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "lineEquationGraph",
+		  "lines": [
+		    {
+		      "id": "line_h",
+		      "color": "#11accd",
+		      "label": "h",
+		      "style": "solid",
+		      "equation": {
+		        "x1": 0,
+		        "y1": 6,
+		        "type": "pointSlope",
+		        "slope": 0.3333333333
+		      }
+		    }
+		  ],
+		  "width": 328,
+		  "xAxis": {
+		    "max": 16,
+		    "min": -1,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 14,
+		    "min": 0,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -25477,7 +24805,7 @@ describe("lineEquationGraph widget tests", () => {
 
 	// Extracted from question: x0a3f784a98b91b00
 	// Question: Compare y-intercepts of two functions
-	// Widget key: image_1
+	// Widget key: graph_image
 	test("line-equation-graph - [x0a3f784a98b91b00] Compare y-intercepts of two functions", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -25491,7 +24819,7 @@ describe("lineEquationGraph widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -1,
+		        "slope": 1,
 		        "yIntercept": 5
 		      }
 		    }
@@ -25500,70 +24828,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 328,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa57f1acc88b37c5b
-	// Question: Compare slopes from a table and a line
-	// Widget key: image_1
-	test("line-equation-graph - [xa57f1acc88b37c5b] Compare slopes from a table and a line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_g",
-		      "color": "#11accd",
-		      "label": "g",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": -0.5,
-		        "yIntercept": 2
-		      }
-		    }
-		  ],
-		  "width": 328,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -25611,15 +24883,15 @@ describe("lineEquationGraph widget tests", () => {
 		  "width": 328,
 		  "xAxis": {
 		    "max": 10,
-		    "min": -2,
-		    "label": "x",
+		    "min": -1,
+		    "label": " ",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 2,
 		    "min": -8,
-		    "label": "y",
+		    "label": " ",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -25644,9 +24916,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x552a9077a3bc1a59
-	// Question: Compare slopes of two functions
+	// Question: Compare slopes from an equation and a graph
 	// Widget key: image_1
-	test("line-equation-graph - [x552a9077a3bc1a59] Compare slopes of two functions", async () => {
+	test("line-equation-graph - [x552a9077a3bc1a59] Compare slopes from an equation and a graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -25668,14 +24940,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -25720,22 +24992,22 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 328,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
-		    "min": 0,
+		    "min": -10,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 2,
+		    "max": 4,
 		    "min": -14,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 328,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -25756,9 +25028,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x99568f8c5fa390c4
-	// Question: Identify the more negative slope
+	// Question: Compare slopes of two functions
 	// Widget key: image_1
-	test("line-equation-graph - [x99568f8c5fa390c4] Identify the more negative slope", async () => {
+	test("line-equation-graph - [x99568f8c5fa390c4] Compare slopes of two functions", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -25780,14 +25052,14 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 6,
 		    "min": -2,
-		    "label": "",
+		    "label": "t",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 8,
 		    "min": -2,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -25827,23 +25099,23 @@ describe("lineEquationGraph widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": 0.5,
+		        "slope": 1,
 		        "yIntercept": -3
 		      }
 		    }
 		  ],
 		  "width": 328,
 		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -25888,22 +25160,22 @@ describe("lineEquationGraph widget tests", () => {
 		      }
 		    }
 		  ],
-		  "width": 328,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 6,
-		    "min": -4,
+		    "min": -6,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 14,
-		    "min": 0,
+		    "max": 20,
+		    "min": -5,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 328,
+		  "height": 400,
 		  "points": [],
 		  "showQuadrantLabels": false
 		} as unknown as WidgetInput
@@ -25924,9 +25196,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2d987e2e18d56028
-	// Question: Compare y-intercepts from an equation and a graphed line
+	// Question: Compare y-intercepts: equation vs. graph
 	// Widget key: image_1
-	test("line-equation-graph - [x2d987e2e18d56028] Compare y-intercepts from an equation and a graphed line", async () => {
+	test("line-equation-graph - [x2d987e2e18d56028] Compare y-intercepts: equation vs. graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -25948,63 +25220,7 @@ describe("lineEquationGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 328,
-		  "points": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for lineEquationGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x70089bcc2f5bdb2d
-	// Question: Which function has a greater y-intercept?
-	// Widget key: image_1
-	test("line-equation-graph - [x70089bcc2f5bdb2d] Which function has a greater y-intercept?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "lineEquationGraph",
-		  "lines": [
-		    {
-		      "id": "line_p",
-		      "color": "#11accd",
-		      "label": "p",
-		      "style": "solid",
-		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 1,
-		        "yIntercept": -6
-		      }
-		    }
-		  ],
-		  "width": 328,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
+		    "label": "r",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -26036,9 +25252,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x7d6745ff53672dcf
-	// Question: Compare slopes from an equation and a graph
+	// Question: Compare slopes from equation and graph
 	// Widget key: image_1
-	test("line-equation-graph - [x7d6745ff53672dcf] Compare slopes from an equation and a graph", async () => {
+	test("line-equation-graph - [x7d6745ff53672dcf] Compare slopes from equation and graph", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -26050,24 +25266,25 @@ describe("lineEquationGraph widget tests", () => {
 		      "label": "q",
 		      "style": "solid",
 		      "equation": {
-		        "type": "slopeIntercept",
-		        "slope": 0.25,
-		        "yIntercept": 0
+		        "A": 1,
+		        "B": -4,
+		        "C": 0,
+		        "type": "standard"
 		      }
 		    }
 		  ],
 		  "width": 328,
 		  "xAxis": {
 		    "max": 5,
-		    "min": -1,
-		    "label": "",
+		    "min": -5,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 3,
-		    "min": -1,
-		    "label": "",
+		    "max": 5,
+		    "min": -5,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -26092,9 +25309,9 @@ describe("lineEquationGraph widget tests", () => {
 	})
 
 	// Extracted from question: x22ee5f2383ae41be
-	// Question: Compare y-intercepts of two functions
+	// Question: Which function has a greater y-intercept?
 	// Widget key: image_1
-	test("line-equation-graph - [x22ee5f2383ae41be] Compare y-intercepts of two functions", async () => {
+	test("line-equation-graph - [x22ee5f2383ae41be] Which function has a greater y-intercept?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -26107,21 +25324,21 @@ describe("lineEquationGraph widget tests", () => {
 		      "style": "solid",
 		      "equation": {
 		        "type": "slopeIntercept",
-		        "slope": -2,
+		        "slope": -1,
 		        "yIntercept": 1
 		      }
 		    }
 		  ],
 		  "width": 328,
 		  "xAxis": {
-		    "max": 6,
-		    "min": -6,
+		    "max": 4,
+		    "min": -1,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 2,
 		    "min": -10,
 		    "label": "y",
 		    "tickInterval": 1,

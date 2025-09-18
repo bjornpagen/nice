@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.959Z
+// Generated on: 2025-09-18T05:17:02.155Z
 // Widget Type: geometricSolidDiagram
 // Source: Real questions from database
 //
@@ -25,23 +25,23 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("geometricSolidDiagram widget tests", () => {
-	// Extracted from question: x72dc3d0e7b62efba
-	// Question: Find the volume of a sphere with radius 1/2 unit
+	// Extracted from question: x71e776db609db5ad
+	// Question: Find the volume of a sphere (radius 5)
 	// Widget key: image_1
-	test("geometric-solid-diagram - [x72dc3d0e7b62efba] Find the volume of a sphere with radius 1/2 unit", async () => {
+	test("geometric-solid-diagram - [x71e776db609db5ad] Find the volume of a sphere (radius 5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "geometricSolidDiagram",
 		  "shape": {
 		    "type": "sphere",
-		    "radius": 0.5
+		    "radius": 5
 		  },
-		  "width": 240,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
-		      "text": "r = 1/2 unit",
+		      "text": "5 units",
 		      "target": "radius"
 		    }
 		  ]
@@ -74,11 +74,85 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "type": "sphere",
 		    "radius": 9
 		  },
-		  "width": 180,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "9 units",
+		      "target": "radius"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for geometricSolidDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x72dc3d0e7b62efba
+	// Question: Find the volume of the sphere
+	// Widget key: image_1
+	test("geometric-solid-diagram - [x72dc3d0e7b62efba] Find the volume of the sphere", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "geometricSolidDiagram",
+		  "shape": {
+		    "type": "sphere",
+		    "radius": 0.5
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [
+		    {
+		      "text": "1/2 unit",
+		      "target": "radius"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for geometricSolidDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe1d438f18f46c848
+	// Question: Find the volume of a sphere (radius 3)
+	// Widget key: image_1
+	test("geometric-solid-diagram - [xe1d438f18f46c848] Find the volume of a sphere (radius 3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "geometricSolidDiagram",
+		  "shape": {
+		    "type": "sphere",
+		    "radius": 3
+		  },
+		  "width": 360,
+		  "height": 360,
+		  "labels": [
+		    {
+		      "text": "3 units",
 		      "target": "radius"
 		    }
 		  ]
@@ -111,48 +185,11 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "type": "sphere",
 		    "radius": 4
 		  },
-		  "width": 180,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
-		      "text": "4 units",
-		      "target": "radius"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for geometricSolidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xe1d438f18f46c848
-	// Question: Find the volume of a sphere
-	// Widget key: image_1
-	test("geometric-solid-diagram - [xe1d438f18f46c848] Find the volume of a sphere", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "geometricSolidDiagram",
-		  "shape": {
-		    "type": "sphere",
-		    "radius": 3
-		  },
-		  "width": 180,
-		  "height": 180,
-		  "labels": [
-		    {
-		      "text": "3 units",
+		      "text": "radius = 4 units",
 		      "target": "radius"
 		    }
 		  ]
@@ -174,9 +211,9 @@ describe("geometricSolidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4cb611880d500097
-	// Question: Find the volume of a sphere from its radius
+	// Question: Find the volume of a sphere
 	// Widget key: image_1
-	test("geometric-solid-diagram - [x4cb611880d500097] Find the volume of a sphere from its radius", async () => {
+	test("geometric-solid-diagram - [x4cb611880d500097] Find the volume of a sphere", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -185,8 +222,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "type": "sphere",
 		    "radius": 10
 		  },
-		  "width": 180,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "10 units",
@@ -211,9 +248,9 @@ describe("geometricSolidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x9c18eb9bb29697f1
-	// Question: Volume of a sphere
+	// Question: Find the volume of a sphere with a one-fourth unit radius
 	// Widget key: image_1
-	test("geometric-solid-diagram - [x9c18eb9bb29697f1] Volume of a sphere", async () => {
+	test("geometric-solid-diagram - [x9c18eb9bb29697f1] Find the volume of a sphere with a one-fourth unit radius", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -222,8 +259,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "type": "sphere",
 		    "radius": 0.25
 		  },
-		  "width": 240,
-		  "height": 240,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "r = 1/4 unit",
@@ -248,9 +285,9 @@ describe("geometricSolidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x7cd6ac5126417fea
-	// Question: Find the volume of the sphere (radius 2)
+	// Question: Find the volume of a sphere
 	// Widget key: image_1
-	test("geometric-solid-diagram - [x7cd6ac5126417fea] Find the volume of the sphere (radius 2)", async () => {
+	test("geometric-solid-diagram - [x7cd6ac5126417fea] Find the volume of a sphere", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -259,8 +296,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "type": "sphere",
 		    "radius": 2
 		  },
-		  "width": 180,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "2 units",
@@ -285,9 +322,9 @@ describe("geometricSolidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x35c03635a82e3af9
-	// Question: Find the volume of a sphere
+	// Question: Find the volume of a sphere (radius 8)
 	// Widget key: image_1
-	test("geometric-solid-diagram - [x35c03635a82e3af9] Find the volume of a sphere", async () => {
+	test("geometric-solid-diagram - [x35c03635a82e3af9] Find the volume of a sphere (radius 8)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -296,8 +333,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "type": "sphere",
 		    "radius": 8
 		  },
-		  "width": 180,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "8 units",
@@ -333,8 +370,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "type": "sphere",
 		    "radius": 7
 		  },
-		  "width": 180,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "7 units",
@@ -359,9 +396,9 @@ describe("geometricSolidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xa6e384defcba290a
-	// Question: Find the volume of the sphere
+	// Question: Find the volume of a sphere (radius 1)
 	// Widget key: image_1
-	test("geometric-solid-diagram - [xa6e384defcba290a] Find the volume of the sphere", async () => {
+	test("geometric-solid-diagram - [xa6e384defcba290a] Find the volume of a sphere (radius 1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -370,48 +407,11 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "type": "sphere",
 		    "radius": 1
 		  },
-		  "width": 180,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "1 unit",
-		      "target": "radius"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for geometricSolidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x71e776db609db5ad
-	// Question: Find the volume of a sphere (radius 5)
-	// Widget key: image_1
-	test("geometric-solid-diagram - [x71e776db609db5ad] Find the volume of a sphere (radius 5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "geometricSolidDiagram",
-		  "shape": {
-		    "type": "sphere",
-		    "radius": 5
-		  },
-		  "width": 180,
-		  "height": 180,
-		  "labels": [
-		    {
-		      "text": "5 units",
 		      "target": "radius"
 		    }
 		  ]
@@ -444,8 +444,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "type": "sphere",
 		    "radius": 6
 		  },
-		  "width": 180,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "6 units",
@@ -469,10 +469,52 @@ describe("geometricSolidDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xd2523669f0c90b0e
+	// Extracted from question: x07dee815cde5bc2a
 	// Question: Find the volume of a cone
 	// Widget key: image_1
-	test("geometric-solid-diagram - [xd2523669f0c90b0e] Find the volume of a cone", async () => {
+	test("geometric-solid-diagram - [x07dee815cde5bc2a] Find the volume of a cone", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "geometricSolidDiagram",
+		  "shape": {
+		    "type": "cone",
+		    "height": 10,
+		    "radius": 4
+		  },
+		  "width": 360,
+		  "height": 480,
+		  "labels": [
+		    {
+		      "text": "4 units",
+		      "target": "radius"
+		    },
+		    {
+		      "text": "10 units",
+		      "target": "height"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for geometricSolidDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd2523669f0c90b0e
+	// Question: Find the volume of the cone
+	// Widget key: image_1
+	test("geometric-solid-diagram - [xd2523669f0c90b0e] Find the volume of the cone", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -482,8 +524,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 9,
 		    "radius": 2
 		  },
-		  "width": 300,
-		  "height": 320,
+		  "width": 380,
+		  "height": 400,
 		  "labels": [
 		    {
 		      "text": "2 units",
@@ -524,8 +566,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 6,
 		    "radius": 10
 		  },
-		  "width": 240,
-		  "height": 90,
+		  "width": 400,
+		  "height": 300,
 		  "labels": [
 		    {
 		      "text": "10 units",
@@ -553,52 +595,10 @@ describe("geometricSolidDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x07dee815cde5bc2a
+	// Extracted from question: xae1c703950392d27
 	// Question: Find the volume of a cone
 	// Widget key: image_1
-	test("geometric-solid-diagram - [x07dee815cde5bc2a] Find the volume of a cone", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "geometricSolidDiagram",
-		  "shape": {
-		    "type": "cone",
-		    "height": 10,
-		    "radius": 4
-		  },
-		  "width": 134.23728813559322,
-		  "height": 180,
-		  "labels": [
-		    {
-		      "text": "r = 4 units",
-		      "target": "radius"
-		    },
-		    {
-		      "text": "h = 10 units",
-		      "target": "height"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for geometricSolidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xae1c703950392d27
-	// Question: Find the volume of the cone
-	// Widget key: image_1
-	test("geometric-solid-diagram - [xae1c703950392d27] Find the volume of the cone", async () => {
+	test("geometric-solid-diagram - [xae1c703950392d27] Find the volume of a cone", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -608,8 +608,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 8,
 		    "radius": 6
 		  },
-		  "width": 180,
-		  "height": 138,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "6 units",
@@ -650,8 +650,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 6,
 		    "radius": 5
 		  },
-		  "width": 240,
-		  "height": 138,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "5 units",
@@ -692,8 +692,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 5,
 		    "radius": 5
 		  },
-		  "width": 180,
-		  "height": 105,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "5 units",
@@ -734,8 +734,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 3,
 		    "radius": 5
 		  },
-		  "width": 240,
-		  "height": 90,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "5 units",
@@ -776,15 +776,15 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 7,
 		    "radius": 7
 		  },
-		  "width": 180,
-		  "height": 105,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
-		      "text": "7 units",
+		      "text": "r = 7 units",
 		      "target": "radius"
 		    },
 		    {
-		      "text": "7 units",
+		      "text": "h = 7 units",
 		      "target": "height"
 		    }
 		  ]
@@ -818,8 +818,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 5,
 		    "radius": 2
 		  },
-		  "width": 134.23728813559322,
-		  "height": 180,
+		  "width": 380,
+		  "height": 420,
 		  "labels": [
 		    {
 		      "text": "2 units",
@@ -860,8 +860,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 4,
 		    "radius": 6
 		  },
-		  "width": 240,
-		  "height": 106.45,
+		  "width": 400,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "6 units",
@@ -890,9 +890,9 @@ describe("geometricSolidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x13b348a260cd9d6f
-	// Question: Find the volume of a cone (exact or decimal)
+	// Question: Find the volume of a cone
 	// Widget key: image_1
-	test("geometric-solid-diagram - [x13b348a260cd9d6f] Find the volume of a cone (exact or decimal)", async () => {
+	test("geometric-solid-diagram - [x13b348a260cd9d6f] Find the volume of a cone", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -902,15 +902,15 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 2,
 		    "radius": 3
 		  },
-		  "width": 240,
-		  "height": 106,
+		  "width": 400,
+		  "height": 350,
 		  "labels": [
 		    {
-		      "text": "3 units",
+		      "text": "radius = 3 units",
 		      "target": "radius"
 		    },
 		    {
-		      "text": "2 units",
+		      "text": "height = 2 units",
 		      "target": "height"
 		    }
 		  ]
@@ -944,8 +944,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 4,
 		    "radius": 3
 		  },
-		  "width": 180,
-		  "height": 138,
+		  "width": 360,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "3 units",
@@ -973,70 +973,28 @@ describe("geometricSolidDiagram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xde6ec880165a5aec
-	// Question: Find the volume of a cylinder
+	// Extracted from question: xaead43c05c37ee59
+	// Question: Find the volume of a cylinder (exact or approximate)
 	// Widget key: image_1
-	test("geometric-solid-diagram - [xde6ec880165a5aec] Find the volume of a cylinder", async () => {
+	test("geometric-solid-diagram - [xaead43c05c37ee59] Find the volume of a cylinder (exact or approximate)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "geometricSolidDiagram",
 		  "shape": {
 		    "type": "cylinder",
-		    "height": 2,
-		    "radius": 3
+		    "height": 3,
+		    "radius": 5
 		  },
-		  "width": 220,
-		  "height": 94,
+		  "width": 400,
+		  "height": 300,
 		  "labels": [
+		    {
+		      "text": "5 units",
+		      "target": "radius"
+		    },
 		    {
 		      "text": "3 units",
-		      "target": "radius"
-		    },
-		    {
-		      "text": "2 units",
-		      "target": "height"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for geometricSolidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x87ea94bac8422390
-	// Question: Find the volume of a cylinder
-	// Widget key: image_1
-	test("geometric-solid-diagram - [x87ea94bac8422390] Find the volume of a cylinder", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "geometricSolidDiagram",
-		  "shape": {
-		    "type": "cylinder",
-		    "height": 6,
-		    "radius": 8
-		  },
-		  "width": 180,
-		  "height": 103,
-		  "labels": [
-		    {
-		      "text": "8 units",
-		      "target": "radius"
-		    },
-		    {
-		      "text": "6 units",
 		      "target": "height"
 		    }
 		  ]
@@ -1070,8 +1028,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 8,
 		    "radius": 4
 		  },
-		  "width": 175,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "4 units",
@@ -1079,6 +1037,90 @@ describe("geometricSolidDiagram widget tests", () => {
 		    },
 		    {
 		      "text": "8 units",
+		      "target": "height"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for geometricSolidDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x87ea94bac8422390
+	// Question: Find the volume of a cylinder
+	// Widget key: image_1
+	test("geometric-solid-diagram - [x87ea94bac8422390] Find the volume of a cylinder", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "geometricSolidDiagram",
+		  "shape": {
+		    "type": "cylinder",
+		    "height": 6,
+		    "radius": 8
+		  },
+		  "width": 400,
+		  "height": 300,
+		  "labels": [
+		    {
+		      "text": "8 units",
+		      "target": "radius"
+		    },
+		    {
+		      "text": "6 units",
+		      "target": "height"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for geometricSolidDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xde6ec880165a5aec
+	// Question: Find the volume of a cylinder
+	// Widget key: image_1
+	test("geometric-solid-diagram - [xde6ec880165a5aec] Find the volume of a cylinder", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "geometricSolidDiagram",
+		  "shape": {
+		    "type": "cylinder",
+		    "height": 2,
+		    "radius": 3
+		  },
+		  "width": 400,
+		  "height": 300,
+		  "labels": [
+		    {
+		      "text": "3 units",
+		      "target": "radius"
+		    },
+		    {
+		      "text": "2 units",
 		      "target": "height"
 		    }
 		  ]
@@ -1112,57 +1154,15 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 4,
 		    "radius": 6
 		  },
-		  "width": 220,
-		  "height": 94,
+		  "width": 400,
+		  "height": 300,
 		  "labels": [
 		    {
-		      "text": "6 units",
+		      "text": "radius = 6 units",
 		      "target": "radius"
 		    },
 		    {
-		      "text": "4 units",
-		      "target": "height"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for geometricSolidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xaead43c05c37ee59
-	// Question: Find the volume of a cylinder
-	// Widget key: image_1
-	test("geometric-solid-diagram - [xaead43c05c37ee59] Find the volume of a cylinder", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "geometricSolidDiagram",
-		  "shape": {
-		    "type": "cylinder",
-		    "height": 3,
-		    "radius": 5
-		  },
-		  "width": 240,
-		  "height": 96,
-		  "labels": [
-		    {
-		      "text": "5 units",
-		      "target": "radius"
-		    },
-		    {
-		      "text": "3 units",
+		      "text": "height = 4 units",
 		      "target": "height"
 		    }
 		  ]
@@ -1184,9 +1184,9 @@ describe("geometricSolidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xba9aa73a34f2def5
-	// Question: Find the volume of a cylinder
+	// Question: Volume of a cylinder
 	// Widget key: image_1
-	test("geometric-solid-diagram - [xba9aa73a34f2def5] Find the volume of a cylinder", async () => {
+	test("geometric-solid-diagram - [xba9aa73a34f2def5] Volume of a cylinder", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1196,8 +1196,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 8,
 		    "radius": 2
 		  },
-		  "width": 107,
-		  "height": 180,
+		  "width": 400,
+		  "height": 400,
 		  "labels": [
 		    {
 		      "text": "2 units",
@@ -1238,8 +1238,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 10,
 		    "radius": 4
 		  },
-		  "width": 146,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "4 units",
@@ -1280,8 +1280,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 6,
 		    "radius": 3
 		  },
-		  "width": 175,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "3 units",
@@ -1322,15 +1322,15 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 5,
 		    "radius": 2
 		  },
-		  "width": 146,
-		  "height": 180,
+		  "width": 400,
+		  "height": 360,
 		  "labels": [
 		    {
-		      "text": "r = 2 units",
+		      "text": "2 units",
 		      "target": "radius"
 		    },
 		    {
-		      "text": "h = 5 units",
+		      "text": "5 units",
 		      "target": "height"
 		    }
 		  ]
@@ -1364,8 +1364,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 10,
 		    "radius": 4
 		  },
-		  "width": 240,
-		  "height": 236,
+		  "width": 400,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "4 units",
@@ -1394,9 +1394,9 @@ describe("geometricSolidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: xd42c8f5c09f49763
-	// Question: Find the volume of a cylinder (exact or approximation)
+	// Question: Find the volume of a cylinder
 	// Widget key: image_1
-	test("geometric-solid-diagram - [xd42c8f5c09f49763] Find the volume of a cylinder (exact or approximation)", async () => {
+	test("geometric-solid-diagram - [xd42c8f5c09f49763] Find the volume of a cylinder", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1406,15 +1406,15 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 6,
 		    "radius": 5
 		  },
-		  "width": 240,
-		  "height": 156,
+		  "width": 360,
+		  "height": 360,
 		  "labels": [
 		    {
-		      "text": "5 units",
+		      "text": "radius = 5 units",
 		      "target": "radius"
 		    },
 		    {
-		      "text": "6 units",
+		      "text": "height = 6 units",
 		      "target": "height"
 		    }
 		  ]
@@ -1448,8 +1448,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 3,
 		    "radius": 4
 		  },
-		  "width": 180,
-		  "height": 103,
+		  "width": 400,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "4 units",
@@ -1490,8 +1490,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 20,
 		    "radius": 10
 		  },
-		  "width": 180,
-		  "height": 173,
+		  "width": 400,
+		  "height": 360,
 		  "labels": [
 		    {
 		      "text": "10 inches",
@@ -1499,6 +1499,48 @@ describe("geometricSolidDiagram widget tests", () => {
 		    },
 		    {
 		      "text": "20 inches",
+		      "target": "height"
+		    }
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for geometricSolidDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa9a5cb4c040e5824
+	// Question: Volume of water remaining in a cone-shaped cup
+	// Widget key: image_1
+	test("geometric-solid-diagram - [xa9a5cb4c040e5824] Volume of water remaining in a cone-shaped cup", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "geometricSolidDiagram",
+		  "shape": {
+		    "type": "cone",
+		    "height": 8,
+		    "radius": 3
+		  },
+		  "width": 360,
+		  "height": 420,
+		  "labels": [
+		    {
+		      "text": "3 cm",
+		      "target": "radius"
+		    },
+		    {
+		      "text": "8 cm",
 		      "target": "height"
 		    }
 		  ]
@@ -1532,94 +1574,15 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 20,
 		    "radius": 4
 		  },
-		  "width": 145.463,
-		  "height": 260,
+		  "width": 360,
+		  "height": 420,
 		  "labels": [
 		    {
-		      "text": "4 cm",
+		      "text": "4 centimeters",
 		      "target": "radius"
 		    },
 		    {
-		      "text": "20 cm",
-		      "target": "height"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for geometricSolidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x00dff9034f2ddb48
-	// Question: Volume of a hemispherical bowl
-	// Widget key: image_1
-	test("geometric-solid-diagram - [x00dff9034f2ddb48] Volume of a hemispherical bowl", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "geometricSolidDiagram",
-		  "shape": {
-		    "type": "sphere",
-		    "radius": 15
-		  },
-		  "width": 180,
-		  "height": 180,
-		  "labels": [
-		    {
-		      "text": "15 cm",
-		      "target": "radius"
-		    }
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for geometricSolidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa9a5cb4c040e5824
-	// Question: Volume of water remaining in a cone-shaped cup
-	// Widget key: image_1
-	test("geometric-solid-diagram - [xa9a5cb4c040e5824] Volume of water remaining in a cone-shaped cup", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "geometricSolidDiagram",
-		  "shape": {
-		    "type": "cone",
-		    "height": 8,
-		    "radius": 3
-		  },
-		  "width": 129.438,
-		  "height": 180,
-		  "labels": [
-		    {
-		      "text": "3 cm",
-		      "target": "radius"
-		    },
-		    {
-		      "text": "8 cm",
+		      "text": "20 centimeters",
 		      "target": "height"
 		    }
 		  ]
@@ -1653,8 +1616,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "height": 2,
 		    "radius": 4
 		  },
-		  "width": 180,
-		  "height": 59,
+		  "width": 400,
+		  "height": 320,
 		  "labels": [
 		    {
 		      "text": "4 feet",
@@ -1683,9 +1646,9 @@ describe("geometricSolidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2d009ffa46ca3820
-	// Question: Identify the shape from a net of squares
-	// Widget key: choice_c_shape
-	test("geometric-solid-diagram - [x2d009ffa46ca3820] Identify the shape from a net of squares", async () => {
+	// Question: Identify a 3D shape from a net
+	// Widget key: choice_c_image
+	test("geometric-solid-diagram - [x2d009ffa46ca3820] Identify a 3D shape from a net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1694,8 +1657,40 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "type": "sphere",
 		    "radius": 5
 		  },
-		  "width": 120,
-		  "height": 120,
+		  "width": 360,
+		  "height": 320,
+		  "labels": []
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for geometricSolidDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x29a33987cc70cc98
+	// Question: Identify a solid from its net
+	// Widget key: choice_b_image
+	test("geometric-solid-diagram - [x29a33987cc70cc98] Identify a solid from its net", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "geometricSolidDiagram",
+		  "shape": {
+		    "type": "sphere",
+		    "radius": 5
+		  },
+		  "width": 360,
+		  "height": 360,
 		  "labels": []
 		} as unknown as WidgetInput
 
@@ -1715,9 +1710,9 @@ describe("geometricSolidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x2b03516c0180b352
-	// Question: Identify the solid formed by a net
-	// Widget key: choice_c_shape
-	test("geometric-solid-diagram - [x2b03516c0180b352] Identify the solid formed by a net", async () => {
+	// Question: Identify the solid from a net
+	// Widget key: choice_c_visual
+	test("geometric-solid-diagram - [x2b03516c0180b352] Identify the solid from a net", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1726,8 +1721,40 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "type": "sphere",
 		    "radius": 5
 		  },
-		  "width": 200,
-		  "height": 180,
+		  "width": 360,
+		  "height": 320,
+		  "labels": []
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for geometricSolidDiagram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xadf4c6388526ed73
+	// Question: Identify the 3D shape
+	// Widget key: image_1
+	test("geometric-solid-diagram - [xadf4c6388526ed73] Identify the 3D shape", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "geometricSolidDiagram",
+		  "shape": {
+		    "type": "sphere",
+		    "radius": 5
+		  },
+		  "width": 400,
+		  "height": 400,
 		  "labels": []
 		} as unknown as WidgetInput
 
@@ -1757,42 +1784,10 @@ describe("geometricSolidDiagram widget tests", () => {
 		  "shape": {
 		    "type": "cylinder",
 		    "height": 12,
-		    "radius": 4
+		    "radius": 5
 		  },
-		  "width": 128,
-		  "height": 150,
-		  "labels": []
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for geometricSolidDiagram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xadf4c6388526ed73
-	// Question: Identify the 3D shape
-	// Widget key: image_1
-	test("geometric-solid-diagram - [xadf4c6388526ed73] Identify the 3D shape", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "geometricSolidDiagram",
-		  "shape": {
-		    "type": "sphere",
-		    "radius": 45.455
-		  },
-		  "width": 100,
-		  "height": 100,
+		  "width": 320,
+		  "height": 375,
 		  "labels": []
 		} as unknown as WidgetInput
 
@@ -1812,20 +1807,20 @@ describe("geometricSolidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5216f19f9da4aa51
-	// Question: Identify the three-dimensional shape
+	// Question: Identify the 3D shape
 	// Widget key: image_1
-	test("geometric-solid-diagram - [x5216f19f9da4aa51] Identify the three-dimensional shape", async () => {
+	test("geometric-solid-diagram - [x5216f19f9da4aa51] Identify the 3D shape", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "geometricSolidDiagram",
 		  "shape": {
 		    "type": "cylinder",
-		    "height": 24,
-		    "radius": 8
+		    "height": 12,
+		    "radius": 4
 		  },
-		  "width": 56,
-		  "height": 180,
+		  "width": 360,
+		  "height": 420,
 		  "labels": []
 		} as unknown as WidgetInput
 
@@ -1854,11 +1849,11 @@ describe("geometricSolidDiagram widget tests", () => {
 		  "type": "geometricSolidDiagram",
 		  "shape": {
 		    "type": "cone",
-		    "height": 15,
-		    "radius": 6
+		    "height": 12,
+		    "radius": 5
 		  },
-		  "width": 134,
-		  "height": 180,
+		  "width": 336,
+		  "height": 450,
 		  "labels": []
 		} as unknown as WidgetInput
 
@@ -1887,11 +1882,11 @@ describe("geometricSolidDiagram widget tests", () => {
 		  "type": "geometricSolidDiagram",
 		  "shape": {
 		    "type": "cylinder",
-		    "height": 3,
+		    "height": 4,
 		    "radius": 6
 		  },
-		  "width": 180,
-		  "height": 74,
+		  "width": 400,
+		  "height": 300,
 		  "labels": []
 		} as unknown as WidgetInput
 
@@ -1911,20 +1906,20 @@ describe("geometricSolidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x4109ee185e4bee91
-	// Question: Identify the 3D shape
+	// Question: Identify a 3D shape from an image
 	// Widget key: image_1
-	test("geometric-solid-diagram - [x4109ee185e4bee91] Identify the 3D shape", async () => {
+	test("geometric-solid-diagram - [x4109ee185e4bee91] Identify a 3D shape from an image", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "geometricSolidDiagram",
 		  "shape": {
 		    "type": "cone",
-		    "height": 5,
-		    "radius": 8
+		    "height": 3,
+		    "radius": 5
 		  },
-		  "width": 180,
-		  "height": 68,
+		  "width": 400,
+		  "height": 300,
 		  "labels": []
 		} as unknown as WidgetInput
 
@@ -1944,9 +1939,9 @@ describe("geometricSolidDiagram widget tests", () => {
 	})
 
 	// Extracted from question: x5bdf2332dc5f9e15
-	// Question: Identify the 3D shape
+	// Question: Identify a three-dimensional shape
 	// Widget key: image_1
-	test("geometric-solid-diagram - [x5bdf2332dc5f9e15] Identify the 3D shape", async () => {
+	test("geometric-solid-diagram - [x5bdf2332dc5f9e15] Identify a three-dimensional shape", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1955,8 +1950,8 @@ describe("geometricSolidDiagram widget tests", () => {
 		    "type": "sphere",
 		    "radius": 5
 		  },
-		  "width": 180,
-		  "height": 180,
+		  "width": 360,
+		  "height": 360,
 		  "labels": []
 		} as unknown as WidgetInput
 

@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.960Z
+// Generated on: 2025-09-18T05:17:02.159Z
 // Widget Type: polygonGraph
 // Source: Real questions from database
 //
@@ -25,71 +25,71 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 describe("polygonGraph widget tests", () => {
-	// Extracted from question: xdf7523558d395623
-	// Question: Sequences of transformations mapping congruent triangles
+	// Extracted from question: x9199af99c57424a8
+	// Question: Map one triangle onto another using transformation sequences
 	// Widget key: image_1
-	test("polygon-graph - [xdf7523558d395623] Sequences of transformations mapping congruent triangles", async () => {
+	test("polygon-graph - [x9199af99c57424a8] Map one triangle onto another using transformation sequences", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
 		  "width": 300,
 		  "xAxis": {
-		    "max": 12,
+		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 12,
+		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 300,
 		  "points": [
 		    {
-		      "x": 7,
-		      "y": 10,
+		      "x": 5,
+		      "y": 7,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 0,
-		      "y": 10,
+		      "x": 5,
+		      "y": 3,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
-		      "y": 6,
+		      "y": 3,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 7,
-		      "y": 7,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": 0,
-		      "id": "E",
-		      "label": "E",
+		      "x": 11,
+		      "y": 8,
+		      "id": "U",
+		      "label": "U",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 11,
-		      "y": 2,
-		      "id": "F",
-		      "label": "F",
+		      "y": 12,
+		      "id": "V",
+		      "label": "V",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 12,
+		      "id": "W",
+		      "label": "W",
 		      "style": "closed"
 		    }
 		  ],
@@ -103,15 +103,15 @@ describe("polygonGraph widget tests", () => {
 		        "C"
 		      ],
 		      "fillColor": "#99999926",
-		      "strokeColor": "#999"
+		      "strokeColor": "#999999"
 		    },
 		    {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "D",
-		        "E",
-		        "F"
+		        "U",
+		        "V",
+		        "W"
 		      ],
 		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
@@ -135,10 +135,10 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9575a78de643d48e
-	// Question: Sequences of transformations mapping congruent quadrilaterals
+	// Extracted from question: x49deab7d461d69da
+	// Question: Transformation sequences mapping KLMN onto ABCD
 	// Widget key: image_1
-	test("polygon-graph - [x9575a78de643d48e] Sequences of transformations mapping congruent quadrilaterals", async () => {
+	test("polygon-graph - [x49deab7d461d69da] Transformation sequences mapping KLMN onto ABCD", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -147,79 +147,79 @@ describe("polygonGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 300,
 		  "points": [
 		    {
-		      "x": 14,
-		      "y": 8,
+		      "x": 4,
+		      "y": 9,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 14,
-		      "y": 11,
+		      "x": 7,
+		      "y": 7,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 12,
-		      "y": 13,
+		      "x": 4,
+		      "y": 3,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 10,
-		      "y": 13,
+		      "x": 2,
+		      "y": 7,
 		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 8,
-		      "y": 9,
-		      "id": "W",
-		      "label": "W",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 6,
-		      "id": "X",
-		      "label": "X",
+		      "x": 9,
+		      "y": 13,
+		      "id": "K",
+		      "label": "K",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
-		      "y": 4,
-		      "id": "Y",
-		      "label": "Y",
+		      "y": 11,
+		      "id": "L",
+		      "label": "L",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": 4,
-		      "id": "Z",
-		      "label": "Z",
+		      "x": 9,
+		      "y": 7,
+		      "id": "M",
+		      "label": "M",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 11,
+		      "id": "N",
+		      "label": "N",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "ABCD",
+		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
@@ -227,17 +227,127 @@ describe("polygonGraph widget tests", () => {
 		        "C",
 		        "D"
 		      ],
+		      "fillColor": "#99999926",
+		      "strokeColor": "#999"
+		    },
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "K",
+		        "L",
+		        "M",
+		        "N"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8e4c9d54ff7cd3fb
+	// Question: Select the transformation sequence that maps one triangle to another
+	// Widget key: image_1
+	test("polygon-graph - [x8e4c9d54ff7cd3fb] Select the transformation sequence that maps one triangle to another", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 9,
+		      "y": 14,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 10,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 10,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 8,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 4,
+		      "id": "Q",
+		      "label": "Q",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 4,
+		      "id": "R",
+		      "label": "R",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
 		      "fillColor": "#00000000",
 		      "strokeColor": "#999999"
 		    },
 		    {
-		      "label": "WXYZ",
+		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "W",
-		        "X",
-		        "Y",
-		        "Z"
+		        "P",
+		        "Q",
+		        "R"
 		      ],
 		      "fillColor": "#00000000",
 		      "strokeColor": "#11accd"
@@ -261,99 +371,841 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4ab06ac8d3ad587b
-	// Question: Identify the corresponding side in a scaled figure
+	// Extracted from question: x8f5659f84e35fa3c
+	// Question: Sequences of transformations mapping congruent triangles
 	// Widget key: image_1
-	test("polygon-graph - [x4ab06ac8d3ad587b] Identify the corresponding side in a scaled figure", async () => {
+	test("polygon-graph - [x8f5659f84e35fa3c] Sequences of transformations mapping congruent triangles", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 325,
+		  "width": 300,
 		  "xAxis": {
-		    "max": 18,
+		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 18,
+		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 325,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 3,
-		      "y": 4,
+		      "x": 2,
+		      "y": 14,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": 11,
+		      "x": 5,
+		      "y": 14,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 10,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 13,
+		      "y": 9,
+		      "id": "M",
+		      "label": "M",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 9,
+		      "id": "N",
+		      "label": "N",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 13,
+		      "y": 5,
+		      "id": "O",
+		      "label": "O",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "ABC",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#99999926",
+		      "strokeColor": "#999999"
+		    },
+		    {
+		      "label": "MNO",
+		      "isClosed": true,
+		      "vertices": [
+		        "M",
+		        "N",
+		        "O"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe0125bd7332e4e30
+	// Question: Choose the sequence of transformations that maps one quadrilateral onto another
+	// Widget key: image_1
+	test("polygon-graph - [xe0125bd7332e4e30] Choose the sequence of transformations that maps one quadrilateral onto another", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 300,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 10,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 12,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
-		      "y": 11,
+		      "y": 13,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": 8,
+		      "x": 9,
+		      "y": 13,
 		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 6,
-		      "y": 4,
-		      "id": "E",
-		      "label": "E",
+		      "x": 14,
+		      "y": 5,
+		      "id": "L",
+		      "label": "L",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 9,
+		      "x": 12,
+		      "y": 5,
+		      "id": "M",
+		      "label": "M",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 6,
+		      "id": "N",
+		      "label": "N",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 9,
+		      "id": "O",
+		      "label": "O",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "ABCD",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ],
+		      "fillColor": "#99999940",
+		      "strokeColor": "#999999"
+		    },
+		    {
+		      "label": "LMNO",
+		      "isClosed": true,
+		      "vertices": [
+		        "L",
+		        "M",
+		        "N",
+		        "O"
+		      ],
+		      "fillColor": "#11accd40",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xffd3e2e9150a398e
+	// Question: Identify a corresponding side in a scaled figure
+	// Widget key: image_1
+	test("polygon-graph - [xffd3e2e9150a398e] Identify a corresponding side in a scaled figure", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 20,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 20,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 12,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 12,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
 		      "y": 3,
 		      "id": "M",
 		      "label": "M",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 9,
+		      "x": 7,
 		      "y": 17,
 		      "id": "N",
 		      "label": "N",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 15,
+		      "x": 13,
 		      "y": 17,
 		      "id": "O",
 		      "label": "O",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 11,
-		      "y": 11,
+		      "x": 13,
+		      "y": 3,
 		      "id": "P",
 		      "label": "P",
 		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "Figure 1",
+		      "isClosed": true,
+		      "vertices": [
+		        "B",
+		        "C",
+		        "D",
+		        "A"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    },
 		    {
-		      "x": 15,
+		      "label": "Figure 2",
+		      "isClosed": true,
+		      "vertices": [
+		        "M",
+		        "N",
+		        "O",
+		        "P"
+		      ],
+		      "fillColor": "#1fab5426",
+		      "strokeColor": "#1fab54"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1affa828d8d1ce52
+	// Question: Identify corresponding sides in a scaled copy
+	// Widget key: image_1
+	test("polygon-graph - [x1affa828d8d1ce52] Identify corresponding sides in a scaled copy", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 20,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 20,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 12,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 15,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 12,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "M",
+		      "label": "M",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 8,
+		      "id": "N",
+		      "label": "N",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 18,
+		      "y": 2,
+		      "id": "O",
+		      "label": "O",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "Figure 1",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    },
+		    {
+		      "label": "Figure 2",
+		      "isClosed": true,
+		      "vertices": [
+		        "M",
+		        "N",
+		        "O"
+		      ],
+		      "fillColor": "#1fab5426",
+		      "strokeColor": "#1fab54"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe8d6ace4a964daef
+	// Question: Identify the corresponding point in a scaled copy
+	// Widget key: image_1
+	test("polygon-graph - [xe8d6ace4a964daef] Identify the corresponding point in a scaled copy", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 300,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 1,
+		      "id": "A2",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 2,
+		      "id": "B2",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "id": "C2",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 6,
+		      "id": "D2",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 4,
+		      "id": "E2",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0.25,
+		      "y": 2,
+		      "id": "A1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0.75,
+		      "y": 2.25,
+		      "id": "B1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
 		      "y": 3,
-		      "id": "Q",
-		      "label": "Q",
+		      "id": "K1",
+		      "label": "K",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0.5,
+		      "y": 3.25,
+		      "id": "D1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 2.75,
+		      "id": "E1",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "Figure 1",
+		      "isClosed": true,
+		      "vertices": [
+		        "A1",
+		        "B1",
+		        "K1",
+		        "D1",
+		        "E1"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    },
+		    {
+		      "label": "Figure 2",
+		      "isClosed": true,
+		      "vertices": [
+		        "A2",
+		        "B2",
+		        "C2",
+		        "D2",
+		        "E2"
+		      ],
+		      "fillColor": "#1fab5426",
+		      "strokeColor": "#1fab54"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3d82bd355e698ed3
+	// Question: Identify a corresponding side in a scaled figure
+	// Widget key: image_1
+	test("polygon-graph - [x3d82bd355e698ed3] Identify a corresponding side in a scaled figure", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 300,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": 8,
+		      "id": "gA",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 9,
+		      "id": "gB",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 9,
+		      "id": "gC",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 6,
+		      "id": "gD",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 4,
+		      "id": "gE",
+		      "label": "E",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 3.5,
+		      "id": "tH",
+		      "label": "H",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 2,
+		      "id": "tI",
+		      "label": "I",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2.5,
+		      "y": 1,
+		      "id": "tJ",
+		      "label": "J",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 3,
+		      "id": "tK",
+		      "label": "K",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": 3.5,
+		      "id": "tL",
+		      "label": "L",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "Figure 1",
+		      "isClosed": true,
+		      "vertices": [
+		        "gA",
+		        "gB",
+		        "gC",
+		        "gD",
+		        "gE"
+		      ],
+		      "fillColor": "#1fab5426",
+		      "strokeColor": "#1fab54"
+		    },
+		    {
+		      "label": "Figure 2",
+		      "isClosed": true,
+		      "vertices": [
+		        "tH",
+		        "tI",
+		        "tJ",
+		        "tK",
+		        "tL"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfe7cabc1fca39020
+	// Question: Identify a corresponding point in scaled copies
+	// Widget key: image_1
+	test("polygon-graph - [xfe7cabc1fca39020] Identify a corresponding point in scaled copies", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 16,
+		    "min": 0,
+		    "label": "Figure 1 and Figure 2",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 14,
+		    "min": 0,
+		    "label": "Grid Units",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 4,
+		      "id": "M",
+		      "label": "M",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 3,
+		      "id": "P1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 4,
+		      "id": "P2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 5,
+		      "id": "P3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 7,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 9,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 7,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 5,
+		      "id": "D",
+		      "label": "D",
 		      "style": "closed"
 		    }
 		  ],
@@ -362,11 +1214,10 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D",
-		        "E"
+		        "M",
+		        "P1",
+		        "P2",
+		        "P3"
 		      ],
 		      "fillColor": "#00000000",
 		      "strokeColor": "#11accd"
@@ -375,11 +1226,10 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "M",
-		        "N",
-		        "O",
-		        "P",
-		        "Q"
+		        "A",
+		        "B",
+		        "C",
+		        "D"
 		      ],
 		      "fillColor": "#00000000",
 		      "strokeColor": "#1fab54"
@@ -403,85 +1253,113 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xfe7cabc1fca39020
-	// Question: Identify a corresponding point in a scaled copy
+	// Extracted from question: x087622222e6ba1d7
+	// Question: Identify corresponding sides in scaled figures
 	// Widget key: image_1
-	test("polygon-graph - [xfe7cabc1fca39020] Identify a corresponding point in a scaled copy", async () => {
+	test("polygon-graph - [x087622222e6ba1d7] Identify corresponding sides in scaled figures", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 325,
+		  "width": 300,
 		  "xAxis": {
-		    "max": 16,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "Figure 1 and Figure 2",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 16,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "Units",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 325,
+		  "height": 300,
 		  "points": [
 		    {
-		      "x": 2,
-		      "y": 4,
-		      "id": "M",
-		      "label": "M",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 5,
-		      "id": "F1_1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 4,
-		      "id": "F1_2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 3,
-		      "id": "F1_3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 7,
+		      "x": 1,
+		      "y": 1,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 10,
-		      "y": 9,
+		      "x": 1,
+		      "y": 4,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 14,
-		      "y": 7,
+		      "x": 3,
+		      "y": 4,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 10,
-		      "y": 5,
+		      "x": 3,
+		      "y": 3,
 		      "id": "D",
 		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 3,
+		      "id": "F",
+		      "label": "F",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 1,
+		      "id": "G",
+		      "label": "G",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 1,
+		      "id": "H",
+		      "label": "H",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 3,
+		      "id": "I",
+		      "label": "I",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 3,
+		      "id": "J",
+		      "label": "J",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 2,
+		      "id": "K",
+		      "label": "K",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 2,
+		      "id": "L",
+		      "label": "L",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 1,
+		      "id": "M",
+		      "label": "M",
 		      "style": "closed"
 		    }
 		  ],
@@ -490,24 +1368,28 @@ describe("polygonGraph widget tests", () => {
 		      "label": "Figure 1",
 		      "isClosed": true,
 		      "vertices": [
-		        "M",
-		        "F1_1",
-		        "F1_2",
-		        "F1_3"
+		        "A",
+		        "B",
+		        "C",
+		        "D",
+		        "F",
+		        "G"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    },
 		    {
 		      "label": "Figure 2",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
+		        "H",
+		        "I",
+		        "J",
+		        "K",
+		        "L",
+		        "M"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#1fab5426",
 		      "strokeColor": "#1fab54"
 		    }
 		  ],
@@ -530,9 +1412,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x92bc4075d8a63ec7
-	// Question: Identify a corresponding point in a scaled copy
+	// Question: Identify a corresponding point in a scaled figure
 	// Widget key: image_1
-	test("polygon-graph - [x92bc4075d8a63ec7] Identify a corresponding point in a scaled copy", async () => {
+	test("polygon-graph - [x92bc4075d8a63ec7] Identify a corresponding point in a scaled figure", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -541,14 +1423,14 @@ describe("polygonGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -613,7 +1495,7 @@ describe("polygonGraph widget tests", () => {
 		        "L",
 		        "M"
 		      ],
-		      "fillColor": "#11accd22",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    },
 		    {
@@ -625,8 +1507,134 @@ describe("polygonGraph widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#1fab5422",
+		      "fillColor": "#1fab5426",
 		      "strokeColor": "#1fab54"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xaf7dfce12493661f
+	// Question: Scale factor from Figure A to Figure B
+	// Widget key: image_1
+	test("polygon-graph - [xaf7dfce12493661f] Scale factor from Figure A to Figure B", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 300,
+		  "xAxis": {
+		    "max": 20,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 20,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 11,
+		      "y": 4,
+		      "id": "A1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 2,
+		      "id": "A2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 16,
+		      "y": 3,
+		      "id": "A3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 14,
+		      "y": 4,
+		      "id": "A4",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 13,
+		      "id": "B1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 7,
+		      "id": "B2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 17,
+		      "y": 10,
+		      "id": "B3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 13,
+		      "id": "B4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "Figure A",
+		      "isClosed": true,
+		      "vertices": [
+		        "A1",
+		        "A2",
+		        "A3",
+		        "A4"
+		      ],
+		      "fillColor": "#1fab5426",
+		      "strokeColor": "#1fab54"
+		    },
+		    {
+		      "label": "Figure B",
+		      "isClosed": true,
+		      "vertices": [
+		        "B1",
+		        "B2",
+		        "B3",
+		        "B4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -676,21 +1684,21 @@ describe("polygonGraph widget tests", () => {
 		      "x": -3,
 		      "y": 6,
 		      "id": "A",
-		      "label": "",
+		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
 		      "y": 2,
 		      "id": "B",
-		      "label": "",
+		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -3,
 		      "y": 4,
 		      "id": "C",
-		      "label": "",
+		      "label": "C",
 		      "style": "closed"
 		    }
 		  ],
@@ -703,7 +1711,7 @@ describe("polygonGraph widget tests", () => {
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -751,24 +1759,45 @@ describe("polygonGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 6,
+		      "x": -3,
+		      "y": 6,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
 		      "y": 2,
-		      "id": "P1",
-		      "label": "",
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 4,
+		      "id": "C",
+		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 6,
-		      "id": "P2",
-		      "label": "",
+		      "id": "Aprime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 2,
+		      "id": "Bprime",
+		      "label": "B′",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 4,
-		      "id": "P3",
-		      "label": "",
+		      "id": "Cprime",
+		      "label": "C′",
 		      "style": "closed"
 		    }
 		  ],
@@ -777,12 +1806,23 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "P1",
-		        "P2",
-		        "P3"
+		        "A",
+		        "B",
+		        "C"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
+		    },
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "Aprime",
+		        "Bprime",
+		        "Cprime"
+		      ],
+		      "fillColor": "#1fab5426",
+		      "strokeColor": "#1fab54"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -830,477 +1870,44 @@ describe("polygonGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": -3,
-		      "y": -6,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": -2,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": -4,
-		      "id": "C",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x04ef364b331fe4c7
-	// Question: Reflect a triangle across the y-axis
-	// Widget key: triangle_plane
-	test("polygon-graph - [x04ef364b331fe4c7] Reflect a triangle across the y-axis (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -3,
 		      "y": 6,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 2,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 4,
-		      "id": "C",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbc86d86e5153be53
-	// Question: Reflect a triangle across the x-axis
-	// Widget key: graph_choice_a
-	test("polygon-graph - [xbc86d86e5153be53] Reflect a triangle across the x-axis (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": 0,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 5,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 4,
-		      "id": "C",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbc86d86e5153be53
-	// Question: Reflect a triangle across the x-axis
-	// Widget key: graph_choice_b
-	test("polygon-graph - [xbc86d86e5153be53] Reflect a triangle across the x-axis (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": 0,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 5,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 4,
-		      "id": "C",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 0,
-		      "id": "A_prime",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": -5,
-		      "id": "B_prime",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": -4,
-		      "id": "C_prime",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    },
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A_prime",
-		        "B_prime",
-		        "C_prime"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#1fab54"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbc86d86e5153be53
-	// Question: Reflect a triangle across the x-axis
-	// Widget key: graph_choice_c
-	test("polygon-graph - [xbc86d86e5153be53] Reflect a triangle across the x-axis (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": 0,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 5,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 4,
-		      "id": "C",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 0,
-		      "id": "A_wrong",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 5,
-		      "id": "B_wrong",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "id": "C_wrong",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    },
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A_wrong",
-		        "B_wrong",
-		        "C_wrong"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#1fab54"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0441d1459313385a
-	// Question: Length of a segment after dilation
-	// Widget key: image_1
-	test("polygon-graph - [x0441d1459313385a] Length of a segment after dilation", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 300,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 300,
-		  "points": [
-		    {
-		      "x": 9,
-		      "y": 5,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 9,
+		      "x": -6,
 		      "y": 2,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 7,
-		      "y": 1,
+		      "x": -3,
+		      "y": 4,
 		      "id": "C",
 		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -6,
+		      "id": "A_reflect_x",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": -2,
+		      "id": "B_reflect_x",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -4,
+		      "id": "C_reflect_x",
+		      "label": "C′",
 		      "style": "closed"
 		    }
 		  ],
@@ -1313,7 +1920,104 @@ describe("polygonGraph widget tests", () => {
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#11accd1a",
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    },
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A_reflect_x",
+		        "B_reflect_x",
+		        "C_reflect_x"
+		      ],
+		      "fillColor": "#1fab5426",
+		      "strokeColor": "#1fab54"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe6cacb86284df85d
+	// Question: Reflect a quadrilateral across the y-axis
+	// Widget key: stimulus_plane
+	test("polygon-graph - [xe6cacb86284df85d] Reflect a quadrilateral across the y-axis", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": -3,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": -6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": -4,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": -2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ],
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -1336,9 +2040,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc2a46068d39fc382
-	// Question: Length of a segment after dilation
+	// Question: Length after a dilation with scale factor 1/2
 	// Widget key: image_1
-	test("polygon-graph - [xc2a46068d39fc382] Length of a segment after dilation", async () => {
+	test("polygon-graph - [xc2a46068d39fc382] Length after a dilation with scale factor 1/2", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1347,14 +2051,14 @@ describe("polygonGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 16,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1407,7 +2111,7 @@ describe("polygonGraph widget tests", () => {
 		        "D",
 		        "E"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -1429,10 +2133,10 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xf2673111cd2127af
-	// Question: Find an image segment length under dilation
+	// Extracted from question: x0441d1459313385a
+	// Question: Length of a dilated segment
 	// Widget key: image_1
-	test("polygon-graph - [xf2673111cd2127af] Find an image segment length under dilation", async () => {
+	test("polygon-graph - [x0441d1459313385a] Length of a dilated segment", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1441,52 +2145,123 @@ describe("polygonGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 300,
 		  "points": [
 		    {
-		      "x": 6.25,
-		      "y": 1.875,
+		      "x": 9,
+		      "y": 5,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 8.75,
-		      "y": 1.875,
+		      "x": 9,
+		      "y": 2,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 8.75,
-		      "y": 3.125,
+		      "x": 7,
+		      "y": 1,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x97a1f0778b928d7d
+	// Question: Find a segment length after a dilation
+	// Widget key: image_1
+	test("polygon-graph - [x97a1f0778b928d7d] Find a segment length after a dilation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 300,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 3,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 3,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 7.5,
-		      "y": 4.375,
+		      "x": 3,
+		      "y": 0,
 		      "id": "D",
 		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6.25,
-		      "y": 3.125,
-		      "id": "E",
-		      "label": "E",
 		      "style": "closed"
 		    }
 		  ],
@@ -1498,10 +2273,95 @@ describe("polygonGraph widget tests", () => {
 		        "A",
 		        "B",
 		        "C",
-		        "D",
-		        "E"
+		        "D"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe17659b9387d43b5
+	// Question: Find a pre-image side length under dilation
+	// Widget key: image_1
+	test("polygon-graph - [xe17659b9387d43b5] Find a pre-image side length under dilation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 300,
+		  "xAxis": {
+		    "max": 12,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 9,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 300,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 6,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 0,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 12,
+		      "y": 0,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 9,
+		      "id": "D_prime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A_prime",
+		        "B_prime",
+		        "C_prime",
+		        "D_prime"
+		      ],
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -1524,25 +2384,25 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: xf9ad5849c306edec
-	// Question: Find a segment length from a dilation
+	// Question: Find the length of a segment after a dilation
 	// Widget key: image_1
-	test("polygon-graph - [xf9ad5849c306edec] Find a segment length from a dilation", async () => {
+	test("polygon-graph - [xf9ad5849c306edec] Find the length of a segment after a dilation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
 		  "width": 300,
 		  "xAxis": {
-		    "max": 12,
+		    "max": 13,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 12,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1551,51 +2411,51 @@ describe("polygonGraph widget tests", () => {
 		    {
 		      "x": 6,
 		      "y": 5,
-		      "id": "A_prime",
-		      "label": "",
+		      "id": "A1",
+		      "label": "A′",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
 		      "y": 8,
-		      "id": "B_prime",
-		      "label": "",
+		      "id": "B1",
+		      "label": "B′",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
 		      "y": 11,
-		      "id": "C_prime",
-		      "label": "",
+		      "id": "C1",
+		      "label": "C′",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 11,
-		      "id": "D_prime",
-		      "label": "",
+		      "id": "D1",
+		      "label": "D′",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 12,
 		      "y": 5,
-		      "id": "E_prime",
-		      "label": "",
+		      "id": "E1",
+		      "label": "E′",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "",
+		      "label": "A′B′C′D′E′",
 		      "isClosed": true,
 		      "vertices": [
-		        "A_prime",
-		        "B_prime",
-		        "C_prime",
-		        "D_prime",
-		        "E_prime"
+		        "A1",
+		        "B1",
+		        "C1",
+		        "D1",
+		        "E1"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#ca337c26",
 		      "strokeColor": "#ca337c"
 		    }
 		  ],
@@ -1618,9 +2478,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x141cd078cf6470f4
-	// Question: Find the length of a pre-image segment under dilation
+	// Question: Find the preimage segment length from a dilation
 	// Widget key: image_1
-	test("polygon-graph - [x141cd078cf6470f4] Find the length of a pre-image segment under dilation", async () => {
+	test("polygon-graph - [x141cd078cf6470f4] Find the preimage segment length from a dilation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1629,45 +2489,45 @@ describe("polygonGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 12,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 12,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 300,
 		  "points": [
 		    {
-		      "x": 10,
-		      "y": 8,
+		      "x": 11,
+		      "y": 9,
 		      "id": "A_prime",
-		      "label": "",
+		      "label": "A'",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 8,
-		      "y": 9,
+		      "x": 9,
+		      "y": 10,
 		      "id": "B_prime",
-		      "label": "",
+		      "label": "B'",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 9,
-		      "y": 9,
+		      "x": 10,
+		      "y": 10,
 		      "id": "C_prime",
-		      "label": "",
+		      "label": "C'",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 9,
-		      "y": 11,
+		      "x": 10,
+		      "y": 12,
 		      "id": "D_prime",
-		      "label": "",
+		      "label": "D'",
 		      "style": "closed"
 		    }
 		  ],
@@ -1681,7 +2541,7 @@ describe("polygonGraph widget tests", () => {
 		        "C_prime",
 		        "D_prime"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#ca337c26",
 		      "strokeColor": "#ca337c"
 		    }
 		  ],
@@ -1703,10 +2563,10 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x279ee4b02f62bd70
-	// Question: Find the missing vertex of a rectangle
+	// Extracted from question: xa308e4407932fbb6
+	// Question: Find the coordinates of the fourth vertex of a rectangle
 	// Widget key: image_1
-	test("polygon-graph - [x279ee4b02f62bd70] Find the missing vertex of a rectangle", async () => {
+	test("polygon-graph - [xa308e4407932fbb6] Find the coordinates of the fourth vertex of a rectangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1730,21 +2590,193 @@ describe("polygonGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": -7,
-		      "y": -7.5,
+		      "y": -2,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -3,
-		      "y": -7.5,
+		      "x": 3,
+		      "y": -2,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -3,
-		      "y": 2.5,
+		      "x": 3,
+		      "y": -5,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": -5,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa44dfa8c542539df
+	// Question: Which coordinate is greater in a rectangle
+	// Widget key: image_1
+	test("polygon-graph - [xa44dfa8c542539df] Which coordinate is greater in a rectangle", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 3,
+		      "id": "A",
+		      "label": "(x, 3)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 7,
+		      "id": "B",
+		      "label": "(2, 7)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 7,
+		      "id": "C",
+		      "label": "(y, 7)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 3,
+		      "id": "D",
+		      "label": "(4, 3)",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2dc3412b82f69a2f
+	// Question: Coordinates of a rectangle's missing vertex
+	// Widget key: image_1
+	test("polygon-graph - [x2dc3412b82f69a2f] Coordinates of a rectangle's missing vertex", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -5,
+		      "y": -8,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 0,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 0,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
@@ -1781,57 +2813,57 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xa44dfa8c542539df
-	// Question: Which coordinate is greater in a rectangle
+	// Extracted from question: x7839eebc5d350424
+	// Question: Which coordinate is greater in the rectangle?
 	// Widget key: image_1
-	test("polygon-graph - [xa44dfa8c542539df] Which coordinate is greater in a rectangle", async () => {
+	test("polygon-graph - [x7839eebc5d350424] Which coordinate is greater in the rectangle?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 400,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
-		    "showGridLines": false
+		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
-		    "showGridLines": false
+		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 308,
 		  "points": [
 		    {
-		      "x": 2,
-		      "y": 3,
+		      "x": 0,
+		      "y": 0,
 		      "id": "BL",
-		      "label": "(x , 3)",
+		      "label": "(0, 0)",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 2,
-		      "y": 7,
+		      "x": 0,
+		      "y": 4,
 		      "id": "TL",
-		      "label": "(2, 7)",
+		      "label": "(0, 4)",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": 7,
+		      "x": 6,
+		      "y": 4,
 		      "id": "TR",
-		      "label": "(y, 7)",
+		      "label": "(6, b)",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": 3,
+		      "x": 6,
+		      "y": 0,
 		      "id": "BR",
-		      "label": "(4, 3)",
+		      "label": "(a, 0)",
 		      "style": "closed"
 		    }
 		  ],
@@ -1845,7 +2877,93 @@ describe("polygonGraph widget tests", () => {
 		        "TR",
 		        "BR"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xee54a69013edeae6
+	// Question: Which coordinate is greater: p or q?
+	// Widget key: image_1
+	test("polygon-graph - [xee54a69013edeae6] Which coordinate is greater: p or q?", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": 5,
+		      "id": "TL",
+		      "label": "(6, 5)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 2,
+		      "id": "TR",
+		      "label": "(9, 2)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 0,
+		      "id": "BR",
+		      "label": "(9, 0)",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 3,
+		      "id": "BL",
+		      "label": "(p, q)",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "TL",
+		        "TR",
+		        "BR",
+		        "BL"
+		      ],
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#000000"
 		    }
 		  ],
@@ -1875,55 +2993,55 @@ describe("polygonGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 340,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 340,
+		  "height": 400,
 		  "points": [
-		    {
-		      "x": -6,
-		      "y": -2,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
 		    {
 		      "x": -2,
 		      "y": -2,
-		      "id": "p2",
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -3,
 		      "y": -7,
-		      "id": "p3",
+		      "id": "P2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": -2,
+		      "id": "P3",
 		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "P",
+		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3"
+		        "P1",
+		        "P2",
+		        "P3"
 		      ],
-		      "fillColor": "#11accd22",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -1957,14 +3075,14 @@ describe("polygonGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -1973,36 +3091,36 @@ describe("polygonGraph widget tests", () => {
 		    {
 		      "x": -1,
 		      "y": -4,
-		      "id": "P1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
 		      "y": -2,
-		      "id": "P2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": -7,
-		      "id": "P3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "P",
+		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "P1",
-		        "P2",
-		        "P3"
+		        "p1",
+		        "p2",
+		        "p3"
 		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#000000"
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -2023,63 +3141,71 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x20678c177199fc08
-	// Question: Find a scale factor from triangle areas
+	// Extracted from question: x4b8ae43914651214
+	// Question: Scaled copy of a rhombus: side length
 	// Widget key: image_1
-	test("polygon-graph - [x20678c177199fc08] Find a scale factor from triangle areas", async () => {
+	test("polygon-graph - [x4b8ae43914651214] Scaled copy of a rhombus: side length", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 325,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 8,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 325,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 1,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 1,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
+		      "x": 3,
 		      "y": 6,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 9,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 4,
 		      "id": "C",
-		      "label": "",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 1,
+		      "id": "D",
+		      "label": "D",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "Triangle T",
+		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
 		        "B",
-		        "C"
+		        "C",
+		        "D"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -2102,9 +3228,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: xa0c27606ab3e418f
-	// Question: Select possible length of a corresponding side in a scaled trapezoid
+	// Question: Scaled copy: possible corresponding side length
 	// Widget key: image_1
-	test("polygon-graph - [xa0c27606ab3e418f] Select possible length of a corresponding side in a scaled trapezoid", async () => {
+	test("polygon-graph - [xa0c27606ab3e418f] Scaled copy: possible corresponding side length", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2113,14 +3239,14 @@ describe("polygonGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 12,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 12,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -2165,7 +3291,93 @@ describe("polygonGraph widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#11accd1a",
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x56dd5eaf0b1d9948
+	// Question: Identify a possible length of the longer base after scaling
+	// Widget key: image_1
+	test("polygon-graph - [x56dd5eaf0b1d9948] Identify a possible length of the longer base after scaling", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": null,
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 1,
+		      "y": 8,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 8,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 2,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 2,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ],
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -2188,25 +3400,25 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x6211a9467aed8fa0
-	// Question: Scaled copy: corresponding side length
+	// Question: Lengths in a scaled copy (multiple select)
 	// Widget key: image_1
-	test("polygon-graph - [x6211a9467aed8fa0] Scaled copy: corresponding side length", async () => {
+	test("polygon-graph - [x6211a9467aed8fa0] Lengths in a scaled copy (multiple select)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
 		  "width": 325,
 		  "xAxis": {
-		    "max": 12,
+		    "max": 13,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 12,
+		    "max": 13,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -2251,7 +3463,93 @@ describe("polygonGraph widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#11accd22",
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc5eb7430d3fecf4a
+	// Question: Scaled copy side length with scale factor less than 1
+	// Widget key: image_1
+	test("polygon-graph - [xc5eb7430d3fecf4a] Scaled copy side length with scale factor less than 1", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 325,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 4,
+		      "y": 3,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 8,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 8,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 3,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ],
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -2274,29 +3572,29 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe77c6a4f994e1cc1
-	// Question: Select possible length after scaling by a factor less than 1
+	// Question: Scaled copy: possible corresponding side length
 	// Widget key: image_1
-	test("polygon-graph - [xe77c6a4f994e1cc1] Select possible length after scaling by a factor less than 1", async () => {
+	test("polygon-graph - [xe77c6a4f994e1cc1] Scaled copy: possible corresponding side length", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 265,
+		  "width": 320,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 265,
+		  "height": 320,
 		  "points": [
 		    {
 		      "x": 2,
@@ -2337,7 +3635,7 @@ describe("polygonGraph widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -2360,54 +3658,54 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x5974dce5cb570372
-	// Question: Dilation of a triangle about point P (scale factor 1/2)
+	// Question: Dilate a triangle about point P with scale factor 1/2
 	// Widget key: dilation_stimulus
-	test("polygon-graph - [x5974dce5cb570372] Dilation of a triangle about point P (scale factor 1/2)", async () => {
+	test("polygon-graph - [x5974dce5cb570372] Dilate a triangle about point P with scale factor 1/2", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
 		  "width": 400,
 		  "xAxis": {
-		    "max": 26,
-		    "min": -2,
+		    "max": 16,
+		    "min": 0,
 		    "label": "x",
-		    "tickInterval": 2,
+		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 2,
-		    "min": -26,
+		    "max": 16,
+		    "min": 0,
 		    "label": "y",
-		    "tickInterval": 2,
+		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": 0,
-		      "y": 0,
+		      "x": 2,
+		      "y": 2,
 		      "id": "P",
 		      "label": "P",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 8,
-		      "y": -8,
+		      "x": 10,
+		      "y": 10,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 12,
-		      "y": -12,
+		      "x": 14,
+		      "y": 14,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 0,
-		      "y": -10,
+		      "x": 2,
+		      "y": 12,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
@@ -2422,7 +3720,85 @@ describe("polygonGraph widget tests", () => {
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#e0f3f7",
+		      "fillColor": "#0c7f9933",
+		      "strokeColor": "#0c7f99"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd42b7764d3ba9f30
+	// Question: Dilate a triangle with center C and scale factor 2
+	// Widget key: triangle_stimulus
+	test("polygon-graph - [xd42b7764d3ba9f30] Dilate a triangle with center C and scale factor 2", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 1,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": -3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "B",
+		        "A",
+		        "C"
+		      ],
+		      "fillColor": "#0c7f9926",
 		      "strokeColor": "#0c7f99"
 		    }
 		  ],
@@ -2445,9 +3821,267 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: xbd438433898c564b
-	// Question: Select the square base on a scaled grid
-	// Widget key: square_choice_a
-	test("polygon-graph - [xbd438433898c564b] Select the square base on a scaled grid (2)", async () => {
+	// Question: Select a 12 cm by 12 cm square on a grid
+	// Widget key: graph_choice_a
+	test("polygon-graph - [xbd438433898c564b] Select a 12 cm by 12 cm square on a grid (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": -6,
+		      "id": "a1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 6,
+		      "id": "a2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": 6,
+		      "id": "a3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": -6,
+		      "id": "a4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "a1",
+		        "a2",
+		        "a3",
+		        "a4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbd438433898c564b
+	// Question: Select a 12 cm by 12 cm square on a grid
+	// Widget key: graph_choice_b
+	test("polygon-graph - [xbd438433898c564b] Select a 12 cm by 12 cm square on a grid (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 9,
+		      "y": -9,
+		      "id": "b1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 9,
+		      "id": "b2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -9,
+		      "y": 9,
+		      "id": "b3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -9,
+		      "y": -9,
+		      "id": "b4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "b1",
+		        "b2",
+		        "b3",
+		        "b4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbd438433898c564b
+	// Question: Select a 12 cm by 12 cm square on a grid
+	// Widget key: graph_choice_c
+	test("polygon-graph - [xbd438433898c564b] Select a 12 cm by 12 cm square on a grid (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 8,
+		      "y": -8,
+		      "id": "c1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 8,
+		      "id": "c2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -8,
+		      "y": 8,
+		      "id": "c3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -8,
+		      "y": -8,
+		      "id": "c4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "c1",
+		        "c2",
+		        "c3",
+		        "c4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf16c351b547ece8d
+	// Question: Recreate a scale drawing of a basketball court
+	// Widget key: rectangle_choice_a
+	test("polygon-graph - [xf16c351b547ece8d] Recreate a scale drawing of a basketball court (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2470,30 +4104,30 @@ describe("polygonGraph widget tests", () => {
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": -6,
-		      "y": -6,
+		      "x": -8,
+		      "y": -2,
 		      "id": "A1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -6,
-		      "y": 6,
-		      "id": "A2",
+		      "x": -2,
+		      "y": -2,
+		      "id": "B1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 6,
-		      "y": 6,
-		      "id": "A3",
+		      "x": -2,
+		      "y": 7,
+		      "id": "C1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 6,
-		      "y": -6,
-		      "id": "A4",
+		      "x": -8,
+		      "y": 7,
+		      "id": "D1",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -2504,12 +4138,12 @@ describe("polygonGraph widget tests", () => {
 		      "isClosed": true,
 		      "vertices": [
 		        "A1",
-		        "A2",
-		        "A3",
-		        "A4"
+		        "B1",
+		        "C1",
+		        "D1"
 		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#333333"
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -2530,10 +4164,10 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xbd438433898c564b
-	// Question: Select the square base on a scaled grid
-	// Widget key: square_choice_b
-	test("polygon-graph - [xbd438433898c564b] Select the square base on a scaled grid (3)", async () => {
+	// Extracted from question: xf16c351b547ece8d
+	// Question: Recreate a scale drawing of a basketball court
+	// Widget key: rectangle_choice_b
+	test("polygon-graph - [xf16c351b547ece8d] Recreate a scale drawing of a basketball court (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2556,116 +4190,116 @@ describe("polygonGraph widget tests", () => {
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": -9,
-		      "y": -9,
-		      "id": "B1",
+		      "x": -7,
+		      "y": -2,
+		      "id": "A2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -9,
-		      "y": 9,
+		      "x": -2,
+		      "y": -2,
 		      "id": "B2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 9,
-		      "y": 9,
-		      "id": "B3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 9,
-		      "y": -9,
-		      "id": "B4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "B1",
-		        "B2",
-		        "B3",
-		        "B4"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#333333"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbd438433898c564b
-	// Question: Select the square base on a scaled grid
-	// Widget key: square_choice_c
-	test("polygon-graph - [xbd438433898c564b] Select the square base on a scaled grid (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -9,
-		      "y": -6,
-		      "id": "C1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -9,
-		      "y": 6,
+		      "x": -2,
+		      "y": 7,
 		      "id": "C2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 9,
-		      "y": 6,
+		      "x": -7,
+		      "y": 7,
+		      "id": "D2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A2",
+		        "B2",
+		        "C2",
+		        "D2"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf16c351b547ece8d
+	// Question: Recreate a scale drawing of a basketball court
+	// Widget key: rectangle_choice_c
+	test("polygon-graph - [xf16c351b547ece8d] Recreate a scale drawing of a basketball court (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -7,
+		      "y": -2,
+		      "id": "A3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": -2,
+		      "id": "B3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 4,
 		      "id": "C3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 9,
-		      "y": -6,
-		      "id": "C4",
+		      "x": -7,
+		      "y": 4,
+		      "id": "D3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -2675,356 +4309,12 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "C1",
-		        "C2",
+		        "A3",
+		        "B3",
 		        "C3",
-		        "C4"
+		        "D3"
 		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#333333"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf16c351b547ece8d
-	// Question: Select the rectangle that matches the scale drawing
-	// Widget key: rectangle_choice_a
-	test("polygon-graph - [xf16c351b547ece8d] Select the rectangle that matches the scale drawing (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -8,
-		      "y": -2,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -8,
-		      "y": 7,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 7,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": -2,
-		      "id": "p4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3",
-		        "p4"
-		      ],
-		      "fillColor": "#FFC8004D",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf16c351b547ece8d
-	// Question: Select the rectangle that matches the scale drawing
-	// Widget key: rectangle_choice_b
-	test("polygon-graph - [xf16c351b547ece8d] Select the rectangle that matches the scale drawing (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -7,
-		      "y": -2,
-		      "id": "q1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": 7,
-		      "id": "q2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 7,
-		      "id": "q3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -2,
-		      "id": "q4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "q1",
-		        "q2",
-		        "q3",
-		        "q4"
-		      ],
-		      "fillColor": "#FFC8004D",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf16c351b547ece8d
-	// Question: Select the rectangle that matches the scale drawing
-	// Widget key: rectangle_choice_c
-	test("polygon-graph - [xf16c351b547ece8d] Select the rectangle that matches the scale drawing (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -7,
-		      "y": -2,
-		      "id": "r1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": 4,
-		      "id": "r2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 4,
-		      "id": "r3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -2,
-		      "id": "r4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "r1",
-		        "r2",
-		        "r3",
-		        "r4"
-		      ],
-		      "fillColor": "#FFC8004D",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf3d267f695b76dd6
-	// Question: Scale drawing of a square city block
-	// Widget key: scale_choice_a
-	test("polygon-graph - [xf3d267f695b76dd6] Scale drawing of a square city block (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 12,
-		    "min": -12,
-		    "label": "x",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 12,
-		    "min": -12,
-		    "label": "y",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -8,
-		      "y": -8,
-		      "id": "a_p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -8,
-		      "y": 8,
-		      "id": "a_p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 8,
-		      "id": "a_p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": -8,
-		      "id": "a_p4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "a_p1",
-		        "a_p2",
-		        "a_p3",
-		        "a_p4"
-		      ],
-		      "fillColor": "#11accd22",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -3046,56 +4336,49 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xf3d267f695b76dd6
-	// Question: Scale drawing of a square city block
-	// Widget key: scale_choice_b
-	test("polygon-graph - [xf3d267f695b76dd6] Scale drawing of a square city block (2)", async () => {
+	// Extracted from question: xa8b16b53226fc876
+	// Question: Create a scale drawing of a right triangle garden
+	// Widget key: graph_choice_a
+	test("polygon-graph - [xa8b16b53226fc876] Create a scale drawing of a right triangle garden (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
 		  "width": 400,
 		  "xAxis": {
-		    "max": 12,
-		    "min": -12,
+		    "max": 10,
+		    "min": -10,
 		    "label": "x",
-		    "tickInterval": 2,
+		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 12,
-		    "min": -12,
+		    "max": 10,
+		    "min": -10,
 		    "label": "y",
-		    "tickInterval": 2,
+		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": -10,
-		      "y": -10,
-		      "id": "b_p1",
+		      "x": -2,
+		      "y": -3,
+		      "id": "A",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -10,
-		      "y": 10,
-		      "id": "b_p2",
+		      "x": -2,
+		      "y": 2,
+		      "id": "B",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 10,
-		      "y": 10,
-		      "id": "b_p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 10,
-		      "y": -10,
-		      "id": "b_p4",
+		      "x": 3,
+		      "y": -3,
+		      "id": "C",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3105,12 +4388,11 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "b_p1",
-		        "b_p2",
-		        "b_p3",
-		        "b_p4"
+		        "A",
+		        "B",
+		        "C"
 		      ],
-		      "fillColor": "#11accd22",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -3132,56 +4414,49 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xf3d267f695b76dd6
-	// Question: Scale drawing of a square city block
-	// Widget key: scale_choice_c
-	test("polygon-graph - [xf3d267f695b76dd6] Scale drawing of a square city block (3)", async () => {
+	// Extracted from question: xa8b16b53226fc876
+	// Question: Create a scale drawing of a right triangle garden
+	// Widget key: graph_choice_b
+	test("polygon-graph - [xa8b16b53226fc876] Create a scale drawing of a right triangle garden (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
 		  "width": 400,
 		  "xAxis": {
-		    "max": 12,
-		    "min": -12,
+		    "max": 10,
+		    "min": -10,
 		    "label": "x",
-		    "tickInterval": 2,
+		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 12,
-		    "min": -12,
+		    "max": 10,
+		    "min": -10,
 		    "label": "y",
-		    "tickInterval": 2,
+		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": -12,
-		      "y": -12,
-		      "id": "c_p1",
+		      "x": -2,
+		      "y": -3,
+		      "id": "A",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -12,
-		      "y": 12,
-		      "id": "c_p2",
+		      "x": -2,
+		      "y": 3,
+		      "id": "B",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 12,
-		      "y": 12,
-		      "id": "c_p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 12,
-		      "y": -12,
-		      "id": "c_p4",
+		      "x": 3,
+		      "y": -3,
+		      "id": "C",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3191,12 +4466,89 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "c_p1",
-		        "c_p2",
-		        "c_p3",
-		        "c_p4"
+		        "A",
+		        "B",
+		        "C"
 		      ],
-		      "fillColor": "#11accd22",
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xa8b16b53226fc876
+	// Question: Create a scale drawing of a right triangle garden
+	// Widget key: graph_choice_c
+	test("polygon-graph - [xa8b16b53226fc876] Create a scale drawing of a right triangle garden (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -1,
+		      "y": -3,
+		      "id": "A",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 3,
+		      "id": "B",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": -3,
+		      "id": "C",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -3226,48 +4578,48 @@ describe("polygonGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 500,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 12,
-		    "min": -12,
+		    "max": 6,
+		    "min": -6,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 12,
-		    "min": -12,
+		    "max": 6,
+		    "min": -6,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 500,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 0,
 		      "y": 0,
-		      "id": "a1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 2,
-		      "id": "a2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
-		      "id": "a3",
+		      "id": "A1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
 		      "y": 0,
-		      "id": "a4",
+		      "id": "A2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "A3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 2,
+		      "id": "A4",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3277,12 +4629,12 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "a1",
-		        "a2",
-		        "a3",
-		        "a4"
+		        "A1",
+		        "A2",
+		        "A3",
+		        "A4"
 		      ],
-		      "fillColor": "#ddeff7",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -3312,48 +4664,48 @@ describe("polygonGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 500,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 12,
-		    "min": -12,
+		    "max": 6,
+		    "min": -6,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 12,
-		    "min": -12,
+		    "max": 6,
+		    "min": -6,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 500,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 2,
-		      "y": 6,
-		      "id": "b1",
+		      "x": -1,
+		      "y": -1,
+		      "id": "B1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2,
-		      "y": 9,
-		      "id": "b2",
+		      "y": -1,
+		      "id": "B2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "B3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -1,
-		      "y": 9,
-		      "id": "b3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -1,
-		      "y": 6,
-		      "id": "b4",
+		      "y": 2,
+		      "id": "B4",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3363,12 +4715,12 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "b1",
-		        "b2",
-		        "b3",
-		        "b4"
+		        "B1",
+		        "B2",
+		        "B3",
+		        "B4"
 		      ],
-		      "fillColor": "#ddeff7",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -3398,48 +4750,48 @@ describe("polygonGraph widget tests", () => {
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 500,
+		  "width": 360,
 		  "xAxis": {
-		    "max": 12,
-		    "min": -12,
+		    "max": 6,
+		    "min": -6,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 12,
-		    "min": -12,
+		    "max": 6,
+		    "min": -6,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 500,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": -5,
-		      "y": -5,
-		      "id": "c1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
+		      "x": -2,
 		      "y": -2,
-		      "id": "c2",
+		      "id": "C1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -1,
+		      "x": 2,
 		      "y": -2,
-		      "id": "c3",
+		      "id": "C2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -1,
-		      "y": -5,
-		      "id": "c4",
+		      "x": 2,
+		      "y": 2,
+		      "id": "C3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 2,
+		      "id": "C4",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3449,12 +4801,12 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "c1",
-		        "c2",
-		        "c3",
-		        "c4"
+		        "C1",
+		        "C2",
+		        "C3",
+		        "C4"
 		      ],
-		      "fillColor": "#ddeff7",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -3477,14 +4829,14 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x614adc65676dfce8
-	// Question: Select a rectangle to represent a hut base on a grid
-	// Widget key: rect_choice_a
-	test("polygon-graph - [x614adc65676dfce8] Select a rectangle to represent a hut base on a grid (2)", async () => {
+	// Question: Select a rectangle to model a 4 m by 6 m hut
+	// Widget key: rectangle_choice_a
+	test("polygon-graph - [x614adc65676dfce8] Select a rectangle to model a 4 m by 6 m hut (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 400,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -3499,33 +4851,33 @@ describe("polygonGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 2,
-		      "y": -5,
-		      "id": "a1",
+		      "x": -3,
+		      "y": -6,
+		      "id": "A1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 2,
-		      "y": 7,
-		      "id": "a2",
+		      "x": -3,
+		      "y": 6,
+		      "id": "A2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -4,
-		      "y": 7,
-		      "id": "a3",
+		      "x": -9,
+		      "y": 6,
+		      "id": "A3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -4,
-		      "y": -5,
-		      "id": "a4",
+		      "x": -9,
+		      "y": -6,
+		      "id": "A4",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3535,13 +4887,13 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "a1",
-		        "a2",
-		        "a3",
-		        "a4"
+		        "A1",
+		        "A2",
+		        "A3",
+		        "A4"
 		      ],
-		      "fillColor": "#cfe9f3",
-		      "strokeColor": "#1177aa"
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -3563,14 +4915,14 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x614adc65676dfce8
-	// Question: Select a rectangle to represent a hut base on a grid
-	// Widget key: rect_choice_b
-	test("polygon-graph - [x614adc65676dfce8] Select a rectangle to represent a hut base on a grid (3)", async () => {
+	// Question: Select a rectangle to model a 4 m by 6 m hut
+	// Widget key: rectangle_choice_b
+	test("polygon-graph - [x614adc65676dfce8] Select a rectangle to model a 4 m by 6 m hut (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 400,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -3585,33 +4937,33 @@ describe("polygonGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 1,
 		      "y": -5,
-		      "id": "b1",
+		      "id": "B1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": 7,
-		      "id": "b2",
+		      "id": "B2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -7,
 		      "y": 7,
-		      "id": "b3",
+		      "id": "B3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -7,
 		      "y": -5,
-		      "id": "b4",
+		      "id": "B4",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3621,13 +4973,13 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "b1",
-		        "b2",
-		        "b3",
-		        "b4"
+		        "B1",
+		        "B2",
+		        "B3",
+		        "B4"
 		      ],
-		      "fillColor": "#cfe9f3",
-		      "strokeColor": "#1177aa"
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -3649,14 +5001,14 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x614adc65676dfce8
-	// Question: Select a rectangle to represent a hut base on a grid
-	// Widget key: rect_choice_c
-	test("polygon-graph - [x614adc65676dfce8] Select a rectangle to represent a hut base on a grid (4)", async () => {
+	// Question: Select a rectangle to model a 4 m by 6 m hut
+	// Widget key: rectangle_choice_c
+	test("polygon-graph - [x614adc65676dfce8] Select a rectangle to model a 4 m by 6 m hut (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 400,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -3671,33 +5023,33 @@ describe("polygonGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "points": [
 		    {
-		      "x": 3,
-		      "y": -2,
-		      "id": "c1",
+		      "x": 10,
+		      "y": -8,
+		      "id": "C1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": 8,
-		      "id": "c2",
+		      "x": 10,
+		      "y": 2,
+		      "id": "C2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -5,
-		      "y": 8,
-		      "id": "c3",
+		      "x": 2,
+		      "y": 2,
+		      "id": "C3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -5,
-		      "y": -2,
-		      "id": "c4",
+		      "x": 2,
+		      "y": -8,
+		      "id": "C4",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -3707,13 +5059,13 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "c1",
-		        "c2",
-		        "c3",
-		        "c4"
+		        "C1",
+		        "C2",
+		        "C3",
+		        "C4"
 		      ],
-		      "fillColor": "#cfe9f3",
-		      "strokeColor": "#1177aa"
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -3735,326 +5087,24 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: xe6c4fc015fff1124
-	// Question: Create a scale drawing of a right triangle
-	// Widget key: garden_grid
-	test("polygon-graph - [xe6c4fc015fff1124] Create a scale drawing of a right triangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 500,
-		  "xAxis": {
-		    "max": 20,
-		    "min": -2,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 20,
-		    "min": -2,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [],
-		  "polygons": [],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xfe0967d69113158a
-	// Question: Create a scale drawing of a processor
-	// Widget key: processor_choice_a
-	test("polygon-graph - [xfe0967d69113158a] Create a scale drawing of a processor (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 500,
-		  "xAxis": {
-		    "max": 12,
-		    "min": -12,
-		    "label": "x",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 12,
-		    "min": -12,
-		    "label": "y",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [
-		    {
-		      "x": 8,
-		      "y": -8,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 8,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -8,
-		      "y": 8,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -8,
-		      "y": -8,
-		      "id": "p4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3",
-		        "p4"
-		      ],
-		      "fillColor": "#cfeff9",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xfe0967d69113158a
-	// Question: Create a scale drawing of a processor
-	// Widget key: processor_choice_b
-	test("polygon-graph - [xfe0967d69113158a] Create a scale drawing of a processor (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 500,
-		  "xAxis": {
-		    "max": 12,
-		    "min": -12,
-		    "label": "x",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 12,
-		    "min": -12,
-		    "label": "y",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [
-		    {
-		      "x": 10,
-		      "y": -9,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 10,
-		      "y": 9,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -8,
-		      "y": 9,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -8,
-		      "y": -9,
-		      "id": "p4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3",
-		        "p4"
-		      ],
-		      "fillColor": "#cfeff9",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xfe0967d69113158a
-	// Question: Create a scale drawing of a processor
-	// Widget key: processor_choice_c
-	test("polygon-graph - [xfe0967d69113158a] Create a scale drawing of a processor (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 500,
-		  "xAxis": {
-		    "max": 12,
-		    "min": -12,
-		    "label": "x",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 12,
-		    "min": -12,
-		    "label": "y",
-		    "tickInterval": 2,
-		    "showGridLines": true
-		  },
-		  "height": 500,
-		  "points": [
-		    {
-		      "x": 10,
-		      "y": -10,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 10,
-		      "y": 10,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -10,
-		      "y": 10,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -10,
-		      "y": -10,
-		      "id": "p4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3",
-		        "p4"
-		      ],
-		      "fillColor": "#cfeff9",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x63d0f3e2dac95aee
-	// Question: Draw a square face to scale on a grid
+	// Question: Scale drawing of a right triangle
 	// Widget key: graph_choice_a
-	test("polygon-graph - [x63d0f3e2dac95aee] Draw a square face to scale on a grid (1)", async () => {
+	test("polygon-graph - [xe6c4fc015fff1124] Scale drawing of a right triangle (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
 		  "width": 380,
 		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
+		    "max": 20,
+		    "min": -2,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
+		    "max": 20,
+		    "min": -2,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
@@ -4062,1061 +5112,849 @@ describe("polygonGraph widget tests", () => {
 		  "height": 380,
 		  "points": [
 		    {
-		      "x": -5,
-		      "y": -5,
-		      "id": "A1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": -5,
-		      "id": "A2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 5,
-		      "id": "A3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 5,
-		      "id": "A4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A1",
-		        "A2",
-		        "A3",
-		        "A4"
-		      ],
-		      "fillColor": "#cfeaf3",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x63d0f3e2dac95aee
-	// Question: Draw a square face to scale on a grid
-	// Widget key: graph_choice_b
-	test("polygon-graph - [x63d0f3e2dac95aee] Draw a square face to scale on a grid (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 380,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 380,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": -4,
-		      "id": "B1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": -4,
-		      "id": "B2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "id": "B3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 4,
-		      "id": "B4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "B1",
-		        "B2",
-		        "B3",
-		        "B4"
-		      ],
-		      "fillColor": "#e6e6e6",
-		      "strokeColor": "#666666"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x63d0f3e2dac95aee
-	// Question: Draw a square face to scale on a grid
-	// Widget key: graph_choice_c
-	test("polygon-graph - [x63d0f3e2dac95aee] Draw a square face to scale on a grid (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 380,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 380,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": -6,
-		      "id": "C1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": -6,
-		      "id": "C2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 6,
-		      "id": "C3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 6,
-		      "id": "C4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "C1",
-		        "C2",
-		        "C3",
-		        "C4"
-		      ],
-		      "fillColor": "#e6e6e6",
-		      "strokeColor": "#666666"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb33fd58db9a5f93e
-	// Question: Redraw the manor's base on a scaled grid
-	// Widget key: rect_choice_a
-	test("polygon-graph - [xb33fd58db9a5f93e] Redraw the manor's base on a scaled grid (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -7,
-		      "y": -3,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -3,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 5,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": 5,
-		      "id": "p4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3",
-		        "p4"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb33fd58db9a5f93e
-	// Question: Redraw the manor's base on a scaled grid
-	// Widget key: rect_choice_b
-	test("polygon-graph - [xb33fd58db9a5f93e] Redraw the manor's base on a scaled grid (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -7,
-		      "y": -3,
-		      "id": "q1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -3,
-		      "id": "q2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 7,
-		      "id": "q3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": 7,
-		      "id": "q4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "q1",
-		        "q2",
-		        "q3",
-		        "q4"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb33fd58db9a5f93e
-	// Question: Redraw the manor's base on a scaled grid
-	// Widget key: rect_choice_c
-	test("polygon-graph - [xb33fd58db9a5f93e] Redraw the manor's base on a scaled grid (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": -3,
-		      "id": "r1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -3,
-		      "id": "r2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 7,
-		      "id": "r3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 7,
-		      "id": "r4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "r1",
-		        "r2",
-		        "r3",
-		        "r4"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5703a1475fd4e510
-	// Question: Select the rectangle representing the hut on a map
-	// Widget key: hut_choice_a
-	test("polygon-graph - [x5703a1475fd4e510] Select the rectangle representing the hut on a map (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": -9,
-		      "id": "A1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
 		      "x": 2,
-		      "y": -9,
-		      "id": "A2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 7,
-		      "id": "A3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 7,
-		      "id": "A4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A1",
-		        "A2",
-		        "A3",
-		        "A4"
-		      ],
-		      "fillColor": "#00000010",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5703a1475fd4e510
-	// Question: Select the rectangle representing the hut on a map
-	// Widget key: hut_choice_b
-	test("polygon-graph - [x5703a1475fd4e510] Select the rectangle representing the hut on a map (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -7,
-		      "y": -9,
-		      "id": "B1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -9,
-		      "id": "B2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 7,
-		      "id": "B3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": 7,
-		      "id": "B4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "B1",
-		        "B2",
-		        "B3",
-		        "B4"
-		      ],
-		      "fillColor": "#00000010",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5703a1475fd4e510
-	// Question: Select the rectangle representing the hut on a map
-	// Widget key: hut_choice_c
-	test("polygon-graph - [x5703a1475fd4e510] Select the rectangle representing the hut on a map (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -7,
-		      "y": -7,
-		      "id": "C1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -7,
-		      "id": "C2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 7,
-		      "id": "C3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": 7,
-		      "id": "C4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "C1",
-		        "C2",
-		        "C3",
-		        "C4"
-		      ],
-		      "fillColor": "#00000010",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x06acb2c026c2704a
-	// Question: Select the correct house outline on a scaled grid
-	// Widget key: house_choice_a
-	test("polygon-graph - [x06acb2c026c2704a] Select the correct house outline on a scaled grid (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -2,
-		      "y": -5,
-		      "id": "A1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 5,
-		      "id": "A2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -8,
-		      "y": 5,
-		      "id": "A3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -8,
-		      "y": -5,
-		      "id": "A4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A1",
-		        "A2",
-		        "A3",
-		        "A4"
-		      ],
-		      "fillColor": "#dbeeff",
-		      "strokeColor": "#333333"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x06acb2c026c2704a
-	// Question: Select the correct house outline on a scaled grid
-	// Widget key: house_choice_b
-	test("polygon-graph - [x06acb2c026c2704a] Select the correct house outline on a scaled grid (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -1,
-		      "y": -5,
-		      "id": "B1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -1,
-		      "y": 7,
-		      "id": "B2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": 7,
-		      "id": "B3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": -5,
-		      "id": "B4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "B1",
-		        "B2",
-		        "B3",
-		        "B4"
-		      ],
-		      "fillColor": "#dbeeff",
-		      "strokeColor": "#333333"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x06acb2c026c2704a
-	// Question: Select the correct house outline on a scaled grid
-	// Widget key: house_choice_c
-	test("polygon-graph - [x06acb2c026c2704a] Select the correct house outline on a scaled grid (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": 2,
-		      "y": -6,
-		      "id": "C1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 6,
-		      "id": "C2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 6,
-		      "id": "C3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -6,
-		      "id": "C4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "C1",
-		        "C2",
-		        "C3",
-		        "C4"
-		      ],
-		      "fillColor": "#dbeeff",
-		      "strokeColor": "#333333"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x713bce99272c6326
-	// Question: Draw a microchip to scale on a grid
-	// Widget key: chip_choice_a
-	test("polygon-graph - [x713bce99272c6326] Draw a microchip to scale on a grid (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": -6,
+		      "y": 2,
 		      "id": "a1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 6,
-		      "y": -6,
+		      "x": 12,
+		      "y": 2,
 		      "id": "a2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
+		      "x": 2,
+		      "y": 17,
+		      "id": "a3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "a1",
+		        "a2",
+		        "a3"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe6c4fc015fff1124
+	// Question: Scale drawing of a right triangle
+	// Widget key: graph_choice_b
+	test("polygon-graph - [xe6c4fc015fff1124] Scale drawing of a right triangle (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 380,
+		  "xAxis": {
+		    "max": 20,
+		    "min": -2,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 20,
+		    "min": -2,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 380,
+		  "points": [
+		    {
+		      "x": 11,
+		      "y": 6,
+		      "id": "b1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 13.5,
+		      "id": "b2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
 		      "x": 6,
 		      "y": 6,
+		      "id": "b3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "b1",
+		        "b2",
+		        "b3"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe6c4fc015fff1124
+	// Question: Scale drawing of a right triangle
+	// Widget key: graph_choice_c
+	test("polygon-graph - [xe6c4fc015fff1124] Scale drawing of a right triangle (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 380,
+		  "xAxis": {
+		    "max": 20,
+		    "min": -2,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 20,
+		    "min": -2,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 380,
+		  "points": [
+		    {
+		      "x": 4,
+		      "y": 4,
+		      "id": "c1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 4,
+		      "id": "c2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 11.5,
+		      "id": "c3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "c1",
+		        "c2",
+		        "c3"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfe0967d69113158a
+	// Question: Create a scale drawing of a square processor
+	// Widget key: graph_choice_a
+	test("polygon-graph - [xfe0967d69113158a] Create a scale drawing of a square processor (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": -9,
+		      "y": -2,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -9,
+		      "y": 7,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 7,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -2,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfe0967d69113158a
+	// Question: Create a scale drawing of a square processor
+	// Widget key: graph_choice_b
+	test("polygon-graph - [xfe0967d69113158a] Create a scale drawing of a square processor (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": 10,
+		      "y": -9,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 9,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -8,
+		      "y": 9,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -8,
+		      "y": -9,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xfe0967d69113158a
+	// Question: Create a scale drawing of a square processor
+	// Widget key: graph_choice_c
+	test("polygon-graph - [xfe0967d69113158a] Create a scale drawing of a square processor (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 360,
+		  "xAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "x",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 12,
+		    "min": -12,
+		    "label": "y",
+		    "tickInterval": 2,
+		    "showGridLines": true
+		  },
+		  "height": 360,
+		  "points": [
+		    {
+		      "x": -5,
+		      "y": -11,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": -11,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 11,
+		      "y": 5,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 5,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x58729b419e278355
+	// Question: Select a rectangle to represent Colorado on the grid
+	// Widget key: graph_choice_a
+	test("polygon-graph - [x58729b419e278355] Select a rectangle to represent Colorado on the grid (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": -6,
+		      "id": "A1",
+		      "label": "A",
+		      "style": "open"
+		    },
+		    {
+		      "x": -6,
+		      "y": 6,
+		      "id": "B1",
+		      "label": "B",
+		      "style": "open"
+		    },
+		    {
+		      "x": 6,
+		      "y": 6,
+		      "id": "C1",
+		      "label": "C",
+		      "style": "open"
+		    },
+		    {
+		      "x": 6,
+		      "y": -6,
+		      "id": "D1",
+		      "label": "D",
+		      "style": "open"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A1",
+		        "B1",
+		        "C1",
+		        "D1"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x58729b419e278355
+	// Question: Select a rectangle to represent Colorado on the grid
+	// Widget key: graph_choice_b
+	test("polygon-graph - [x58729b419e278355] Select a rectangle to represent Colorado on the grid (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -7,
+		      "y": -2,
+		      "id": "A2",
+		      "label": "A",
+		      "style": "open"
+		    },
+		    {
+		      "x": -7,
+		      "y": 7,
+		      "id": "B2",
+		      "label": "B",
+		      "style": "open"
+		    },
+		    {
+		      "x": 5,
+		      "y": 7,
+		      "id": "C2",
+		      "label": "C",
+		      "style": "open"
+		    },
+		    {
+		      "x": 5,
+		      "y": -2,
+		      "id": "D2",
+		      "label": "D",
+		      "style": "open"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A2",
+		        "B2",
+		        "C2",
+		        "D2"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x58729b419e278355
+	// Question: Select a rectangle to represent Colorado on the grid
+	// Widget key: graph_choice_c
+	test("polygon-graph - [x58729b419e278355] Select a rectangle to represent Colorado on the grid (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -5,
+		      "y": -4,
+		      "id": "A3",
+		      "label": "A",
+		      "style": "open"
+		    },
+		    {
+		      "x": -5,
+		      "y": 5,
+		      "id": "B3",
+		      "label": "B",
+		      "style": "open"
+		    },
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "id": "C3",
+		      "label": "C",
+		      "style": "open"
+		    },
+		    {
+		      "x": 5,
+		      "y": -4,
+		      "id": "D3",
+		      "label": "D",
+		      "style": "open"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A3",
+		        "B3",
+		        "C3",
+		        "D3"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5703a1475fd4e510
+	// Question: Select the rectangle that represents the hut on Peter's map
+	// Widget key: hut_map
+	test("polygon-graph - [x5703a1475fd4e510] Select the rectangle that represents the hut on Peter's map (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 7,
+		      "y": 9,
+		      "id": "s1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 9,
+		      "id": "s2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "1 m",
+		      "isClosed": false,
+		      "vertices": [
+		        "s1",
+		        "s2"
+		      ],
+		      "fillColor": "#00000000",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5703a1475fd4e510
+	// Question: Select the rectangle that represents the hut on Peter's map
+	// Widget key: hut_choice_a
+	test("polygon-graph - [x5703a1475fd4e510] Select the rectangle that represents the hut on Peter's map (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -1,
+		      "y": -9,
+		      "id": "a1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 7,
+		      "id": "a2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -9,
+		      "y": 7,
 		      "id": "a3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -6,
-		      "y": 6,
+		      "x": -9,
+		      "y": -9,
 		      "id": "a4",
 		      "label": "",
 		      "style": "closed"
@@ -5132,8 +5970,8 @@ describe("polygonGraph widget tests", () => {
 		        "a3",
 		        "a4"
 		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#000000"
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -5154,10 +5992,10 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x713bce99272c6326
-	// Question: Draw a microchip to scale on a grid
-	// Widget key: chip_choice_b
-	test("polygon-graph - [x713bce99272c6326] Draw a microchip to scale on a grid (3)", async () => {
+	// Extracted from question: x5703a1475fd4e510
+	// Question: Select the rectangle that represents the hut on Peter's map
+	// Widget key: hut_choice_b
+	test("polygon-graph - [x5703a1475fd4e510] Select the rectangle that represents the hut on Peter's map (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5180,14 +6018,14 @@ describe("polygonGraph widget tests", () => {
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": 8,
-		      "y": -8,
+		      "x": 3,
+		      "y": -9,
 		      "id": "b1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 8,
+		      "x": 3,
 		      "y": 7,
 		      "id": "b2",
 		      "label": "",
@@ -5202,7 +6040,7 @@ describe("polygonGraph widget tests", () => {
 		    },
 		    {
 		      "x": -7,
-		      "y": -8,
+		      "y": -9,
 		      "id": "b4",
 		      "label": "",
 		      "style": "closed"
@@ -5218,7 +6056,351 @@ describe("polygonGraph widget tests", () => {
 		        "b3",
 		        "b4"
 		      ],
-		      "fillColor": "#11accd33",
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5703a1475fd4e510
+	// Question: Select the rectangle that represents the hut on Peter's map
+	// Widget key: hut_choice_c
+	test("polygon-graph - [x5703a1475fd4e510] Select the rectangle that represents the hut on Peter's map (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": -6,
+		      "id": "c1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 6,
+		      "id": "c2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -8,
+		      "y": 6,
+		      "id": "c3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -8,
+		      "y": -6,
+		      "id": "c4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "c1",
+		        "c2",
+		        "c3",
+		        "c4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x06acb2c026c2704a
+	// Question: Select the outline of Natalie’s house on a grid
+	// Widget key: house_choice_a
+	test("polygon-graph - [x06acb2c026c2704a] Select the outline of Natalie’s house on a grid (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -6,
+		      "y": -5,
+		      "id": "A1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -5,
+		      "id": "A2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 5,
+		      "id": "A3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": 5,
+		      "id": "A4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A1",
+		        "A2",
+		        "A3",
+		        "A4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x06acb2c026c2704a
+	// Question: Select the outline of Natalie’s house on a grid
+	// Widget key: house_choice_b
+	test("polygon-graph - [x06acb2c026c2704a] Select the outline of Natalie’s house on a grid (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": -9,
+		      "id": "B1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": -9,
+		      "id": "B2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 3,
+		      "id": "B3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 3,
+		      "id": "B4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "B1",
+		        "B2",
+		        "B3",
+		        "B4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x06acb2c026c2704a
+	// Question: Select the outline of Natalie’s house on a grid
+	// Widget key: house_choice_c
+	test("polygon-graph - [x06acb2c026c2704a] Select the outline of Natalie’s house on a grid (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -9,
+		      "y": -10,
+		      "id": "C1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": -10,
+		      "id": "C2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 2,
+		      "id": "C3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -9,
+		      "y": 2,
+		      "id": "C4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "C1",
+		        "C2",
+		        "C3",
+		        "C4"
+		      ],
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#000000"
 		    }
 		  ],
@@ -5241,9 +6423,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x713bce99272c6326
-	// Question: Draw a microchip to scale on a grid
-	// Widget key: chip_choice_c
-	test("polygon-graph - [x713bce99272c6326] Draw a microchip to scale on a grid (4)", async () => {
+	// Question: Draw a square microchip to scale on a grid
+	// Widget key: choice_a_visual
+	test("polygon-graph - [x713bce99272c6326] Draw a square microchip to scale on a grid (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5266,289 +6448,31 @@ describe("polygonGraph widget tests", () => {
 		  "height": 400,
 		  "points": [
 		    {
-		      "x": -9,
-		      "y": -9,
-		      "id": "c1",
-		      "label": "",
+		      "x": 8,
+		      "y": -8,
+		      "id": "p1",
+		      "label": " ",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 7,
-		      "y": -9,
-		      "id": "c2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
+		      "x": 8,
 		      "y": 7,
-		      "id": "c3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -9,
-		      "y": 7,
-		      "id": "c4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "c1",
-		        "c2",
-		        "c3",
-		        "c4"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa20e5503075f43b9
-	// Question: Select the rectangle with given dimensions on a grid
-	// Widget key: rect_choice_a
-	test("polygon-graph - [xa20e5503075f43b9] Select the rectangle with given dimensions on a grid (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": -9,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": -9,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 7,
-		      "id": "C",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 7,
-		      "id": "D",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa20e5503075f43b9
-	// Question: Select the rectangle with given dimensions on a grid
-	// Widget key: rect_choice_b
-	test("polygon-graph - [xa20e5503075f43b9] Select the rectangle with given dimensions on a grid (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -7,
-		      "y": -9,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": -9,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": 7,
-		      "id": "C",
-		      "label": "",
+		      "id": "p2",
+		      "label": " ",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -7,
 		      "y": 7,
-		      "id": "D",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xa20e5503075f43b9
-	// Question: Select the rectangle with given dimensions on a grid
-	// Widget key: rect_choice_c
-	test("polygon-graph - [xa20e5503075f43b9] Select the rectangle with given dimensions on a grid (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 400,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 400,
-		  "points": [
-		    {
-		      "x": -7,
-		      "y": -7,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": -7,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": 7,
-		      "id": "C",
-		      "label": "",
+		      "id": "p3",
+		      "label": " ",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -7,
-		      "y": 7,
-		      "id": "D",
-		      "label": "",
+		      "y": -8,
+		      "id": "p4",
+		      "label": " ",
 		      "style": "closed"
 		    }
 		  ],
@@ -5557,98 +6481,12 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4"
 		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbd10785336828609
-	// Question: Perimeter of a parallelogram on a grid
-	// Widget key: image_1
-	test("polygon-graph - [xbd10785336828609] Perimeter of a parallelogram on a grid", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 240,
-		  "xAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 150,
-		  "points": [
-		    {
-		      "x": 7,
-		      "y": 9,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 1,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 9,
-		      "y": 1,
-		      "id": "C",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 15,
-		      "y": 9,
-		      "id": "D",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -5670,143 +6508,57 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2e886215480f372b
-	// Question: Perimeter of a trapezoid on a grid
-	// Widget key: image_1
-	test("polygon-graph - [x2e886215480f372b] Perimeter of a trapezoid on a grid", async () => {
+	// Extracted from question: x713bce99272c6326
+	// Question: Draw a square microchip to scale on a grid
+	// Widget key: choice_b_visual
+	test("polygon-graph - [x713bce99272c6326] Draw a square microchip to scale on a grid (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 240,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 16,
-		    "min": 0,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
-		    "min": 0,
-		    "label": "",
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 150,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 1,
-		      "id": "A",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 15,
-		      "y": 1,
-		      "id": "B",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 9,
-		      "y": 9,
-		      "id": "C",
-		      "label": "",
-		      "style": "open"
-		    },
-		    {
-		      "x": 1,
-		      "y": 9,
-		      "id": "D",
-		      "label": "",
-		      "style": "open"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x89f1c21413a25ab7
-	// Question: Find the perimeter of the trapezoid
-	// Widget key: image_1
-	test("polygon-graph - [x89f1c21413a25ab7] Find the perimeter of the trapezoid", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 240,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 129,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 9,
-		      "y": 0,
-		      "id": "B",
-		      "label": "",
+		      "x": 5,
+		      "y": -5,
+		      "id": "q1",
+		      "label": " ",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 5,
-		      "y": 3,
-		      "id": "C",
-		      "label": "",
+		      "y": 5,
+		      "id": "q2",
+		      "label": " ",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": 3,
-		      "id": "D",
-		      "label": "",
+		      "x": -5,
+		      "y": 5,
+		      "id": "q3",
+		      "label": " ",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": -5,
+		      "id": "q4",
+		      "label": " ",
 		      "style": "closed"
 		    }
 		  ],
@@ -5815,12 +6567,12 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
+		        "q1",
+		        "q2",
+		        "q3",
+		        "q4"
 		      ],
-		      "fillColor": "#11accd22",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -5842,50 +6594,57 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x16291eef386cc41a
-	// Question: Perimeter of a triangle on a coordinate grid
-	// Widget key: image_1
-	test("polygon-graph - [x16291eef386cc41a] Perimeter of a triangle on a coordinate grid", async () => {
+	// Extracted from question: x713bce99272c6326
+	// Question: Draw a square microchip to scale on a grid
+	// Widget key: choice_c_visual
+	test("polygon-graph - [x713bce99272c6326] Draw a square microchip to scale on a grid (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 240,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 20,
-		    "min": 0,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 14,
-		    "min": 0,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 168,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 1,
-		      "id": "P1",
-		      "label": "",
+		      "x": 9,
+		      "y": -3,
+		      "id": "r1",
+		      "label": " ",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 10,
-		      "y": 13,
-		      "id": "P2",
-		      "label": "",
+		      "x": 9,
+		      "y": 9,
+		      "id": "r2",
+		      "label": " ",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 19,
-		      "y": 1,
-		      "id": "P3",
-		      "label": "",
+		      "x": -3,
+		      "y": 9,
+		      "id": "r3",
+		      "label": " ",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -3,
+		      "id": "r4",
+		      "label": " ",
 		      "style": "closed"
 		    }
 		  ],
@@ -5894,11 +6653,12 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "P1",
-		        "P2",
-		        "P3"
+		        "r1",
+		        "r2",
+		        "r3",
+		        "r4"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -5921,9 +6681,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: xb9cebec5f4b88b43
-	// Question: Perimeter of a triangle on a coordinate grid
+	// Question: Perimeter of a triangle on a grid
 	// Widget key: image_1
-	test("polygon-graph - [xb9cebec5f4b88b43] Perimeter of a triangle on a coordinate grid", async () => {
+	test("polygon-graph - [xb9cebec5f4b88b43] Perimeter of a triangle on a grid", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -5932,39 +6692,39 @@ describe("polygonGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 20,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 360,
+		  "height": 480,
 		  "points": [
 		    {
 		      "x": 2,
-		      "y": 18,
+		      "y": 2,
 		      "id": "A",
 		      "label": "",
-		      "style": "closed"
+		      "style": "open"
+		    },
+		    {
+		      "x": 2,
+		      "y": 18,
+		      "id": "B",
+		      "label": "",
+		      "style": "open"
 		    },
 		    {
 		      "x": 8,
 		      "y": 10,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 2,
 		      "id": "C",
 		      "label": "",
-		      "style": "closed"
+		      "style": "open"
 		    }
 		  ],
 		  "polygons": [
@@ -5973,10 +6733,10 @@ describe("polygonGraph widget tests", () => {
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
-		        "B",
-		        "C"
+		        "C",
+		        "B"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -5998,64 +6758,50 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9e40263ee610f27e
-	// Question: Properties preserved under rotation
+	// Extracted from question: x671a0de8ba89212f
+	// Question: Properties preserved under a rotation
 	// Widget key: image_1
-	test("polygon-graph - [x9e40263ee610f27e] Properties preserved under rotation", async () => {
+	test("polygon-graph - [x671a0de8ba89212f] Properties preserved under a rotation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 325,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
+		    "max": 4,
+		    "min": -8,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
+		    "max": 4,
+		    "min": -8,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 325,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 3,
-		      "y": -2,
+		      "x": -3,
+		      "y": 1,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 5,
-		      "y": 4,
+		      "x": -5,
+		      "y": -6,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 5,
-		      "y": 1,
+		      "x": -2,
+		      "y": -2,
 		      "id": "C",
 		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": -1,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "origin",
-		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -6066,10 +6812,9 @@ describe("polygonGraph widget tests", () => {
 		      "vertices": [
 		        "A",
 		        "B",
-		        "C",
-		        "D"
+		        "C"
 		      ],
-		      "fillColor": "#11accd22",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -6092,9 +6837,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x9ac09197fafa6172
-	// Question: Unchanged properties under a translation
+	// Question: Properties preserved under a translation (quadrilateral)
 	// Widget key: image_1
-	test("polygon-graph - [x9ac09197fafa6172] Unchanged properties under a translation", async () => {
+	test("polygon-graph - [x9ac09197fafa6172] Properties preserved under a translation (quadrilateral)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6102,19 +6847,19 @@ describe("polygonGraph widget tests", () => {
 		  "width": 325,
 		  "xAxis": {
 		    "max": 2,
-		    "min": -10,
-		    "label": "",
+		    "min": -8,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 2,
-		    "min": -10,
-		    "label": "",
+		    "min": -8,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 288,
+		  "height": 300,
 		  "points": [
 		    {
 		      "x": -6,
@@ -6147,7 +6892,7 @@ describe("polygonGraph widget tests", () => {
 		  ],
 		  "polygons": [
 		    {
-		      "label": "",
+		      "label": "ABCD",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
@@ -6155,7 +6900,7 @@ describe("polygonGraph widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#11accd33",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -6178,25 +6923,25 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x16e04c9375a30895
-	// Question: Properties preserved under a triangle translation
+	// Question: Properties preserved under a translation
 	// Widget key: image_1
-	test("polygon-graph - [x16e04c9375a30895] Properties preserved under a triangle translation", async () => {
+	test("polygon-graph - [x16e04c9375a30895] Properties preserved under a translation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 295,
+		  "width": 300,
 		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 5,
+		    "min": -5,
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
+		    "max": 5,
+		    "min": -5,
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -6206,21 +6951,21 @@ describe("polygonGraph widget tests", () => {
 		      "x": -2,
 		      "y": 3,
 		      "id": "A",
-		      "label": "",
+		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 1,
 		      "id": "B",
-		      "label": "",
+		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": -3,
 		      "id": "C",
-		      "label": "",
+		      "label": "C",
 		      "style": "closed"
 		    }
 		  ],
@@ -6233,7 +6978,7 @@ describe("polygonGraph widget tests", () => {
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -6256,25 +7001,25 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x9360c00e6c7745c8
-	// Question: Angle-only reasoning about similarity of quadrilaterals
+	// Question: Identify the error in a similarity conclusion from angle measures
 	// Widget key: image_1
-	test("polygon-graph - [x9360c00e6c7745c8] Angle-only reasoning about similarity of quadrilaterals", async () => {
+	test("polygon-graph - [x9360c00e6c7745c8] Identify the error in a similarity conclusion from angle measures", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 262,
+		  "width": 320,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -6339,7 +7084,7 @@ describe("polygonGraph widget tests", () => {
 		  ],
 		  "polygons": [
 		    {
-		      "label": "STUV",
+		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
 		        "S",
@@ -6347,11 +7092,11 @@ describe("polygonGraph widget tests", () => {
 		        "U",
 		        "V"
 		      ],
-		      "fillColor": "#0c7f9914",
+		      "fillColor": "#0c7f991a",
 		      "strokeColor": "#0c7f99"
 		    },
 		    {
-		      "label": "WXYZ",
+		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
 		        "W",
@@ -6359,8 +7104,86 @@ describe("polygonGraph widget tests", () => {
 		        "Y",
 		        "Z"
 		      ],
-		      "fillColor": "#ca337c14",
+		      "fillColor": "#ca337c1a",
 		      "strokeColor": "#ca337c"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2130676b11201508
+	// Question: Translate a triangle left by 5 units
+	// Widget key: triangle_abc_initial
+	test("polygon-graph - [x2130676b11201508] Translate a triangle left by 5 units", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -1,
+		      "y": 1,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": -3,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 0,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -6383,13 +7206,13 @@ describe("polygonGraph widget tests", () => {
 
 	// Extracted from question: xcb5a5663d6f5f688
 	// Question: Translate a triangle up by 2 units
-	// Widget key: triangle_stimulus
-	test("polygon-graph - [xcb5a5663d6f5f688] Translate a triangle up by 2 units", async () => {
+	// Widget key: graph_choice_a
+	test("polygon-graph - [xcb5a5663d6f5f688] Translate a triangle up by 2 units (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 425,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 8,
 		    "min": -8,
@@ -6404,27 +7227,27 @@ describe("polygonGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 425,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 6,
-		      "y": -5,
-		      "id": "A",
-		      "label": "A",
+		      "y": -7,
+		      "id": "P1",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -2,
-		      "y": 4,
-		      "id": "B",
-		      "label": "B",
+		      "y": 2,
+		      "id": "P2",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -7,
-		      "y": -5,
-		      "id": "C",
-		      "label": "C",
+		      "y": -7,
+		      "id": "P3",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -6433,11 +7256,167 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
+		        "P1",
+		        "P2",
+		        "P3"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcb5a5663d6f5f688
+	// Question: Translate a triangle up by 2 units
+	// Widget key: graph_choice_b
+	test("polygon-graph - [xcb5a5663d6f5f688] Translate a triangle up by 2 units (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 6,
+		      "y": -3,
+		      "id": "P1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 6,
+		      "id": "P2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": -3,
+		      "id": "P3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "P1",
+		        "P2",
+		        "P3"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcb5a5663d6f5f688
+	// Question: Translate a triangle up by 2 units
+	// Widget key: graph_choice_c
+	test("polygon-graph - [xcb5a5663d6f5f688] Translate a triangle up by 2 units (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 8,
+		      "y": -5,
+		      "id": "P1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 4,
+		      "id": "P2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": -5,
+		      "id": "P3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "P1",
+		        "P2",
+		        "P3"
+		      ],
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -6461,7 +7440,7 @@ describe("polygonGraph widget tests", () => {
 
 	// Extracted from question: xbe64f4ff1530ea69
 	// Question: Translate a triangle on the coordinate plane
-	// Widget key: triangle_initial
+	// Widget key: graph_choice_a
 	test("polygon-graph - [xbe64f4ff1530ea69] Translate a triangle on the coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -6486,23 +7465,23 @@ describe("polygonGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": -4,
-		      "y": -3,
-		      "id": "A",
-		      "label": "A",
+		      "y": -6,
+		      "id": "A1",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
-		      "y": 0,
-		      "id": "B",
-		      "label": "B",
+		      "y": -3,
+		      "id": "B1",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
-		      "y": 2,
-		      "id": "C",
-		      "label": "C",
+		      "y": -1,
+		      "id": "C1",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -6511,11 +7490,11 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
+		        "B1",
+		        "C1",
+		        "A1"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -6539,8 +7518,86 @@ describe("polygonGraph widget tests", () => {
 
 	// Extracted from question: xbe64f4ff1530ea69
 	// Question: Translate a triangle on the coordinate plane
-	// Widget key: triangle_choice_a
+	// Widget key: graph_choice_b
 	test("polygon-graph - [xbe64f4ff1530ea69] Translate a triangle on the coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 3,
+		      "id": "Bp",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -6,
+		      "y": 5,
+		      "id": "Cp",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": 0,
+		      "id": "Ap",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "Bp",
+		        "Cp",
+		        "Ap"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xbe64f4ff1530ea69
+	// Question: Translate a triangle on the coordinate plane
+	// Widget key: graph_choice_c
+	test("polygon-graph - [xbe64f4ff1530ea69] Translate a triangle on the coordinate plane (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6565,98 +7622,20 @@ describe("polygonGraph widget tests", () => {
 		    {
 		      "x": -1,
 		      "y": -3,
-		      "id": "A1",
+		      "id": "A2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 3,
 		      "y": 0,
-		      "id": "B1",
+		      "id": "B2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -3,
 		      "y": 2,
-		      "id": "C1",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A1",
-		        "B1",
-		        "C1"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbe64f4ff1530ea69
-	// Question: Translate a triangle on the coordinate plane
-	// Widget key: triangle_choice_b
-	test("polygon-graph - [xbe64f4ff1530ea69] Translate a triangle on the coordinate plane (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": 0,
-		      "id": "A2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 3,
-		      "id": "B2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 5,
 		      "id": "C2",
 		      "label": "",
 		      "style": "closed"
@@ -6667,11 +7646,11 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A2",
 		        "B2",
-		        "C2"
+		        "C2",
+		        "A2"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -6695,7 +7674,7 @@ describe("polygonGraph widget tests", () => {
 
 	// Extracted from question: xbe64f4ff1530ea69
 	// Question: Translate a triangle on the coordinate plane
-	// Widget key: triangle_choice_c
+	// Widget key: triangle_stimulus
 	test("polygon-graph - [xbe64f4ff1530ea69] Translate a triangle on the coordinate plane (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -6720,22 +7699,22 @@ describe("polygonGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": -4,
-		      "y": -6,
-		      "id": "A3",
+		      "y": -3,
+		      "id": "A",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
-		      "y": -3,
-		      "id": "B3",
+		      "y": 0,
+		      "id": "B",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
-		      "y": -1,
-		      "id": "C3",
+		      "y": 2,
+		      "id": "C",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -6745,11 +7724,11 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A3",
-		        "B3",
-		        "C3"
+		        "A",
+		        "B",
+		        "C"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -6772,9 +7751,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x932e5e1f88cd26c0
-	// Question: Select the translated image of a triangle (2 units down)
-	// Widget key: triangle_stimulus
-	test("polygon-graph - [x932e5e1f88cd26c0] Select the translated image of a triangle (2 units down)", async () => {
+	// Question: Translate a triangle down on the coordinate plane
+	// Widget key: triangle_plane
+	test("polygon-graph - [x932e5e1f88cd26c0] Translate a triangle down on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6799,22 +7778,22 @@ describe("polygonGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": -4,
-		      "id": "A",
-		      "label": "A",
+		      "id": "pA",
+		      "label": " ",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
 		      "y": -5,
-		      "id": "B",
-		      "label": "B",
+		      "id": "pB",
+		      "label": " ",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 6,
 		      "y": 2,
-		      "id": "C",
-		      "label": "C",
+		      "id": "pC",
+		      "label": " ",
 		      "style": "closed"
 		    }
 		  ],
@@ -6823,284 +7802,11 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
+		        "pA",
+		        "pB",
+		        "pC"
 		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x622210c259822d46
-	// Question: Translate a triangle: left 3 and down 3
-	// Widget key: graph_choice_a
-	test("polygon-graph - [x622210c259822d46] Translate a triangle: left 3 and down 3 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": 3,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 4,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": -4,
-		      "id": "C",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x622210c259822d46
-	// Question: Translate a triangle: left 3 and down 3
-	// Widget key: graph_choice_b
-	test("polygon-graph - [x622210c259822d46] Translate a triangle: left 3 and down 3 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": 3,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 4,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": -4,
-		      "id": "C",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7,
-		      "y": 0,
-		      "id": "A_t",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 1,
-		      "id": "B_t",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -7,
-		      "id": "C_t",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    },
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A_t",
-		        "B_t",
-		        "C_t"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#1fab54"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x622210c259822d46
-	// Question: Translate a triangle: left 3 and down 3
-	// Widget key: graph_choice_c
-	test("polygon-graph - [x622210c259822d46] Translate a triangle: left 3 and down 3 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": 3,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 4,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": -4,
-		      "id": "C",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -7,
-		      "id": "C_t",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -7124,7 +7830,7 @@ describe("polygonGraph widget tests", () => {
 
 	// Extracted from question: x1d176c1baecde342
 	// Question: Translate a triangle on the coordinate plane
-	// Widget key: triangle_stimulus
+	// Widget key: triangle_original
 	test("polygon-graph - [x1d176c1baecde342] Translate a triangle on the coordinate plane", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -7178,7 +7884,7 @@ describe("polygonGraph widget tests", () => {
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -7200,10 +7906,10 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xac5edfba8adcc82a
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: graph_choice_a
-	test("polygon-graph - [xac5edfba8adcc82a] Translate a quadrilateral on the coordinate plane (1)", async () => {
+	// Extracted from question: xc0eece1841e195e0
+	// Question: Translate a quadrilateral to the right
+	// Widget key: original_quadrilateral
+	test("polygon-graph - [xc0eece1841e195e0] Translate a quadrilateral to the right", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7226,407 +7932,29 @@ describe("polygonGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": -4,
-		      "y": 1,
+		      "x": -1,
+		      "y": 2,
 		      "id": "A",
 		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -1,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 1,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 3,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 6,
-		      "id": "Ap",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 4,
-		      "id": "Bp",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": 6,
-		      "id": "Cp",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 8,
-		      "id": "Dp",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    },
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "Ap",
-		        "Bp",
-		        "Cp",
-		        "Dp"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#1fab54"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xac5edfba8adcc82a
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: graph_choice_b
-	test("polygon-graph - [xac5edfba8adcc82a] Translate a quadrilateral on the coordinate plane (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": 1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -1,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 1,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 3,
-		      "id": "D",
-		      "label": "D",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": -4,
-		      "id": "Ap",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": -6,
-		      "id": "Bp",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6,
-		      "y": -4,
-		      "id": "Cp",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": -2,
-		      "id": "Dp",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    },
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "Ap",
-		        "Bp",
-		        "Cp",
-		        "Dp"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#1fab54"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xac5edfba8adcc82a
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: graph_choice_c
-	test("polygon-graph - [xac5edfba8adcc82a] Translate a quadrilateral on the coordinate plane (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": 1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -1,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 1,
-		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 3,
-		      "id": "D",
-		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
-		      "y": -4,
-		      "id": "Ap",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": -6,
-		      "id": "Bp",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -4,
-		      "id": "Cp",
-		      "label": "",
+		      "y": 1,
+		      "id": "B",
+		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -7,
 		      "y": -2,
-		      "id": "Dp",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    },
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "Ap",
-		        "Bp",
-		        "Cp",
-		        "Dp"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#1fab54"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xac5edfba8adcc82a
-	// Question: Translate a quadrilateral on the coordinate plane
-	// Widget key: original_quadrilateral
-	test("polygon-graph - [xac5edfba8adcc82a] Translate a quadrilateral on the coordinate plane (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": 1,
-		      "id": "A",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": -1,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 1,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -5,
-		      "y": 3,
+		      "x": 0,
+		      "y": -5,
 		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
@@ -7642,7 +7970,7 @@ describe("polygonGraph widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -7664,10 +7992,10 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xcf519d006338bb59
-	// Question: Translate a triangle on the coordinate plane
-	// Widget key: choice_b_graph
-	test("polygon-graph - [xcf519d006338bb59] Translate a triangle on the coordinate plane", async () => {
+	// Extracted from question: x4b6bef69f89b1100
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: graph_initial
+	test("polygon-graph - [x4b6bef69f89b1100] Translate a quadrilateral on the coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7690,23 +8018,116 @@ describe("polygonGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 6,
-		      "y": 5,
+		      "x": 1,
+		      "y": -2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": -4,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 2,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": -1,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4b6bef69f89b1100
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: graph_choice_a
+	test("polygon-graph - [x4b6bef69f89b1100] Translate a quadrilateral on the coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": -2,
 		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 1,
-		      "y": 7,
+		      "x": -2,
+		      "y": -4,
 		      "id": "P2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -1,
-		      "y": 0,
+		      "x": 1,
+		      "y": 2,
 		      "id": "P3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": -1,
+		      "id": "P4",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -7718,9 +8139,182 @@ describe("polygonGraph widget tests", () => {
 		      "vertices": [
 		        "P1",
 		        "P2",
-		        "P3"
+		        "P3",
+		        "P4"
 		      ],
-		      "fillColor": "#1fab5433",
+		      "fillColor": "#1fab5426",
+		      "strokeColor": "#1fab54"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4b6bef69f89b1100
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: graph_choice_b
+	test("polygon-graph - [x4b6bef69f89b1100] Translate a quadrilateral on the coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -4,
+		      "y": -2,
+		      "id": "Q1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -4,
+		      "id": "Q2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 2,
+		      "id": "Q3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": -1,
+		      "id": "Q4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "Q1",
+		        "Q2",
+		        "Q3",
+		        "Q4"
+		      ],
+		      "fillColor": "#1fab5426",
+		      "strokeColor": "#1fab54"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4b6bef69f89b1100
+	// Question: Translate a quadrilateral on the coordinate plane
+	// Widget key: graph_choice_c
+	test("polygon-graph - [x4b6bef69f89b1100] Translate a quadrilateral on the coordinate plane (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -1,
+		      "y": -2,
+		      "id": "R1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": -4,
+		      "id": "R2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 2,
+		      "id": "R3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -1,
+		      "id": "R4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "R1",
+		        "R2",
+		        "R3",
+		        "R4"
+		      ],
+		      "fillColor": "#1fab5426",
 		      "strokeColor": "#1fab54"
 		    }
 		  ],
@@ -7744,8 +8338,242 @@ describe("polygonGraph widget tests", () => {
 
 	// Extracted from question: x7604bc20e45baaa5
 	// Question: Translate a triangle on the coordinate plane
-	// Widget key: triangle_plane
-	test("polygon-graph - [x7604bc20e45baaa5] Translate a triangle on the coordinate plane", async () => {
+	// Widget key: graph_choice_a
+	test("polygon-graph - [x7604bc20e45baaa5] Translate a triangle on the coordinate plane (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "A2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -4,
+		      "id": "B2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": 2,
+		      "id": "C2",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A2",
+		        "C2",
+		        "B2"
+		      ],
+		      "fillColor": "#00000000",
+		      "strokeColor": "#1fab54"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7604bc20e45baaa5
+	// Question: Translate a triangle on the coordinate plane
+	// Widget key: graph_choice_b
+	test("polygon-graph - [x7604bc20e45baaa5] Translate a triangle on the coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 4,
+		      "id": "A1p",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": 6,
+		      "id": "C1p",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 0,
+		      "id": "B1p",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A1p",
+		        "C1p",
+		        "B1p"
+		      ],
+		      "fillColor": "#00000000",
+		      "strokeColor": "#1fab54"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7604bc20e45baaa5
+	// Question: Translate a triangle on the coordinate plane
+	// Widget key: graph_choice_c
+	test("polygon-graph - [x7604bc20e45baaa5] Translate a triangle on the coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -8,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -4,
+		      "y": 4,
+		      "id": "A3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7,
+		      "y": 0,
+		      "id": "B3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -8,
+		      "y": 6,
+		      "id": "C3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A3",
+		        "C3",
+		        "B3"
+		      ],
+		      "fillColor": "#00000000",
+		      "strokeColor": "#1fab54"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7604bc20e45baaa5
+	// Question: Translate a triangle on the coordinate plane
+	// Widget key: original_triangle
+	test("polygon-graph - [x7604bc20e45baaa5] Translate a triangle on the coordinate plane (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7771,27 +8599,27 @@ describe("polygonGraph widget tests", () => {
 		      "x": -2,
 		      "y": 2,
 		      "id": "A",
-		      "label": "A",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -5,
 		      "y": -2,
 		      "id": "B",
-		      "label": "B",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -6,
 		      "y": 4,
 		      "id": "C",
-		      "label": "C",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "ABC",
+		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
@@ -7820,25 +8648,25 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xfd9f142d6c27eec3
-	// Question: Translate a quadrilateral by a vector
-	// Widget key: stimulus_quadrilateral
-	test("polygon-graph - [xfd9f142d6c27eec3] Translate a quadrilateral by a vector", async () => {
+	// Extracted from question: x0c9e74efe84ad405
+	// Question: Select the pentagon with given vertices
+	// Widget key: graph_choice_a
+	test("polygon-graph - [x0c9e74efe84ad405] Select the pentagon with given vertices (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
 		  "width": 425,
 		  "xAxis": {
-		    "max": 8,
-		    "min": -8,
+		    "max": 10,
+		    "min": -10,
 		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "min": -8,
+		    "max": 10,
+		    "min": -10,
 		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
@@ -7846,31 +8674,564 @@ describe("polygonGraph widget tests", () => {
 		  "height": 425,
 		  "points": [
 		    {
-		      "x": 6,
+		      "x": 5,
+		      "y": 5,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 4,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4.5,
+		      "y": -4,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
 		      "y": -5,
-		      "id": "A",
-		      "label": "A",
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 0,
+		      "id": "p5",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4",
+		        "p5"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0c9e74efe84ad405
+	// Question: Select the pentagon with given vertices
+	// Widget key: graph_choice_b
+	test("polygon-graph - [x0c9e74efe84ad405] Select the pentagon with given vertices (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 4,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4.5,
+		      "y": 4,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -5,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 0,
+		      "id": "p5",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4",
+		        "p5"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0c9e74efe84ad405
+	// Question: Select the pentagon with given vertices
+	// Widget key: graph_choice_c
+	test("polygon-graph - [x0c9e74efe84ad405] Select the pentagon with given vertices (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 5,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 4,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4.5,
+		      "y": -4,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -5,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 0,
+		      "id": "p5",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4",
+		        "p5"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0b5dd0317f0857d9
+	// Question: Select the quadrilateral from given vertices
+	// Widget key: graph_choice_a
+	test("polygon-graph - [x0b5dd0317f0857d9] Select the quadrilateral from given vertices (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 8,
+		      "y": 0,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 7,
+		      "id": "p2",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
-		      "y": -3,
+		      "y": 0,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 6,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0b5dd0317f0857d9
+	// Question: Select the quadrilateral from given vertices
+	// Widget key: graph_choice_b
+	test("polygon-graph - [x0b5dd0317f0857d9] Select the quadrilateral from given vertices (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 8,
+		      "y": 0,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 7,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": -6,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0b5dd0317f0857d9
+	// Question: Select the quadrilateral from given vertices
+	// Widget key: graph_choice_c
+	test("polygon-graph - [x0b5dd0317f0857d9] Select the quadrilateral from given vertices (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 8,
+		      "y": 0,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": -7,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 0,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": -6,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x464316abed728ee9
+	// Question: Identify a triangle from given vertices
+	// Widget key: graph_choice_a
+	test("polygon-graph - [x464316abed728ee9] Identify a triangle from given vertices (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": -4.5,
+		      "id": "A",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7.5,
+		      "y": 0,
 		      "id": "B",
-		      "label": "B",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 5,
-		      "y": -2,
+		      "x": 0,
+		      "y": 6.5,
 		      "id": "C",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": -4,
-		      "id": "D",
-		      "label": "D",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -7881,1067 +9242,10 @@ describe("polygonGraph widget tests", () => {
 		      "vertices": [
 		        "A",
 		        "B",
-		        "C",
-		        "D"
+		        "C"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0b5dd0317f0857d9
-	// Question: Identify a quadrilateral from given vertices
-	// Widget key: graph_choice_a
-	test("polygon-graph - [x0b5dd0317f0857d9] Identify a quadrilateral from given vertices (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 8,
-		      "y": 0,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 7,
-		      "id": "P2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "P3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": 6,
-		      "id": "P4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "P1",
-		        "P2",
-		        "P3",
-		        "P4"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0b5dd0317f0857d9
-	// Question: Identify a quadrilateral from given vertices
-	// Widget key: graph_choice_b
-	test("polygon-graph - [x0b5dd0317f0857d9] Identify a quadrilateral from given vertices (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 8,
-		      "y": 0,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 7,
-		      "id": "P2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "P3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -6,
-		      "id": "P4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "P1",
-		        "P2",
-		        "P3",
-		        "P4"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0b5dd0317f0857d9
-	// Question: Identify a quadrilateral from given vertices
-	// Widget key: graph_choice_c
-	test("polygon-graph - [x0b5dd0317f0857d9] Identify a quadrilateral from given vertices (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 8,
-		      "y": 0,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": -7,
-		      "id": "P2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 0,
-		      "id": "P3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 2,
-		      "y": -6,
-		      "id": "P4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "P1",
-		        "P2",
-		        "P3",
-		        "P4"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x444d0678bef5498e
-	// Question: Identify a triangle from three vertices on a coordinate plane
-	// Widget key: triangle_choice_a
-	test("polygon-graph - [x444d0678bef5498e] Identify a triangle from three vertices on a coordinate plane (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": 4,
-		      "id": "A1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 5,
-		      "id": "A2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 9,
-		      "y": 0,
-		      "id": "A3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A1",
-		        "A2",
-		        "A3"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x444d0678bef5498e
-	// Question: Identify a triangle from three vertices on a coordinate plane
-	// Widget key: triangle_choice_b
-	test("polygon-graph - [x444d0678bef5498e] Identify a triangle from three vertices on a coordinate plane (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": 4,
-		      "id": "B1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": -5,
-		      "id": "B2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 9,
-		      "y": 0,
-		      "id": "B3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "B1",
-		        "B2",
-		        "B3"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x444d0678bef5498e
-	// Question: Identify a triangle from three vertices on a coordinate plane
-	// Widget key: triangle_choice_c
-	test("polygon-graph - [x444d0678bef5498e] Identify a triangle from three vertices on a coordinate plane (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": 4,
-		      "id": "C1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": -5,
-		      "id": "C2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 9,
-		      "y": -1,
-		      "id": "C3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "C1",
-		        "C2",
-		        "C3"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0c9e74efe84ad405
-	// Question: Select the graph that forms the pentagon from given vertices
-	// Widget key: pentagon_choice_a
-	test("polygon-graph - [x0c9e74efe84ad405] Select the graph that forms the pentagon from given vertices (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": 5,
-		      "id": "a1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 4,
-		      "id": "a2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4.5,
-		      "y": -4,
-		      "id": "a3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": -5,
-		      "id": "a4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 9,
-		      "y": 0,
-		      "id": "a5",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "a1",
-		        "a5",
-		        "a4",
-		        "a2",
-		        "a3"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0c9e74efe84ad405
-	// Question: Select the graph that forms the pentagon from given vertices
-	// Widget key: pentagon_choice_b
-	test("polygon-graph - [x0c9e74efe84ad405] Select the graph that forms the pentagon from given vertices (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": 5,
-		      "id": "b1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 4,
-		      "id": "b2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4.5,
-		      "y": -4,
-		      "id": "b3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": -5,
-		      "id": "b4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 9,
-		      "y": 0,
-		      "id": "b5",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "b1",
-		        "b2",
-		        "b3",
-		        "b4",
-		        "b5"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0c9e74efe84ad405
-	// Question: Select the graph that forms the pentagon from given vertices
-	// Widget key: pentagon_choice_c
-	test("polygon-graph - [x0c9e74efe84ad405] Select the graph that forms the pentagon from given vertices (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 5,
-		      "y": 5,
-		      "id": "c1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 4,
-		      "id": "c2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4.5,
-		      "y": 4,
-		      "id": "c3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": -5,
-		      "id": "c4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 9,
-		      "y": 0,
-		      "id": "c5",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "c1",
-		        "c2",
-		        "c3",
-		        "c4",
-		        "c5"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0bd727c39829602d
-	// Question: Select the graph showing a pentagon with given vertices
-	// Widget key: pentagon_choice_a
-	test("polygon-graph - [x0bd727c39829602d] Select the graph showing a pentagon with given vertices (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -7.5,
-		      "y": 0,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 6.5,
-		      "id": "P2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5.5,
-		      "y": 5.5,
-		      "id": "P3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6.5,
-		      "y": 0,
-		      "id": "P4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -4.5,
-		      "id": "P5",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "P1",
-		        "P3",
-		        "P5",
-		        "P2",
-		        "P4"
-		      ],
-		      "fillColor": "#4a90e240",
-		      "strokeColor": "#4A90E2"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0bd727c39829602d
-	// Question: Select the graph showing a pentagon with given vertices
-	// Widget key: pentagon_choice_b
-	test("polygon-graph - [x0bd727c39829602d] Select the graph showing a pentagon with given vertices (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -7.5,
-		      "y": 0,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 6.5,
-		      "id": "P2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5.5,
-		      "y": 5.5,
-		      "id": "P3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6.5,
-		      "y": 0,
-		      "id": "P4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -4.5,
-		      "id": "P5",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "P1",
-		        "P2",
-		        "P3",
-		        "P4",
-		        "P5"
-		      ],
-		      "fillColor": "#4a90e240",
-		      "strokeColor": "#4A90E2"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x0bd727c39829602d
-	// Question: Select the graph showing a pentagon with given vertices
-	// Widget key: pentagon_choice_c
-	test("polygon-graph - [x0bd727c39829602d] Select the graph showing a pentagon with given vertices (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -7.5,
-		      "y": 0,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 6.5,
-		      "id": "P2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5.5,
-		      "y": 4.5,
-		      "id": "P3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6.5,
-		      "y": 0,
-		      "id": "P4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -4.5,
-		      "id": "P5",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "P1",
-		        "P2",
-		        "P3",
-		        "P4",
-		        "P5"
-		      ],
-		      "fillColor": "#4a90e240",
-		      "strokeColor": "#4A90E2"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -8963,9 +9267,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x464316abed728ee9
-	// Question: Select the graph for given triangle vertices
-	// Widget key: graph_choice_a
-	test("polygon-graph - [x464316abed728ee9] Select the graph for given triangle vertices (1)", async () => {
+	// Question: Identify a triangle from given vertices
+	// Widget key: graph_choice_b
+	test("polygon-graph - [x464316abed728ee9] Identify a triangle from given vertices (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8990,256 +9294,614 @@ describe("polygonGraph widget tests", () => {
 		    {
 		      "x": 0,
 		      "y": -4.5,
-		      "id": "A1",
+		      "id": "P1",
 		      "label": "",
 		      "style": "closed"
 		    },
+		    {
+		      "x": -7.5,
+		      "y": 0,
+		      "id": "P2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 6.5,
+		      "id": "P3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "P1",
+		        "P2",
+		        "P3"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x464316abed728ee9
+	// Question: Identify a triangle from given vertices
+	// Widget key: graph_choice_c
+	test("polygon-graph - [x464316abed728ee9] Identify a triangle from given vertices (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 4.5,
+		      "id": "A",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -7.5,
+		      "y": 0,
+		      "id": "B",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 6.5,
+		      "id": "C",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x444d0678bef5498e
+	// Question: Select the triangle with given vertices
+	// Widget key: triangle_choice_a
+	test("polygon-graph - [x444d0678bef5498e] Select the triangle with given vertices (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": -4,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -5,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 0,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x444d0678bef5498e
+	// Question: Select the triangle with given vertices
+	// Widget key: triangle_choice_b
+	test("polygon-graph - [x444d0678bef5498e] Select the triangle with given vertices (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": 4,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -5,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 0,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x444d0678bef5498e
+	// Question: Select the triangle with given vertices
+	// Widget key: triangle_choice_c
+	test("polygon-graph - [x444d0678bef5498e] Select the triangle with given vertices (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": 4,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 1,
+		      "y": -5,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 9,
+		      "y": 1,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0bd727c39829602d
+	// Question: Select the graph that shows the given pentagon
+	// Widget key: graph_choice_a
+	test("polygon-graph - [x0bd727c39829602d] Select the graph that shows the given pentagon (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -7.5,
+		      "y": 0,
+		      "id": "P1",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 6.5,
+		      "id": "P2",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5.5,
+		      "y": 5.5,
+		      "id": "P3",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6.5,
+		      "y": 0,
+		      "id": "P4",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 4.5,
+		      "id": "P5",
+		      "label": "E",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "P1",
+		        "P2",
+		        "P3",
+		        "P4",
+		        "P5"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0bd727c39829602d
+	// Question: Select the graph that shows the given pentagon
+	// Widget key: graph_choice_b
+	test("polygon-graph - [x0bd727c39829602d] Select the graph that shows the given pentagon (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -7.5,
+		      "y": 0,
+		      "id": "P1",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 6.5,
+		      "id": "P2",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5.5,
+		      "y": 5.5,
+		      "id": "P3",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6.5,
+		      "y": 0,
+		      "id": "P4",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -4.5,
+		      "id": "P5",
+		      "label": "E",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "P1",
+		        "P2",
+		        "P3",
+		        "P4",
+		        "P5"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x0bd727c39829602d
+	// Question: Select the graph that shows the given pentagon
+	// Widget key: graph_choice_c
+	test("polygon-graph - [x0bd727c39829602d] Select the graph that shows the given pentagon (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
 		    {
 		      "x": 7.5,
 		      "y": 0,
-		      "id": "A2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 6.5,
-		      "id": "A3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A1",
-		        "A2",
-		        "A3"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x464316abed728ee9
-	// Question: Select the graph for given triangle vertices
-	// Widget key: graph_choice_b
-	test("polygon-graph - [x464316abed728ee9] Select the graph for given triangle vertices (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": -4.5,
-		      "id": "B1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7.5,
-		      "y": 0,
-		      "id": "B2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 6.5,
-		      "id": "B3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "B1",
-		        "B2",
-		        "B3"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x464316abed728ee9
-	// Question: Select the graph for given triangle vertices
-	// Widget key: graph_choice_c
-	test("polygon-graph - [x464316abed728ee9] Select the graph for given triangle vertices (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": -4.5,
-		      "id": "C1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -7.5,
-		      "y": 0,
-		      "id": "C2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -6.5,
-		      "id": "C3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "C1",
-		        "C2",
-		        "C3"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x08f2ede236e8a319
-	// Question: Select the triangle from given vertices
-	// Widget key: graph_choice_a
-	test("polygon-graph - [x08f2ede236e8a319] Select the triangle from given vertices (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -8,
-		      "y": -5,
 		      "id": "P1",
-		      "label": "",
+		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -2,
-		      "y": 1,
+		      "x": 0,
+		      "y": 6.5,
 		      "id": "P2",
-		      "label": "",
+		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -3,
-		      "y": 6,
+		      "x": 5.5,
+		      "y": 5.5,
 		      "id": "P3",
-		      "label": "",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6.5,
+		      "y": 0,
+		      "id": "P4",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -4.5,
+		      "id": "P5",
+		      "label": "E",
 		      "style": "closed"
 		    }
 		  ],
@@ -9250,9 +9912,11 @@ describe("polygonGraph widget tests", () => {
 		      "vertices": [
 		        "P1",
 		        "P2",
-		        "P3"
+		        "P3",
+		        "P4",
+		        "P5"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -9275,1173 +9939,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x08f2ede236e8a319
-	// Question: Select the triangle from given vertices
-	// Widget key: graph_choice_b
-	test("polygon-graph - [x08f2ede236e8a319] Select the triangle from given vertices (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -8,
-		      "y": -5,
-		      "id": "Q1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 1,
-		      "id": "Q2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": -6,
-		      "id": "Q3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "Q1",
-		        "Q2",
-		        "Q3"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x08f2ede236e8a319
-	// Question: Select the triangle from given vertices
-	// Widget key: graph_choice_c
-	test("polygon-graph - [x08f2ede236e8a319] Select the triangle from given vertices (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -9,
-		      "y": -5,
-		      "id": "R1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -2,
-		      "y": 1,
-		      "id": "R2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 6,
-		      "id": "R3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "R1",
-		        "R2",
-		        "R3"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc27c078f05d13381
-	// Question: Identify the pentagon from given vertices
-	// Widget key: graph_choice_a
-	test("polygon-graph - [xc27c078f05d13381] Identify the pentagon from given vertices (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 9,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 0,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -7,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 0,
-		      "id": "p4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 9,
-		      "id": "p5",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "p1",
-		        "p3",
-		        "p2",
-		        "p4",
-		        "p5"
-		      ],
-		      "fillColor": "#99d9ea80",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc27c078f05d13381
-	// Question: Identify the pentagon from given vertices
-	// Widget key: graph_choice_b
-	test("polygon-graph - [xc27c078f05d13381] Identify the pentagon from given vertices (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 9,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 0,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -7,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 0,
-		      "id": "p4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 9,
-		      "id": "p5",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3",
-		        "p4",
-		        "p5"
-		      ],
-		      "fillColor": "#99d9ea80",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc27c078f05d13381
-	// Question: Identify the pentagon from given vertices
-	// Widget key: graph_choice_c
-	test("polygon-graph - [xc27c078f05d13381] Identify the pentagon from given vertices (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 0,
-		      "y": 9,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 8,
-		      "y": 0,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -7,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 0,
-		      "id": "p4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": -9,
-		      "id": "p5_wrong",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3",
-		        "p4",
-		        "p5_wrong"
-		      ],
-		      "fillColor": "#99d9ea80",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2139aff8c2468d19
-	// Question: Identify a quadrilateral from given vertices on a coordinate plane
-	// Widget key: graph_choice_a
-	test("polygon-graph - [x2139aff8c2468d19] Identify a quadrilateral from given vertices on a coordinate plane (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 7,
-		      "y": 7,
-		      "id": "a_p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 4,
-		      "id": "a_p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 4,
-		      "id": "a_p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": -4,
-		      "id": "a_p4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "a_p1",
-		        "a_p2",
-		        "a_p3",
-		        "a_p4"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2139aff8c2468d19
-	// Question: Identify a quadrilateral from given vertices on a coordinate plane
-	// Widget key: graph_choice_b
-	test("polygon-graph - [x2139aff8c2468d19] Identify a quadrilateral from given vertices on a coordinate plane (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 7,
-		      "y": -7,
-		      "id": "b_p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 4,
-		      "id": "b_p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 4,
-		      "id": "b_p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": -4,
-		      "id": "b_p4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "b_p1",
-		        "b_p2",
-		        "b_p3",
-		        "b_p4"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2139aff8c2468d19
-	// Question: Identify a quadrilateral from given vertices on a coordinate plane
-	// Widget key: graph_choice_c
-	test("polygon-graph - [x2139aff8c2468d19] Identify a quadrilateral from given vertices on a coordinate plane (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": 7,
-		      "y": -7,
-		      "id": "c_p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": -4,
-		      "id": "c_p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": 4,
-		      "id": "c_p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -3,
-		      "y": -4,
-		      "id": "c_p4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "c_p1",
-		        "c_p2",
-		        "c_p3",
-		        "c_p4"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd77f24f920e2355f
-	// Question: Select the graph showing a triangle from given vertices
-	// Widget key: graph_choice_a
-	test("polygon-graph - [xd77f24f920e2355f] Select the graph showing a triangle from given vertices (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -5,
-		      "y": 0,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 9,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 7,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3"
-		      ],
-		      "fillColor": "#cfe9ff",
-		      "strokeColor": "#4A90E2"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd77f24f920e2355f
-	// Question: Select the graph showing a triangle from given vertices
-	// Widget key: graph_choice_b
-	test("polygon-graph - [xd77f24f920e2355f] Select the graph showing a triangle from given vertices (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -5,
-		      "y": 0,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 9,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 9,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3"
-		      ],
-		      "fillColor": "#cfe9ff",
-		      "strokeColor": "#4A90E2"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd77f24f920e2355f
-	// Question: Select the graph showing a triangle from given vertices
-	// Widget key: graph_choice_c
-	test("polygon-graph - [xd77f24f920e2355f] Select the graph showing a triangle from given vertices (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -4,
-		      "y": 0,
-		      "id": "p1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 9,
-		      "id": "p2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 9,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3"
-		      ],
-		      "fillColor": "#cfe9ff",
-		      "strokeColor": "#4A90E2"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc9187daacca72603
-	// Question: Select the triangle with given vertices
+	// Question: Select the triangle with given vertices on a coordinate plane
 	// Widget key: triangle_choice_a
-	test("polygon-graph - [xc9187daacca72603] Select the triangle with given vertices (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -9,
-		      "y": 4,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -9,
-		      "y": 7,
-		      "id": "P2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 9,
-		      "id": "P3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "P1",
-		        "P2",
-		        "P3"
-		      ],
-		      "fillColor": "#99d8f2",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc9187daacca72603
-	// Question: Select the triangle with given vertices
-	// Widget key: triangle_choice_b
-	test("polygon-graph - [xc9187daacca72603] Select the triangle with given vertices (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -9,
-		      "y": 4,
-		      "id": "Q1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": 7,
-		      "id": "Q2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 9,
-		      "id": "Q3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "Q1",
-		        "Q2",
-		        "Q3"
-		      ],
-		      "fillColor": "#c7e9f1",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xc9187daacca72603
-	// Question: Select the triangle with given vertices
-	// Widget key: triangle_choice_c
-	test("polygon-graph - [xc9187daacca72603] Select the triangle with given vertices (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -9,
-		      "y": 4,
-		      "id": "R1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -9,
-		      "y": 7,
-		      "id": "R2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 6,
-		      "id": "R3",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "R1",
-		        "R2",
-		        "R3"
-		      ],
-		      "fillColor": "#d7eff7",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x53ce41b82e264d27
-	// Question: Identify a pentagon from given vertices on a coordinate plane
-	// Widget key: graph_choice_a
-	test("polygon-graph - [x53ce41b82e264d27] Identify a pentagon from given vertices on a coordinate plane (1)", async () => {
+	test("polygon-graph - [x08f2ede236e8a319] Select the triangle with given vertices on a coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10465,36 +9965,22 @@ describe("polygonGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": -8,
-		      "y": 9,
+		      "y": -5,
 		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -9,
-		      "y": 7,
+		      "x": -2,
+		      "y": 1,
 		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -9,
-		      "y": 4,
-		      "id": "p3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
 		      "x": -3,
-		      "y": 5,
-		      "id": "p4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 9,
-		      "id": "p5",
+		      "y": 6,
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10506,12 +9992,10 @@ describe("polygonGraph widget tests", () => {
 		      "vertices": [
 		        "p1",
 		        "p2",
-		        "p3",
-		        "p4",
-		        "p5"
+		        "p3"
 		      ],
-		      "fillColor": "#a3c5f366",
-		      "strokeColor": "#4a78d0"
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -10532,10 +10016,10 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x53ce41b82e264d27
-	// Question: Identify a pentagon from given vertices on a coordinate plane
-	// Widget key: graph_choice_b
-	test("polygon-graph - [x53ce41b82e264d27] Identify a pentagon from given vertices on a coordinate plane (2)", async () => {
+	// Extracted from question: x08f2ede236e8a319
+	// Question: Select the triangle with given vertices on a coordinate plane
+	// Widget key: triangle_choice_b
+	test("polygon-graph - [x08f2ede236e8a319] Select the triangle with given vertices on a coordinate plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10559,36 +10043,22 @@ describe("polygonGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": -8,
-		      "y": 9,
+		      "y": -5,
 		      "id": "q1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -9,
-		      "y": 7,
+		      "x": -2,
+		      "y": -1,
 		      "id": "q2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -9,
-		      "y": 4,
-		      "id": "q3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -3,
 		      "y": 6,
-		      "id": "q4",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 9,
-		      "id": "q5",
+		      "id": "q3",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10600,12 +10070,862 @@ describe("polygonGraph widget tests", () => {
 		      "vertices": [
 		        "q1",
 		        "q2",
-		        "q3",
-		        "q4",
-		        "q5"
+		        "q3"
 		      ],
-		      "fillColor": "#a3c5f366",
-		      "strokeColor": "#4a78d0"
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x08f2ede236e8a319
+	// Question: Select the triangle with given vertices on a coordinate plane
+	// Widget key: triangle_choice_c
+	test("polygon-graph - [x08f2ede236e8a319] Select the triangle with given vertices on a coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -8,
+		      "y": -5,
+		      "id": "r1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -2,
+		      "y": 1,
+		      "id": "r2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -6,
+		      "id": "r3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "r1",
+		        "r2",
+		        "r3"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc27c078f05d13381
+	// Question: Identify a pentagon from given vertices
+	// Widget key: graph_choice_a
+	test("polygon-graph - [xc27c078f05d13381] Identify a pentagon from given vertices (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 9,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 0,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -7,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 0,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 9,
+		      "id": "p5",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p3",
+		        "p2",
+		        "p5",
+		        "p4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc27c078f05d13381
+	// Question: Identify a pentagon from given vertices
+	// Widget key: graph_choice_b
+	test("polygon-graph - [xc27c078f05d13381] Identify a pentagon from given vertices (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 9,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 0,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -7,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 0,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 9,
+		      "id": "p5",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4",
+		        "p5"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc27c078f05d13381
+	// Question: Identify a pentagon from given vertices
+	// Widget key: graph_choice_c
+	test("polygon-graph - [xc27c078f05d13381] Identify a pentagon from given vertices (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 0,
+		      "y": 9,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 0,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -7,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 0,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 8,
+		      "id": "p5",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4",
+		        "p5"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2139aff8c2468d19
+	// Question: Identify a quadrilateral from vertex coordinates
+	// Widget key: graph_choice_a
+	test("polygon-graph - [x2139aff8c2468d19] Identify a quadrilateral from vertex coordinates (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": 4,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 4,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": 7,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -4,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p3",
+		        "p2",
+		        "p1",
+		        "p4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2139aff8c2468d19
+	// Question: Identify a quadrilateral from vertex coordinates
+	// Widget key: graph_choice_b
+	test("polygon-graph - [x2139aff8c2468d19] Identify a quadrilateral from vertex coordinates (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": 4,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 4,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": -7,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -4,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p3",
+		        "p2",
+		        "p1",
+		        "p4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x2139aff8c2468d19
+	// Question: Identify a quadrilateral from vertex coordinates
+	// Widget key: graph_choice_c
+	test("polygon-graph - [x2139aff8c2468d19] Identify a quadrilateral from vertex coordinates (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": 4,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 4,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": -7,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -4,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p3",
+		        "p2",
+		        "p4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd77f24f920e2355f
+	// Question: Select the triangle from its vertices on a coordinate plane
+	// Widget key: graph_choice_a
+	test("polygon-graph - [xd77f24f920e2355f] Select the triangle from its vertices on a coordinate plane (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -5,
+		      "y": 0,
+		      "id": "A1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": -9,
+		      "id": "A2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -9,
+		      "id": "A3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A1",
+		        "A2",
+		        "A3"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd77f24f920e2355f
+	// Question: Select the triangle from its vertices on a coordinate plane
+	// Widget key: graph_choice_b
+	test("polygon-graph - [xd77f24f920e2355f] Select the triangle from its vertices on a coordinate plane (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -5,
+		      "y": 0,
+		      "id": "B1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -5,
+		      "y": 9,
+		      "id": "B2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 9,
+		      "id": "B3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "B1",
+		        "B2",
+		        "B3"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd77f24f920e2355f
+	// Question: Select the triangle from its vertices on a coordinate plane
+	// Widget key: graph_choice_c
+	test("polygon-graph - [xd77f24f920e2355f] Select the triangle from its vertices on a coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": 5,
+		      "y": 0,
+		      "id": "C1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 9,
+		      "id": "C2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 9,
+		      "id": "C3",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "C1",
+		        "C2",
+		        "C3"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -10627,9 +10947,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x53ce41b82e264d27
-	// Question: Identify a pentagon from given vertices on a coordinate plane
-	// Widget key: graph_choice_c
-	test("polygon-graph - [x53ce41b82e264d27] Identify a pentagon from given vertices on a coordinate plane (3)", async () => {
+	// Question: Select the graph of a pentagon from given vertices
+	// Widget key: graph_choice_a
+	test("polygon-graph - [x53ce41b82e264d27] Select the graph of a pentagon from given vertices (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10653,36 +10973,36 @@ describe("polygonGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": -8,
-		      "y": 8,
-		      "id": "r1",
+		      "y": 9,
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -9,
 		      "y": 7,
-		      "id": "r2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -9,
 		      "y": 4,
-		      "id": "r3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -3,
 		      "y": 5,
-		      "id": "r4",
+		      "id": "p4",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -4,
 		      "y": 9,
-		      "id": "r5",
+		      "id": "p5",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10692,14 +11012,202 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "r1",
-		        "r2",
-		        "r3",
-		        "r4",
-		        "r5"
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4",
+		        "p5"
 		      ],
-		      "fillColor": "#a3c5f366",
-		      "strokeColor": "#4a78d0"
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x53ce41b82e264d27
+	// Question: Select the graph of a pentagon from given vertices
+	// Widget key: graph_choice_b
+	test("polygon-graph - [x53ce41b82e264d27] Select the graph of a pentagon from given vertices (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -8,
+		      "y": 9,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -9,
+		      "y": 7,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -9,
+		      "y": 4,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 6,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": 9,
+		      "id": "p5",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4",
+		        "p5"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x53ce41b82e264d27
+	// Question: Select the graph of a pentagon from given vertices
+	// Widget key: graph_choice_c
+	test("polygon-graph - [x53ce41b82e264d27] Select the graph of a pentagon from given vertices (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 425,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 425,
+		  "points": [
+		    {
+		      "x": -8,
+		      "y": 9,
+		      "id": "p1",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -9,
+		      "y": 7,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -9,
+		      "y": 4,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 5,
+		      "id": "p4",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": 9,
+		      "id": "p5",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "p1",
+		        "p3",
+		        "p5",
+		        "p2",
+		        "p4"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -10721,9 +11229,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2e255b756911f229
-	// Question: Identify a quadrilateral from given vertices on a graph
-	// Widget key: graph_choice_a
-	test("polygon-graph - [x2e255b756911f229] Identify a quadrilateral from given vertices on a graph (1)", async () => {
+	// Question: Select a quadrilateral from vertex coordinates
+	// Widget key: quad_choice_a
+	test("polygon-graph - [x2e255b756911f229] Select a quadrilateral from vertex coordinates (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10748,28 +11256,28 @@ describe("polygonGraph widget tests", () => {
 		    {
 		      "x": -4,
 		      "y": 9,
-		      "id": "p1",
+		      "id": "v1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -8,
 		      "y": 9,
-		      "id": "p2",
+		      "id": "v2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -9,
 		      "y": 7,
-		      "id": "p3",
+		      "id": "v3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -9,
 		      "y": 5,
-		      "id": "p4",
+		      "id": "v4",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10779,13 +11287,13 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3",
-		        "p4"
+		        "v4",
+		        "v3",
+		        "v2",
+		        "v1"
 		      ],
-		      "fillColor": "#cfe8ff",
-		      "strokeColor": "#1177cc"
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -10807,9 +11315,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2e255b756911f229
-	// Question: Identify a quadrilateral from given vertices on a graph
-	// Widget key: graph_choice_b
-	test("polygon-graph - [x2e255b756911f229] Identify a quadrilateral from given vertices on a graph (2)", async () => {
+	// Question: Select a quadrilateral from vertex coordinates
+	// Widget key: quad_choice_b
+	test("polygon-graph - [x2e255b756911f229] Select a quadrilateral from vertex coordinates (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10834,28 +11342,28 @@ describe("polygonGraph widget tests", () => {
 		    {
 		      "x": -4,
 		      "y": 9,
-		      "id": "p1",
+		      "id": "v1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -8,
 		      "y": 9,
-		      "id": "p2",
+		      "id": "v2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -9,
 		      "y": 7,
-		      "id": "p3",
+		      "id": "v3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -9,
 		      "y": 4,
-		      "id": "p4",
+		      "id": "v4",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10865,13 +11373,13 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3",
-		        "p4"
+		        "v4",
+		        "v3",
+		        "v2",
+		        "v1"
 		      ],
-		      "fillColor": "#cfe8ff",
-		      "strokeColor": "#1177cc"
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -10893,9 +11401,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x2e255b756911f229
-	// Question: Identify a quadrilateral from given vertices on a graph
-	// Widget key: graph_choice_c
-	test("polygon-graph - [x2e255b756911f229] Identify a quadrilateral from given vertices on a graph (3)", async () => {
+	// Question: Select a quadrilateral from vertex coordinates
+	// Widget key: quad_choice_c
+	test("polygon-graph - [x2e255b756911f229] Select a quadrilateral from vertex coordinates (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10920,28 +11428,28 @@ describe("polygonGraph widget tests", () => {
 		    {
 		      "x": -4,
 		      "y": 9,
-		      "id": "p1",
+		      "id": "v1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -8,
-		      "y": 8,
-		      "id": "p2",
+		      "x": -7,
+		      "y": 9,
+		      "id": "v2",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -9,
 		      "y": 7,
-		      "id": "p3",
+		      "id": "v3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -9,
 		      "y": 4,
-		      "id": "p4",
+		      "id": "v4",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -10951,98 +11459,12 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "p1",
-		        "p2",
-		        "p3",
-		        "p4"
+		        "v4",
+		        "v3",
+		        "v2",
+		        "v1"
 		      ],
-		      "fillColor": "#cfe8ff",
-		      "strokeColor": "#1177cc"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x153dcbdb24bf96bf
-	// Question: Select the graph of a quadrilateral from given vertices
-	// Widget key: graph_choice_a
-	test("polygon-graph - [x153dcbdb24bf96bf] Select the graph of a quadrilateral from given vertices (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
-		    {
-		      "x": -7.5,
-		      "y": 0,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 4.5,
-		      "id": "P2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6.5,
-		      "y": 0,
-		      "id": "P3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -6.5,
-		      "id": "P4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "P1",
-		        "P2",
-		        "P3",
-		        "P4"
-		      ],
-		      "fillColor": "#11accd33",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -11065,9 +11487,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x153dcbdb24bf96bf
-	// Question: Select the graph of a quadrilateral from given vertices
-	// Widget key: graph_choice_b
-	test("polygon-graph - [x153dcbdb24bf96bf] Select the graph of a quadrilateral from given vertices (2)", async () => {
+	// Question: Identify a quadrilateral from given vertices
+	// Widget key: graph_choice_a
+	test("polygon-graph - [x153dcbdb24bf96bf] Identify a quadrilateral from given vertices (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11092,114 +11514,28 @@ describe("polygonGraph widget tests", () => {
 		    {
 		      "x": -7.5,
 		      "y": 0,
-		      "id": "P1",
+		      "id": "p1",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
 		      "y": 6.5,
-		      "id": "P2",
+		      "id": "p2",
 		      "label": "",
 		      "style": "closed"
 		    },
-		    {
-		      "x": 6.5,
-		      "y": 0,
-		      "id": "P3",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": -4.5,
-		      "id": "P4",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "P1",
-		        "P2",
-		        "P3",
-		        "P4"
-		      ],
-		      "fillColor": "#11accd33",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x153dcbdb24bf96bf
-	// Question: Select the graph of a quadrilateral from given vertices
-	// Widget key: graph_choice_c
-	test("polygon-graph - [x153dcbdb24bf96bf] Select the graph of a quadrilateral from given vertices (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 425,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 425,
-		  "points": [
 		    {
 		      "x": 7.5,
 		      "y": 0,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 0,
-		      "y": 6.5,
-		      "id": "P2",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 6.5,
-		      "y": 0,
-		      "id": "P3",
+		      "id": "p3",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 0,
 		      "y": -4.5,
-		      "id": "P4",
+		      "id": "p4",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -11209,10 +11545,10 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "P1",
-		        "P2",
-		        "P3",
-		        "P4"
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4"
 		      ],
 		      "fillColor": "#11accd33",
 		      "strokeColor": "#11accd"
@@ -11236,15 +11572,15 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x864348e6b3571126
-	// Question: Draw a rectangle on a coordinate plane
+	// Extracted from question: x153dcbdb24bf96bf
+	// Question: Identify a quadrilateral from given vertices
 	// Widget key: graph_choice_b
-	test("polygon-graph - [x864348e6b3571126] Draw a rectangle on a coordinate plane (2)", async () => {
+	test("polygon-graph - [x153dcbdb24bf96bf] Identify a quadrilateral from given vertices (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 340,
+		  "width": 425,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -11259,34 +11595,34 @@ describe("polygonGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 325,
+		  "height": 425,
 		  "points": [
 		    {
-		      "x": -3,
-		      "y": 2,
-		      "id": "A",
-		      "label": " ",
+		      "x": -7.5,
+		      "y": 0,
+		      "id": "p1",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 6,
-		      "y": 2,
-		      "id": "B",
-		      "label": " ",
+		      "x": 0,
+		      "y": 6.5,
+		      "id": "p2",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 6,
-		      "y": -4,
-		      "id": "C",
-		      "label": " ",
+		      "x": 6.5,
+		      "y": 0,
+		      "id": "p3",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -3,
-		      "y": -4,
-		      "id": "D",
-		      "label": " ",
+		      "x": 0,
+		      "y": -4.5,
+		      "id": "p4",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
@@ -11295,12 +11631,12 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd33",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -11322,15 +11658,15 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x864348e6b3571126
-	// Question: Draw a rectangle on a coordinate plane
+	// Extracted from question: x153dcbdb24bf96bf
+	// Question: Identify a quadrilateral from given vertices
 	// Widget key: graph_choice_c
-	test("polygon-graph - [x864348e6b3571126] Draw a rectangle on a coordinate plane (3)", async () => {
+	test("polygon-graph - [x153dcbdb24bf96bf] Identify a quadrilateral from given vertices (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 340,
+		  "width": 425,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
@@ -11345,32 +11681,48 @@ describe("polygonGraph widget tests", () => {
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 325,
+		  "height": 425,
 		  "points": [
 		    {
-		      "x": -3,
-		      "y": 2,
-		      "id": "L",
-		      "label": " ",
+		      "x": -7.5,
+		      "y": 0,
+		      "id": "p1",
+		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 6,
-		      "y": 2,
-		      "id": "R",
-		      "label": " ",
+		      "x": 0,
+		      "y": 6.5,
+		      "id": "p2",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6.5,
+		      "y": 0,
+		      "id": "p3",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -5.5,
+		      "id": "p4",
+		      "label": "",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
 		      "label": "",
-		      "isClosed": false,
+		      "isClosed": true,
 		      "vertices": [
-		        "L",
-		        "R"
+		        "p1",
+		        "p2",
+		        "p3",
+		        "p4"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd33",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -11392,10 +11744,10 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xfeabeeb8281f94ac
-	// Question: Select a rectangle given two vertices and perimeter
+	// Extracted from question: x90cf0299a9d89f40
+	// Question: Identify a rectangle on the coordinate plane
 	// Widget key: graph_choice_a
-	test("polygon-graph - [xfeabeeb8281f94ac] Select a rectangle given two vertices and perimeter", async () => {
+	test("polygon-graph - [x90cf0299a9d89f40] Identify a rectangle on the coordinate plane (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11418,171 +11770,15 @@ describe("polygonGraph widget tests", () => {
 		  "height": 325,
 		  "points": [
 		    {
-		      "x": -4,
+		      "x": -1,
 		      "y": 4,
 		      "id": "UL",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
+		      "x": 3,
 		      "y": 4,
-		      "id": "UR",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": false,
-		      "vertices": [
-		        "UL",
-		        "UR"
-		      ],
-		      "fillColor": "#11accd",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbc1d82d67dc942a5
-	// Question: Identify a rectangle from two vertices and a perimeter
-	// Widget key: graph_choice_b
-	test("polygon-graph - [xbc1d82d67dc942a5] Identify a rectangle from two vertices and a perimeter (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 340,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": 6,
-		      "id": "UL",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 6,
-		      "id": "UR",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": -2,
-		      "id": "LR",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": -2,
-		      "id": "LL",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "UL",
-		        "UR",
-		        "LR",
-		        "LL"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xbc1d82d67dc942a5
-	// Question: Identify a rectangle from two vertices and a perimeter
-	// Widget key: graph_choice_c
-	test("polygon-graph - [xbc1d82d67dc942a5] Identify a rectangle from two vertices and a perimeter (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 340,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": 6,
-		      "id": "UL",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 6,
 		      "id": "UR",
 		      "label": "",
 		      "style": "closed"
@@ -11618,236 +11814,10 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x35e51c1d2eb8e23e
-	// Question: Identify a rectangle from coordinates and area
-	// Widget key: graph_choice_b
-	test("polygon-graph - [x35e51c1d2eb8e23e] Identify a rectangle from coordinates and area (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 340,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": 0,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 0,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": -6,
-		      "id": "C",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -6,
-		      "y": -6,
-		      "id": "D",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x35e51c1d2eb8e23e
-	// Question: Identify a rectangle from coordinates and area
-	// Widget key: graph_choice_c
-	test("polygon-graph - [x35e51c1d2eb8e23e] Identify a rectangle from coordinates and area (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 340,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -6,
-		      "y": 0,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -4,
-		      "y": 0,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": false,
-		      "vertices": [
-		        "A",
-		        "B"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9117b7858e7f418f
-	// Question: Identify a rectangle on the coordinate plane
-	// Widget key: graph_choice_a
-	test("polygon-graph - [x9117b7858e7f418f] Identify a rectangle on the coordinate plane (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 340,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "x",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "y",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 3,
-		      "y": -3,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": -3,
-		      "id": "P2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": false,
-		      "vertices": [
-		        "P1",
-		        "P2"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x9117b7858e7f418f
+	// Extracted from question: x90cf0299a9d89f40
 	// Question: Identify a rectangle on the coordinate plane
 	// Widget key: graph_choice_b
-	test("polygon-graph - [x9117b7858e7f418f] Identify a rectangle on the coordinate plane (2)", async () => {
+	test("polygon-graph - [x90cf0299a9d89f40] Identify a rectangle on the coordinate plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11870,29 +11840,29 @@ describe("polygonGraph widget tests", () => {
 		  "height": 325,
 		  "points": [
 		    {
-		      "x": 3,
-		      "y": -3,
+		      "x": -1,
+		      "y": 4,
 		      "id": "UL",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 7,
-		      "y": -3,
+		      "x": 3,
+		      "y": 4,
 		      "id": "UR",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 7,
-		      "y": -7,
+		      "x": 3,
+		      "y": -4,
 		      "id": "LR",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": -7,
+		      "x": -1,
+		      "y": -4,
 		      "id": "LL",
 		      "label": "",
 		      "style": "closed"
@@ -11903,12 +11873,12 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "UL",
-		        "UR",
 		        "LR",
+		        "UR",
+		        "UL",
 		        "LL"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -11930,10 +11900,10 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x95ae2112be449690
-	// Question: Draw a rectangle from coordinates and area
-	// Widget key: rect_choice_a
-	test("polygon-graph - [x95ae2112be449690] Draw a rectangle from coordinates and area (1)", async () => {
+	// Extracted from question: x90cf0299a9d89f40
+	// Question: Identify a rectangle on the coordinate plane
+	// Widget key: graph_choice_c
+	test("polygon-graph - [x90cf0299a9d89f40] Identify a rectangle on the coordinate plane (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11942,14 +11912,14 @@ describe("polygonGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -11957,171 +11927,15 @@ describe("polygonGraph widget tests", () => {
 		  "points": [
 		    {
 		      "x": -1,
-		      "y": 7,
-		      "id": "P1",
+		      "y": 4,
+		      "id": "UL",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": 7,
-		      "id": "P2",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": false,
-		      "vertices": [
-		        "P1",
-		        "P2"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x95ae2112be449690
-	// Question: Draw a rectangle from coordinates and area
-	// Widget key: rect_choice_b
-	test("polygon-graph - [x95ae2112be449690] Draw a rectangle from coordinates and area (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 340,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -1,
-		      "y": 7,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 7,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 3,
-		      "id": "C",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": -1,
-		      "y": 3,
-		      "id": "D",
-		      "label": "",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#11accd"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x95ae2112be449690
-	// Question: Draw a rectangle from coordinates and area
-	// Widget key: rect_choice_c
-	test("polygon-graph - [x95ae2112be449690] Draw a rectangle from coordinates and area (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 340,
-		  "xAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": -10,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": -1,
-		      "y": 7,
-		      "id": "P1",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 7,
-		      "id": "P2",
+		      "x": 3,
+		      "y": 4,
+		      "id": "UR",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -12145,10 +11959,10 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc0cdf19d2b5cb0f3
-	// Question: Select the rectangle that matches the given vertices and area
+	// Extracted from question: x864348e6b3571126
+	// Question: Select the rectangle from coordinates and perimeter
 	// Widget key: rect_choice_a
-	test("polygon-graph - [xc0cdf19d2b5cb0f3] Select the rectangle that matches the given vertices and area (1)", async () => {
+	test("polygon-graph - [x864348e6b3571126] Select the rectangle from coordinates and perimeter (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12171,30 +11985,30 @@ describe("polygonGraph widget tests", () => {
 		  "height": 325,
 		  "points": [
 		    {
-		      "x": -4,
-		      "y": 4,
-		      "id": "A",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 4,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
+		      "x": -3,
 		      "y": 2,
-		      "id": "C",
+		      "id": "UL",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -4,
+		      "x": 6,
 		      "y": 2,
-		      "id": "D",
+		      "id": "UR",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": -2,
+		      "id": "BR",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -2,
+		      "id": "BL",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -12204,12 +12018,12 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
+		        "UL",
+		        "UR",
+		        "BR",
+		        "BL"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -12231,10 +12045,10 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xc0cdf19d2b5cb0f3
-	// Question: Select the rectangle that matches the given vertices and area
+	// Extracted from question: x864348e6b3571126
+	// Question: Select the rectangle from coordinates and perimeter
 	// Widget key: rect_choice_b
-	test("polygon-graph - [xc0cdf19d2b5cb0f3] Select the rectangle that matches the given vertices and area (2)", async () => {
+	test("polygon-graph - [x864348e6b3571126] Select the rectangle from coordinates and perimeter (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12257,30 +12071,30 @@ describe("polygonGraph widget tests", () => {
 		  "height": 325,
 		  "points": [
 		    {
-		      "x": -4,
-		      "y": 4,
-		      "id": "A",
+		      "x": -3,
+		      "y": 2,
+		      "id": "UL",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": 4,
-		      "id": "B",
+		      "x": 6,
+		      "y": 2,
+		      "id": "UR",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": 3,
-		      "id": "C",
+		      "x": 6,
+		      "y": -4,
+		      "id": "BR",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -4,
-		      "y": 3,
-		      "id": "D",
+		      "x": -3,
+		      "y": -4,
+		      "id": "BL",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -12290,10 +12104,381 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
+		        "UL",
+		        "UR",
+		        "BR",
+		        "BL"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x864348e6b3571126
+	// Question: Select the rectangle from coordinates and perimeter
+	// Widget key: rect_choice_c
+	test("polygon-graph - [x864348e6b3571126] Select the rectangle from coordinates and perimeter (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 340,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -3,
+		      "y": 2,
+		      "id": "UL",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 2,
+		      "id": "UR",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": -6,
+		      "id": "BR",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": -6,
+		      "id": "BL",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "UL",
+		        "UR",
+		        "BR",
+		        "BL"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9117b7858e7f418f
+	// Question: Identify a rectangle from coordinates and area
+	// Widget key: rectangle_choice_a
+	test("polygon-graph - [x9117b7858e7f418f] Identify a rectangle from coordinates and area (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 340,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": -3,
+		      "id": "UL",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": -3,
+		      "id": "UR",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": -7,
+		      "id": "LL",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": -7,
+		      "id": "LR",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "UL",
+		        "UR",
+		        "LR",
+		        "LL"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9117b7858e7f418f
+	// Question: Identify a rectangle from coordinates and area
+	// Widget key: rectangle_choice_b
+	test("polygon-graph - [x9117b7858e7f418f] Identify a rectangle from coordinates and area (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 340,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": -3,
+		      "id": "UL",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": -3,
+		      "id": "UR",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": false,
+		      "vertices": [
+		        "UL",
+		        "UR"
+		      ],
+		      "fillColor": "#00000000",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9117b7858e7f418f
+	// Question: Identify a rectangle from coordinates and area
+	// Widget key: rectangle_choice_c
+	test("polygon-graph - [x9117b7858e7f418f] Identify a rectangle from coordinates and area (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 340,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": -3,
+		      "id": "UL",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 7,
+		      "y": -3,
+		      "id": "UR",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x95ae2112be449690
+	// Question: Select the rectangle on a coordinate plane
+	// Widget key: graph_choice_c
+	test("polygon-graph - [x95ae2112be449690] Select the rectangle on a coordinate plane", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 340,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -1,
+		      "y": 7,
+		      "id": "UL",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 7,
+		      "id": "UR",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": false,
+		      "vertices": [
+		        "UR",
+		        "UL"
 		      ],
 		      "fillColor": "#00000000",
 		      "strokeColor": "#11accd"
@@ -12318,9 +12503,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: xc0cdf19d2b5cb0f3
-	// Question: Select the rectangle that matches the given vertices and area
-	// Widget key: rect_choice_c
-	test("polygon-graph - [xc0cdf19d2b5cb0f3] Select the rectangle that matches the given vertices and area (3)", async () => {
+	// Question: Select the rectangle on the coordinate plane
+	// Widget key: rectangle_choice_a
+	test("polygon-graph - [xc0cdf19d2b5cb0f3] Select the rectangle on the coordinate plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12345,28 +12530,28 @@ describe("polygonGraph widget tests", () => {
 		    {
 		      "x": -4,
 		      "y": 4,
-		      "id": "A",
+		      "id": "UL",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 4,
-		      "id": "B",
-		      "label": "",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 4,
-		      "y": 5,
-		      "id": "C",
+		      "id": "UR",
 		      "label": "",
 		      "style": "closed"
 		    },
 		    {
 		      "x": -4,
-		      "y": 5,
-		      "id": "D",
+		      "y": 2,
+		      "id": "LL",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 2,
+		      "id": "LR",
 		      "label": "",
 		      "style": "closed"
 		    }
@@ -12376,12 +12561,184 @@ describe("polygonGraph widget tests", () => {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A",
-		        "B",
-		        "C",
-		        "D"
+		        "UR",
+		        "UL",
+		        "LL",
+		        "LR"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc0cdf19d2b5cb0f3
+	// Question: Select the rectangle on the coordinate plane
+	// Widget key: rectangle_choice_b
+	test("polygon-graph - [xc0cdf19d2b5cb0f3] Select the rectangle on the coordinate plane (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 340,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": -4,
+		      "y": 4,
+		      "id": "UL",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 4,
+		      "id": "UR",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": 3,
+		      "id": "LL",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 3,
+		      "id": "LR",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "UR",
+		        "UL",
+		        "LL",
+		        "LR"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc0cdf19d2b5cb0f3
+	// Question: Select the rectangle on the coordinate plane
+	// Widget key: rectangle_choice_c
+	test("polygon-graph - [xc0cdf19d2b5cb0f3] Select the rectangle on the coordinate plane (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 340,
+		  "xAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 325,
+		  "points": [
+		    {
+		      "x": 4,
+		      "y": 5,
+		      "id": "UR_top",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": 5,
+		      "id": "UL_top",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": 4,
+		      "id": "UL",
+		      "label": "",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 4,
+		      "id": "UR",
+		      "label": "",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "UR_top",
+		        "UL_top",
+		        "UL",
+		        "UR"
+		      ],
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    }
 		  ],
@@ -12404,9 +12761,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: xf4b5a7b0adb2a34a
-	// Question: Is Figure B a scaled copy of Figure A?
+	// Question: Scaled copy: Figure B vs. Figure A
 	// Widget key: image_1
-	test("polygon-graph - [xf4b5a7b0adb2a34a] Is Figure B a scaled copy of Figure A?", async () => {
+	test("polygon-graph - [xf4b5a7b0adb2a34a] Scaled copy: Figure B vs. Figure A", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12415,14 +12772,14 @@ describe("polygonGraph widget tests", () => {
 		  "xAxis": {
 		    "max": 12,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
+		    "max": 12,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -12495,7 +12852,7 @@ describe("polygonGraph widget tests", () => {
 		        "A3",
 		        "A4"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    },
 		    {
@@ -12507,118 +12864,8 @@ describe("polygonGraph widget tests", () => {
 		        "B3",
 		        "B4"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#1fab5426",
 		      "strokeColor": "#1fab54"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4d2e56d87d01167e
-	// Question: Identify a scaled copy from two triangles on a grid
-	// Widget key: image_1
-	test("polygon-graph - [x4d2e56d87d01167e] Identify a scaled copy from two triangles on a grid", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 325,
-		  "xAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "min": 0,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 325,
-		  "points": [
-		    {
-		      "x": 1,
-		      "y": 4,
-		      "id": "A_figA",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 7,
-		      "id": "B_figA",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 4,
-		      "id": "C_figA",
-		      "label": "C",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 1,
-		      "y": 1,
-		      "id": "A_figB",
-		      "label": "A",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": 4,
-		      "id": "B_figB",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 7,
-		      "y": 1,
-		      "id": "C_figB",
-		      "label": "C",
-		      "style": "closed"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "Figure A",
-		      "isClosed": true,
-		      "vertices": [
-		        "A_figA",
-		        "B_figA",
-		        "C_figA"
-		      ],
-		      "fillColor": "#1fab540d",
-		      "strokeColor": "#1fab54"
-		    },
-		    {
-		      "label": "Figure B",
-		      "isClosed": true,
-		      "vertices": [
-		        "A_figB",
-		        "B_figB",
-		        "C_figB"
-		      ],
-		      "fillColor": "#11accd0d",
-		      "strokeColor": "#11accd"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -12649,16 +12896,16 @@ describe("polygonGraph widget tests", () => {
 		  "type": "polygonGraph",
 		  "width": 325,
 		  "xAxis": {
-		    "max": 15,
+		    "max": 14,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 15,
+		    "max": 14,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -12797,26 +13044,26 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x5ba55a99168352b7
+	// Extracted from question: xae4cf756b0e10aef
 	// Question: Is Figure B a scaled copy of Figure A?
 	// Widget key: image_1
-	test("polygon-graph - [x5ba55a99168352b7] Is Figure B a scaled copy of Figure A?", async () => {
+	test("polygon-graph - [xae4cf756b0e10aef] Is Figure B a scaled copy of Figure A?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
 		  "width": 325,
 		  "xAxis": {
-		    "max": 10,
+		    "max": 14,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 14,
 		    "min": 0,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -12825,56 +13072,84 @@ describe("polygonGraph widget tests", () => {
 		    {
 		      "x": 2,
 		      "y": 2,
-		      "id": "A1",
+		      "id": "A_p1",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
 		      "x": 2,
+		      "y": 13,
+		      "id": "A_p2",
+		      "label": "",
+		      "style": "open"
+		    },
+		    {
+		      "x": 8,
+		      "y": 13,
+		      "id": "A_p3",
+		      "label": "",
+		      "style": "open"
+		    },
+		    {
+		      "x": 8,
 		      "y": 5,
-		      "id": "A2",
+		      "id": "A_p4",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
-		      "x": 4,
-		      "y": 6,
-		      "id": "A3",
+		      "x": 5,
+		      "y": 5,
+		      "id": "A_p5",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
-		      "x": 4,
+		      "x": 5,
 		      "y": 2,
-		      "id": "A4",
+		      "id": "A_p6",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
-		      "x": 6,
-		      "y": 2,
-		      "id": "B1",
+		      "x": 11,
+		      "y": 7,
+		      "id": "B_p1",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
-		      "x": 6,
+		      "x": 11,
+		      "y": 10,
+		      "id": "B_p2",
+		      "label": "",
+		      "style": "open"
+		    },
+		    {
+		      "x": 13,
+		      "y": 10,
+		      "id": "B_p3",
+		      "label": "",
+		      "style": "open"
+		    },
+		    {
+		      "x": 13,
 		      "y": 8,
-		      "id": "B2",
+		      "id": "B_p4",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
-		      "x": 9,
-		      "y": 9,
-		      "id": "B3",
+		      "x": 12,
+		      "y": 8,
+		      "id": "B_p5",
 		      "label": "",
 		      "style": "open"
 		    },
 		    {
-		      "x": 9,
-		      "y": 2,
-		      "id": "B4",
+		      "x": 12,
+		      "y": 7,
+		      "id": "B_p6",
 		      "label": "",
 		      "style": "open"
 		    }
@@ -12884,24 +13159,28 @@ describe("polygonGraph widget tests", () => {
 		      "label": "Figure A",
 		      "isClosed": true,
 		      "vertices": [
-		        "A1",
-		        "A2",
-		        "A3",
-		        "A4"
+		        "A_p1",
+		        "A_p2",
+		        "A_p3",
+		        "A_p4",
+		        "A_p5",
+		        "A_p6"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#11accd"
 		    },
 		    {
 		      "label": "Figure B",
 		      "isClosed": true,
 		      "vertices": [
-		        "B1",
-		        "B2",
-		        "B3",
-		        "B4"
+		        "B_p1",
+		        "B_p2",
+		        "B_p3",
+		        "B_p4",
+		        "B_p5",
+		        "B_p6"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#1fab5426",
 		      "strokeColor": "#1fab54"
 		    }
 		  ],
@@ -12924,29 +13203,29 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: xd87ccf1ae5cf0021
-	// Question: Determine true or false about properties under a dilation
+	// Question: True or false: properties under dilation
 	// Widget key: image_1
-	test("polygon-graph - [xd87ccf1ae5cf0021] Determine true or false about properties under a dilation", async () => {
+	test("polygon-graph - [xd87ccf1ae5cf0021] True or false: properties under dilation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 245,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 245,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": -2,
@@ -13001,140 +13280,62 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7315a86592fa0d88
-	// Question: Dilation: Compare lengths and areas
+	// Extracted from question: xe4e2dc829e16edbd
+	// Question: Effects of dilation on lengths and areas
 	// Widget key: image_1
-	test("polygon-graph - [x7315a86592fa0d88] Dilation: Compare lengths and areas", async () => {
+	test("polygon-graph - [xe4e2dc829e16edbd] Effects of dilation on lengths and areas", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 245,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "",
+		    "max": 16,
+		    "min": 0,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "",
+		    "max": 16,
+		    "min": 0,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 245,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 3,
-		      "y": -3,
-		      "id": "A",
-		      "label": "A",
-		      "style": "open"
-		    },
-		    {
-		      "x": -3,
-		      "y": 0,
-		      "id": "B",
-		      "label": "B",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 3,
-		      "y": 3,
-		      "id": "C",
-		      "label": "C",
-		      "style": "open"
-		    }
-		  ],
-		  "polygons": [
-		    {
-		      "label": "",
-		      "isClosed": true,
-		      "vertices": [
-		        "A",
-		        "B",
-		        "C"
-		      ],
-		      "fillColor": "#00000000",
-		      "strokeColor": "#000000"
-		    }
-		  ],
-		  "showQuadrantLabels": false
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for polygonGraph", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x397d8791b00c4934
-	// Question: Determine true or false statements about a dilation
-	// Widget key: image_1
-	test("polygon-graph - [x397d8791b00c4934] Determine true or false statements about a dilation", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "polygonGraph",
-		  "width": 245,
-		  "xAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
-		    "tickInterval": 1,
-		    "showGridLines": true
-		  },
-		  "height": 245,
-		  "points": [
-		    {
-		      "x": -3,
-		      "y": -3,
+		      "x": 6,
+		      "y": 12,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -3,
-		      "y": 3,
+		      "x": 6,
+		      "y": 6,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 4,
-		      "y": 4,
+		      "x": 12,
+		      "y": 8,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 0,
-		      "y": -3,
+		      "x": 8,
+		      "y": 12,
 		      "id": "D",
 		      "label": "D",
 		      "style": "closed"
 		    },
 		    {
-		      "x": -1,
-		      "y": 2,
+		      "x": 14,
+		      "y": 12,
 		      "id": "P",
 		      "label": "P",
 		      "style": "closed"
@@ -13142,7 +13343,7 @@ describe("polygonGraph widget tests", () => {
 		  ],
 		  "polygons": [
 		    {
-		      "label": "",
+		      "label": "ABCD",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
@@ -13172,30 +13373,279 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1fb15dc195c2aad1
-	// Question: Properties under dilation: segments and angle measures
+	// Extracted from question: x4cc9827bd569a06b
+	// Question: True/false claims after a dilation
 	// Widget key: image_1
-	test("polygon-graph - [x1fb15dc195c2aad1] Properties under dilation: segments and angle measures", async () => {
+	test("polygon-graph - [x4cc9827bd569a06b] True/false claims after a dilation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 245,
+		  "width": 400,
+		  "xAxis": {
+		    "max": 6,
+		    "min": -6,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "min": -6,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 3,
+		      "y": -3,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -3,
+		      "y": 0,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 3,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#00000000",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xead9cdc5a7f33198
+	// Question: Dilations: compare lengths and angle measures
+	// Widget key: image_1
+	test("polygon-graph - [xead9cdc5a7f33198] Dilations: compare lengths and angle measures", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 10,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 10,
+		      "y": 10,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#00000000",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc50195a1d58e6c15
+	// Question: Dilation: Evaluate claims about perimeter and side lengths
+	// Widget key: image_1
+	test("polygon-graph - [xc50195a1d58e6c15] Dilation: Evaluate claims about perimeter and side lengths", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 8,
+		    "min": -6,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "min": -6,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -2,
+		      "y": 3,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": -2,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": 3,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1fb15dc195c2aad1
+	// Question: True or false: Properties under dilation
+	// Widget key: image_1
+	test("polygon-graph - [x1fb15dc195c2aad1] True or false: Properties under dilation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": -10,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 245,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": -2,
@@ -13217,20 +13667,6 @@ describe("polygonGraph widget tests", () => {
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
-		    },
-		    {
-		      "x": -5,
-		      "y": 9,
-		      "id": "A_prime",
-		      "label": "A′",
-		      "style": "closed"
-		    },
-		    {
-		      "x": 5,
-		      "y": 5,
-		      "id": "B_prime",
-		      "label": "B′",
-		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
@@ -13242,19 +13678,93 @@ describe("polygonGraph widget tests", () => {
 		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#00000010",
+		      "fillColor": "#00000000",
 		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x49840f2dd4d24958
+	// Question: True/false claims about a dilation
+	// Widget key: image_1
+	test("polygon-graph - [x49840f2dd4d24958] True/false claims about a dilation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 3,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
 		    },
 		    {
-		      "label": "",
+		      "x": 8,
+		      "y": 3,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 7,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 5,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "ABC",
 		      "isClosed": true,
 		      "vertices": [
-		        "A_prime",
-		        "B_prime",
+		        "A",
+		        "B",
 		        "C"
 		      ],
-		      "fillColor": "#1fab5415",
-		      "strokeColor": "#1fab54"
+		      "fillColor": "#00000000",
+		      "strokeColor": "#000000"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -13276,25 +13786,25 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x1f4582acc57292a1
-	// Question: Determine whether dilation claims are true or false
+	// Question: Dilations: Evaluate claims about a dilated triangle
 	// Widget key: image_1
-	test("polygon-graph - [x1f4582acc57292a1] Determine whether dilation claims are true or false", async () => {
+	test("polygon-graph - [x1f4582acc57292a1] Dilations: Evaluate claims about a dilated triangle", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
 		  "width": 400,
 		  "xAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "x",
+		    "max": 6,
+		    "min": -6,
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "y",
+		    "label": null,
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -13339,7 +13849,7 @@ describe("polygonGraph widget tests", () => {
 		        "C"
 		      ],
 		      "fillColor": "#11accd26",
-		      "strokeColor": "#11accd"
+		      "strokeColor": "#000000"
 		    }
 		  ],
 		  "showQuadrantLabels": false
@@ -13361,9 +13871,9 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x0a7ebe8fdc5c876a
-	// Question: Dilations: Parallel and collinear segment properties
+	// Question: True or false: Lines under a dilation
 	// Widget key: image_1
-	test("polygon-graph - [x0a7ebe8fdc5c876a] Dilations: Parallel and collinear segment properties", async () => {
+	test("polygon-graph - [x0a7ebe8fdc5c876a] True or false: Lines under a dilation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13371,15 +13881,15 @@ describe("polygonGraph widget tests", () => {
 		  "width": 400,
 		  "xAxis": {
 		    "max": 6,
-		    "min": -6,
-		    "label": "",
+		    "min": -5,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 6,
-		    "min": -6,
-		    "label": "",
+		    "max": 5,
+		    "min": -5,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
@@ -13411,6 +13921,139 @@ describe("polygonGraph widget tests", () => {
 		      "y": 3,
 		      "id": "D",
 		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 1,
+		      "id": "A_prime",
+		      "label": "A′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -1.6666666667,
+		      "id": "B_prime",
+		      "label": "B′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 1,
+		      "id": "C_prime",
+		      "label": "C′",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 4,
+		      "y": 3,
+		      "id": "D_prime",
+		      "label": "D′",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ],
+		      "fillColor": "#00000000",
+		      "strokeColor": "#000000"
+		    },
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A_prime",
+		        "B_prime",
+		        "C_prime",
+		        "D_prime"
+		      ],
+		      "fillColor": "#1fab5426",
+		      "strokeColor": "#1fab54"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb56001af90a2e003
+	// Question: Dilations: evaluate parallelism and perpendicularity claims
+	// Widget key: image_1
+	test("polygon-graph - [xb56001af90a2e003] Dilations: evaluate parallelism and perpendicularity claims", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 6,
+		    "min": -6,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "min": -6,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": -1,
+		      "y": -1,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": 3,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 1,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 2,
+		      "y": 0,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -4,
+		      "y": -3,
+		      "id": "P",
+		      "label": "P",
 		      "style": "closed"
 		    }
 		  ],
@@ -13446,55 +14089,55 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x6eac7a02db40d4ba
-	// Question: Determine truth of claims after a dilation
+	// Extracted from question: x72ade7f538932594
+	// Question: Effects of dilation on segments and perimeters (true/false)
 	// Widget key: image_1
-	test("polygon-graph - [x6eac7a02db40d4ba] Determine truth of claims after a dilation", async () => {
+	test("polygon-graph - [x72ade7f538932594] Effects of dilation on segments and perimeters (true/false)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 220,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 22,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 22,
+		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 220,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 10,
-		      "y": 6,
+		      "x": 2,
+		      "y": 3,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 13,
-		      "y": 7,
+		      "x": 8,
+		      "y": 3,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 7,
-		      "y": 12,
+		      "x": 4,
+		      "y": 7,
 		      "id": "C",
 		      "label": "C",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 9,
-		      "y": 8,
+		      "x": 6,
+		      "y": 5,
 		      "id": "P",
 		      "label": "P",
 		      "style": "closed"
@@ -13532,29 +14175,29 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: xdc58dc26da22ef6a
-	// Question: Dilations: Evaluate claims about a quadrilateral and its image
+	// Question: True or false: properties after a dilation about a center
 	// Widget key: image_1
-	test("polygon-graph - [xdc58dc26da22ef6a] Dilations: Evaluate claims about a quadrilateral and its image", async () => {
+	test("polygon-graph - [xdc58dc26da22ef6a] True or false: properties after a dilation about a center", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 245,
+		  "width": 360,
 		  "xAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 245,
+		  "height": 360,
 		  "points": [
 		    {
 		      "x": 4,
@@ -13587,28 +14230,28 @@ describe("polygonGraph widget tests", () => {
 		    {
 		      "x": 4,
 		      "y": 0,
-		      "id": "A_p",
+		      "id": "Aprime",
 		      "label": "A′",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 1,
 		      "y": -2,
-		      "id": "B_p",
+		      "id": "Bprime",
 		      "label": "B′",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 2.5,
 		      "y": 0,
-		      "id": "C_p",
+		      "id": "Cprime",
 		      "label": "C′",
 		      "style": "closed"
 		    },
 		    {
 		      "x": 4,
 		      "y": 1.5,
-		      "id": "D_p",
+		      "id": "Dprime",
 		      "label": "D′",
 		      "style": "closed"
 		    }
@@ -13623,19 +14266,19 @@ describe("polygonGraph widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#00000010",
+		      "fillColor": "#00000000",
 		      "strokeColor": "#000000"
 		    },
 		    {
 		      "label": "",
 		      "isClosed": true,
 		      "vertices": [
-		        "A_p",
-		        "B_p",
-		        "C_p",
-		        "D_p"
+		        "Aprime",
+		        "Bprime",
+		        "Cprime",
+		        "Dprime"
 		      ],
-		      "fillColor": "#1fab5410",
+		      "fillColor": "#1fab5400",
 		      "strokeColor": "#1fab54"
 		    }
 		  ],
@@ -13658,29 +14301,29 @@ describe("polygonGraph widget tests", () => {
 	})
 
 	// Extracted from question: x4ea7807dbe48974a
-	// Question: Properties under dilation: angles and parallel lines
+	// Question: True or false about a dilation of a quadrilateral
 	// Widget key: image_1
-	test("polygon-graph - [x4ea7807dbe48974a] Properties under dilation: angles and parallel lines", async () => {
+	test("polygon-graph - [x4ea7807dbe48974a] True or false about a dilation of a quadrilateral", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 245,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 6,
 		    "min": -6,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 245,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": -2,
@@ -13743,63 +14386,78 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x37a83f33095d55bd
-	// Question: Determine truth values about a dilation
+	// Extracted from question: x2b82cfe45635a0dd
+	// Question: Determine true/false claims after a dilation
 	// Widget key: image_1
-	test("polygon-graph - [x37a83f33095d55bd] Determine truth values about a dilation", async () => {
+	test("polygon-graph - [x2b82cfe45635a0dd] Determine true/false claims after a dilation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 245,
+		  "width": 400,
 		  "xAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
-		    "max": 5,
-		    "min": -5,
-		    "label": "",
+		    "max": 10,
+		    "min": -10,
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 245,
+		  "height": 400,
 		  "points": [
 		    {
-		      "x": 1,
-		      "y": 1,
+		      "x": -3,
+		      "y": -3,
 		      "id": "A",
 		      "label": "A",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": 1,
+		      "x": -3,
+		      "y": 3,
 		      "id": "B",
 		      "label": "B",
 		      "style": "closed"
 		    },
 		    {
-		      "x": 3,
-		      "y": -3,
+		      "x": 4,
+		      "y": 4,
 		      "id": "C",
 		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 0,
+		      "y": -3,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": -1,
+		      "y": 2,
+		      "id": "P",
+		      "label": "P",
 		      "style": "closed"
 		    }
 		  ],
 		  "polygons": [
 		    {
-		      "label": "",
+		      "label": "ABCD",
 		      "isClosed": true,
 		      "vertices": [
 		        "A",
 		        "B",
-		        "C"
+		        "C",
+		        "D"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#000000"
 		    }
 		  ],
@@ -13821,30 +14479,30 @@ describe("polygonGraph widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x390711f5b0214db5
-	// Question: Determine truth of statements about a dilation
+	// Extracted from question: x203708454712a789
+	// Question: True/false properties under a dilation
 	// Widget key: image_1
-	test("polygon-graph - [x390711f5b0214db5] Determine truth of statements about a dilation", async () => {
+	test("polygon-graph - [x203708454712a789] True/false properties under a dilation", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "polygonGraph",
-		  "width": 245,
+		  "width": 400,
 		  "xAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "x",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "min": 0,
-		    "label": "",
+		    "label": "y",
 		    "tickInterval": 1,
 		    "showGridLines": true
 		  },
-		  "height": 245,
+		  "height": 400,
 		  "points": [
 		    {
 		      "x": 2,
@@ -13892,7 +14550,178 @@ describe("polygonGraph widget tests", () => {
 		        "C",
 		        "D"
 		      ],
-		      "fillColor": "#00000000",
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#11accd"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x390711f5b0214db5
+	// Question: True or false statements about a dilation
+	// Widget key: image_1
+	test("polygon-graph - [x390711f5b0214db5] True or false statements about a dilation", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 9,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 3,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 3,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 6,
+		      "id": "D",
+		      "label": "D",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 5,
+		      "y": 6,
+		      "id": "P",
+		      "label": "P",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C",
+		        "D"
+		      ],
+		      "fillColor": "#11accd26",
+		      "strokeColor": "#000000"
+		    }
+		  ],
+		  "showQuadrantLabels": false
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for polygonGraph", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xe6adc00053eb530d
+	// Question: Dilation: Parallel vs. Same Line (True/False)
+	// Widget key: image_1
+	test("polygon-graph - [xe6adc00053eb530d] Dilation: Parallel vs. Same Line (True/False)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "polygonGraph",
+		  "width": 400,
+		  "xAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "x",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "min": 0,
+		    "label": "y",
+		    "tickInterval": 1,
+		    "showGridLines": true
+		  },
+		  "height": 400,
+		  "points": [
+		    {
+		      "x": 2,
+		      "y": 2,
+		      "id": "A",
+		      "label": "A",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 8,
+		      "y": 6,
+		      "id": "B",
+		      "label": "B",
+		      "style": "closed"
+		    },
+		    {
+		      "x": 6,
+		      "y": 10,
+		      "id": "C",
+		      "label": "C",
+		      "style": "closed"
+		    }
+		  ],
+		  "polygons": [
+		    {
+		      "label": "",
+		      "isClosed": true,
+		      "vertices": [
+		        "A",
+		        "B",
+		        "C"
+		      ],
+		      "fillColor": "#11accd26",
 		      "strokeColor": "#000000"
 		    }
 		  ],

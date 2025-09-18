@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.972Z
+// Generated on: 2025-09-18T05:17:02.169Z
 // Widget Type: rectangularFrameDiagram
 // Source: Real questions from database
 //
@@ -26,15 +26,15 @@ import * as logger from "@superbuilders/slog"
 
 describe("rectangularFrameDiagram widget tests", () => {
 	// Extracted from question: x335cbb4b025e09ae
-	// Question: Find the area of the yard inside the fence
+	// Question: Area of a square yard from fence panels
 	// Widget key: image_1
-	test("rectangular-frame-diagram - [x335cbb4b025e09ae] Find the area of the yard inside the fence", async () => {
+	test("rectangular-frame-diagram - [x335cbb4b025e09ae] Area of a square yard from fence panels", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "rectangularFrameDiagram",
-		  "width": 240,
-		  "height": 110,
+		  "width": 400,
+		  "height": 300,
 		  "labels": [],
 		  "diagonals": [],
 		  "thickness": 1,

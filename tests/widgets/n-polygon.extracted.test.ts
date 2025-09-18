@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.971Z
+// Generated on: 2025-09-18T05:17:02.169Z
 // Widget Type: nPolygon
 // Source: Real questions from database
 //
@@ -26,219 +26,16 @@ import * as logger from "@superbuilders/slog"
 
 describe("nPolygon widget tests", () => {
 	// Extracted from question: x2130231f278cf3dc
-	// Question: Compare coordinates in a rectangle
+	// Question: Which coordinate is greater?
 	// Widget key: image_1
-	test("n-polygon - [x2130231f278cf3dc] Compare coordinates in a rectangle", async () => {
+	test("n-polygon - [x2130231f278cf3dc] Which coordinate is greater?", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "rectangle",
-		  "width": 223,
-		  "height": 270,
-		  "fillColor": "#DDEEFF"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7839eebc5d350424
-	// Question: Compare two coordinates in a rectangle
-	// Widget key: image_1
-	test("n-polygon - [x7839eebc5d350424] Compare two coordinates in a rectangle", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "rectangle",
-		  "width": 270,
-		  "height": 231,
-		  "fillColor": "#FFFFFF"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xddab61063efd799b
-	// Question: Identify the vertical cross-section of a square pyramid
-	// Widget key: choice_a_shape
-	test("n-polygon - [xddab61063efd799b] Identify the vertical cross-section of a square pyramid (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "triangle",
-		  "width": 100,
-		  "height": 100,
-		  "fillColor": "#cccccc"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xddab61063efd799b
-	// Question: Identify the vertical cross-section of a square pyramid
-	// Widget key: choice_b_shape
-	test("n-polygon - [xddab61063efd799b] Identify the vertical cross-section of a square pyramid (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "square",
-		  "width": 100,
-		  "height": 100,
-		  "fillColor": "#cccccc"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xddab61063efd799b
-	// Question: Identify the vertical cross-section of a square pyramid
-	// Widget key: choice_c_shape
-	test("n-polygon - [xddab61063efd799b] Identify the vertical cross-section of a square pyramid (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "rectangle",
-		  "width": 100,
-		  "height": 100,
-		  "fillColor": "#cccccc"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xddab61063efd799b
-	// Question: Identify the vertical cross-section of a square pyramid
-	// Widget key: choice_d_shape
-	test("n-polygon - [xddab61063efd799b] Identify the vertical cross-section of a square pyramid (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "hexagon",
-		  "width": 100,
-		  "height": 100,
-		  "fillColor": "#cccccc"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4139736ff42aefd2
-	// Question: Cross section of a block of butter
-	// Widget key: choice_a_shape
-	test("n-polygon - [x4139736ff42aefd2] Cross section of a block of butter (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "square",
-		  "width": 120,
-		  "height": 120,
-		  "fillColor": "#FFFFFF"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4139736ff42aefd2
-	// Question: Cross section of a block of butter
-	// Widget key: choice_c_shape
-	test("n-polygon - [x4139736ff42aefd2] Cross section of a block of butter (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "rectangle",
-		  "width": 140,
-		  "height": 105,
+		  "width": 400,
+		  "height": 300,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -258,17 +55,220 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x2ea82a3291511b2e
-	// Question: Identify the solid from a rectangular vertical slice
-	// Widget key: image_1
-	test("n-polygon - [x2ea82a3291511b2e] Identify the solid from a rectangular vertical slice", async () => {
+	// Question: Identify a solid from a vertical slice
+	// Widget key: stimulus_shape
+	test("n-polygon - [x2ea82a3291511b2e] Identify a solid from a vertical slice", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "rectangle",
-		  "width": 200,
-		  "height": 200,
+		  "width": 340,
+		  "height": 440,
 		  "fillColor": "#ffffff"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xddab61063efd799b
+	// Question: Vertical cross-section of a square pyramid
+	// Widget key: choice_a_shape
+	test("n-polygon - [xddab61063efd799b] Vertical cross-section of a square pyramid (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "triangle",
+		  "width": 300,
+		  "height": 300,
+		  "fillColor": "#FFFFFF"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xddab61063efd799b
+	// Question: Vertical cross-section of a square pyramid
+	// Widget key: choice_b_shape
+	test("n-polygon - [xddab61063efd799b] Vertical cross-section of a square pyramid (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "square",
+		  "width": 300,
+		  "height": 300,
+		  "fillColor": "#FFFFFF"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xddab61063efd799b
+	// Question: Vertical cross-section of a square pyramid
+	// Widget key: choice_c_shape
+	test("n-polygon - [xddab61063efd799b] Vertical cross-section of a square pyramid (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "rectangle",
+		  "width": 300,
+		  "height": 300,
+		  "fillColor": "#FFFFFF"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xddab61063efd799b
+	// Question: Vertical cross-section of a square pyramid
+	// Widget key: choice_d_shape
+	test("n-polygon - [xddab61063efd799b] Vertical cross-section of a square pyramid (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "hexagon",
+		  "width": 300,
+		  "height": 300,
+		  "fillColor": "#FFFFFF"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4139736ff42aefd2
+	// Question: Identify the shape of a vertical cross-section
+	// Widget key: choice_a_shape
+	test("n-polygon - [x4139736ff42aefd2] Identify the shape of a vertical cross-section (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "square",
+		  "width": 320,
+		  "height": 320,
+		  "fillColor": "#FFFFFF"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4139736ff42aefd2
+	// Question: Identify the shape of a vertical cross-section
+	// Widget key: choice_c_shape
+	test("n-polygon - [x4139736ff42aefd2] Identify the shape of a vertical cross-section (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "rectangle",
+		  "width": 400,
+		  "height": 300,
+		  "fillColor": "#FFFFFF"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4139736ff42aefd2
+	// Question: Identify the shape of a vertical cross-section
+	// Widget key: choice_d_shape
+	test("n-polygon - [x4139736ff42aefd2] Identify the shape of a vertical cross-section (5)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "triangle",
+		  "width": 320,
+		  "height": 320,
+		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -287,17 +287,17 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x8bf3dcc1812f07b6
-	// Question: Identify a solid from its horizontal cross-section
-	// Widget key: pentagon_image
-	test("n-polygon - [x8bf3dcc1812f07b6] Identify a solid from its horizontal cross-section", async () => {
+	// Question: Identify a solid from a horizontal slice (pentagon)
+	// Widget key: image_1
+	test("n-polygon - [x8bf3dcc1812f07b6] Identify a solid from a horizontal slice (pentagon)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "pentagon",
-		  "width": 200,
-		  "height": 200,
-		  "fillColor": "#ffffff"
+		  "width": 360,
+		  "height": 360,
+		  "fillColor": "#f2f2f2"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -316,16 +316,45 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x209d34a33212eb67
-	// Question: Identify the solid from a triangular slice
-	// Widget key: image_1
-	test("n-polygon - [x209d34a33212eb67] Identify the solid from a triangular slice", async () => {
+	// Question: Identify the solid from a triangular horizontal slice
+	// Widget key: triangle_image
+	test("n-polygon - [x209d34a33212eb67] Identify the solid from a triangular horizontal slice", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "triangle",
-		  "width": 200,
-		  "height": 170,
+		  "width": 360,
+		  "height": 360,
+		  "fillColor": "#ffffff"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb0b26af2552ebf85
+	// Question: Select a solid that produces a triangular vertical slice
+	// Widget key: stimulus_triangle
+	test("n-polygon - [xb0b26af2552ebf85] Select a solid that produces a triangular vertical slice", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "triangle",
+		  "width": 360,
+		  "height": 360,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -345,45 +374,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x4f1f8eb1e5cd00ec
-	// Question: Identify a solid from a hexagonal cross-section
-	// Widget key: image_hexagon
-	test("n-polygon - [x4f1f8eb1e5cd00ec] Identify a solid from a hexagonal cross-section", async () => {
+	// Question: Identify a solid from its horizontal cross-section
+	// Widget key: stimulus_hexagon
+	test("n-polygon - [x4f1f8eb1e5cd00ec] Identify a solid from its horizontal cross-section", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "hexagon",
-		  "width": 200,
-		  "height": 200,
-		  "fillColor": "#FFFFFF"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x728cd6c47f90fd12
-	// Question: Identify a solid from a triangular vertical slice
-	// Widget key: triangle_image
-	test("n-polygon - [x728cd6c47f90fd12] Identify a solid from a triangular vertical slice", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "triangle",
-		  "width": 200,
-		  "height": 200,
+		  "width": 360,
+		  "height": 360,
 		  "fillColor": "#ffffff"
 		} as unknown as WidgetInput
 
@@ -403,17 +403,17 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: xa63d03bcdc40499a
-	// Question: Identify a solid from its horizontal slice (square)
-	// Widget key: stimulus_square
-	test("n-polygon - [xa63d03bcdc40499a] Identify a solid from its horizontal slice (square)", async () => {
+	// Question: Identify a solid from a square cross-section
+	// Widget key: stimulus_shape
+	test("n-polygon - [xa63d03bcdc40499a] Identify a solid from a square cross-section", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "square",
-		  "width": 200,
-		  "height": 200,
-		  "fillColor": "#FFFFFF"
+		  "width": 320,
+		  "height": 320,
+		  "fillColor": "#ffffff"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -432,16 +432,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x7b7f9e81dc7e0cea
-	// Question: Cross-section of a pentagonal prism
+	// Question: Cross-section of a pentagonal prism by a horizontal plane
 	// Widget key: choice_a_shape
-	test("n-polygon - [x7b7f9e81dc7e0cea] Cross-section of a pentagonal prism (2)", async () => {
+	test("n-polygon - [x7b7f9e81dc7e0cea] Cross-section of a pentagonal prism by a horizontal plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "pentagon",
-		  "width": 100,
-		  "height": 100,
+		  "width": 360,
+		  "height": 360,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -461,16 +461,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x7b7f9e81dc7e0cea
-	// Question: Cross-section of a pentagonal prism
+	// Question: Cross-section of a pentagonal prism by a horizontal plane
 	// Widget key: choice_b_shape
-	test("n-polygon - [x7b7f9e81dc7e0cea] Cross-section of a pentagonal prism (3)", async () => {
+	test("n-polygon - [x7b7f9e81dc7e0cea] Cross-section of a pentagonal prism by a horizontal plane (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "triangle",
-		  "width": 100,
-		  "height": 100,
+		  "width": 360,
+		  "height": 360,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -490,16 +490,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x7b7f9e81dc7e0cea
-	// Question: Cross-section of a pentagonal prism
+	// Question: Cross-section of a pentagonal prism by a horizontal plane
 	// Widget key: choice_c_shape
-	test("n-polygon - [x7b7f9e81dc7e0cea] Cross-section of a pentagonal prism (4)", async () => {
+	test("n-polygon - [x7b7f9e81dc7e0cea] Cross-section of a pentagonal prism by a horizontal plane (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "rectangle",
-		  "width": 100,
-		  "height": 100,
+		  "width": 400,
+		  "height": 300,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -519,16 +519,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x7b7f9e81dc7e0cea
-	// Question: Cross-section of a pentagonal prism
+	// Question: Cross-section of a pentagonal prism by a horizontal plane
 	// Widget key: choice_d_shape
-	test("n-polygon - [x7b7f9e81dc7e0cea] Cross-section of a pentagonal prism (5)", async () => {
+	test("n-polygon - [x7b7f9e81dc7e0cea] Cross-section of a pentagonal prism by a horizontal plane (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "square",
-		  "width": 100,
-		  "height": 100,
+		  "width": 360,
+		  "height": 360,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -548,16 +548,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x7c120e3f24093a5b
-	// Question: Identify the cross-section of a triangular prism (tent)
+	// Question: Identify the cross-section of a triangular prism
 	// Widget key: choice_a_shape
-	test("n-polygon - [x7c120e3f24093a5b] Identify the cross-section of a triangular prism (tent) (2)", async () => {
+	test("n-polygon - [x7c120e3f24093a5b] Identify the cross-section of a triangular prism (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "triangle",
-		  "width": 100,
-		  "height": 100,
+		  "width": 320,
+		  "height": 320,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -577,16 +577,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x7c120e3f24093a5b
-	// Question: Identify the cross-section of a triangular prism (tent)
+	// Question: Identify the cross-section of a triangular prism
 	// Widget key: choice_b_shape
-	test("n-polygon - [x7c120e3f24093a5b] Identify the cross-section of a triangular prism (tent) (3)", async () => {
+	test("n-polygon - [x7c120e3f24093a5b] Identify the cross-section of a triangular prism (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "square",
-		  "width": 100,
-		  "height": 100,
+		  "width": 320,
+		  "height": 320,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -606,103 +606,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x7c120e3f24093a5b
-	// Question: Identify the cross-section of a triangular prism (tent)
+	// Question: Identify the cross-section of a triangular prism
 	// Widget key: choice_c_shape
-	test("n-polygon - [x7c120e3f24093a5b] Identify the cross-section of a triangular prism (tent) (4)", async () => {
+	test("n-polygon - [x7c120e3f24093a5b] Identify the cross-section of a triangular prism (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "rectangle",
-		  "width": 100,
-		  "height": 100,
-		  "fillColor": "#FFFFFF"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x141c0caeea18da08
-	// Question: Identify the cross-section of a sliced square pyramid
-	// Widget key: choice_b_shape
-	test("n-polygon - [x141c0caeea18da08] Identify the cross-section of a sliced square pyramid (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "triangle",
-		  "width": 100,
-		  "height": 100,
-		  "fillColor": "#FFFFFF"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x141c0caeea18da08
-	// Question: Identify the cross-section of a sliced square pyramid
-	// Widget key: choice_c_shape
-	test("n-polygon - [x141c0caeea18da08] Identify the cross-section of a sliced square pyramid (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "rectangle",
-		  "width": 100,
-		  "height": 100,
-		  "fillColor": "#FFFFFF"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x141c0caeea18da08
-	// Question: Identify the cross-section of a sliced square pyramid
-	// Widget key: choice_d_shape
-	test("n-polygon - [x141c0caeea18da08] Identify the cross-section of a sliced square pyramid (5)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "square",
-		  "width": 100,
-		  "height": 100,
+		  "width": 320,
+		  "height": 320,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -722,16 +635,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x72bb801397b54d5e
-	// Question: Identify the cross-section of a right square pyramid
+	// Question: Identify the cross-section of a square-based pyramid
 	// Widget key: choice_a_shape
-	test("n-polygon - [x72bb801397b54d5e] Identify the cross-section of a right square pyramid (2)", async () => {
+	test("n-polygon - [x72bb801397b54d5e] Identify the cross-section of a square-based pyramid (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "square",
-		  "width": 100,
-		  "height": 100,
+		  "width": 340,
+		  "height": 340,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -751,16 +664,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x72bb801397b54d5e
-	// Question: Identify the cross-section of a right square pyramid
+	// Question: Identify the cross-section of a square-based pyramid
 	// Widget key: choice_b_shape
-	test("n-polygon - [x72bb801397b54d5e] Identify the cross-section of a right square pyramid (3)", async () => {
+	test("n-polygon - [x72bb801397b54d5e] Identify the cross-section of a square-based pyramid (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "triangle",
-		  "width": 100,
-		  "height": 100,
+		  "width": 340,
+		  "height": 340,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -780,16 +693,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x72bb801397b54d5e
-	// Question: Identify the cross-section of a right square pyramid
+	// Question: Identify the cross-section of a square-based pyramid
 	// Widget key: choice_c_shape
-	test("n-polygon - [x72bb801397b54d5e] Identify the cross-section of a right square pyramid (4)", async () => {
+	test("n-polygon - [x72bb801397b54d5e] Identify the cross-section of a square-based pyramid (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "rectangle",
-		  "width": 100,
-		  "height": 100,
+		  "width": 360,
+		  "height": 300,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -809,16 +722,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x72bb801397b54d5e
-	// Question: Identify the cross-section of a right square pyramid
+	// Question: Identify the cross-section of a square-based pyramid
 	// Widget key: choice_d_shape
-	test("n-polygon - [x72bb801397b54d5e] Identify the cross-section of a right square pyramid (5)", async () => {
+	test("n-polygon - [x72bb801397b54d5e] Identify the cross-section of a square-based pyramid (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "pentagon",
-		  "width": 100,
-		  "height": 100,
+		  "width": 340,
+		  "height": 340,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -838,16 +751,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x80dc1341b9007790
-	// Question: Identify the cross-section of a right prism
+	// Question: Identify the horizontal cross-section of a right prism
 	// Widget key: choice_a_shape
-	test("n-polygon - [x80dc1341b9007790] Identify the cross-section of a right prism (2)", async () => {
+	test("n-polygon - [x80dc1341b9007790] Identify the horizontal cross-section of a right prism (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "square",
-		  "width": 100,
-		  "height": 100,
+		  "width": 320,
+		  "height": 320,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -867,16 +780,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x80dc1341b9007790
-	// Question: Identify the cross-section of a right prism
+	// Question: Identify the horizontal cross-section of a right prism
 	// Widget key: choice_b_shape
-	test("n-polygon - [x80dc1341b9007790] Identify the cross-section of a right prism (3)", async () => {
+	test("n-polygon - [x80dc1341b9007790] Identify the horizontal cross-section of a right prism (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "triangle",
-		  "width": 100,
-		  "height": 100,
+		  "width": 320,
+		  "height": 320,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -896,16 +809,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x80dc1341b9007790
-	// Question: Identify the cross-section of a right prism
+	// Question: Identify the horizontal cross-section of a right prism
 	// Widget key: choice_c_shape
-	test("n-polygon - [x80dc1341b9007790] Identify the cross-section of a right prism (4)", async () => {
+	test("n-polygon - [x80dc1341b9007790] Identify the horizontal cross-section of a right prism (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "rectangle",
-		  "width": 100,
-		  "height": 100,
+		  "width": 400,
+		  "height": 300,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -925,16 +838,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: x80dc1341b9007790
-	// Question: Identify the cross-section of a right prism
+	// Question: Identify the horizontal cross-section of a right prism
 	// Widget key: choice_d_shape
-	test("n-polygon - [x80dc1341b9007790] Identify the cross-section of a right prism (5)", async () => {
+	test("n-polygon - [x80dc1341b9007790] Identify the horizontal cross-section of a right prism (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "octagon",
-		  "width": 100,
-		  "height": 100,
+		  "width": 320,
+		  "height": 320,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -954,17 +867,17 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: xc8ec7679f407c09d
-	// Question: Cross-section of a triangular prism by a horizontal plane
+	// Question: Identify the horizontal cross-section of a triangular prism
 	// Widget key: choice_a_shape
-	test("n-polygon - [xc8ec7679f407c09d] Cross-section of a triangular prism by a horizontal plane (2)", async () => {
+	test("n-polygon - [xc8ec7679f407c09d] Identify the horizontal cross-section of a triangular prism (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "triangle",
-		  "width": 100,
-		  "height": 100,
-		  "fillColor": "#FFFFFF"
+		  "width": 300,
+		  "height": 300,
+		  "fillColor": "#ffffff"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -983,17 +896,17 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: xc8ec7679f407c09d
-	// Question: Cross-section of a triangular prism by a horizontal plane
+	// Question: Identify the horizontal cross-section of a triangular prism
 	// Widget key: choice_b_shape
-	test("n-polygon - [xc8ec7679f407c09d] Cross-section of a triangular prism by a horizontal plane (3)", async () => {
+	test("n-polygon - [xc8ec7679f407c09d] Identify the horizontal cross-section of a triangular prism (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "square",
-		  "width": 100,
-		  "height": 100,
-		  "fillColor": "#FFFFFF"
+		  "width": 300,
+		  "height": 300,
+		  "fillColor": "#ffffff"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1012,17 +925,17 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: xc8ec7679f407c09d
-	// Question: Cross-section of a triangular prism by a horizontal plane
+	// Question: Identify the horizontal cross-section of a triangular prism
 	// Widget key: choice_c_shape
-	test("n-polygon - [xc8ec7679f407c09d] Cross-section of a triangular prism by a horizontal plane (4)", async () => {
+	test("n-polygon - [xc8ec7679f407c09d] Identify the horizontal cross-section of a triangular prism (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "rectangle",
-		  "width": 100,
-		  "height": 100,
-		  "fillColor": "#FFFFFF"
+		  "width": 300,
+		  "height": 300,
+		  "fillColor": "#ffffff"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1041,17 +954,17 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: xc8ec7679f407c09d
-	// Question: Cross-section of a triangular prism by a horizontal plane
+	// Question: Identify the horizontal cross-section of a triangular prism
 	// Widget key: choice_d_shape
-	test("n-polygon - [xc8ec7679f407c09d] Cross-section of a triangular prism by a horizontal plane (5)", async () => {
+	test("n-polygon - [xc8ec7679f407c09d] Identify the horizontal cross-section of a triangular prism (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "octagon",
-		  "width": 100,
-		  "height": 100,
-		  "fillColor": "#FFFFFF"
+		  "width": 300,
+		  "height": 300,
+		  "fillColor": "#ffffff"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1070,16 +983,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: xa33f179a801021da
-	// Question: Vertical cross-section of a rectangular prism
+	// Question: Cross-section of a right rectangular prism by a vertical plane
 	// Widget key: choice_a_visual
-	test("n-polygon - [xa33f179a801021da] Vertical cross-section of a rectangular prism (1)", async () => {
+	test("n-polygon - [xa33f179a801021da] Cross-section of a right rectangular prism by a vertical plane (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "rectangle",
-		  "width": 120,
-		  "height": 90,
+		  "width": 400,
+		  "height": 300,
 		  "fillColor": "#ffffff"
 		} as unknown as WidgetInput
 
@@ -1099,16 +1012,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: xa33f179a801021da
-	// Question: Vertical cross-section of a rectangular prism
+	// Question: Cross-section of a right rectangular prism by a vertical plane
 	// Widget key: choice_b_visual
-	test("n-polygon - [xa33f179a801021da] Vertical cross-section of a rectangular prism (2)", async () => {
+	test("n-polygon - [xa33f179a801021da] Cross-section of a right rectangular prism by a vertical plane (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "triangle",
-		  "width": 100,
-		  "height": 100,
+		  "width": 340,
+		  "height": 340,
 		  "fillColor": "#ffffff"
 		} as unknown as WidgetInput
 
@@ -1128,16 +1041,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: xa33f179a801021da
-	// Question: Vertical cross-section of a rectangular prism
+	// Question: Cross-section of a right rectangular prism by a vertical plane
 	// Widget key: choice_c_visual
-	test("n-polygon - [xa33f179a801021da] Vertical cross-section of a rectangular prism (3)", async () => {
+	test("n-polygon - [xa33f179a801021da] Cross-section of a right rectangular prism by a vertical plane (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "octagon",
-		  "width": 100,
-		  "height": 100,
+		  "width": 340,
+		  "height": 340,
 		  "fillColor": "#ffffff"
 		} as unknown as WidgetInput
 
@@ -1157,16 +1070,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: xa33f179a801021da
-	// Question: Vertical cross-section of a rectangular prism
+	// Question: Cross-section of a right rectangular prism by a vertical plane
 	// Widget key: choice_d_visual
-	test("n-polygon - [xa33f179a801021da] Vertical cross-section of a rectangular prism (4)", async () => {
+	test("n-polygon - [xa33f179a801021da] Cross-section of a right rectangular prism by a vertical plane (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "square",
-		  "width": 100,
-		  "height": 100,
+		  "width": 340,
+		  "height": 340,
 		  "fillColor": "#ffffff"
 		} as unknown as WidgetInput
 
@@ -1186,16 +1099,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: xaaf221c1e7ea291e
-	// Question: Cross-section of an inverted square pyramid
+	// Question: Identify the shape of a horizontal cross-section of a square pyramid
 	// Widget key: choice_a_shape
-	test("n-polygon - [xaaf221c1e7ea291e] Cross-section of an inverted square pyramid (2)", async () => {
+	test("n-polygon - [xaaf221c1e7ea291e] Identify the shape of a horizontal cross-section of a square pyramid (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "square",
-		  "width": 100,
-		  "height": 100,
+		  "width": 320,
+		  "height": 320,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -1215,16 +1128,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: xaaf221c1e7ea291e
-	// Question: Cross-section of an inverted square pyramid
+	// Question: Identify the shape of a horizontal cross-section of a square pyramid
 	// Widget key: choice_b_shape
-	test("n-polygon - [xaaf221c1e7ea291e] Cross-section of an inverted square pyramid (3)", async () => {
+	test("n-polygon - [xaaf221c1e7ea291e] Identify the shape of a horizontal cross-section of a square pyramid (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "triangle",
-		  "width": 100,
-		  "height": 100,
+		  "width": 320,
+		  "height": 320,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -1244,16 +1157,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: xaaf221c1e7ea291e
-	// Question: Cross-section of an inverted square pyramid
+	// Question: Identify the shape of a horizontal cross-section of a square pyramid
 	// Widget key: choice_c_shape
-	test("n-polygon - [xaaf221c1e7ea291e] Cross-section of an inverted square pyramid (4)", async () => {
+	test("n-polygon - [xaaf221c1e7ea291e] Identify the shape of a horizontal cross-section of a square pyramid (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "rectangle",
-		  "width": 100,
-		  "height": 100,
+		  "width": 320,
+		  "height": 320,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -1273,16 +1186,16 @@ describe("nPolygon widget tests", () => {
 	})
 
 	// Extracted from question: xaaf221c1e7ea291e
-	// Question: Cross-section of an inverted square pyramid
+	// Question: Identify the shape of a horizontal cross-section of a square pyramid
 	// Widget key: choice_d_shape
-	test("n-polygon - [xaaf221c1e7ea291e] Cross-section of an inverted square pyramid (5)", async () => {
+	test("n-polygon - [xaaf221c1e7ea291e] Identify the shape of a horizontal cross-section of a square pyramid (5)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "pentagon",
-		  "width": 100,
-		  "height": 100,
+		  "width": 320,
+		  "height": 320,
 		  "fillColor": "#FFFFFF"
 		} as unknown as WidgetInput
 
@@ -1301,163 +1214,18 @@ describe("nPolygon widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2d4f558559981f78
-	// Question: Side length after scaling by a factor less than 1
-	// Widget key: image_1
-	test("n-polygon - [x2d4f558559981f78] Side length after scaling by a factor less than 1", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "square",
-		  "width": 200,
-		  "height": 200,
-		  "fillColor": "#11accd"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6834a77b59de585a
-	// Question: Scaled copy: side length with scale factor greater than 1
-	// Widget key: image_1
-	test("n-polygon - [x6834a77b59de585a] Scaled copy: side length with scale factor greater than 1", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "square",
-		  "width": 267,
-		  "height": 234,
-		  "fillColor": "#ffffff"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x58729b419e278355
-	// Question: Recreate Colorado on a grid
-	// Widget key: rectangle_choice_a
-	test("n-polygon - [x58729b419e278355] Recreate Colorado on a grid (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "rectangle",
-		  "width": 160,
-		  "height": 120,
-		  "fillColor": "#4472C4"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x58729b419e278355
-	// Question: Recreate Colorado on a grid
-	// Widget key: rectangle_choice_b
-	test("n-polygon - [x58729b419e278355] Recreate Colorado on a grid (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "square",
-		  "width": 140,
-		  "height": 140,
-		  "fillColor": "#A5A5A5"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x58729b419e278355
-	// Question: Recreate Colorado on a grid
-	// Widget key: rectangle_choice_c
-	test("n-polygon - [x58729b419e278355] Recreate Colorado on a grid (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "type": "nPolygon",
-		  "shape": "pentagon",
-		  "width": 160,
-		  "height": 120,
-		  "fillColor": "#70AD47"
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for nPolygon", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xea3406f5dda54d38
-	// Question: Draw a rectangle from two vertices and its area
+	// Extracted from question: xa20e5503075f43b9
+	// Question: Select the scaled rectangle for the mausoleum plan
 	// Widget key: rect_choice_a
-	test("n-polygon - [xea3406f5dda54d38] Draw a rectangle from two vertices and its area (1)", async () => {
+	test("n-polygon - [xa20e5503075f43b9] Select the scaled rectangle for the mausoleum plan (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
-		  "shape": "pentagon",
-		  "width": 120,
-		  "height": 120,
-		  "fillColor": "#11ACCD"
+		  "shape": "square",
+		  "width": 360,
+		  "height": 300,
+		  "fillColor": "#FDE68A"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1475,18 +1243,18 @@ describe("nPolygon widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xea3406f5dda54d38
-	// Question: Draw a rectangle from two vertices and its area
+	// Extracted from question: xa20e5503075f43b9
+	// Question: Select the scaled rectangle for the mausoleum plan
 	// Widget key: rect_choice_b
-	test("n-polygon - [xea3406f5dda54d38] Draw a rectangle from two vertices and its area (2)", async () => {
+	test("n-polygon - [xa20e5503075f43b9] Select the scaled rectangle for the mausoleum plan (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "rectangle",
-		  "width": 120,
-		  "height": 90,
-		  "fillColor": "#FDB515"
+		  "width": 360,
+		  "height": 300,
+		  "fillColor": "#A7F3D0"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1504,18 +1272,279 @@ describe("nPolygon widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xea3406f5dda54d38
-	// Question: Draw a rectangle from two vertices and its area
+	// Extracted from question: xa20e5503075f43b9
+	// Question: Select the scaled rectangle for the mausoleum plan
 	// Widget key: rect_choice_c
-	test("n-polygon - [xea3406f5dda54d38] Draw a rectangle from two vertices and its area (3)", async () => {
+	test("n-polygon - [xa20e5503075f43b9] Select the scaled rectangle for the mausoleum plan (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "type": "nPolygon",
 		  "shape": "hexagon",
-		  "width": 120,
-		  "height": 120,
-		  "fillColor": "#7AC943"
+		  "width": 360,
+		  "height": 300,
+		  "fillColor": "#BFDBFE"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x63d0f3e2dac95aee
+	// Question: Draw a scaled square face of a salt crystal
+	// Widget key: square_face_choice_a
+	test("n-polygon - [x63d0f3e2dac95aee] Draw a scaled square face of a salt crystal (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "rectangle",
+		  "width": 400,
+		  "height": 400,
+		  "fillColor": "#a7c7ff"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x63d0f3e2dac95aee
+	// Question: Draw a scaled square face of a salt crystal
+	// Widget key: square_face_choice_b
+	test("n-polygon - [x63d0f3e2dac95aee] Draw a scaled square face of a salt crystal (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "square",
+		  "width": 400,
+		  "height": 400,
+		  "fillColor": "#a7c7ff"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x63d0f3e2dac95aee
+	// Question: Draw a scaled square face of a salt crystal
+	// Widget key: square_face_choice_c
+	test("n-polygon - [x63d0f3e2dac95aee] Draw a scaled square face of a salt crystal (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "pentagon",
+		  "width": 400,
+		  "height": 400,
+		  "fillColor": "#a7c7ff"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb33fd58db9a5f93e
+	// Question: Select a rectangle representing the manor's base
+	// Widget key: rectangle_choice_a
+	test("n-polygon - [xb33fd58db9a5f93e] Select a rectangle representing the manor's base (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "square",
+		  "width": 360,
+		  "height": 360,
+		  "fillColor": "#88CCEE"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb33fd58db9a5f93e
+	// Question: Select a rectangle representing the manor's base
+	// Widget key: rectangle_choice_b
+	test("n-polygon - [xb33fd58db9a5f93e] Select a rectangle representing the manor's base (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "rectangle",
+		  "width": 360,
+		  "height": 360,
+		  "fillColor": "#66CC99"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb33fd58db9a5f93e
+	// Question: Select a rectangle representing the manor's base
+	// Widget key: rectangle_choice_c
+	test("n-polygon - [xb33fd58db9a5f93e] Select a rectangle representing the manor's base (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "pentagon",
+		  "width": 360,
+		  "height": 360,
+		  "fillColor": "#EE8866"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc3cf32285979342e
+	// Question: Identify a rectangle from two vertices and the perimeter
+	// Widget key: rectangle_choice_a
+	test("n-polygon - [xc3cf32285979342e] Identify a rectangle from two vertices and the perimeter (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "triangle",
+		  "width": 340,
+		  "height": 455,
+		  "fillColor": "#E6E6E6"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc3cf32285979342e
+	// Question: Identify a rectangle from two vertices and the perimeter
+	// Widget key: rectangle_choice_b
+	test("n-polygon - [xc3cf32285979342e] Identify a rectangle from two vertices and the perimeter (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "rectangle",
+		  "width": 340,
+		  "height": 455,
+		  "fillColor": "#E6E6E6"
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for nPolygon", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xc3cf32285979342e
+	// Question: Identify a rectangle from two vertices and the perimeter
+	// Widget key: rectangle_choice_c
+	test("n-polygon - [xc3cf32285979342e] Identify a rectangle from two vertices and the perimeter (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "type": "nPolygon",
+		  "shape": "pentagon",
+		  "width": 340,
+		  "height": 455,
+		  "fillColor": "#E6E6E6"
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)

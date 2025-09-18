@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.967Z
+// Generated on: 2025-09-18T05:17:02.167Z
 // Widget Type: numberLineWithAction
 // Source: Real questions from database
 //
@@ -26,17 +26,17 @@ import * as logger from "@superbuilders/slog"
 
 describe("numberLineWithAction widget tests", () => {
 	// Extracted from question: xa5da05cd450e06fe
-	// Question: Which number line model represents −2 + 4.5?
-	// Widget key: choice_a_nl
-	test("number-line-with-action - [xa5da05cd450e06fe] Which number line model represents −2 + 4.5? (1)", async () => {
+	// Question: Choose the number line model for -2 + 4.5
+	// Widget key: number_line_choice_a
+	test("number-line-with-action - [xa5da05cd450e06fe] Choose the number line model for -2 + 4.5 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -9,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -48,9 +48,8 @@ describe("numberLineWithAction widget tests", () => {
 		    {
 		      "delta": {
 		        "sign": "+",
-		        "type": "mixed",
-		        "whole": 4,
-		        "numerator": 1,
+		        "type": "fraction",
+		        "numerator": 9,
 		        "denominator": 2
 		      }
 		    }
@@ -80,17 +79,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xa5da05cd450e06fe
-	// Question: Which number line model represents −2 + 4.5?
-	// Widget key: choice_b_nl
-	test("number-line-with-action - [xa5da05cd450e06fe] Which number line model represents −2 + 4.5? (2)", async () => {
+	// Question: Choose the number line model for -2 + 4.5
+	// Widget key: number_line_choice_b
+	test("number-line-with-action - [xa5da05cd450e06fe] Choose the number line model for -2 + 4.5 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -9,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -102,9 +101,8 @@ describe("numberLineWithAction widget tests", () => {
 		    {
 		      "delta": {
 		        "sign": "-",
-		        "type": "mixed",
-		        "whole": 4,
-		        "numerator": 1,
+		        "type": "fraction",
+		        "numerator": 9,
 		        "denominator": 2
 		      }
 		    }
@@ -134,17 +132,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xa5da05cd450e06fe
-	// Question: Which number line model represents −2 + 4.5?
-	// Widget key: choice_c_nl
-	test("number-line-with-action - [xa5da05cd450e06fe] Which number line model represents −2 + 4.5? (3)", async () => {
+	// Question: Choose the number line model for -2 + 4.5
+	// Widget key: number_line_choice_c
+	test("number-line-with-action - [xa5da05cd450e06fe] Choose the number line model for -2 + 4.5 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -9,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -156,9 +154,8 @@ describe("numberLineWithAction widget tests", () => {
 		    {
 		      "delta": {
 		        "sign": "-",
-		        "type": "mixed",
-		        "whole": 4,
-		        "numerator": 1,
+		        "type": "fraction",
+		        "numerator": 9,
 		        "denominator": 2
 		      }
 		    }
@@ -188,9 +185,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xc87663abd3f6b59d
-	// Question: Which number line model represents 3 1/2 + (−6)?
-	// Widget key: choice_a_nl
-	test("number-line-with-action - [xc87663abd3f6b59d] Which number line model represents 3 1/2 + (−6)? (1)", async () => {
+	// Question: Select the number line model for 3 1/2 + (−6)
+	// Widget key: choice_a_number_line
+	test("number-line-with-action - [xc87663abd3f6b59d] Select the number line model for 3 1/2 + (−6) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -198,7 +195,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -4,
 		  "type": "numberLineWithAction",
 		  "width": 440,
-		  "height": 117,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -246,9 +243,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xc87663abd3f6b59d
-	// Question: Which number line model represents 3 1/2 + (−6)?
-	// Widget key: choice_b_nl
-	test("number-line-with-action - [xc87663abd3f6b59d] Which number line model represents 3 1/2 + (−6)? (2)", async () => {
+	// Question: Select the number line model for 3 1/2 + (−6)
+	// Widget key: choice_b_number_line
+	test("number-line-with-action - [xc87663abd3f6b59d] Select the number line model for 3 1/2 + (−6) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -256,7 +253,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -4,
 		  "type": "numberLineWithAction",
 		  "width": 440,
-		  "height": 117,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -304,9 +301,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xc87663abd3f6b59d
-	// Question: Which number line model represents 3 1/2 + (−6)?
-	// Widget key: choice_c_nl
-	test("number-line-with-action - [xc87663abd3f6b59d] Which number line model represents 3 1/2 + (−6)? (3)", async () => {
+	// Question: Select the number line model for 3 1/2 + (−6)
+	// Widget key: choice_c_number_line
+	test("number-line-with-action - [xc87663abd3f6b59d] Select the number line model for 3 1/2 + (−6) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -314,7 +311,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -4,
 		  "type": "numberLineWithAction",
 		  "width": 440,
-		  "height": 117,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -328,8 +325,10 @@ describe("numberLineWithAction widget tests", () => {
 		    {
 		      "delta": {
 		        "sign": "+",
-		        "type": "whole",
-		        "value": 6
+		        "type": "mixed",
+		        "whole": 6,
+		        "numerator": 1,
+		        "denominator": 2
 		      }
 		    }
 		  ],
@@ -362,9 +361,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x7362559be7b98f2d
-	// Question: Choose the number line model for adding negative integers
-	// Widget key: choice_a_nl
-	test("number-line-with-action - [x7362559be7b98f2d] Choose the number line model for adding negative integers (1)", async () => {
+	// Question: Select the number line model for -2 + (-7)
+	// Widget key: number_line_choice_a
+	test("number-line-with-action - [x7362559be7b98f2d] Select the number line model for -2 + (-7) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -372,7 +371,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -12,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 113,
+		  "height": 300,
 		  "actions": [
 		    {
 		      "delta": {
@@ -414,9 +413,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x7362559be7b98f2d
-	// Question: Choose the number line model for adding negative integers
-	// Widget key: choice_b_nl
-	test("number-line-with-action - [x7362559be7b98f2d] Choose the number line model for adding negative integers (2)", async () => {
+	// Question: Select the number line model for -2 + (-7)
+	// Widget key: number_line_choice_b
+	test("number-line-with-action - [x7362559be7b98f2d] Select the number line model for -2 + (-7) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -424,7 +423,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -12,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 113,
+		  "height": 300,
 		  "actions": [
 		    {
 		      "delta": {
@@ -466,9 +465,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x7362559be7b98f2d
-	// Question: Choose the number line model for adding negative integers
-	// Widget key: choice_c_nl
-	test("number-line-with-action - [x7362559be7b98f2d] Choose the number line model for adding negative integers (3)", async () => {
+	// Question: Select the number line model for -2 + (-7)
+	// Widget key: number_line_choice_c
+	test("number-line-with-action - [x7362559be7b98f2d] Select the number line model for -2 + (-7) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -476,7 +475,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -12,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 113,
+		  "height": 300,
 		  "actions": [
 		    {
 		      "delta": {
@@ -518,17 +517,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xb3accc11204a02de
-	// Question: Select the number line model for 6 + (−2)
-	// Widget key: choice_a_number_line
-	test("number-line-with-action - [xb3accc11204a02de] Select the number line model for 6 + (−2) (1)", async () => {
+	// Question: Which number line model represents 6 + (−2)?
+	// Widget key: choice_a_visual
+	test("number-line-with-action - [xb3accc11204a02de] Which number line model represents 6 + (−2)? (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -5,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -570,17 +569,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xb3accc11204a02de
-	// Question: Select the number line model for 6 + (−2)
-	// Widget key: choice_b_number_line
-	test("number-line-with-action - [xb3accc11204a02de] Select the number line model for 6 + (−2) (2)", async () => {
+	// Question: Which number line model represents 6 + (−2)?
+	// Widget key: choice_b_visual
+	test("number-line-with-action - [xb3accc11204a02de] Which number line model represents 6 + (−2)? (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -5,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -622,17 +621,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xb3accc11204a02de
-	// Question: Select the number line model for 6 + (−2)
-	// Widget key: choice_c_number_line
-	test("number-line-with-action - [xb3accc11204a02de] Select the number line model for 6 + (−2) (3)", async () => {
+	// Question: Which number line model represents 6 + (−2)?
+	// Widget key: choice_c_visual
+	test("number-line-with-action - [xb3accc11204a02de] Which number line model represents 6 + (−2)? (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
 		  "min": -5,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -684,7 +683,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -9,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 120,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -738,7 +737,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -9,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 120,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -792,7 +791,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -9,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 120,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -836,17 +835,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xf6faf90e920bece0
-	// Question: Select the number line model for -5 + 2.5
-	// Widget key: choice_a_number_line
-	test("number-line-with-action - [xf6faf90e920bece0] Select the number line model for -5 + 2.5 (1)", async () => {
+	// Question: Choose the number line model for −5 + 2.5
+	// Widget key: number_line_choice_a
+	test("number-line-with-action - [xf6faf90e920bece0] Choose the number line model for −5 + 2.5 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -889,17 +888,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xf6faf90e920bece0
-	// Question: Select the number line model for -5 + 2.5
-	// Widget key: choice_b_number_line
-	test("number-line-with-action - [xf6faf90e920bece0] Select the number line model for -5 + 2.5 (2)", async () => {
+	// Question: Choose the number line model for −5 + 2.5
+	// Widget key: number_line_choice_b
+	test("number-line-with-action - [xf6faf90e920bece0] Choose the number line model for −5 + 2.5 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 8,
-		  "min": -6,
+		  "min": -3,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -942,17 +941,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xf6faf90e920bece0
-	// Question: Select the number line model for -5 + 2.5
-	// Widget key: choice_c_number_line
-	test("number-line-with-action - [xf6faf90e920bece0] Select the number line model for -5 + 2.5 (3)", async () => {
+	// Question: Choose the number line model for −5 + 2.5
+	// Widget key: number_line_choice_c
+	test("number-line-with-action - [xf6faf90e920bece0] Choose the number line model for −5 + 2.5 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 8,
-		  "min": -6,
+		  "max": 10,
+		  "min": -1,
 		  "type": "numberLineWithAction",
-		  "width": 128,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -995,17 +994,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x82261bcc5edaa00e
-	// Question: Choose the number line model for -2 1/2 + (-5)
-	// Widget key: choice_a_number_line
-	test("number-line-with-action - [x82261bcc5edaa00e] Choose the number line model for -2 1/2 + (-5) (1)", async () => {
+	// Question: Choose the number line model for a negative sum
+	// Widget key: choice_a_numberline
+	test("number-line-with-action - [x82261bcc5edaa00e] Choose the number line model for a negative sum (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -9,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -1028,12 +1027,9 @@ describe("numberLineWithAction widget tests", () => {
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 3
-		  },
-		  "secondaryTickInterval": {
-		    "type": "whole",
 		    "interval": 1
-		  }
+		  },
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1052,17 +1048,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x82261bcc5edaa00e
-	// Question: Choose the number line model for -2 1/2 + (-5)
-	// Widget key: choice_b_number_line
-	test("number-line-with-action - [x82261bcc5edaa00e] Choose the number line model for -2 1/2 + (-5) (2)", async () => {
+	// Question: Choose the number line model for a negative sum
+	// Widget key: choice_b_numberline
+	test("number-line-with-action - [x82261bcc5edaa00e] Choose the number line model for a negative sum (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -9,
 		  "type": "numberLineWithAction",
-		  "width": 167.14285714285714,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -1085,12 +1081,9 @@ describe("numberLineWithAction widget tests", () => {
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 3
-		  },
-		  "secondaryTickInterval": {
-		    "type": "whole",
 		    "interval": 1
-		  }
+		  },
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1109,17 +1102,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x82261bcc5edaa00e
-	// Question: Choose the number line model for -2 1/2 + (-5)
-	// Widget key: choice_c_number_line
-	test("number-line-with-action - [x82261bcc5edaa00e] Choose the number line model for -2 1/2 + (-5) (3)", async () => {
+	// Question: Choose the number line model for a negative sum
+	// Widget key: choice_c_numberline
+	test("number-line-with-action - [x82261bcc5edaa00e] Choose the number line model for a negative sum (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -9,
 		  "type": "numberLineWithAction",
-		  "width": 98.57142857142857,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -1142,12 +1135,9 @@ describe("numberLineWithAction widget tests", () => {
 		  "orientation": "vertical",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 3
-		  },
-		  "secondaryTickInterval": {
-		    "type": "whole",
 		    "interval": 1
-		  }
+		  },
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1176,7 +1166,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -1,
 		  "type": "numberLineWithAction",
 		  "width": 440,
-		  "height": 150,
+		  "height": 330,
 		  "actions": [
 		    {
 		      "delta": {
@@ -1231,7 +1221,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -1,
 		  "type": "numberLineWithAction",
 		  "width": 440,
-		  "height": 150,
+		  "height": 330,
 		  "actions": [
 		    {
 		      "delta": {
@@ -1286,7 +1276,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -1,
 		  "type": "numberLineWithAction",
 		  "width": 440,
-		  "height": 150,
+		  "height": 330,
 		  "actions": [
 		    {
 		      "delta": {
@@ -1331,211 +1321,151 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x44abd870dc49e748
-	// Question: Select the number line model for -1 1/2 + 1 1/2
-	// Widget key: choice_a_nl
-	test("number-line-with-action - [x44abd870dc49e748] Select the number line model for -1 1/2 + 1 1/2 (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 3,
-		  "min": -3,
-		  "type": "numberLineWithAction",
-		  "width": 105,
-		  "height": 240,
-		  "actions": [
-		    {
-		      "delta": {
-		        "sign": "-",
-		        "type": "mixed",
-		        "whole": 1,
-		        "numerator": 1,
-		        "denominator": 2
-		      }
-		    },
-		    {
-		      "delta": {
-		        "sign": "+",
-		        "type": "mixed",
-		        "whole": 1,
-		        "numerator": 1,
-		        "denominator": 2
-		      }
-		    }
-		  ],
-		  "startValue": 0,
-		  "orientation": "vertical",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "numerator": 1,
-		    "denominator": 2
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLineWithAction", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x44abd870dc49e748
-	// Question: Select the number line model for -1 1/2 + 1 1/2
-	// Widget key: choice_b_nl
-	test("number-line-with-action - [x44abd870dc49e748] Select the number line model for -1 1/2 + 1 1/2 (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 3,
-		  "min": -3,
-		  "type": "numberLineWithAction",
-		  "width": 105,
-		  "height": 240,
-		  "actions": [
-		    {
-		      "delta": {
-		        "sign": "-",
-		        "type": "mixed",
-		        "whole": 1,
-		        "numerator": 1,
-		        "denominator": 2
-		      }
-		    },
-		    {
-		      "delta": {
-		        "sign": "-",
-		        "type": "mixed",
-		        "whole": 1,
-		        "numerator": 1,
-		        "denominator": 2
-		      }
-		    }
-		  ],
-		  "startValue": 0,
-		  "orientation": "vertical",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "numerator": 1,
-		    "denominator": 2
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLineWithAction", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x44abd870dc49e748
-	// Question: Select the number line model for -1 1/2 + 1 1/2
-	// Widget key: choice_c_nl
-	test("number-line-with-action - [x44abd870dc49e748] Select the number line model for -1 1/2 + 1 1/2 (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 3,
-		  "min": -3,
-		  "type": "numberLineWithAction",
-		  "width": 105,
-		  "height": 240,
-		  "actions": [
-		    {
-		      "delta": {
-		        "sign": "+",
-		        "type": "mixed",
-		        "whole": 1,
-		        "numerator": 1,
-		        "denominator": 2
-		      }
-		    },
-		    {
-		      "delta": {
-		        "sign": "+",
-		        "type": "mixed",
-		        "whole": 1,
-		        "numerator": 1,
-		        "denominator": 2
-		      }
-		    }
-		  ],
-		  "startValue": 0,
-		  "orientation": "vertical",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "numerator": 1,
-		    "denominator": 2
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLineWithAction", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x293c0f0461f4d484
-	// Question: Select the number line model for -4.5 + (-3.5)
+	// Question: Choose the number line model for -1 1/2 + 1 1/2
 	// Widget key: choice_a_number_line
-	test("number-line-with-action - [x293c0f0461f4d484] Select the number line model for -4.5 + (-3.5) (1)", async () => {
+	test("number-line-with-action - [x44abd870dc49e748] Choose the number line model for -1 1/2 + 1 1/2 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
-		  "min": -9,
+		  "min": -3,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 400,
 		  "actions": [
 		    {
 		      "delta": {
 		        "sign": "-",
-		        "type": "fraction",
-		        "numerator": 9,
+		        "type": "mixed",
+		        "whole": 1,
+		        "numerator": 1,
+		        "denominator": 2
+		      }
+		    },
+		    {
+		      "delta": {
+		        "sign": "+",
+		        "type": "mixed",
+		        "whole": 1,
+		        "numerator": 1,
+		        "denominator": 2
+		      }
+		    }
+		  ],
+		  "startValue": 0,
+		  "orientation": "vertical",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 3
+		  },
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLineWithAction", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x44abd870dc49e748
+	// Question: Choose the number line model for -1 1/2 + 1 1/2
+	// Widget key: choice_b_number_line
+	test("number-line-with-action - [x44abd870dc49e748] Choose the number line model for -1 1/2 + 1 1/2 (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 3,
+		  "min": -3,
+		  "type": "numberLineWithAction",
+		  "width": 360,
+		  "height": 400,
+		  "actions": [
+		    {
+		      "delta": {
+		        "sign": "-",
+		        "type": "mixed",
+		        "whole": 1,
+		        "numerator": 1,
 		        "denominator": 2
 		      }
 		    },
 		    {
 		      "delta": {
 		        "sign": "-",
-		        "type": "fraction",
-		        "numerator": 7,
+		        "type": "mixed",
+		        "whole": 1,
+		        "numerator": 1,
+		        "denominator": 2
+		      }
+		    }
+		  ],
+		  "startValue": 0,
+		  "orientation": "vertical",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 3
+		  },
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLineWithAction", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x44abd870dc49e748
+	// Question: Choose the number line model for -1 1/2 + 1 1/2
+	// Widget key: choice_c_number_line
+	test("number-line-with-action - [x44abd870dc49e748] Choose the number line model for -1 1/2 + 1 1/2 (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 3,
+		  "min": -3,
+		  "type": "numberLineWithAction",
+		  "width": 360,
+		  "height": 400,
+		  "actions": [
+		    {
+		      "delta": {
+		        "sign": "+",
+		        "type": "mixed",
+		        "whole": 1,
+		        "numerator": 1,
+		        "denominator": 2
+		      }
+		    },
+		    {
+		      "delta": {
+		        "sign": "+",
+		        "type": "mixed",
+		        "whole": 1,
+		        "numerator": 1,
 		        "denominator": 2
 		      }
 		    }
@@ -1568,23 +1498,84 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x293c0f0461f4d484
-	// Question: Select the number line model for -4.5 + (-3.5)
-	// Widget key: choice_b_number_line
-	test("number-line-with-action - [x293c0f0461f4d484] Select the number line model for -4.5 + (-3.5) (2)", async () => {
+	// Question: Choose the number line model for a sum of negatives
+	// Widget key: choice_a_nl
+	test("number-line-with-action - [x293c0f0461f4d484] Choose the number line model for a sum of negatives (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -9,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
 		        "sign": "-",
-		        "type": "fraction",
-		        "numerator": 5,
+		        "type": "mixed",
+		        "whole": 4,
+		        "numerator": 1,
+		        "denominator": 2
+		      }
+		    },
+		    {
+		      "delta": {
+		        "sign": "-",
+		        "type": "mixed",
+		        "whole": 3,
+		        "numerator": 1,
+		        "denominator": 2
+		      }
+		    }
+		  ],
+		  "startValue": 0,
+		  "orientation": "vertical",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 3
+		  },
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "numerator": 1,
+		    "denominator": 2
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLineWithAction", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x293c0f0461f4d484
+	// Question: Choose the number line model for a sum of negatives
+	// Widget key: choice_b_nl
+	test("number-line-with-action - [x293c0f0461f4d484] Choose the number line model for a sum of negatives (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 3,
+		  "min": -9,
+		  "type": "numberLineWithAction",
+		  "width": 360,
+		  "height": 420,
+		  "actions": [
+		    {
+		      "delta": {
+		        "sign": "-",
+		        "type": "mixed",
+		        "whole": 2,
+		        "numerator": 1,
 		        "denominator": 2
 		      }
 		    },
@@ -1603,8 +1594,9 @@ describe("numberLineWithAction widget tests", () => {
 		    "interval": 3
 		  },
 		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
+		    "type": "fraction",
+		    "numerator": 1,
+		    "denominator": 2
 		  }
 		} as unknown as WidgetInput
 
@@ -1624,31 +1616,33 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x293c0f0461f4d484
-	// Question: Select the number line model for -4.5 + (-3.5)
-	// Widget key: choice_c_number_line
-	test("number-line-with-action - [x293c0f0461f4d484] Select the number line model for -4.5 + (-3.5) (3)", async () => {
+	// Question: Choose the number line model for a sum of negatives
+	// Widget key: choice_c_nl
+	test("number-line-with-action - [x293c0f0461f4d484] Choose the number line model for a sum of negatives (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -9,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
 		        "sign": "-",
-		        "type": "fraction",
-		        "numerator": 9,
+		        "type": "mixed",
+		        "whole": 4,
+		        "numerator": 1,
 		        "denominator": 2
 		      }
 		    },
 		    {
 		      "delta": {
 		        "sign": "+",
-		        "type": "fraction",
-		        "numerator": 7,
+		        "type": "mixed",
+		        "whole": 3,
+		        "numerator": 1,
 		        "denominator": 2
 		      }
 		    }
@@ -1660,8 +1654,9 @@ describe("numberLineWithAction widget tests", () => {
 		    "interval": 3
 		  },
 		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
+		    "type": "fraction",
+		    "numerator": 1,
+		    "denominator": 2
 		  }
 		} as unknown as WidgetInput
 
@@ -1682,7 +1677,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: x53fb22deb1bc7f3e
 	// Question: Select the number line model for 2.5 + 4.5
-	// Widget key: choice_a_numberline
+	// Widget key: choice_a_nl
 	test("number-line-with-action - [x53fb22deb1bc7f3e] Select the number line model for 2.5 + 4.5 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -1691,7 +1686,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -8,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 112.55,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -1716,7 +1711,11 @@ describe("numberLineWithAction widget tests", () => {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "numerator": 1,
+		    "denominator": 2
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1736,7 +1735,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: x53fb22deb1bc7f3e
 	// Question: Select the number line model for 2.5 + 4.5
-	// Widget key: choice_b_numberline
+	// Widget key: choice_b_nl
 	test("number-line-with-action - [x53fb22deb1bc7f3e] Select the number line model for 2.5 + 4.5 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -1745,7 +1744,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -8,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 112.55,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -1770,7 +1769,11 @@ describe("numberLineWithAction widget tests", () => {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "numerator": 1,
+		    "denominator": 2
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1790,7 +1793,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: x53fb22deb1bc7f3e
 	// Question: Select the number line model for 2.5 + 4.5
-	// Widget key: choice_c_numberline
+	// Widget key: choice_c_nl
 	test("number-line-with-action - [x53fb22deb1bc7f3e] Select the number line model for 2.5 + 4.5 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -1799,7 +1802,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -8,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 112.55,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -1824,7 +1827,11 @@ describe("numberLineWithAction widget tests", () => {
 		    "type": "whole",
 		    "interval": 1
 		  },
-		  "secondaryTickInterval": null
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "numerator": 1,
+		    "denominator": 2
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -1843,9 +1850,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x21aa7b20592b802a
-	// Question: Select the number line model for a sum of negative numbers
+	// Question: Select the number line model for -2 + (-7/2)
 	// Widget key: choice_a_number_line
-	test("number-line-with-action - [x21aa7b20592b802a] Select the number line model for a sum of negative numbers (1)", async () => {
+	test("number-line-with-action - [x21aa7b20592b802a] Select the number line model for -2 + (-7/2) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1853,7 +1860,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -9,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 112.5531914893617,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -1896,9 +1903,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x21aa7b20592b802a
-	// Question: Select the number line model for a sum of negative numbers
+	// Question: Select the number line model for -2 + (-7/2)
 	// Widget key: choice_b_number_line
-	test("number-line-with-action - [x21aa7b20592b802a] Select the number line model for a sum of negative numbers (2)", async () => {
+	test("number-line-with-action - [x21aa7b20592b802a] Select the number line model for -2 + (-7/2) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1906,7 +1913,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -9,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 141.91489361702128,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -1949,9 +1956,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x21aa7b20592b802a
-	// Question: Select the number line model for a sum of negative numbers
+	// Question: Select the number line model for -2 + (-7/2)
 	// Widget key: choice_c_number_line
-	test("number-line-with-action - [x21aa7b20592b802a] Select the number line model for a sum of negative numbers (3)", async () => {
+	test("number-line-with-action - [x21aa7b20592b802a] Select the number line model for -2 + (-7/2) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1959,7 +1966,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -9,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 112.5531914893617,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -2003,7 +2010,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: x9f41a9112f828675
 	// Question: Select the number line model for 1.5 + (−4)
-	// Widget key: numberline_choice_a
+	// Widget key: choice_a_nl
 	test("number-line-with-action - [x9f41a9112f828675] Select the number line model for 1.5 + (−4) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2011,8 +2018,8 @@ describe("numberLineWithAction widget tests", () => {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -2056,7 +2063,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: x9f41a9112f828675
 	// Question: Select the number line model for 1.5 + (−4)
-	// Widget key: numberline_choice_b
+	// Widget key: choice_b_nl
 	test("number-line-with-action - [x9f41a9112f828675] Select the number line model for 1.5 + (−4) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2064,8 +2071,8 @@ describe("numberLineWithAction widget tests", () => {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -2109,7 +2116,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: x9f41a9112f828675
 	// Question: Select the number line model for 1.5 + (−4)
-	// Widget key: numberline_choice_c
+	// Widget key: choice_c_nl
 	test("number-line-with-action - [x9f41a9112f828675] Select the number line model for 1.5 + (−4) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2117,8 +2124,8 @@ describe("numberLineWithAction widget tests", () => {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -2162,7 +2169,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: x621482e0914d615c
 	// Question: Select the number line model for 5/2 + 3
-	// Widget key: choice_a_number_line
+	// Widget key: nl_choice_a
 	test("number-line-with-action - [x621482e0914d615c] Select the number line model for 5/2 + 3 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2170,8 +2177,8 @@ describe("numberLineWithAction widget tests", () => {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 400,
 		  "actions": [
 		    {
 		      "delta": {
@@ -2218,7 +2225,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: x621482e0914d615c
 	// Question: Select the number line model for 5/2 + 3
-	// Widget key: choice_b_number_line
+	// Widget key: nl_choice_b
 	test("number-line-with-action - [x621482e0914d615c] Select the number line model for 5/2 + 3 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2226,8 +2233,8 @@ describe("numberLineWithAction widget tests", () => {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLineWithAction",
-		  "width": 102.85714285714286,
-		  "height": 240,
+		  "width": 360,
+		  "height": 400,
 		  "actions": [
 		    {
 		      "delta": {
@@ -2274,7 +2281,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: x621482e0914d615c
 	// Question: Select the number line model for 5/2 + 3
-	// Widget key: choice_c_number_line
+	// Widget key: nl_choice_c
 	test("number-line-with-action - [x621482e0914d615c] Select the number line model for 5/2 + 3 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2282,8 +2289,8 @@ describe("numberLineWithAction widget tests", () => {
 		  "max": 6,
 		  "min": -6,
 		  "type": "numberLineWithAction",
-		  "width": 132.85714285714286,
-		  "height": 240,
+		  "width": 360,
+		  "height": 400,
 		  "actions": [
 		    {
 		      "delta": {
@@ -2330,7 +2337,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: x5381f9d9641ca379
 	// Question: Select the number line model for -4 + 7.5
-	// Widget key: choice_a_number_line
+	// Widget key: choice_a_visual
 	test("number-line-with-action - [x5381f9d9641ca379] Select the number line model for -4 + 7.5 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2339,7 +2346,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -9,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 113,
+		  "height": 312,
 		  "actions": [
 		    {
 		      "delta": {
@@ -2351,8 +2358,9 @@ describe("numberLineWithAction widget tests", () => {
 		    {
 		      "delta": {
 		        "sign": "+",
-		        "type": "fraction",
-		        "numerator": 15,
+		        "type": "mixed",
+		        "whole": 7,
+		        "numerator": 1,
 		        "denominator": 2
 		      }
 		    }
@@ -2383,7 +2391,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: x5381f9d9641ca379
 	// Question: Select the number line model for -4 + 7.5
-	// Widget key: choice_b_number_line
+	// Widget key: choice_b_visual
 	test("number-line-with-action - [x5381f9d9641ca379] Select the number line model for -4 + 7.5 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2392,7 +2400,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -9,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 132,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -2404,8 +2412,9 @@ describe("numberLineWithAction widget tests", () => {
 		    {
 		      "delta": {
 		        "sign": "-",
-		        "type": "fraction",
-		        "numerator": 15,
+		        "type": "mixed",
+		        "whole": 7,
+		        "numerator": 1,
 		        "denominator": 2
 		      }
 		    }
@@ -2436,7 +2445,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: x5381f9d9641ca379
 	// Question: Select the number line model for -4 + 7.5
-	// Widget key: choice_c_number_line
+	// Widget key: choice_c_visual
 	test("number-line-with-action - [x5381f9d9641ca379] Select the number line model for -4 + 7.5 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2445,7 +2454,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -9,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 113,
+		  "height": 312,
 		  "actions": [
 		    {
 		      "delta": {
@@ -2457,8 +2466,9 @@ describe("numberLineWithAction widget tests", () => {
 		    {
 		      "delta": {
 		        "sign": "+",
-		        "type": "fraction",
-		        "numerator": 11,
+		        "type": "mixed",
+		        "whole": 5,
+		        "numerator": 1,
 		        "denominator": 2
 		      }
 		    }
@@ -2488,183 +2498,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xd71c42100bcc7400
-	// Question: Select the number line model for 3/4 + (-1/4)
-	// Widget key: choice_a_nl
-	test("number-line-with-action - [xd71c42100bcc7400] Select the number line model for 3/4 + (-1/4) (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 1,
-		  "min": -1,
-		  "type": "numberLineWithAction",
-		  "width": 440,
-		  "height": 120,
-		  "actions": [
-		    {
-		      "delta": {
-		        "sign": "+",
-		        "type": "fraction",
-		        "numerator": 3,
-		        "denominator": 4
-		      }
-		    },
-		    {
-		      "delta": {
-		        "sign": "-",
-		        "type": "fraction",
-		        "numerator": 1,
-		        "denominator": 4
-		      }
-		    }
-		  ],
-		  "startValue": 0,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "numerator": 1,
-		    "denominator": 4
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLineWithAction", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd71c42100bcc7400
-	// Question: Select the number line model for 3/4 + (-1/4)
-	// Widget key: choice_b_nl
-	test("number-line-with-action - [xd71c42100bcc7400] Select the number line model for 3/4 + (-1/4) (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 1,
-		  "min": -1,
-		  "type": "numberLineWithAction",
-		  "width": 440,
-		  "height": 120,
-		  "actions": [
-		    {
-		      "delta": {
-		        "sign": "-",
-		        "type": "fraction",
-		        "numerator": 3,
-		        "denominator": 4
-		      }
-		    },
-		    {
-		      "delta": {
-		        "sign": "-",
-		        "type": "fraction",
-		        "numerator": 1,
-		        "denominator": 4
-		      }
-		    }
-		  ],
-		  "startValue": 0,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "numerator": 1,
-		    "denominator": 4
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLineWithAction", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xd71c42100bcc7400
-	// Question: Select the number line model for 3/4 + (-1/4)
-	// Widget key: choice_c_nl
-	test("number-line-with-action - [xd71c42100bcc7400] Select the number line model for 3/4 + (-1/4) (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 1,
-		  "min": -1,
-		  "type": "numberLineWithAction",
-		  "width": 440,
-		  "height": 120,
-		  "actions": [
-		    {
-		      "delta": {
-		        "sign": "-",
-		        "type": "fraction",
-		        "numerator": 3,
-		        "denominator": 4
-		      }
-		    },
-		    {
-		      "delta": {
-		        "sign": "+",
-		        "type": "fraction",
-		        "numerator": 1,
-		        "denominator": 4
-		      }
-		    }
-		  ],
-		  "startValue": 0,
-		  "orientation": "horizontal",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "secondaryTickInterval": {
-		    "type": "fraction",
-		    "numerator": 1,
-		    "denominator": 4
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLineWithAction", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x90c8983e96809916
-	// Question: Choose the number line model for -1/2 + 5/4
+	// Question: Select the number line model for 3/4 + (−1/4)
 	// Widget key: choice_a_number_line
-	test("number-line-with-action - [x90c8983e96809916] Choose the number line model for -1/2 + 5/4 (1)", async () => {
+	test("number-line-with-action - [xd71c42100bcc7400] Select the number line model for 3/4 + (−1/4) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2672,21 +2508,21 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -1,
 		  "type": "numberLineWithAction",
 		  "width": 440,
-		  "height": 117,
+		  "height": 320,
 		  "actions": [
+		    {
+		      "delta": {
+		        "sign": "+",
+		        "type": "fraction",
+		        "numerator": 3,
+		        "denominator": 4
+		      }
+		    },
 		    {
 		      "delta": {
 		        "sign": "-",
 		        "type": "fraction",
 		        "numerator": 1,
-		        "denominator": 2
-		      }
-		    },
-		    {
-		      "delta": {
-		        "sign": "+",
-		        "type": "fraction",
-		        "numerator": 5,
 		        "denominator": 4
 		      }
 		    }
@@ -2719,10 +2555,10 @@ describe("numberLineWithAction widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x90c8983e96809916
-	// Question: Choose the number line model for -1/2 + 5/4
+	// Extracted from question: xd71c42100bcc7400
+	// Question: Select the number line model for 3/4 + (−1/4)
 	// Widget key: choice_b_number_line
-	test("number-line-with-action - [x90c8983e96809916] Choose the number line model for -1/2 + 5/4 (2)", async () => {
+	test("number-line-with-action - [xd71c42100bcc7400] Select the number line model for 3/4 + (−1/4) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2730,21 +2566,79 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -1,
 		  "type": "numberLineWithAction",
 		  "width": 440,
-		  "height": 127,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
-		        "sign": "+",
+		        "sign": "-",
 		        "type": "fraction",
-		        "numerator": 1,
-		        "denominator": 2
+		        "numerator": 3,
+		        "denominator": 4
 		      }
 		    },
 		    {
 		      "delta": {
 		        "sign": "-",
 		        "type": "fraction",
-		        "numerator": 5,
+		        "numerator": 1,
+		        "denominator": 4
+		      }
+		    }
+		  ],
+		  "startValue": 0,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "secondaryTickInterval": {
+		    "type": "fraction",
+		    "numerator": 1,
+		    "denominator": 4
+		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLineWithAction", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xd71c42100bcc7400
+	// Question: Select the number line model for 3/4 + (−1/4)
+	// Widget key: choice_c_number_line
+	test("number-line-with-action - [xd71c42100bcc7400] Select the number line model for 3/4 + (−1/4) (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 1,
+		  "min": -1,
+		  "type": "numberLineWithAction",
+		  "width": 440,
+		  "height": 320,
+		  "actions": [
+		    {
+		      "delta": {
+		        "sign": "-",
+		        "type": "fraction",
+		        "numerator": 3,
+		        "denominator": 4
+		      }
+		    },
+		    {
+		      "delta": {
+		        "sign": "+",
+		        "type": "fraction",
+		        "numerator": 1,
 		        "denominator": 4
 		      }
 		    }
@@ -2778,9 +2672,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x90c8983e96809916
-	// Question: Choose the number line model for -1/2 + 5/4
-	// Widget key: choice_c_number_line
-	test("number-line-with-action - [x90c8983e96809916] Choose the number line model for -1/2 + 5/4 (3)", async () => {
+	// Question: Select the number line model for a sum of fractions
+	// Widget key: choice_a_nl
+	test("number-line-with-action - [x90c8983e96809916] Select the number line model for a sum of fractions (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2788,14 +2682,69 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -1,
 		  "type": "numberLineWithAction",
 		  "width": 440,
-		  "height": 166,
+		  "height": 300,
+		  "actions": [
+		    {
+		      "delta": {
+		        "sign": "-",
+		        "type": "fraction",
+		        "numerator": 1,
+		        "denominator": 2
+		      }
+		    },
+		    {
+		      "delta": {
+		        "sign": "+",
+		        "type": "fraction",
+		        "numerator": 5,
+		        "denominator": 4
+		      }
+		    }
+		  ],
+		  "startValue": 0,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "numerator": 1,
+		    "denominator": 4
+		  },
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLineWithAction", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x90c8983e96809916
+	// Question: Select the number line model for a sum of fractions
+	// Widget key: choice_b_nl
+	test("number-line-with-action - [x90c8983e96809916] Select the number line model for a sum of fractions (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 1,
+		  "min": -1,
+		  "type": "numberLineWithAction",
+		  "width": 440,
+		  "height": 300,
 		  "actions": [
 		    {
 		      "delta": {
 		        "sign": "+",
 		        "type": "fraction",
-		        "numerator": 1,
-		        "denominator": 2
+		        "numerator": 2,
+		        "denominator": 4
 		      }
 		    },
 		    {
@@ -2810,14 +2759,66 @@ describe("numberLineWithAction widget tests", () => {
 		  "startValue": 0,
 		  "orientation": "horizontal",
 		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  },
-		  "secondaryTickInterval": {
 		    "type": "fraction",
 		    "numerator": 1,
 		    "denominator": 4
-		  }
+		  },
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLineWithAction", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x90c8983e96809916
+	// Question: Select the number line model for a sum of fractions
+	// Widget key: choice_c_nl
+	test("number-line-with-action - [x90c8983e96809916] Select the number line model for a sum of fractions (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 1,
+		  "min": -1,
+		  "type": "numberLineWithAction",
+		  "width": 440,
+		  "height": 300,
+		  "actions": [
+		    {
+		      "delta": {
+		        "sign": "+",
+		        "type": "fraction",
+		        "numerator": 2,
+		        "denominator": 4
+		      }
+		    },
+		    {
+		      "delta": {
+		        "sign": "-",
+		        "type": "fraction",
+		        "numerator": 5,
+		        "denominator": 4
+		      }
+		    }
+		  ],
+		  "startValue": 0,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "numerator": 1,
+		    "denominator": 4
+		  },
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -2837,7 +2838,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: xced586698a4a059a
 	// Question: Select the number line model for 3.5 + (−5)
-	// Widget key: choice_a_image
+	// Widget key: choice_a_number_line
 	test("number-line-with-action - [xced586698a4a059a] Select the number line model for 3.5 + (−5) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2845,15 +2846,14 @@ describe("numberLineWithAction widget tests", () => {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
 		        "sign": "+",
-		        "type": "mixed",
-		        "whole": 3,
-		        "numerator": 1,
+		        "type": "fraction",
+		        "numerator": 7,
 		        "denominator": 2
 		      }
 		    },
@@ -2894,7 +2894,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: xced586698a4a059a
 	// Question: Select the number line model for 3.5 + (−5)
-	// Widget key: choice_b_image
+	// Widget key: choice_b_number_line
 	test("number-line-with-action - [xced586698a4a059a] Select the number line model for 3.5 + (−5) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2902,15 +2902,14 @@ describe("numberLineWithAction widget tests", () => {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLineWithAction",
-		  "width": 150,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
 		        "sign": "-",
-		        "type": "mixed",
-		        "whole": 3,
-		        "numerator": 1,
+		        "type": "fraction",
+		        "numerator": 7,
 		        "denominator": 2
 		      }
 		    },
@@ -2951,7 +2950,7 @@ describe("numberLineWithAction widget tests", () => {
 
 	// Extracted from question: xced586698a4a059a
 	// Question: Select the number line model for 3.5 + (−5)
-	// Widget key: choice_c_image
+	// Widget key: choice_c_number_line
 	test("number-line-with-action - [xced586698a4a059a] Select the number line model for 3.5 + (−5) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -2959,8 +2958,8 @@ describe("numberLineWithAction widget tests", () => {
 		  "max": 4,
 		  "min": -4,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -2972,9 +2971,8 @@ describe("numberLineWithAction widget tests", () => {
 		    {
 		      "delta": {
 		        "sign": "+",
-		        "type": "mixed",
-		        "whole": 1,
-		        "numerator": 1,
+		        "type": "fraction",
+		        "numerator": 3,
 		        "denominator": 2
 		      }
 		    }
@@ -3007,9 +3005,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xcabd43499582d390
-	// Question: Number line model for -2/5 + 4/5
+	// Question: Select the number line model for -2/5 + 4/5
 	// Widget key: choice_a_number_line
-	test("number-line-with-action - [xcabd43499582d390] Number line model for -2/5 + 4/5 (1)", async () => {
+	test("number-line-with-action - [xcabd43499582d390] Select the number line model for -2/5 + 4/5 (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3017,7 +3015,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -1,
 		  "type": "numberLineWithAction",
 		  "width": 440,
-		  "height": 117.33333333333333,
+		  "height": 340,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3039,11 +3037,14 @@ describe("numberLineWithAction widget tests", () => {
 		  "startValue": 0,
 		  "orientation": "horizontal",
 		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "secondaryTickInterval": {
 		    "type": "fraction",
 		    "numerator": 1,
 		    "denominator": 5
-		  },
-		  "secondaryTickInterval": null
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3062,9 +3063,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xcabd43499582d390
-	// Question: Number line model for -2/5 + 4/5
+	// Question: Select the number line model for -2/5 + 4/5
 	// Widget key: choice_b_number_line
-	test("number-line-with-action - [xcabd43499582d390] Number line model for -2/5 + 4/5 (2)", async () => {
+	test("number-line-with-action - [xcabd43499582d390] Select the number line model for -2/5 + 4/5 (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3072,7 +3073,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -1,
 		  "type": "numberLineWithAction",
 		  "width": 440,
-		  "height": 127.11111111111111,
+		  "height": 340,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3094,11 +3095,14 @@ describe("numberLineWithAction widget tests", () => {
 		  "startValue": 0,
 		  "orientation": "horizontal",
 		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "secondaryTickInterval": {
 		    "type": "fraction",
 		    "numerator": 1,
 		    "denominator": 5
-		  },
-		  "secondaryTickInterval": null
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3117,9 +3121,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xcabd43499582d390
-	// Question: Number line model for -2/5 + 4/5
+	// Question: Select the number line model for -2/5 + 4/5
 	// Widget key: choice_c_number_line
-	test("number-line-with-action - [xcabd43499582d390] Number line model for -2/5 + 4/5 (3)", async () => {
+	test("number-line-with-action - [xcabd43499582d390] Select the number line model for -2/5 + 4/5 (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3127,7 +3131,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -1,
 		  "type": "numberLineWithAction",
 		  "width": 440,
-		  "height": 166.22222222222223,
+		  "height": 340,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3149,11 +3153,14 @@ describe("numberLineWithAction widget tests", () => {
 		  "startValue": 0,
 		  "orientation": "horizontal",
 		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  },
+		  "secondaryTickInterval": {
 		    "type": "fraction",
 		    "numerator": 1,
 		    "denominator": 5
-		  },
-		  "secondaryTickInterval": null
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3172,17 +3179,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x51dd8b7ef627dd5b
-	// Question: Select the number line model for −5 + (−2.5)
+	// Question: Select the number line model for -5 + (-2.5)
 	// Widget key: choice_a_numberline
-	test("number-line-with-action - [x51dd8b7ef627dd5b] Select the number line model for −5 + (−2.5) (1)", async () => {
+	test("number-line-with-action - [x51dd8b7ef627dd5b] Select the number line model for -5 + (-2.5) (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -9,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 360,
+		  "height": 400,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3228,17 +3235,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x51dd8b7ef627dd5b
-	// Question: Select the number line model for −5 + (−2.5)
+	// Question: Select the number line model for -5 + (-2.5)
 	// Widget key: choice_b_numberline
-	test("number-line-with-action - [x51dd8b7ef627dd5b] Select the number line model for −5 + (−2.5) (2)", async () => {
+	test("number-line-with-action - [x51dd8b7ef627dd5b] Select the number line model for -5 + (-2.5) (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -9,
 		  "type": "numberLineWithAction",
-		  "width": 154.28571428571428,
-		  "height": 240,
+		  "width": 360,
+		  "height": 400,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3284,21 +3291,21 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x51dd8b7ef627dd5b
-	// Question: Select the number line model for −5 + (−2.5)
+	// Question: Select the number line model for -5 + (-2.5)
 	// Widget key: choice_c_numberline
-	test("number-line-with-action - [x51dd8b7ef627dd5b] Select the number line model for −5 + (−2.5) (3)", async () => {
+	test("number-line-with-action - [x51dd8b7ef627dd5b] Select the number line model for -5 + (-2.5) (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -9,
 		  "type": "numberLineWithAction",
-		  "width": 90,
-		  "height": 240,
+		  "width": 360,
+		  "height": 400,
 		  "actions": [
 		    {
 		      "delta": {
-		        "sign": "-",
+		        "sign": "+",
 		        "type": "fraction",
 		        "numerator": 5,
 		        "denominator": 2
@@ -3322,6 +3329,53 @@ describe("numberLineWithAction widget tests", () => {
 		    "type": "whole",
 		    "interval": 1
 		  }
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLineWithAction", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf70235524a56eeb0
+	// Question: Locate -(-D) on a number line
+	// Widget key: number_line_initial
+	test("number-line-with-action - [xf70235524a56eeb0] Locate -(-D) on a number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 2,
+		  "min": -2,
+		  "type": "numberLineWithAction",
+		  "width": 460,
+		  "height": 320,
+		  "actions": [
+		    {
+		      "delta": {
+		        "sign": "-",
+		        "type": "fraction",
+		        "numerator": 1,
+		        "denominator": 2
+		      }
+		    }
+		  ],
+		  "startValue": 0,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "fraction",
+		    "numerator": 1,
+		    "denominator": 2
+		  },
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3349,8 +3403,8 @@ describe("numberLineWithAction widget tests", () => {
 		  "max": 3,
 		  "min": -6,
 		  "type": "numberLineWithAction",
-		  "width": 158,
-		  "height": 240,
+		  "width": 320,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3391,65 +3445,10 @@ describe("numberLineWithAction widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xf8477be75aae4dbd
-	// Question: Complete the equation from a vertical number line
-	// Widget key: image_1
-	test("number-line-with-action - [xf8477be75aae4dbd] Complete the equation from a vertical number line", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "max": 15,
-		  "min": -5,
-		  "type": "numberLineWithAction",
-		  "width": 96,
-		  "height": 240,
-		  "actions": [
-		    {
-		      "delta": {
-		        "sign": "+",
-		        "type": "whole",
-		        "value": 5
-		      }
-		    },
-		    {
-		      "delta": {
-		        "sign": "+",
-		        "type": "whole",
-		        "value": 9
-		      }
-		    }
-		  ],
-		  "startValue": 0,
-		  "orientation": "vertical",
-		  "tickInterval": {
-		    "type": "whole",
-		    "interval": 5
-		  },
-		  "secondaryTickInterval": {
-		    "type": "whole",
-		    "interval": 1
-		  }
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for numberLineWithAction", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xf63af1f04fe534b3
-	// Question: Complete an equation from a number line
+	// Question: Complete the equation from a number line
 	// Widget key: image_1
-	test("number-line-with-action - [xf63af1f04fe534b3] Complete an equation from a number line", async () => {
+	test("number-line-with-action - [xf63af1f04fe534b3] Complete the equation from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3457,7 +3456,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -9,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 113,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3501,10 +3500,62 @@ describe("numberLineWithAction widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x9108c4694f368e4b
-	// Question: Write an equation to describe a number line diagram
+	// Extracted from question: xf8477be75aae4dbd
+	// Question: Complete the equation from a vertical number line
 	// Widget key: image_1
-	test("number-line-with-action - [x9108c4694f368e4b] Write an equation to describe a number line diagram", async () => {
+	test("number-line-with-action - [xf8477be75aae4dbd] Complete the equation from a vertical number line", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 14,
+		  "min": -5,
+		  "type": "numberLineWithAction",
+		  "width": 360,
+		  "height": 400,
+		  "actions": [
+		    {
+		      "delta": {
+		        "sign": "+",
+		        "type": "whole",
+		        "value": 5
+		      }
+		    },
+		    {
+		      "delta": {
+		        "sign": "+",
+		        "type": "whole",
+		        "value": 9
+		      }
+		    }
+		  ],
+		  "startValue": 0,
+		  "orientation": "vertical",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 5
+		  },
+		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLineWithAction", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9108c4694f368e4b
+	// Question: Write an equation to describe the number line diagram
+	// Widget key: image_1
+	test("number-line-with-action - [x9108c4694f368e4b] Write an equation to describe the number line diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3512,7 +3563,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": 0,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 113,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3554,17 +3605,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xdab0ac9f3c04c60c
-	// Question: Select an equation to describe the number line diagram
+	// Question: Write an addition or subtraction equation from a number line diagram
 	// Widget key: image_1
-	test("number-line-with-action - [xdab0ac9f3c04c60c] Select an equation to describe the number line diagram", async () => {
+	test("number-line-with-action - [xdab0ac9f3c04c60c] Write an addition or subtraction equation from a number line diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -3,
 		  "type": "numberLineWithAction",
-		  "width": 180,
-		  "height": 240,
+		  "width": 360,
+		  "height": 480,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3606,9 +3657,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xd610b87535fc620e
-	// Question: Complete an equation from a number line
+	// Question: Complete the equation from a number line
 	// Widget key: image_1
-	test("number-line-with-action - [xd610b87535fc620e] Complete an equation from a number line", async () => {
+	test("number-line-with-action - [xd610b87535fc620e] Complete the equation from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3616,7 +3667,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -12,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 113,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3661,17 +3712,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x39cfc94b3d039302
-	// Question: Write an equation to describe a number-line diagram
+	// Question: Write an addition or subtraction equation from a number line
 	// Widget key: image_1
-	test("number-line-with-action - [x39cfc94b3d039302] Write an equation to describe a number-line diagram", async () => {
+	test("number-line-with-action - [x39cfc94b3d039302] Write an addition or subtraction equation from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 20,
-		  "min": -20,
+		  "max": 10,
+		  "min": -15,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 113,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3713,17 +3764,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xae44b6995c503ad2
-	// Question: Complete an equation from a vertical number line
+	// Question: Complete the equation from the diagram
 	// Widget key: image_1
-	test("number-line-with-action - [xae44b6995c503ad2] Complete an equation from a vertical number line", async () => {
+	test("number-line-with-action - [xae44b6995c503ad2] Complete the equation from the diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 3,
 		  "min": -9,
 		  "type": "numberLineWithAction",
-		  "width": 135,
-		  "height": 240,
+		  "width": 340,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3765,9 +3816,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x71f64f609e0ecd93
-	// Question: Complete the equation from the diagram
+	// Question: Complete the equation from a number line
 	// Widget key: image_1
-	test("number-line-with-action - [x71f64f609e0ecd93] Complete the equation from the diagram", async () => {
+	test("number-line-with-action - [x71f64f609e0ecd93] Complete the equation from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3775,7 +3826,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -10,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 113,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3817,9 +3868,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x78abb9f914c32982
-	// Question: Write an addition or subtraction equation from a number line
+	// Question: Select an equation to describe the number-line diagram
 	// Widget key: image_1
-	test("number-line-with-action - [x78abb9f914c32982] Write an addition or subtraction equation from a number line", async () => {
+	test("number-line-with-action - [x78abb9f914c32982] Select an equation to describe the number-line diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3827,7 +3878,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": 0,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 113,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3869,17 +3920,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x5e1e310fb9a0bb90
-	// Question: Write an equation to describe a vertical number line diagram
+	// Question: Write an equation from a vertical number line
 	// Widget key: image_1
-	test("number-line-with-action - [x5e1e310fb9a0bb90] Write an equation to describe a vertical number line diagram", async () => {
+	test("number-line-with-action - [x5e1e310fb9a0bb90] Write an equation from a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 10,
-		  "min": -5,
+		  "min": -10,
 		  "type": "numberLineWithAction",
-		  "width": 128,
-		  "height": 240,
+		  "width": 360,
+		  "height": 400,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3921,17 +3972,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x9c5db293cf7cd413
-	// Question: Write an equation to describe a number line diagram
+	// Question: Write an addition or subtraction equation from a number line
 	// Widget key: image_1
-	test("number-line-with-action - [x9c5db293cf7cd413] Write an equation to describe a number line diagram", async () => {
+	test("number-line-with-action - [x9c5db293cf7cd413] Write an addition or subtraction equation from a number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 6,
-		  "min": -6,
+		  "min": -5,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 113,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -3952,12 +4003,9 @@ describe("numberLineWithAction widget tests", () => {
 		  "orientation": "horizontal",
 		  "tickInterval": {
 		    "type": "whole",
-		    "interval": 2
-		  },
-		  "secondaryTickInterval": {
-		    "type": "whole",
 		    "interval": 1
-		  }
+		  },
+		  "secondaryTickInterval": null
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)
@@ -3976,17 +4024,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x9dde932a1383109d
-	// Question: Write an addition or subtraction equation from a vertical number line
+	// Question: Write an addition or subtraction equation from a diagram
 	// Widget key: image_1
-	test("number-line-with-action - [x9dde932a1383109d] Write an addition or subtraction equation from a vertical number line", async () => {
+	test("number-line-with-action - [x9dde932a1383109d] Write an addition or subtraction equation from a diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "max": 2,
 		  "min": -12,
 		  "type": "numberLineWithAction",
-		  "width": 127.05882352941177,
-		  "height": 240,
+		  "width": 360,
+		  "height": 420,
 		  "actions": [
 		    {
 		      "delta": {
@@ -4028,17 +4076,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x8eb6b54b62efd010
-	// Question: Write an addition or subtraction equation from a diagram
+	// Question: Write an equation to describe the diagram
 	// Widget key: image_1
-	test("number-line-with-action - [x8eb6b54b62efd010] Write an addition or subtraction equation from a diagram", async () => {
+	test("number-line-with-action - [x8eb6b54b62efd010] Write an equation to describe the diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 8,
+		  "max": 10,
 		  "min": -3,
 		  "type": "numberLineWithAction",
-		  "width": 157,
-		  "height": 240,
+		  "width": 360,
+		  "height": 400,
 		  "actions": [
 		    {
 		      "delta": {
@@ -4080,9 +4128,9 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: xf44c0185ceef49ea
-	// Question: Complete the equation from a number line
+	// Question: Complete the equation that describes the diagram
 	// Widget key: image_1
-	test("number-line-with-action - [xf44c0185ceef49ea] Complete the equation from a number line", async () => {
+	test("number-line-with-action - [xf44c0185ceef49ea] Complete the equation that describes the diagram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4090,7 +4138,7 @@ describe("numberLineWithAction widget tests", () => {
 		  "min": -8,
 		  "type": "numberLineWithAction",
 		  "width": 460,
-		  "height": 113,
+		  "height": 320,
 		  "actions": [
 		    {
 		      "delta": {
@@ -4135,17 +4183,17 @@ describe("numberLineWithAction widget tests", () => {
 	})
 
 	// Extracted from question: x52861d81023728a9
-	// Question: Complete the equation that describes the diagram
+	// Question: Complete an equation from a vertical number line
 	// Widget key: image_1
-	test("number-line-with-action - [x52861d81023728a9] Complete the equation that describes the diagram", async () => {
+	test("number-line-with-action - [x52861d81023728a9] Complete an equation from a vertical number line", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
-		  "max": 12,
+		  "max": 2,
 		  "min": -12,
 		  "type": "numberLineWithAction",
-		  "width": 120,
-		  "height": 240,
+		  "width": 300,
+		  "height": 400,
 		  "actions": [
 		    {
 		      "delta": {
@@ -4169,6 +4217,46 @@ describe("numberLineWithAction widget tests", () => {
 		    "interval": 1
 		  },
 		  "secondaryTickInterval": null
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for numberLineWithAction", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6924bf3af0c393ef
+	// Question: Find the missing value
+	// Widget key: image_1
+	test("number-line-with-action - [x6924bf3af0c393ef] Find the missing value", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "max": 15,
+		  "min": -15,
+		  "type": "numberLineWithAction",
+		  "width": 380,
+		  "height": 380,
+		  "actions": [],
+		  "startValue": -15,
+		  "orientation": "horizontal",
+		  "tickInterval": {
+		    "type": "whole",
+		    "interval": 5
+		  },
+		  "secondaryTickInterval": {
+		    "type": "whole",
+		    "interval": 1
+		  }
 		} as unknown as WidgetInput
 
 		// Generate the widget (includes runtime validation)

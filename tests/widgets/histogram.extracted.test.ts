@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-17T15:38:03.965Z
+// Generated on: 2025-09-18T05:17:02.163Z
 // Widget Type: histogram
 // Source: Real questions from database
 //
@@ -26,9 +26,9 @@ import * as logger from "@superbuilders/slog"
 
 describe("histogram widget tests", () => {
 	// Extracted from question: x8c717a352b878dc6
-	// Question: Compare features of a histogram and a dot plot
+	// Question: Compare information from a histogram versus a dot plot
 	// Widget key: image_1
-	test("histogram - [x8c717a352b878dc6] Compare features of a histogram and a dot plot", async () => {
+	test("histogram - [x8c717a352b878dc6] Compare information from a histogram versus a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -53,8 +53,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
-		  "width": 312,
+		  "title": "Number of rooms by number of guests",
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Number of guests"
 		  },
@@ -63,7 +63,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of rooms",
 		    "tickInterval": 2
 		  },
-		  "height": 260,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    4,
@@ -91,9 +91,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x4edfab7c7aae9b1c
-	// Question: Choose the appropriate display: histogram vs. dot plot
+	// Question: Compare information in a histogram and a dot plot
 	// Widget key: image_1
-	test("histogram - [x4edfab7c7aae9b1c] Choose the appropriate display: histogram vs. dot plot", async () => {
+	test("histogram - [x4edfab7c7aae9b1c] Compare information in a histogram and a dot plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -118,8 +118,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Number of rooms vs. number of guests",
-		  "width": 312,
+		  "title": "Number of rooms by number of guests",
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Number of guests"
 		  },
@@ -128,7 +128,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of rooms",
 		    "tickInterval": 2
 		  },
-		  "height": 260,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    4,
@@ -156,9 +156,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x8fe5deea25a82a06
-	// Question: Choose the histogram for areas less than 150 square meters
+	// Question: Select a histogram for areas less than 150 square meters
 	// Widget key: image_1
-	test("histogram - [x8fe5deea25a82a06] Choose the histogram for areas less than 150 square meters (1)", async () => {
+	test("histogram - [x8fe5deea25a82a06] Select a histogram for areas less than 150 square meters (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -183,8 +183,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
-		  "width": 296,
+		  "title": "Histogram A",
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Area (square meters)"
 		  },
@@ -193,7 +193,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of houses",
 		    "tickInterval": 2
 		  },
-		  "height": 260,
+		  "height": 300,
 		  "separators": [
 		    0,
 		    50,
@@ -221,9 +221,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x8fe5deea25a82a06
-	// Question: Choose the histogram for areas less than 150 square meters
+	// Question: Select a histogram for areas less than 150 square meters
 	// Widget key: image_2
-	test("histogram - [x8fe5deea25a82a06] Choose the histogram for areas less than 150 square meters (2)", async () => {
+	test("histogram - [x8fe5deea25a82a06] Select a histogram for areas less than 150 square meters (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -239,8 +239,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
-		  "width": 296,
+		  "title": "Histogram B",
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Area (square meters)"
 		  },
@@ -249,7 +249,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of houses",
 		    "tickInterval": 2
 		  },
-		  "height": 260,
+		  "height": 300,
 		  "separators": [
 		    0,
 		    100,
@@ -274,9 +274,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x09597e9a9517bfe6
-	// Question: Identify the histogram for areas greater than 200 square meters
+	// Question: Use a histogram to count houses with area greater than 200 square meters
 	// Widget key: image_2
-	test("histogram - [x09597e9a9517bfe6] Identify the histogram for areas greater than 200 square meters (1)", async () => {
+	test("histogram - [x09597e9a9517bfe6] Use a histogram to count houses with area greater than 200 square meters (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -301,17 +301,17 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram A",
-		  "width": 296,
+		  "title": "",
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Area in square meters"
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "label": "Number of houses",
-		    "tickInterval": 2
+		    "tickInterval": 1
 		  },
-		  "height": 260,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    50,
@@ -339,9 +339,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x09597e9a9517bfe6
-	// Question: Identify the histogram for areas greater than 200 square meters
+	// Question: Use a histogram to count houses with area greater than 200 square meters
 	// Widget key: image_3
-	test("histogram - [x09597e9a9517bfe6] Identify the histogram for areas greater than 200 square meters (2)", async () => {
+	test("histogram - [x09597e9a9517bfe6] Use a histogram to count houses with area greater than 200 square meters (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -357,17 +357,17 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram B",
-		  "width": 296,
+		  "title": "",
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Area in square meters"
 		  },
 		  "yAxis": {
 		    "max": 20,
 		    "label": "Number of houses",
-		    "tickInterval": 4
+		    "tickInterval": 5
 		  },
-		  "height": 260,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    100,
@@ -392,9 +392,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x31466f8bec7efbee
-	// Question: Identify information from a histogram and a box plot
+	// Question: Interpreting a histogram and a box plot
 	// Widget key: image_1
-	test("histogram - [x31466f8bec7efbee] Identify information from a histogram and a box plot", async () => {
+	test("histogram - [x31466f8bec7efbee] Interpreting a histogram and a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -416,8 +416,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Pumpkin Masses",
-		  "width": 500,
+		  "title": "Pumpkin mass distribution",
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Mass in kilograms"
 		  },
@@ -426,7 +426,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of pumpkins",
 		    "tickInterval": 2
 		  },
-		  "height": 350,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    3,
@@ -453,9 +453,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x9c61ff00df94cabb
-	// Question: Histogram vs. box plot: identify information
+	// Question: Compare information from a histogram and a box plot
 	// Widget key: image_1
-	test("histogram - [x9c61ff00df94cabb] Histogram vs. box plot: identify information", async () => {
+	test("histogram - [x9c61ff00df94cabb] Compare information from a histogram and a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -477,7 +477,7 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
+		  "title": "Pumpkin mass distribution",
 		  "width": 300,
 		  "xAxis": {
 		    "label": "Mass in kilograms"
@@ -487,7 +487,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of pumpkins",
 		    "tickInterval": 2
 		  },
-		  "height": 260,
+		  "height": 460,
 		  "separators": [
 		    0,
 		    3,
@@ -514,9 +514,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x2d3d2522a483ff94
-	// Question: Identify what histograms and box plots show
+	// Question: Histograms vs. box plots: choose the display
 	// Widget key: image_1
-	test("histogram - [x2d3d2522a483ff94] Identify what histograms and box plots show", async () => {
+	test("histogram - [x2d3d2522a483ff94] Histograms vs. box plots: choose the display", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -541,7 +541,7 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
+		  "title": "Number of vehicles vs. distance",
 		  "width": 300,
 		  "xAxis": {
 		    "label": "Distance in thousands of kilometers"
@@ -549,9 +549,9 @@ describe("histogram widget tests", () => {
 		  "yAxis": {
 		    "max": 10,
 		    "label": "Number of vehicles",
-		    "tickInterval": 2
+		    "tickInterval": 1
 		  },
-		  "height": 260,
+		  "height": 300,
 		  "separators": [
 		    0,
 		    50,
@@ -579,9 +579,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x673291a23b728108
-	// Question: Histogram vs. box plot: minimum and total count
+	// Question: Comparing a histogram and a box plot
 	// Widget key: image_1
-	test("histogram - [x673291a23b728108] Histogram vs. box plot: minimum and total count", async () => {
+	test("histogram - [x673291a23b728108] Comparing a histogram and a box plot", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -606,8 +606,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
-		  "width": 600,
+		  "title": "Histogram",
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Distance (thousands of kilometers)"
 		  },
@@ -616,7 +616,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of vehicles",
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    50,
@@ -645,7 +645,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: xbfe1bb15c4062cc0
 	// Question: Interpret histograms of comic-book movie revenues
-	// Widget key: histogram_dx
+	// Widget key: hist_dx
 	test("histogram - [xbfe1bb15c4062cc0] Interpret histograms of comic-book movie revenues (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -677,9 +677,9 @@ describe("histogram widget tests", () => {
 		    "label": "Revenue (hundreds of millions of dollars)"
 		  },
 		  "yAxis": {
-		    "max": 20,
+		    "max": 12,
 		    "label": "Number of Movies",
-		    "tickInterval": 5
+		    "tickInterval": 3
 		  },
 		  "height": 388,
 		  "separators": [
@@ -710,7 +710,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: xbfe1bb15c4062cc0
 	// Question: Interpret histograms of comic-book movie revenues
-	// Widget key: histogram_marble
+	// Widget key: hist_marble
 	test("histogram - [xbfe1bb15c4062cc0] Interpret histograms of comic-book movie revenues (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -745,9 +745,9 @@ describe("histogram widget tests", () => {
 		    "label": "Revenue (hundreds of millions of dollars)"
 		  },
 		  "yAxis": {
-		    "max": 20,
+		    "max": 16,
 		    "label": "Number of Movies",
-		    "tickInterval": 5
+		    "tickInterval": 4
 		  },
 		  "height": 388,
 		  "separators": [
@@ -778,9 +778,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x309bbdae386c159c
-	// Question: Interpret information from histograms
-	// Widget key: histogram_alabama
-	test("histogram - [x309bbdae386c159c] Interpret information from histograms (1)", async () => {
+	// Question: Interpreting histograms of offensive linemen masses
+	// Widget key: image_alabama
+	test("histogram - [x309bbdae386c159c] Interpreting histograms of offensive linemen masses (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -805,7 +805,7 @@ describe("histogram widget tests", () => {
 		  "title": "Alabama",
 		  "width": 480,
 		  "xAxis": {
-		    "label": "Mass (in kilograms)"
+		    "label": "Mass, in kilograms"
 		  },
 		  "yAxis": {
 		    "max": 10,
@@ -839,9 +839,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x309bbdae386c159c
-	// Question: Interpret information from histograms
-	// Widget key: histogram_mount_union
-	test("histogram - [x309bbdae386c159c] Interpret information from histograms (2)", async () => {
+	// Question: Interpreting histograms of offensive linemen masses
+	// Widget key: image_mount_union
+	test("histogram - [x309bbdae386c159c] Interpreting histograms of offensive linemen masses (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -863,7 +863,7 @@ describe("histogram widget tests", () => {
 		  "title": "Mount Union",
 		  "width": 480,
 		  "xAxis": {
-		    "label": "Mass (in kilograms)"
+		    "label": "Mass, in kilograms"
 		  },
 		  "yAxis": {
 		    "max": 10,
@@ -896,9 +896,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x41a29d2a277ce7d8
-	// Question: Interpret January temperature histograms
-	// Widget key: image_portland
-	test("histogram - [x41a29d2a277ce7d8] Interpret January temperature histograms (1)", async () => {
+	// Question: Interpret histograms of January temperatures: Minneapolis vs. Portland
+	// Widget key: hist_portland
+	test("histogram - [x41a29d2a277ce7d8] Interpret histograms of January temperatures: Minneapolis vs. Portland (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -941,12 +941,12 @@ describe("histogram widget tests", () => {
 		  "title": "Portland",
 		  "width": 460,
 		  "xAxis": {
-		    "label": "Temperature (degrees Celsius)"
+		    "label": "Temperature, in degrees Celsius"
 		  },
 		  "yAxis": {
-		    "max": 14,
+		    "max": 15,
 		    "label": "Number of days",
-		    "tickInterval": 2
+		    "tickInterval": 5
 		  },
 		  "height": 372,
 		  "separators": [
@@ -981,9 +981,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x41a29d2a277ce7d8
-	// Question: Interpret January temperature histograms
-	// Widget key: image_minneapolis
-	test("histogram - [x41a29d2a277ce7d8] Interpret January temperature histograms (2)", async () => {
+	// Question: Interpret histograms of January temperatures: Minneapolis vs. Portland
+	// Widget key: hist_minneapolis
+	test("histogram - [x41a29d2a277ce7d8] Interpret histograms of January temperatures: Minneapolis vs. Portland (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1026,10 +1026,10 @@ describe("histogram widget tests", () => {
 		  "title": "Minneapolis",
 		  "width": 460,
 		  "xAxis": {
-		    "label": "Temperature (degrees Celsius)"
+		    "label": "Temperature, in degrees Celsius"
 		  },
 		  "yAxis": {
-		    "max": 14,
+		    "max": 10,
 		    "label": "Number of days",
 		    "tickInterval": 2
 		  },
@@ -1066,9 +1066,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x3f4dbfed49421691
-	// Question: Interpret histograms: Minneapolis vs. Portland
+	// Question: Interpret histograms: Minneapolis vs. Portland temperatures
 	// Widget key: image_1
-	test("histogram - [x3f4dbfed49421691] Interpret histograms: Minneapolis vs. Portland (1)", async () => {
+	test("histogram - [x3f4dbfed49421691] Interpret histograms: Minneapolis vs. Portland temperatures (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1097,7 +1097,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Portland",
-		  "width": 600,
+		  "width": 480,
 		  "xAxis": {
 		    "label": "Temperature (degrees Celsius)"
 		  },
@@ -1106,7 +1106,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of days",
 		    "tickInterval": 3
 		  },
-		  "height": 400,
+		  "height": 380,
 		  "separators": [
 		    15,
 		    18,
@@ -1135,9 +1135,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x3f4dbfed49421691
-	// Question: Interpret histograms: Minneapolis vs. Portland
+	// Question: Interpret histograms: Minneapolis vs. Portland temperatures
 	// Widget key: image_2
-	test("histogram - [x3f4dbfed49421691] Interpret histograms: Minneapolis vs. Portland (2)", async () => {
+	test("histogram - [x3f4dbfed49421691] Interpret histograms: Minneapolis vs. Portland temperatures (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1166,7 +1166,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Minneapolis",
-		  "width": 600,
+		  "width": 480,
 		  "xAxis": {
 		    "label": "Temperature (degrees Celsius)"
 		  },
@@ -1175,7 +1175,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of days",
 		    "tickInterval": 3
 		  },
-		  "height": 400,
+		  "height": 380,
 		  "separators": [
 		    15,
 		    18,
@@ -1204,9 +1204,74 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xacabf733053a5e70
-	// Question: Interpret information from histograms of building heights
-	// Widget key: image_us_histogram
-	test("histogram - [xacabf733053a5e70] Interpret information from histograms of building heights (1)", async () => {
+	// Question: Interpret information from histograms of tallest buildings
+	// Widget key: histogram_china
+	test("histogram - [xacabf733053a5e70] Interpret information from histograms of tallest buildings (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 25
+		    },
+		    {
+		      "frequency": 7
+		    },
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "China",
+		  "width": 480,
+		  "xAxis": {
+		    "label": "Height, in meters"
+		  },
+		  "yAxis": {
+		    "max": 30,
+		    "label": "Number of Buildings",
+		    "tickInterval": 5
+		  },
+		  "height": 388,
+		  "separators": [
+		    240,
+		    290,
+		    340,
+		    390,
+		    440,
+		    490,
+		    540
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xacabf733053a5e70
+	// Question: Interpret information from histograms of tallest buildings
+	// Widget key: histogram_united_states
+	test("histogram - [xacabf733053a5e70] Interpret information from histograms of tallest buildings (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1237,7 +1302,7 @@ describe("histogram widget tests", () => {
 		  "title": "United States",
 		  "width": 480,
 		  "xAxis": {
-		    "label": "Height (meters)"
+		    "label": "Height, in meters"
 		  },
 		  "yAxis": {
 		    "max": 30,
@@ -1272,75 +1337,10 @@ describe("histogram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: xacabf733053a5e70
-	// Question: Interpret information from histograms of building heights
-	// Widget key: image_china_histogram
-	test("histogram - [xacabf733053a5e70] Interpret information from histograms of building heights (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 25
-		    },
-		    {
-		      "frequency": 7
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "China",
-		  "width": 480,
-		  "xAxis": {
-		    "label": "Height (meters)"
-		  },
-		  "yAxis": {
-		    "max": 30,
-		    "label": "Number of Buildings",
-		    "tickInterval": 5
-		  },
-		  "height": 388,
-		  "separators": [
-		    240,
-		    290,
-		    340,
-		    390,
-		    440,
-		    490,
-		    540
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xe0dba072551a06a7
-	// Question: Count homes under 100 square meters from a histogram
+	// Question: Homes with area less than 100 square meters
 	// Widget key: image_1
-	test("histogram - [xe0dba072551a06a7] Count homes under 100 square meters from a histogram", async () => {
+	test("histogram - [xe0dba072551a06a7] Homes with area less than 100 square meters", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1366,16 +1366,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Size of each house on Amara's street",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
-		    "label": "Area, in square meters"
+		    "label": "Area (square meters)"
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "label": "Number of houses",
-		    "tickInterval": 1
+		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 350,
 		  "separators": [
 		    0,
 		    50,
@@ -1403,9 +1403,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xe120da4e0ac19dcd
-	// Question: Compare counts between histogram bins
+	// Question: Compare histogram bin counts
 	// Widget key: histogram_image
-	test("histogram - [xe120da4e0ac19dcd] Compare counts between histogram bins", async () => {
+	test("histogram - [xe120da4e0ac19dcd] Compare histogram bin counts", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1431,7 +1431,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Volume of water Lucia drank each day",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Volume, in liters"
 		  },
@@ -1440,7 +1440,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of days",
 		    "tickInterval": 2
 		  },
-		  "height": 350,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    1,
@@ -1468,9 +1468,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x2ce7c5a5b9fcbae0
-	// Question: Compare counts between histogram bins
+	// Question: Compare counts in two histogram bins
 	// Widget key: image_1
-	test("histogram - [x2ce7c5a5b9fcbae0] Compare counts between histogram bins", async () => {
+	test("histogram - [x2ce7c5a5b9fcbae0] Compare counts in two histogram bins", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1493,21 +1493,265 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Mass of each pumpkin in Siri's patch",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
-		    "label": "Mass (kg)"
+		    "label": "Mass, in kilograms"
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "label": "Number of pumpkins",
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    3,
 		    6,
 		    9,
+		    12,
+		    15
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x677d573305754634
+	// Question: Count games from a histogram
+	// Widget key: image_1
+	test("histogram - [x677d573305754634] Count games from a histogram", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 8
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Balls made in each game of Watson's Billiards Tournament",
+		  "width": 400,
+		  "xAxis": {
+		    "label": "Number of balls made"
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "label": "Number of games",
+		    "tickInterval": 2
+		  },
+		  "height": 300,
+		  "separators": [
+		    0,
+		    3,
+		    6,
+		    9,
+		    12,
+		    15
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3fabb8db7d996fe5
+	// Question: Compare counts from a histogram
+	// Widget key: image_1
+	test("histogram - [x3fabb8db7d996fe5] Compare counts from a histogram", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 8
+		    },
+		    {
+		      "frequency": 6
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Guests in Each Hostel Room",
+		  "width": 400,
+		  "xAxis": {
+		    "label": "Number of guests"
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "label": "Number of hostel rooms",
+		    "tickInterval": 2
+		  },
+		  "height": 320,
+		  "separators": [
+		    0,
+		    4,
+		    8,
+		    12,
+		    16,
+		    20,
+		    23
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x169c99c1da2fdda1
+	// Question: Count pumpkins from a histogram
+	// Widget key: image_1
+	test("histogram - [x169c99c1da2fdda1] Count pumpkins from a histogram", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 8
+		    },
+		    {
+		      "frequency": 6
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Mass of each pumpkin in Siri's patch",
+		  "width": 400,
+		  "xAxis": {
+		    "label": "Mass, in kilograms"
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "label": "Number of pumpkins",
+		    "tickInterval": 2
+		  },
+		  "height": 350,
+		  "separators": [
+		    0,
+		    3,
+		    6,
+		    9,
+		    12,
+		    15
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xae3fbca6a78ea1c2
+	// Question: Count games with 11 or fewer balls made from a histogram
+	// Widget key: image_1
+	test("histogram - [xae3fbca6a78ea1c2] Count games with 11 or fewer balls made from a histogram", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 8
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Balls made in each game of Watson's Billiards Tournament",
+		  "width": 400,
+		  "xAxis": {
+		    "label": "Number of balls made"
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "label": "Number of games",
+		    "tickInterval": 2
+		  },
+		  "height": 350,
+		  "separators": [
+		    0,
+		    4,
+		    8,
 		    12,
 		    15
 		  ]
@@ -1566,129 +1810,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of hostel rooms",
 		    "tickInterval": 2
 		  },
-		  "height": 260,
-		  "separators": [
-		    0,
-		    4,
-		    8,
-		    12,
-		    16,
-		    20,
-		    23
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x677d573305754634
-	// Question: Histogram: games with 11 or fewer balls made
-	// Widget key: image_1
-	test("histogram - [x677d573305754634] Histogram: games with 11 or fewer balls made", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 8
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Balls made in each game of Watson's Billiards Tournament",
-		  "width": 400,
-		  "xAxis": {
-		    "label": "Number of balls made"
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "label": "Number of games",
-		    "tickInterval": 2
-		  },
-		  "height": 260,
-		  "separators": [
-		    0,
-		    4,
-		    8,
-		    12,
-		    15
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3fabb8db7d996fe5
-	// Question: Compare counts in a histogram
-	// Widget key: histogram_image
-	test("histogram - [x3fabb8db7d996fe5] Compare counts in a histogram", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 8
-		    },
-		    {
-		      "frequency": 6
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Guests in each hostel room",
-		  "width": 600,
-		  "xAxis": {
-		    "label": "Number of guests"
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "label": "Number of hostel rooms",
-		    "tickInterval": 2
-		  },
-		  "height": 400,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    4,
@@ -1716,9 +1838,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x4d8f1f3bd8dcbee8
-	// Question: Count total festivals from a histogram
+	// Question: Total festivals from a histogram
 	// Widget key: image_1
-	test("histogram - [x4d8f1f3bd8dcbee8] Count total festivals from a histogram", async () => {
+	test("histogram - [x4d8f1f3bd8dcbee8] Total festivals from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1750,132 +1872,14 @@ describe("histogram widget tests", () => {
 		    "label": "Number of festivals",
 		    "tickInterval": 1
 		  },
-		  "height": 283,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    6,
 		    12,
 		    18,
 		    24,
-		    29
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x169c99c1da2fdda1
-	// Question: Count pumpkins from a histogram
-	// Widget key: image_1
-	test("histogram - [x169c99c1da2fdda1] Count pumpkins from a histogram", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 8
-		    },
-		    {
-		      "frequency": 6
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Mass of each pumpkin in Siri's patch",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Mass (kilograms)"
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "label": "Number of pumpkins",
-		    "tickInterval": 2
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    3,
-		    6,
-		    9,
-		    12,
-		    15
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xae3fbca6a78ea1c2
-	// Question: Count games with 11 or fewer balls made
-	// Widget key: image_1
-	test("histogram - [xae3fbca6a78ea1c2] Count games with 11 or fewer balls made", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 8
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Balls made in each game of Watson's Billiards Tournament",
-		  "width": 600,
-		  "xAxis": {
-		    "label": "Number of balls made"
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "label": "Number of games",
-		    "tickInterval": 2
-		  },
-		  "height": 400,
-		  "separators": [
-		    0,
-		    3,
-		    7,
-		    11,
-		    15
+		    30
 		  ]
 		} as unknown as WidgetInput
 
@@ -1895,9 +1899,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xcce27e90412c4cf5
-	// Question: Total pumpkins in Leonard's patch
+	// Question: Count pumpkins from a histogram
 	// Widget key: image_1
-	test("histogram - [xcce27e90412c4cf5] Total pumpkins in Leonard's patch", async () => {
+	test("histogram - [xcce27e90412c4cf5] Count pumpkins from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1922,14 +1926,14 @@ describe("histogram widget tests", () => {
 		  "title": "Mass of each pumpkin in Leonard's patch",
 		  "width": 320,
 		  "xAxis": {
-		    "label": "Mass (kilograms)"
+		    "label": "Mass, in kilograms"
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "label": "Number of pumpkins",
 		    "tickInterval": 2
 		  },
-		  "height": 258,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    3,
@@ -1956,9 +1960,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xa89ab43d41acde2d
-	// Question: How many hostel rooms are there?
+	// Question: Count hostel rooms from a histogram
 	// Widget key: image_1
-	test("histogram - [xa89ab43d41acde2d] How many hostel rooms are there?", async () => {
+	test("histogram - [xa89ab43d41acde2d] Count hostel rooms from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -1993,7 +1997,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of hostel rooms",
 		    "tickInterval": 2
 		  },
-		  "height": 260,
+		  "height": 300,
 		  "separators": [
 		    0,
 		    4,
@@ -2001,7 +2005,7 @@ describe("histogram widget tests", () => {
 		    12,
 		    16,
 		    20,
-		    24
+		    23
 		  ]
 		} as unknown as WidgetInput
 
@@ -2049,7 +2053,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Size of each house on Prince Street",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Area (square meters)"
 		  },
@@ -2058,7 +2062,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of houses",
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    50,
@@ -2086,9 +2090,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xd2f725180fdfb95a
-	// Question: Count rooms with 11 or fewer guests
-	// Widget key: histogram_image
-	test("histogram - [xd2f725180fdfb95a] Count rooms with 11 or fewer guests", async () => {
+	// Question: Count rooms with 11 or fewer guests from a histogram
+	// Widget key: image_1
+	test("histogram - [xd2f725180fdfb95a] Count rooms with 11 or fewer guests from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2114,7 +2118,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Guests in each hostel room",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Number of guests"
 		  },
@@ -2123,7 +2127,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of hostel rooms",
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    4,
@@ -2131,7 +2135,7 @@ describe("histogram widget tests", () => {
 		    12,
 		    16,
 		    20,
-		    24
+		    23
 		  ]
 		} as unknown as WidgetInput
 
@@ -2179,7 +2183,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Guests in each hostel room",
-		  "width": 600,
+		  "width": 320,
 		  "xAxis": {
 		    "label": "Number of guests"
 		  },
@@ -2188,7 +2192,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of hostel rooms",
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    4,
@@ -2216,9 +2220,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x75a620fabb1a6f82
-	// Question: Compare counts in a histogram
-	// Widget key: histogram_image
-	test("histogram - [x75a620fabb1a6f82] Compare counts in a histogram", async () => {
+	// Question: Compare frequencies in a histogram
+	// Widget key: image_1
+	test("histogram - [x75a620fabb1a6f82] Compare frequencies in a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2241,7 +2245,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Countries represented at each festival",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Number of countries"
 		  },
@@ -2250,7 +2254,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of festivals",
 		    "tickInterval": 1
 		  },
-		  "height": 400,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    6,
@@ -2277,9 +2281,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x41ae2bfc5fba180b
-	// Question: Count days from a histogram of water consumed
+	// Question: Total days from a histogram
 	// Widget key: image_1
-	test("histogram - [x41ae2bfc5fba180b] Count days from a histogram of water consumed", async () => {
+	test("histogram - [x41ae2bfc5fba180b] Total days from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2305,16 +2309,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Volume of water Lucia drank each day",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
-		    "label": "Volume (liters)"
+		    "label": "Volume, in liters"
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "label": "Number of days",
 		    "tickInterval": 2
 		  },
-		  "height": 350,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    1,
@@ -2342,9 +2346,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x7d28612263787d18
-	// Question: Total games in Watson's Billiards Tournament
-	// Widget key: image_1
-	test("histogram - [x7d28612263787d18] Total games in Watson's Billiards Tournament", async () => {
+	// Question: Find the total number of games from a histogram
+	// Widget key: histogram_image
+	test("histogram - [x7d28612263787d18] Find the total number of games from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2354,9 +2358,6 @@ describe("histogram widget tests", () => {
 		    },
 		    {
 		      "frequency": 1
-		    },
-		    {
-		      "frequency": 0
 		    },
 		    {
 		      "frequency": 5
@@ -2376,14 +2377,13 @@ describe("histogram widget tests", () => {
 		    "label": "Number of games",
 		    "tickInterval": 2
 		  },
-		  "height": 260,
+		  "height": 300,
 		  "separators": [
 		    0,
-		    3,
-		    6,
-		    9,
+		    4,
+		    8,
 		    12,
-		    15
+		    16
 		  ]
 		} as unknown as WidgetInput
 
@@ -2403,9 +2403,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x1b3ba9acf63a5b26
-	// Question: Compare counts from a histogram
+	// Question: Compare counts in a histogram
 	// Widget key: image_1
-	test("histogram - [x1b3ba9acf63a5b26] Compare counts from a histogram", async () => {
+	test("histogram - [x1b3ba9acf63a5b26] Compare counts in a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2434,7 +2434,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of games",
 		    "tickInterval": 2
 		  },
-		  "height": 260,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    4,
@@ -2482,7 +2482,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Balls made in each game of Watson's Billiards Tournament",
-		  "width": 320,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Number of balls made"
 		  },
@@ -2491,13 +2491,13 @@ describe("histogram widget tests", () => {
 		    "label": "Number of games",
 		    "tickInterval": 2
 		  },
-		  "height": 283,
+		  "height": 350,
 		  "separators": [
 		    0,
 		    4,
 		    8,
 		    12,
-		    16
+		    15
 		  ]
 		} as unknown as WidgetInput
 
@@ -2517,9 +2517,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x67457ede4cbd49c5
-	// Question: How many hostel rooms have 11 or fewer guests?
+	// Question: Count rooms with 11 or fewer guests
 	// Widget key: image_1
-	test("histogram - [x67457ede4cbd49c5] How many hostel rooms have 11 or fewer guests?", async () => {
+	test("histogram - [x67457ede4cbd49c5] Count rooms with 11 or fewer guests", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2545,7 +2545,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Guests in each hostel room",
-		  "width": 400,
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of guests"
 		  },
@@ -2554,7 +2554,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of hostel rooms",
 		    "tickInterval": 2
 		  },
-		  "height": 260,
+		  "height": 340,
 		  "separators": [
 		    0,
 		    4,
@@ -2582,9 +2582,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xfc4a97857cb0c1bd
-	// Question: How many houses are on Prince Street?
+	// Question: Count houses from a histogram
 	// Widget key: image_1
-	test("histogram - [xfc4a97857cb0c1bd] How many houses are on Prince Street?", async () => {
+	test("histogram - [xfc4a97857cb0c1bd] Count houses from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2610,14 +2610,14 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Size of each house on Prince Street",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Area, in square meters"
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "label": "Number of houses",
-		    "tickInterval": 1
+		    "tickInterval": 2
 		  },
 		  "height": 350,
 		  "separators": [
@@ -2647,9 +2647,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x9dd9c3c11e995bb5
-	// Question: Count vehicles from a histogram
-	// Widget key: histogram_image
-	test("histogram - [x9dd9c3c11e995bb5] Count vehicles from a histogram", async () => {
+	// Question: Total vehicles from a histogram
+	// Widget key: image_1
+	test("histogram - [x9dd9c3c11e995bb5] Total vehicles from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2675,7 +2675,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Distance driven for each vehicle at Nam's Repair Shop",
-		  "width": 320,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Distance (thousands of kilometers)"
 		  },
@@ -2684,7 +2684,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of vehicles",
 		    "tickInterval": 2
 		  },
-		  "height": 258,
+		  "height": 350,
 		  "separators": [
 		    0,
 		    50,
@@ -2712,9 +2712,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x452aa8b6d797dcc3
-	// Question: Total number of festivals from a histogram
+	// Question: Count total festivals from a histogram
 	// Widget key: image_1
-	test("histogram - [x452aa8b6d797dcc3] Total number of festivals from a histogram", async () => {
+	test("histogram - [x452aa8b6d797dcc3] Count total festivals from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2746,7 +2746,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of festivals",
 		    "tickInterval": 1
 		  },
-		  "height": 260,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    6,
@@ -2773,9 +2773,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x0545c2de735a5d79
-	// Question: Vehicles driven less than 200 thousand kilometers
-	// Widget key: histogram_image
-	test("histogram - [x0545c2de735a5d79] Vehicles driven less than 200 thousand kilometers", async () => {
+	// Question: Vehicles driven less than 200 thousand kilometers (histogram)
+	// Widget key: image_1
+	test("histogram - [x0545c2de735a5d79] Vehicles driven less than 200 thousand kilometers (histogram)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2801,16 +2801,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Distance driven for each vehicle at Nam's Repair Shop",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
-		    "label": "Distance (thousands of kilometers)"
+		    "label": "Distance, in thousands of kilometers"
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 8,
 		    "label": "Number of vehicles",
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    50,
@@ -2838,9 +2838,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x6945e4d9e47958ff
-	// Question: Count festivals with at least 12 countries
+	// Question: Count festivals with 12 or more countries
 	// Widget key: image_1
-	test("histogram - [x6945e4d9e47958ff] Count festivals with at least 12 countries", async () => {
+	test("histogram - [x6945e4d9e47958ff] Count festivals with 12 or more countries", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2863,7 +2863,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Countries represented at each festival",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Number of countries"
 		  },
@@ -2872,7 +2872,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of festivals",
 		    "tickInterval": 1
 		  },
-		  "height": 400,
+		  "height": 300,
 		  "separators": [
 		    0,
 		    6,
@@ -2899,9 +2899,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xf8af1dab929140f9
-	// Question: Compare counts in a histogram
+	// Question: Compare counts from a histogram
 	// Widget key: image_1
-	test("histogram - [xf8af1dab929140f9] Compare counts in a histogram", async () => {
+	test("histogram - [xf8af1dab929140f9] Compare counts from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -2923,8 +2923,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Cherries in Each Cherry Pie at Bernetta's Bakery",
-		  "width": 500,
+		  "title": "Cherries in each cherry pie at Bernetta's Bakery",
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Number of cherries"
 		  },
@@ -2933,7 +2933,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of pies",
 		    "tickInterval": 2
 		  },
-		  "height": 350,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    30,
@@ -2988,16 +2988,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Distance driven for each vehicle at Nam's Gas Station",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Distance (thousands of kilometers)"
 		  },
 		  "yAxis": {
-		    "max": 8,
+		    "max": 10,
 		    "label": "Number of vehicles",
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    50,
@@ -3025,9 +3025,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x452b3d0cace30671
-	// Question: Total days measured from a histogram
+	// Question: Total number of days from a histogram
 	// Widget key: image_1
-	test("histogram - [x452b3d0cace30671] Total days measured from a histogram", async () => {
+	test("histogram - [x452b3d0cace30671] Total number of days from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3053,7 +3053,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Volume of water Hurley drank each day",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Volume, in liters"
 		  },
@@ -3090,9 +3090,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x1e0b1ce80416fb50
-	// Question: Compare counts from a histogram
+	// Question: Compare counts in a histogram
 	// Widget key: image_1
-	test("histogram - [x1e0b1ce80416fb50] Compare counts from a histogram", async () => {
+	test("histogram - [x1e0b1ce80416fb50] Compare counts in a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3112,16 +3112,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Balls made in each game of Watson's Billiards Tournament",
-		  "width": 500,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Number of balls made"
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "label": "Number of games",
-		    "tickInterval": 2
+		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    4,
@@ -3147,9 +3147,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x1c16de62ccfc09fc
-	// Question: Count pies with at least 90 cherries from a histogram
+	// Question: Count pies with at least 90 cherries
 	// Widget key: image_1
-	test("histogram - [x1c16de62ccfc09fc] Count pies with at least 90 cherries from a histogram", async () => {
+	test("histogram - [x1c16de62ccfc09fc] Count pies with at least 90 cherries", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3172,16 +3172,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Cherries in each cherry pie at Bernetta's Bakery",
-		  "width": 320,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Number of cherries"
 		  },
 		  "yAxis": {
-		    "max": 12,
+		    "max": 15,
 		    "label": "Number of pies",
-		    "tickInterval": 2
+		    "tickInterval": 5
 		  },
-		  "height": 283,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    30,
@@ -3208,9 +3208,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x565ed1e85e4345a8
-	// Question: Total homes from a histogram
-	// Widget key: histogram_image
-	test("histogram - [x565ed1e85e4345a8] Total homes from a histogram", async () => {
+	// Question: Number of homes from a histogram
+	// Widget key: image_1
+	test("histogram - [x565ed1e85e4345a8] Number of homes from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3236,16 +3236,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Size of each house on Amara's street",
-		  "width": 500,
+		  "width": 420,
 		  "xAxis": {
-		    "label": "Area, in square meters"
+		    "label": "Area (square meters)"
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "label": "Number of houses",
-		    "tickInterval": 1
+		    "tickInterval": 2
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    50,
@@ -3273,9 +3273,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x56b110393b5e1cce
-	// Question: Total vehicles at Nam's Gas Station
-	// Widget key: histogram_image
-	test("histogram - [x56b110393b5e1cce] Total vehicles at Nam's Gas Station", async () => {
+	// Question: Total vehicles from a histogram
+	// Widget key: image_1
+	test("histogram - [x56b110393b5e1cce] Total vehicles from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3301,16 +3301,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Distance driven for each vehicle at Nam's Gas Station",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Distance (thousands of kilometers)"
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 8,
 		    "label": "Number of vehicles",
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 350,
 		  "separators": [
 		    0,
 		    50,
@@ -3338,9 +3338,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x2dbd11aec769d869
-	// Question: Compare counts in a histogram
+	// Question: Compare counts between histogram bins
 	// Widget key: image_1
-	test("histogram - [x2dbd11aec769d869] Compare counts in a histogram", async () => {
+	test("histogram - [x2dbd11aec769d869] Compare counts between histogram bins", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3366,16 +3366,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Distance driven for each vehicle at Nam's Repair Shop",
-		  "width": 600,
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Distance, in thousands of kilometers"
 		  },
 		  "yAxis": {
-		    "max": 6,
+		    "max": 10,
 		    "label": "Number of vehicles",
-		    "tickInterval": 1
+		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    50,
@@ -3403,200 +3403,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xaea0504f3bdab957
-	// Question: How many festivals had 12 or more countries?
+	// Question: Count festivals with at least 12 countries
 	// Widget key: image_1
-	test("histogram - [xaea0504f3bdab957] How many festivals had 12 or more countries?", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Countries represented at each festival",
-		  "width": 600,
-		  "xAxis": {
-		    "label": "Number of countries"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of festivals",
-		    "tickInterval": 1
-		  },
-		  "height": 400,
-		  "separators": [
-		    0,
-		    6,
-		    12,
-		    18,
-		    24,
-		    30
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x17aef6e8edbb6eb9
-	// Question: Vehicles driven less than 200 thousand kilometers
-	// Widget key: image_1
-	test("histogram - [x17aef6e8edbb6eb9] Vehicles driven less than 200 thousand kilometers", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 6
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Distance driven for each vehicle at Nam's Gas Station",
-		  "width": 320,
-		  "xAxis": {
-		    "label": "Distance (thousands of kilometers)"
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "label": "Number of vehicles",
-		    "tickInterval": 2
-		  },
-		  "height": 258,
-		  "separators": [
-		    0,
-		    50,
-		    100,
-		    150,
-		    200,
-		    250,
-		    300
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x43a259dcbb1f95c2
-	// Question: Compare counts in two histogram bins
-	// Widget key: image_1
-	test("histogram - [x43a259dcbb1f95c2] Compare counts in two histogram bins", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 8
-		    },
-		    {
-		      "frequency": 8
-		    },
-		    {
-		      "frequency": 6
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Volume of water Hurley drank each day",
-		  "width": 600,
-		  "xAxis": {
-		    "label": "Volume (liters)"
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "label": "Number of days",
-		    "tickInterval": 2
-		  },
-		  "height": 400,
-		  "separators": [
-		    0,
-		    1,
-		    2,
-		    3,
-		    4,
-		    5,
-		    6
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x5d8573c46d0da4cc
-	// Question: Compare counts in histogram bins
-	// Widget key: histogram_image
-	test("histogram - [x5d8573c46d0da4cc] Compare counts in histogram bins", async () => {
+	test("histogram - [xaea0504f3bdab957] Count festivals with at least 12 countries", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3628,7 +3437,198 @@ describe("histogram widget tests", () => {
 		    "label": "Number of festivals",
 		    "tickInterval": 1
 		  },
-		  "height": 260,
+		  "height": 320,
+		  "separators": [
+		    0,
+		    6,
+		    12,
+		    18,
+		    24,
+		    30
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x17aef6e8edbb6eb9
+	// Question: Count vehicles under 200 thousand kilometers from a histogram
+	// Widget key: image_1
+	test("histogram - [x17aef6e8edbb6eb9] Count vehicles under 200 thousand kilometers from a histogram", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 6
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Distance driven for each vehicle at Nam's Gas Station",
+		  "width": 400,
+		  "xAxis": {
+		    "label": "Distance, in thousands of kilometers"
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "label": "Number of vehicles",
+		    "tickInterval": 2
+		  },
+		  "height": 320,
+		  "separators": [
+		    0,
+		    50,
+		    100,
+		    150,
+		    200,
+		    250,
+		    300
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x43a259dcbb1f95c2
+	// Question: Read a histogram: compare two bins
+	// Widget key: image_1
+	test("histogram - [x43a259dcbb1f95c2] Read a histogram: compare two bins", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 8
+		    },
+		    {
+		      "frequency": 8
+		    },
+		    {
+		      "frequency": 6
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Volume of water Hurley drank each day",
+		  "width": 400,
+		  "xAxis": {
+		    "label": "Volume, in liters"
+		  },
+		  "yAxis": {
+		    "max": 10,
+		    "label": "Number of days",
+		    "tickInterval": 2
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    1,
+		    2,
+		    3,
+		    4,
+		    5,
+		    6
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x5d8573c46d0da4cc
+	// Question: Compare frequencies in a histogram
+	// Widget key: image_1
+	test("histogram - [x5d8573c46d0da4cc] Compare frequencies in a histogram", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Countries represented at each festival",
+		  "width": 400,
+		  "xAxis": {
+		    "label": "Number of countries"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of festivals",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
 		  "separators": [
 		    0,
 		    6,
@@ -3655,9 +3655,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xbfa7ff106c461875
-	// Question: Compare counts between histogram bins
-	// Widget key: image_1
-	test("histogram - [xbfa7ff106c461875] Compare counts between histogram bins", async () => {
+	// Question: Compare counts on a histogram
+	// Widget key: histogram_image
+	test("histogram - [xbfa7ff106c461875] Compare counts on a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3683,16 +3683,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Size of each house on Prince Street",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
-		    "label": "Area (square meters)"
+		    "label": "Area (m²)"
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "label": "Number of houses",
 		    "tickInterval": 1
 		  },
-		  "height": 400,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    50,
@@ -3745,7 +3745,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Mass of each pumpkin in Leonard's patch",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Mass, in kilograms"
 		  },
@@ -3754,7 +3754,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of pumpkins",
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 340,
 		  "separators": [
 		    0,
 		    3,
@@ -3781,9 +3781,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x8496e8a1196951c4
-	// Question: Compare counts across histogram bins
-	// Widget key: image_1
-	test("histogram - [x8496e8a1196951c4] Compare counts across histogram bins", async () => {
+	// Question: Compare counts between histogram bins
+	// Widget key: histogram_image
+	test("histogram - [x8496e8a1196951c4] Compare counts between histogram bins", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3809,16 +3809,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Size of each house on Amara's street",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
-		    "label": "Area, in square meters"
+		    "label": "Area (square meters)"
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "label": "Number of houses",
-		    "tickInterval": 1
+		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    50,
@@ -3846,9 +3846,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xe6b5cb4937f7cc6f
-	// Question: Compare counts from a pumpkin mass histogram
-	// Widget key: image_1
-	test("histogram - [xe6b5cb4937f7cc6f] Compare counts from a pumpkin mass histogram", async () => {
+	// Question: Compare counts in a histogram
+	// Widget key: histogram_image
+	test("histogram - [xe6b5cb4937f7cc6f] Compare counts in a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3871,16 +3871,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Mass of each pumpkin in Leonard's patch",
-		  "width": 600,
+		  "width": 420,
 		  "xAxis": {
-		    "label": "Mass (kilograms)"
+		    "label": "Mass, in kilograms"
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "label": "Number of pumpkins",
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    3,
@@ -3907,9 +3907,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xeb753f0fe8c6127d
-	// Question: Count pumpkins with mass greater than 6 kg
+	// Question: Count pumpkins with mass greater than a value from a histogram
 	// Widget key: image_1
-	test("histogram - [xeb753f0fe8c6127d] Count pumpkins with mass greater than 6 kg", async () => {
+	test("histogram - [xeb753f0fe8c6127d] Count pumpkins with mass greater than a value from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -3932,16 +3932,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Mass of each pumpkin in Siri's patch",
-		  "width": 600,
+		  "width": 400,
 		  "xAxis": {
-		    "label": "Mass (kilograms)"
+		    "label": "Mass (kg)"
 		  },
 		  "yAxis": {
 		    "max": 10,
 		    "label": "Number of pumpkins",
 		    "tickInterval": 2
 		  },
-		  "height": 400,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    3,
@@ -3992,8 +3992,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Ages of hikers",
-		  "width": 600,
+		  "title": "Ages of hikers on a trail",
+		  "width": 360,
 		  "xAxis": {
 		    "label": "Number of years"
 		  },
@@ -4002,7 +4002,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of hikers",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    5,
@@ -4050,17 +4050,17 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Number of kilometers run by club members",
-		  "width": 300,
+		  "title": "Distance Run by Club Members",
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Number of kilometers"
 		  },
 		  "yAxis": {
-		    "max": 8,
+		    "max": 10,
 		    "label": "Number of runners",
 		    "tickInterval": 1
 		  },
-		  "height": 228,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    5,
@@ -4086,9 +4086,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x4cd8f052f211e957
-	// Question: Identify the median interval from a histogram
+	// Question: Median interval from a histogram
 	// Widget key: image_2
-	test("histogram - [x4cd8f052f211e957] Identify the median interval from a histogram", async () => {
+	test("histogram - [x4cd8f052f211e957] Median interval from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4116,7 +4116,7 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Pretest scores for Mrs. Baker's class",
+		  "title": "Pre-test Scores for Mrs. Baker's Class",
 		  "width": 320,
 		  "xAxis": {
 		    "label": "Score out of 14 points"
@@ -4126,7 +4126,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of students",
 		    "tickInterval": 1
 		  },
-		  "height": 243,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    2,
@@ -4179,17 +4179,17 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
+		  "title": "Number of hours worked by cashiers last week",
 		  "width": 300,
 		  "xAxis": {
 		    "label": "Number of hours"
 		  },
 		  "yAxis": {
-		    "max": 5,
+		    "max": 6,
 		    "label": "Number of cashiers",
 		    "tickInterval": 1
 		  },
-		  "height": 240,
+		  "height": 300,
 		  "separators": [
 		    0,
 		    10,
@@ -4216,9 +4216,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xa182159c77fec284
-	// Question: Describe clusters, gaps, and peaks in a histogram
+	// Question: Identify features of a work-hours histogram
 	// Widget key: image_1
-	test("histogram - [xa182159c77fec284] Describe clusters, gaps, and peaks in a histogram", async () => {
+	test("histogram - [xa182159c77fec284] Identify features of a work-hours histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4255,17 +4255,17 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Hours Worked by Plumbers Last Week",
-		  "width": 296,
+		  "title": "Hours worked by Acme Plumbing plumbers last week",
+		  "width": 400,
 		  "xAxis": {
-		    "label": "Number of hours worked"
+		    "label": "Hours worked"
 		  },
 		  "yAxis": {
 		    "max": 25,
 		    "label": "Number of plumbers",
 		    "tickInterval": 5
 		  },
-		  "height": 260,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    5,
@@ -4297,9 +4297,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x3139706c08b673c0
-	// Question: Identify clusters, gaps, and peaks in a histogram
+	// Question: Describe a histogram using clusters, gaps, and peaks
 	// Widget key: image_1
-	test("histogram - [x3139706c08b673c0] Identify clusters, gaps, and peaks in a histogram", async () => {
+	test("histogram - [x3139706c08b673c0] Describe a histogram using clusters, gaps, and peaks", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4324,8 +4324,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Distance run by each member of MPLS Running Club",
-		  "width": 296,
+		  "title": "Distance run by MPLS Running Club members",
+		  "width": 300,
 		  "xAxis": {
 		    "label": "Distance in kilometers"
 		  },
@@ -4334,7 +4334,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of members",
 		    "tickInterval": 5
 		  },
-		  "height": 260,
+		  "height": 300,
 		  "separators": [
 		    0,
 		    5,
@@ -4362,9 +4362,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x0a508e9c59ccda65
-	// Question: Identify a statement about clusters, gaps, and peaks from a histogram
+	// Question: Describe clusters, gaps, and peaks from a histogram
 	// Widget key: image_1
-	test("histogram - [x0a508e9c59ccda65] Identify a statement about clusters, gaps, and peaks from a histogram", async () => {
+	test("histogram - [x0a508e9c59ccda65] Describe clusters, gaps, and peaks from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4402,7 +4402,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Number of U.S. states visited by each pilot of Pangaea Airlines",
-		  "width": 296,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Number of states"
 		  },
@@ -4411,7 +4411,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of pilots",
 		    "tickInterval": 5
 		  },
-		  "height": 260,
+		  "height": 300,
 		  "separators": [
 		    0,
 		    5,
@@ -4443,9 +4443,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x815c64e6768a4bc9
-	// Question: Identify peaks, gaps, and clusters on a histogram
+	// Question: Describe peaks, gaps, and clusters in a histogram
 	// Widget key: image_1
-	test("histogram - [x815c64e6768a4bc9] Identify peaks, gaps, and clusters on a histogram", async () => {
+	test("histogram - [x815c64e6768a4bc9] Describe peaks, gaps, and clusters in a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4482,17 +4482,17 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
-		  "width": 296,
+		  "title": "Number of putts versus length in meters",
+		  "width": 320,
 		  "xAxis": {
-		    "label": "Length in meters"
+		    "label": "Length (meters)"
 		  },
 		  "yAxis": {
 		    "max": 30,
 		    "label": "Number of putts",
 		    "tickInterval": 5
 		  },
-		  "height": 260,
+		  "height": 300,
 		  "separators": [
 		    0,
 		    1,
@@ -4524,9 +4524,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x9a037a51002dfdaf
-	// Question: Describe clusters, gaps, and peaks in a histogram
+	// Question: Describe clusters, gaps, and peaks from a histogram
 	// Widget key: image_1
-	test("histogram - [x9a037a51002dfdaf] Describe clusters, gaps, and peaks in a histogram", async () => {
+	test("histogram - [x9a037a51002dfdaf] Describe clusters, gaps, and peaks from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4538,42 +4538,42 @@ describe("histogram widget tests", () => {
 		      "frequency": 0
 		    },
 		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
 		      "frequency": 9
 		    },
 		    {
-		      "frequency": 12
+		      "frequency": 20
 		    },
 		    {
-		      "frequency": 10
+		      "frequency": 38
 		    },
 		    {
-		      "frequency": 7
+		      "frequency": 43
 		    },
 		    {
-		      "frequency": 5
+		      "frequency": 38
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 26
+		    },
+		    {
+		      "frequency": 15
+		    },
+		    {
+		      "frequency": 8
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Guests per day at Seth's Sandwich Shop",
+		  "title": "Number of Guests by Day at Seth's Sandwich Shop",
 		  "width": 317,
 		  "xAxis": {
 		    "label": "Number of guests"
 		  },
 		  "yAxis": {
-		    "max": 16,
+		    "max": 50,
 		    "label": "Number of days",
-		    "tickInterval": 4
+		    "tickInterval": 10
 		  },
-		  "height": 260,
+		  "height": 300,
 		  "separators": [
 		    0,
 		    20,
@@ -4605,9 +4605,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x96cadfddc6556044
-	// Question: Describe a histogram using clusters, gaps, and peaks
+	// Question: Identify clusters, gaps, and peaks on a histogram
 	// Widget key: image_1
-	test("histogram - [x96cadfddc6556044] Describe a histogram using clusters, gaps, and peaks", async () => {
+	test("histogram - [x96cadfddc6556044] Identify clusters, gaps, and peaks on a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4645,7 +4645,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Test Score Distribution",
-		  "width": 296,
+		  "width": 300,
 		  "xAxis": {
 		    "label": "Score"
 		  },
@@ -4654,7 +4654,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of students",
 		    "tickInterval": 5
 		  },
-		  "height": 260,
+		  "height": 300,
 		  "separators": [
 		    0,
 		    10,
@@ -4686,9 +4686,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x9668322fa2997048
-	// Question: Describe clusters, gaps, and peaks from a histogram
+	// Question: Identify clusters, gaps, and peaks on a histogram
 	// Widget key: image_1
-	test("histogram - [x9668322fa2997048] Describe clusters, gaps, and peaks from a histogram", async () => {
+	test("histogram - [x9668322fa2997048] Identify clusters, gaps, and peaks on a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4720,16 +4720,16 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Number of vacation days used by Bike Haven employees last year",
-		  "width": 296,
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Number of days"
 		  },
 		  "yAxis": {
-		    "max": 20,
+		    "max": 16,
 		    "label": "Number of employees",
-		    "tickInterval": 5
+		    "tickInterval": 2
 		  },
-		  "height": 260,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    2,
@@ -4759,9 +4759,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xd0f2671091f1aee4
-	// Question: Describe a histogram: clusters, gaps, and peaks
+	// Question: Interpret a histogram: gaps and peaks
 	// Widget key: image_1
-	test("histogram - [xd0f2671091f1aee4] Describe a histogram: clusters, gaps, and peaks", async () => {
+	test("histogram - [xd0f2671091f1aee4] Interpret a histogram: gaps and peaks", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -4798,8 +4798,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Anika's scores from her last 30 rounds",
-		  "width": 296,
+		  "title": "Anika's scores (last 30 rounds)",
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Number of points"
 		  },
@@ -4808,7 +4808,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of games",
 		    "tickInterval": 2
 		  },
-		  "height": 260,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    10,
@@ -4879,8 +4879,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
-		  "width": 296,
+		  "title": "Salary distribution at Dream Sales",
+		  "width": 400,
 		  "xAxis": {
 		    "label": "Salary in thousands of dollars"
 		  },
@@ -4889,7 +4889,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of employees",
 		    "tickInterval": 5
 		  },
-		  "height": 260,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    10,
@@ -4901,678 +4901,6 @@ describe("histogram widget tests", () => {
 		    70,
 		    80,
 		    90,
-		    100
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x23ab5c3a7c359b14
-	// Question: Create a histogram from guest counts
-	// Widget key: hist_choice_a
-	test("histogram - [x23ab5c3a7c359b14] Create a histogram from guest counts (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 6
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Number of guests per day",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of guests"
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "label": "Number of days",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    100,
-		    200,
-		    300
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x23ab5c3a7c359b14
-	// Question: Create a histogram from guest counts
-	// Widget key: hist_choice_b
-	test("histogram - [x23ab5c3a7c359b14] Create a histogram from guest counts (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 6
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Number of guests per day",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of guests"
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "label": "Number of days",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    100,
-		    200,
-		    300
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x23ab5c3a7c359b14
-	// Question: Create a histogram from guest counts
-	// Widget key: hist_choice_c
-	test("histogram - [x23ab5c3a7c359b14] Create a histogram from guest counts (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 5
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Number of guests per day",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of guests"
-		  },
-		  "yAxis": {
-		    "max": 8,
-		    "label": "Number of days",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    100,
-		    200,
-		    300
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x460f8b996f5729d6
-	// Question: Create a histogram from daily house visits
-	// Widget key: histogram_choice_a
-	test("histogram - [x460f8b996f5729d6] Create a histogram from daily house visits (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Number of houses visited per day",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of houses visited"
-		  },
-		  "yAxis": {
-		    "max": 4,
-		    "label": "Number of days",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    10,
-		    20,
-		    30,
-		    40
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x460f8b996f5729d6
-	// Question: Create a histogram from daily house visits
-	// Widget key: histogram_choice_b
-	test("histogram - [x460f8b996f5729d6] Create a histogram from daily house visits (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 3
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Number of houses visited per day",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of houses visited"
-		  },
-		  "yAxis": {
-		    "max": 4,
-		    "label": "Number of days",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    10,
-		    20,
-		    30,
-		    40
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x460f8b996f5729d6
-	// Question: Create a histogram from daily house visits
-	// Widget key: histogram_choice_c
-	test("histogram - [x460f8b996f5729d6] Create a histogram from daily house visits (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Number of houses visited per day",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of houses visited"
-		  },
-		  "yAxis": {
-		    "max": 4,
-		    "label": "Number of days",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    10,
-		    20,
-		    30,
-		    40
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3c94643c20b9353f
-	// Question: Create a histogram from data values
-	// Widget key: hist_choice_a
-	test("histogram - [x3c94643c20b9353f] Create a histogram from data values (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Song length distribution",
-		  "width": 436,
-		  "xAxis": {
-		    "label": "Length of song (in minutes)"
-		  },
-		  "yAxis": {
-		    "max": 7,
-		    "label": "Number of mornings",
-		    "tickInterval": 1
-		  },
-		  "height": 359,
-		  "separators": [
-		    0,
-		    3,
-		    6,
-		    9
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3c94643c20b9353f
-	// Question: Create a histogram from data values
-	// Widget key: hist_choice_b
-	test("histogram - [x3c94643c20b9353f] Create a histogram from data values (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Song length distribution",
-		  "width": 436,
-		  "xAxis": {
-		    "label": "Length of song (in minutes)"
-		  },
-		  "yAxis": {
-		    "max": 7,
-		    "label": "Number of mornings",
-		    "tickInterval": 1
-		  },
-		  "height": 359,
-		  "separators": [
-		    0,
-		    3,
-		    6,
-		    9
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x3c94643c20b9353f
-	// Question: Create a histogram from data values
-	// Widget key: hist_choice_c
-	test("histogram - [x3c94643c20b9353f] Create a histogram from data values (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Song length distribution",
-		  "width": 436,
-		  "xAxis": {
-		    "label": "Length of song (in minutes)"
-		  },
-		  "yAxis": {
-		    "max": 7,
-		    "label": "Number of mornings",
-		    "tickInterval": 1
-		  },
-		  "height": 359,
-		  "separators": [
-		    0,
-		    3,
-		    6,
-		    9
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x257e4643be322e69
-	// Question: Create a histogram from weight-loss data
-	// Widget key: hist_choice_a
-	test("histogram - [x257e4643be322e69] Create a histogram from weight-loss data (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Weight-Loss Histogram",
-		  "width": 520,
-		  "xAxis": {
-		    "label": "Weight loss (in kilograms)"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of members",
-		    "tickInterval": 1
-		  },
-		  "height": 360,
-		  "separators": [
-		    0,
-		    20,
-		    40,
-		    60,
-		    80,
-		    100
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x257e4643be322e69
-	// Question: Create a histogram from weight-loss data
-	// Widget key: hist_choice_b
-	test("histogram - [x257e4643be322e69] Create a histogram from weight-loss data (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Weight-Loss Histogram",
-		  "width": 520,
-		  "xAxis": {
-		    "label": "Weight loss (in kilograms)"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of members",
-		    "tickInterval": 1
-		  },
-		  "height": 360,
-		  "separators": [
-		    0,
-		    20,
-		    40,
-		    60,
-		    80,
-		    100
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x257e4643be322e69
-	// Question: Create a histogram from weight-loss data
-	// Widget key: hist_choice_c
-	test("histogram - [x257e4643be322e69] Create a histogram from weight-loss data (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 0
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Weight-Loss Histogram",
-		  "width": 520,
-		  "xAxis": {
-		    "label": "Weight loss (in kilograms)"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of members",
-		    "tickInterval": 1
-		  },
-		  "height": 360,
-		  "separators": [
-		    0,
-		    20,
-		    40,
-		    60,
-		    80,
 		    100
 		  ]
 		} as unknown as WidgetInput
@@ -5611,8 +4939,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
-		  "width": 436,
+		  "title": "Song length distribution",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Length of song (in minutes)"
 		  },
@@ -5621,7 +4949,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of mornings",
 		    "tickInterval": 1
 		  },
-		  "height": 359,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    3,
@@ -5654,18 +4982,18 @@ describe("histogram widget tests", () => {
 		const input = {
 		  "bins": [
 		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
 		      "frequency": 2
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 3
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
-		  "width": 436,
+		  "title": "Song length distribution",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Length of song (in minutes)"
 		  },
@@ -5674,7 +5002,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of mornings",
 		    "tickInterval": 1
 		  },
-		  "height": 359,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    3,
@@ -5717,7 +5045,60 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
+		  "title": "Song length distribution",
+		  "width": 420,
+		  "xAxis": {
+		    "label": "Length of song (in minutes)"
+		  },
+		  "yAxis": {
+		    "max": 7,
+		    "label": "Number of mornings",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    3,
+		    6,
+		    9
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3c94643c20b9353f
+	// Question: Create a histogram from song-length data
+	// Widget key: hist_choice_a
+	test("histogram - [x3c94643c20b9353f] Create a histogram from song-length data (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Song Lengths Since Changing Barns",
 		  "width": 436,
 		  "xAxis": {
 		    "label": "Length of song (in minutes)"
@@ -5751,9 +5132,970 @@ describe("histogram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
+	// Extracted from question: x3c94643c20b9353f
+	// Question: Create a histogram from song-length data
+	// Widget key: hist_choice_b
+	test("histogram - [x3c94643c20b9353f] Create a histogram from song-length data (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 3
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Song Lengths Since Changing Barns",
+		  "width": 436,
+		  "xAxis": {
+		    "label": "Length of song (in minutes)"
+		  },
+		  "yAxis": {
+		    "max": 7,
+		    "label": "Number of mornings",
+		    "tickInterval": 1
+		  },
+		  "height": 359,
+		  "separators": [
+		    0,
+		    3,
+		    6,
+		    9
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x3c94643c20b9353f
+	// Question: Create a histogram from song-length data
+	// Widget key: hist_choice_c
+	test("histogram - [x3c94643c20b9353f] Create a histogram from song-length data (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Song Lengths Since Changing Barns",
+		  "width": 436,
+		  "xAxis": {
+		    "label": "Length of song (in minutes)"
+		  },
+		  "yAxis": {
+		    "max": 7,
+		    "label": "Number of mornings",
+		    "tickInterval": 1
+		  },
+		  "height": 359,
+		  "separators": [
+		    0,
+		    3,
+		    6,
+		    9
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4976e354e4fa5d65
+	// Question: Select the histogram that matches the data
+	// Widget key: hist_choice_a
+	test("histogram - [x4976e354e4fa5d65] Select the histogram that matches the data (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 6
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of years back in time",
+		  "width": 420,
+		  "xAxis": {
+		    "label": "Number of years back in time"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of uses",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    4,
+		    8,
+		    12
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4976e354e4fa5d65
+	// Question: Select the histogram that matches the data
+	// Widget key: hist_choice_b
+	test("histogram - [x4976e354e4fa5d65] Select the histogram that matches the data (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of years back in time",
+		  "width": 420,
+		  "xAxis": {
+		    "label": "Number of years back in time"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of uses",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    4,
+		    8,
+		    12
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x4976e354e4fa5d65
+	// Question: Select the histogram that matches the data
+	// Widget key: hist_choice_c
+	test("histogram - [x4976e354e4fa5d65] Select the histogram that matches the data (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of years back in time",
+		  "width": 420,
+		  "xAxis": {
+		    "label": "Number of years back in time"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of uses",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    4,
+		    8,
+		    12
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x257e4643be322e69
+	// Question: Create a histogram from weight loss data
+	// Widget key: hist_choice_a
+	test("histogram - [x257e4643be322e69] Create a histogram from weight loss data (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Weight loss data",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Weight loss (in kilograms)"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of members",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    20,
+		    40,
+		    60,
+		    80,
+		    100
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x257e4643be322e69
+	// Question: Create a histogram from weight loss data
+	// Widget key: hist_choice_b
+	test("histogram - [x257e4643be322e69] Create a histogram from weight loss data (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Weight loss data",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Weight loss (in kilograms)"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of members",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    20,
+		    40,
+		    60,
+		    80,
+		    100
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x257e4643be322e69
+	// Question: Create a histogram from weight loss data
+	// Widget key: hist_choice_c
+	test("histogram - [x257e4643be322e69] Create a histogram from weight loss data (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Weight loss data",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Weight loss (in kilograms)"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of members",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    20,
+		    40,
+		    60,
+		    80,
+		    100
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x932188f15f1efde7
+	// Question: Create a histogram from a data set
+	// Widget key: histogram_choice_a
+	test("histogram - [x932188f15f1efde7] Create a histogram from a data set (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Fruit punch stain counts",
+		  "width": 442,
+		  "xAxis": {
+		    "label": "Number of stains"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of rooms",
+		    "tickInterval": 1
+		  },
+		  "height": 390,
+		  "separators": [
+		    0,
+		    5,
+		    10,
+		    15,
+		    20,
+		    25
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x932188f15f1efde7
+	// Question: Create a histogram from a data set
+	// Widget key: histogram_choice_b
+	test("histogram - [x932188f15f1efde7] Create a histogram from a data set (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Fruit punch stain counts",
+		  "width": 442,
+		  "xAxis": {
+		    "label": "Number of stains"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of rooms",
+		    "tickInterval": 1
+		  },
+		  "height": 390,
+		  "separators": [
+		    0,
+		    5,
+		    10,
+		    15,
+		    20,
+		    25
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x932188f15f1efde7
+	// Question: Create a histogram from a data set
+	// Widget key: histogram_choice_c
+	test("histogram - [x932188f15f1efde7] Create a histogram from a data set (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Fruit punch stain counts",
+		  "width": 442,
+		  "xAxis": {
+		    "label": "Number of stains"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of rooms",
+		    "tickInterval": 1
+		  },
+		  "height": 390,
+		  "separators": [
+		    0,
+		    5,
+		    10,
+		    15,
+		    20,
+		    25
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x23ab5c3a7c359b14
+	// Question: Create a histogram from guest counts
+	// Widget key: histogram_choice_a
+	test("histogram - [x23ab5c3a7c359b14] Create a histogram from guest counts (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 6
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Guest count distribution",
+		  "width": 436,
+		  "xAxis": {
+		    "label": "Number of guests"
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "label": "Number of days",
+		    "tickInterval": 1
+		  },
+		  "height": 364,
+		  "separators": [
+		    0,
+		    100,
+		    200,
+		    300
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x23ab5c3a7c359b14
+	// Question: Create a histogram from guest counts
+	// Widget key: histogram_choice_b
+	test("histogram - [x23ab5c3a7c359b14] Create a histogram from guest counts (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 6
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Guest count distribution",
+		  "width": 436,
+		  "xAxis": {
+		    "label": "Number of guests"
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "label": "Number of days",
+		    "tickInterval": 1
+		  },
+		  "height": 364,
+		  "separators": [
+		    0,
+		    100,
+		    200,
+		    300
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x23ab5c3a7c359b14
+	// Question: Create a histogram from guest counts
+	// Widget key: histogram_choice_c
+	test("histogram - [x23ab5c3a7c359b14] Create a histogram from guest counts (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 5
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Guest count distribution",
+		  "width": 436,
+		  "xAxis": {
+		    "label": "Number of guests"
+		  },
+		  "yAxis": {
+		    "max": 8,
+		    "label": "Number of days",
+		    "tickInterval": 1
+		  },
+		  "height": 364,
+		  "separators": [
+		    0,
+		    100,
+		    200,
+		    300
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7ac6f01e3b7db87d
+	// Question: Create a histogram from moo counts
+	// Widget key: hist_choice_a
+	test("histogram - [x7ac6f01e3b7db87d] Create a histogram from moo counts (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of Moo Counts",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of moos"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of cows",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    20,
+		    40,
+		    60,
+		    80
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7ac6f01e3b7db87d
+	// Question: Create a histogram from moo counts
+	// Widget key: hist_choice_b
+	test("histogram - [x7ac6f01e3b7db87d] Create a histogram from moo counts (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of Moo Counts",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of moos"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of cows",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    20,
+		    40,
+		    60,
+		    80
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7ac6f01e3b7db87d
+	// Question: Create a histogram from moo counts
+	// Widget key: hist_choice_c
+	test("histogram - [x7ac6f01e3b7db87d] Create a histogram from moo counts (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 3
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of Moo Counts",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of moos"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of cows",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    20,
+		    40,
+		    60,
+		    80
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
 	// Extracted from question: x34f23fefc76a21ae
 	// Question: Create a histogram from sales data
-	// Widget key: hist_choice_a
+	// Widget key: histogram_choice_a
 	test("histogram - [x34f23fefc76a21ae] Create a histogram from sales data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -5763,10 +6105,10 @@ describe("histogram widget tests", () => {
 		      "frequency": 1
 		    },
 		    {
-		      "frequency": 1
+		      "frequency": 2
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 0
@@ -5776,8 +6118,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of fruit punch sales",
-		  "width": 500,
+		  "title": "Histogram",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of fruit punches"
 		  },
@@ -5786,7 +6128,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of days",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    5,
@@ -5814,7 +6156,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x34f23fefc76a21ae
 	// Question: Create a histogram from sales data
-	// Widget key: hist_choice_b
+	// Widget key: histogram_choice_b
 	test("histogram - [x34f23fefc76a21ae] Create a histogram from sales data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -5824,10 +6166,10 @@ describe("histogram widget tests", () => {
 		      "frequency": 1
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 1
 		    },
 		    {
-		      "frequency": 1
+		      "frequency": 2
 		    },
 		    {
 		      "frequency": 0
@@ -5837,8 +6179,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of fruit punch sales",
-		  "width": 500,
+		  "title": "Histogram",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of fruit punches"
 		  },
@@ -5847,7 +6189,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of days",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    5,
@@ -5875,7 +6217,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x34f23fefc76a21ae
 	// Question: Create a histogram from sales data
-	// Widget key: hist_choice_c
+	// Widget key: histogram_choice_c
 	test("histogram - [x34f23fefc76a21ae] Create a histogram from sales data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -5888,18 +6230,18 @@ describe("histogram widget tests", () => {
 		      "frequency": 1
 		    },
 		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
 		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of fruit punch sales",
-		  "width": 500,
+		  "title": "Histogram",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of fruit punches"
 		  },
@@ -5908,7 +6250,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of days",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    5,
@@ -5916,6 +6258,336 @@ describe("histogram widget tests", () => {
 		    15,
 		    20,
 		    25
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x52c68601d95bbb4e
+	// Question: Create a histogram from time-travel data
+	// Widget key: histogram_choice_a
+	test("histogram - [x52c68601d95bbb4e] Create a histogram from time-travel data (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of time-travel years",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of years back in time"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of uses",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    4,
+		    8,
+		    12
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x52c68601d95bbb4e
+	// Question: Create a histogram from time-travel data
+	// Widget key: histogram_choice_b
+	test("histogram - [x52c68601d95bbb4e] Create a histogram from time-travel data (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of time-travel years",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of years back in time"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of uses",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    4,
+		    8,
+		    12
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x52c68601d95bbb4e
+	// Question: Create a histogram from time-travel data
+	// Widget key: histogram_choice_c
+	test("histogram - [x52c68601d95bbb4e] Create a histogram from time-travel data (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 6
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of time-travel years",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of years back in time"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of uses",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    4,
+		    8,
+		    12
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x460f8b996f5729d6
+	// Question: Create a histogram from daily house counts
+	// Widget key: hist_choice_a
+	test("histogram - [x460f8b996f5729d6] Create a histogram from daily house counts (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of houses visited"
+		  },
+		  "yAxis": {
+		    "max": 4,
+		    "label": "Number of days",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    10,
+		    20,
+		    30,
+		    40
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x460f8b996f5729d6
+	// Question: Create a histogram from daily house counts
+	// Widget key: hist_choice_b
+	test("histogram - [x460f8b996f5729d6] Create a histogram from daily house counts (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 3
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of houses visited"
+		  },
+		  "yAxis": {
+		    "max": 4,
+		    "label": "Number of days",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    10,
+		    20,
+		    30,
+		    40
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x460f8b996f5729d6
+	// Question: Create a histogram from daily house counts
+	// Widget key: hist_choice_c
+	test("histogram - [x460f8b996f5729d6] Create a histogram from daily house counts (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of houses visited"
+		  },
+		  "yAxis": {
+		    "max": 4,
+		    "label": "Number of days",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    10,
+		    20,
+		    30,
+		    40
 		  ]
 		} as unknown as WidgetInput
 
@@ -5936,7 +6608,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x8608929b10bff82f
 	// Question: Create a histogram from game minutes
-	// Widget key: histogram_choice_a
+	// Widget key: hist_choice_a
 	test("histogram - [x8608929b10bff82f] Create a histogram from game minutes (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -5960,7 +6632,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Histogram",
-		  "width": 500,
+		  "width": 436,
 		  "xAxis": {
 		    "label": "Number of minutes"
 		  },
@@ -5969,7 +6641,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of games",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 367,
 		  "separators": [
 		    0,
 		    5,
@@ -5997,23 +6669,23 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x8608929b10bff82f
 	// Question: Create a histogram from game minutes
-	// Widget key: histogram_choice_b
+	// Widget key: hist_choice_b
 	test("histogram - [x8608929b10bff82f] Create a histogram from game minutes (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 1
-		    },
-		    {
 		      "frequency": 0
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
 		    },
 		    {
 		      "frequency": 2
@@ -6021,7 +6693,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Histogram",
-		  "width": 500,
+		  "width": 436,
 		  "xAxis": {
 		    "label": "Number of minutes"
 		  },
@@ -6030,7 +6702,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of games",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 367,
 		  "separators": [
 		    0,
 		    5,
@@ -6058,7 +6730,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x8608929b10bff82f
 	// Question: Create a histogram from game minutes
-	// Widget key: histogram_choice_c
+	// Widget key: hist_choice_c
 	test("histogram - [x8608929b10bff82f] Create a histogram from game minutes (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -6068,13 +6740,13 @@ describe("histogram widget tests", () => {
 		      "frequency": 0
 		    },
 		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
 		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 2
@@ -6082,7 +6754,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Histogram",
-		  "width": 500,
+		  "width": 436,
 		  "xAxis": {
 		    "label": "Number of minutes"
 		  },
@@ -6091,349 +6763,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of games",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    5,
-		    10,
-		    15,
-		    20,
-		    25
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x52c68601d95bbb4e
-	// Question: Create a histogram from a data set
-	// Widget key: histogram_choice_a
-	test("histogram - [x52c68601d95bbb4e] Create a histogram from a data set (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram",
-		  "width": 467,
-		  "xAxis": {
-		    "label": "Number of years back in time"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of uses",
-		    "tickInterval": 1
-		  },
-		  "height": 392,
-		  "separators": [
-		    0,
-		    4,
-		    8,
-		    12
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x52c68601d95bbb4e
-	// Question: Create a histogram from a data set
-	// Widget key: histogram_choice_b
-	test("histogram - [x52c68601d95bbb4e] Create a histogram from a data set (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram",
-		  "width": 467,
-		  "xAxis": {
-		    "label": "Number of years back in time"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of uses",
-		    "tickInterval": 1
-		  },
-		  "height": 392,
-		  "separators": [
-		    0,
-		    4,
-		    8,
-		    12
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x52c68601d95bbb4e
-	// Question: Create a histogram from a data set
-	// Widget key: histogram_choice_c
-	test("histogram - [x52c68601d95bbb4e] Create a histogram from a data set (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram",
-		  "width": 467,
-		  "xAxis": {
-		    "label": "Number of years back in time"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of uses",
-		    "tickInterval": 1
-		  },
-		  "height": 392,
-		  "separators": [
-		    0,
-		    4,
-		    8,
-		    12
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x932188f15f1efde7
-	// Question: Select the histogram that represents the stain counts
-	// Widget key: histogram_choice_a
-	test("histogram - [x932188f15f1efde7] Select the histogram that represents the stain counts (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Stain counts by interval",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of stains"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of rooms",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    5,
-		    10,
-		    15,
-		    20,
-		    25
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x932188f15f1efde7
-	// Question: Select the histogram that represents the stain counts
-	// Widget key: histogram_choice_b
-	test("histogram - [x932188f15f1efde7] Select the histogram that represents the stain counts (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Stain counts by interval",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of stains"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of rooms",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    5,
-		    10,
-		    15,
-		    20,
-		    25
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x932188f15f1efde7
-	// Question: Select the histogram that represents the stain counts
-	// Widget key: histogram_choice_c
-	test("histogram - [x932188f15f1efde7] Select the histogram that represents the stain counts (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Stain counts by interval",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of stains"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of rooms",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
+		  "height": 367,
 		  "separators": [
 		    0,
 		    5,
@@ -6460,253 +6790,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x464d18776ccbcd86
-	// Question: Create a histogram from tunnel counts
-	// Widget key: histogram_frame
-	test("histogram - [x464d18776ccbcd86] Create a histogram from tunnel counts (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 0
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram of tunnel counts",
-		  "width": 440,
-		  "xAxis": {
-		    "label": "Number of tunnels"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of years",
-		    "tickInterval": 1
-		  },
-		  "height": 358,
-		  "separators": [
-		    0,
-		    4,
-		    8,
-		    12,
-		    16,
-		    20
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x464d18776ccbcd86
-	// Question: Create a histogram from tunnel counts
-	// Widget key: histogram_choice_a
-	test("histogram - [x464d18776ccbcd86] Create a histogram from tunnel counts (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram of tunnel counts",
-		  "width": 440,
-		  "xAxis": {
-		    "label": "Number of tunnels"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of years",
-		    "tickInterval": 1
-		  },
-		  "height": 358,
-		  "separators": [
-		    0,
-		    4,
-		    8,
-		    12,
-		    16,
-		    20
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x464d18776ccbcd86
-	// Question: Create a histogram from tunnel counts
-	// Widget key: histogram_choice_b
-	test("histogram - [x464d18776ccbcd86] Create a histogram from tunnel counts (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram of tunnel counts",
-		  "width": 440,
-		  "xAxis": {
-		    "label": "Number of tunnels"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of years",
-		    "tickInterval": 1
-		  },
-		  "height": 358,
-		  "separators": [
-		    0,
-		    4,
-		    8,
-		    12,
-		    16,
-		    20
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x464d18776ccbcd86
-	// Question: Create a histogram from tunnel counts
-	// Widget key: histogram_choice_c
-	test("histogram - [x464d18776ccbcd86] Create a histogram from tunnel counts (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram of tunnel counts",
-		  "width": 440,
-		  "xAxis": {
-		    "label": "Number of tunnels"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of years",
-		    "tickInterval": 1
-		  },
-		  "height": 358,
-		  "separators": [
-		    0,
-		    4,
-		    8,
-		    12,
-		    16,
-		    20
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x84be252657a64280
-	// Question: Create a histogram from data
+	// Question: Create a histogram from Gary's tunnel data
 	// Widget key: hist_choice_a
-	test("histogram - [x84be252657a64280] Create a histogram from data (1)", async () => {
+	test("histogram - [x464d18776ccbcd86] Create a histogram from Gary's tunnel data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6721,27 +6807,31 @@ describe("histogram widget tests", () => {
 		      "frequency": 2
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram",
-		  "width": 439,
+		  "title": "Histogram of tunnel counts",
+		  "width": 440,
 		  "xAxis": {
-		    "label": "Number of houses visited"
+		    "label": "Number of tunnels"
 		  },
 		  "yAxis": {
-		    "max": 4,
-		    "label": "Number of days",
+		    "max": 5,
+		    "label": "Number of years",
 		    "tickInterval": 1
 		  },
-		  "height": 357,
+		  "height": 358,
 		  "separators": [
 		    0,
-		    10,
-		    20,
-		    30,
-		    40
+		    4,
+		    8,
+		    12,
+		    16,
+		    20
 		  ]
 		} as unknown as WidgetInput
 
@@ -6760,10 +6850,10 @@ describe("histogram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x84be252657a64280
-	// Question: Create a histogram from data
+	// Extracted from question: x464d18776ccbcd86
+	// Question: Create a histogram from Gary's tunnel data
 	// Widget key: hist_choice_b
-	test("histogram - [x84be252657a64280] Create a histogram from data (2)", async () => {
+	test("histogram - [x464d18776ccbcd86] Create a histogram from Gary's tunnel data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6772,7 +6862,71 @@ describe("histogram widget tests", () => {
 		      "frequency": 2
 		    },
 		    {
+		      "frequency": 1
+		    },
+		    {
 		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of tunnel counts",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of tunnels"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of years",
+		    "tickInterval": 1
+		  },
+		  "height": 358,
+		  "separators": [
+		    0,
+		    4,
+		    8,
+		    12,
+		    16,
+		    20
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x464d18776ccbcd86
+	// Question: Create a histogram from Gary's tunnel data
+	// Widget key: hist_choice_c
+	test("histogram - [x464d18776ccbcd86] Create a histogram from Gary's tunnel data (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 2
@@ -6782,7 +6936,65 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram",
+		  "title": "Histogram of tunnel counts",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of tunnels"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of years",
+		    "tickInterval": 1
+		  },
+		  "height": 358,
+		  "separators": [
+		    0,
+		    4,
+		    8,
+		    12,
+		    16,
+		    20
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x84be252657a64280
+	// Question: Create a histogram from daily house visits
+	// Widget key: hist_choice_a
+	test("histogram - [x84be252657a64280] Create a histogram from daily house visits (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Daily house visits",
 		  "width": 439,
 		  "xAxis": {
 		    "label": "Number of houses visited"
@@ -6818,15 +7030,15 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x84be252657a64280
-	// Question: Create a histogram from data
-	// Widget key: hist_choice_c
-	test("histogram - [x84be252657a64280] Create a histogram from data (3)", async () => {
+	// Question: Create a histogram from daily house visits
+	// Widget key: hist_choice_b
+	test("histogram - [x84be252657a64280] Create a histogram from daily house visits (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 1
+		      "frequency": 2
 		    },
 		    {
 		      "frequency": 1
@@ -6835,11 +7047,68 @@ describe("histogram widget tests", () => {
 		      "frequency": 2
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 2
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram",
+		  "title": "Daily house visits",
+		  "width": 439,
+		  "xAxis": {
+		    "label": "Number of houses visited"
+		  },
+		  "yAxis": {
+		    "max": 4,
+		    "label": "Number of days",
+		    "tickInterval": 1
+		  },
+		  "height": 357,
+		  "separators": [
+		    0,
+		    10,
+		    20,
+		    30,
+		    40
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x84be252657a64280
+	// Question: Create a histogram from daily house visits
+	// Widget key: hist_choice_c
+	test("histogram - [x84be252657a64280] Create a histogram from daily house visits (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Daily house visits",
 		  "width": 439,
 		  "xAxis": {
 		    "label": "Number of houses visited"
@@ -6875,9 +7144,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x627968a38574864b
-	// Question: Create a histogram from game scores
-	// Widget key: histogram_choice_a
-	test("histogram - [x627968a38574864b] Create a histogram from game scores (1)", async () => {
+	// Question: Select the histogram for game scores
+	// Widget key: hist_choice_a
+	test("histogram - [x627968a38574864b] Select the histogram for game scores (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -6893,7 +7162,7 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Game scores",
+		  "title": "Game Score Histogram",
 		  "width": 431,
 		  "xAxis": {
 		    "label": "Number of points"
@@ -6928,25 +7197,25 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x627968a38574864b
-	// Question: Create a histogram from game scores
-	// Widget key: histogram_choice_b
-	test("histogram - [x627968a38574864b] Create a histogram from game scores (2)", async () => {
+	// Question: Select the histogram for game scores
+	// Widget key: hist_choice_b
+	test("histogram - [x627968a38574864b] Select the histogram for game scores (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
 		      "frequency": 3
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Game scores",
+		  "title": "Game Score Histogram",
 		  "width": 431,
 		  "xAxis": {
 		    "label": "Number of points"
@@ -6981,25 +7250,25 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x627968a38574864b
-	// Question: Create a histogram from game scores
-	// Widget key: histogram_choice_c
-	test("histogram - [x627968a38574864b] Create a histogram from game scores (3)", async () => {
+	// Question: Select the histogram for game scores
+	// Widget key: hist_choice_c
+	test("histogram - [x627968a38574864b] Select the histogram for game scores (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 2
+		      "frequency": 1
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 3
 		    },
 		    {
 		      "frequency": 3
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Game scores",
+		  "title": "Game Score Histogram",
 		  "width": 431,
 		  "xAxis": {
 		    "label": "Number of points"
@@ -7035,7 +7304,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x15eb63eb76deaacd
 	// Question: Create a histogram from television sizes
-	// Widget key: hist_choice_a
+	// Widget key: histogram_choice_a
 	test("histogram - [x15eb63eb76deaacd] Create a histogram from television sizes (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -7045,15 +7314,15 @@ describe("histogram widget tests", () => {
 		      "frequency": 1
 		    },
 		    {
-		      "frequency": 4
+		      "frequency": 3
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 4
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of television screen sizes",
-		  "width": 500,
+		  "title": "Television screen size distribution",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Screen size (in centimeters)"
 		  },
@@ -7062,7 +7331,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of televisions",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    25,
@@ -7088,61 +7357,8 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x15eb63eb76deaacd
 	// Question: Create a histogram from television sizes
-	// Widget key: hist_choice_b
+	// Widget key: histogram_choice_b
 	test("histogram - [x15eb63eb76deaacd] Create a histogram from television sizes (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 4
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram of television screen sizes",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Screen size (in centimeters)"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of televisions",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    25,
-		    50,
-		    75
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x15eb63eb76deaacd
-	// Question: Create a histogram from television sizes
-	// Widget key: hist_choice_c
-	test("histogram - [x15eb63eb76deaacd] Create a histogram from television sizes (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7151,15 +7367,15 @@ describe("histogram widget tests", () => {
 		      "frequency": 2
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 2
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 4
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of television screen sizes",
-		  "width": 500,
+		  "title": "Television screen size distribution",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Screen size (in centimeters)"
 		  },
@@ -7168,7 +7384,60 @@ describe("histogram widget tests", () => {
 		    "label": "Number of televisions",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
+		  "separators": [
+		    0,
+		    25,
+		    50,
+		    75
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x15eb63eb76deaacd
+	// Question: Create a histogram from television sizes
+	// Widget key: histogram_choice_c
+	test("histogram - [x15eb63eb76deaacd] Create a histogram from television sizes (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 5
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Television screen size distribution",
+		  "width": 420,
+		  "xAxis": {
+		    "label": "Screen size (in centimeters)"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of televisions",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
 		  "separators": [
 		    0,
 		    25,
@@ -7194,7 +7463,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: xe50e15f87735738d
 	// Question: Create a histogram from exam scores
-	// Widget key: histogram_choice_a
+	// Widget key: hist_choice_a
 	test("histogram - [xe50e15f87735738d] Create a histogram from exam scores (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -7217,8 +7486,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Test score distribution",
-		  "width": 500,
+		  "title": "Final Exam Score Distribution",
+		  "width": 438,
 		  "xAxis": {
 		    "label": "Test score"
 		  },
@@ -7227,7 +7496,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of students",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    20,
@@ -7255,7 +7524,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: xe50e15f87735738d
 	// Question: Create a histogram from exam scores
-	// Widget key: histogram_choice_b
+	// Widget key: hist_choice_b
 	test("histogram - [xe50e15f87735738d] Create a histogram from exam scores (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -7278,8 +7547,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Test score distribution",
-		  "width": 500,
+		  "title": "Final Exam Score Distribution",
+		  "width": 438,
 		  "xAxis": {
 		    "label": "Test score"
 		  },
@@ -7288,7 +7557,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of students",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    20,
@@ -7316,7 +7585,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: xe50e15f87735738d
 	// Question: Create a histogram from exam scores
-	// Widget key: histogram_choice_c
+	// Widget key: hist_choice_c
 	test("histogram - [xe50e15f87735738d] Create a histogram from exam scores (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -7329,18 +7598,18 @@ describe("histogram widget tests", () => {
 		      "frequency": 0
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 0
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 4
 		    },
 		    {
 		      "frequency": 4
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Test score distribution",
-		  "width": 500,
+		  "title": "Final Exam Score Distribution",
+		  "width": 438,
 		  "xAxis": {
 		    "label": "Test score"
 		  },
@@ -7349,7 +7618,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of students",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    20,
@@ -7376,9 +7645,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xf001c8849ed0b843
-	// Question: Create a histogram from data
+	// Question: Select the histogram that represents the data
 	// Widget key: histogram_choice_a
-	test("histogram - [xf001c8849ed0b843] Create a histogram from data (1)", async () => {
+	test("histogram - [xf001c8849ed0b843] Select the histogram that represents the data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7400,8 +7669,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram",
-		  "width": 500,
+		  "title": "Tunnel Counts per Year",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of tunnels"
 		  },
@@ -7410,7 +7679,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of years",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 358,
 		  "separators": [
 		    0,
 		    4,
@@ -7437,70 +7706,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xf001c8849ed0b843
-	// Question: Create a histogram from data
+	// Question: Select the histogram that represents the data
 	// Widget key: histogram_choice_b
-	test("histogram - [xf001c8849ed0b843] Create a histogram from data (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of tunnels"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of years",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    4,
-		    8,
-		    12,
-		    16,
-		    20
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xf001c8849ed0b843
-	// Question: Create a histogram from data
-	// Widget key: histogram_choice_c
-	test("histogram - [xf001c8849ed0b843] Create a histogram from data (3)", async () => {
+	test("histogram - [xf001c8849ed0b843] Select the histogram that represents the data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7512,6 +7720,67 @@ describe("histogram widget tests", () => {
 		      "frequency": 3
 		    },
 		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Tunnel Counts per Year",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of tunnels"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of years",
+		    "tickInterval": 1
+		  },
+		  "height": 358,
+		  "separators": [
+		    0,
+		    4,
+		    8,
+		    12,
+		    16,
+		    20
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf001c8849ed0b843
+	// Question: Select the histogram that represents the data
+	// Widget key: histogram_choice_c
+	test("histogram - [xf001c8849ed0b843] Select the histogram that represents the data (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
 		      "frequency": 1
 		    },
 		    {
@@ -7522,8 +7791,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram",
-		  "width": 500,
+		  "title": "Tunnel Counts per Year",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of tunnels"
 		  },
@@ -7532,7 +7801,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of years",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 358,
 		  "separators": [
 		    0,
 		    4,
@@ -7559,9 +7828,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x4fb58988c7772d2f
-	// Question: Create a histogram of Trey’s work hours
+	// Question: Create a histogram from work hours
 	// Widget key: hist_choice_a
-	test("histogram - [x4fb58988c7772d2f] Create a histogram of Trey’s work hours (1)", async () => {
+	test("histogram - [x4fb58988c7772d2f] Create a histogram from work hours (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7577,8 +7846,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of work hours",
-		  "width": 500,
+		  "title": "Work hours distribution",
+		  "width": 441,
 		  "xAxis": {
 		    "label": "Number of hours"
 		  },
@@ -7587,7 +7856,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of shifts",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 385,
 		  "separators": [
 		    0,
 		    3,
@@ -7612,9 +7881,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x4fb58988c7772d2f
-	// Question: Create a histogram of Trey’s work hours
+	// Question: Create a histogram from work hours
 	// Widget key: hist_choice_b
-	test("histogram - [x4fb58988c7772d2f] Create a histogram of Trey’s work hours (2)", async () => {
+	test("histogram - [x4fb58988c7772d2f] Create a histogram from work hours (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7630,8 +7899,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of work hours",
-		  "width": 500,
+		  "title": "Work hours distribution",
+		  "width": 441,
 		  "xAxis": {
 		    "label": "Number of hours"
 		  },
@@ -7640,7 +7909,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of shifts",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 385,
 		  "separators": [
 		    0,
 		    3,
@@ -7665,9 +7934,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x4fb58988c7772d2f
-	// Question: Create a histogram of Trey’s work hours
+	// Question: Create a histogram from work hours
 	// Widget key: hist_choice_c
-	test("histogram - [x4fb58988c7772d2f] Create a histogram of Trey’s work hours (3)", async () => {
+	test("histogram - [x4fb58988c7772d2f] Create a histogram from work hours (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7683,8 +7952,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of work hours",
-		  "width": 500,
+		  "title": "Work hours distribution",
+		  "width": 441,
 		  "xAxis": {
 		    "label": "Number of hours"
 		  },
@@ -7693,7 +7962,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of shifts",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 385,
 		  "separators": [
 		    0,
 		    3,
@@ -7718,9 +7987,115 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x7caa87d398d3a7b9
-	// Question: Select the histogram for Hawaii Eagles game scores
+	// Question: Create a histogram from game scores
 	// Widget key: hist_choice_a
-	test("histogram - [x7caa87d398d3a7b9] Select the histogram for Hawaii Eagles game scores (1)", async () => {
+	test("histogram - [x7caa87d398d3a7b9] Create a histogram from game scores (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of Game Scores",
+		  "width": 431,
+		  "xAxis": {
+		    "label": "Number of points"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of games",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    15,
+		    30,
+		    45
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7caa87d398d3a7b9
+	// Question: Create a histogram from game scores
+	// Widget key: hist_choice_b
+	test("histogram - [x7caa87d398d3a7b9] Create a histogram from game scores (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of Game Scores",
+		  "width": 431,
+		  "xAxis": {
+		    "label": "Number of points"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of games",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    15,
+		    30,
+		    45
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x7caa87d398d3a7b9
+	// Question: Create a histogram from game scores
+	// Widget key: hist_choice_c
+	test("histogram - [x7caa87d398d3a7b9] Create a histogram from game scores (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7729,121 +8104,15 @@ describe("histogram widget tests", () => {
 		      "frequency": 1
 		    },
 		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Hawaii Eagles Game Scores",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of points"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of games",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    15,
-		    30,
-		    45
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7caa87d398d3a7b9
-	// Question: Select the histogram for Hawaii Eagles game scores
-	// Widget key: hist_choice_b
-	test("histogram - [x7caa87d398d3a7b9] Select the histogram for Hawaii Eagles game scores (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 2
-		    },
-		    {
 		      "frequency": 3
 		    },
 		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Hawaii Eagles Game Scores",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of points"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of games",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    15,
-		    30,
-		    45
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7caa87d398d3a7b9
-	// Question: Select the histogram for Hawaii Eagles game scores
-	// Widget key: hist_choice_c
-	test("histogram - [x7caa87d398d3a7b9] Select the histogram for Hawaii Eagles game scores (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
 		      "frequency": 3
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Hawaii Eagles Game Scores",
-		  "width": 500,
+		  "title": "Histogram of Game Scores",
+		  "width": 431,
 		  "xAxis": {
 		    "label": "Number of points"
 		  },
@@ -7852,7 +8121,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of games",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    15,
@@ -7877,9 +8146,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x69190c0464f96205
-	// Question: Create a histogram from book page counts
-	// Widget key: histogram_choice_a
-	test("histogram - [x69190c0464f96205] Create a histogram from book page counts (1)", async () => {
+	// Question: Create a histogram from page counts
+	// Widget key: hist_choice_a
+	test("histogram - [x69190c0464f96205] Create a histogram from page counts (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7898,8 +8167,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Book Page Counts",
-		  "width": 500,
+		  "title": "Page Counts for Pedro's Books",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of pages"
 		  },
@@ -7908,7 +8177,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of books",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 380,
 		  "separators": [
 		    0,
 		    150,
@@ -7934,9 +8203,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x69190c0464f96205
-	// Question: Create a histogram from book page counts
-	// Widget key: histogram_choice_b
-	test("histogram - [x69190c0464f96205] Create a histogram from book page counts (2)", async () => {
+	// Question: Create a histogram from page counts
+	// Widget key: hist_choice_b
+	test("histogram - [x69190c0464f96205] Create a histogram from page counts (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -7955,8 +8224,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Book Page Counts",
-		  "width": 500,
+		  "title": "Page Counts for Pedro's Books",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of pages"
 		  },
@@ -7965,7 +8234,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of books",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 380,
 		  "separators": [
 		    0,
 		    150,
@@ -7991,9 +8260,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x69190c0464f96205
-	// Question: Create a histogram from book page counts
-	// Widget key: histogram_choice_c
-	test("histogram - [x69190c0464f96205] Create a histogram from book page counts (3)", async () => {
+	// Question: Create a histogram from page counts
+	// Widget key: hist_choice_c
+	test("histogram - [x69190c0464f96205] Create a histogram from page counts (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8012,8 +8281,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Book Page Counts",
-		  "width": 500,
+		  "title": "Page Counts for Pedro's Books",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of pages"
 		  },
@@ -8022,7 +8291,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of books",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 380,
 		  "separators": [
 		    0,
 		    150,
@@ -8049,7 +8318,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x51ce6de084a3bceb
 	// Question: Create a histogram from work hours
-	// Widget key: hist_choice_a
+	// Widget key: histogram_choice_a
 	test("histogram - [x51ce6de084a3bceb] Create a histogram from work hours (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -8066,8 +8335,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Hours worked distribution",
-		  "width": 500,
+		  "title": "Histogram of hours worked per shift",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of hours"
 		  },
@@ -8076,7 +8345,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of shifts",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    3,
@@ -8102,7 +8371,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x51ce6de084a3bceb
 	// Question: Create a histogram from work hours
-	// Widget key: hist_choice_b
+	// Widget key: histogram_choice_b
 	test("histogram - [x51ce6de084a3bceb] Create a histogram from work hours (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -8119,8 +8388,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Hours worked distribution",
-		  "width": 500,
+		  "title": "Histogram of hours worked per shift",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of hours"
 		  },
@@ -8129,7 +8398,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of shifts",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    3,
@@ -8155,7 +8424,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x51ce6de084a3bceb
 	// Question: Create a histogram from work hours
-	// Widget key: hist_choice_c
+	// Widget key: histogram_choice_c
 	test("histogram - [x51ce6de084a3bceb] Create a histogram from work hours (4)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -8172,8 +8441,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Hours worked distribution",
-		  "width": 500,
+		  "title": "Histogram of hours worked per shift",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of hours"
 		  },
@@ -8182,7 +8451,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of shifts",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    3,
@@ -8207,9 +8476,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x6a650fdccd3f32c5
-	// Question: Select the histogram that represents the data
+	// Question: Create a histogram from moo counts
 	// Widget key: hist_choice_a
-	test("histogram - [x6a650fdccd3f32c5] Select the histogram that represents the data (1)", async () => {
+	test("histogram - [x6a650fdccd3f32c5] Create a histogram from moo counts (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8218,18 +8487,18 @@ describe("histogram widget tests", () => {
 		      "frequency": 2
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 2
 		    },
 		    {
-		      "frequency": 1
+		      "frequency": 2
 		    },
 		    {
 		      "frequency": 2
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of cow moos",
-		  "width": 500,
+		  "title": "Moo counts",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of moos"
 		  },
@@ -8238,7 +8507,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of cows",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    20,
@@ -8264,18 +8533,18 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x6a650fdccd3f32c5
-	// Question: Select the histogram that represents the data
+	// Question: Create a histogram from moo counts
 	// Widget key: hist_choice_b
-	test("histogram - [x6a650fdccd3f32c5] Select the histogram that represents the data (2)", async () => {
+	test("histogram - [x6a650fdccd3f32c5] Create a histogram from moo counts (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 3
+		      "frequency": 2
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 3
 		    },
 		    {
 		      "frequency": 1
@@ -8285,8 +8554,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of cow moos",
-		  "width": 500,
+		  "title": "Moo counts",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of moos"
 		  },
@@ -8295,7 +8564,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of cows",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    20,
@@ -8321,9 +8590,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x6a650fdccd3f32c5
-	// Question: Select the histogram that represents the data
+	// Question: Create a histogram from moo counts
 	// Widget key: hist_choice_c
-	test("histogram - [x6a650fdccd3f32c5] Select the histogram that represents the data (3)", async () => {
+	test("histogram - [x6a650fdccd3f32c5] Create a histogram from moo counts (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8332,18 +8601,18 @@ describe("histogram widget tests", () => {
 		      "frequency": 2
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 3
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 0
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 3
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of cow moos",
-		  "width": 500,
+		  "title": "Moo counts",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of moos"
 		  },
@@ -8352,7 +8621,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of cows",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    20,
@@ -8377,169 +8646,10 @@ describe("histogram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x4976e354e4fa5d65
-	// Question: Create a histogram from a data set
-	// Widget key: histogram_choice_a
-	test("histogram - [x4976e354e4fa5d65] Create a histogram from a data set (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram",
-		  "width": 467,
-		  "xAxis": {
-		    "label": "Number of years back in time"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of uses",
-		    "tickInterval": 1
-		  },
-		  "height": 392,
-		  "separators": [
-		    0,
-		    4,
-		    8,
-		    12
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4976e354e4fa5d65
-	// Question: Create a histogram from a data set
-	// Widget key: histogram_choice_b
-	test("histogram - [x4976e354e4fa5d65] Create a histogram from a data set (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 6
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram",
-		  "width": 467,
-		  "xAxis": {
-		    "label": "Number of years back in time"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of uses",
-		    "tickInterval": 1
-		  },
-		  "height": 392,
-		  "separators": [
-		    0,
-		    4,
-		    8,
-		    12
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x4976e354e4fa5d65
-	// Question: Create a histogram from a data set
-	// Widget key: histogram_choice_c
-	test("histogram - [x4976e354e4fa5d65] Create a histogram from a data set (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram",
-		  "width": 467,
-		  "xAxis": {
-		    "label": "Number of years back in time"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of uses",
-		    "tickInterval": 1
-		  },
-		  "height": 392,
-		  "separators": [
-		    0,
-		    4,
-		    8,
-		    12
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
 	// Extracted from question: xf8a765e55be187cd
-	// Question: Create a histogram from golf drive distances
-	// Widget key: histogram_choice_a
-	test("histogram - [xf8a765e55be187cd] Create a histogram from golf drive distances (1)", async () => {
+	// Question: Create a histogram from drive distances
+	// Widget key: hist_choice_a
+	test("histogram - [xf8a765e55be187cd] Create a histogram from drive distances (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8548,10 +8658,10 @@ describe("histogram widget tests", () => {
 		      "frequency": 1
 		    },
 		    {
-		      "frequency": 1
+		      "frequency": 2
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 3
@@ -8561,8 +8671,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Driving distance (in meters)",
-		  "width": 500,
+		  "title": " ",
+		  "width": 435,
 		  "xAxis": {
 		    "label": "Driving distance (in meters)"
 		  },
@@ -8571,7 +8681,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of drives",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 358,
 		  "separators": [
 		    0,
 		    50,
@@ -8598,15 +8708,15 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xf8a765e55be187cd
-	// Question: Create a histogram from golf drive distances
-	// Widget key: histogram_choice_b
-	test("histogram - [xf8a765e55be187cd] Create a histogram from golf drive distances (2)", async () => {
+	// Question: Create a histogram from drive distances
+	// Widget key: hist_choice_b
+	test("histogram - [xf8a765e55be187cd] Create a histogram from drive distances (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 2
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 1
@@ -8615,15 +8725,15 @@ describe("histogram widget tests", () => {
 		      "frequency": 2
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 3
 		    },
 		    {
 		      "frequency": 1
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Driving distance (in meters)",
-		  "width": 500,
+		  "title": " ",
+		  "width": 435,
 		  "xAxis": {
 		    "label": "Driving distance (in meters)"
 		  },
@@ -8632,7 +8742,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of drives",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 358,
 		  "separators": [
 		    0,
 		    50,
@@ -8659,241 +8769,302 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xf8a765e55be187cd
+	// Question: Create a histogram from drive distances
+	// Widget key: hist_choice_c
+	test("histogram - [xf8a765e55be187cd] Create a histogram from drive distances (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": " ",
+		  "width": 435,
+		  "xAxis": {
+		    "label": "Driving distance (in meters)"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of drives",
+		    "tickInterval": 1
+		  },
+		  "height": 358,
+		  "separators": [
+		    0,
+		    50,
+		    100,
+		    150,
+		    200,
+		    250
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xf8a765e55be187cd
+	// Question: Create a histogram from drive distances
+	// Widget key: histogram_initial
+	test("histogram - [xf8a765e55be187cd] Create a histogram from drive distances (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 0
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": " ",
+		  "width": 435,
+		  "xAxis": {
+		    "label": "Driving distance (in meters)"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of drives",
+		    "tickInterval": 1
+		  },
+		  "height": 358,
+		  "separators": [
+		    0,
+		    50,
+		    100,
+		    150,
+		    200,
+		    250
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcab89b1b0d92d84d
+	// Question: Create a histogram from book page counts
+	// Widget key: hist_choice_a
+	test("histogram - [xcab89b1b0d92d84d] Create a histogram from book page counts (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Books by page range",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of pages"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of books",
+		    "tickInterval": 1
+		  },
+		  "height": 380,
+		  "separators": [
+		    0,
+		    150,
+		    300,
+		    450,
+		    600
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcab89b1b0d92d84d
+	// Question: Create a histogram from book page counts
+	// Widget key: hist_choice_b
+	test("histogram - [xcab89b1b0d92d84d] Create a histogram from book page counts (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Books by page range",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of pages"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of books",
+		    "tickInterval": 1
+		  },
+		  "height": 380,
+		  "separators": [
+		    0,
+		    150,
+		    300,
+		    450,
+		    600
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xcab89b1b0d92d84d
+	// Question: Create a histogram from book page counts
+	// Widget key: hist_choice_c
+	test("histogram - [xcab89b1b0d92d84d] Create a histogram from book page counts (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Books by page range",
+		  "width": 440,
+		  "xAxis": {
+		    "label": "Number of pages"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of books",
+		    "tickInterval": 1
+		  },
+		  "height": 380,
+		  "separators": [
+		    0,
+		    150,
+		    300,
+		    450,
+		    600
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb6f930bfdc23f3a9
 	// Question: Create a histogram from golf drive distances
-	// Widget key: histogram_choice_c
-	test("histogram - [xf8a765e55be187cd] Create a histogram from golf drive distances (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Driving distance (in meters)",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Driving distance (in meters)"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of drives",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    50,
-		    100,
-		    150,
-		    200,
-		    250
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcab89b1b0d92d84d
-	// Question: Select the histogram that represents the book page counts
-	// Widget key: histogram_choice_a
-	test("histogram - [xcab89b1b0d92d84d] Select the histogram that represents the book page counts (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Book Page Counts",
-		  "width": 520,
-		  "xAxis": {
-		    "label": "Number of pages"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of books",
-		    "tickInterval": 1
-		  },
-		  "height": 360,
-		  "separators": [
-		    0,
-		    150,
-		    300,
-		    450,
-		    600
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcab89b1b0d92d84d
-	// Question: Select the histogram that represents the book page counts
-	// Widget key: histogram_choice_b
-	test("histogram - [xcab89b1b0d92d84d] Select the histogram that represents the book page counts (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Book Page Counts",
-		  "width": 520,
-		  "xAxis": {
-		    "label": "Number of pages"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of books",
-		    "tickInterval": 1
-		  },
-		  "height": 360,
-		  "separators": [
-		    0,
-		    150,
-		    300,
-		    450,
-		    600
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xcab89b1b0d92d84d
-	// Question: Select the histogram that represents the book page counts
-	// Widget key: histogram_choice_c
-	test("histogram - [xcab89b1b0d92d84d] Select the histogram that represents the book page counts (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Book Page Counts",
-		  "width": 520,
-		  "xAxis": {
-		    "label": "Number of pages"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of books",
-		    "tickInterval": 1
-		  },
-		  "height": 360,
-		  "separators": [
-		    0,
-		    150,
-		    300,
-		    450,
-		    600
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb6f930bfdc23f3a9
-	// Question: Create a histogram of golf drive distances
 	// Widget key: hist_choice_a
-	test("histogram - [xb6f930bfdc23f3a9] Create a histogram of golf drive distances (1)", async () => {
+	test("histogram - [xb6f930bfdc23f3a9] Create a histogram from golf drive distances (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8915,8 +9086,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of Luiza’s Golf Drives",
-		  "width": 500,
+		  "title": "Golf drive distances",
+		  "width": 435,
 		  "xAxis": {
 		    "label": "Driving distance (in meters)"
 		  },
@@ -8925,7 +9096,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of drives",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 358,
 		  "separators": [
 		    0,
 		    50,
@@ -8952,9 +9123,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xb6f930bfdc23f3a9
-	// Question: Create a histogram of golf drive distances
+	// Question: Create a histogram from golf drive distances
 	// Widget key: hist_choice_b
-	test("histogram - [xb6f930bfdc23f3a9] Create a histogram of golf drive distances (2)", async () => {
+	test("histogram - [xb6f930bfdc23f3a9] Create a histogram from golf drive distances (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -8966,18 +9137,18 @@ describe("histogram widget tests", () => {
 		      "frequency": 2
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 1
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 3
 		    },
 		    {
 		      "frequency": 1
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram Option B",
-		  "width": 500,
+		  "title": "Golf drive distances",
+		  "width": 435,
 		  "xAxis": {
 		    "label": "Driving distance (in meters)"
 		  },
@@ -8986,7 +9157,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of drives",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 358,
 		  "separators": [
 		    0,
 		    50,
@@ -9013,9 +9184,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xb6f930bfdc23f3a9
-	// Question: Create a histogram of golf drive distances
+	// Question: Create a histogram from golf drive distances
 	// Widget key: hist_choice_c
-	test("histogram - [xb6f930bfdc23f3a9] Create a histogram of golf drive distances (3)", async () => {
+	test("histogram - [xb6f930bfdc23f3a9] Create a histogram from golf drive distances (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9037,8 +9208,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram Option C",
-		  "width": 500,
+		  "title": "Golf drive distances",
+		  "width": 435,
 		  "xAxis": {
 		    "label": "Driving distance (in meters)"
 		  },
@@ -9047,7 +9218,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of drives",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 358,
 		  "separators": [
 		    0,
 		    50,
@@ -9074,9 +9245,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xf94519ea4105471c
-	// Question: Create a histogram from monthly feather sales
-	// Widget key: histogram_choice_a
-	test("histogram - [xf94519ea4105471c] Create a histogram from monthly feather sales (1)", async () => {
+	// Question: Create a histogram from a data set
+	// Widget key: hist_choice_a
+	test("histogram - [xf94519ea4105471c] Create a histogram from a data set (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9095,8 +9266,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of monthly feather sales",
-		  "width": 500,
+		  "title": "Number of feathers sold by month",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of feathers sold"
 		  },
@@ -9105,7 +9276,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of months",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 340,
 		  "separators": [
 		    0,
 		    5,
@@ -9131,29 +9302,29 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xf94519ea4105471c
-	// Question: Create a histogram from monthly feather sales
-	// Widget key: histogram_choice_b
-	test("histogram - [xf94519ea4105471c] Create a histogram from monthly feather sales (2)", async () => {
+	// Question: Create a histogram from a data set
+	// Widget key: hist_choice_b
+	test("histogram - [xf94519ea4105471c] Create a histogram from a data set (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 1
+		      "frequency": 2
 		    },
 		    {
 		      "frequency": 3
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 2
 		    },
 		    {
 		      "frequency": 1
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of monthly feather sales",
-		  "width": 500,
+		  "title": "Number of feathers sold by month",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of feathers sold"
 		  },
@@ -9162,7 +9333,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of months",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 340,
 		  "separators": [
 		    0,
 		    5,
@@ -9188,29 +9359,29 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xf94519ea4105471c
-	// Question: Create a histogram from monthly feather sales
-	// Widget key: histogram_choice_c
-	test("histogram - [xf94519ea4105471c] Create a histogram from monthly feather sales (3)", async () => {
+	// Question: Create a histogram from a data set
+	// Widget key: hist_choice_c
+	test("histogram - [xf94519ea4105471c] Create a histogram from a data set (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 2
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 3
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 3
 		    },
 		    {
 		      "frequency": 1
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of monthly feather sales",
-		  "width": 500,
+		  "title": "Number of feathers sold by month",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of feathers sold"
 		  },
@@ -9219,7 +9390,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of months",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 340,
 		  "separators": [
 		    0,
 		    5,
@@ -9245,180 +9416,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x39ec8da9db3af5b4
-	// Question: Select a histogram for unicorn counts
-	// Widget key: histogram_choice_a
-	test("histogram - [x39ec8da9db3af5b4] Select a histogram for unicorn counts (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of unicorns"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of forests",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    5,
-		    10,
-		    15,
-		    20
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x39ec8da9db3af5b4
-	// Question: Select a histogram for unicorn counts
-	// Widget key: histogram_choice_b
-	test("histogram - [x39ec8da9db3af5b4] Select a histogram for unicorn counts (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of unicorns"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of forests",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    5,
-		    10,
-		    15,
-		    20
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x39ec8da9db3af5b4
-	// Question: Select a histogram for unicorn counts
-	// Widget key: histogram_choice_c
-	test("histogram - [x39ec8da9db3af5b4] Select a histogram for unicorn counts (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of unicorns"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of forests",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    5,
-		    10,
-		    15,
-		    20
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x2f2d2e59fb1999e2
-	// Question: Create a histogram from a data set
+	// Question: Choose the correct histogram for the unicorn data
 	// Widget key: hist_choice_a
-	test("histogram - [x2f2d2e59fb1999e2] Create a histogram from a data set (1)", async () => {
+	test("histogram - [x39ec8da9db3af5b4] Choose the correct histogram for the unicorn data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9437,8 +9437,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram",
-		  "width": 500,
+		  "title": "Unicorn counts in enchanted forests",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of unicorns"
 		  },
@@ -9447,7 +9447,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of forests",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    5,
@@ -9472,10 +9472,10 @@ describe("histogram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x2f2d2e59fb1999e2
-	// Question: Create a histogram from a data set
+	// Extracted from question: x39ec8da9db3af5b4
+	// Question: Choose the correct histogram for the unicorn data
 	// Widget key: hist_choice_b
-	test("histogram - [x2f2d2e59fb1999e2] Create a histogram from a data set (2)", async () => {
+	test("histogram - [x39ec8da9db3af5b4] Choose the correct histogram for the unicorn data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9494,8 +9494,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram",
-		  "width": 500,
+		  "title": "Unicorn counts in enchanted forests",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of unicorns"
 		  },
@@ -9504,7 +9504,64 @@ describe("histogram widget tests", () => {
 		    "label": "Number of forests",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
+		  "separators": [
+		    0,
+		    5,
+		    10,
+		    15,
+		    20
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x39ec8da9db3af5b4
+	// Question: Choose the correct histogram for the unicorn data
+	// Widget key: hist_choice_c
+	test("histogram - [x39ec8da9db3af5b4] Choose the correct histogram for the unicorn data (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Unicorn counts in enchanted forests",
+		  "width": 420,
+		  "xAxis": {
+		    "label": "Number of unicorns"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of forests",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
 		  "separators": [
 		    0,
 		    5,
@@ -9530,272 +9587,44 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x2f2d2e59fb1999e2
-	// Question: Create a histogram from a data set
-	// Widget key: hist_choice_c
-	test("histogram - [x2f2d2e59fb1999e2] Create a histogram from a data set (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of unicorns"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of forests",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    5,
-		    10,
-		    15,
-		    20
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x60164cc8b85d6b79
-	// Question: Choose the correct histogram for email counts
-	// Widget key: histogram_choice_a
-	test("histogram - [x60164cc8b85d6b79] Choose the correct histogram for email counts (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Email counts per day",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of emails sent"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of days",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    30,
-		    60,
-		    90,
-		    120
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x60164cc8b85d6b79
-	// Question: Choose the correct histogram for email counts
-	// Widget key: histogram_choice_b
-	test("histogram - [x60164cc8b85d6b79] Choose the correct histogram for email counts (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Email counts per day",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of emails sent"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of days",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    30,
-		    60,
-		    90,
-		    120
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x60164cc8b85d6b79
-	// Question: Choose the correct histogram for email counts
-	// Widget key: histogram_choice_c
-	test("histogram - [x60164cc8b85d6b79] Choose the correct histogram for email counts (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Email counts per day",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of emails sent"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of days",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    30,
-		    60,
-		    90,
-		    120
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x7ac6f01e3b7db87d
-	// Question: Create a histogram from cow-moo counts
+	// Question: Create a histogram from unicorn counts
 	// Widget key: hist_choice_a
-	test("histogram - [x7ac6f01e3b7db87d] Create a histogram from cow-moo counts (1)", async () => {
+	test("histogram - [x2f2d2e59fb1999e2] Create a histogram from unicorn counts (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
 		      "frequency": 1
 		    },
 		    {
 		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Cow moo counts",
-		  "width": 500,
+		  "title": "Histogram",
+		  "width": 420,
 		  "xAxis": {
-		    "label": "Number of moos"
+		    "label": "Number of unicorns"
 		  },
 		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of cows",
+		    "max": 5,
+		    "label": "Number of forests",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 340,
 		  "separators": [
 		    0,
-		    20,
-		    40,
-		    60,
-		    80
+		    5,
+		    10,
+		    15,
+		    20
 		  ]
 		} as unknown as WidgetInput
 
@@ -9814,10 +9643,10 @@ describe("histogram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7ac6f01e3b7db87d
-	// Question: Create a histogram from cow-moo counts
+	// Extracted from question: x2f2d2e59fb1999e2
+	// Question: Create a histogram from unicorn counts
 	// Widget key: hist_choice_b
-	test("histogram - [x7ac6f01e3b7db87d] Create a histogram from cow-moo counts (2)", async () => {
+	test("histogram - [x2f2d2e59fb1999e2] Create a histogram from unicorn counts (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9826,7 +9655,7 @@ describe("histogram widget tests", () => {
 		      "frequency": 2
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 2
@@ -9836,23 +9665,23 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Cow moo counts",
-		  "width": 500,
+		  "title": "Histogram",
+		  "width": 420,
 		  "xAxis": {
-		    "label": "Number of moos"
+		    "label": "Number of unicorns"
 		  },
 		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of cows",
+		    "max": 5,
+		    "label": "Number of forests",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 340,
 		  "separators": [
 		    0,
-		    20,
-		    40,
-		    60,
-		    80
+		    5,
+		    10,
+		    15,
+		    20
 		  ]
 		} as unknown as WidgetInput
 
@@ -9871,10 +9700,10 @@ describe("histogram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x7ac6f01e3b7db87d
-	// Question: Create a histogram from cow-moo counts
+	// Extracted from question: x2f2d2e59fb1999e2
+	// Question: Create a histogram from unicorn counts
 	// Widget key: hist_choice_c
-	test("histogram - [x7ac6f01e3b7db87d] Create a histogram from cow-moo counts (3)", async () => {
+	test("histogram - [x2f2d2e59fb1999e2] Create a histogram from unicorn counts (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9883,7 +9712,121 @@ describe("histogram widget tests", () => {
 		      "frequency": 1
 		    },
 		    {
-		      "frequency": 4
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram",
+		  "width": 420,
+		  "xAxis": {
+		    "label": "Number of unicorns"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of forests",
+		    "tickInterval": 1
+		  },
+		  "height": 340,
+		  "separators": [
+		    0,
+		    5,
+		    10,
+		    15,
+		    20
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x60164cc8b85d6b79
+	// Question: Create a histogram from email counts
+	// Widget key: hist_choice_a
+	test("histogram - [x60164cc8b85d6b79] Create a histogram from email counts (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Number of emails sent per day",
+		  "width": 445,
+		  "xAxis": {
+		    "label": "Number of emails sent"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of days",
+		    "tickInterval": 1
+		  },
+		  "height": 358,
+		  "separators": [
+		    0,
+		    30,
+		    60,
+		    90,
+		    120
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x60164cc8b85d6b79
+	// Question: Create a histogram from email counts
+	// Widget key: hist_choice_b
+	test("histogram - [x60164cc8b85d6b79] Create a histogram from email counts (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 3
 		    },
 		    {
 		      "frequency": 1
@@ -9893,23 +9836,80 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Cow moo counts",
-		  "width": 500,
+		  "title": "Number of emails sent per day",
+		  "width": 445,
 		  "xAxis": {
-		    "label": "Number of moos"
+		    "label": "Number of emails sent"
 		  },
 		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of cows",
+		    "max": 5,
+		    "label": "Number of days",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 358,
 		  "separators": [
 		    0,
-		    20,
-		    40,
+		    30,
 		    60,
-		    80
+		    90,
+		    120
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x60164cc8b85d6b79
+	// Question: Create a histogram from email counts
+	// Widget key: hist_choice_c
+	test("histogram - [x60164cc8b85d6b79] Create a histogram from email counts (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 0
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Number of emails sent per day",
+		  "width": 445,
+		  "xAxis": {
+		    "label": "Number of emails sent"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of days",
+		    "tickInterval": 1
+		  },
+		  "height": 358,
+		  "separators": [
+		    0,
+		    30,
+		    60,
+		    90,
+		    120
 		  ]
 		} as unknown as WidgetInput
 
@@ -9929,9 +9929,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x952663e279b9d074
-	// Question: Select the correct histogram for Leo's playing time
-	// Widget key: hist_choice_a
-	test("histogram - [x952663e279b9d074] Select the correct histogram for Leo's playing time (1)", async () => {
+	// Question: Create a histogram from playing-time data
+	// Widget key: histogram_choice_a
+	test("histogram - [x952663e279b9d074] Create a histogram from playing-time data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -9953,8 +9953,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Minutes played per game",
-		  "width": 600,
+		  "title": "Minutes Played",
+		  "width": 436,
 		  "xAxis": {
 		    "label": "Number of minutes"
 		  },
@@ -9963,7 +9963,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of games",
 		    "tickInterval": 1
 		  },
-		  "height": 400,
+		  "height": 367,
 		  "separators": [
 		    0,
 		    5,
@@ -9990,9 +9990,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x952663e279b9d074
-	// Question: Select the correct histogram for Leo's playing time
-	// Widget key: hist_choice_b
-	test("histogram - [x952663e279b9d074] Select the correct histogram for Leo's playing time (2)", async () => {
+	// Question: Create a histogram from playing-time data
+	// Widget key: histogram_choice_b
+	test("histogram - [x952663e279b9d074] Create a histogram from playing-time data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10004,18 +10004,18 @@ describe("histogram widget tests", () => {
 		      "frequency": 1
 		    },
 		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
 		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Minutes played per game",
-		  "width": 600,
+		  "title": "Minutes Played",
+		  "width": 436,
 		  "xAxis": {
 		    "label": "Number of minutes"
 		  },
@@ -10024,7 +10024,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of games",
 		    "tickInterval": 1
 		  },
-		  "height": 400,
+		  "height": 367,
 		  "separators": [
 		    0,
 		    5,
@@ -10051,9 +10051,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x952663e279b9d074
-	// Question: Select the correct histogram for Leo's playing time
-	// Widget key: hist_choice_c
-	test("histogram - [x952663e279b9d074] Select the correct histogram for Leo's playing time (3)", async () => {
+	// Question: Create a histogram from playing-time data
+	// Widget key: histogram_choice_c
+	test("histogram - [x952663e279b9d074] Create a histogram from playing-time data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10075,8 +10075,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Minutes played per game",
-		  "width": 600,
+		  "title": "Minutes Played",
+		  "width": 436,
 		  "xAxis": {
 		    "label": "Number of minutes"
 		  },
@@ -10085,7 +10085,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of games",
 		    "tickInterval": 1
 		  },
-		  "height": 400,
+		  "height": 367,
 		  "separators": [
 		    0,
 		    5,
@@ -10237,13 +10237,13 @@ describe("histogram widget tests", () => {
 		      "frequency": 1
 		    },
 		    {
-		      "frequency": 2
-		    },
-		    {
 		      "frequency": 1
 		    },
 		    {
 		      "frequency": 3
+		    },
+		    {
+		      "frequency": 2
 		    }
 		  ],
 		  "type": "histogram",
@@ -10284,61 +10284,8 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x188770ee7a9811c3
 	// Question: Create a histogram from television screen sizes
-	// Widget key: histogram_initial
+	// Widget key: hist_choice_a
 	test("histogram - [x188770ee7a9811c3] Create a histogram from television screen sizes (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 0
-		    },
-		    {
-		      "frequency": 0
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Television screen sizes",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Screen size (in centimeters)"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of televisions",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    25,
-		    50,
-		    75
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x188770ee7a9811c3
-	// Question: Create a histogram from television screen sizes
-	// Widget key: histogram_choice_a
-	test("histogram - [x188770ee7a9811c3] Create a histogram from television screen sizes (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10354,8 +10301,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Television screen sizes",
-		  "width": 500,
+		  "title": "Television screen size distribution",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Screen size (in centimeters)"
 		  },
@@ -10364,7 +10311,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of televisions",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    25,
@@ -10390,7 +10337,60 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x188770ee7a9811c3
 	// Question: Create a histogram from television screen sizes
-	// Widget key: histogram_choice_b
+	// Widget key: hist_choice_b
+	test("histogram - [x188770ee7a9811c3] Create a histogram from television screen sizes (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 3
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Television screen size distribution",
+		  "width": 420,
+		  "xAxis": {
+		    "label": "Screen size (in centimeters)"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of televisions",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    25,
+		    50,
+		    75
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x188770ee7a9811c3
+	// Question: Create a histogram from television screen sizes
+	// Widget key: hist_choice_c
 	test("histogram - [x188770ee7a9811c3] Create a histogram from television screen sizes (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -10407,8 +10407,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Television screen sizes",
-		  "width": 500,
+		  "title": "Television screen size distribution",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Screen size (in centimeters)"
 		  },
@@ -10417,60 +10417,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of televisions",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    25,
-		    50,
-		    75
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x188770ee7a9811c3
-	// Question: Create a histogram from television screen sizes
-	// Widget key: histogram_choice_c
-	test("histogram - [x188770ee7a9811c3] Create a histogram from television screen sizes (4)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 3
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Television screen sizes",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Screen size (in centimeters)"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of televisions",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    25,
@@ -10496,28 +10443,28 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x9b2dc70eb097982d
 	// Question: Create a histogram from daily email counts
-	// Widget key: hist_choice_a
+	// Widget key: histogram_initial
 	test("histogram - [x9b2dc70eb097982d] Create a histogram from daily email counts (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 1
+		      "frequency": 0
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 0
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 0
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 0
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of Daily Email Counts",
-		  "width": 500,
+		  "title": "Histogram setup",
+		  "width": 445,
 		  "xAxis": {
 		    "label": "Number of emails sent"
 		  },
@@ -10526,7 +10473,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of days",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 358,
 		  "separators": [
 		    0,
 		    30,
@@ -10553,7 +10500,7 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x9b2dc70eb097982d
 	// Question: Create a histogram from daily email counts
-	// Widget key: hist_choice_b
+	// Widget key: histogram_choice_a
 	test("histogram - [x9b2dc70eb097982d] Create a histogram from daily email counts (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
@@ -10563,18 +10510,18 @@ describe("histogram widget tests", () => {
 		      "frequency": 1
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 2
 		    },
 		    {
-		      "frequency": 1
+		      "frequency": 2
 		    },
 		    {
 		      "frequency": 2
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of Daily Email Counts",
-		  "width": 500,
+		  "title": "Histogram A",
+		  "width": 445,
 		  "xAxis": {
 		    "label": "Number of emails sent"
 		  },
@@ -10583,7 +10530,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of days",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 358,
 		  "separators": [
 		    0,
 		    30,
@@ -10610,17 +10557,17 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: x9b2dc70eb097982d
 	// Question: Create a histogram from daily email counts
-	// Widget key: hist_choice_c
+	// Widget key: histogram_choice_b
 	test("histogram - [x9b2dc70eb097982d] Create a histogram from daily email counts (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 0
+		      "frequency": 1
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 3
@@ -10630,8 +10577,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of Daily Email Counts",
-		  "width": 500,
+		  "title": "Histogram B",
+		  "width": 445,
 		  "xAxis": {
 		    "label": "Number of emails sent"
 		  },
@@ -10640,7 +10587,64 @@ describe("histogram widget tests", () => {
 		    "label": "Number of days",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 358,
+		  "separators": [
+		    0,
+		    30,
+		    60,
+		    90,
+		    120
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x9b2dc70eb097982d
+	// Question: Create a histogram from daily email counts
+	// Widget key: histogram_choice_c
+	test("histogram - [x9b2dc70eb097982d] Create a histogram from daily email counts (4)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram C",
+		  "width": 445,
+		  "xAxis": {
+		    "label": "Number of emails sent"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of days",
+		    "tickInterval": 1
+		  },
+		  "height": 358,
 		  "separators": [
 		    0,
 		    30,
@@ -10666,9 +10670,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x724cc783cb56dec8
-	// Question: Create a histogram from lap counts
+	// Question: Create a histogram from swim laps data
 	// Widget key: histogram_choice_a
-	test("histogram - [x724cc783cb56dec8] Create a histogram from lap counts (1)", async () => {
+	test("histogram - [x724cc783cb56dec8] Create a histogram from swim laps data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10677,10 +10681,10 @@ describe("histogram widget tests", () => {
 		      "frequency": 0
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 3
 		    },
 		    {
-		      "frequency": 1
+		      "frequency": 0
 		    },
 		    {
 		      "frequency": 3
@@ -10690,8 +10694,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Distribution of laps",
-		  "width": 520,
+		  "title": "Number of Laps Histogram",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of laps"
 		  },
@@ -10727,9 +10731,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x724cc783cb56dec8
-	// Question: Create a histogram from lap counts
+	// Question: Create a histogram from swim laps data
 	// Widget key: histogram_choice_b
-	test("histogram - [x724cc783cb56dec8] Create a histogram from lap counts (2)", async () => {
+	test("histogram - [x724cc783cb56dec8] Create a histogram from swim laps data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10738,10 +10742,10 @@ describe("histogram widget tests", () => {
 		      "frequency": 0
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 2
 		    },
 		    {
-		      "frequency": 0
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 3
@@ -10751,8 +10755,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Distribution of laps",
-		  "width": 520,
+		  "title": "Number of Laps Histogram",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of laps"
 		  },
@@ -10788,9 +10792,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x724cc783cb56dec8
-	// Question: Create a histogram from lap counts
+	// Question: Create a histogram from swim laps data
 	// Widget key: histogram_choice_c
-	test("histogram - [x724cc783cb56dec8] Create a histogram from lap counts (3)", async () => {
+	test("histogram - [x724cc783cb56dec8] Create a histogram from swim laps data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10812,8 +10816,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Distribution of laps",
-		  "width": 520,
+		  "title": "Number of Laps Histogram",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of laps"
 		  },
@@ -10849,9 +10853,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x16ccc580077f28cd
-	// Question: Create a histogram from star counts
+	// Question: Create a histogram from data
 	// Widget key: histogram_choice_a
-	test("histogram - [x16ccc580077f28cd] Create a histogram from star counts (1)", async () => {
+	test("histogram - [x16ccc580077f28cd] Create a histogram from data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -10873,8 +10877,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of star counts",
-		  "width": 500,
+		  "title": "Histogram of stars per constellation",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of stars"
 		  },
@@ -10883,7 +10887,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of constellations",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    5,
@@ -10910,15 +10914,15 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x16ccc580077f28cd
-	// Question: Create a histogram from star counts
+	// Question: Create a histogram from data
 	// Widget key: histogram_choice_b
-	test("histogram - [x16ccc580077f28cd] Create a histogram from star counts (2)", async () => {
+	test("histogram - [x16ccc580077f28cd] Create a histogram from data (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 1
+		      "frequency": 2
 		    },
 		    {
 		      "frequency": 1
@@ -10927,15 +10931,15 @@ describe("histogram widget tests", () => {
 		      "frequency": 2
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 1
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of star counts",
-		  "width": 500,
+		  "title": "Histogram of stars per constellation",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of stars"
 		  },
@@ -10944,7 +10948,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of constellations",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    5,
@@ -10971,21 +10975,21 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x16ccc580077f28cd
-	// Question: Create a histogram from star counts
+	// Question: Create a histogram from data
 	// Widget key: histogram_choice_c
-	test("histogram - [x16ccc580077f28cd] Create a histogram from star counts (3)", async () => {
+	test("histogram - [x16ccc580077f28cd] Create a histogram from data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 0
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 3
-		    },
-		    {
-		      "frequency": 2
 		    },
 		    {
 		      "frequency": 1
@@ -10995,8 +10999,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of star counts",
-		  "width": 500,
+		  "title": "Histogram of stars per constellation",
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of stars"
 		  },
@@ -11005,7 +11009,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of constellations",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    5,
@@ -11032,180 +11036,180 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x6265afd33b5e2d38
-	// Question: Create a histogram from years open
-	// Widget key: histogram_choice_a
-	test("histogram - [x6265afd33b5e2d38] Create a histogram from years open (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram of years open",
-		  "width": 432,
-		  "xAxis": {
-		    "label": "Number of years"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of locations",
-		    "tickInterval": 1
-		  },
-		  "height": 368,
-		  "separators": [
-		    0,
-		    3,
-		    6,
-		    9,
-		    12
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6265afd33b5e2d38
-	// Question: Create a histogram from years open
-	// Widget key: histogram_choice_b
-	test("histogram - [x6265afd33b5e2d38] Create a histogram from years open (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram of years open",
-		  "width": 432,
-		  "xAxis": {
-		    "label": "Number of years"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of locations",
-		    "tickInterval": 1
-		  },
-		  "height": 368,
-		  "separators": [
-		    0,
-		    3,
-		    6,
-		    9,
-		    12
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x6265afd33b5e2d38
-	// Question: Create a histogram from years open
-	// Widget key: histogram_choice_c
-	test("histogram - [x6265afd33b5e2d38] Create a histogram from years open (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram of years open",
-		  "width": 432,
-		  "xAxis": {
-		    "label": "Number of years"
-		  },
-		  "yAxis": {
-		    "max": 6,
-		    "label": "Number of locations",
-		    "tickInterval": 1
-		  },
-		  "height": 368,
-		  "separators": [
-		    0,
-		    3,
-		    6,
-		    9,
-		    12
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: xb58397fa7691090a
-	// Question: Create a histogram from monthly feather sales
+	// Question: Select the histogram that represents the data
 	// Widget key: hist_choice_a
-	test("histogram - [xb58397fa7691090a] Create a histogram from monthly feather sales (1)", async () => {
+	test("histogram - [x6265afd33b5e2d38] Select the histogram that represents the data (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Years open at Omar's Omelette Operation",
+		  "width": 432,
+		  "xAxis": {
+		    "label": "Number of years"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of locations",
+		    "tickInterval": 1
+		  },
+		  "height": 368,
+		  "separators": [
+		    0,
+		    3,
+		    6,
+		    9,
+		    12
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6265afd33b5e2d38
+	// Question: Select the histogram that represents the data
+	// Widget key: hist_choice_b
+	test("histogram - [x6265afd33b5e2d38] Select the histogram that represents the data (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Years open at Omar's Omelette Operation",
+		  "width": 432,
+		  "xAxis": {
+		    "label": "Number of years"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of locations",
+		    "tickInterval": 1
+		  },
+		  "height": 368,
+		  "separators": [
+		    0,
+		    3,
+		    6,
+		    9,
+		    12
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x6265afd33b5e2d38
+	// Question: Select the histogram that represents the data
+	// Widget key: hist_choice_c
+	test("histogram - [x6265afd33b5e2d38] Select the histogram that represents the data (3)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Years open at Omar's Omelette Operation",
+		  "width": 432,
+		  "xAxis": {
+		    "label": "Number of years"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Number of locations",
+		    "tickInterval": 1
+		  },
+		  "height": 368,
+		  "separators": [
+		    0,
+		    3,
+		    6,
+		    9,
+		    12
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: xb58397fa7691090a
+	// Question: Select a histogram for Patsy's feather sales
+	// Widget key: hist_choice_a
+	test("histogram - [xb58397fa7691090a] Select a histogram for Patsy's feather sales (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11225,7 +11229,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Histogram of monthly feather sales",
-		  "width": 500,
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of feathers sold"
 		  },
@@ -11234,7 +11238,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of months",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    5,
@@ -11260,9 +11264,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xb58397fa7691090a
-	// Question: Create a histogram from monthly feather sales
+	// Question: Select a histogram for Patsy's feather sales
 	// Widget key: hist_choice_b
-	test("histogram - [xb58397fa7691090a] Create a histogram from monthly feather sales (2)", async () => {
+	test("histogram - [xb58397fa7691090a] Select a histogram for Patsy's feather sales (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11282,7 +11286,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Histogram of monthly feather sales",
-		  "width": 500,
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of feathers sold"
 		  },
@@ -11291,7 +11295,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of months",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    5,
@@ -11317,9 +11321,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xb58397fa7691090a
-	// Question: Create a histogram from monthly feather sales
+	// Question: Select a histogram for Patsy's feather sales
 	// Widget key: hist_choice_c
-	test("histogram - [xb58397fa7691090a] Create a histogram from monthly feather sales (3)", async () => {
+	test("histogram - [xb58397fa7691090a] Select a histogram for Patsy's feather sales (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11339,7 +11343,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Histogram of monthly feather sales",
-		  "width": 500,
+		  "width": 440,
 		  "xAxis": {
 		    "label": "Number of feathers sold"
 		  },
@@ -11348,7 +11352,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of months",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    5,
@@ -11374,18 +11378,18 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x1a8cfa4b0621544f
-	// Question: Create a histogram from data points
-	// Widget key: histogram_choice_a
-	test("histogram - [x1a8cfa4b0621544f] Create a histogram from data points (1)", async () => {
+	// Question: Create a histogram from data
+	// Widget key: hist_choice_a
+	test("histogram - [x1a8cfa4b0621544f] Create a histogram from data (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 1
+		      "frequency": 2
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 2
@@ -11395,8 +11399,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of red candy pieces",
-		  "width": 600,
+		  "title": "Red candy pieces per bag",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of red candy pieces"
 		  },
@@ -11405,7 +11409,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of bags",
 		    "tickInterval": 1
 		  },
-		  "height": 400,
+		  "height": 340,
 		  "separators": [
 		    0,
 		    3,
@@ -11431,9 +11435,66 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x1a8cfa4b0621544f
-	// Question: Create a histogram from data points
-	// Widget key: histogram_choice_b
-	test("histogram - [x1a8cfa4b0621544f] Create a histogram from data points (2)", async () => {
+	// Question: Create a histogram from data
+	// Widget key: hist_choice_b
+	test("histogram - [x1a8cfa4b0621544f] Create a histogram from data (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Red candy pieces per bag",
+		  "width": 420,
+		  "xAxis": {
+		    "label": "Number of red candy pieces"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of bags",
+		    "tickInterval": 1
+		  },
+		  "height": 340,
+		  "separators": [
+		    0,
+		    3,
+		    6,
+		    9,
+		    12
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1a8cfa4b0621544f
+	// Question: Create a histogram from data
+	// Widget key: hist_choice_c
+	test("histogram - [x1a8cfa4b0621544f] Create a histogram from data (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11452,8 +11513,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of red candy pieces",
-		  "width": 600,
+		  "title": "Red candy pieces per bag",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of red candy pieces"
 		  },
@@ -11462,7 +11523,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of bags",
 		    "tickInterval": 1
 		  },
-		  "height": 400,
+		  "height": 340,
 		  "separators": [
 		    0,
 		    3,
@@ -11487,10 +11548,132 @@ describe("histogram widget tests", () => {
 		expect(svg).toMatchSnapshot()
 	})
 
-	// Extracted from question: x1a8cfa4b0621544f
-	// Question: Create a histogram from data points
-	// Widget key: histogram_choice_c
-	test("histogram - [x1a8cfa4b0621544f] Create a histogram from data points (3)", async () => {
+	// Extracted from question: x1819b6374eb18c83
+	// Question: Create a histogram from data on stars in constellations
+	// Widget key: hist_choice_a
+	test("histogram - [x1819b6374eb18c83] Create a histogram from data on stars in constellations (1)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of Star Counts",
+		  "width": 420,
+		  "xAxis": {
+		    "label": "Number of stars"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of constellations",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    5,
+		    10,
+		    15,
+		    20,
+		    25
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1819b6374eb18c83
+	// Question: Create a histogram from data on stars in constellations
+	// Widget key: hist_choice_b
+	test("histogram - [x1819b6374eb18c83] Create a histogram from data on stars in constellations (2)", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram of Star Counts",
+		  "width": 420,
+		  "xAxis": {
+		    "label": "Number of stars"
+		  },
+		  "yAxis": {
+		    "max": 5,
+		    "label": "Number of constellations",
+		    "tickInterval": 1
+		  },
+		  "height": 360,
+		  "separators": [
+		    0,
+		    5,
+		    10,
+		    15,
+		    20,
+		    25
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x1819b6374eb18c83
+	// Question: Create a histogram from data on stars in constellations
+	// Widget key: hist_choice_c
+	test("histogram - [x1819b6374eb18c83] Create a histogram from data on stars in constellations (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11499,69 +11682,12 @@ describe("histogram widget tests", () => {
 		      "frequency": 0
 		    },
 		    {
+		      "frequency": 2
+		    },
+		    {
 		      "frequency": 3
 		    },
 		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram of red candy pieces",
-		  "width": 600,
-		  "xAxis": {
-		    "label": "Number of red candy pieces"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of bags",
-		    "tickInterval": 1
-		  },
-		  "height": 400,
-		  "separators": [
-		    0,
-		    3,
-		    6,
-		    9,
-		    12
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1819b6374eb18c83
-	// Question: Create a histogram from star counts
-	// Widget key: histogram_choice_a
-	test("histogram - [x1819b6374eb18c83] Create a histogram from star counts (1)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
 		      "frequency": 1
 		    },
 		    {
@@ -11569,8 +11695,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram of star counts",
-		  "width": 500,
+		  "title": "Histogram of Star Counts",
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of stars"
 		  },
@@ -11579,129 +11705,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of constellations",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    5,
-		    10,
-		    15,
-		    20,
-		    25
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1819b6374eb18c83
-	// Question: Create a histogram from star counts
-	// Widget key: histogram_choice_b
-	test("histogram - [x1819b6374eb18c83] Create a histogram from star counts (2)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram of star counts",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of stars"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of constellations",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
-		  "separators": [
-		    0,
-		    5,
-		    10,
-		    15,
-		    20,
-		    25
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x1819b6374eb18c83
-	// Question: Create a histogram from star counts
-	// Widget key: histogram_choice_c
-	test("histogram - [x1819b6374eb18c83] Create a histogram from star counts (3)", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "Histogram of star counts",
-		  "width": 500,
-		  "xAxis": {
-		    "label": "Number of stars"
-		  },
-		  "yAxis": {
-		    "max": 5,
-		    "label": "Number of constellations",
-		    "tickInterval": 1
-		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    5,
@@ -11736,10 +11740,10 @@ describe("histogram widget tests", () => {
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 4
+		      "frequency": 5
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 2
 		    },
 		    {
 		      "frequency": 1
@@ -11749,8 +11753,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Years open by location",
-		  "width": 500,
+		  "title": "",
+		  "width": 432,
 		  "xAxis": {
 		    "label": "Number of years"
 		  },
@@ -11759,7 +11763,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of locations",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 368,
 		  "separators": [
 		    0,
 		    3,
@@ -11793,21 +11797,21 @@ describe("histogram widget tests", () => {
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 5
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 2
 		    },
 		    {
 		      "frequency": 2
 		    },
 		    {
 		      "frequency": 1
-		    },
-		    {
-		      "frequency": 1
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Years open by location",
-		  "width": 500,
+		  "title": "",
+		  "width": 432,
 		  "xAxis": {
 		    "label": "Number of years"
 		  },
@@ -11816,7 +11820,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of locations",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 368,
 		  "separators": [
 		    0,
 		    3,
@@ -11850,10 +11854,10 @@ describe("histogram widget tests", () => {
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 5
+		      "frequency": 3
 		    },
 		    {
-		      "frequency": 1
+		      "frequency": 3
 		    },
 		    {
 		      "frequency": 2
@@ -11863,8 +11867,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Years open by location",
-		  "width": 500,
+		  "title": "",
+		  "width": 432,
 		  "xAxis": {
 		    "label": "Number of years"
 		  },
@@ -11873,7 +11877,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of locations",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 368,
 		  "separators": [
 		    0,
 		    3,
@@ -11899,9 +11903,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x0c56be56347f785d
-	// Question: Create a histogram from guest counts
+	// Question: Create a histogram from daily guest counts
 	// Widget key: hist_choice_a
-	test("histogram - [x0c56be56347f785d] Create a histogram from guest counts (1)", async () => {
+	test("histogram - [x0c56be56347f785d] Create a histogram from daily guest counts (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -11918,7 +11922,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Histogram",
-		  "width": 500,
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of guests"
 		  },
@@ -11927,7 +11931,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of days",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    100,
@@ -11952,18 +11956,18 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x0c56be56347f785d
-	// Question: Create a histogram from guest counts
+	// Question: Create a histogram from daily guest counts
 	// Widget key: hist_choice_b
-	test("histogram - [x0c56be56347f785d] Create a histogram from guest counts (2)", async () => {
+	test("histogram - [x0c56be56347f785d] Create a histogram from daily guest counts (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 1
+		      "frequency": 2
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 1
 		    },
 		    {
 		      "frequency": 5
@@ -11971,7 +11975,7 @@ describe("histogram widget tests", () => {
 		  ],
 		  "type": "histogram",
 		  "title": "Histogram",
-		  "width": 500,
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of guests"
 		  },
@@ -11980,7 +11984,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of days",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    100,
@@ -12005,26 +12009,26 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x0c56be56347f785d
-	// Question: Create a histogram from guest counts
+	// Question: Create a histogram from daily guest counts
 	// Widget key: hist_choice_c
-	test("histogram - [x0c56be56347f785d] Create a histogram from guest counts (3)", async () => {
+	test("histogram - [x0c56be56347f785d] Create a histogram from daily guest counts (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
+		      "frequency": 1
+		    },
+		    {
 		      "frequency": 0
 		    },
 		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 6
+		      "frequency": 7
 		    }
 		  ],
 		  "type": "histogram",
 		  "title": "Histogram",
-		  "width": 500,
+		  "width": 420,
 		  "xAxis": {
 		    "label": "Number of guests"
 		  },
@@ -12033,7 +12037,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of days",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    100,
@@ -12058,9 +12062,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x43b013007bc45c84
-	// Question: Create a histogram from exam scores
-	// Widget key: histogram_choice_a
-	test("histogram - [x43b013007bc45c84] Create a histogram from exam scores (1)", async () => {
+	// Question: Create a histogram from a data set
+	// Widget key: hist_choice_a
+	test("histogram - [x43b013007bc45c84] Create a histogram from a data set (1)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12072,18 +12076,18 @@ describe("histogram widget tests", () => {
 		      "frequency": 0
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 1
 		    },
 		    {
-		      "frequency": 2
+		      "frequency": 3
 		    },
 		    {
 		      "frequency": 4
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Test score distribution",
-		  "width": 500,
+		  "title": "Test Score Distribution",
+		  "width": 438,
 		  "xAxis": {
 		    "label": "Test score"
 		  },
@@ -12092,7 +12096,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of students",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    20,
@@ -12119,9 +12123,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x43b013007bc45c84
-	// Question: Create a histogram from exam scores
-	// Widget key: histogram_choice_b
-	test("histogram - [x43b013007bc45c84] Create a histogram from exam scores (2)", async () => {
+	// Question: Create a histogram from a data set
+	// Widget key: hist_choice_b
+	test("histogram - [x43b013007bc45c84] Create a histogram from a data set (2)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12133,18 +12137,18 @@ describe("histogram widget tests", () => {
 		      "frequency": 0
 		    },
 		    {
-		      "frequency": 1
+		      "frequency": 0
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 4
 		    },
 		    {
 		      "frequency": 4
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Test score distribution",
-		  "width": 500,
+		  "title": "Test Score Distribution",
+		  "width": 438,
 		  "xAxis": {
 		    "label": "Test score"
 		  },
@@ -12153,7 +12157,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of students",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    20,
@@ -12180,9 +12184,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x43b013007bc45c84
-	// Question: Create a histogram from exam scores
-	// Widget key: histogram_choice_c
-	test("histogram - [x43b013007bc45c84] Create a histogram from exam scores (3)", async () => {
+	// Question: Create a histogram from a data set
+	// Widget key: hist_choice_c
+	test("histogram - [x43b013007bc45c84] Create a histogram from a data set (3)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12204,8 +12208,8 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Test score distribution",
-		  "width": 500,
+		  "title": "Test Score Distribution",
+		  "width": 438,
 		  "xAxis": {
 		    "label": "Test score"
 		  },
@@ -12214,7 +12218,7 @@ describe("histogram widget tests", () => {
 		    "label": "Number of students",
 		    "tickInterval": 1
 		  },
-		  "height": 350,
+		  "height": 360,
 		  "separators": [
 		    0,
 		    20,
@@ -12222,87 +12226,6 @@ describe("histogram widget tests", () => {
 		    60,
 		    80,
 		    100
-		  ]
-		} as unknown as WidgetInput
-
-		// Generate the widget (includes runtime validation)
-		const result = await errors.try(generateWidget(input as unknown as Widget))
-		if (result.error) {
-			// If widget generation fails, it likely means the database data doesn't match current schema
-			logger.error("widget generation failed for histogram", { 
-				error: result.error,
-				inputData: input
-			})
-			throw errors.wrap(result.error, "widget generation")
-		}
-		
-		const svg = result.data
-		expect(svg).toMatchSnapshot()
-	})
-
-	// Extracted from question: x8d402f9c7aad6182
-	// Question: Identify the shape of a histogram
-	// Widget key: image_1
-	test("histogram - [x8d402f9c7aad6182] Identify the shape of a histogram", async () => {
-		// Note: Database data may not match current library schemas exactly
-		// Using runtime validation in generateWidget for flexibility
-		const input = {
-		  "bins": [
-		    {
-		      "frequency": 2
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 7
-		    },
-		    {
-		      "frequency": 9
-		    },
-		    {
-		      "frequency": 8
-		    },
-		    {
-		      "frequency": 7
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 2
-		    }
-		  ],
-		  "type": "histogram",
-		  "title": "",
-		  "width": 320,
-		  "xAxis": {
-		    "label": ""
-		  },
-		  "yAxis": {
-		    "max": 10,
-		    "label": "",
-		    "tickInterval": 2
-		  },
-		  "height": 258.462,
-		  "separators": [
-		    0,
-		    1,
-		    2,
-		    3,
-		    4,
-		    5,
-		    6,
-		    7,
-		    8,
-		    9,
-		    10
 		  ]
 		} as unknown as WidgetInput
 
@@ -12322,9 +12245,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x3601baae11123367
-	// Question: Describe the distribution's shape from a histogram
+	// Question: Identify the shape of a distribution from a histogram
 	// Widget key: image_1
-	test("histogram - [x3601baae11123367] Describe the distribution's shape from a histogram", async () => {
+	test("histogram - [x3601baae11123367] Identify the shape of a distribution from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12361,17 +12284,98 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram",
+		  "title": "",
 		  "width": 320,
 		  "xAxis": {
-		    "label": "Value"
+		    "label": ""
 		  },
 		  "yAxis": {
 		    "max": 15,
 		    "label": "Frequency",
 		    "tickInterval": 5
 		  },
-		  "height": 258,
+		  "height": 320,
+		  "separators": [
+		    0,
+		    1,
+		    2,
+		    3,
+		    4,
+		    5,
+		    6,
+		    7,
+		    8,
+		    9,
+		    10
+		  ]
+		} as unknown as WidgetInput
+
+		// Generate the widget (includes runtime validation)
+		const result = await errors.try(generateWidget(input as unknown as Widget))
+		if (result.error) {
+			// If widget generation fails, it likely means the database data doesn't match current schema
+			logger.error("widget generation failed for histogram", { 
+				error: result.error,
+				inputData: input
+			})
+			throw errors.wrap(result.error, "widget generation")
+		}
+		
+		const svg = result.data
+		expect(svg).toMatchSnapshot()
+	})
+
+	// Extracted from question: x8d402f9c7aad6182
+	// Question: Describe the distribution's shape from a histogram
+	// Widget key: image_1
+	test("histogram - [x8d402f9c7aad6182] Describe the distribution's shape from a histogram", async () => {
+		// Note: Database data may not match current library schemas exactly
+		// Using runtime validation in generateWidget for flexibility
+		const input = {
+		  "bins": [
+		    {
+		      "frequency": 1
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 5
+		    },
+		    {
+		      "frequency": 4
+		    },
+		    {
+		      "frequency": 3
+		    },
+		    {
+		      "frequency": 2
+		    },
+		    {
+		      "frequency": 1
+		    }
+		  ],
+		  "type": "histogram",
+		  "title": "Histogram",
+		  "width": 320,
+		  "xAxis": {
+		    "label": "Value"
+		  },
+		  "yAxis": {
+		    "max": 6,
+		    "label": "Frequency",
+		    "tickInterval": 1
+		  },
+		  "height": 320,
 		  "separators": [
 		    0,
 		    1,
@@ -12403,9 +12407,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x336ddad0eda6a1fa
-	// Question: Identify the shape of a distribution from a histogram
+	// Question: Describe the distribution shape from a histogram
 	// Widget key: image_1
-	test("histogram - [x336ddad0eda6a1fa] Identify the shape of a distribution from a histogram", async () => {
+	test("histogram - [x336ddad0eda6a1fa] Describe the distribution shape from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12452,7 +12456,7 @@ describe("histogram widget tests", () => {
 		    "label": "Frequency",
 		    "tickInterval": 5
 		  },
-		  "height": 258,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    1,
@@ -12484,9 +12488,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xabd97e027b113164
-	// Question: Describe the shape of a histogram
+	// Question: Describe the shape of a distribution from a histogram
 	// Widget key: image_1
-	test("histogram - [xabd97e027b113164] Describe the shape of a histogram", async () => {
+	test("histogram - [xabd97e027b113164] Describe the shape of a distribution from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12526,14 +12530,14 @@ describe("histogram widget tests", () => {
 		  "title": "",
 		  "width": 320,
 		  "xAxis": {
-		    "label": ""
+		    "label": "Value"
 		  },
 		  "yAxis": {
-		    "max": 14,
+		    "max": 16,
 		    "label": "Frequency",
 		    "tickInterval": 2
 		  },
-		  "height": 258,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    1,
@@ -12604,17 +12608,17 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
+		  "title": "Histogram",
 		  "width": 320,
 		  "xAxis": {
-		    "label": ""
+		    "label": "Bins"
 		  },
 		  "yAxis": {
 		    "max": 14,
 		    "label": "Frequency",
 		    "tickInterval": 2
 		  },
-		  "height": 258,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    1,
@@ -12646,56 +12650,56 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x58f729330b647f56
-	// Question: Describe the shape of a histogram
+	// Question: Describe the shape of a histogram distribution
 	// Widget key: image_1
-	test("histogram - [x58f729330b647f56] Describe the shape of a histogram", async () => {
+	test("histogram - [x58f729330b647f56] Describe the shape of a histogram distribution", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 1
+		      "frequency": 6
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 15
 		    },
 		    {
-		      "frequency": 4
+		      "frequency": 20
+		    },
+		    {
+		      "frequency": 26
+		    },
+		    {
+		      "frequency": 35
+		    },
+		    {
+		      "frequency": 36
+		    },
+		    {
+		      "frequency": 27
+		    },
+		    {
+		      "frequency": 21
+		    },
+		    {
+		      "frequency": 16
 		    },
 		    {
 		      "frequency": 5
-		    },
-		    {
-		      "frequency": 7
-		    },
-		    {
-		      "frequency": 7
-		    },
-		    {
-		      "frequency": 5
-		    },
-		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 3
-		    },
-		    {
-		      "frequency": 1
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
+		  "title": "Histogram",
 		  "width": 320,
 		  "xAxis": {
-		    "label": ""
+		    "label": "Bins"
 		  },
 		  "yAxis": {
-		    "max": 8,
-		    "label": "",
-		    "tickInterval": 1
+		    "max": 40,
+		    "label": "Frequency",
+		    "tickInterval": 5
 		  },
-		  "height": 258,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    1,
@@ -12727,9 +12731,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xe0ca396cdc1d9294
-	// Question: Identify the shape of a distribution from a histogram
+	// Question: Describe the shape of a distribution from a histogram
 	// Widget key: image_1
-	test("histogram - [xe0ca396cdc1d9294] Identify the shape of a distribution from a histogram", async () => {
+	test("histogram - [xe0ca396cdc1d9294] Describe the shape of a distribution from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12747,16 +12751,16 @@ describe("histogram widget tests", () => {
 		      "frequency": 6
 		    },
 		    {
-		      "frequency": 8
+		      "frequency": 9
 		    },
 		    {
-		      "frequency": 11
+		      "frequency": 12
 		    },
 		    {
-		      "frequency": 15
+		      "frequency": 16
 		    },
 		    {
-		      "frequency": 13
+		      "frequency": 14
 		    }
 		  ],
 		  "type": "histogram",
@@ -12768,9 +12772,9 @@ describe("histogram widget tests", () => {
 		  "yAxis": {
 		    "max": 20,
 		    "label": "Frequency",
-		    "tickInterval": 2
+		    "tickInterval": 5
 		  },
-		  "height": 258,
+		  "height": 300,
 		  "separators": [
 		    0,
 		    1,
@@ -12801,39 +12805,39 @@ describe("histogram widget tests", () => {
 
 	// Extracted from question: xac93a9a21a2d1384
 	// Question: Describe the shape of a distribution from a histogram
-	// Widget key: histogram_image
+	// Widget key: image_1
 	test("histogram - [xac93a9a21a2d1384] Describe the shape of a distribution from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
 		  "bins": [
 		    {
-		      "frequency": 5
+		      "frequency": 4
 		    },
 		    {
-		      "frequency": 9
+		      "frequency": 7
+		    },
+		    {
+		      "frequency": 11
+		    },
+		    {
+		      "frequency": 16
 		    },
 		    {
 		      "frequency": 14
 		    },
 		    {
-		      "frequency": 19
+		      "frequency": 12
 		    },
 		    {
-		      "frequency": 17
+		      "frequency": 6
 		    },
 		    {
-		      "frequency": 13
-		    },
-		    {
-		      "frequency": 8
-		    },
-		    {
-		      "frequency": 4
+		      "frequency": 3
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram",
+		  "title": "",
 		  "width": 320,
 		  "xAxis": {
 		    "label": "Value"
@@ -12843,7 +12847,7 @@ describe("histogram widget tests", () => {
 		    "label": "Frequency",
 		    "tickInterval": 5
 		  },
-		  "height": 258,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    1,
@@ -12873,9 +12877,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x488c100d2de60caf
-	// Question: Describe the distribution's shape from a histogram
+	// Question: Identify the distribution shape from a histogram
 	// Widget key: image_1
-	test("histogram - [x488c100d2de60caf] Describe the distribution's shape from a histogram", async () => {
+	test("histogram - [x488c100d2de60caf] Identify the distribution shape from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -12890,39 +12894,39 @@ describe("histogram widget tests", () => {
 		      "frequency": 0
 		    },
 		    {
-		      "frequency": 1
+		      "frequency": 2
 		    },
 		    {
-		      "frequency": 4
-		    },
-		    {
-		      "frequency": 7
+		      "frequency": 6
 		    },
 		    {
 		      "frequency": 10
 		    },
 		    {
-		      "frequency": 8
+		      "frequency": 15
 		    },
 		    {
-		      "frequency": 3
+		      "frequency": 12
+		    },
+		    {
+		      "frequency": 5
 		    },
 		    {
 		      "frequency": 2
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "Histogram",
+		  "title": "",
 		  "width": 320,
 		  "xAxis": {
-		    "label": "Value"
+		    "label": "Value range"
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 20,
 		    "label": "Frequency",
-		    "tickInterval": 2
+		    "tickInterval": 5
 		  },
-		  "height": 258,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    1,
@@ -12954,9 +12958,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x96aac12ff6bbcf69
-	// Question: Identify the shape of a distribution from a histogram
+	// Question: Describe the shape of a histogram
 	// Widget key: image_1
-	test("histogram - [x96aac12ff6bbcf69] Identify the shape of a distribution from a histogram", async () => {
+	test("histogram - [x96aac12ff6bbcf69] Describe the shape of a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13000,10 +13004,10 @@ describe("histogram widget tests", () => {
 		  },
 		  "yAxis": {
 		    "max": 20,
-		    "label": "",
+		    "label": "Frequency",
 		    "tickInterval": 2
 		  },
-		  "height": 258,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    1,
@@ -13035,9 +13039,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: xb91b2103019586f3
-	// Question: Describe the shape of a distribution from a histogram
+	// Question: Identify the shape of a distribution from a histogram
 	// Widget key: image_1
-	test("histogram - [xb91b2103019586f3] Describe the shape of a distribution from a histogram", async () => {
+	test("histogram - [xb91b2103019586f3] Identify the shape of a distribution from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13071,17 +13075,17 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
+		  "title": "Histogram",
 		  "width": 320,
 		  "xAxis": {
-		    "label": ""
+		    "label": "Bins"
 		  },
 		  "yAxis": {
-		    "max": 50,
+		    "max": 40,
 		    "label": "Frequency",
-		    "tickInterval": 10
+		    "tickInterval": 5
 		  },
-		  "height": 258,
+		  "height": 320,
 		  "separators": [
 		    0,
 		    1,
@@ -13157,7 +13161,7 @@ describe("histogram widget tests", () => {
 		    12,
 		    16,
 		    20,
-		    24
+		    23
 		  ]
 		} as unknown as WidgetInput
 
@@ -13177,9 +13181,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x674dca858ee7c29e
-	// Question: Estimate probability from a histogram
+	// Question: Estimate probability from a histogram (running distances)
 	// Widget key: image_1
-	test("histogram - [x674dca858ee7c29e] Estimate probability from a histogram", async () => {
+	test("histogram - [x674dca858ee7c29e] Estimate probability from a histogram (running distances)", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13198,13 +13202,13 @@ describe("histogram widget tests", () => {
 		    }
 		  ],
 		  "type": "histogram",
-		  "title": "",
+		  "title": "Number of kilometers run each day",
 		  "width": 460,
 		  "xAxis": {
 		    "label": "Number of kilometers"
 		  },
 		  "yAxis": {
-		    "max": 10,
+		    "max": 6,
 		    "label": "Number of days",
 		    "tickInterval": 1
 		  },
@@ -13234,9 +13238,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x32952c2c828ce58b
-	// Question: Estimate probability from a histogram
+	// Question: Estimate a probability from a histogram
 	// Widget key: image_1
-	test("histogram - [x32952c2c828ce58b] Estimate probability from a histogram", async () => {
+	test("histogram - [x32952c2c828ce58b] Estimate a probability from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
@@ -13295,9 +13299,9 @@ describe("histogram widget tests", () => {
 	})
 
 	// Extracted from question: x1e6271c5091d1e85
-	// Question: Estimate a probability from a histogram
+	// Question: Estimate experimental probability from a histogram
 	// Widget key: image_1
-	test("histogram - [x1e6271c5091d1e85] Estimate a probability from a histogram", async () => {
+	test("histogram - [x1e6271c5091d1e85] Estimate experimental probability from a histogram", async () => {
 		// Note: Database data may not match current library schemas exactly
 		// Using runtime validation in generateWidget for flexibility
 		const input = {
