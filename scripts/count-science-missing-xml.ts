@@ -6,14 +6,14 @@ import { and, eq, inArray, isNull, sql } from "drizzle-orm"
 import { db } from "@/db"
 import { niceCourses, niceExercises, niceLessonContents, niceLessons, niceQuestions, niceUnits } from "@/db/schemas"
 import { qti } from "@/lib/clients"
-import { HARDCODED_SCIENCE_COURSE_IDS } from "@/lib/constants/course-mapping"
+import { HARDCODED_MATH_COURSE_IDS } from "@/lib/constants/course-mapping"
 import { ErrQtiNotFound } from "@/lib/qti"
 import { extractIdentifier } from "@/lib/xml-utils"
 
 async function main(): Promise<void> {
 	logger.info("starting missing xml analysis for science courses", {
-		courseIds: HARDCODED_SCIENCE_COURSE_IDS,
-		courseCount: HARDCODED_SCIENCE_COURSE_IDS.length
+		courseIds: HARDCODED_MATH_COURSE_IDS,
+		courseCount: HARDCODED_MATH_COURSE_IDS.length
 	})
 
 	const totalResult = await errors.try(
@@ -25,7 +25,7 @@ async function main(): Promise<void> {
 			.innerJoin(niceLessons, eq(niceLessonContents.lessonId, niceLessons.id))
 			.innerJoin(niceUnits, eq(niceLessons.unitId, niceUnits.id))
 			.innerJoin(niceCourses, eq(niceUnits.courseId, niceCourses.id))
-			.where(inArray(niceCourses.id, [...HARDCODED_SCIENCE_COURSE_IDS]))
+			.where(inArray(niceCourses.id, [...HARDCODED_MATH_COURSE_IDS]))
 	)
 	if (totalResult.error) {
 		logger.error("database query", { error: totalResult.error })
@@ -43,7 +43,7 @@ async function main(): Promise<void> {
 			.innerJoin(niceLessons, eq(niceLessonContents.lessonId, niceLessons.id))
 			.innerJoin(niceUnits, eq(niceLessons.unitId, niceUnits.id))
 			.innerJoin(niceCourses, eq(niceUnits.courseId, niceCourses.id))
-			.where(and(inArray(niceCourses.id, [...HARDCODED_SCIENCE_COURSE_IDS]), isNull(niceQuestions.xml)))
+			.where(and(inArray(niceCourses.id, [...HARDCODED_MATH_COURSE_IDS]), isNull(niceQuestions.xml)))
 	)
 	if (missingResult.error) {
 		logger.error("database query", { error: missingResult.error })
@@ -75,7 +75,7 @@ async function main(): Promise<void> {
 			.innerJoin(niceLessons, eq(niceLessonContents.lessonId, niceLessons.id))
 			.innerJoin(niceUnits, eq(niceLessons.unitId, niceUnits.id))
 			.innerJoin(niceCourses, eq(niceUnits.courseId, niceCourses.id))
-			.where(and(inArray(niceCourses.id, [...HARDCODED_SCIENCE_COURSE_IDS]), sql`${niceQuestions.xml} is not null`))
+			.where(and(inArray(niceCourses.id, [...HARDCODED_MATH_COURSE_IDS]), sql`${niceQuestions.xml} is not null`))
 	)
 	if (withXmlQueryResult.error) {
 		logger.error("database query", { error: withXmlQueryResult.error })

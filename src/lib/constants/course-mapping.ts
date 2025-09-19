@@ -81,9 +81,9 @@ export function isHardcodedCourse(courseId: string): courseId is CourseId {
 }
 
 export const HARDCODED_MATH_COURSE_IDS = [
-	"x0267d782", // 6th grade math (Common Core)
-	"x6b17ba59", // 7th grade math (Common Core)
-	"x7c7044d7" // 8th grade math (Common Core)
+	"x0267d782" // 6th grade math (Common Core)
+	// "x6b17ba59", // 7th grade math (Common Core)
+	// "x7c7044d7" // 8th grade math (Common Core)
 ] as const
 
 export const HARDCODED_SCIENCE_COURSE_IDS = [

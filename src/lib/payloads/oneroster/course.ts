@@ -1,17 +1,14 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { and, eq, inArray, sql } from "drizzle-orm"
+import he from "he"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { env } from "@/env"
-import { getCourseMapping, getAverageReadingWpmForCourse, isHardcodedCourse } from "@/lib/constants/course-mapping"
-import { getAssessmentTest } from "@/lib/data/fetchers/qti"
-import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
-import { applyQtiSelectionAndOrdering } from "@/lib/qti-selection"
-import { formatResourceTitleForDisplay } from "@/lib/utils/format-resource-title"
 import { qti } from "@/lib/clients"
+import { getAverageReadingWpmForCourse, getCourseMapping, isHardcodedCourse } from "@/lib/constants/course-mapping"
+import { formatResourceTitleForDisplay } from "@/lib/utils/format-resource-title"
 import { extractQtiStimulusBodyContent } from "@/lib/xml-utils"
-import he from "he"
 
 function normalizeKhanSlug(slug: string): string {
 	const colonIndex = slug.indexOf(":")
@@ -283,7 +280,11 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 	// --- NEW: Fetch CASE learning objective IDs from Common Core via join table ---
 	// Build a map keyed by `${contentType}:${contentId}` -> string[] of CASE IDs
 	const learningObjectivesByContentTypeId = new Map<string, string[]>()
-	function addLearningObjective(contentType: "Video" | "Article" | "Exercise", contentId: string, caseId: string): void {
+	function addLearningObjective(
+		contentType: "Video" | "Article" | "Exercise",
+		contentId: string,
+		caseId: string
+	): void {
 		if (caseId === "") {
 			return
 		}
@@ -315,10 +316,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				.from(schema.niceLessonContentsCommonCoreStandards)
 				.innerJoin(
 					schema.niceCommonCoreStandards,
-					eq(
-						schema.niceLessonContentsCommonCoreStandards.commonCoreStandardId,
-						schema.niceCommonCoreStandards.id
-					)
+					eq(schema.niceLessonContentsCommonCoreStandards.commonCoreStandardId, schema.niceCommonCoreStandards.id)
 				)
 				.where(
 					and(
@@ -370,67 +368,11 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		}
 	}
 
-	// 2.5. Compute question counts for exercises and quizzes to derive XP
-	logger.info("computing qti question counts for xp", { courseId })
-
-	// Helper to deterministically compute the final selected question count for a test
-	async function computeSelectedQuestionCountForTest(testSourcedId: string): Promise<number> {
-		const testResult = await errors.try(getAssessmentTest(testSourcedId))
-		if (testResult.error) {
-			logger.error("qti xp: failed to fetch assessment test", { testSourcedId, error: testResult.error })
-			throw errors.wrap(testResult.error, "qti assessment test")
-		}
-
-		const resolvedResult = await errors.try(resolveAllQuestionsForTestFromXml(testResult.data))
-		if (resolvedResult.error) {
-			logger.error("qti xp: failed to resolve questions from qti xml", {
-				testSourcedId,
-				error: resolvedResult.error
-			})
-			throw errors.wrap(resolvedResult.error, "qti resolve questions")
-		}
-
-		// Apply selection and ordering. Count is deterministic w.r.t selection limits.
-		const selected = applyQtiSelectionAndOrdering(testResult.data, resolvedResult.data)
-		return selected.length
-	}
-
-	// Build maps: exerciseId -> count, assessmentId (Quiz) -> count
-	const exerciseCountsResult = await errors.try(
-		Promise.all(
-			exercises.map(async (e) => {
-				const testSourcedId = `nice_${e.id}`
-				const count = await computeSelectedQuestionCountForTest(testSourcedId)
-				return { id: e.id, count }
-			})
-		)
-	)
-	if (exerciseCountsResult.error) {
-		logger.error("qti xp: failed computing exercise question counts", { error: exerciseCountsResult.error })
-		throw exerciseCountsResult.error
-	}
-	const exerciseQuestionCountMap = new Map<string, number>(exerciseCountsResult.data.map((r) => [r.id, r.count]))
-
+	// Build helper sets to ensure every exercise gets an ALI exactly once
 	const allQuizAssessments = [
 		...assessments.filter((a) => a.type === "Quiz"),
 		...courseAssessments.filter((a) => a.type === "Quiz")
 	]
-	const quizCountsResult = await errors.try(
-		Promise.all(
-			allQuizAssessments.map(async (a) => {
-				const testSourcedId = `nice_${a.id}`
-				const count = await computeSelectedQuestionCountForTest(testSourcedId)
-				return { id: a.id, count }
-			})
-		)
-	)
-	if (quizCountsResult.error) {
-		logger.error("qti xp: failed computing quiz question counts", { error: quizCountsResult.error })
-		throw quizCountsResult.error
-	}
-	const quizQuestionCountMap = new Map<string, number>(quizCountsResult.data.map((r) => [r.id, r.count]))
-
-	// Build helper sets to ensure every exercise gets an ALI exactly once
 	const quizAssessmentIds = new Set(allQuizAssessments.map((a) => a.id))
 	const exerciseIdsAttachedToQuizzes = new Set<string>()
 	for (const [assessmentId, exerciseIds] of exercisesByAssessmentId.entries()) {
@@ -508,11 +450,11 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 
 	const resourceSet = new Set<string>()
 
-	// SHOUTY CONSTANTS per XP spec: expected XP reflects minutes of focused work.
-	// For unit tests and course challenges, assume 2 questions per minute.
-	const QUESTIONS_PER_MINUTE = 2
-	const UNIT_TEST_EXPECTED_QUESTIONS = 12
-	const COURSE_CHALLENGE_EXPECTED_QUESTIONS = 30
+	// HARDCODED XP VALUES
+	const EXERCISE_XP = 2
+	const QUIZ_XP = 4
+	const UNIT_TEST_XP = 6
+	const COURSE_CHALLENGE_XP = 15
 
 	// Reading speed assumption for articles:
 	// If course is hardcoded with known grades, use average WPM from grade mapping; else fallback to 200
@@ -524,7 +466,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		cleaned = cleaned.replace(/<figcaption[\s\S]*?<\/figcaption>/gi, " ")
 		cleaned = cleaned.replace(/<details[\s\S]*?<\/details>/gi, (match) => {
 			const summaryMatch = match.match(/<summary[^>]*>([\s\S]*?)<\/summary>/i)
-			const summaryText = summaryMatch ? summaryMatch[1] ?? "" : ""
+			const summaryText = summaryMatch ? (summaryMatch[1] ?? "") : ""
 			const summaryLower = summaryText.toLowerCase()
 			const isAttributionLike =
 				summaryLower.includes("attribution") ||
@@ -716,7 +658,11 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 							let articleXp: number | undefined
 							const articleXpResult = await errors.try(computeArticleXpFromStimulus(content.id))
 							if (articleXpResult.error) {
-								logger.error("qti xp: failed computing article xp from stimulus", { articleId: content.id, slug: content.slug, error: articleXpResult.error })
+								logger.error("qti xp: failed computing article xp from stimulus", {
+									articleId: content.id,
+									slug: content.slug,
+									error: articleXpResult.error
+								})
 								throw articleXpResult.error
 							}
 							articleXp = articleXpResult.data
@@ -753,11 +699,6 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								xp: computedVideoXp
 							}
 						} else if (lc.contentType === "Exercise") {
-							const exerciseQuestionCount = exerciseQuestionCountMap.get(content.id)
-							if (exerciseQuestionCount === undefined) {
-								logger.error("qti xp: missing question count for exercise", { exerciseId: content.id })
-								throw errors.new("qti xp: exercise question count missing")
-							}
 							metadata = {
 								...metadata,
 								type: "interactive",
@@ -765,7 +706,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								khanActivityType: "Exercise",
 								launchUrl: `${appDomain}${metadata.path}/e/${content.slug}`,
 								url: `${appDomain}${metadata.path}/e/${content.slug}`,
-								xp: Math.ceil(exerciseQuestionCount * 0.5)
+								xp: EXERCISE_XP
 							}
 						}
 
@@ -863,17 +804,14 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		for (const assessment of unitAssessments) {
 			const assessmentSourcedId = `nice_${assessment.id}`
 			if (!resourceSet.has(assessmentSourcedId)) {
-				const exerciseCount = exercisesByAssessmentId.get(assessment.id)?.length || 0
-				let assessmentXp = exerciseCount * 1
+				let assessmentXp: number
 				if (assessment.type === "UnitTest") {
-					assessmentXp = Math.round(UNIT_TEST_EXPECTED_QUESTIONS / QUESTIONS_PER_MINUTE)
+					assessmentXp = UNIT_TEST_XP
 				} else if (assessment.type === "Quiz") {
-					const quizCount = quizQuestionCountMap.get(assessment.id)
-					if (quizCount === undefined) {
-						logger.error("qti xp: missing question count for quiz", { assessmentId: assessment.id })
-						throw errors.new("qti xp: quiz question count missing")
-					}
-					assessmentXp = Math.ceil(quizCount * 0.5)
+					assessmentXp = QUIZ_XP
+				} else {
+					// Fallback for other assessment types
+					assessmentXp = 1
 				}
 
 				// Determine lesson type for metadata tagging
@@ -982,17 +920,14 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		for (const assessment of courseAssessments.sort((a, b) => a.ordering - b.ordering)) {
 			const assessmentSourcedId = `nice_${assessment.id}`
 			if (!resourceSet.has(assessmentSourcedId)) {
-				const exerciseCount = exercisesByAssessmentId.get(assessment.id)?.length || 0
-				let assessmentXp = exerciseCount * 1
+				let assessmentXp: number
 				if (assessment.type === "CourseChallenge") {
-					assessmentXp = Math.round(COURSE_CHALLENGE_EXPECTED_QUESTIONS / QUESTIONS_PER_MINUTE)
+					assessmentXp = COURSE_CHALLENGE_XP
 				} else if (assessment.type === "Quiz") {
-					const quizCount = quizQuestionCountMap.get(assessment.id)
-					if (quizCount === undefined) {
-						logger.error("qti xp: missing question count for quiz", { assessmentId: assessment.id })
-						throw errors.new("qti xp: quiz question count missing")
-					}
-					assessmentXp = Math.ceil(quizCount * 0.5)
+					assessmentXp = QUIZ_XP
+				} else {
+					// Fallback for other assessment types
+					assessmentXp = 1
 				}
 
 				let khanLessonType: "quiz" | "unittest" | "coursechallenge" | undefined
