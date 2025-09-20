@@ -419,7 +419,9 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 		}
 
 		// Map OneRoster subjects back to UI-friendly subjects
-		const uiSubject = mapFromOneRosterSubjects(course.subjects)
+		// Special case: Override for computing courses since OneRoster doesn't support "Computing" as a subject
+		const uiSubject =
+			courseMetadata.khanSubjectSlug === "computing" ? "Computing" : mapFromOneRosterSubjects(course.subjects)
 
 		if (!coursesBySubject.has(uiSubject)) {
 			coursesBySubject.set(uiSubject, [])
