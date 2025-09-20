@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto"
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
@@ -28,9 +27,7 @@ type AssessmentTestCandidate = {
 	xml: string
 }
 
-function encodeProblemType(problemType: string): string {
-	return createHash("sha256").update(problemType).digest("hex").slice(0, 12)
-}
+// encodeProblemType removed; k-bucketing is used for exercises
 
 export const assembleDifferentiatedItemsAndCreateTests = inngest.createFunction(
 	{
@@ -292,6 +289,9 @@ export const assembleDifferentiatedItemsAndCreateTests = inngest.createFunction(
 				}
 			}
 
+			// Limit assessments to exercises that actually belong to this course
+			const validExerciseIds = new Set(allExercises.map((e) => e.id))
+
 			const assessmentMap = new Map<
 				string,
 				{
@@ -314,7 +314,15 @@ export const assembleDifferentiatedItemsAndCreateTests = inngest.createFunction(
 						exerciseIds: []
 					})
 				}
-				assessmentMap.get(row.assessmentId)?.exerciseIds.push(row.exerciseId)
+				if (validExerciseIds.has(row.exerciseId)) {
+					assessmentMap.get(row.assessmentId)?.exerciseIds.push(row.exerciseId)
+				} else {
+					logger.debug("skipping cross-course exercise in assessment", {
+						assessmentId: row.assessmentId,
+						exerciseId: row.exerciseId,
+						assessmentTitle: row.assessmentTitle
+					})
+				}
 			}
 
 			const buildTestObject = (
@@ -360,7 +368,7 @@ ${sectionsXml}
 				return { id, xml }
 			}
 
-			const explicitTestsCandidates: AssessmentTestCandidate[] = Array.from(assessmentMap.entries()).map(
+			const explicitTestsCandidatesRaw: Array<AssessmentTestCandidate | null> = Array.from(assessmentMap.entries()).map(
 				([assessmentId, data]) => {
 					const questionIds = data.exerciseIds.flatMap((exerciseId) => {
 						const questions = differentiatedQuestionsByExerciseId.get(exerciseId)
@@ -376,11 +384,12 @@ ${sectionsXml}
 					})
 
 					if (questionIds.length === 0) {
-						logger.info("creating empty test for assessment without questions", {
+						logger.info("skipping assessment without questions", {
 							assessmentId,
 							assessmentTitle: data.title,
 							assessmentType: data.type
 						})
+						return null
 					}
 
 					// Map question IDs to full question objects with exercise information
@@ -428,19 +437,31 @@ ${sectionsXml}
 							problemType: originalQuestion.problemType // ADD THIS LINE
 						}
 					})
+					if (allQuestionsForTest.length === 0) {
+						logger.info("skipping assessment with zero mapped questions after filtering", {
+							assessmentId,
+							assessmentTitle: data.title,
+							assessmentType: data.type
+						})
+						return null
+					}
 					return buildTestObject(assessmentId, data.title, allQuestionsForTest, data.type)
 				}
 			)
+			const explicitTestsCandidates: AssessmentTestCandidate[] = explicitTestsCandidatesRaw.filter(
+				(t): t is AssessmentTestCandidate => t !== null
+			)
 
-			const exerciseTestsCandidates: AssessmentTestCandidate[] = allExercises.map((exercise) => {
+			const exerciseTestsCandidatesRaw: Array<AssessmentTestCandidate | null> = allExercises.map((exercise) => {
 				// Get questions for this exercise (may be empty)
 				const questionIds = differentiatedQuestionsByExerciseId.get(exercise.id) || []
 
 				if (questionIds.length === 0) {
-					logger.info("creating empty test for exercise without questions", {
+					logger.info("skipping exercise without questions", {
 						exerciseId: exercise.id,
 						exerciseTitle: exercise.title
 					})
+					return null
 				}
 
 				// Map back to full question objects to get problemType
@@ -473,32 +494,23 @@ ${sectionsXml}
 					return { id: qtiId, problemType: originalQuestion.problemType }
 				})
 
-				// Group questions by their problemType.
-				const questionsByProblemType = new Map<string, Array<{ id: string; problemType: string }>>()
-				for (const q of questionsForExercise) {
-					if (!questionsByProblemType.has(q.problemType)) {
-						questionsByProblemType.set(q.problemType, [])
-					}
-					questionsByProblemType.get(q.problemType)?.push(q)
-				}
-
 				const safeTitle = escapeXmlAttribute(exercise.title)
 
-				const sectionsXml = Array.from(questionsByProblemType.entries())
-					.map(([problemType, problemTypeQuestions]) => {
-						const encodedProblemType = encodeProblemType(problemType)
-						const itemRefsXml = problemTypeQuestions
+				// Use deterministic K-bucketing with K=4 to produce 4 sections selecting 1 each
+				const buckets = buildDeterministicKBuckets(exercise.id, questionsForExercise, 4).buckets
+				const sectionsXml = buckets
+					.map((bucket, i) => {
+						const itemRefsXml = bucket
 							.map(
 								(q, index) =>
 									`<qti-assessment-item-ref identifier="${q.id}" href="/assessment-items/${q.id}" sequence="${index + 1}"></qti-assessment-item-ref>`
 							)
 							.join("\n                ")
-						const selectCountForExercise = 1
-						return `        <qti-assessment-section identifier="SECTION_${exercise.id}_${encodedProblemType}" title="${safeTitle}" visible="false">
-            <qti-selection select="${selectCountForExercise}" with-replacement="false"/>
-            <qti-ordering shuffle="true"/>
-            ${itemRefsXml}
-        </qti-assessment-section>`
+						return `        <qti-assessment-section identifier="SECTION_${exercise.id}_BUCKET_${i}" title="${safeTitle}" visible="false">
+					            <qti-selection select="1" with-replacement="false"/>
+					            <qti-ordering shuffle="true"/>
+					            ${itemRefsXml}
+					        </qti-assessment-section>`
 					})
 					.join("\n")
 
@@ -513,6 +525,9 @@ ${sectionsXml}
 </qti-assessment-test>`
 				return { id: exercise.id, xml }
 			})
+			const exerciseTestsCandidates: AssessmentTestCandidate[] = exerciseTestsCandidatesRaw.filter(
+				(t): t is AssessmentTestCandidate => t !== null
+			)
 
 			// Ghetto-validate assessment tests (batched upsert + immediate delete)
 			const testCandidates = [...explicitTestsCandidates, ...exerciseTestsCandidates]
