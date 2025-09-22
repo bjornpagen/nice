@@ -35,7 +35,19 @@ export const HARDCODED_COURSE_MAPPING = {
 	xaacaf77b: ["12"], // Microeconomics
 	xba99f16dd99e6fe4: ["12"], // Macroeconomics
 
-	x2d2f703b37b450a3: ["10"] //AP®︎/College Computer Science Principles
+	// Computer Science Courses
+	x2d2f703b37b450a3: ["10"], //AP®︎/College Computer Science Principles
+
+	// Reading and Vocabulary Courses
+	x435b1de09a877dd7: ["8"], // 8th grade reading and vocab
+	x7538838f96af3430: ["7"], //7th grade reading and vocab
+	x8ddea1200317e822: ["6"], //6th grade reading and vocab
+	xaf0c1b5d7010608e: ["3"], //3rd grade reading and vocab
+	xb350e60168d6e96f: ["5"], //5th grade reading and vocab
+	xd45453bfd2ae8614: ["9"], //9th grade reading and vocab
+	xd89aabc5d5847a2b: ["10"], //10th grade reading and vocab
+	xe0e52cf20ce2546d: ["4"], //4th grade reading and vocab
+	xfb4fc0bf01437792: ["2"] //2nd grade reading and vocab
 } as const
 
 export type CourseId = keyof typeof HARDCODED_COURSE_MAPPING
@@ -63,7 +75,17 @@ export const ALL_HARDCODED_COURSE_IDS: CourseId[] = [
 	"x66f79d8a", // world-history
 	"xb41992e0ff5e0f09", // ap-world-history
 	"x231f0f4241b58f49", // us-government-and-civics
-	"x3e2fc37246974751" // ap-college-us-government-and-politics
+	"x3e2fc37246974751", // ap-college-us-government-and-politics
+	"x2d2f703b37b450a3", // AP®︎/College Computer Science Principles
+	"x435b1de09a877dd7", // 8th grade reading and vocab
+	"x7538838f96af3430", //7th grade reading and vocab
+	"x8ddea1200317e822", //6th grade reading and vocab
+	"xaf0c1b5d7010608e", //3rd grade reading and vocab
+	"xb350e60168d6e96f", //5th grade reading and vocab
+	"xd45453bfd2ae8614", //9th grade reading and vocab
+	"xd89aabc5d5847a2b", //10th grade reading and vocab
+	"xe0e52cf20ce2546d", //4th grade reading and vocab
+	"xfb4fc0bf01437792" //2nd grade reading and vocab
 ]
 
 /**
@@ -108,7 +130,17 @@ export const HARDCODED_HISTORY_COURSE_IDS = [
 	// "x231f0f4241b58f49", // us-government-and-civics
 	// "x3e2fc37246974751", // ap-college-us-government-and-politics
 	// "x7a03a96a83aa80ff" // Constitution 101
-	"x2d2f703b37b450a3" //AP®︎/College Computer Science Principles
+	// "x2d2f703b37b450a3", //AP®︎/College Computer Science Principles
+
+	"x435b1de09a877dd7", // 8th grade reading and vocab
+	"x7538838f96af3430", //7th grade reading and vocab
+	"x8ddea1200317e822", //6th grade reading and vocab
+	"xaf0c1b5d7010608e", //3rd grade reading and vocab
+	"xb350e60168d6e96f", //5th grade reading and vocab
+	"xd45453bfd2ae8614", //9th grade reading and vocab
+	"xd89aabc5d5847a2b", //10th grade reading and vocab
+	"xe0e52cf20ce2546d", //4th grade reading and vocab
+	"xfb4fc0bf01437792" //2nd grade reading and vocab
 ] as const
 
 /**
