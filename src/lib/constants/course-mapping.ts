@@ -148,6 +148,10 @@ export const HARDCODED_HISTORY_COURSE_IDS = [
  * Grades 6-12 are defined, following a pattern of +25 WPM per grade.
  */
 export const GRADE_TO_WPM: Readonly<Record<string, number>> = {
+	"2": 120,
+	"3": 140,
+	"4": 150,
+	"5": 150,
 	"6": 150,
 	"7": 175,
 	"8": 200,
