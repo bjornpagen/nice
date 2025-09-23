@@ -96,7 +96,49 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 				logger.error("failed to build perseus envelope", { error: result.error })
 				throw result.error
 			}
-			return result.data
+
+			// Filter out non-image URLs (like Wikimedia Commons attribution pages)
+			const envelope = result.data
+			const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"]
+
+			// Filter rasterImageUrls to only include actual image files
+			if (Array.isArray(envelope.rasterImageUrls)) {
+				const filteredRasterUrls = envelope.rasterImageUrls.filter((url: string) => {
+					// Check if URL has an image extension
+					const hasImageExtension = imageExtensions.some((ext) => url.toLowerCase().includes(ext))
+					// Exclude wiki pages and other non-image URLs
+					const isWikiPage = url.includes("/wiki/")
+					return hasImageExtension && !isWikiPage
+				})
+
+				logger.debug("filtered raster image urls", {
+					original: envelope.rasterImageUrls.length,
+					filtered: filteredRasterUrls.length,
+					removed: envelope.rasterImageUrls.filter((url: string) => !filteredRasterUrls.includes(url))
+				})
+
+				envelope.rasterImageUrls = filteredRasterUrls
+			}
+
+			// Also filter vectorImageUrls if present
+			if (Array.isArray(envelope.vectorImageUrls)) {
+				const filteredVectorUrls = envelope.vectorImageUrls.filter((url: string) => {
+					const hasImageExtension = imageExtensions.some((ext) => url.toLowerCase().includes(ext))
+					const isWikiPage = url.includes("/wiki/")
+					return hasImageExtension && !isWikiPage
+				})
+
+				if (envelope.vectorImageUrls.length !== filteredVectorUrls.length) {
+					logger.debug("filtered vector image urls", {
+						original: envelope.vectorImageUrls.length,
+						filtered: filteredVectorUrls.length
+					})
+				}
+
+				envelope.vectorImageUrls = filteredVectorUrls
+			}
+
+			return envelope
 		})
 
 		// Steps 3 & 4 combined: generate structured item and compile to QTI XML in a single step.
