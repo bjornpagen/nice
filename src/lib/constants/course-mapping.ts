@@ -30,6 +30,7 @@ export const HARDCODED_COURSE_MAPPING = {
 	xb41992e0ff5e0f09: ["10"], // ap-world-history
 	x231f0f4241b58f49: ["12"], // us-government-and-civics
 	x3e2fc37246974751: ["12"], // ap-college-us-government-and-politics
+	x7a03a96a83aa80ff: [], // Constitution 101
 	x2832fbb7463fe65a: ["12"], // AP®︎/College Microeconomics
 	x4b5148b6d48d333a: ["12"], // AP®︎/College Macroeconomics
 	xaacaf77b: ["12"], // Microeconomics
@@ -76,7 +77,9 @@ export const ALL_HARDCODED_COURSE_IDS: CourseId[] = [
 	"xb41992e0ff5e0f09", // ap-world-history
 	"x231f0f4241b58f49", // us-government-and-civics
 	"x3e2fc37246974751", // ap-college-us-government-and-politics
+	"x7a03a96a83aa80ff", // Constitution 101
 	"x2d2f703b37b450a3", // AP®︎/College Computer Science Principles
+
 	"x435b1de09a877dd7", // 8th grade reading and vocab
 	// "x7538838f96af3430", //7th grade reading and vocab
 	"x8ddea1200317e822", //6th grade reading and vocab

@@ -193,6 +193,9 @@ const events = {
 			courseSlug: z.string().min(1)
 		})
 	},
+	"oneroster/course.ingest.all": {
+		data: z.object({}) // No data needed - uses hardcoded course IDs
+	},
 	"oneroster/class.ingest.one": {
 		data: z.object({
 			courseSlug: z.string().min(1)

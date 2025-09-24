@@ -28,6 +28,7 @@ import { orchestrateHardcodedScienceQtiUpload } from "@/inngest/functions/migrat
 import { orchestrateHardcodedScienceStimulusMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-stimulus-migration"
 // Import OneRoster workers
 import { generatePayloadForCourse as generateOnerosterPayloadForCourse } from "@/inngest/functions/oneroster/generate-payload-for-course"
+import { ingestAllCourses } from "@/inngest/functions/oneroster/ingest-all-courses"
 import { ingestAssessmentLineItems } from "@/inngest/functions/oneroster/ingest-assessment-line-items"
 import { ingestClass } from "@/inngest/functions/oneroster/ingest-class"
 import { ingestComponentResourceOne } from "@/inngest/functions/oneroster/ingest-component-resource-one"
@@ -105,6 +106,7 @@ export const { GET, POST, PUT } = serve({
 		// differentiatedIngest,
 		// OneRoster Functions
 		generateOnerosterPayloadForCourse,
+		ingestAllCourses,
 		ingestClass,
 		ingestComponentResourceOne,
 		ingestCourse,

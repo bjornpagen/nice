@@ -429,7 +429,10 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				khanSlug: course.slug,
 				khanSubjectSlug: subjectSlug,
 				khanTitle: course.title,
-				khanDescription: course.description
+				khanDescription: course.description,
+				AlphaLearn: {
+					publishStatus: "active"
+				}
 			}
 		},
 		// ADDED: class object generation
