@@ -2,6 +2,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import * as React from "react"
+import { connection } from "next/server"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { finalizeArticleTimeSpentEvent } from "@/lib/actions/tracking"
 import { fetchExercisePageData } from "@/lib/data/content"
@@ -13,13 +14,15 @@ import { Content } from "@/app/(user)/[subject]/[course]/(practice)/[unit]/[less
 
 // --- REMOVED: The local ExercisePageData type definition ---
 
-export const dynamic = "force-dynamic"
+// Removed: dynamic export; we mark the route dynamic by awaiting connection()
 
 export default async function ExercisePage({
 	params
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; exercise: string }>
 }) {
+	// Ensure this route is treated as dynamic and has request context
+	await connection()
 	const normalizedParamsPromise = normalizeParams(params)
 	const exercisePromise: Promise<ExercisePageData> = normalizedParamsPromise.then(fetchExercisePageData)
 
