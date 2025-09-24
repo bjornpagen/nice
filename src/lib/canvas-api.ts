@@ -244,12 +244,12 @@ export class CanvasClient {
 			id: z.number(),
 			title: z.string(),
 			quiz_type: z.string(),
-			points_possible: z.number(),
+			points_possible: z.number().nullable().optional(),
 			question_count: z.number(),
 			question_types: z.array(z.string()).optional(),
 			html_url: z.string().url()
 		})
-		.strict()
+		.passthrough()
 
 	private static readonly MCAnswerSchema = z
 		.object({
@@ -292,8 +292,18 @@ export class CanvasClient {
 		})
 		.strict()
 
+	// Generic fallback for all other question types
+	private static readonly GenericQuestionSchema = z
+		.object({
+			id: z.number(),
+			question_type: z.string()
+		})
+		.passthrough()
+
 	private static readonly QuizSubmissionQuestionsSchema = z.object({
-		quiz_submission_questions: z.array(z.union([CanvasClient.MCQuestionSchema, CanvasClient.MatchingQuestionSchema]))
+		quiz_submission_questions: z.array(
+			z.union([CanvasClient.MCQuestionSchema, CanvasClient.MatchingQuestionSchema, CanvasClient.GenericQuestionSchema])
+		)
 	})
 
 	async getClassicQuizMeta(courseId: string, quizId: string): Promise<z.infer<typeof CanvasClient.QuizMetaSchema>> {
@@ -319,7 +329,7 @@ export class CanvasClient {
 			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
 			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
 		}
-		const data = CanvasClient.QuizMetaSchema.parse(jsonResult.data)
+		const data = assertSchema(CanvasClient.QuizMetaSchema, jsonResult.data)
 		return data
 	}
 
@@ -348,7 +358,7 @@ export class CanvasClient {
 			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
 			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
 		}
-		const data = CanvasClient.QuizSubmissionQuestionsSchema.parse(jsonResult.data)
+		const data = assertSchema(CanvasClient.QuizSubmissionQuestionsSchema, jsonResult.data)
 		return data
 	}
 
@@ -364,13 +374,13 @@ export class CanvasClient {
 			hide_from_students: z.boolean(),
 			front_page: z.boolean(),
 			html_url: z.string().url(),
-			body: z.string(),
+			body: z.string().nullable().optional(),
 			updated_at: z.string(),
 			todo_date: z.string().nullable().optional(),
 			publish_at: z.string().nullable().optional(),
 			locked_for_user: z.boolean().optional()
 		})
-		.strict()
+		.passthrough()
 
 	async getPageDetail(courseId: string, pageUrl: string): Promise<z.infer<typeof CanvasClient.PageDetailSchema>> {
 		logger.info("fetching page detail", { courseId, pageUrl })
@@ -395,7 +405,7 @@ export class CanvasClient {
 			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
 			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
 		}
-		const data = CanvasClient.PageDetailSchema.parse(jsonResult.data)
+		const data = assertSchema(CanvasClient.PageDetailSchema, jsonResult.data)
 		return data
 	}
 
@@ -410,7 +420,7 @@ export class CanvasClient {
 			html_url: z.string().url(),
 			submission_types: z.array(z.string()).optional()
 		})
-		.strict()
+		.passthrough()
 
 	async getAssignmentDetail(
 		courseId: string,
@@ -438,8 +448,286 @@ export class CanvasClient {
 			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
 			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
 		}
-		const data = CanvasClient.AssignmentDetailSchema.parse(jsonResult.data)
+		const data = assertSchema(CanvasClient.AssignmentDetailSchema, jsonResult.data)
 		return data
+	}
+
+	// =================================================================================
+	// Modules (REST) and quiz submission helpers
+	// =================================================================================
+
+	// REST modules with items
+	private static readonly RestModuleItemSchema = z
+		.object({
+			id: z.union([z.number(), z.string()]),
+			title: z.string().optional(),
+			type: z.string(),
+			content_id: z.union([z.number(), z.string()]).nullable().optional(),
+			page_url: z.string().optional(),
+			html_url: z.string().url().optional()
+		})
+		.passthrough()
+
+	private static readonly RestModuleSchema = z
+		.object({
+			id: z.union([z.number(), z.string()]),
+			name: z.string().optional(),
+			items_url: z.string().url().optional(),
+			items: z.array(CanvasClient.RestModuleItemSchema).optional()
+		})
+		.passthrough()
+
+	private async fetchAllPages(url: string): Promise<unknown[]> {
+		const results: unknown[] = []
+		let nextUrl: string | null = url
+		while (nextUrl) {
+			const fetchResult = await errors.try(
+				fetch(nextUrl, {
+					method: "GET",
+					headers: this.#headers,
+					credentials: "include"
+				})
+			)
+			if (fetchResult.error) {
+				logger.error("canvas-api: network request failed", { url: nextUrl, error: fetchResult.error })
+				throw errors.wrap(fetchResult.error, "canvas-api: network request failed")
+			}
+			const responseCandidate = fetchResult.data
+			if (!responseCandidate) {
+				logger.error("canvas-api: unexpected missing response", { url: nextUrl })
+				throw errors.new("canvas-api: missing response")
+			}
+			const response: Response = responseCandidate
+			if (!response.ok) {
+				logger.error("canvas-api: request failed", { status: response.status, url: nextUrl })
+				throw errors.new(`canvas-api: request failed with status ${response.status}`)
+			}
+			const jsonResult = await errors.try(response.json())
+			if (jsonResult.error) {
+				logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
+				throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
+			}
+			const page = jsonResult.data
+			if (Array.isArray(page)) results.push(...page)
+			let linkHeader: string | null = null
+			const headerLower = response.headers.get("link")
+			if (typeof headerLower === "string") linkHeader = headerLower
+			else {
+				const headerUpper = response.headers.get("Link")
+				if (typeof headerUpper === "string") linkHeader = headerUpper
+			}
+			if (linkHeader !== null && /rel="next"/.test(linkHeader)) {
+				const match = linkHeader.match(/<([^>]+)>; rel="next"/)
+				nextUrl = match?.[1] ?? null
+			} else {
+				nextUrl = null
+			}
+		}
+		return results
+	}
+
+	async getModulesWithItems(courseId: string): Promise<Array<z.infer<typeof CanvasClient.RestModuleSchema>>> {
+		logger.info("fetching modules with items", { courseId })
+		const base = `${this.#baseUrl}/api/v1/courses/${courseId}/modules?include[]=items&per_page=100`
+		const raw = await this.fetchAllPages(base)
+		const parsed: Array<z.infer<typeof CanvasClient.RestModuleSchema>> = []
+		for (const entry of raw) {
+			const res = CanvasClient.RestModuleSchema.safeParse(entry)
+			if (res.success) parsed.push(res.data)
+			else {
+				logger.warn("skipping unparsable module entry", { error: res.error })
+			}
+		}
+		return parsed
+	}
+
+	// Assignment info map keyed by module item id
+	private static readonly AssignmentInfoSchema = z.record(
+		z.string(),
+		z.object({
+			points_possible: z.number().nullable().optional(),
+			due_date: z.string().nullable().optional(),
+			todo_date: z.string().nullable().optional()
+		})
+	)
+
+	async getAssignmentInfoMap(courseId: string): Promise<z.infer<typeof CanvasClient.AssignmentInfoSchema>> {
+		logger.info("fetching assignment info map", { courseId })
+		const url = `${this.#baseUrl}/courses/${courseId}/modules/items/assignment_info`
+		const fetchResult = await errors.try(fetch(url, { method: "GET", headers: this.#headers, credentials: "include" }))
+		if (fetchResult.error) {
+			logger.error("canvas-api: network request failed", { url, error: fetchResult.error })
+			throw errors.wrap(fetchResult.error, "canvas-api: network request failed")
+		}
+		if (!fetchResult.data.ok) {
+			logger.error("canvas-api: request failed", { status: fetchResult.data.status, url })
+			throw errors.new(`canvas-api: request failed with status ${fetchResult.data.status}`)
+		}
+		const jsonResult = await errors.try(fetchResult.data.json())
+		if (jsonResult.error) {
+			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
+			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
+		}
+		return assertSchema(CanvasClient.AssignmentInfoSchema, jsonResult.data)
+	}
+
+	// Create or get a quiz submission (starts an attempt)
+	private static readonly QuizSubmissionCreatedSchema = z
+		.object({
+			quiz_submissions: z.array(
+				z.object({ id: z.number(), quiz_id: z.number().optional(), attempt: z.number().optional() }).passthrough()
+			)
+		})
+		.strict()
+
+	private static readonly QuizSubmissionsListSchema = z
+		.object({
+			quiz_submissions: z.array(
+				z
+					.object({ id: z.number(), attempt: z.number().optional(), workflow_state: z.string().optional() })
+					.passthrough()
+			)
+		})
+		.strict()
+
+	async createQuizSubmission(courseId: string, quizId: string | number): Promise<number> {
+		logger.info("creating quiz submission", { courseId, quizId })
+		const url = `${this.#baseUrl}/api/v1/courses/${courseId}/quizzes/${quizId}/submissions`
+		const fetchResult = await errors.try(fetch(url, { method: "POST", headers: this.#headers, credentials: "include" }))
+		if (fetchResult.error) {
+			logger.error("canvas-api: network request failed", { url, error: fetchResult.error })
+			throw errors.wrap(fetchResult.error, "canvas-api: network request failed")
+		}
+		if (!fetchResult.data.ok) {
+			logger.error("canvas-api: request failed", { status: fetchResult.data.status, url })
+			throw errors.new(`canvas-api: request failed with status ${fetchResult.data.status}`)
+		}
+		const jsonResult = await errors.try(fetchResult.data.json())
+		if (jsonResult.error) {
+			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
+			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
+		}
+		const payload = assertSchema(CanvasClient.QuizSubmissionCreatedSchema, jsonResult.data)
+		if (!payload.quiz_submissions.length) {
+			logger.error("canvas-api: createQuizSubmission returned empty list", { courseId, quizId })
+			throw errors.new("canvas-api: create quiz submission returned empty list")
+		}
+		const firstSubmission = payload.quiz_submissions[0]
+		if (!firstSubmission) {
+			logger.error("canvas-api: quiz submissions array empty after validation", { courseId, quizId })
+			throw errors.new("canvas-api: empty quiz submissions")
+		}
+		const firstSubmissionId: number = firstSubmission.id
+		return firstSubmissionId
+	}
+
+	private async listQuizSubmissions(courseId: string, quizId: string | number): Promise<Array<{ id: number }>> {
+		logger.info("listing quiz submissions", { courseId, quizId })
+		const url = `${this.#baseUrl}/api/v1/courses/${courseId}/quizzes/${quizId}/submissions`
+		const fetchResult = await errors.try(fetch(url, { method: "GET", headers: this.#headers, credentials: "include" }))
+		if (fetchResult.error) {
+			logger.error("canvas-api: network request failed", { url, error: fetchResult.error })
+			throw errors.wrap(fetchResult.error, "canvas-api: network request failed")
+		}
+		if (!fetchResult.data.ok) {
+			// Some courses/quizzes return 400 when no submissions exist yet. Treat as empty.
+			if (fetchResult.data.status === 400 || fetchResult.data.status === 404) {
+				logger.warn("quiz submissions not listable, treating as empty", {
+					status: fetchResult.data.status,
+					courseId,
+					quizId
+				})
+				return []
+			}
+			logger.error("canvas-api: request failed", { status: fetchResult.data.status, url })
+			throw errors.new(`canvas-api: request failed with status ${fetchResult.data.status}`)
+		}
+		const jsonResult = await errors.try(fetchResult.data.json())
+		if (jsonResult.error) {
+			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
+			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
+		}
+		const data = assertSchema(CanvasClient.QuizSubmissionsListSchema, jsonResult.data)
+		return data.quiz_submissions.map((s) => ({ id: s.id }))
+	}
+
+	async getOrCreateQuizSubmissionId(courseId: string, quizId: string | number): Promise<number> {
+		// First, reuse an existing submission if present
+		const existing = await this.listQuizSubmissions(courseId, quizId)
+		if (existing.length > 0) {
+			// Use the last one (assume most recent)
+			const last = existing[existing.length - 1]
+			if (!last) {
+				logger.error("canvas-api: missing existing submission after length check", {
+					courseId,
+					quizId,
+					existingCount: existing.length
+				})
+				throw errors.new("canvas-api: missing existing submission")
+			}
+			return last.id
+		}
+		// Otherwise try to create
+		const url = `${this.#baseUrl}/api/v1/courses/${courseId}/quizzes/${quizId}/submissions`
+		const fetchResult = await errors.try(fetch(url, { method: "POST", headers: this.#headers, credentials: "include" }))
+		if (fetchResult.error) {
+			logger.error("canvas-api: network request failed", { url, error: fetchResult.error })
+			throw errors.wrap(fetchResult.error, "canvas-api: network request failed")
+		}
+		if (!fetchResult.data.ok) {
+			// If a submission already exists, Canvas may return 409. Re-list and reuse.
+			if (fetchResult.data.status === 409) {
+				logger.warn("quiz submission already exists, reusing existing", { courseId, quizId })
+				const subs = await this.listQuizSubmissions(courseId, quizId)
+				if (subs.length > 0) {
+					const last = subs[subs.length - 1]
+					if (!last) {
+						logger.error("canvas-api: missing subs last after 409 reuse", { courseId, quizId, subsCount: subs.length })
+						throw errors.new("canvas-api: missing submission after 409")
+					}
+					return last.id
+				}
+			}
+			// Some courses/quizzes return 400/403 on create due to settings; try re-list and reuse
+			if (fetchResult.data.status === 400 || fetchResult.data.status === 403) {
+				logger.warn("quiz submission create not allowed, attempting reuse", {
+					status: fetchResult.data.status,
+					courseId,
+					quizId
+				})
+				const subs = await this.listQuizSubmissions(courseId, quizId)
+				if (subs.length > 0) {
+					const last = subs[subs.length - 1]
+					if (!last) {
+						logger.error("canvas-api: missing subs last after 400/403 reuse", {
+							courseId,
+							quizId,
+							subsCount: subs.length
+						})
+						throw errors.new("canvas-api: missing submission after 400/403")
+					}
+					return last.id
+				}
+			}
+			logger.error("canvas-api: request failed", { status: fetchResult.data.status, url })
+			throw errors.new(`canvas-api: request failed with status ${fetchResult.data.status}`)
+		}
+		const jsonResult = await errors.try(fetchResult.data.json())
+		if (jsonResult.error) {
+			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
+			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
+		}
+		const payload = assertSchema(CanvasClient.QuizSubmissionCreatedSchema, jsonResult.data)
+		if (!payload.quiz_submissions.length) {
+			logger.error("canvas-api: createQuizSubmission returned empty list", { courseId, quizId })
+			throw errors.new("canvas-api: create quiz submission returned empty list")
+		}
+		const first = payload.quiz_submissions[0]
+		if (!first) {
+			logger.error("canvas-api: empty quiz_submissions after parse", { courseId, quizId })
+			throw errors.new("canvas-api: empty quiz_submissions")
+		}
+		return first.id
 	}
 }
 
