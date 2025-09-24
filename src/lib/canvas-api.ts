@@ -1,0 +1,463 @@
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
+import { z } from "zod"
+
+// =================================================================================
+// Zod Schemas for Canvas GraphQL "GetCourseModules" shape
+// =================================================================================
+
+const UserRefSchema = z
+	.object({
+		id: z.string(),
+		name: z.string(),
+		__typename: z.string()
+	})
+	.strict()
+
+const AssessmentRequestSchema = z
+	.object({
+		id: z.string(),
+		anonymousId: z.string().optional(),
+		available: z.boolean().optional(),
+		createdAt: z.string().optional(),
+		workflowState: z.string().optional(),
+		user: UserRefSchema.optional(),
+		anonymizedUser: UserRefSchema.optional(),
+		__typename: z.string()
+	})
+	.strict()
+
+const PeerReviewsSchema = z
+	.object({
+		anonymousReviews: z.boolean(),
+		__typename: z.literal("PeerReviews")
+	})
+	.strict()
+
+const AssignmentContentSchema = z
+	.object({
+		__typename: z.literal("Assignment"),
+		name: z.string().optional(),
+		_id: z.string().optional(),
+		peerReviews: PeerReviewsSchema.optional(),
+		assessmentRequestsForCurrentUser: z.array(AssessmentRequestSchema).optional()
+	})
+	.strict()
+
+const PageContentSchema = z
+	.object({
+		__typename: z.literal("Page")
+	})
+	.strict()
+
+const QuizContentSchema = z
+	.object({
+		__typename: z.literal("Quiz")
+	})
+	.strict()
+
+const ExternalUrlContentSchema = z
+	.object({
+		__typename: z.literal("ExternalUrl")
+	})
+	.strict()
+
+const SubHeaderContentSchema = z
+	.object({
+		__typename: z.literal("SubHeader")
+	})
+	.strict()
+
+const ModuleItemContentSchema = z.union([
+	AssignmentContentSchema,
+	PageContentSchema,
+	QuizContentSchema,
+	ExternalUrlContentSchema,
+	SubHeaderContentSchema
+])
+
+const ModuleItemSchema = z
+	.object({
+		content: ModuleItemContentSchema,
+		__typename: z.literal("ModuleItem")
+	})
+	.strict()
+
+const ModuleSchema = z
+	.object({
+		id: z.string(),
+		moduleItems: z.array(ModuleItemSchema),
+		__typename: z.literal("Module")
+	})
+	.strict()
+
+const ModulesConnectionSchema = z
+	.object({
+		nodes: z.array(ModuleSchema),
+		__typename: z.literal("ModuleConnection")
+	})
+	.strict()
+
+const GetCourseModulesResponseSchema = z.object({
+	data: z.object({
+		course: z
+			.object({
+				modulesConnection: ModulesConnectionSchema,
+				__typename: z.literal("Course")
+			})
+			.nullable()
+	})
+})
+
+export type GetCourseModulesResponse = z.infer<typeof GetCourseModulesResponseSchema>
+
+// =================================================================================
+// Helpers
+// =================================================================================
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+async function retryWithBackoff<T>(
+	fn: () => Promise<T>,
+	options: { retries: number; initialDelay: number }
+): Promise<{ data: T | null; error: Error | null }> {
+	let lastError: Error | null = null
+	for (let i = 0; i < options.retries; i++) {
+		const result = await errors.try(fn())
+		if (result.error) {
+			lastError = result.error
+			const delay = options.initialDelay * 2 ** i
+			logger.warn("operation failed, retrying after delay", {
+				attempt: i + 1,
+				maxRetries: options.retries,
+				delayMs: delay,
+				error: lastError
+			})
+			await sleep(delay)
+		} else {
+			return { data: result.data, error: null }
+		}
+	}
+	return { data: null, error: lastError }
+}
+
+export function assertSchema<T>(schema: z.ZodType<T>, raw: unknown): T {
+	const result = schema.safeParse(raw)
+	if (!result.success) {
+		logger.error("Zod validation failed", { error: result.error })
+		throw errors.wrap(result.error, "canvas-api: schema validation failed")
+	}
+	return result.data
+}
+
+// =================================================================================
+// Canvas GraphQL Client
+// =================================================================================
+
+export interface CanvasClientOptions {
+	baseUrl: string
+	cookie: string
+	csrfToken: string
+	userAgent?: string
+}
+
+export class CanvasClient {
+	#baseUrl: string
+	#headers: HeadersInit
+
+	constructor(options: CanvasClientOptions) {
+		this.#baseUrl = options.baseUrl.replace(/\/$/, "")
+		this.#headers = {
+			accept: "*/*",
+			"content-type": "application/json",
+			"x-requested-with": "XMLHttpRequest",
+			"x-csrf-token": options.csrfToken,
+			"user-agent":
+				options.userAgent ??
+				"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+			cookie: options.cookie
+		}
+	}
+
+	private async graphQL(body: unknown): Promise<unknown> {
+		const url = `${this.#baseUrl}/api/graphql`
+		logger.info("canvas graphql request", { url })
+		const fetchResult = await errors.try(
+			fetch(url, {
+				method: "POST",
+				headers: this.#headers,
+				body: JSON.stringify(body)
+			})
+		)
+		if (fetchResult.error) {
+			logger.error("canvas-api: network request failed", { url, error: fetchResult.error })
+			throw errors.wrap(fetchResult.error, "canvas-api: network request failed")
+		}
+		const response = fetchResult.data
+		if (!response.ok) {
+			const textResult = await errors.try(response.text())
+			if (textResult.error) {
+				logger.error("canvas-api: request failed and body parse failed", {
+					status: response.status,
+					error: textResult.error
+				})
+				throw errors.new(`canvas-api: request failed with status ${response.status}`)
+			}
+			logger.error("canvas-api: request failed", { status: response.status, body: textResult.data })
+			throw errors.new(`canvas-api: request failed with status ${response.status}`)
+		}
+		const jsonResult = await errors.try(response.json())
+		if (jsonResult.error) {
+			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
+			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
+		}
+		return jsonResult.data
+	}
+
+	async getCourseModules(courseId: string): Promise<GetCourseModulesResponse> {
+		logger.info("fetching course modules", { courseId })
+		const operationName = "GetCourseModules"
+		const query =
+			"query GetCourseModules($courseId: ID!) {\n  course(id: $courseId) {\n    modulesConnection {\n      nodes {\n        id: _id\n        moduleItems {\n          content {\n            ... on Assignment {\n              name\n              _id\n              peerReviews {\n                anonymousReviews\n                __typename\n              }\n              assessmentRequestsForCurrentUser {\n                id: _id\n                anonymousId\n                available\n                createdAt\n                workflowState\n                user {\n                  id: _id\n                  name\n                  __typename\n                }\n                anonymizedUser {\n                  id: _id\n                  name\n                  __typename\n                }\n                __typename\n              }\n              __typename\n            }\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
+
+		const body = { operationName, variables: { courseId }, query }
+
+		const result = await retryWithBackoff(() => this.graphQL(body), {
+			retries: 3,
+			initialDelay: 1000
+		})
+		if (result.error || !result.data) {
+			logger.error("getCourseModules failed", { error: result.error, hasData: !!result.data })
+			throw result.error || errors.new("canvas-api: unexpected null result from getCourseModules")
+		}
+		const data = assertSchema(GetCourseModulesResponseSchema, result.data)
+		return data
+	}
+
+	// =================================================================================
+	// Classic Quizzes (REST)
+	// =================================================================================
+
+	// Schemas for classic quiz meta and submission questions
+	private static readonly QuizMetaSchema = z
+		.object({
+			id: z.number(),
+			title: z.string(),
+			quiz_type: z.string(),
+			points_possible: z.number(),
+			question_count: z.number(),
+			question_types: z.array(z.string()).optional(),
+			html_url: z.string().url()
+		})
+		.strict()
+
+	private static readonly MCAnswerSchema = z
+		.object({
+			id: z.number(),
+			text: z.string().nullable().optional(),
+			html: z.string().nullable().optional()
+		})
+		.strict()
+
+	private static readonly MCQuestionSchema = z
+		.object({
+			id: z.number(),
+			question_type: z.literal("multiple_choice_question"),
+			question_name: z.string(),
+			question_text: z.string(),
+			answers: z.array(CanvasClient.MCAnswerSchema),
+			answer: z.string().nullable()
+		})
+		.strict()
+
+	private static readonly MatchingPairSchema = z
+		.object({
+			id: z.number(),
+			left: z.string().nullable().optional(),
+			right: z.string().nullable().optional(),
+			text: z.string().nullable().optional(),
+			html: z.string().nullable().optional()
+		})
+		.strict()
+
+	private static readonly MatchingQuestionSchema = z
+		.object({
+			id: z.number(),
+			question_type: z.literal("matching_question"),
+			question_name: z.string(),
+			question_text: z.string(),
+			answers: z.array(CanvasClient.MatchingPairSchema),
+			matches: z.array(CanvasClient.MatchingPairSchema),
+			answer: z.array(z.record(z.string(), z.unknown())).nullable().optional()
+		})
+		.strict()
+
+	private static readonly QuizSubmissionQuestionsSchema = z.object({
+		quiz_submission_questions: z.array(z.union([CanvasClient.MCQuestionSchema, CanvasClient.MatchingQuestionSchema]))
+	})
+
+	async getClassicQuizMeta(courseId: string, quizId: string): Promise<z.infer<typeof CanvasClient.QuizMetaSchema>> {
+		logger.info("fetching classic quiz meta", { courseId, quizId })
+		const url = `${this.#baseUrl}/api/v1/courses/${courseId}/quizzes/${quizId}`
+		const fetchResult = await errors.try(
+			fetch(url, {
+				method: "GET",
+				headers: this.#headers,
+				credentials: "include"
+			})
+		)
+		if (fetchResult.error) {
+			logger.error("canvas-api: network request failed", { url, error: fetchResult.error })
+			throw errors.wrap(fetchResult.error, "canvas-api: network request failed")
+		}
+		if (!fetchResult.data.ok) {
+			logger.error("canvas-api: request failed", { status: fetchResult.data.status, url })
+			throw errors.new(`canvas-api: request failed with status ${fetchResult.data.status}`)
+		}
+		const jsonResult = await errors.try(fetchResult.data.json())
+		if (jsonResult.error) {
+			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
+			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
+		}
+		const data = CanvasClient.QuizMetaSchema.parse(jsonResult.data)
+		return data
+	}
+
+	async getClassicQuizSubmissionQuestions(
+		submissionId: string
+	): Promise<z.infer<typeof CanvasClient.QuizSubmissionQuestionsSchema>> {
+		logger.info("fetching classic quiz submission questions", { submissionId })
+		const url = `${this.#baseUrl}/api/v1/quiz_submissions/${submissionId}/questions`
+		const fetchResult = await errors.try(
+			fetch(url, {
+				method: "GET",
+				headers: this.#headers,
+				credentials: "include"
+			})
+		)
+		if (fetchResult.error) {
+			logger.error("canvas-api: network request failed", { url, error: fetchResult.error })
+			throw errors.wrap(fetchResult.error, "canvas-api: network request failed")
+		}
+		if (!fetchResult.data.ok) {
+			logger.error("canvas-api: request failed", { status: fetchResult.data.status, url })
+			throw errors.new(`canvas-api: request failed with status ${fetchResult.data.status}`)
+		}
+		const jsonResult = await errors.try(fetchResult.data.json())
+		if (jsonResult.error) {
+			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
+			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
+		}
+		const data = CanvasClient.QuizSubmissionQuestionsSchema.parse(jsonResult.data)
+		return data
+	}
+
+	// Page (wiki) detail schema and method
+	private static readonly PageDetailSchema = z
+		.object({
+			title: z.string(),
+			created_at: z.string(),
+			url: z.string(),
+			editing_roles: z.string(),
+			page_id: z.number(),
+			published: z.boolean(),
+			hide_from_students: z.boolean(),
+			front_page: z.boolean(),
+			html_url: z.string().url(),
+			body: z.string(),
+			updated_at: z.string(),
+			todo_date: z.string().nullable().optional(),
+			publish_at: z.string().nullable().optional(),
+			locked_for_user: z.boolean().optional()
+		})
+		.strict()
+
+	async getPageDetail(courseId: string, pageUrl: string): Promise<z.infer<typeof CanvasClient.PageDetailSchema>> {
+		logger.info("fetching page detail", { courseId, pageUrl })
+		const url = `${this.#baseUrl}/api/v1/courses/${courseId}/pages/${encodeURIComponent(pageUrl)}`
+		const fetchResult = await errors.try(
+			fetch(url, {
+				method: "GET",
+				headers: this.#headers,
+				credentials: "include"
+			})
+		)
+		if (fetchResult.error) {
+			logger.error("canvas-api: network request failed", { url, error: fetchResult.error })
+			throw errors.wrap(fetchResult.error, "canvas-api: network request failed")
+		}
+		if (!fetchResult.data.ok) {
+			logger.error("canvas-api: request failed", { status: fetchResult.data.status, url })
+			throw errors.new(`canvas-api: request failed with status ${fetchResult.data.status}`)
+		}
+		const jsonResult = await errors.try(fetchResult.data.json())
+		if (jsonResult.error) {
+			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
+			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
+		}
+		const data = CanvasClient.PageDetailSchema.parse(jsonResult.data)
+		return data
+	}
+
+	// Assignment detail schema and method
+	private static readonly AssignmentDetailSchema = z
+		.object({
+			id: z.number(),
+			name: z.string(),
+			description: z.string().nullable().optional(),
+			points_possible: z.number().nullable(),
+			due_at: z.string().nullable(),
+			html_url: z.string().url(),
+			submission_types: z.array(z.string()).optional()
+		})
+		.strict()
+
+	async getAssignmentDetail(
+		courseId: string,
+		assignmentId: string
+	): Promise<z.infer<typeof CanvasClient.AssignmentDetailSchema>> {
+		logger.info("fetching assignment detail", { courseId, assignmentId })
+		const url = `${this.#baseUrl}/api/v1/courses/${courseId}/assignments/${assignmentId}`
+		const fetchResult = await errors.try(
+			fetch(url, {
+				method: "GET",
+				headers: this.#headers,
+				credentials: "include"
+			})
+		)
+		if (fetchResult.error) {
+			logger.error("canvas-api: network request failed", { url, error: fetchResult.error })
+			throw errors.wrap(fetchResult.error, "canvas-api: network request failed")
+		}
+		if (!fetchResult.data.ok) {
+			logger.error("canvas-api: request failed", { status: fetchResult.data.status, url })
+			throw errors.new(`canvas-api: request failed with status ${fetchResult.data.status}`)
+		}
+		const jsonResult = await errors.try(fetchResult.data.json())
+		if (jsonResult.error) {
+			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
+			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
+		}
+		const data = CanvasClient.AssignmentDetailSchema.parse(jsonResult.data)
+		return data
+	}
+}
+
+// =================================================================================
+// Factory from env (optional convenience)
+// =================================================================================
+
+export function createCanvasClientFromEnv(): CanvasClient {
+	const baseUrl = process.env.CANVAS_BASE_URL
+	const cookie = process.env.CANVAS_SESSION_COOKIE
+	const csrf = process.env.CANVAS_CSRF_TOKEN
+	if (!baseUrl || !cookie || !csrf) {
+		logger.error("missing canvas environment configuration", {
+			hasBaseUrl: !!baseUrl,
+			hasCookie: !!cookie,
+			hasCsrf: !!csrf
+		})
+		throw errors.new("canvas configuration missing env vars")
+	}
+	return new CanvasClient({ baseUrl, cookie, csrfToken: csrf })
+}
