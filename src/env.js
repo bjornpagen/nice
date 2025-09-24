@@ -37,8 +37,8 @@ export const env = createEnv({
 		BLOB_READ_WRITE_TOKEN: z.string().min(1),
 		// Vercel deployment variable (optional, only present in deployed environments)
 		VERCEL_DEPLOYMENT_ID: z.string().optional(),
-		// Redis connection URL (optional for local development)
-		REDIS_URL: z.string().url().optional(),
+		// Redis connection URL (required)
+		REDIS_URL: z.string().url(),
 
 		// --- LTI 1.3 CONFIGURATION ---
 		LTI_ISSUER: z.string().url(),
