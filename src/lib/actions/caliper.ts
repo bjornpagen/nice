@@ -1,12 +1,38 @@
 "use server"
 
-import { randomUUID } from "node:crypto"
-import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { z } from "zod"
+import { caliper } from "@/lib/clients"
+import { ListCaliperEventsQuerySchema } from "@/lib/caliper"
+
+const CaliperListEventsResponseSchema = z.object({
+  success: z.literal(true),
+  data: z.unknown()
+})
+
+type CaliperListEventsResponse = z.infer<typeof CaliperListEventsResponseSchema>
+
+export async function listCaliperEvents(input: unknown): Promise<CaliperListEventsResponse> {
+  const parsed = ListCaliperEventsQuerySchema.safeParse(input)
+  if (!parsed.success) {
+    logger.error("caliper list events: invalid input", { error: parsed.error })
+    throw errors.wrap(parsed.error, "caliper list events input validation")
+  }
+
+  const result = await errors.try(caliper.listEvents(parsed.data))
+  if (result.error) {
+    logger.error("caliper list events: request failed", { error: result.error })
+    throw errors.wrap(result.error, "caliper list events api call")
+  }
+
+  return { success: true, data: result.data }
+}
+
+import { randomUUID } from "node:crypto"
+import { auth } from "@clerk/nextjs/server"
 import { env } from "@/env"
 import { getCurrentUserSourcedId } from "@/lib/authorization"
-// REMOVED: No longer needs streak, xp, or oneroster clients/utils.
 import type {
 	CaliperEnvelope,
 	TimebackActivityCompletedEvent,
@@ -14,9 +40,7 @@ import type {
 	TimebackActivityMetric,
 	TimebackTimeSpentEvent
 } from "@/lib/caliper"
-// ADDED: Import the new Caliper utility functions.
 import { extractResourceIdFromCompoundId, normalizeCaliperId } from "@/lib/caliper/utils"
-import { caliper } from "@/lib/clients"
 import { type NiceCaliperActor, type NiceCaliperContext, sendBankedXpAwardedEvent } from "@/lib/ports/analytics"
 
 const SENSOR_ID = env.NEXT_PUBLIC_APP_DOMAIN

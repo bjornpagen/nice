@@ -164,6 +164,17 @@ export const CaliperEventSchema = z.union([
 	FlexibleTimebackTimeSpentEventSchema
 ])
 
+// query schema for listing events
+export const ListCaliperEventsQuerySchema = z.object({
+	limit: z.number().int().positive().max(1000).optional(),
+	offset: z.number().int().min(0).optional(),
+	sensor: z.string().url().optional(),
+	startDate: z.string().datetime().optional(),
+	endDate: z.string().datetime().optional(),
+	actorId: z.string().optional(),
+	actorEmail: z.string().email().optional()
+})
+
 export class CaliperApiClient {
 	#accessToken: string | null = null
 	#tokenPromise: Promise<string> | null = null
@@ -370,7 +381,7 @@ export class CaliperApiClient {
 		logger.info("caliper client: events sent successfully")
 	}
 
-	// New method to fetch events
+	// New method to fetch events by actor id (legacy helper)
 	public async getEvents(actorId: string): Promise<z.infer<typeof CaliperEventSchema>[]> {
 		logger.info("caliper client: fetching events for actor", { actorId })
 		const endpoint = `/caliper/events?actorId=${encodeURIComponent(actorId)}&limit=1000` // Fetch up to 1000 events
@@ -415,5 +426,33 @@ export class CaliperApiClient {
 			skippedEvents: events.length - validEvents.length
 		})
 		return validEvents
+	}
+
+	// generic list events endpoint with full query support
+	public async listEvents(
+		query: z.infer<typeof ListCaliperEventsQuerySchema>
+	): Promise<unknown> {
+		logger.info("caliper client: listing events", {
+			limit: query.limit,
+			offset: query.offset,
+			sensor: query.sensor,
+			startDate: query.startDate,
+			endDate: query.endDate,
+			actorId: query.actorId,
+			actorEmail: query.actorEmail
+		})
+
+		const params = new URLSearchParams()
+		if (typeof query.limit === "number") params.set("limit", String(query.limit))
+		if (typeof query.offset === "number") params.set("offset", String(query.offset))
+		if (query.sensor && query.sensor !== "") params.set("sensor", query.sensor)
+		if (query.startDate && query.startDate !== "") params.set("startDate", query.startDate)
+		if (query.endDate && query.endDate !== "") params.set("endDate", query.endDate)
+		if (query.actorId && query.actorId !== "") params.set("actorId", query.actorId)
+		if (query.actorEmail && query.actorEmail !== "") params.set("actorEmail", query.actorEmail)
+
+		const endpoint = `/caliper/events${params.toString() ? `?${params.toString()}` : ""}`
+		const response = await this.#request(endpoint, { method: "GET" }, z.unknown())
+		return response
 	}
 }

@@ -112,6 +112,22 @@ const GetCourseModulesResponseSchema = z.object({
 export type GetCourseModulesResponse = z.infer<typeof GetCourseModulesResponseSchema>
 
 // =================================================================================
+// Relay pagination primitives (pageInfo + generic connection builder)
+// =================================================================================
+
+const PageInfoSchema = z
+	.object({
+		hasNextPage: z.boolean(),
+		endCursor: z.string().nullable().optional(),
+		__typename: z.string().optional()
+	})
+	.strict()
+
+// =================================================================================
+// note: avoid a generic connection builder because zod loses node typing
+// which degrades to unknown[] and harms type safety.
+
+// =================================================================================
 // Helpers
 // =================================================================================
 
@@ -214,6 +230,23 @@ export class CanvasClient {
 		return jsonResult.data
 	}
 
+private async paginateConnection<TNode, TPageInfo extends { hasNextPage: boolean; endCursor?: string | null }>(
+		fetchPage: (after: string | null) => Promise<{ nodes: TNode[]; pageInfo: TPageInfo }>,
+	): Promise<TNode[]> {
+		let after: string | null = null
+		const allNodes: TNode[] = []
+		for (;;) {
+			const { nodes, pageInfo } = await fetchPage(after)
+			if (nodes.length > 0) {
+				allNodes.push(...nodes)
+			}
+			if (!pageInfo.hasNextPage) {
+				return allNodes
+			}
+			after = (pageInfo.endCursor ?? null)
+		}
+	}
+
 	async getCourseModules(courseId: string): Promise<GetCourseModulesResponse> {
 		logger.info("fetching course modules", { courseId })
 		const operationName = "GetCourseModules"
@@ -232,6 +265,298 @@ export class CanvasClient {
 		}
 		const data = assertSchema(GetCourseModulesResponseSchema, result.data)
 		return data
+	}
+
+	// =================================================================================
+	// GraphQL: node / legacyNode helpers
+	// =================================================================================
+
+	private static readonly NodePayloadSchema = z.object({
+		data: z.object({ node: z.object({ __typename: z.string() }).passthrough().nullable() })
+	})
+
+	async getNode(id: string): Promise<z.infer<typeof CanvasClient.NodePayloadSchema>["data"]["node"]> {
+		logger.info("fetching graphql node", { id })
+		const operationName = "GetNode"
+		const query =
+			"query GetNode($id: ID!) {\n  node(id: $id) {\n    __typename\n  }\n}"
+		const body = { operationName, variables: { id }, query }
+		const result = await retryWithBackoff(() => this.graphQL(body), { retries: 3, initialDelay: 1000 })
+		if (result.error || !result.data) {
+			logger.error("getNode failed", { error: result.error, hasData: !!result.data })
+			throw result.error || errors.new("canvas-api: unexpected null result from getNode")
+		}
+		const parsed = CanvasClient.NodePayloadSchema.safeParse(result.data)
+		if (!parsed.success) {
+			logger.error("Zod validation failed", { error: parsed.error })
+			throw errors.wrap(parsed.error, "canvas-api: schema validation failed")
+		}
+		return parsed.data.data.node
+	}
+
+	private static readonly LegacyNodePayloadSchema = z.object({
+		data: z.object({
+			legacyNode: z.object({ __typename: z.string() }).passthrough().nullable()
+		})
+	})
+
+	async getLegacyNode(legacyId: string, type: string): Promise<z.infer<typeof CanvasClient.LegacyNodePayloadSchema>["data"]["legacyNode"]> {
+		logger.info("fetching graphql legacyNode", { legacyId, type })
+		const operationName = "GetLegacyNode"
+		const query =
+			"query GetLegacyNode($legacyId: ID!, $type: LegacyResource!) {\n  legacyNode(legacyId: $legacyId, type: $type) {\n    __typename\n  }\n}"
+		const body = { operationName, variables: { legacyId, type }, query }
+		const result = await retryWithBackoff(() => this.graphQL(body), { retries: 3, initialDelay: 1000 })
+		if (result.error || !result.data) {
+			logger.error("getLegacyNode failed", { error: result.error, hasData: !!result.data })
+			throw result.error || errors.new("canvas-api: unexpected null result from getLegacyNode")
+		}
+		const parsed = CanvasClient.LegacyNodePayloadSchema.safeParse(result.data)
+		if (!parsed.success) {
+			logger.error("Zod validation failed", { error: parsed.error })
+			throw errors.wrap(parsed.error, "canvas-api: schema validation failed")
+		}
+		return parsed.data.data.legacyNode
+	}
+
+	// =================================================================================
+	// GraphQL: list assignments/pages/quizzes with relay pagination
+	// =================================================================================
+
+	private static readonly AssignmentNodeSchema = z
+		.object({
+			_id: z.string(),
+			name: z.string().nullable().optional(),
+			__typename: z.literal("Assignment").optional()
+		})
+		.strict()
+
+	private static readonly AssignmentsConnectionSchema = z
+		.object({
+			nodes: z.array(CanvasClient.AssignmentNodeSchema),
+			pageInfo: PageInfoSchema,
+			__typename: z.string().optional()
+		})
+		.strict()
+
+	private static readonly AssignmentsResponseSchema = z.object({
+		data: z.object({
+			course: z
+				.object({ assignmentsConnection: CanvasClient.AssignmentsConnectionSchema, __typename: z.string().optional() })
+				.nullable()
+		})
+	})
+
+	async listCourseAssignments(courseId: string): Promise<z.infer<typeof CanvasClient.AssignmentNodeSchema>[]> {
+		logger.info("listing course assignments", { courseId })
+		const operationName = "ListCourseAssignments"
+		const query =
+			"query ListCourseAssignments($courseId: ID!, $first: Int!, $after: String) {\n  course(id: $courseId) {\n    assignmentsConnection(first: $first, after: $after) {\n      nodes {\n        _id\n        name\n        __typename\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
+
+		const pageFetcher = async (after: string | null): Promise<{ nodes: z.infer<typeof CanvasClient.AssignmentNodeSchema>[]; pageInfo: z.infer<typeof PageInfoSchema> }> => {
+			const variables = { courseId, first: 50, after }
+			const body = { operationName, variables, query }
+			const result = await retryWithBackoff(() => this.graphQL(body), { retries: 3, initialDelay: 1000 })
+			if (result.error || !result.data) {
+				logger.error("listCourseAssignments page fetch failed", { error: result.error, hasData: !!result.data })
+				throw result.error || errors.new("canvas-api: unexpected null result from listCourseAssignments")
+			}
+			const parsed = CanvasClient.AssignmentsResponseSchema.safeParse(result.data)
+			if (!parsed.success) {
+				logger.error("Zod validation failed", { error: parsed.error })
+				throw errors.wrap(parsed.error, "canvas-api: schema validation failed")
+			}
+			if (!parsed.data.data.course) {
+				logger.error("graphql course not found", { courseId })
+				throw errors.new("canvas-api: course not found")
+			}
+			return {
+				nodes: parsed.data.data.course.assignmentsConnection.nodes,
+				pageInfo: parsed.data.data.course.assignmentsConnection.pageInfo
+			}
+		}
+
+		const nodes = await this.paginateConnection(pageFetcher)
+		return nodes
+	}
+
+	private static readonly PageNodeSchema = z
+		.object({
+			_id: z.string().optional(),
+			title: z.string().nullable().optional(),
+			url: z.string().nullable().optional(),
+			__typename: z.literal("Page").optional()
+		})
+		.strict()
+
+	private static readonly PagesConnectionSchema = z
+		.object({
+			nodes: z.array(CanvasClient.PageNodeSchema),
+			pageInfo: PageInfoSchema,
+			__typename: z.string().optional()
+		})
+		.strict()
+
+	private static readonly PagesResponseSchema = z.object({
+		data: z.object({
+			course: z
+				.object({ pagesConnection: CanvasClient.PagesConnectionSchema, __typename: z.string().optional() })
+				.nullable()
+		})
+	})
+
+	async listCoursePages(courseId: string): Promise<z.infer<typeof CanvasClient.PageNodeSchema>[]> {
+		logger.info("listing course pages", { courseId })
+		const operationName = "ListCoursePages"
+		const query =
+			"query ListCoursePages($courseId: ID!, $first: Int!, $after: String) {\n  course(id: $courseId) {\n    pagesConnection(first: $first, after: $after) {\n      nodes {\n        _id\n        title\n        url\n        __typename\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
+
+		const pageFetcher = async (after: string | null): Promise<{ nodes: z.infer<typeof CanvasClient.PageNodeSchema>[]; pageInfo: z.infer<typeof PageInfoSchema> }> => {
+			const variables = { courseId, first: 50, after }
+			const body = { operationName, variables, query }
+			const result = await retryWithBackoff(() => this.graphQL(body), { retries: 3, initialDelay: 1000 })
+			if (result.error || !result.data) {
+				logger.error("listCoursePages page fetch failed", { error: result.error, hasData: !!result.data })
+				throw result.error || errors.new("canvas-api: unexpected null result from listCoursePages")
+			}
+			const parsed = CanvasClient.PagesResponseSchema.safeParse(result.data)
+			if (!parsed.success) {
+				logger.error("Zod validation failed", { error: parsed.error })
+				throw errors.wrap(parsed.error, "canvas-api: schema validation failed")
+			}
+			if (!parsed.data.data.course) {
+				logger.error("graphql course not found", { courseId })
+				throw errors.new("canvas-api: course not found")
+			}
+			return {
+				nodes: parsed.data.data.course.pagesConnection.nodes,
+				pageInfo: parsed.data.data.course.pagesConnection.pageInfo
+			}
+		}
+
+		const nodes = await this.paginateConnection(pageFetcher)
+		return nodes
+	}
+
+	private static readonly QuizNodeSchema = z
+		.object({
+			_id: z.string(),
+			title: z.string().nullable().optional(),
+			__typename: z.literal("Quiz").optional()
+		})
+		.strict()
+
+	private static readonly QuizzesConnectionSchema = z
+		.object({
+			nodes: z.array(CanvasClient.QuizNodeSchema),
+			pageInfo: PageInfoSchema,
+			__typename: z.string().optional()
+		})
+		.strict()
+
+	private static readonly QuizzesResponseSchema = z.object({
+		data: z.object({
+			course: z
+				.object({ quizzesConnection: CanvasClient.QuizzesConnectionSchema, __typename: z.string().optional() })
+				.nullable()
+		})
+	})
+
+	async listCourseQuizzes(courseId: string): Promise<z.infer<typeof CanvasClient.QuizNodeSchema>[]> {
+		logger.info("listing course quizzes", { courseId })
+		const operationName = "ListCourseQuizzes"
+		const query =
+			"query ListCourseQuizzes($courseId: ID!, $first: Int!, $after: String) {\n  course(id: $courseId) {\n    quizzesConnection(first: $first, after: $after) {\n      nodes {\n        _id\n        title\n        __typename\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
+
+		const pageFetcher = async (after: string | null): Promise<{ nodes: z.infer<typeof CanvasClient.QuizNodeSchema>[]; pageInfo: z.infer<typeof PageInfoSchema> }> => {
+			const variables = { courseId, first: 50, after }
+			const body = { operationName, variables, query }
+			const result = await retryWithBackoff(() => this.graphQL(body), { retries: 3, initialDelay: 1000 })
+			if (result.error || !result.data) {
+				logger.error("listCourseQuizzes page fetch failed", { error: result.error, hasData: !!result.data })
+				throw result.error || errors.new("canvas-api: unexpected null result from listCourseQuizzes")
+			}
+			const parsed = CanvasClient.QuizzesResponseSchema.safeParse(result.data)
+			if (!parsed.success) {
+				logger.error("Zod validation failed", { error: parsed.error })
+				throw errors.wrap(parsed.error, "canvas-api: schema validation failed")
+			}
+			if (!parsed.data.data.course) {
+				logger.error("graphql course not found", { courseId })
+				throw errors.new("canvas-api: course not found")
+			}
+			return {
+				nodes: parsed.data.data.course.quizzesConnection.nodes,
+				pageInfo: parsed.data.data.course.quizzesConnection.pageInfo
+			}
+		}
+
+		const nodes = await this.paginateConnection(pageFetcher)
+		return nodes
+	}
+
+	// =================================================================================
+	// GraphQL Introspection (pruned)
+	// =================================================================================
+
+	private static readonly IntrospectionSchema = z
+		.object({
+			data: z.object({
+				__schema: z.object({
+					types: z
+						.array(
+							z
+								.object({
+									kind: z.string(),
+									name: z.string(),
+									fields: z
+										.array(z.object({ name: z.string() }).strict())
+										.nullable()
+										.optional()
+								})
+								.strict()
+						)
+						.optional(),
+					queryType: z.object({ name: z.string() }).strict().optional(),
+					mutationType: z.object({ name: z.string() }).strict().nullable().optional(),
+					subscriptionType: z.object({ name: z.string() }).strict().nullable().optional()
+				}).strict()
+			})
+		})
+
+	async introspect(): Promise<{
+		queryTypeName: string | null
+		mutationTypeName: string | null
+		subscriptionTypeName: string | null
+		types: { name: string; kind: string; fieldNames: string[] }[]
+	}> {
+		logger.info("graphql introspection starting", {})
+		const operationName = "IntrospectionQuery"
+		const query =
+			"query IntrospectionQuery {\n  __schema {\n    queryType { name }\n    mutationType { name }\n    subscriptionType { name }\n    types {\n      kind\n      name\n      fields { name }\n    }\n  }\n}"
+		const body = { operationName, query }
+		const result = await retryWithBackoff(() => this.graphQL(body), { retries: 3, initialDelay: 1000 })
+		if (result.error || !result.data) {
+			logger.error("introspection fetch failed", { error: result.error, hasData: !!result.data })
+			throw result.error || errors.new("canvas-api: unexpected null result from introspection")
+		}
+		const parsed = CanvasClient.IntrospectionSchema.safeParse(result.data)
+		if (!parsed.success) {
+			logger.error("Zod validation failed", { error: parsed.error })
+			throw errors.wrap(parsed.error, "canvas-api: schema validation failed")
+		}
+		const schema = parsed.data.data.__schema
+		const types = (schema.types ?? []).map((t) => ({
+			name: t.name,
+			kind: t.kind,
+			fieldNames: (t.fields ?? []).map((f) => f.name)
+		}))
+		return {
+			queryTypeName: schema.queryType ? schema.queryType.name : null,
+			mutationTypeName: schema.mutationType ? schema.mutationType.name : null,
+			subscriptionTypeName: schema.subscriptionType ? schema.subscriptionType.name : null,
+			types
+		}
 	}
 
 	// =================================================================================
