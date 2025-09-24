@@ -499,6 +499,11 @@ private async paginateConnection<TNode, TPageInfo extends { hasNextPage: boolean
 		return nodes
 	}
 
+	// Back-compat alias for scripts expecting listPages
+	async listPages(courseId: string): Promise<z.infer<typeof CanvasClient.PageNodeSchema>[]> {
+		return this.listCoursePages(courseId)
+	}
+
 	private static readonly QuizNodeSchema = z
 		.object({
 			_id: z.string(),
@@ -717,6 +722,82 @@ private async paginateConnection<TNode, TPageInfo extends { hasNextPage: boolean
 		}
 		const data = assertSchema(CanvasClient.QuizMetaSchema, jsonResult.data)
 		return data
+	}
+
+	// =================================================================================
+	// Discussions (REST)
+	// =================================================================================
+
+	private static readonly DiscussionTopicSchema = z
+		.object({
+			id: z.number(),
+			title: z.string().optional()
+		})
+		.passthrough()
+
+	async listDiscussionTopics(courseId: string): Promise<Array<z.infer<typeof CanvasClient.DiscussionTopicSchema>>> {
+		logger.info("listing discussion topics", { courseId })
+		const base = `${this.#baseUrl}/api/v1/courses/${courseId}/discussion_topics?per_page=100`
+		const raw = await this.fetchAllPages(base)
+		const topics: Array<z.infer<typeof CanvasClient.DiscussionTopicSchema>> = []
+		for (const entry of raw) {
+			const res = CanvasClient.DiscussionTopicSchema.safeParse(entry)
+			if (res.success) topics.push(res.data)
+			else {
+				logger.warn("skipping unparsable discussion topic entry", { error: res.error })
+			}
+		}
+		return topics
+	}
+
+	private static readonly DiscussionTopicViewSchema = z.record(z.string(), z.unknown())
+
+	async getDiscussionTopicView(courseId: string, topicId: number | string): Promise<z.infer<typeof CanvasClient.DiscussionTopicViewSchema>> {
+		logger.info("fetching discussion topic view", { courseId, topicId })
+		const url = `${this.#baseUrl}/api/v1/courses/${courseId}/discussion_topics/${topicId}/view`
+		const fetchResult = await errors.try(
+			fetch(url, { method: "GET", headers: this.#headers, credentials: "include" })
+		)
+		if (fetchResult.error) {
+			logger.error("canvas-api: network request failed", { url, error: fetchResult.error })
+			throw errors.wrap(fetchResult.error, "canvas-api: network request failed")
+		}
+		if (!fetchResult.data.ok) {
+			logger.error("canvas-api: request failed", { status: fetchResult.data.status, url })
+			throw errors.new(`canvas-api: request failed with status ${fetchResult.data.status}`)
+		}
+		const jsonResult = await errors.try(fetchResult.data.json())
+		if (jsonResult.error) {
+			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
+			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
+		}
+		return assertSchema(CanvasClient.DiscussionTopicViewSchema, jsonResult.data)
+	}
+
+	// =================================================================================
+	// Classic Quiz Questions (REST)
+	// =================================================================================
+
+	private static readonly ClassicQuizQuestionSchema = z
+		.object({
+			id: z.number(),
+			question_type: z.string()
+		})
+		.passthrough()
+
+	async getClassicQuizQuestions(courseId: string, quizId: string): Promise<Array<z.infer<typeof CanvasClient.ClassicQuizQuestionSchema>>> {
+		logger.info("fetching classic quiz questions", { courseId, quizId })
+		const base = `${this.#baseUrl}/api/v1/courses/${courseId}/quizzes/${quizId}/questions?per_page=100`
+		const raw = await this.fetchAllPages(base)
+		const questions: Array<z.infer<typeof CanvasClient.ClassicQuizQuestionSchema>> = []
+		for (const entry of raw) {
+			const res = CanvasClient.ClassicQuizQuestionSchema.safeParse(entry)
+			if (res.success) questions.push(res.data)
+			else {
+				logger.warn("skipping unparsable classic quiz question entry", { error: res.error })
+			}
+		}
+		return questions
 	}
 
 	async getClassicQuizSubmissionQuestions(

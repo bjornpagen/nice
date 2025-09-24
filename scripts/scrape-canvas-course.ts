@@ -145,13 +145,18 @@ async function main(): Promise<void> {
     results["pageBodiesError"] = String(pagesResult.error)
   } else {
     for (const p of pagesResult.data) {
+      if (!p.url) {
+        logger.warn("page missing url, skipping", { pageId: p._id })
+        continue
+      }
       const detailResult = await errors.try(client.getPageDetail(COURSE_ID, p.url))
       if (detailResult.error) {
         logger.warn("page detail failed, skipping", { url: p.url, error: detailResult.error })
         continue
       }
       const d = detailResult.data
-      pageBodies[p.url] = { title: d.title, url: d.url, body: d.body }
+      const safeBody = d.body ?? ""
+      pageBodies[p.url] = { title: d.title, url: d.url, body: safeBody }
     }
     results["pageBodies"] = pageBodies
   }
