@@ -1,7 +1,6 @@
 import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { connection } from "next/server"
 import * as React from "react"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { finalizeArticleTimeSpentEvent } from "@/lib/actions/tracking"
@@ -14,34 +13,45 @@ import { Content } from "@/app/(user)/[subject]/[course]/(practice)/[unit]/[less
 
 // --- REMOVED: The local ExercisePageData type definition ---
 
+export const dynamic = "force-dynamic"
+
 export default async function ExercisePage({
 	params
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; exercise: string }>
 }) {
-	await connection()
 	const normalizedParamsPromise = normalizeParams(params)
 	const exercisePromise: Promise<ExercisePageData> = normalizedParamsPromise.then(fetchExercisePageData)
 
+	// Resolve user sourcedId during render; avoid calling currentUser() later in a timer or background task
+	const userSourcedIdPromise: Promise<string | undefined> = currentUser()
+		.then((user) => {
+			if (!user?.publicMetadata) {
+				logger.warn("user has no public metadata for finalization")
+				return undefined
+			}
+			const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+			if (!metadataValidation.success) {
+				logger.error("invalid user metadata for finalization", { error: metadataValidation.error })
+				return undefined
+			}
+			const id = metadataValidation.data.sourceId
+			if (typeof id !== "string" || id.length === 0) {
+				logger.error("invalid user metadata for finalization: missing sourceId")
+				return undefined
+			}
+			return id
+		})
+
 	// --- NEW: Proactive Finalization for ALL preceding articles in window ---
 	const finalizeArticlesInWindow = async () => {
-		const [exerciseData, normalizedParams] = await Promise.all([exercisePromise, normalizedParamsPromise])
-		const user = await currentUser();
-		if (!user?.publicMetadata) {
-			logger.warn("user has no public metadata for finalization");
-			return;
-		}
-
-		// Validate user metadata with shared schema (expects sourceId)
-		const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata);
-		if (!metadataValidation.success) {
-			logger.error("invalid user metadata for finalization", { error: metadataValidation.error });
-			return;
-		}
-		const userSourcedId = metadataValidation.data.sourceId;
-		if (typeof userSourcedId !== "string" || userSourcedId.length === 0) {
-			logger.error("invalid user metadata for finalization: missing sourceId");
-			return;
+		const [exerciseData, normalizedParams, userSourcedId] = await Promise.all([
+			exercisePromise,
+			normalizedParamsPromise,
+			userSourcedIdPromise
+		])
+		if (!userSourcedId) {
+			return
 		}
 
 		// Use the exact banking window logic to identify passive resources
