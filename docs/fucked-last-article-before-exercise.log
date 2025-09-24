@@ -1,0 +1,85 @@
+2025-09-24T14:23:28.867Z [info] [hs-bio] /a/the-biosphere status=200
+2025-09-24T14:23:29.104Z [info] INFO sending caliper time spent event actorId=https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/4dacb9bc-0cc4-4618-8247-5d1e16ac360d activityId=https://www.nice.academy/science/hs-bio/x230b3ff252126bb6:ecology-and-natural-systems/x230b3ff252126bb6:organization-of-natural-systems/a/organization-of-natural-systems durationInSeconds=62
+2025-09-24T14:23:29.105Z [info] INFO caliper client: sending events eventCount=1
+2025-09-24T14:23:29.298Z [info] INFO caliper: access token acquired
+2025-09-24T14:23:29.543Z [info] INFO caliper client: events sent successfully
+
+2025-09-24T14:23:29.825Z [info] [hs-bio] /a/the-biosphere status=200
+2025-09-24T14:23:29.940Z [error] ERROR failed to connect to redis error=Error: Socket already opened
+2025-09-24T14:23:29.952Z [error] Unhandled Rejection: Error: redis connection failed
+    at <unknown> (.next/server/chunks/6741.js:1:9605) {
+  toString: [Function: d],
+  [cause]: Error: Socket already opened
+      at j.connect (.next/server/chunks/719.js:1:126285)
+      at k.connect (.next/server/chunks/719.js:1:203158)
+      at <unknown> (.next/server/chunks/6741.js:1:9524)
+      at 77896 (.next/server/chunks/6741.js:1:9644)
+      at c (.next/server/webpack-runtime.js:1:205)
+      at 10651 (.next/server/chunks/6741.js:1:264)
+      at c (.next/server/webpack-runtime.js:1:205)
+      at 75595 (.next/server/chunks/5595.js:1:274)
+      at c (.next/server/webpack-runtime.js:1:205)
+      at 48898 (.next/server/chunks/700.js:1:12387)
+}
+2025-09-24T14:23:29.952Z [fatal] Node.js process exited with exit status: 128. The logs above can help with debugging the issue.
+2025-09-24T14:23:29.953Z [error] Error: redis connection failed
+    at <unknown> (.next/server/chunks/6741.js:1:9605) {
+  toString: [Function: d],
+  [cause]: Error: Socket already opened
+      at j.connect (.next/server/chunks/719.js:1:126285)
+      at k.connect (.next/server/chunks/719.js:1:203158)
+      at <unknown> (.next/server/chunks/6741.js:1:9524)
+      at 77896 (.next/server/chunks/6741.js:1:9644)
+      at c (.next/server/webpack-runtime.js:1:205)
+      at 10651 (.next/server/chunks/6741.js:1:264)
+      at c (.next/server/webpack-runtime.js:1:205)
+      at 75595 (.next/server/chunks/5595.js:1:274)
+      at c (.next/server/webpack-runtime.js:1:205)
+      at 48898 (.next/server/chunks/700.js:1:12387)
+}
+2025-09-24T14:23:30.060Z [info] INFO tracking article view onerosterUserSourcedId=4dacb9bc-0cc4-4618-8247-5d1e16ac360d onerosterArticleResourceSourcedId=nice_xfbf414c6a5f9f56b
+2025-09-24T14:23:30.242Z [info] INFO oneroster: access token acquired
+2025-09-24T14:23:30.512Z [info] INFO getAllCoursesBySlug called slug=hs-bio
+2025-09-24T14:23:30.516Z [info] INFO cache invalidated keys=[user-progress:4dacb9bc-0cc4-4618-8247-5d1e16ac360d:nice_x230b3ff252126bb6:dpl_GHDt2ZYdewMVxyW5gBWem9D25VSE] deleted=1
+2025-09-24T14:23:30.516Z [info] INFO invalidated user progress cache cacheKey=user-progress:4dacb9bc-0cc4-4618-8247-5d1e16ac360d:nice_x230b3ff252126bb6:dpl_GHDt2ZYdewMVxyW5gBWem9D25VSE
+2025-09-24T14:23:30.516Z [info] INFO successfully tracked article view onerosterUserSourcedId=4dacb9bc-0cc4-4618-8247-5d1e16ac360d onerosterArticleResourceSourcedId=nice_xfbf414c6a5f9f56b onerosterResultSourcedId=nice_4dacb9bc-0cc4-4618-8247-5d1e16ac360d_nice_xfbf414c6a5f9f56b_ali
+
+2025-09-24T14:24:19.486Z [info] [hs-bio] /a/the-biosphere status=200
+2025-09-24T14:24:19.704Z [error] ERROR failed to connect to redis error=Error: Socket already opened
+2025-09-24T14:24:19.772Z [error] Unhandled Rejection: Error: redis connection failed
+    at <unknown> (.next/server/chunks/6741.js:1:9605) {
+  toString: [Function: d],
+  [cause]: Error: Socket already opened
+      at j.connect (.next/server/chunks/719.js:1:126285)
+      at k.connect (.next/server/chunks/719.js:1:203158)
+      at <unknown> (.next/server/chunks/6741.js:1:9524)
+      at 77896 (.next/server/chunks/6741.js:1:9644)
+      at c (.next/server/webpack-runtime.js:1:205)
+      at 10651 (.next/server/chunks/6741.js:1:264)
+      at c (.next/server/webpack-runtime.js:1:205)
+      at 75595 (.next/server/chunks/5595.js:1:274)
+      at c (.next/server/webpack-runtime.js:1:205)
+      at 48898 (.next/server/chunks/700.js:1:12387)
+}
+2025-09-24T14:24:19.772Z [fatal] Node.js process exited with exit status: 128. The logs above can help with debugging the issue.
+2025-09-24T14:24:19.775Z [error] Error: redis connection failed
+    at <unknown> (.next/server/chunks/6741.js:1:9605) {
+  toString: [Function: d],
+  [cause]: Error: Socket already opened
+      at j.connect (.next/server/chunks/719.js:1:126285)
+      at k.connect (.next/server/chunks/719.js:1:203158)
+      at <unknown> (.next/server/chunks/6741.js:1:9524)
+      at 77896 (.next/server/chunks/6741.js:1:9644)
+      at c (.next/server/webpack-runtime.js:1:205)
+      at 10651 (.next/server/chunks/6741.js:1:264)
+      at c (.next/server/webpack-runtime.js:1:205)
+      at 75595 (.next/server/chunks/5595.js:1:274)
+      at c (.next/server/webpack-runtime.js:1:205)
+      at 48898 (.next/server/chunks/700.js:1:12387)
+}
+2025-09-24T14:24:19.989Z [info] INFO tracking article view onerosterUserSourcedId=4dacb9bc-0cc4-4618-8247-5d1e16ac360d onerosterArticleResourceSourcedId=nice_xfbf414c6a5f9f56b
+2025-09-24T14:24:20.296Z [info] INFO oneroster: access token acquired
+2025-09-24T14:24:20.627Z [info] INFO getAllCoursesBySlug called slug=hs-bio
+2025-09-24T14:24:20.631Z [info] INFO cache invalidated keys=[user-progress:4dacb9bc-0cc4-4618-8247-5d1e16ac360d:nice_x230b3ff252126bb6:dpl_GHDt2ZYdewMVxyW5gBWem9D25VSE] deleted=1
+2025-09-24T14:24:20.631Z [info] INFO invalidated user progress cache cacheKey=user-progress:4dacb9bc-0cc4-4618-8247-5d1e16ac360d:nice_x230b3ff252126bb6:dpl_GHDt2ZYdewMVxyW5gBWem9D25VSE
+2025-09-24T14:24:20.631Z [info] INFO successfully tracked article view onerosterUserSourcedId=4dacb9bc-0cc4-4618-8247-5d1e16ac360d onerosterArticleResourceSourcedId=nice_xfbf414c6a5f9f56b onerosterResultSourcedId=nice_4dacb9bc-0cc4-4618-8247-5d1e16ac360d_nice_xfbf414c6a5f9f56b_ali

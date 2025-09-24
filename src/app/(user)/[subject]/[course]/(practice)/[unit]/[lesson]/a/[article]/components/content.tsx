@@ -10,9 +10,7 @@ import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/
 import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
-import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { trackArticleView } from "@/lib/actions/tracking"
-import { CALIPER_SUBJECT_MAPPING, type CaliperSubject, isSubjectSlug } from "@/lib/constants/subjects"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { ArticlePageData } from "@/lib/types/page"
 
@@ -27,7 +25,7 @@ export function Content({
 	const article = React.use(articlePromise)
 	const params = React.use(paramsPromise)
 	const { user } = useUser()
-	const startTimeRef = React.useRef<Date | null>(null)
+	const lastSyncTimestampRef = React.useRef<number | null>(null)
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const { setProgressForResource, beginProgressUpdate, endProgressUpdate } = useLessonProgress()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
@@ -51,16 +49,36 @@ export function Content({
 		}
 	}
 
+	// Helper function to send partial finalization using sendBeacon
+	const sendBestEffortPartialFinalize = React.useCallback((onerosterUserSourcedId: string) => {
+		const url = "/api/caliper/article/partial-finalize"
+		const payload = {
+			onerosterUserSourcedId,
+			onerosterArticleResourceSourcedId: article.id,
+			articleTitle: article.title,
+			courseInfo: {
+				subjectSlug: params.subject,
+				courseSlug: params.course
+			}
+		}
+		const body = JSON.stringify(payload)
+		// Best-effort send using sendBeacon, failures are acceptable here
+		// as server-side finalization provides the safety net
+		const beaconResult = errors.trySync(() =>
+			navigator.sendBeacon(url, new Blob([body], { type: "application/json" }))
+		)
+		if (beaconResult.error) {
+			logger.debug("sendBeacon failed during page unload", { error: beaconResult.error })
+		}
+	}, [article.id, article.title, params.subject, params.course])
+
 	React.useEffect(() => {
 		if (isLocked) {
 			// Do not track or mark progress when locked
 			return
 		}
-		// Record the start time when component mounts
-		startTimeRef.current = new Date()
 
 		let onerosterUserSourcedId: string | undefined
-		let userEmail: string | undefined
 
 		if (user) {
 			const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
@@ -69,7 +87,6 @@ export function Content({
 				throw parsed.error
 			}
 			onerosterUserSourcedId = parsed.data.sourceId
-			userEmail = user.primaryEmailAddress?.emailAddress
 		}
 
 		if (article.id) {
@@ -100,53 +117,12 @@ export function Content({
 				endProgressUpdate(article.id)
 			}
 			void trackArticleAsync()
-			// Resolve subject via centralized mapping with strong typing
-			let mappedSubject: CaliperSubject = "None"
-			if (isSubjectSlug(params.subject)) {
-				mappedSubject = CALIPER_SUBJECT_MAPPING[params.subject]
-			}
-
-			// Cleanup function to send time spent event when component unmounts
-			return () => {
-				if (startTimeRef.current && user && onerosterUserSourcedId && userEmail) {
-					const endTime = new Date()
-					const durationInSeconds = Math.floor((endTime.getTime() - startTimeRef.current.getTime()) / 1000)
-
-					// Only send if user spent at least 1 second on the article
-					if (durationInSeconds >= 1) {
-						// Ensure actor is valid before sending.
-						const actorForCleanup = {
-							id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${onerosterUserSourcedId}`,
-							type: "TimebackUser" as const,
-							email: userEmail
-						}
-
-						// Ensure context is valid before sending.
-						const contextForCleanup = {
-							id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}/${params.subject}/${params.course}/${params.unit}/${params.lesson}/a/${params.article}`,
-							type: "TimebackActivityContext" as const,
-							subject: mappedSubject,
-							app: { name: "Nice Academy" },
-							course: { name: params.course },
-							activity: {
-								name: article.title,
-								id: article.id
-							},
-							process: false
-						}
-						void sendCaliperTimeSpentEvent(actorForCleanup, contextForCleanup, durationInSeconds)
-					}
-				}
-			}
 		}
 	}, [
 		user,
 		article.id,
-		article.title,
 		params.subject,
 		params.course,
-		params.unit,
-		params.lesson,
 		params.article,
 		isLocked,
 		router,
@@ -154,6 +130,87 @@ export function Content({
 		endProgressUpdate,
 		setProgressForResource
 	])
+
+	// Effect for heartbeat accumulation
+	React.useEffect(() => {
+		if (isLocked || !user) {
+			return
+		}
+
+		const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+		if (!parsed.success) {
+			return
+		}
+		const onerosterUserSourcedId = parsed.data.sourceId
+
+		const HEARTBEAT_INTERVAL_MS = 5000 // Use 5s cadence
+
+		const heartbeat = async () => {
+			const now = Date.now()
+			if (document.visibilityState === "visible") {
+				const lastSync = lastSyncTimestampRef.current
+				if (lastSync) {
+					const deltaSeconds = (now - lastSync) / 1000
+					const result = await errors.try(fetch("/api/caliper/article/accumulate", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							onerosterUserSourcedId,
+							onerosterArticleResourceSourcedId: article.id,
+							sessionDeltaSeconds: deltaSeconds
+						})
+					}))
+					if (result.error) {
+						logger.error("failed to accumulate article read time", { error: result.error })
+					}
+				}
+			}
+			lastSyncTimestampRef.current = now
+		}
+
+		lastSyncTimestampRef.current = Date.now()
+		const intervalId = setInterval(heartbeat, HEARTBEAT_INTERVAL_MS)
+		return () => clearInterval(intervalId)
+	}, [user, article.id, params.subject, params.course, isLocked])
+
+	// Effect for page visibility changes and closure
+	React.useEffect(() => {
+		if (isLocked || !user) {
+			return
+		}
+
+		const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+		if (!parsed.success) {
+			return
+		}
+		const onerosterUserSourcedId = parsed.data.sourceId
+
+		const handleVisibilityChange = () => {
+			if (document.visibilityState === "hidden" && onerosterUserSourcedId) {
+				sendBestEffortPartialFinalize(onerosterUserSourcedId)
+			} else {
+				lastSyncTimestampRef.current = Date.now()
+			}
+		}
+
+		const handlePageHide = () => {
+			if (onerosterUserSourcedId) {
+				sendBestEffortPartialFinalize(onerosterUserSourcedId)
+			}
+		}
+
+		document.addEventListener("visibilitychange", handleVisibilityChange)
+		window.addEventListener("pagehide", handlePageHide)
+
+		return () => {
+			document.removeEventListener("visibilitychange", handleVisibilityChange)
+			window.removeEventListener("pagehide", handlePageHide)
+			// Send partial finalize on unmount to handle SPA navigation
+			if (onerosterUserSourcedId) {
+				sendBestEffortPartialFinalize(onerosterUserSourcedId)
+			}
+		}
+	}, [user, isLocked, sendBestEffortPartialFinalize])
 
 	// isLocked computed above
 

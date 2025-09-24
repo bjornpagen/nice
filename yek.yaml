@@ -18,10 +18,8 @@ ignore_patterns:
   - "**/__snapshots__/**"
   - "docs/**"
   - "src/lib/qti-validation/**"
-  - "src/lib/widgets/**"
   - "scripts/**"
   - "src/inngest/**"
-  - "tests/**"
   - "prompt/**"
   - "src/app/**"
 priority_rules:
