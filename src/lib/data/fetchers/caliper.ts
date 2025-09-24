@@ -45,15 +45,17 @@ function normalizeResourceIdFromActivityId(activityId: string | undefined): stri
 }
 
 /**
- * Banking-specific minute bucketing:
- * - 0–19s => 0 minutes
- * - 20–29s => 1 minute
- * - otherwise standard rounding: round(seconds / 60)
+ * Banking minute bucketing (ceil semantics):
+ * - <= 0s => 0 minutes
+ * - > 0s  => ceil(seconds / 60)
+ *
+ * Rationale: Aligns awarded minutes with expected XP calculation, which
+ * uses ceil(duration / 60). This removes systematic under-awards near
+ * completion (e.g., ~6.3 minutes rounding down to 6).
  */
-function computeBankingMinutes(seconds: number): number {
-	if (seconds <= 0) return 0
-	if (seconds >= 20 && seconds < 30) return 1
-	return Math.round(seconds / 60)
+export function computeBankingMinutes(seconds: number): number {
+    if (seconds <= 20) return 0
+    return Math.ceil(seconds / 60)
 }
 
 /**
