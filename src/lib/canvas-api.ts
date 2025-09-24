@@ -138,14 +138,15 @@ async function retryWithBackoff<T>(
 	options: { retries: number; initialDelay: number }
 ): Promise<{ data: T | null; error: Error | null }> {
 	let lastError: Error | null = null
-	for (let i = 0; i < options.retries; i++) {
+    const attempts = Math.max(1, options.retries)
+    for (let i = 0; i < attempts; i++) {
 		const result = await errors.try(fn())
 		if (result.error) {
 			lastError = result.error
 			const delay = options.initialDelay * 2 ** i
 			logger.warn("operation failed, retrying after delay", {
 				attempt: i + 1,
-				maxRetries: options.retries,
+                maxRetries: attempts,
 				delayMs: delay,
 				error: lastError
 			})
@@ -170,30 +171,51 @@ export function assertSchema<T>(schema: z.ZodType<T>, raw: unknown): T {
 // Canvas GraphQL Client
 // =================================================================================
 
-export interface CanvasClientOptions {
-	baseUrl: string
-	cookie: string
-	csrfToken: string
-	userAgent?: string
+export interface CanvasClientOptionsCookieAuth {
+    baseUrl: string
+    cookie: string
+    csrfToken: string
+    userAgent?: string
 }
+
+export interface CanvasClientOptionsTokenAuth {
+    baseUrl: string
+    token: string
+    userAgent?: string
+}
+
+export type CanvasClientOptions = CanvasClientOptionsCookieAuth | CanvasClientOptionsTokenAuth
 
 export class CanvasClient {
 	#baseUrl: string
 	#headers: HeadersInit
 
-	constructor(options: CanvasClientOptions) {
-		this.#baseUrl = options.baseUrl.replace(/\/$/, "")
-		this.#headers = {
-			accept: "*/*",
-			"content-type": "application/json",
-			"x-requested-with": "XMLHttpRequest",
-			"x-csrf-token": options.csrfToken,
-			"user-agent":
-				options.userAgent ??
-				"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
-			cookie: options.cookie
-		}
-	}
+    constructor(options: CanvasClientOptions) {
+        this.#baseUrl = options.baseUrl.replace(/\/$/, "")
+        const userAgent =
+            options.userAgent ??
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+
+        // explicit auth mode selection: either token auth OR cookie+csrf
+        if ("token" in options) {
+            this.#headers = {
+                accept: "*/*",
+                "content-type": "application/json",
+                authorization: `Bearer ${options.token}`,
+                "user-agent": userAgent
+            }
+            return
+        }
+
+        this.#headers = {
+            accept: "*/*",
+            "content-type": "application/json",
+            "x-requested-with": "XMLHttpRequest",
+            "x-csrf-token": options.csrfToken,
+            "user-agent": userAgent,
+            cookie: options.cookie
+        }
+    }
 
 	private async graphQL(body: unknown): Promise<unknown> {
 		const url = `${this.#baseUrl}/api/graphql`
@@ -222,12 +244,41 @@ export class CanvasClient {
 			logger.error("canvas-api: request failed", { status: response.status, body: textResult.data })
 			throw errors.new(`canvas-api: request failed with status ${response.status}`)
 		}
-		const jsonResult = await errors.try(response.json())
-		if (jsonResult.error) {
-			logger.error("canvas-api: failed to parse json response", { error: jsonResult.error })
-			throw errors.wrap(jsonResult.error, "canvas-api: failed to parse json response")
+		const textResult = await errors.try(response.text())
+		if (textResult.error) {
+			logger.error("canvas-api: failed to read response body", { error: textResult.error })
+			throw errors.wrap(textResult.error, "canvas-api: failed to read response body")
 		}
-		return jsonResult.data
+		const parseResult = errors.trySync(() => JSON.parse(textResult.data))
+		if (parseResult.error) {
+			logger.error("canvas-api: failed to parse json response", {
+				error: parseResult.error,
+				snippet: textResult.data.slice(0, 500)
+			})
+			throw errors.wrap(parseResult.error, "canvas-api: failed to parse json response")
+		}
+		const json: unknown = parseResult.data
+		// detect graphql-level errors
+		const maybeErrors = (json as { errors?: Array<{ message?: string; path?: unknown; extensions?: unknown }> }).errors
+		if (Array.isArray(maybeErrors) && maybeErrors.length > 0) {
+			logger.error("canvas-api: graphql returned errors", { errors: maybeErrors })
+			throw errors.new("canvas-api: graphql error")
+		}
+		return json
+	}
+
+	// public raw query helper for dynamic scraping/introspection
+	async rawQuery(operationName: string, query: string, variables?: Record<string, unknown>): Promise<unknown> {
+		const body: Record<string, unknown> = { operationName, query }
+		if (variables) {
+			body.variables = variables
+		}
+		const result = await retryWithBackoff(() => this.graphQL(body), { retries: 3, initialDelay: 1000 })
+		if (result.error || !result.data) {
+			logger.error("canvas-api: rawQuery failed", { operationName, error: result.error, hasData: !!result.data })
+			throw result.error || errors.new("canvas-api: unexpected null result from rawQuery")
+		}
+		return result.data
 	}
 
 private async paginateConnection<TNode, TPageInfo extends { hasNextPage: boolean; endCursor?: string | null }>(
@@ -300,12 +351,22 @@ private async paginateConnection<TNode, TPageInfo extends { hasNextPage: boolean
 		})
 	})
 
-	async getLegacyNode(legacyId: string, type: string): Promise<z.infer<typeof CanvasClient.LegacyNodePayloadSchema>["data"]["legacyNode"]> {
-		logger.info("fetching graphql legacyNode", { legacyId, type })
+	async getLegacyNode(
+		_id: string,
+		typeToken: string
+	): Promise<z.infer<typeof CanvasClient.LegacyNodePayloadSchema>["data"]["legacyNode"]> {
+		logger.info("fetching graphql legacyNode", { _id, type: typeToken })
+		// embed enum token literally to satisfy schema (variables cannot use String for enum types)
+		// validate token is safe (upper snake case)
+		const isValidToken = /^[A-Z_]+$/.test(typeToken)
+		if (!isValidToken) {
+			logger.error("invalid legacyNode type token", { type: typeToken })
+			throw errors.new("canvas-api: invalid legacy node type token")
+		}
 		const operationName = "GetLegacyNode"
 		const query =
-			"query GetLegacyNode($legacyId: ID!, $type: LegacyResource!) {\n  legacyNode(legacyId: $legacyId, type: $type) {\n    __typename\n  }\n}"
-		const body = { operationName, variables: { legacyId, type }, query }
+			`query GetLegacyNode($_id: ID!) {\n  legacyNode(_id: $_id, type: ${typeToken}) {\n    __typename\n  }\n}`
+		const body = { operationName, variables: { _id }, query }
 		const result = await retryWithBackoff(() => this.graphQL(body), { retries: 3, initialDelay: 1000 })
 		if (result.error || !result.data) {
 			logger.error("getLegacyNode failed", { error: result.error, hasData: !!result.data })
@@ -409,7 +470,7 @@ private async paginateConnection<TNode, TPageInfo extends { hasNextPage: boolean
 		logger.info("listing course pages", { courseId })
 		const operationName = "ListCoursePages"
 		const query =
-			"query ListCoursePages($courseId: ID!, $first: Int!, $after: String) {\n  course(id: $courseId) {\n    pagesConnection(first: $first, after: $after) {\n      nodes {\n        _id\n        title\n        url\n        __typename\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
+			"query ListCoursePages($courseId: ID!, $first: Int!, $after: String) {\n  course(id: $courseId) {\n    pagesConnection(first: $first, after: $after) {\n      nodes {\n        _id\n        title\n        __typename\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}"
 
 		const pageFetcher = async (after: string | null): Promise<{ nodes: z.infer<typeof CanvasClient.PageNodeSchema>[]; pageInfo: z.infer<typeof PageInfoSchema> }> => {
 			const variables = { courseId, first: 50, after }

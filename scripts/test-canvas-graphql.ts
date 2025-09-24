@@ -4,14 +4,14 @@ import { CanvasClient } from "@/lib/canvas-api"
 
 // set your canvas details here for local testing
 const CANVAS_BASE_URL = "https://uths.instructure.com"
-const CANVAS_SESSION_COOKIE = "log_session_id=ee28a6c2e0f45ae2c1ac03f43e628e0d; canvas_session=1ZBVwPbzShRfRBz1BNv-uQ+ivTk0p3yO8hRfhT_zp6lLg94eTvFndcl-Qn_jfS1BkuVf1_KKoSR08V_wfQF8Il49KE_cckXPFuxsjh2SaWir44hD7rvAhy5MA9d43VpNeyDXl_-mHyzKLn3zEy_vbJ7IKD6jvsDdzh8w05lmcV_6hkbxDqunGq9Xm1L6zcOQyWND8rH4ZtBc1R1LlOzoJzOkuv3mxzb-SoCugrR2htMNR_BybXyt85_5naTV5YnESWoBNVtlOYp7F54BiBeuLM1MyAKQscyskevYEd-nvYaozuKLRBlQODDLMbLz-PwN8W1RNF6iXYPmNx-48g8RROhT5YOEbrzUChbUze4HU9OmpFSBq7ljtndu3A6ixzHAW2BLeABBc7ZDqYlIbBYUdF2M_FBtJqhOudgNNAq9iO8Gg.7RkPmH6cQyUC-y2e9YJncJrxaQ0.aNRVqg; _csrf_token=NzGkFo%2FnlUy1YBrylSTy6CPYO%2FEtCU4fiO784NEvMupYQux14JXPOeRXd6WmcLSgbbIKl2lGfXDvubi4lWBAgA%3D%3D" // full cookie string including csrf_token
-const CANVAS_CSRF_TOKEN = "_csrf_token=NzGkFo%2FnlUy1YBrylSTy6CPYO%2FEtCU4fiO784NEvMupYQux14JXPOeRXd6WmcLSgbbIKl2lGfXDvubi4lWBAgA%3D%3D" // csrf token value
-const CANVAS_TEST_COURSE_ID = "12345" // legacy numeric id as string
+const CANVAS_TOKEN = "15214~HKUmE3m6xHBAQ4MMPATVZvR3rBeaZ3J24MereDCnQeWr4VzaeGAckh6NYcEYX42k" // profile settings → new access token
+const CANVAS_TEST_COURSE_ID = "8834"
 
 async function main(): Promise<void> {
   logger.info("starting canvas graphql smoke test")
 
-  const client = new CanvasClient({ baseUrl: CANVAS_BASE_URL, cookie: CANVAS_SESSION_COOKIE, csrfToken: CANVAS_CSRF_TOKEN })
+  // bearer token auth
+  const client = new CanvasClient({ baseUrl: CANVAS_BASE_URL, token: CANVAS_TOKEN })
   const courseId = CANVAS_TEST_COURSE_ID
 
   // 1) minimal introspection to confirm graphql is reachable
@@ -40,6 +40,7 @@ async function main(): Promise<void> {
   const pagesResult = await errors.try(client.listCoursePages(courseId))
   if (pagesResult.error) {
     logger.error("listCoursePages failed", { error: pagesResult.error })
+    // fail fast: do not continue to quizzes if pages failed
     throw errors.wrap(pagesResult.error, "list pages")
   }
   const quizzesResult = await errors.try(client.listCourseQuizzes(courseId))
@@ -64,19 +65,19 @@ async function main(): Promise<void> {
 
     // construct relay global id for Assignment via base64("Assignment-<legacyId>")
     const globalId = Buffer.from(`Assignment-${firstAssignmentId}`).toString("base64")
-    const nodeResult = await errors.try(client.getNode(globalId))
-    if (nodeResult.error) {
-      logger.warn("getNode failed (non-fatal)", { error: nodeResult.error, globalId })
-    } else {
-      logger.info("getNode ok", { typename: nodeResult.data?.__typename })
-    }
+  const nodeResult = await errors.try(client.getNode(globalId))
+  if (nodeResult.error) {
+    logger.error("getNode failed", { error: nodeResult.error, globalId })
+    throw errors.wrap(nodeResult.error, "get node")
+  }
+  logger.info("getNode ok", { typename: nodeResult.data?.__typename })
 
-    const legacyNodeResult = await errors.try(client.getLegacyNode(firstAssignmentId, "ASSIGNMENT"))
-    if (legacyNodeResult.error) {
-      logger.warn("getLegacyNode failed (non-fatal)", { error: legacyNodeResult.error })
-    } else {
-      logger.info("getLegacyNode ok", { typename: legacyNodeResult.data?.__typename })
-    }
+  const legacyNodeResult = await errors.try(client.getLegacyNode(firstAssignmentId, "ASSIGNMENT"))
+  if (legacyNodeResult.error) {
+    logger.error("getLegacyNode failed", { error: legacyNodeResult.error, _id: firstAssignmentId })
+    throw errors.wrap(legacyNodeResult.error, "get legacy node")
+  }
+  logger.info("getLegacyNode ok", { typename: legacyNodeResult.data?.__typename })
   }
 
   logger.info("canvas graphql smoke test completed")
