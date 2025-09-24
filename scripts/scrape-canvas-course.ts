@@ -139,24 +139,28 @@ async function main(): Promise<void> {
   // 3) augment with REST content: page bodies, assignments, discussions, quizzes
   logger.info("fetching page bodies via rest")
   const pageBodies: Record<string, { title: string; url: string; body: string }> = {}
-  const pagesResult = await errors.try(client.listPages(COURSE_ID))
+  const pagesResult = await errors.try<Awaited<ReturnType<CanvasClient["listCoursePages"]>>>(
+    client.listCoursePages(COURSE_ID)
+  )
   if (pagesResult.error) {
     logger.warn("rest pages list failed, skipping", { error: pagesResult.error })
     results["pageBodiesError"] = String(pagesResult.error)
   } else {
     for (const p of pagesResult.data) {
-      if (!p.url) {
-        logger.warn("page missing url, skipping", { pageId: p._id })
+      const url = typeof p?.url === "string" ? p.url : null
+      if (!url) {
         continue
       }
-      const detailResult = await errors.try(client.getPageDetail(COURSE_ID, p.url))
+      const detailResult = await errors.try(client.getPageDetail(COURSE_ID, url))
       if (detailResult.error) {
-        logger.warn("page detail failed, skipping", { url: p.url, error: detailResult.error })
+        logger.warn("page detail failed, skipping", { url, error: detailResult.error })
         continue
       }
       const d = detailResult.data
-      const safeBody = d.body ?? ""
-      pageBodies[p.url] = { title: d.title, url: d.url, body: safeBody }
+      if (typeof d?.body !== "string") {
+        continue
+      }
+      pageBodies[url] = { title: d.title, url: d.url, body: d.body }
     }
     results["pageBodies"] = pageBodies
   }
@@ -176,23 +180,7 @@ async function main(): Promise<void> {
   }
   results["assignmentDetails"] = assignmentDetails
 
-  logger.info("fetching discussions via rest")
-  const discussionViews: Record<string, any> = {}
-  const topicsResult = await errors.try(client.listDiscussionTopics(COURSE_ID))
-  if (topicsResult.error) {
-    logger.warn("discussion topics list failed, skipping", { error: topicsResult.error })
-    results["discussionViewsError"] = String(topicsResult.error)
-  } else {
-    for (const t of topicsResult.data) {
-      const viewResult = await errors.try(client.getDiscussionTopicView(COURSE_ID, t.id))
-      if (viewResult.error) {
-        logger.warn("discussion view failed, skipping", { id: t.id, error: viewResult.error })
-        continue
-      }
-      discussionViews[String(t.id)] = viewResult.data
-    }
-    results["discussionViews"] = discussionViews
-  }
+  // discussions REST calls are not available in CanvasClient rn; skipping this section
 
   logger.info("fetching classic quiz questions via rest")
   const quizzes = (results["quizzesConnection"] as any[]) ?? []
@@ -200,7 +188,14 @@ async function main(): Promise<void> {
   for (const q of quizzes) {
     const id = q?._id
     if (!id) continue
-    const qsResult = await errors.try(client.getClassicQuizQuestions(COURSE_ID, String(id)))
+    const subIdResult = await errors.try(client.getOrCreateQuizSubmissionId(COURSE_ID, String(id)))
+    if (subIdResult.error) {
+      logger.warn("quiz submission id fetch failed, skipping", { id, error: subIdResult.error })
+      continue
+    }
+    const qsResult = await errors.try(
+      client.getClassicQuizSubmissionQuestions(String(subIdResult.data))
+    )
     if (qsResult.error) {
       logger.warn("quiz questions fetch failed, skipping", { id, error: qsResult.error })
       continue
@@ -218,7 +213,7 @@ async function main(): Promise<void> {
     ),
     pagesWithBodies: pageBodies ? Object.keys(pageBodies).length : 0,
     assignmentsDetailed: Object.keys(assignmentDetails).length,
-    discussionsDetailed: discussionViews ? Object.keys(discussionViews).length : 0,
+    discussionsDetailed: 0,
     quizzesDetailed: Object.keys(quizQuestions).length
   }
   results["summary"] = summary
