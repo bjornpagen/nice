@@ -5,7 +5,6 @@ import * as React from "react"
 import { Banner } from "@/components/banner"
 import { Header } from "@/components/header"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
-import { connection } from "next/server"
 
 function UserHeaderSkeleton() {
 	return (
@@ -48,9 +47,7 @@ async function UserHeader() {
 	)
 }
 
-export default async function Layout({ children }: { children: React.ReactNode }) {
-	// Ensure dynamic rendering so header's user access runs within request context
-	await connection()
+export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<div className="flex flex-col h-screen bg-white">
 			<div className="flex-shrink-0 z-50">
