@@ -121,6 +121,22 @@ export async function accumulateCaliperWatchTime(
 	}
 }
 
+/**
+ * Resolves a course slug to its OneRoster sourcedId.
+ * Returns null if the course cannot be found.
+ */
+async function resolveCourseSourcedId(courseSlug: string): Promise<string | null> {
+	const courseResult = await errors.try(getAllCoursesBySlug(courseSlug))
+	if (courseResult.error || !courseResult.data[0]) {
+		logger.error("failed to resolve course sourced id", {
+			courseSlug,
+			error: courseResult.error
+		})
+		return null
+	}
+	return courseResult.data[0].sourcedId
+}
+
 // A new, shared helper function will be created to build the Caliper payload,
 // ensuring consistency between video and article event generation.
 async function buildCaliperPayloadForContent(
@@ -188,7 +204,7 @@ async function upsertNiceTimeSpentToOneRoster(params: {
     kind: "video" | "article"
     userSourcedId: string
     resourceSourcedId: string
-    courseSlug: string
+    courseSourcedId: string
     finalSeconds: number
 }): Promise<void> {
     const lineItemId = getAssessmentLineItemId(params.resourceSourcedId)
@@ -247,7 +263,7 @@ async function upsertNiceTimeSpentToOneRoster(params: {
             metadata: {
                 nice_timeSpent: writeTime,
                 lessonType: params.kind,
-                courseSourcedId: params.courseSlug
+                courseSourcedId: params.courseSourcedId
             }
         }
     }
@@ -354,13 +370,16 @@ export async function finalizeCaliperPartialTimeSpent(
 	})
 
 	// Mirror cumulative time so gradebook reflects progress between sessions
-	await upsertNiceTimeSpentToOneRoster({
-		kind: "video",
-		userSourcedId: serverSourcedId,
-		resourceSourcedId: onerosterVideoResourceSourcedId,
-		courseSlug: courseInfo.courseSlug,
-		finalSeconds: newState.cumulativeWatchTimeSeconds
-	})
+	const courseSourcedId = await resolveCourseSourcedId(courseInfo.courseSlug)
+	if (courseSourcedId) {
+		await upsertNiceTimeSpentToOneRoster({
+			kind: "video",
+			userSourcedId: serverSourcedId,
+			resourceSourcedId: onerosterVideoResourceSourcedId,
+			courseSourcedId,
+			finalSeconds: newState.cumulativeWatchTimeSeconds
+		})
+	}
 }
 
 export async function finalizeCaliperTimeSpentEvent(
@@ -431,13 +450,16 @@ export async function finalizeCaliperTimeSpentEvent(
 	}
 	await setCaliperVideoWatchState(onerosterUserSourcedId, onerosterVideoResourceSourcedId, finalState)
 
-	await upsertNiceTimeSpentToOneRoster({
-		kind: "video",
-		userSourcedId: onerosterUserSourcedId,
-		resourceSourcedId: onerosterVideoResourceSourcedId,
-		courseSlug: courseInfo.courseSlug,
-		finalSeconds: finalState.cumulativeWatchTimeSeconds
-	})
+	const courseSourcedId = await resolveCourseSourcedId(courseInfo.courseSlug)
+	if (courseSourcedId) {
+		await upsertNiceTimeSpentToOneRoster({
+			kind: "video",
+			userSourcedId: onerosterUserSourcedId,
+			resourceSourcedId: onerosterVideoResourceSourcedId,
+			courseSourcedId,
+			finalSeconds: finalState.cumulativeWatchTimeSeconds
+		})
+	}
 	const delResult = await errors.try(redis.del(lockKey))
 	if (delResult.error) {
 		logger.error("caliper finalize: del lock", { error: delResult.error })
@@ -496,14 +518,8 @@ export async function trackArticleView(
 	}
 
 	// Invalidate the user progress cache for this course.
-	const courseResult = await errors.try(getAllCoursesBySlug(courseInfo.courseSlug))
-	if (courseResult.error || !courseResult.data[0]) {
-		logger.error("failed to find course for cache invalidation", {
-			courseSlug: courseInfo.courseSlug,
-			error: courseResult.error
-		})
-	} else {
-		const onerosterCourseSourcedId = courseResult.data[0].sourcedId
+	const onerosterCourseSourcedId = await resolveCourseSourcedId(courseInfo.courseSlug)
+	if (onerosterCourseSourcedId) {
 		const cacheKey = cacheUtils.userProgressByCourse(onerosterUserSourcedId, onerosterCourseSourcedId)
 		await invalidateCache([cacheKey])
 		logger.info("invalidated user progress cache", { cacheKey })
@@ -649,14 +665,8 @@ export async function updateVideoProgress(
 	}
 
 	// Invalidate the user progress cache for this course.
-	const courseResult = await errors.try(getAllCoursesBySlug(courseInfo.courseSlug))
-	if (courseResult.error || !courseResult.data[0]) {
-		logger.error("failed to find course for cache invalidation", {
-			courseSlug: courseInfo.courseSlug,
-			error: courseResult.error
-		})
-	} else {
-		const onerosterCourseSourcedId = courseResult.data[0].sourcedId
+	const onerosterCourseSourcedId = await resolveCourseSourcedId(courseInfo.courseSlug)
+	if (onerosterCourseSourcedId) {
 		const cacheKey = cacheUtils.userProgressByCourse(onerosterUserSourcedId, onerosterCourseSourcedId)
 		await invalidateCache([cacheKey])
 		logger.info("invalidated user progress cache", { cacheKey })
@@ -777,7 +787,8 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 				totalQuestions: assessmentTotalQuestions,
 				attemptNumber: attemptNumber,
 				durationInSeconds,
-				isExercise: contentType === "Exercise"
+				isExercise: contentType === "Exercise",
+				userEmail
 			})
 		)
 
@@ -1169,13 +1180,16 @@ export async function finalizeArticlePartialTimeSpent(
 	await setCaliperArticleReadState(serverSourcedId, onerosterArticleResourceSourcedId, newState)
 
 	// Mirror cumulative time so gradebook reflects progress between sessions
-	await upsertNiceTimeSpentToOneRoster({
-		kind: "article",
-		userSourcedId: serverSourcedId,
-		resourceSourcedId: onerosterArticleResourceSourcedId,
-		courseSlug: courseInfo.courseSlug,
-		finalSeconds: newState.cumulativeReadTimeSeconds
-	})
+	const courseSourcedId = await resolveCourseSourcedId(courseInfo.courseSlug)
+	if (courseSourcedId) {
+		await upsertNiceTimeSpentToOneRoster({
+			kind: "article",
+			userSourcedId: serverSourcedId,
+			resourceSourcedId: onerosterArticleResourceSourcedId,
+			courseSourcedId,
+			finalSeconds: newState.cumulativeReadTimeSeconds
+		})
+	}
 }
 
 export async function finalizeArticleTimeSpentEvent(
@@ -1276,11 +1290,14 @@ export async function finalizeArticleTimeSpentEvent(
 
 	await releaseLock()
 
-	await upsertNiceTimeSpentToOneRoster({
-		kind: "article",
-		userSourcedId: onerosterUserSourcedId,
-		resourceSourcedId: onerosterArticleResourceSourcedId,
-		courseSlug: courseInfo.courseSlug,
-		finalSeconds: finalState.cumulativeReadTimeSeconds
-	})
+	const courseSourcedId = await resolveCourseSourcedId(courseInfo.courseSlug)
+	if (courseSourcedId) {
+		await upsertNiceTimeSpentToOneRoster({
+			kind: "article",
+			userSourcedId: onerosterUserSourcedId,
+			resourceSourcedId: onerosterArticleResourceSourcedId,
+			courseSourcedId,
+			finalSeconds: finalState.cumulativeReadTimeSeconds
+		})
+	}
 }

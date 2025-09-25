@@ -30,6 +30,14 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 	logger.info("saving assessment result [service]", { correlationId, resourceId, userId })
 
 	// 1. Calculate XP (includes proficiency check and banking)
+	if (!command.userEmail) {
+		logger.error("CRITICAL: user email required for XP calculation", { 
+			correlationId, 
+			resourceId,
+			userId 
+		})
+		throw errors.new("user email: required for XP calculation")
+	}
 	const xpResult = await xp.awardXpForAssessment({
 		userSourcedId: userId,
 		assessmentResourceId: resourceId,
@@ -40,7 +48,8 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 		totalQuestions: totalQuestions,
 		attemptNumber: attemptNumber,
 		durationInSeconds: command.durationInSeconds,
-		isExercise: command.contentType === "Exercise"
+		isExercise: command.contentType === "Exercise",
+		userEmail: command.userEmail
 	})
 
 	// 2. Prepare and save the primary result to the gradebook (MUST SUCCEED)

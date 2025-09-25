@@ -278,7 +278,8 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 export async function awardBankedXpForExercise(params: {
 	exerciseResourceSourcedId: string
 	onerosterUserSourcedId: string
-	onerosterCourseSourcedId: string
+    onerosterCourseSourcedId: string
+    userEmail: string
 }): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
 	// Normalize using shared utility to avoid string parsing divergence
 	const userId = extractUserSourcedId(params.onerosterUserSourcedId)
@@ -318,6 +319,15 @@ export async function awardBankedXpForExercise(params: {
 				? parsedMeta.data.nice_timeSpent 
 				: 0
 
+			if (timeSpent === 0) {
+				logger.info("no time spent recorded for eligible passive resource", {
+					resourceId: resource.sourcedId,
+					resultId: resultSourcedId,
+					hasResult: !!result.data,
+					hasMetadata: !!result.data?.metadata
+				})
+			}
+
 			logger.debug("fetched canonical time spent for resource", {
 				resourceId: resource.sourcedId,
 				timeSpent,
@@ -326,6 +336,11 @@ export async function awardBankedXpForExercise(params: {
 
 			return { ...resource, timeSpent }
 		})
+	)
+
+	// Build a quick lookup to preserve existing time spent when writing results
+	const timeSpentByResourceId = new Map<string, number>(
+		timeSpentResults.map((r) => [r.sourcedId, r.timeSpent])
 	)
 
 	// 3. Calculate total banked XP using the canonical time values
@@ -402,7 +417,9 @@ export async function awardBankedXpForExercise(params: {
 				completedAt: new Date().toISOString(),
 				courseSourcedId: params.onerosterCourseSourcedId,
 				penaltyApplied: false,
-				xpReason: "Banked XP"
+				xpReason: "Banked XP",
+				// Preserve canonical time spent so it is not lost on PUT
+				nice_timeSpent: Math.max(0, timeSpentByResourceId.get(resourceId) ?? 0)
 			}
 
 			const saveResult = await errors.try(
@@ -422,43 +439,51 @@ export async function awardBankedXpForExercise(params: {
 			} else {
 				logger.info("saved banked xp assessment result", { resourceId })
 
-				// After successful gradebook upsert, send Caliper banked XP event (best-effort)
-				const userResult = await errors.try(oneroster.getAllUsers({ filter: `sourcedId='${userId}'` }))
-				if (userResult.error) {
-					logger.error("failed to fetch user for banked xp caliper event", { error: userResult.error, userId })
-				} else {
-					const user = userResult.data[0]
-					if (!user || !user.email) {
-						logger.error("missing user email for banked xp caliper event", { userId })
-					} else {
-						const subjectSlug = String(resource.metadata?.khanSubjectSlug ?? "")
-						const mappedSubject = isSubjectSlug(subjectSlug) ? CALIPER_SUBJECT_MAPPING[subjectSlug] : "None"
-						const awardedXp = computedAwardedXp
-						const actor = {
-							id: constructActorId(userId),
-							type: "TimebackUser" as const,
-							email: user.email
-						}
-						const context = {
-							id: `${env.NEXT_PUBLIC_APP_DOMAIN}/resources/${resource.sourcedId}`,
-							type: "TimebackActivityContext" as const,
-							subject: mappedSubject,
-							app: { name: "Nice Academy" },
-							course: {
-								name: "Unknown",
-								id: `${env.TIMEBACK_ONEROSTER_SERVER_URL}/ims/oneroster/rostering/v1p2/courses/${params.onerosterCourseSourcedId}`
-							},
-							activity: { name: resource.title, id: resource.sourcedId },
-							process: false
-						}
+				// After successful gradebook upsert, send Caliper banked XP event
+				if (!resource.metadata) {
+					logger.error("CRITICAL: resource missing metadata for caliper event", { resourceId })
+					throw errors.new("resource metadata: required for caliper event")
+				}
+				if (typeof resource.metadata.khanSubjectSlug !== "string") {
+					logger.error("CRITICAL: resource missing subject slug for caliper event", { 
+						resourceId,
+						khanSubjectSlug: resource.metadata.khanSubjectSlug,
+						type: typeof resource.metadata.khanSubjectSlug
+					})
+					throw errors.new("resource metadata: subject slug required for caliper event")
+				}
+				if (!isSubjectSlug(resource.metadata.khanSubjectSlug)) {
+					logger.error("CRITICAL: invalid subject slug for caliper event", { 
+						resourceId, 
+						subjectSlug: resource.metadata.khanSubjectSlug 
+					})
+					throw errors.new("resource metadata: invalid subject slug")
+				}
+				const mappedSubject = CALIPER_SUBJECT_MAPPING[resource.metadata.khanSubjectSlug]
+				const awardedXp = computedAwardedXp
+				const actor = {
+					id: constructActorId(userId),
+					type: "TimebackUser" as const,
+					email: params.userEmail
+				}
+				const context = {
+					id: `${env.NEXT_PUBLIC_APP_DOMAIN}/resources/${resource.sourcedId}`,
+					type: "TimebackActivityContext" as const,
+					subject: mappedSubject,
+					app: { name: "Nice Academy" },
+					course: {
+						name: "Unknown",
+						id: `${env.TIMEBACK_ONEROSTER_SERVER_URL}/ims/oneroster/rostering/v1p2/courses/${params.onerosterCourseSourcedId}`
+					},
+					activity: { name: resource.title, id: resource.sourcedId },
+					process: false
+				}
 
-						const caliperResult = await errors.try(sendCaliperBankedXpAwardedEvent(actor, context, awardedXp))
-						if (caliperResult.error) {
-							logger.error("failed to send banked xp caliper event", { error: caliperResult.error, userId, resourceId })
-						} else {
-							logger.info("sent banked xp caliper event", { userId, resourceId, awardedXp })
-						}
-					}
+				const caliperResult = await errors.try(sendCaliperBankedXpAwardedEvent(actor, context, awardedXp))
+				if (caliperResult.error) {
+					logger.error("failed to send banked xp caliper event", { error: caliperResult.error, userId, resourceId })
+				} else {
+					logger.info("sent banked xp caliper event", { userId, resourceId, awardedXp })
 				}
 			}
 		}

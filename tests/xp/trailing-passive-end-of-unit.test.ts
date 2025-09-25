@@ -5,6 +5,7 @@ declare module "@/lib/xp/bank" {
 		exerciseResourceSourcedId: string
 		onerosterUserSourcedId: string
 		onerosterCourseSourcedId: string
+		userEmail: string
 	}): Promise<{ bankedXp: number; awardedResourceIds: string[] }>
 	export function awardBankedXpForUnitCompletion(params: {
 		onerosterUserSourcedId: string
@@ -243,6 +244,7 @@ async function awardBankedXpForExercise(params: {
 	exerciseResourceSourcedId: string
 	onerosterUserSourcedId: string
 	onerosterCourseSourcedId: string
+	userEmail: string
 }): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
 	const { awardBankedXpForExercise: realImplementation } = await import("@/lib/xp/bank")
 	return realImplementation(params)
@@ -530,7 +532,8 @@ describe("Banked XP - dedupe across exercise and unit completion", () => {
 		const exerciseAward = await awardBankedXpForExercise({
 			exerciseResourceSourcedId: E2,
 			onerosterUserSourcedId: "user:u1",
-			onerosterCourseSourcedId: "course1"
+			onerosterCourseSourcedId: "course1",
+			userEmail: "test@example.com"
 		})
 		expect(new Set(exerciseAward.awardedResourceIds)).toEqual(new Set([A1]))
 		expect(exerciseAward.bankedXp).toBe(1)
