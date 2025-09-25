@@ -26,42 +26,40 @@ export default async function ExercisePage({
 	const normalizedParamsPromise = normalizeParams(params)
 	const exercisePromise: Promise<ExercisePageData> = normalizedParamsPromise.then(fetchExercisePageData)
 
-	// Resolve user sourcedId during render; avoid calling currentUser() later in a timer or background task
-	const userSourcedIdPromise: Promise<string | undefined> = currentUser()
-		.then((user) => {
-			if (!user?.publicMetadata) {
-				logger.warn("user has no public metadata for finalization")
-				return undefined
-			}
-			const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-			if (!metadataValidation.success) {
-				logger.error("invalid user metadata for finalization", { error: metadataValidation.error })
-				return undefined
-			}
-			const id = metadataValidation.data.sourceId
-			if (typeof id !== "string" || id.length === 0) {
-				logger.error("invalid user metadata for finalization: missing sourceId")
-				return undefined
-			}
-			return id
-		})
+	// Resolve Clerk user and metadata synchronously within the request
+	const user = await currentUser()
+	if (!user) {
+		logger.error("exercise page: unauthenticated user")
+		throw errors.new("user required")
+	}
+	const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+	if (!metadataValidation.success) {
+		logger.error("invalid user metadata for finalization", { error: metadataValidation.error })
+		throw errors.new("invalid user metadata")
+	}
+	const userSourcedId = metadataValidation.data.sourceId
+	if (typeof userSourcedId !== "string" || userSourcedId.length === 0) {
+		logger.error("invalid user metadata for finalization: missing sourceId")
+		throw errors.new("missing user sourceId")
+	}
+	const userEmail = user.emailAddresses?.[0]?.emailAddress
+	if (!userEmail) {
+		logger.error("exercise page: missing user email at render")
+		throw errors.new("user email required")
+	}
 
 	// --- NEW: Proactive Finalization for ALL preceding articles in window ---
-	const finalizeArticlesInWindow = async (userEmail: string) => {
-		const [exerciseData, normalizedParams, userSourcedId] = await Promise.all([
+	const finalizeArticlesInWindow = async (resolvedUserSourcedId: string, resolvedUserEmail: string) => {
+		const [exerciseData, normalizedParams] = await Promise.all([
 			exercisePromise,
-			normalizedParamsPromise,
-			userSourcedIdPromise
+			normalizedParamsPromise
 		])
-		if (!userSourcedId) {
-			return
-		}
 
 		// Use the exact banking window logic to identify passive resources
 		const eligibleResult = await errors.try(
 			findEligiblePassiveResourcesForExercise({
 				exerciseResourceSourcedId: exerciseData.exercise.id,
-				onerosterUserSourcedId: userSourcedId
+				onerosterUserSourcedId: resolvedUserSourcedId
 			})
 		);
 		if (eligibleResult.error) {
@@ -88,11 +86,11 @@ export default async function ExercisePage({
 		const finalizePromises = articles.map((article) =>
 			errors.try(
 				finalizeArticleTimeSpentEventService(
-					userSourcedId,
+					resolvedUserSourcedId,
 					article.sourcedId,
 					article.title,
 					{ subjectSlug: normalizedParams.subject, courseSlug: normalizedParams.course },
-					userEmail
+					resolvedUserEmail
 				)
 			)
 		);
@@ -109,14 +107,8 @@ export default async function ExercisePage({
 		}
 	}
 
-	// Fire and forget the finalization - don't wait for it
-	const user = await currentUser()
-	const userEmail = user?.emailAddresses?.[0]?.emailAddress
-	if (!userEmail) {
-		logger.error("exercise page: missing user email at render")
-		throw errors.new("user email required")
-	}
-	finalizeArticlesInWindow(userEmail).catch((error) => {
+	// Fire and forget the finalization with already-resolved identity (no deferred auth access)
+	finalizeArticlesInWindow(userSourcedId, userEmail).catch((error) => {
 		logger.error("exercise finalization worker failed", { error })
 	})
 

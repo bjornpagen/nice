@@ -5,6 +5,7 @@ import { fetchCoursePageData } from "@/lib/data/course"
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { buildResourceLockStatus, normalizeParams } from "@/lib/utils"
+import { connection } from "next/server"
 
 // Wrapper component to consume the lock status promise and provide it to context
 function CourseLockStatusWrapper({
@@ -27,13 +28,15 @@ function CourseLockStatusWrapper({
 }
 
 // Course-wide layout that provides lock status context for both overview and practice pages
-export default function CourseLayout({
+export default async function CourseLayout({
 	params,
 	children
 }: {
 	params: Promise<{ subject: string; course: string }>
 	children: React.ReactNode
 }) {
+	// Ensure this layout renders dynamically so server auth APIs run within request context
+	await connection()
 	// Normalize params to handle encoded characters
 	const normalizedParamsPromise = normalizeParams(params)
 
