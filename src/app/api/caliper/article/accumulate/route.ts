@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
+import { AccumulateRequestSchema, type AccumulateRequest } from "@/lib/schemas/caliper-article"
 import { accumulateArticleReadTime } from "@/lib/actions/tracking"
 import { getCurrentUserSourcedId } from "@/lib/authorization"
 
@@ -19,14 +20,8 @@ export async function POST(request: Request) {
 		return new NextResponse("Bad Request", { status: 400 })
 	}
 
-	// Validate request body with Zod
-	const AccumulateRequestSchema = z.object({
-		onerosterUserSourcedId: z.string().min(1),
-		onerosterArticleResourceSourcedId: z.string().min(1),
-		sessionDeltaSeconds: z.number().nonnegative()
-	})
-
-	const validation = AccumulateRequestSchema.safeParse(bodyResult.data)
+    // Validate request body with shared Zod schema
+    const validation = AccumulateRequestSchema.safeParse(bodyResult.data)
 	if (!validation.success) {
 		logger.error("invalid accumulate request body", { error: validation.error })
 		return new NextResponse("Bad Request", { status: 400 })

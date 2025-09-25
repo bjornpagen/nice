@@ -12,6 +12,7 @@ import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
 import { trackArticleView } from "@/lib/actions/tracking"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
+import type { AccumulateRequest, PartialFinalizeRequest } from "@/lib/schemas/caliper-article"
 import type { ArticlePageData } from "@/lib/types/page"
 
 export function Content({
@@ -31,7 +32,16 @@ export function Content({
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
 	const isLocked = resourceLockStatus[article.componentResourceSourcedId] === true
 	const parsed = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
-	const canUnlockAll = parsed.success && parsed.data.roles.some((r) => r.role !== "student")
+	if (!parsed.success) {
+		logger.error("clerk user metadata validation failed", { error: parsed.error })
+		throw parsed.error
+	}
+	const onerosterUserSourcedId = parsed.data.sourceId
+	if (!onerosterUserSourcedId) {
+		logger.error("CRITICAL: missing OneRoster sourcedId in clerk metadata")
+		throw errors.new("clerk metadata: sourceId required")
+	}
+	const canUnlockAll = parsed.data.roles.some((r) => r.role !== "student")
 
 	const handleToggleLockAll = () => {
 		if (!canUnlockAll) return
@@ -50,9 +60,9 @@ export function Content({
 	}
 
 	// Helper function to send partial finalization using sendBeacon
-	const sendBestEffortPartialFinalize = React.useCallback((onerosterUserSourcedId: string) => {
+	const sendBestEffortPartialFinalize = React.useCallback(() => {
 		const url = "/api/caliper/article/partial-finalize"
-		const payload = {
+		const payload: PartialFinalizeRequest = {
 			onerosterUserSourcedId,
 			onerosterArticleResourceSourcedId: article.id,
 			articleTitle: article.title,
@@ -70,23 +80,12 @@ export function Content({
 		if (beaconResult.error) {
 			logger.debug("sendBeacon failed during page unload", { error: beaconResult.error })
 		}
-	}, [article.id, article.title, params.subject, params.course])
+	}, [article.id, article.title, params.subject, params.course, onerosterUserSourcedId])
 
 	React.useEffect(() => {
 		if (isLocked) {
 			// Do not track or mark progress when locked
 			return
-		}
-
-		let onerosterUserSourcedId: string | undefined
-
-		if (user) {
-			const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-			if (!parsed.success) {
-				logger.error("clerk user metadata validation failed", { error: parsed.error })
-				throw parsed.error
-			}
-			onerosterUserSourcedId = parsed.data.sourceId
 		}
 
 		if (article.id) {
@@ -137,12 +136,6 @@ export function Content({
 			return
 		}
 
-		const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-		if (!parsed.success) {
-			return
-		}
-		const onerosterUserSourcedId = parsed.data.sourceId
-
 		const HEARTBEAT_INTERVAL_MS = 5000 // Use 5s cadence
 
 		const heartbeat = async () => {
@@ -151,14 +144,15 @@ export function Content({
 				const lastSync = lastSyncTimestampRef.current
 				if (lastSync) {
 					const deltaSeconds = (now - lastSync) / 1000
+					const body: AccumulateRequest = {
+						onerosterUserSourcedId,
+						onerosterArticleResourceSourcedId: article.id,
+						sessionDeltaSeconds: deltaSeconds
+					}
 					const result = await errors.try(fetch("/api/caliper/article/accumulate", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
-						body: JSON.stringify({
-							onerosterUserSourcedId,
-							onerosterArticleResourceSourcedId: article.id,
-							sessionDeltaSeconds: deltaSeconds
-						})
+						body: JSON.stringify(body)
 					}))
 					if (result.error) {
 						logger.error("failed to accumulate article read time", { error: result.error })
@@ -179,24 +173,16 @@ export function Content({
 			return
 		}
 
-		const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-		if (!parsed.success) {
-			return
-		}
-		const onerosterUserSourcedId = parsed.data.sourceId
-
 		const handleVisibilityChange = () => {
-			if (document.visibilityState === "hidden" && onerosterUserSourcedId) {
-				sendBestEffortPartialFinalize(onerosterUserSourcedId)
+			if (document.visibilityState === "hidden") {
+				sendBestEffortPartialFinalize()
 			} else {
 				lastSyncTimestampRef.current = Date.now()
 			}
 		}
 
 		const handlePageHide = () => {
-			if (onerosterUserSourcedId) {
-				sendBestEffortPartialFinalize(onerosterUserSourcedId)
-			}
+			sendBestEffortPartialFinalize()
 		}
 
 		document.addEventListener("visibilitychange", handleVisibilityChange)
@@ -206,9 +192,7 @@ export function Content({
 			document.removeEventListener("visibilitychange", handleVisibilityChange)
 			window.removeEventListener("pagehide", handlePageHide)
 			// Send partial finalize on unmount to handle SPA navigation
-			if (onerosterUserSourcedId) {
-				sendBestEffortPartialFinalize(onerosterUserSourcedId)
-			}
+			sendBestEffortPartialFinalize()
 		}
 	}, [user, isLocked, sendBestEffortPartialFinalize])
 

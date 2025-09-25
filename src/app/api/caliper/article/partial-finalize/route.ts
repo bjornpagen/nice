@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
+import { PartialFinalizeRequestSchema, type PartialFinalizeRequest } from "@/lib/schemas/caliper-article"
 import { finalizeArticlePartialTimeSpent } from "@/lib/actions/tracking"
 import { getCurrentUserSourcedId } from "@/lib/authorization"
 import { redis } from "@/lib/redis"
@@ -19,18 +20,8 @@ export async function POST(request: Request) {
 		return new NextResponse("Bad Request", { status: 400 })
 	}
 
-	// Validate request body with Zod
-	const PartialFinalizeRequestSchema = z.object({
-		onerosterUserSourcedId: z.string().min(1),
-		onerosterArticleResourceSourcedId: z.string().min(1),
-		articleTitle: z.string().min(1),
-		courseInfo: z.object({
-			subjectSlug: z.string().min(1),
-			courseSlug: z.string().min(1)
-		})
-	})
-
-	const validation = PartialFinalizeRequestSchema.safeParse(bodyResult.data)
+    // Validate request body with shared Zod schema
+    const validation = PartialFinalizeRequestSchema.safeParse(bodyResult.data)
 	if (!validation.success) {
 		logger.error("invalid partial-finalize request body", { error: validation.error })
 		return new NextResponse("Bad Request", { status: 400 })
