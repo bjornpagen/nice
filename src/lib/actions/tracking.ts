@@ -5,6 +5,13 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { updateProficiencyFromAssessment } from "@/lib/actions/proficiency"
+import type { CaliperArticleReadState } from "@/lib/article-cache"
+// At the top of the file, add imports for the new article cache
+import {
+	getCaliperFinalizationLockKey as getArticleFinalizationLockKey, // Alias to avoid name collision
+	getCaliperArticleReadState,
+	setCaliperArticleReadState
+} from "@/lib/article-cache"
 import { getCurrentUserSourcedId } from "@/lib/authorization"
 import * as cacheUtils from "@/lib/cache"
 import { invalidateCache } from "@/lib/cache"
@@ -19,13 +26,6 @@ import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 import { assertPercentageInteger, coercePercentageInteger } from "@/lib/utils/score"
 // Caliper additive tracking imports
 import { getCaliperFinalizationLockKey, getCaliperVideoWatchState, setCaliperVideoWatchState } from "@/lib/video-cache"
-// At the top of the file, add imports for the new article cache
-import {
-	getCaliperArticleReadState,
-	getCaliperFinalizationLockKey as getArticleFinalizationLockKey, // Alias to avoid name collision
-	setCaliperArticleReadState
-} from "@/lib/article-cache"
-import type { CaliperArticleReadState } from "@/lib/article-cache"
 // ADDED: Import the new XP service.
 import { awardXpForAssessment } from "@/lib/xp/service"
 
@@ -930,7 +930,10 @@ export async function accumulateArticleReadTime(
 	}
 	const serverSourcedId = await getCurrentUserSourcedId(userId)
 	if (onerosterUserSourcedId !== serverSourcedId) {
-		logger.error("caliper accumulate article: sourcedId mismatch", { clientUserSourcedId: onerosterUserSourcedId, serverSourcedId })
+		logger.error("caliper accumulate article: sourcedId mismatch", {
+			clientUserSourcedId: onerosterUserSourcedId,
+			serverSourcedId
+		})
 		throw errors.new("unauthorized sourcedId")
 	}
 
@@ -939,20 +942,20 @@ export async function accumulateArticleReadTime(
 		return
 	}
 
-    const now = new Date()
-    const existingState = await getCaliperArticleReadState(serverSourcedId, onerosterArticleResourceSourcedId)
-    let currentState: CaliperArticleReadState
-    if (existingState) {
-        currentState = existingState
-    } else {
-        currentState = {
-            cumulativeReadTimeSeconds: 0,
-            reportedReadTimeSeconds: 0,
-            canonicalDurationSeconds: null,
-            lastServerSyncAt: null,
-            finalizedAt: null
-        }
-    }
+	const now = new Date()
+	const existingState = await getCaliperArticleReadState(serverSourcedId, onerosterArticleResourceSourcedId)
+	let currentState: CaliperArticleReadState
+	if (existingState) {
+		currentState = existingState
+	} else {
+		currentState = {
+			cumulativeReadTimeSeconds: 0,
+			reportedReadTimeSeconds: 0,
+			canonicalDurationSeconds: null,
+			lastServerSyncAt: null,
+			finalizedAt: null
+		}
+	}
 
 	if (currentState.finalizedAt !== null) {
 		logger.debug("article already finalized, skipping accumulate", { articleId: onerosterArticleResourceSourcedId })
@@ -967,7 +970,11 @@ export async function accumulateArticleReadTime(
 		const guardAllowed = Math.max(allowed, leeway)
 
 		if (effectiveDelta > guardAllowed) {
-			logger.warn("caliper accumulate article: delta clamped by wall-time guard", { sessionDeltaSeconds, allowed, effectiveDelta: guardAllowed })
+			logger.warn("caliper accumulate article: delta clamped by wall-time guard", {
+				sessionDeltaSeconds,
+				allowed,
+				effectiveDelta: guardAllowed
+			})
 			effectiveDelta = Math.max(0, guardAllowed)
 		}
 	}
@@ -979,7 +986,11 @@ export async function accumulateArticleReadTime(
 		lastServerSyncAt: now.toISOString()
 	}
 
-	logger.debug("article accumulate: success", { articleId: onerosterArticleResourceSourcedId, delta: effectiveDelta, cumulative: newCumulative });
+	logger.debug("article accumulate: success", {
+		articleId: onerosterArticleResourceSourcedId,
+		delta: effectiveDelta,
+		cumulative: newCumulative
+	})
 	await setCaliperArticleReadState(serverSourcedId, onerosterArticleResourceSourcedId, newState)
 }
 
@@ -996,7 +1007,10 @@ export async function finalizeArticlePartialTimeSpent(
 	}
 	const serverSourcedId = await getCurrentUserSourcedId(userId)
 	if (onerosterUserSourcedId !== serverSourcedId) {
-		logger.error("caliper partial finalize article: sourcedId mismatch", { clientUserSourcedId: onerosterUserSourcedId, serverSourcedId })
+		logger.error("caliper partial finalize article: sourcedId mismatch", {
+			clientUserSourcedId: onerosterUserSourcedId,
+			serverSourcedId
+		})
 		throw errors.new("unauthorized sourcedId")
 	}
 
@@ -1022,7 +1036,11 @@ export async function finalizeArticlePartialTimeSpent(
 		courseInfo
 	)
 
-	logger.info("article partial finalize: sending delta", { articleId: onerosterArticleResourceSourcedId, user: serverSourcedId, delta: Math.floor(deltaToReport) })
+	logger.info("article partial finalize: sending delta", {
+		articleId: onerosterArticleResourceSourcedId,
+		user: serverSourcedId,
+		delta: Math.floor(deltaToReport)
+	})
 
 	const sendResult = await errors.try(sendCaliperTimeSpentEvent(actor, context, Math.floor(deltaToReport)))
 	if (sendResult.error) {
@@ -1055,60 +1073,84 @@ export async function finalizeArticleTimeSpentEvent(
 		throw errors.wrap(lockSetResult.error, "caliper finalize article lock")
 	}
 	if (!lockSetResult.data) {
-		logger.debug("caliper finalize article: lock not acquired, another process is finalizing", { articleId: onerosterArticleResourceSourcedId, user: onerosterUserSourcedId });
+		logger.debug("caliper finalize article: lock not acquired, another process is finalizing", {
+			articleId: onerosterArticleResourceSourcedId,
+			user: onerosterUserSourcedId
+		})
 		return
 	}
-	
-	let lockReleased = false;
+
+	let lockReleased = false
 	const releaseLock = async () => {
 		if (!lockReleased && redis) {
-			const delResult = await errors.try(redis.del(lockKey));
+			const delResult = await errors.try(redis.del(lockKey))
 			if (delResult.error) {
-				logger.error("caliper finalize article: del lock failed", { error: delResult.error });
+				logger.error("caliper finalize article: del lock failed", { error: delResult.error })
 			}
-			lockReleased = true;
+			lockReleased = true
 		}
-	};
-
-	try {
-		const state = await getCaliperArticleReadState(onerosterUserSourcedId, onerosterArticleResourceSourcedId)
-		if (!state) {
-			logger.debug("article finalize: no state found", { articleId: onerosterArticleResourceSourcedId })
-			await releaseLock();
-			return
-		}
-		if (state.finalizedAt !== null) {
-			logger.debug("article finalize: already finalized", { articleId: onerosterArticleResourceSourcedId })
-			await releaseLock();
-			return
-		}
-
-		const deltaToReport = Math.max(0, state.cumulativeReadTimeSeconds - state.reportedReadTimeSeconds)
-
-		if (deltaToReport > 0) {
-			const { actor, context } = await buildCaliperPayloadForContent(
-				onerosterUserSourcedId,
-				onerosterArticleResourceSourcedId,
-				articleTitle,
-				courseInfo
-			)
-
-			logger.info("article finalize: sending timespent", { delta: Math.floor(deltaToReport), articleId: onerosterArticleResourceSourcedId, lock: "acquired" })
-
-			const sendResult = await errors.try(sendCaliperTimeSpentEvent(actor, context, Math.floor(deltaToReport)))
-			if (sendResult.error) {
-				logger.error("caliper finalize article: failed to send event", { error: sendResult.error })
-				throw errors.wrap(sendResult.error, "caliper timespent send article")
-			}
-		}
-
-		const finalState: CaliperArticleReadState = {
-			...state,
-			reportedReadTimeSeconds: state.cumulativeReadTimeSeconds,
-			finalizedAt: new Date().toISOString()
-		}
-		await setCaliperArticleReadState(onerosterUserSourcedId, onerosterArticleResourceSourcedId, finalState)
-	} finally {
-		await releaseLock();
 	}
+
+	const stateResult = await errors.try(
+		getCaliperArticleReadState(onerosterUserSourcedId, onerosterArticleResourceSourcedId)
+	)
+	if (stateResult.error) {
+		await releaseLock()
+		logger.error("caliper finalize article: get state failed", { error: stateResult.error })
+		throw errors.wrap(stateResult.error, "caliper finalize article state")
+	}
+	const state = stateResult.data
+	if (!state) {
+		logger.debug("article finalize: no state found", { articleId: onerosterArticleResourceSourcedId })
+		await releaseLock()
+		return
+	}
+	if (state.finalizedAt !== null) {
+		logger.debug("article finalize: already finalized", { articleId: onerosterArticleResourceSourcedId })
+		await releaseLock()
+		return
+	}
+
+	const deltaToReport = Math.max(0, state.cumulativeReadTimeSeconds - state.reportedReadTimeSeconds)
+
+	if (deltaToReport > 0) {
+		const payloadResult = await errors.try(
+			buildCaliperPayloadForContent(onerosterUserSourcedId, onerosterArticleResourceSourcedId, articleTitle, courseInfo)
+		)
+		if (payloadResult.error) {
+			await releaseLock()
+			logger.error("caliper finalize article: build payload failed", { error: payloadResult.error })
+			throw errors.wrap(payloadResult.error, "caliper payload build")
+		}
+		const { actor, context } = payloadResult.data
+
+		logger.info("article finalize: sending timespent", {
+			delta: Math.floor(deltaToReport),
+			articleId: onerosterArticleResourceSourcedId,
+			lock: "acquired"
+		})
+
+		const sendResult = await errors.try(sendCaliperTimeSpentEvent(actor, context, Math.floor(deltaToReport)))
+		if (sendResult.error) {
+			await releaseLock()
+			logger.error("caliper finalize article: failed to send event", { error: sendResult.error })
+			throw errors.wrap(sendResult.error, "caliper timespent send article")
+		}
+	}
+
+	const finalState: CaliperArticleReadState = {
+		...state,
+		reportedReadTimeSeconds: state.cumulativeReadTimeSeconds,
+		finalizedAt: new Date().toISOString()
+	}
+	const setStateResult = await errors.try(
+		setCaliperArticleReadState(onerosterUserSourcedId, onerosterArticleResourceSourcedId, finalState)
+	)
+	if (setStateResult.error) {
+		await releaseLock()
+		logger.error("caliper finalize article: set state failed", { error: setStateResult.error })
+		throw errors.wrap(setStateResult.error, "caliper finalize article state set")
+	}
+
+	await releaseLock()
 }
