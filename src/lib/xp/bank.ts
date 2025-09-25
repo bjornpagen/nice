@@ -12,6 +12,7 @@ import {
     getComponentResourcesForCourse,
     getCourseComponentsByParentId,
     getCourseComponentsBySourcedId,
+    getResource,
     getResourcesByIds,
     getResult as fetcherGetResult
 } from "@/lib/data/fetchers/oneroster"
@@ -35,345 +36,93 @@ export function computeBankingMinutes(seconds: number): number {
 }
 
 /**
- * A pure function to identify the window of passive resources (videos, articles)
- * between the previous exercise and the current one. This function performs NO writes
- * and is safe to call for identification purposes before cache invalidation.
+ * Retrieves the list of passive resources that should be banked upon completion of a given exercise.
+ * This function reads the pre-calculated list of passive resource IDs from the exercise's metadata
+ * and then fetches the full resource details to get the canonical expected XP.
  */
 export async function findEligiblePassiveResourcesForExercise(params: {
 	exerciseResourceSourcedId: string
-	onerosterCourseSourcedId: string
 	onerosterUserSourcedId: string
 }): Promise<Array<{ sourcedId: string; expectedXp: number }>> {
-	const { exerciseResourceSourcedId, onerosterCourseSourcedId } = params
-	logger.info("identifying eligible passive resources for exercise", { 
+	const { exerciseResourceSourcedId, onerosterUserSourcedId } = params
+	const correlationId = randomUUID()
+	logger.info("identifying eligible passive resources from exercise metadata", {
 		exerciseResourceSourcedId,
-		onerosterCourseSourcedId 
+		correlationId
 	})
 
-	const exerciseResourceId = extractResourceIdFromCompoundId(exerciseResourceSourcedId)
-
-	// Fetch the exercise component resource scoped to the current course
-	const componentResourceResult = await errors.try(
-		getComponentResourceForResourceInCourse(onerosterCourseSourcedId, exerciseResourceId)
-	)
-	if (componentResourceResult.error) {
-		logger.error("exercise component resource fetch failed", { 
-			error: componentResourceResult.error,
-			courseSourcedId: onerosterCourseSourcedId,
-			resourceSourcedId: exerciseResourceId
+	// 1. Fetch the exercise resource to get the list of passive resource IDs.
+	const resourceResult = await errors.try(getResource(exerciseResourceSourcedId))
+	if (resourceResult.error) {
+		logger.error("failed to fetch exercise resource for banking", {
+			error: resourceResult.error,
+			exerciseResourceSourcedId,
+			correlationId
 		})
-		throw errors.wrap(componentResourceResult.error, "exercise component resource fetch")
+		throw errors.wrap(resourceResult.error, "exercise resource fetch for banking")
 	}
-	const exerciseComponentResource = componentResourceResult.data
-	if (!exerciseComponentResource) {
-		logger.error("CRITICAL: exercise component resource is undefined after fetch", {
-			courseSourcedId: onerosterCourseSourcedId,
-			resourceSourcedId: exerciseResourceId
-		})
-		throw errors.new("exercise component resource undefined")
-	}
-	
-	// Determine the unit id from the exercise's courseComponent (lesson) → parent unit
-	const lessonComponentId = exerciseComponentResource.courseComponent.sourcedId
-    const lessonComponentResult = await errors.try(
-        getCourseComponentsBySourcedId(lessonComponentId)
-    )
-	if (lessonComponentResult.error) {
-		logger.error("lesson component fetch for unit resolution failed", {
-			error: lessonComponentResult.error,
-			lessonComponentId
-		})
-		throw errors.wrap(lessonComponentResult.error, "lesson component fetch for unit resolution")
-	}
-	const lessonComponent = lessonComponentResult.data[0]
-	const parentUnitId = lessonComponent?.parent?.sourcedId
-	const exerciseSortOrder = exerciseComponentResource.sortOrder
-
-	if (!parentUnitId) {
-		logger.warn("exercise lesson has no parent unit", {
-			lessonComponentId,
-			exerciseResourceId
+	const exerciseResource = resourceResult.data
+	if (!exerciseResource) {
+		logger.warn("exercise resource not found, cannot determine passive resources", {
+			exerciseResourceSourcedId,
+			correlationId
 		})
 		return []
 	}
 
-	// 2. List all lessons in the unit (for recursive CR lookup)
-	const unitLessonsResult = await errors.try(
-		getCourseComponentsByParentId(parentUnitId)
-	)
-	if (unitLessonsResult.error) {
-		logger.error("unit lessons fetch failed", { 
-			error: unitLessonsResult.error,
-			parentUnitId 
+	// 2. Safely parse the passiveResources array of strings from metadata.
+	const PassiveResourceIdsSchema = z.array(z.string()).optional()
+	const parsed = PassiveResourceIdsSchema.safeParse(exerciseResource.metadata?.passiveResources)
+	if (!parsed.success || !parsed.data || parsed.data.length === 0) {
+		logger.info("no passiveResources metadata found for this exercise", {
+			exerciseResourceSourcedId,
+			correlationId
 		})
-		throw errors.wrap(unitLessonsResult.error, "unit lessons fetch")
+		return []
 	}
 
-	const lessonIds = unitLessonsResult.data.map((c) => c.sourcedId)
-	const lessonSortOrderMap = new Map<string, number>()
-	for (const c of unitLessonsResult.data) {
-		lessonSortOrderMap.set(c.sourcedId, c.sortOrder)
-	}
-	
-	logger.info("built lesson sort order map", {
-		lessonComponentId,
-		currentLessonSortOrder: lessonSortOrderMap.get(lessonComponentId),
-		unitLessonCount: lessonIds.length,
-		parentUnitId
-	})
+	const candidateResourceIds = parsed.data
 
-	// 3. Fetch ALL component resources under the unit's lessons (primary path)
-	type ComponentResourceView = { resourceId: string; sortOrder: number; lessonId: string }
-	let componentResources: Array<ComponentResourceView> = []
-	if (lessonIds.length > 0) {
-		const lessonCrResult = await errors.try(
-			getComponentResourcesByLessonIds(lessonIds)
-		)
-		if (lessonCrResult.error) {
-			logger.error("lesson component resources fetch failed", { 
-				error: lessonCrResult.error, 
-				lessonIds 
-			})
-			throw errors.wrap(lessonCrResult.error, "lesson component resources fetch")
-		}
-		componentResources = lessonCrResult.data.map((cr) => ({
-			resourceId: cr.resource.sourcedId,
-			sortOrder: cr.sortOrder,
-			lessonId: cr.courseComponent.sourcedId
+	// 3. Fetch the full resource objects for the candidate IDs to get their canonical XP.
+	const resourcesResult = await errors.try(getResourcesByIds(candidateResourceIds))
+	if (resourcesResult.error) {
+		logger.error("failed to fetch passive resource details", {
+			error: resourcesResult.error,
+			resourceIds: candidateResourceIds,
+			correlationId
+		})
+		throw errors.wrap(resourcesResult.error, "passive resource details fetch")
+	}
+
+	const candidateResources = resourcesResult.data
+		.map((resource) => ({
+			sourcedId: resource.sourcedId,
+			expectedXp: typeof resource.metadata?.xp === "number" ? resource.metadata.xp : 0
 		}))
-	}
+		.filter((r) => r.expectedXp > 0) // Only consider resources that grant XP.
 
-	// 3b. Fallback: include unit-level component resources if no lessons or empty
-	if (componentResources.length === 0) {
-		logger.info("no component resources found in lessons, checking unit-level resources", { 
-			parentUnitId,
-			lessonCount: lessonIds.length 
-		})
-		
-		// Fetch all CRs for the course and filter to unit-level ones
-		const allCourseCrResult = await errors.try(
-			getComponentResourcesForCourse(onerosterCourseSourcedId)
-		)
-		if (allCourseCrResult.error) {
-			logger.error("course component resources fetch failed", { 
-				error: allCourseCrResult.error, 
-				courseSourcedId: onerosterCourseSourcedId 
-			})
-			throw errors.wrap(allCourseCrResult.error, "course component resources fetch")
-		}
-		
-		// Filter to only unit-level CRs
-		const unitCrs = allCourseCrResult.data.filter(
-			cr => cr.courseComponent.sourcedId === parentUnitId
-		)
-		
-		if (unitCrs.length > 0) {
-			logger.info("found unit-level component resources", { 
-				count: unitCrs.length,
-				parentUnitId 
-			})
-		}
-		
-		componentResources = unitCrs.map((cr) => ({
-			resourceId: cr.resource.sourcedId,
-			sortOrder: cr.sortOrder,
-			lessonId: cr.courseComponent.sourcedId
-		}))
-	}
-
-	// 4. Fetch resource metadata for detection and filtering
-	const allResourceIds = componentResources.map((cr) => cr.resourceId)
-	if (allResourceIds.length === 0) {
-		logger.info("no resources found in unit scope", { parentUnitId })
-		return []
-	}
-	const allResourcesResult = await errors.try(
-		getResourcesByIds(allResourceIds)
-	)
-	if (allResourcesResult.error) {
-		logger.error("unit resources fetch for exercise detection failed", {
-			error: allResourcesResult.error,
-			allResourceIds
-		})
-		throw errors.wrap(allResourcesResult.error, "unit resources fetch for exercise detection")
-	}
-	const resourceMap = new Map<string, Resource>()
-	for (const resource of allResourcesResult.data) {
-		resourceMap.set(resource.sourcedId, resource)
-	}
-
-	// 5. Compute previous exercise boundary using tuple ordering: (lessonSortOrder, contentSortOrder)
-	const currentLessonSortOrder = lessonSortOrderMap.get(lessonComponentId)
-	if (currentLessonSortOrder === undefined) {
-		logger.error("CRITICAL: lesson sort order not found", {
-			lessonComponentId,
-			availableLessons: Array.from(lessonSortOrderMap.keys())
-		})
-		throw errors.new("lesson sort order not found for exercise lesson")
-	}
-	let previousExerciseTuple: { lessonSortOrder: number; contentSortOrder: number } | null = null
-	for (const cr of componentResources) {
-		const resource = resourceMap.get(cr.resourceId)
-		const lessonSortOrder = lessonSortOrderMap.get(cr.lessonId)
-		if (lessonSortOrder === undefined) {
-			logger.error("CRITICAL: lesson sort order not found for component resource", {
-				lessonId: cr.lessonId,
-				resourceId: cr.resourceId,
-				availableLessons: Array.from(lessonSortOrderMap.keys())
-			})
-			throw errors.new("lesson sort order not found for component resource")
-		}
-		const isExerciseResource =
-			resource?.metadata?.khanActivityType === "Exercise" || resource?.metadata?.khanLessonType === "exercise"
-		if (!resource || !isExerciseResource) continue
-		if (cr.resourceId === exerciseResourceId) continue
-
-		const isBeforeCurrent =
-			lessonSortOrder < currentLessonSortOrder ||
-			(lessonSortOrder === currentLessonSortOrder && cr.sortOrder < exerciseSortOrder)
-		if (!isBeforeCurrent) continue
-
-		if (!previousExerciseTuple) {
-			previousExerciseTuple = { lessonSortOrder, contentSortOrder: cr.sortOrder }
-			continue
-		}
-		const isAfterPrevious =
-			lessonSortOrder > previousExerciseTuple.lessonSortOrder ||
-			(lessonSortOrder === previousExerciseTuple.lessonSortOrder &&
-				cr.sortOrder > previousExerciseTuple.contentSortOrder)
-		if (isAfterPrevious) previousExerciseTuple = { lessonSortOrder, contentSortOrder: cr.sortOrder }
-	}
-
-	// Count exercises in unit for logging
-	let exerciseCountInUnit = 0
-	for (const cr of componentResources) {
-		const resource = resourceMap.get(cr.resourceId)
-		if (!resource) continue
-		const isExerciseResource =
-			resource?.metadata?.khanActivityType === "Exercise" || resource?.metadata?.khanLessonType === "exercise"
-		if (isExerciseResource) exerciseCountInUnit++
-	}
-
-	logger.info("found exercise boundaries", {
-		currentExerciseSortOrder: exerciseSortOrder,
-		currentLessonSortOrder,
-		previousExerciseSortOrder: previousExerciseTuple?.contentSortOrder ?? -1,
-		previousLessonSortOrder: previousExerciseTuple?.lessonSortOrder ?? -1,
-		previousBoundaryResourceId: previousExerciseTuple ? 
-			componentResources.find(cr => 
-				lessonSortOrderMap.get(cr.lessonId) === previousExerciseTuple.lessonSortOrder && 
-				cr.sortOrder === previousExerciseTuple.contentSortOrder
-			)?.resourceId : null,
-		exerciseResourceId,
-		exerciseCountInUnit,
-		hasPreviousBoundary: previousExerciseTuple !== null
-	})
-
-	// 6. Identify passive resources strictly between previous and current exercise using tuple ordering
-	const candidateResourceIds: string[] = []
-	for (const cr of componentResources) {
-		const lessonSortOrder = lessonSortOrderMap.get(cr.lessonId)
-		if (lessonSortOrder === undefined) {
-			logger.error("CRITICAL: lesson sort order not found for candidate resource", {
-				lessonId: cr.lessonId,
-				resourceId: cr.resourceId,
-				availableLessons: Array.from(lessonSortOrderMap.keys())
-			})
-			throw errors.new("lesson sort order not found for candidate resource")
-		}
-		const isAfterPrevious = previousExerciseTuple
-			? lessonSortOrder > previousExerciseTuple.lessonSortOrder ||
-				(lessonSortOrder === previousExerciseTuple.lessonSortOrder &&
-					cr.sortOrder > previousExerciseTuple.contentSortOrder)
-			: true
-		const isBeforeCurrent =
-			lessonSortOrder < currentLessonSortOrder ||
-			(lessonSortOrder === currentLessonSortOrder && cr.sortOrder < exerciseSortOrder)
-		if (!(isAfterPrevious && isBeforeCurrent)) continue
-
-		const resource = resourceMap.get(cr.resourceId)
-		if (!resource) continue
-		const metadata = resource.metadata
-		const expectedXp = typeof metadata?.xp === "number" ? metadata.xp : 0
-		if (expectedXp <= 0) continue
-		const isInteractive = metadata?.type === "interactive"
-		const kind = metadata && typeof metadata.khanActivityType === "string" ? metadata.khanActivityType : undefined
-		if (isInteractive && (kind === "Article" || kind === "Video")) {
-			candidateResourceIds.push(resource.sourcedId)
-		}
-	}
-
-	// Count by type for better logging
-	let articleCount = 0
-	let videoCount = 0
-	for (const resourceId of candidateResourceIds) {
-		const resource = resourceMap.get(resourceId)
-		if (!resource) continue
-		const kind = resource.metadata?.khanActivityType
-		if (kind === "Article") articleCount++
-		else if (kind === "Video") videoCount++
-	}
-
-	logger.info("candidate passive resources in window", {
-		candidateCount: candidateResourceIds.length,
-		articleCount,
-		videoCount,
-		windowStart: previousExerciseTuple ? 
-			`(lesson=${previousExerciseTuple.lessonSortOrder}, content=${previousExerciseTuple.contentSortOrder})` : 
-			"beginning",
-		windowEnd: `(lesson=${currentLessonSortOrder}, content=${exerciseSortOrder})`
-	})
-
-	if (candidateResourceIds.length === 0) {
-		logger.info("no eligible resources found in window", {
-			hasPreviousBoundary: previousExerciseTuple !== null,
-			unitLessonCount: lessonIds.length,
-			windowCandidateCount: 0,
-			unitId: parentUnitId,
-			lessonId: lessonComponentId,
-			exerciseResourceId
-		})
-		return []
-	}
-
-	// 7. Build passive resources list with expected XP
-	const passiveResources: Array<{ sourcedId: string; expectedXp: number }> = []
-	for (const id of candidateResourceIds) {
-		const res = resourceMap.get(id)
-		if (!res) continue
-		const expectedXp = typeof res.metadata?.xp === "number" ? res.metadata.xp : 0
-		passiveResources.push({ sourcedId: id, expectedXp })
-	}
-
-	// 7b. Dedupe: exclude resources already banked for this user
-	if (passiveResources.length === 0) {
-		return []
-	}
-
-	logger.info("checking existing results for bank dedupe", {
-		candidateCount: passiveResources.length
-	})
-
-	const userId = extractUserSourcedId(params.onerosterUserSourcedId)
+	// 4. Deduplicate: Filter out resources that have already been banked for this user.
+	const userId = extractUserSourcedId(onerosterUserSourcedId)
 	const eligibilityChecks = await Promise.all(
-		passiveResources.map(async (resource) => {
+		candidateResources.map(async (resource) => {
 			const resultSourcedId = generateResultSourcedId(userId, resource.sourcedId, false)
-            const existingResult = await errors.try(fetcherGetResult(resultSourcedId))
+			const existingResult = await errors.try(fetcherGetResult(resultSourcedId))
+
 			if (existingResult.error) {
 				logger.error("bank dedupe: failed to read existing result", {
 					userId,
 					resourceId: resource.sourcedId,
 					resultSourcedId,
-					error: existingResult.error
+					error: existingResult.error,
+					correlationId
 				})
 				throw errors.wrap(existingResult.error, "bank dedupe: read existing result")
 			}
 
-			// Narrow metadata shape using Zod to avoid unsafe casts
 			const BankedMetaSchema = z.object({ xp: z.number().optional(), xpReason: z.string().optional() }).passthrough()
-			const parsed = BankedMetaSchema.safeParse(existingResult.data?.metadata)
-			const xpValue = parsed.success && typeof parsed.data.xp === "number" ? parsed.data.xp : 0
-			const xpReason = parsed.success && typeof parsed.data.xpReason === "string" ? parsed.data.xpReason : ""
+			const parsedMeta = BankedMetaSchema.safeParse(existingResult.data?.metadata)
+			const xpValue = parsedMeta.success && typeof parsedMeta.data.xp === "number" ? parsedMeta.data.xp : 0
+			const xpReason = parsedMeta.success && typeof parsedMeta.data.xpReason === "string" ? parsedMeta.data.xpReason : ""
 			const alreadyBanked = xpValue > 0 || xpReason === "Banked XP"
 
 			return { resource, alreadyBanked }
@@ -382,9 +131,11 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 
 	const eligibleResources = eligibilityChecks.filter((e) => !e.alreadyBanked).map((e) => e.resource)
 
-	logger.info("bank dedupe complete", {
+	logger.info("passive resource identification complete", {
+		exerciseResourceSourcedId,
 		eligibleCount: eligibleResources.length,
-		filteredCount: passiveResources.length - eligibleResources.length
+		filteredCount: candidateResources.length - eligibleResources.length,
+		correlationId
 	})
 
 	return eligibleResources
@@ -408,7 +159,6 @@ export async function awardBankedXpForExercise(params: {
 	// 1. Identify eligible resources using the pure function (already deduped)
     const eligibleResources = await findEligiblePassiveResourcesForExercise({
 		exerciseResourceSourcedId: params.exerciseResourceSourcedId,
-		onerosterCourseSourcedId: params.onerosterCourseSourcedId,
 		onerosterUserSourcedId: params.onerosterUserSourcedId
 	})
 

@@ -61,7 +61,6 @@ export default async function ExercisePage({
 		const eligibleResult = await errors.try(
 			findEligiblePassiveResourcesForExercise({
 				exerciseResourceSourcedId: exerciseData.exercise.id,
-				onerosterCourseSourcedId: exerciseData.exercise.onerosterCourseSourcedId,
 				onerosterUserSourcedId: userSourcedId
 			})
 		);
