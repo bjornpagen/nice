@@ -67,7 +67,8 @@ type FinalizeFn = (
 	userSourcedId: string,
 	videoId: string,
 	videoTitle: string,
-	courseInfo: { subjectSlug: string; courseSlug: string }
+  courseInfo: { subjectSlug: string; courseSlug: string },
+  userEmail: string
 ) => Promise<void>
 type GetStateFn = (
 	userId: string,
@@ -152,7 +153,7 @@ describe("Caliper video time tracking (additive, parallel to OneRoster)", () => 
 			courseSlug: "algebra"
 		})
 		// Explicit second finalize call should be a no-op
-		await finalizeCaliperTimeSpentEvent(userId, videoId, "Title", { subjectSlug: "math", courseSlug: "algebra" })
+    await finalizeCaliperTimeSpentEvent(userId, videoId, "Title", { subjectSlug: "math", courseSlug: "algebra" }, "user@example.com")
 		expect(mockSendCaliper).toHaveBeenCalledTimes(1)
 		const state = await getCaliperVideoWatchState(userId, videoId)
 		expect(state?.finalizedAt).not.toBeNull()

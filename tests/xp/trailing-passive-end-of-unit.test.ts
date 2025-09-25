@@ -232,6 +232,82 @@ mock.module("@/lib/clients", () => ({
 	}
 }))
 
+// New: Mock the fetcher layer used by bank.ts
+mock.module("@/lib/data/fetchers/oneroster", () => ({
+  // Return the CR for a resource within the course
+  getComponentResourceForResourceInCourse: (_courseId: string, resourceId: string) =>
+    Promise.resolve({ resource: { sourcedId: resourceId }, courseComponent: { sourcedId: LESSON2 }, sortOrder: 1 }),
+
+  // Resolve a course component by sourcedId (to find parent unit)
+  getCourseComponentsBySourcedId: (id: string) =>
+    Promise.resolve([{ sourcedId: id, parent: { sourcedId: UNIT1 }, sortOrder: id === LESSON1 ? 1 : 2 }]),
+
+  // List lessons under a unit
+  getCourseComponentsByParentId: (parentId: string) =>
+    Promise.resolve(
+      parentId === UNIT1
+        ? [
+            { sourcedId: LESSON1, sortOrder: 1 },
+            { sourcedId: LESSON2, sortOrder: 2 }
+          ]
+        : []
+    ),
+
+  // Component resources by lesson ids
+  getComponentResourcesByLessonIds: (lessonIds: string[]) =>
+    Promise.resolve(
+      [
+        { resource: { sourcedId: E1 }, courseComponent: { sourcedId: LESSON1 }, sortOrder: 1 },
+        { resource: { sourcedId: A1 }, courseComponent: { sourcedId: LESSON1 }, sortOrder: 2 },
+        { resource: { sourcedId: E2 }, courseComponent: { sourcedId: LESSON2 }, sortOrder: 1 },
+        { resource: { sourcedId: TRAIL }, courseComponent: { sourcedId: LESSON2 }, sortOrder: 2 }
+      ].filter((cr) => lessonIds.includes(cr.courseComponent.sourcedId))
+    ),
+
+  // All component resources in a course (used by fallback branches)
+  getComponentResourcesForCourse: (_courseId: string) =>
+    Promise.resolve([
+      { resource: { sourcedId: E1 }, courseComponent: { sourcedId: LESSON1 }, sortOrder: 1 },
+      { resource: { sourcedId: A1 }, courseComponent: { sourcedId: LESSON1 }, sortOrder: 2 },
+      { resource: { sourcedId: E2 }, courseComponent: { sourcedId: LESSON2 }, sortOrder: 1 },
+      { resource: { sourcedId: TRAIL }, courseComponent: { sourcedId: LESSON2 }, sortOrder: 2 }
+    ]),
+
+  // Fetch resource metadata
+  getResourcesByIds: (ids: string[]) =>
+    Promise.resolve(
+      ids.map((id) => ({
+        sourcedId: id,
+        title: id,
+        metadata: {
+          type: "interactive",
+          khanActivityType: id === A1 ? "Article" : id === TRAIL ? "Video" : "Exercise",
+          xp: id === A1 || id === TRAIL ? 1 : 0,
+          khanSubjectSlug: "math"
+        }
+      }))
+    ),
+
+  // Read an existing assessment result (for dedupe/time-spent reads)
+  getResult: (resultSourcedId: string) => {
+    const existing = inMemoryResults.get(resultSourcedId)
+    if (existing) return Promise.resolve(existing)
+    // Simulate time spent for known passives when not yet saved: A1, TRAIL
+    const parts = resultSourcedId.split("_")
+    let resourceId = ""
+    for (const part of parts) {
+      if (part === "A1" || part === "TRAIL") {
+        resourceId = part
+        break
+      }
+    }
+    if (resourceId === "A1" || resourceId === "TRAIL") {
+      return Promise.resolve({ metadata: { nice_timeSpent: 60 } })
+    }
+    return Promise.resolve(null)
+  }
+}))
+
 // Define local helpers and functions (avoid cross-file module mock collisions)
 function getAssessmentLineItemId(resourceId: string): string {
 	return `${resourceId}_ali`
@@ -367,7 +443,8 @@ async function awardBankedXpForUnitCompletion(params: {
 	unitData: import("@/lib/types/domain").Unit
 }): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
 	// calculateBankedXpForResources removed - now integrated into awardBankedXpForExercise
-	const userId = params.onerosterUserSourcedId
+	const { extractUserSourcedId } = await import("@/lib/utils/actor-id")
+	const userId = extractUserSourcedId(params.onerosterUserSourcedId)
 	const passive: Array<{ sourcedId: string; expectedXp: number }> = []
 	for (const child of params.unitData.children) {
 		if (child.type === "Lesson") {

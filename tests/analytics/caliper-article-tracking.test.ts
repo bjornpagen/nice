@@ -72,13 +72,15 @@ type PartialFinalizeFn = (
   userSourcedId: string,
   articleId: string,
   articleTitle: string,
-  courseInfo: { subjectSlug: string; courseSlug: string }
+  courseInfo: { subjectSlug: string; courseSlug: string },
+  userEmail: string
 ) => Promise<void>
 type FinalizeArticleFn = (
   userSourcedId: string,
   articleId: string,
   articleTitle: string,
-  courseInfo: { subjectSlug: string; courseSlug: string }
+  courseInfo: { subjectSlug: string; courseSlug: string },
+  userEmail: string
 ) => Promise<void>
 type GetArticleStateFn = (
   userId: string,
@@ -154,7 +156,7 @@ describe("Caliper article time tracking (heartbeat + finalize)", () => {
     const articleId = "nice_article_2"
     await accumulateArticleReadTime(userId, articleId, 12)
 
-    await finalizeArticlePartialTimeSpent(userId, articleId, "Title", { subjectSlug: "math", courseSlug: "algebra" })
+    await finalizeArticlePartialTimeSpent(userId, articleId, "Title", { subjectSlug: "math", courseSlug: "algebra" }, "user@example.com")
     expect(mockSendCaliper).toHaveBeenCalledTimes(1)
 
     const stateAfter = await getCaliperArticleReadState(userId, articleId)
@@ -170,7 +172,7 @@ describe("Caliper article time tracking (heartbeat + finalize)", () => {
       })
     }
     await accumulateArticleReadTime(userId, articleId, 5)
-    await finalizeArticlePartialTimeSpent(userId, articleId, "Title", { subjectSlug: "math", courseSlug: "algebra" })
+    await finalizeArticlePartialTimeSpent(userId, articleId, "Title", { subjectSlug: "math", courseSlug: "algebra" }, "user@example.com")
     expect(mockSendCaliper).toHaveBeenCalledTimes(2)
     const stateAfter2 = await getCaliperArticleReadState(userId, articleId)
     expect(stateAfter2?.reportedReadTimeSeconds).toBe(17)
@@ -182,7 +184,7 @@ describe("Caliper article time tracking (heartbeat + finalize)", () => {
     const articleId = "nice_article_3"
     await accumulateArticleReadTime(userId, articleId, 20)
 
-    await finalizeArticleTimeSpentEvent(userId, articleId, "Title", { subjectSlug: "math", courseSlug: "algebra" })
+    await finalizeArticleTimeSpentEvent(userId, articleId, "Title", { subjectSlug: "math", courseSlug: "algebra" }, "user@example.com")
     expect(mockSendCaliper).toHaveBeenCalledTimes(1)
     const state = await getCaliperArticleReadState(userId, articleId)
     if (!state) throw new Error("article state should not be null after finalize")
@@ -190,7 +192,7 @@ describe("Caliper article time tracking (heartbeat + finalize)", () => {
     expect(state.reportedReadTimeSeconds).toBe(state.cumulativeReadTimeSeconds)
 
     // Second finalize should be a no-op (lock + already finalized)
-    await finalizeArticleTimeSpentEvent(userId, articleId, "Title", { subjectSlug: "math", courseSlug: "algebra" })
+    await finalizeArticleTimeSpentEvent(userId, articleId, "Title", { subjectSlug: "math", courseSlug: "algebra" }, "user@example.com")
     expect(mockSendCaliper).toHaveBeenCalledTimes(1)
 
     // Accumulate after finalize should be ignored

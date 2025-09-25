@@ -4,7 +4,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { AccumulateRequestSchema, type AccumulateRequest } from "@/lib/schemas/caliper-article"
-import { accumulateArticleReadTime } from "@/lib/actions/tracking"
+import { accumulateArticleReadTimeService } from "@/lib/services/caliper-article"
 import { getCurrentUserSourcedId } from "@/lib/authorization"
 
 export async function POST(request: Request) {
@@ -35,12 +35,12 @@ export async function POST(request: Request) {
 		return new NextResponse("Unauthorized", { status: 401 })
 	}
 
-	// Fire-and-forget call to the server action
-	void accumulateArticleReadTime(
-		onerosterUserSourcedId,
-		onerosterArticleResourceSourcedId,
-		sessionDeltaSeconds
-	).catch((error) => {
+    // Fire-and-forget call to the service (no auth inside)
+    void accumulateArticleReadTimeService(
+        serverSourcedId,
+        onerosterArticleResourceSourcedId,
+        sessionDeltaSeconds
+    ).catch((error) => {
 		logger.error("accumulate article read time failed", { error })
 	})
 

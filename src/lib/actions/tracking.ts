@@ -3,7 +3,6 @@
 import { auth, clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { z } from "zod"
 import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { updateProficiencyFromAssessment } from "@/lib/actions/proficiency"
 import type { CaliperArticleReadState } from "@/lib/article-cache"
@@ -16,10 +15,8 @@ import {
 import { getCurrentUserSourcedId } from "@/lib/authorization"
 import * as cacheUtils from "@/lib/cache"
 import { invalidateCache } from "@/lib/cache"
-import { extractResourceIdFromCompoundId, normalizeCaliperId } from "@/lib/caliper/utils"
 import { oneroster } from "@/lib/clients"
 import { VIDEO_COMPLETION_THRESHOLD_PERCENT, VIDEO_COMPLETION_THRESHOLD_RATIO } from "@/lib/constants/progress"
-import { CALIPER_SUBJECT_MAPPING, isSubjectSlug } from "@/lib/constants/subjects"
 import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
 import { redis } from "@/lib/redis"
 import { constructActorId } from "@/lib/utils/actor-id"
@@ -116,9 +113,24 @@ export async function accumulateCaliperWatchTime(
 
 	await setCaliperVideoWatchState(serverSourcedId, onerosterVideoResourceSourcedId, newState)
 
-	if (canonicalDuration > 0 && newCumulative / canonicalDuration >= VIDEO_COMPLETION_THRESHOLD_RATIO) {
-		await finalizeCaliperTimeSpentEvent(serverSourcedId, onerosterVideoResourceSourcedId, videoTitle, courseInfo)
-	}
+    if (canonicalDuration > 0 && newCumulative / canonicalDuration >= VIDEO_COMPLETION_THRESHOLD_RATIO) {
+        const { userId } = await auth()
+        if (!userId) {
+            logger.error("caliper partial finalize: user not authenticated")
+            throw errors.new("user not authenticated")
+        }
+        const userResult = await errors.try((await clerkClient()).users.getUser(userId))
+        if (userResult.error) {
+            logger.error("caliper partial finalize: get user", { error: userResult.error })
+            throw errors.wrap(userResult.error, "caliper user fetch")
+        }
+        const userEmail = userResult.data.emailAddresses[0]?.emailAddress
+        if (!userEmail) {
+            logger.error("caliper partial finalize: missing user email", { userId })
+            throw errors.new("user email required")
+        }
+        await finalizeCaliperTimeSpentEvent(serverSourcedId, onerosterVideoResourceSourcedId, videoTitle, courseInfo, userEmail)
+    }
 }
 
 /**
@@ -137,180 +149,45 @@ async function resolveCourseSourcedId(courseSlug: string): Promise<string | null
 	return courseResult.data[0].sourcedId
 }
 
-// A new, shared helper function will be created to build the Caliper payload,
-// ensuring consistency between video and article event generation.
-async function buildCaliperPayloadForContent(
-	onerosterUserSourcedId: string,
-	onerosterResourceSourcedId: string,
-	title: string,
-	courseInfo: { subjectSlug: string; courseSlug: string }
-) {
-	if (!isSubjectSlug(courseInfo.subjectSlug)) {
-		logger.error("caliper payload: invalid subject slug", { subjectSlug: courseInfo.subjectSlug })
-		throw errors.new("invalid subject slug")
-	}
+// Removed unused buildCaliperPayloadForContent; callers use buildCaliperPayloadForContentWithEmail instead
 
-	const { userId: clerkUserId } = await auth()
-	if (!clerkUserId) {
-		logger.error("caliper payload: user not authenticated")
-		throw errors.new("user not authenticated")
-	}
-
-	const userResult = await errors.try((await clerkClient()).users.getUser(clerkUserId))
-	if (userResult.error) {
-		logger.error("caliper payload: get user", { error: userResult.error })
-		throw errors.wrap(userResult.error, "caliper user fetch")
-	}
-	const userEmail = userResult.data.emailAddresses[0]?.emailAddress
-	if (!userEmail) {
-		logger.error("caliper payload: missing user email", { clerkUserId })
-		throw errors.new("user email required")
-	}
-
-	const normalizedResourceId = extractResourceIdFromCompoundId(onerosterResourceSourcedId)
-	const activityId = normalizeCaliperId(normalizedResourceId)
-
-	const actor = {
-		id: constructActorId(onerosterUserSourcedId),
-		type: "TimebackUser" as const,
-		email: userEmail
-	}
-	const context = {
-		id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}/${courseInfo.subjectSlug}/${courseInfo.courseSlug}`,
-		type: "TimebackActivityContext" as const,
-		subject: CALIPER_SUBJECT_MAPPING[courseInfo.subjectSlug],
-		app: { name: "Nice Academy" },
-		course: { name: courseInfo.courseSlug },
-		activity: { name: title, id: activityId }
-	}
-
-	return { actor, context }
-}
-
-// Zod schema for existing OneRoster result data
-const ExistingResultSchema = z.object({
-    score: z.number().nullable().optional(),
-    scoreStatus: z.enum(["fully graded", "partially graded", "submitted", "not submitted", "exempt"]).optional(),
-    metadata: z.record(z.string(), z.any()).optional()
-}).passthrough()
-
-// Schema for parsing the time spent from metadata
-const TimeSpentMetadataSchema = z.object({
-    nice_timeSpent: z.number().optional()
-}).passthrough()
+import { buildCaliperPayloadForContentWithEmail } from "@/lib/caliper/payload"
+import { upsertNiceTimeSpentToOneRoster as writeTimeToOneRoster } from "@/lib/caliper/writer"
 
 // Unified writer to mirror cumulative time into OneRoster metadata
-async function upsertNiceTimeSpentToOneRoster(params: {
-    kind: "video" | "article"
-    userSourcedId: string
-    resourceSourcedId: string
-    courseSourcedId: string
-    finalSeconds: number
-}): Promise<void> {
-    const lineItemId = getAssessmentLineItemId(params.resourceSourcedId)
-    const resultId = `nice_${params.userSourcedId}_${lineItemId}`
-
-    // Default values
-    let preservedScore = 100
-    let preservedStatus: "fully graded" | "partially graded" = "fully graded"
-    let existingTime: number | undefined
-
-    // Fetch existing result and parse with Zod
-    const getResult = await errors.try(oneroster.getResult(resultId))
-    if (!getResult.error && getResult.data) {
-        const parsed = ExistingResultSchema.safeParse(getResult.data)
-        
-        if (parsed.success) {
-            // Extract score if it exists
-            if (typeof parsed.data.score === "number") {
-                preservedScore = Math.round(parsed.data.score)
-            }
-            
-            // Extract status if it's one we care about
-            if (parsed.data.scoreStatus === "partially graded" || parsed.data.scoreStatus === "fully graded") {
-                preservedStatus = parsed.data.scoreStatus
-            }
-            
-            // Extract existing time from metadata
-            if (parsed.data.metadata) {
-                const metadataParsed = TimeSpentMetadataSchema.safeParse(parsed.data.metadata)
-                if (metadataParsed.success && metadataParsed.data.nice_timeSpent !== undefined) {
-                    existingTime = metadataParsed.data.nice_timeSpent
-                }
-            }
-        }
-    }
-
-    // Calculate final time to write (ensure monotonic increase)
-    const newTime = Math.floor(params.finalSeconds)
-    const writeTime = existingTime !== undefined ? Math.max(existingTime, newTime) : newTime
-
-    logger.debug("upserting nice time spent to oneroster", {
-        kind: params.kind,
-        resultId,
-        existingTime,
-        newTime,
-        writeTime
-    })
-
-    const updatePayload = {
-        result: {
-            assessmentLineItem: { sourcedId: lineItemId, type: "assessmentLineItem" as const },
-            student: { sourcedId: params.userSourcedId, type: "user" as const },
-            scoreStatus: preservedStatus,
-            scoreDate: new Date().toISOString(),
-            score: preservedScore,
-            metadata: {
-                nice_timeSpent: writeTime,
-                lessonType: params.kind,
-                courseSourcedId: params.courseSourcedId
-            }
-        }
-    }
-
-    const putResult = await errors.try(oneroster.putResult(resultId, updatePayload))
-    if (putResult.error) {
-        logger.error("failed to write nice_timeSpent to oneroster", {
-            error: putResult.error,
-            kind: params.kind,
-            resultId,
-            userSourcedId: params.userSourcedId,
-            resourceSourcedId: params.resourceSourcedId,
-            writeTime
-        })
-        // Don't throw - this is a non-critical background operation
-    }
-}
+// DEPRECATED: use writeTimeToOneRoster from @/lib/caliper/writer
+export const upsertNiceTimeSpentToOneRoster = writeTimeToOneRoster
 
 // Server-only partial finalize: send only unreported delta and persist reported total
 export async function finalizeCaliperPartialTimeSpent(
-	clientUserSourcedId: string,
-	onerosterVideoResourceSourcedId: string,
-	videoTitle: string,
-	courseInfo: { subjectSlug: string; courseSlug: string }
+    clientUserSourcedId: string,
+    onerosterVideoResourceSourcedId: string,
+    videoTitle: string,
+    courseInfo: { subjectSlug: string; courseSlug: string },
+    userEmail: string
 ): Promise<void> {
-	const { userId } = await auth()
-	if (!userId) {
-		logger.error("caliper partial finalize: user not authenticated")
-		throw errors.new("user not authenticated")
-	}
-	const serverSourcedId = await getCurrentUserSourcedId(userId)
-	if (clientUserSourcedId !== serverSourcedId) {
-		logger.error("caliper partial finalize: sourcedId mismatch", { clientUserSourcedId, serverSourcedId })
-		throw errors.new("unauthorized sourcedId")
-	}
+    const { userId } = await auth()
+    if (!userId) {
+        logger.error("caliper partial finalize: user not authenticated")
+        throw errors.new("user not authenticated")
+    }
+    const serverSourcedId = await getCurrentUserSourcedId(userId)
+    if (clientUserSourcedId !== serverSourcedId) {
+        logger.error("caliper partial finalize: sourcedId mismatch", { clientUserSourcedId, serverSourcedId })
+        throw errors.new("unauthorized sourcedId")
+    }
 
-	const state = await getCaliperVideoWatchState(serverSourcedId, onerosterVideoResourceSourcedId)
+    const state = await getCaliperVideoWatchState(serverSourcedId, onerosterVideoResourceSourcedId)
 	if (!state) {
 		logger.debug("caliper partial finalize: no state found; skipping", {
-			user: serverSourcedId,
+			user: clientUserSourcedId,
 			videoId: onerosterVideoResourceSourcedId
 		})
 		return
 	}
 	if (state.finalizedAt) {
 		logger.debug("caliper partial finalize: already finalized; skipping", {
-			user: serverSourcedId,
+			user: clientUserSourcedId,
 			videoId: onerosterVideoResourceSourcedId
 		})
 		return
@@ -320,14 +197,15 @@ export async function finalizeCaliperPartialTimeSpent(
 	const deltaToReport = Math.max(0, state.cumulativeWatchTimeSeconds - alreadyReported)
 	if (deltaToReport <= 0) {
 		logger.debug("caliper partial finalize: no new delta; skipping", {
-			user: serverSourcedId,
+            user: serverSourcedId,
 			videoId: onerosterVideoResourceSourcedId
 		})
 		return
 	}
 
-	const { actor, context } = await buildCaliperPayloadForContent(
-		serverSourcedId,
+    const { actor, context } = await buildCaliperPayloadForContentWithEmail(
+        serverSourcedId,
+		userEmail,
 		onerosterVideoResourceSourcedId,
 		videoTitle,
 		courseInfo
@@ -335,7 +213,7 @@ export async function finalizeCaliperPartialTimeSpent(
 
 	logger.info("caliper partial finalize: sending delta", {
 		videoId: onerosterVideoResourceSourcedId,
-		user: serverSourcedId,
+        user: serverSourcedId,
 		delta: Math.floor(deltaToReport)
 	})
 
@@ -350,13 +228,13 @@ export async function finalizeCaliperPartialTimeSpent(
 		reportedWatchTimeSeconds: alreadyReported + deltaToReport,
 		lastServerSyncAt: new Date().toISOString()
 	}
-	const setStateResult = await errors.try(
-		setCaliperVideoWatchState(serverSourcedId, onerosterVideoResourceSourcedId, newState)
-	)
+    const setStateResult = await errors.try(
+        setCaliperVideoWatchState(serverSourcedId, onerosterVideoResourceSourcedId, newState)
+    )
 	if (setStateResult.error) {
 		logger.error("CRITICAL: caliper partial finalize: event sent but failed to persist state", {
 			videoId: onerosterVideoResourceSourcedId,
-			user: serverSourcedId,
+            user: serverSourcedId,
 			reportedDelta: deltaToReport,
 			error: setStateResult.error
 		})
@@ -365,16 +243,16 @@ export async function finalizeCaliperPartialTimeSpent(
 
 	logger.info("caliper partial finalize: reported delta and updated state", {
 		videoId: onerosterVideoResourceSourcedId,
-		user: serverSourcedId,
+        user: serverSourcedId,
 		reportedWatchTimeSeconds: newState.reportedWatchTimeSeconds
 	})
 
 	// Mirror cumulative time so gradebook reflects progress between sessions
 	const courseSourcedId = await resolveCourseSourcedId(courseInfo.courseSlug)
 	if (courseSourcedId) {
-		await upsertNiceTimeSpentToOneRoster({
+        await upsertNiceTimeSpentToOneRoster({
 			kind: "video",
-			userSourcedId: serverSourcedId,
+            userSourcedId: serverSourcedId,
 			resourceSourcedId: onerosterVideoResourceSourcedId,
 			courseSourcedId,
 			finalSeconds: newState.cumulativeWatchTimeSeconds
@@ -383,20 +261,26 @@ export async function finalizeCaliperPartialTimeSpent(
 }
 
 export async function finalizeCaliperTimeSpentEvent(
-	onerosterUserSourcedId: string,
-	onerosterVideoResourceSourcedId: string,
-	videoTitle: string,
-	courseInfo: { subjectSlug: string; courseSlug: string }
+    onerosterUserSourcedId: string,
+    onerosterVideoResourceSourcedId: string,
+    videoTitle: string,
+    courseInfo: { subjectSlug: string; courseSlug: string },
+    userEmail: string
 ) {
 	if (!redis) {
 		logger.error("caliper finalize: redis unavailable")
 		throw errors.new("persistence service unavailable")
 	}
-	const { userId: clerkUserId } = await auth()
-	if (!clerkUserId) {
-		logger.error("caliper finalize: user not authenticated")
-		throw errors.new("user not authenticated")
-	}
+    const { userId } = await auth()
+    if (!userId) {
+        logger.error("caliper finalize: user not authenticated")
+        throw errors.new("user not authenticated")
+    }
+    const serverSourcedId = await getCurrentUserSourcedId(userId)
+    if (onerosterUserSourcedId !== serverSourcedId) {
+        logger.error("caliper finalize: sourcedId mismatch", { clientUserSourcedId: onerosterUserSourcedId, serverSourcedId })
+        throw errors.new("unauthorized sourcedId")
+    }
 	const lockKey = getCaliperFinalizationLockKey(onerosterUserSourcedId, onerosterVideoResourceSourcedId)
 	const lockSet = await errors.try(redis.set(lockKey, "1", { EX: 30, NX: true }))
 	if (lockSet.error) {
@@ -418,8 +302,9 @@ export async function finalizeCaliperTimeSpentEvent(
 	const alreadyReported = state.reportedWatchTimeSeconds !== undefined ? state.reportedWatchTimeSeconds : 0
 	const deltaToReport = Math.max(0, state.cumulativeWatchTimeSeconds - alreadyReported)
 
-	const { actor, context } = await buildCaliperPayloadForContent(
+	const { actor, context } = await buildCaliperPayloadForContentWithEmail(
 		onerosterUserSourcedId,
+		userEmail,
 		onerosterVideoResourceSourcedId,
 		videoTitle,
 		courseInfo
@@ -1119,26 +1004,13 @@ export async function accumulateArticleReadTime(
 }
 
 export async function finalizeArticlePartialTimeSpent(
-	onerosterUserSourcedId: string,
-	onerosterArticleResourceSourcedId: string,
-	articleTitle: string,
-	courseInfo: { subjectSlug: string; courseSlug: string }
+    onerosterUserSourcedId: string,
+    onerosterArticleResourceSourcedId: string,
+    articleTitle: string,
+    courseInfo: { subjectSlug: string; courseSlug: string },
+    userEmail: string
 ): Promise<void> {
-	const { userId } = await auth()
-	if (!userId) {
-		logger.error("caliper partial finalize article: user not authenticated")
-		throw errors.new("user not authenticated")
-	}
-	const serverSourcedId = await getCurrentUserSourcedId(userId)
-	if (onerosterUserSourcedId !== serverSourcedId) {
-		logger.error("caliper partial finalize article: sourcedId mismatch", {
-			clientUserSourcedId: onerosterUserSourcedId,
-			serverSourcedId
-		})
-		throw errors.new("unauthorized sourcedId")
-	}
-
-	const state = await getCaliperArticleReadState(serverSourcedId, onerosterArticleResourceSourcedId)
+    const state = await getCaliperArticleReadState(onerosterUserSourcedId, onerosterArticleResourceSourcedId)
 	if (!state) {
 		logger.debug("article partial finalize: no state found", { articleId: onerosterArticleResourceSourcedId })
 		return
@@ -1153,16 +1025,17 @@ export async function finalizeArticlePartialTimeSpent(
 		return
 	}
 
-	const { actor, context } = await buildCaliperPayloadForContent(
-		serverSourcedId,
-		onerosterArticleResourceSourcedId,
-		articleTitle,
-		courseInfo
-	)
+    const { actor, context } = await buildCaliperPayloadForContentWithEmail(
+        onerosterUserSourcedId,
+        userEmail,
+        onerosterArticleResourceSourcedId,
+        articleTitle,
+        courseInfo
+    )
 
 	logger.info("article partial finalize: sending delta", {
 		articleId: onerosterArticleResourceSourcedId,
-		user: serverSourcedId,
+		user: onerosterUserSourcedId,
 		delta: Math.floor(deltaToReport)
 	})
 
@@ -1172,19 +1045,19 @@ export async function finalizeArticlePartialTimeSpent(
 		throw errors.wrap(sendResult.error, "caliper partial timespent article")
 	}
 
-	const newState: CaliperArticleReadState = {
+    const newState: CaliperArticleReadState = {
 		...state,
 		reportedReadTimeSeconds: state.reportedReadTimeSeconds + deltaToReport,
 		lastServerSyncAt: new Date().toISOString()
 	}
-	await setCaliperArticleReadState(serverSourcedId, onerosterArticleResourceSourcedId, newState)
+    await setCaliperArticleReadState(onerosterUserSourcedId, onerosterArticleResourceSourcedId, newState)
 
 	// Mirror cumulative time so gradebook reflects progress between sessions
-	const courseSourcedId = await resolveCourseSourcedId(courseInfo.courseSlug)
+    const courseSourcedId = await resolveCourseSourcedId(courseInfo.courseSlug)
 	if (courseSourcedId) {
 		await upsertNiceTimeSpentToOneRoster({
 			kind: "article",
-			userSourcedId: serverSourcedId,
+            userSourcedId: onerosterUserSourcedId,
 			resourceSourcedId: onerosterArticleResourceSourcedId,
 			courseSourcedId,
 			finalSeconds: newState.cumulativeReadTimeSeconds
@@ -1193,10 +1066,11 @@ export async function finalizeArticlePartialTimeSpent(
 }
 
 export async function finalizeArticleTimeSpentEvent(
-	onerosterUserSourcedId: string,
-	onerosterArticleResourceSourcedId: string,
-	articleTitle: string,
-	courseInfo: { subjectSlug: string; courseSlug: string }
+    onerosterUserSourcedId: string,
+    onerosterArticleResourceSourcedId: string,
+    articleTitle: string,
+    courseInfo: { subjectSlug: string; courseSlug: string },
+    userEmail: string
 ) {
 	if (!redis) {
 		logger.error("caliper finalize article: redis unavailable")
@@ -1249,10 +1123,16 @@ export async function finalizeArticleTimeSpentEvent(
 
 	const deltaToReport = Math.max(0, state.cumulativeReadTimeSeconds - state.reportedReadTimeSeconds)
 
-	if (deltaToReport > 0) {
-		const payloadResult = await errors.try(
-			buildCaliperPayloadForContent(onerosterUserSourcedId, onerosterArticleResourceSourcedId, articleTitle, courseInfo)
-		)
+    if (deltaToReport > 0) {
+        const payloadResult = await errors.try(
+            buildCaliperPayloadForContentWithEmail(
+                onerosterUserSourcedId,
+                userEmail,
+                onerosterArticleResourceSourcedId,
+                articleTitle,
+                courseInfo
+            )
+        )
 		if (payloadResult.error) {
 			await releaseLock()
 			logger.error("caliper finalize article: build payload failed", { error: payloadResult.error })

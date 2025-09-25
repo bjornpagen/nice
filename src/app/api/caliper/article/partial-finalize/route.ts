@@ -2,9 +2,8 @@ import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { z } from "zod"
 import { PartialFinalizeRequestSchema, type PartialFinalizeRequest } from "@/lib/schemas/caliper-article"
-import { finalizeArticlePartialTimeSpent } from "@/lib/actions/tracking"
+import { finalizeArticlePartialTimeSpentService } from "@/lib/services/caliper-article"
 import { getCurrentUserSourcedId } from "@/lib/authorization"
 import { redis } from "@/lib/redis"
 
@@ -51,12 +50,27 @@ export async function POST(request: Request) {
 	}
 
 	// Fire-and-forget call to the server action
-	void finalizeArticlePartialTimeSpent(
-		onerosterUserSourcedId,
-		onerosterArticleResourceSourcedId,
-		articleTitle,
-		courseInfo
-	).catch((error) => {
+    // Drill userEmail now (safe during live request)
+    let userEmail: string | undefined
+    if (userId) {
+        const userResult = await errors.try((await (await import("@clerk/nextjs/server")).clerkClient()).users.getUser(userId))
+        if (!userResult.error) {
+            userEmail = userResult.data.emailAddresses[0]?.emailAddress
+        }
+    }
+
+    if (!userEmail) {
+        logger.error("partial finalize: missing user email in request context")
+        return new NextResponse("Unauthorized", { status: 401 })
+    }
+
+    void finalizeArticlePartialTimeSpentService(
+        onerosterUserSourcedId,
+        onerosterArticleResourceSourcedId,
+        articleTitle,
+        courseInfo,
+        userEmail
+    ).catch((error) => {
 		logger.error("partial finalize failed", { error })
 	})
 

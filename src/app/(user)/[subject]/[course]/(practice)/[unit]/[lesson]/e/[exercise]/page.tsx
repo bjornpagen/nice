@@ -4,7 +4,7 @@ import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { connection } from "next/server"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
-import { finalizeArticleTimeSpentEvent } from "@/lib/actions/tracking"
+import { finalizeArticleTimeSpentEventService } from "@/lib/services/caliper-article"
 import { fetchExercisePageData } from "@/lib/data/content"
 import type { ExercisePageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
@@ -47,7 +47,7 @@ export default async function ExercisePage({
 		})
 
 	// --- NEW: Proactive Finalization for ALL preceding articles in window ---
-	const finalizeArticlesInWindow = async () => {
+	const finalizeArticlesInWindow = async (userEmail: string) => {
 		const [exerciseData, normalizedParams, userSourcedId] = await Promise.all([
 			exercisePromise,
 			normalizedParamsPromise,
@@ -87,11 +87,12 @@ export default async function ExercisePage({
 		// Finalize all articles in parallel
 		const finalizePromises = articles.map((article) =>
 			errors.try(
-				finalizeArticleTimeSpentEvent(
+				finalizeArticleTimeSpentEventService(
 					userSourcedId,
 					article.sourcedId,
 					article.title,
-					{ subjectSlug: normalizedParams.subject, courseSlug: normalizedParams.course }
+					{ subjectSlug: normalizedParams.subject, courseSlug: normalizedParams.course },
+					userEmail
 				)
 			)
 		);
@@ -109,7 +110,13 @@ export default async function ExercisePage({
 	}
 
 	// Fire and forget the finalization - don't wait for it
-	finalizeArticlesInWindow().catch((error) => {
+	const user = await currentUser()
+	const userEmail = user?.emailAddresses?.[0]?.emailAddress
+	if (!userEmail) {
+		logger.error("exercise page: missing user email at render")
+		throw errors.new("user email required")
+	}
+	finalizeArticlesInWindow(userEmail).catch((error) => {
 		logger.error("exercise finalization worker failed", { error })
 	})
 

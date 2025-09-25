@@ -3,7 +3,7 @@ import * as React from "react"
 import { fetchArticlePageData } from "@/lib/data/content"
 import type { ArticlePageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
-import { Content } from "./components/content"
+import { Content } from "@/app/(user)/[subject]/[course]/(practice)/[unit]/[lesson]/a/[article]/components/content"
 
 // --- REMOVED: The local ArticlePageData type definition ---
 
@@ -16,7 +16,7 @@ export default async function ArticlePage({
 	// Normalize URLs by replacing %3A with : (for Khan Academy IDs)
 	const normalizedParamsPromise = normalizeParams(params)
 
-	const articlePromise: Promise<ArticlePageData> = normalizedParamsPromise.then((normalizedParams) => 
+	const articlePromise: Promise<ArticlePageData> = normalizedParamsPromise.then((normalizedParams) =>
 		fetchArticlePageData({
 			article: normalizedParams.article,
 			lesson: normalizedParams.lesson,

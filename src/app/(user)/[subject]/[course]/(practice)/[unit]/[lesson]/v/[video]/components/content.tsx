@@ -39,6 +39,28 @@ export function Content({
 	const params = React.use(paramsPromise)
 	const { user } = useUser()
 	const { setCurrentResourceCompleted } = useLessonProgress()
+
+	// Validate Clerk metadata early and fail fast if missing required fields
+	if (!user?.publicMetadata) {
+		throw errors.new("clerk metadata: publicMetadata required")
+	}
+	const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+	if (!parsed.success) {
+		throw errors.wrap(parsed.error, "clerk metadata validation")
+	}
+	const parsedSourceId = parsed.data.sourceId
+	if (typeof parsedSourceId !== "string" || parsedSourceId.length === 0) {
+		throw errors.new("clerk metadata: sourceId required")
+	}
+	const onerosterUserSourcedId: string = parsedSourceId
+	const userEmail: string = (() => {
+		const email = user.emailAddresses?.[0]?.emailAddress
+		if (!email) {
+			throw errors.new("user email required")
+		}
+		return email
+	})()
+
 	// Transcript tab is intentionally hidden for now because transcript data is not hydrated.
 	// We keep "transcript" in the union type non-destructively so this is trivial to re-enable later.
 	const [activeTab, setActiveTab] = React.useState<"about" | "transcript">("about")
@@ -135,59 +157,37 @@ export function Content({
 		// Only send if watched at least 1 second
 		if (finalWatchTime < 1) return
 
-		// Validate user metadata
-		let sourceId: string | undefined
-		if (user?.publicMetadata) {
-			const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-			if (metadataValidation.success) {
-				sourceId = metadataValidation.data.sourceId
-			}
-		}
-
-		if (sourceId) {
-			// Server-built partial finalize to report only delta
-			void finalizeCaliperPartialTimeSpent(sourceId, video.id, video.title, {
-				subjectSlug: params.subject,
-				courseSlug: params.course
-			})
-			// Mark video as completed locally to enable Continue
-			setCurrentResourceCompleted(true)
-			hasSentFinalEventRef.current = true
-			if (!hasRefreshedForCompletionRef.current) {
-				hasRefreshedForCompletionRef.current = true
-				router.refresh()
-			}
+		// Server-built partial finalize to report only delta
+		void finalizeCaliperPartialTimeSpent(onerosterUserSourcedId, video.id, video.title, {
+			subjectSlug: params.subject,
+			courseSlug: params.course
+		}, userEmail)
+		// Mark video as completed locally to enable Continue
+		setCurrentResourceCompleted(true)
+		hasSentFinalEventRef.current = true
+		if (!hasRefreshedForCompletionRef.current) {
+			hasRefreshedForCompletionRef.current = true
+			router.refresh()
 		}
 	}
 
 	// Load saved progress when component mounts
 	React.useEffect(() => {
 		const loadSavedProgress = async () => {
-			// Validate user metadata
-			let onerosterUserSourcedId: string | undefined
-			if (user?.publicMetadata) {
-				const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-				if (metadataValidation.success) {
-					onerosterUserSourcedId = metadataValidation.data.sourceId
-				}
+			const result = await errors.try(getVideoProgress(video.id))
+			if (result.error) {
+				// Note: Failed to load video progress, starting from beginning
+				return
 			}
 
-			if (onerosterUserSourcedId) {
-				const result = await errors.try(getVideoProgress(video.id))
-				if (result.error) {
-					// Note: Failed to load video progress, starting from beginning
-					return
-				}
-
-				if (result.data) {
-					if (result.data.percentComplete >= VIDEO_COMPLETION_THRESHOLD_PERCENT) {
-						// Already completed previously; unlock Continue immediately and enable controls
-						setCurrentResourceCompleted(true)
-						setArePlayerControlsEnabled(true)
-					} else if (result.data.percentComplete > 0) {
-						// Note: Loaded saved video progress, will resume from this position
-						savedProgressRef.current = result.data
-					}
+			if (result.data) {
+				if (result.data.percentComplete >= VIDEO_COMPLETION_THRESHOLD_PERCENT) {
+					// Already completed previously; unlock Continue immediately and enable controls
+					setCurrentResourceCompleted(true)
+					setArePlayerControlsEnabled(true)
+				} else if (result.data.percentComplete > 0) {
+					// Note: Loaded saved video progress, will resume from this position
+					savedProgressRef.current = result.data
 				}
 			}
 		}
@@ -328,6 +328,8 @@ export function Content({
 					}
 				}
 				if (onerosterUserSourcedId) {
+					const userEmail = user?.emailAddresses?.[0]?.emailAddress
+					if (!userEmail) return
 					// Flush a last small accumulation delta if any clock is running
 					if (lastAccumulateAtRef.current) {
 						const sinceMs = Date.now() - lastAccumulateAtRef.current
@@ -352,7 +354,7 @@ export function Content({
 					void finalizeCaliperTimeSpentEvent(onerosterUserSourcedId, video.id, video.title, {
 						subjectSlug: params.subject,
 						courseSlug: params.course
-					})
+					}, userEmail)
 					hasSentFinalEventRef.current = true
 					return
 				}
@@ -369,22 +371,12 @@ export function Content({
 			// Only send if watched at least 1 second
 			if (finalWatchTime < 1) return
 
-			// Validate user metadata
-			let sourceId: string | undefined
-			if (user?.publicMetadata) {
-				const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-				if (metadataValidation.success) {
-					sourceId = metadataValidation.data.sourceId
-				}
-			}
-
-			if (sourceId) {
-				void finalizeCaliperPartialTimeSpent(sourceId, video.id, video.title, {
-					subjectSlug: params.subject,
-					courseSlug: params.course
-				})
-				hasSentFinalEventRef.current = true
-			}
+			// Use validated values
+			void finalizeCaliperPartialTimeSpent(onerosterUserSourcedId, video.id, video.title, {
+				subjectSlug: params.subject,
+				courseSlug: params.course
+			}, userEmail)
+			hasSentFinalEventRef.current = true
 		}
 	}, [user, video.title, video.id, params.subject, params.course])
 
@@ -592,9 +584,8 @@ export function Content({
 						<div className="flex space-x-8">
 							<button
 								type="button"
-								className={`pb-4 px-1 font-medium text-base transition-colors relative ${
-									activeTab === "about" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
-								}`}
+								className={`pb-4 px-1 font-medium text-base transition-colors relative ${activeTab === "about" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
+									}`}
 								onClick={() => setActiveTab("about")}
 							>
 								About
@@ -612,9 +603,8 @@ export function Content({
 							{false && (
 								<button
 									type="button"
-									className={`pb-4 px-1 font-medium text-base transition-colors relative ${
-										activeTab === "transcript" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
-									}`}
+									className={`pb-4 px-1 font-medium text-base transition-colors relative ${activeTab === "transcript" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
+										}`}
 									onClick={() => setActiveTab("transcript")}
 								>
 									Transcript
