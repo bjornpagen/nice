@@ -16,6 +16,9 @@ export const AssessmentResultMetadataSchema = z
 		attempt: z.number().int().optional(),
 		startedAt: z.string().datetime().optional(),
 		completedAt: z.string().datetime(),
+		// Optional per-content metadata
+		// nice_timeSpent captures watched seconds for passive content (e.g., video)
+		nice_timeSpent: z.number().int().optional(),
 		lessonType: z.string().optional(),
 		courseSourcedId: z.string(),
 		durationInSeconds: z.number().optional(),
