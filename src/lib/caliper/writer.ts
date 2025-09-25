@@ -89,6 +89,17 @@ export async function upsertNiceTimeSpentToOneRoster(params: {
             writeTime
         })
         // Don't throw - this is a non-critical background operation
+    } else {
+        logger.info("wrote nice time spent to oneroster", {
+            kind: params.kind,
+            resultId,
+            userSourcedId: params.userSourcedId,
+            resourceSourcedId: params.resourceSourcedId,
+            writeTime,
+            existingTime,
+            preservedScore,
+            preservedStatus
+        })
     }
 }
 

@@ -129,12 +129,24 @@ export async function finalizeArticlePartialTimeSpentService(
 
     const courseSourcedId = await resolveCourseSourcedIdLocal(courseInfo.courseSlug)
     if (courseSourcedId) {
+        logger.info("writing article time spent to oneroster", {
+            userSourcedId,
+            resourceSourcedId: onerosterArticleResourceSourcedId,
+            courseSourcedId,
+            finalSeconds: newState.cumulativeReadTimeSeconds
+        })
         await writeTimeToOneRoster({
             kind: "article",
             userSourcedId,
             resourceSourcedId: onerosterArticleResourceSourcedId,
             courseSourcedId,
             finalSeconds: newState.cumulativeReadTimeSeconds
+        })
+    } else {
+        logger.warn("skipping oneroster time spent write: course not found", {
+            courseSlug: courseInfo.courseSlug,
+            userSourcedId,
+            resourceSourcedId: onerosterArticleResourceSourcedId
         })
     }
 }
@@ -246,6 +258,12 @@ export async function finalizeArticleTimeSpentEventService(
 
     const courseSourcedId = await resolveCourseSourcedIdLocal(courseInfo.courseSlug)
     if (courseSourcedId) {
+        logger.info("writing article time spent to oneroster", {
+            userSourcedId,
+            resourceSourcedId: onerosterArticleResourceSourcedId,
+            courseSourcedId,
+            finalSeconds: finalState.cumulativeReadTimeSeconds
+        })
         await writeTimeToOneRoster({
             kind: "article",
             userSourcedId,
@@ -253,12 +271,26 @@ export async function finalizeArticleTimeSpentEventService(
             courseSourcedId,
             finalSeconds: finalState.cumulativeReadTimeSeconds
         })
+    } else {
+        logger.warn("skipping oneroster time spent write: course not found", {
+            courseSlug: courseInfo.courseSlug,
+            userSourcedId,
+            resourceSourcedId: onerosterArticleResourceSourcedId
+        })
     }
 }
 
 async function resolveCourseSourcedIdLocal(courseSlug: string): Promise<string | null> {
     const courseResult = await errors.try(getAllCoursesBySlug(courseSlug))
-    if (courseResult.error || !courseResult.data[0]) {
+    if (courseResult.error) {
+        logger.error("failed to resolve course sourced id", {
+            courseSlug,
+            error: courseResult.error
+        })
+        return null
+    }
+    if (!courseResult.data[0]) {
+        logger.warn("course not found for sourced id resolution", { courseSlug })
         return null
     }
     return courseResult.data[0].sourcedId

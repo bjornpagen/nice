@@ -250,12 +250,24 @@ export async function finalizeCaliperPartialTimeSpent(
 	// Mirror cumulative time so gradebook reflects progress between sessions
 	const courseSourcedId = await resolveCourseSourcedId(courseInfo.courseSlug)
 	if (courseSourcedId) {
+		logger.info("writing video time spent to oneroster", {
+			userSourcedId: serverSourcedId,
+			resourceSourcedId: onerosterVideoResourceSourcedId,
+			courseSourcedId,
+			finalSeconds: newState.cumulativeWatchTimeSeconds
+		})
         await upsertNiceTimeSpentToOneRoster({
 			kind: "video",
             userSourcedId: serverSourcedId,
 			resourceSourcedId: onerosterVideoResourceSourcedId,
 			courseSourcedId,
 			finalSeconds: newState.cumulativeWatchTimeSeconds
+		})
+	} else {
+		logger.warn("skipping oneroster time spent write: course not found", {
+			courseSlug: courseInfo.courseSlug,
+			userSourcedId: serverSourcedId,
+			resourceSourcedId: onerosterVideoResourceSourcedId
 		})
 	}
 }
@@ -337,12 +349,24 @@ export async function finalizeCaliperTimeSpentEvent(
 
 	const courseSourcedId = await resolveCourseSourcedId(courseInfo.courseSlug)
 	if (courseSourcedId) {
+		logger.info("writing video time spent to oneroster", {
+			userSourcedId: onerosterUserSourcedId,
+			resourceSourcedId: onerosterVideoResourceSourcedId,
+			courseSourcedId,
+			finalSeconds: finalState.cumulativeWatchTimeSeconds
+		})
 		await upsertNiceTimeSpentToOneRoster({
 			kind: "video",
 			userSourcedId: onerosterUserSourcedId,
 			resourceSourcedId: onerosterVideoResourceSourcedId,
 			courseSourcedId,
 			finalSeconds: finalState.cumulativeWatchTimeSeconds
+		})
+	} else {
+		logger.warn("skipping oneroster time spent write: course not found", {
+			courseSlug: courseInfo.courseSlug,
+			userSourcedId: onerosterUserSourcedId,
+			resourceSourcedId: onerosterVideoResourceSourcedId
 		})
 	}
 	const delResult = await errors.try(redis.del(lockKey))
@@ -1055,12 +1079,24 @@ export async function finalizeArticlePartialTimeSpent(
 	// Mirror cumulative time so gradebook reflects progress between sessions
     const courseSourcedId = await resolveCourseSourcedId(courseInfo.courseSlug)
 	if (courseSourcedId) {
+		logger.info("writing article time spent to oneroster", {
+			userSourcedId: onerosterUserSourcedId,
+			resourceSourcedId: onerosterArticleResourceSourcedId,
+			courseSourcedId,
+			finalSeconds: newState.cumulativeReadTimeSeconds
+		})
 		await upsertNiceTimeSpentToOneRoster({
 			kind: "article",
             userSourcedId: onerosterUserSourcedId,
 			resourceSourcedId: onerosterArticleResourceSourcedId,
 			courseSourcedId,
 			finalSeconds: newState.cumulativeReadTimeSeconds
+		})
+	} else {
+		logger.warn("skipping oneroster time spent write: course not found", {
+			courseSlug: courseInfo.courseSlug,
+			userSourcedId: onerosterUserSourcedId,
+			resourceSourcedId: onerosterArticleResourceSourcedId
 		})
 	}
 }
@@ -1172,12 +1208,24 @@ export async function finalizeArticleTimeSpentEvent(
 
 	const courseSourcedId = await resolveCourseSourcedId(courseInfo.courseSlug)
 	if (courseSourcedId) {
+		logger.info("writing article time spent to oneroster", {
+			userSourcedId: onerosterUserSourcedId,
+			resourceSourcedId: onerosterArticleResourceSourcedId,
+			courseSourcedId,
+			finalSeconds: finalState.cumulativeReadTimeSeconds
+		})
 		await upsertNiceTimeSpentToOneRoster({
 			kind: "article",
 			userSourcedId: onerosterUserSourcedId,
 			resourceSourcedId: onerosterArticleResourceSourcedId,
 			courseSourcedId,
 			finalSeconds: finalState.cumulativeReadTimeSeconds
+		})
+	} else {
+		logger.warn("skipping oneroster time spent write: course not found", {
+			courseSlug: courseInfo.courseSlug,
+			userSourcedId: onerosterUserSourcedId,
+			resourceSourcedId: onerosterArticleResourceSourcedId
 		})
 	}
 }
