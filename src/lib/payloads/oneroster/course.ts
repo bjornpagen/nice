@@ -542,6 +542,9 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 	}
 
 	for (const unit of units.sort((a, b) => a.ordering - b.ordering)) {
+		// REFACTOR: Track passive resource IDs for next exercise to enable pre-calculated XP banking
+		let passiveResourcesForNextExercise: string[] = []
+		
 		onerosterPayload.courseComponents.push({
 			sourcedId: `nice_${unit.id}`,
 			status: "active",
@@ -638,8 +641,26 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 
 			const lessonContentLinks = lessonContents
 				.filter((lc) => lc.lessonId === lesson.id)
-				.sort((a, b) => a.ordering - b.ordering)
-			for (const lc of lessonContentLinks) {
+				.sort((a, b) => {
+					// Primary sort by ordering
+					const orderDiff = a.ordering - b.ordering
+					if (orderDiff !== 0) return orderDiff
+					
+					// Secondary sort when ordering is the same: Video > Article > Exercise
+					// Videos come first (lowest), then Articles, then Exercises (highest)
+					const typeOrder: Record<string, number> = { 
+						Video: 0,    // Highest priority - comes first
+						Article: 1,  // Middle priority
+						Exercise: 2  // Lowest priority - comes last
+					}
+					const aType = typeOrder[a.contentType] ?? 999
+					const bType = typeOrder[b.contentType] ?? 999
+					return aType - bType
+				})
+			// Use index-based sortOrder to ensure uniqueness
+			for (let contentIndex = 0; contentIndex < lessonContentLinks.length; contentIndex++) {
+				const lc = lessonContentLinks[contentIndex]
+				if (!lc) continue
 				const content = contentMap.get(lc.contentId)
 				if (content) {
 					const contentSourcedId = `nice_${content.id}`
@@ -656,61 +677,75 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 							path: `/${subjectSlug}/${course.slug}/${unit.slug}/${lesson.slug}`
 						}
 
-						if (lc.contentType === "Article") {
-							// CHANGE: Convert Articles to interactive type
-							let articleXp: number | undefined
-							const articleXpResult = await errors.try(computeArticleXpFromStimulus(content.id))
-							if (articleXpResult.error) {
-								logger.error("qti xp: failed computing article xp from stimulus", {
-									articleId: content.id,
-									slug: content.slug,
-									error: articleXpResult.error
-								})
-								throw articleXpResult.error
-							}
-							articleXp = articleXpResult.data
-							metadata = {
-								...metadata,
-								type: "interactive",
-								toolProvider: "Nice Academy",
-								khanActivityType: "Article",
-								launchUrl: `${appDomain}${metadata.path}/a/${content.slug}`,
-								url: `${appDomain}${metadata.path}/a/${content.slug}`,
-								xp: articleXp
-							}
-						} else if (lc.contentType === "Video") {
-							// CHANGE: Convert Videos to interactive type
-							const videoData = videos.find((v) => v.id === content.id)
-							if (!videoData?.youtubeId) {
-								logger.error("CRITICAL: Missing youtubeId for video", { contentId: content.id, slug: content.slug })
-								throw errors.new("video metadata: youtubeId is required for interactive video resource")
-							}
-							// XP calculation: round to nearest minute (>= 7:30 => 8xp), no fallbacks
-							if (typeof videoData.duration !== "number") {
-								logger.error("CRITICAL: Missing duration for video", { contentId: content.id, slug: content.slug })
-								throw errors.new("video metadata: duration is required for interactive video resource")
-							}
-							const computedVideoXp = Math.max(1, Math.ceil(videoData.duration / 60))
-							metadata = {
-								...metadata,
-								type: "interactive",
-								toolProvider: "Nice Academy",
-								khanActivityType: "Video",
-								launchUrl: `${appDomain}${metadata.path}/v/${content.slug}`,
-								url: `${appDomain}${metadata.path}/v/${content.slug}`,
-								khanYoutubeId: videoData.youtubeId,
-								xp: computedVideoXp
-							}
-						} else if (lc.contentType === "Exercise") {
-							metadata = {
-								...metadata,
-								type: "interactive",
-								toolProvider: "Nice Academy",
-								khanActivityType: "Exercise",
-								launchUrl: `${appDomain}${metadata.path}/e/${content.slug}`,
-								url: `${appDomain}${metadata.path}/e/${content.slug}`,
-								xp: EXERCISE_XP
-							}
+					if (lc.contentType === "Article") {
+						// CHANGE: Convert Articles to interactive type
+						let articleXp: number | undefined
+						const articleXpResult = await errors.try(computeArticleXpFromStimulus(content.id))
+						if (articleXpResult.error) {
+							logger.error("qti xp: failed computing article xp from stimulus", {
+								articleId: content.id,
+								slug: content.slug,
+								error: articleXpResult.error
+							})
+							throw articleXpResult.error
+						}
+						articleXp = articleXpResult.data
+						metadata = {
+							...metadata,
+							type: "interactive",
+							toolProvider: "Nice Academy",
+							khanActivityType: "Article",
+							launchUrl: `${appDomain}${metadata.path}/a/${content.slug}`,
+							url: `${appDomain}${metadata.path}/a/${content.slug}`,
+							xp: articleXp
+						}
+						
+						// REFACTOR: Collect sourcedId of passive resource if it grants XP
+						if (articleXp > 0) {
+							passiveResourcesForNextExercise.push(contentSourcedId)
+						}
+					} else if (lc.contentType === "Video") {
+						// CHANGE: Convert Videos to interactive type
+						const videoData = videos.find((v) => v.id === content.id)
+						if (!videoData?.youtubeId) {
+							logger.error("CRITICAL: Missing youtubeId for video", { contentId: content.id, slug: content.slug })
+							throw errors.new("video metadata: youtubeId is required for interactive video resource")
+						}
+						// XP calculation: round to nearest minute (>= 7:30 => 8xp), no fallbacks
+						if (typeof videoData.duration !== "number") {
+							logger.error("CRITICAL: Missing duration for video", { contentId: content.id, slug: content.slug })
+							throw errors.new("video metadata: duration is required for interactive video resource")
+						}
+						const computedVideoXp = Math.max(1, Math.ceil(videoData.duration / 60))
+						metadata = {
+							...metadata,
+							type: "interactive",
+							toolProvider: "Nice Academy",
+							khanActivityType: "Video",
+							launchUrl: `${appDomain}${metadata.path}/v/${content.slug}`,
+							url: `${appDomain}${metadata.path}/v/${content.slug}`,
+							khanYoutubeId: videoData.youtubeId,
+							xp: computedVideoXp
+						}
+						
+						// REFACTOR: Collect sourcedId of passive resource if it grants XP
+						if (computedVideoXp > 0) {
+							passiveResourcesForNextExercise.push(contentSourcedId)
+						}
+					} else if (lc.contentType === "Exercise") {
+						metadata = {
+							...metadata,
+							type: "interactive",
+							toolProvider: "Nice Academy",
+							khanActivityType: "Exercise",
+							launchUrl: `${appDomain}${metadata.path}/e/${content.slug}`,
+							url: `${appDomain}${metadata.path}/e/${content.slug}`,
+							xp: EXERCISE_XP,
+							// REFACTOR: Attach the collected list of passive resource IDs
+							passiveResources: passiveResourcesForNextExercise
+						}
+						// REFACTOR: Reset the collector for the next group
+						passiveResourcesForNextExercise = []
 						}
 
 						// Attach CASE learning objectives to metadata when present
@@ -797,7 +832,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						title: componentTitle,
 						courseComponent: { sourcedId: `nice_${lesson.id}`, type: "courseComponent" },
 						resource: { sourcedId: contentSourcedId, type: "resource" },
-						sortOrder: lc.ordering
+						sortOrder: contentIndex  // Use index to ensure unique sortOrder
 					})
 				}
 			}
