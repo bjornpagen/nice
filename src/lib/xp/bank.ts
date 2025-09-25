@@ -621,64 +621,86 @@ export async function awardBankedXpForExercise(params: {
  * Computes a breakdown of banked XP for a quiz without performing any writes.
  * Returns separate totals for videos and articles based on the same eligibility
  * window. Now uses canonical nice_timeSpent from assessment results.
+ * Course-scoped for deterministic results when resources exist in multiple courses.
  */
 export async function getBankedXpBreakdownForQuiz(
 	quizResourceId: string,
-	userSourcedId: string
+	userSourcedId: string,
+	onerosterCourseSourcedId: string
 ): Promise<{ articleXp: number; videoXp: number }> {
-	logger.info("computing banked xp breakdown for quiz", { quizResourceId, userSourcedId })
+	logger.info("computing banked xp breakdown for quiz", { 
+		quizResourceId, 
+		userSourcedId,
+		onerosterCourseSourcedId 
+	})
 
 	const userId = extractUserSourcedId(userSourcedId)
 
-	// 1. Locate quiz component resource to derive unit and sort order context
-	// Note: We don't have courseSourcedId here, so we need to fetch all CRs and filter
-	// TODO: This should be refactored to pass courseSourcedId and use getComponentResourceForResourceInCourse
-	const { getAllComponentResources } = await import("@/lib/data/fetchers/oneroster")
-	const allCrResult = await errors.try(
-		getAllComponentResources()
+	// 1. Locate quiz component resource scoped to the course
+	const componentResourceResult = await errors.try(
+		getComponentResourceForResourceInCourse(onerosterCourseSourcedId, quizResourceId)
 	)
-	if (allCrResult.error) {
-		logger.error("all component resources fetch failed", { error: allCrResult.error })
-		throw errors.wrap(allCrResult.error, "all component resources fetch")
-	}
-	// Filter to only the quiz resource
-	const quizCrs = allCrResult.data.filter(cr => cr.resource.sourcedId === quizResourceId)
-	
-	if (quizCrs.length === 0) {
-		logger.warn("could not find component resource for quiz", { quizResourceId })
-		return { articleXp: 0, videoXp: 0 }
-	}
-	if (quizCrs.length > 1) {
-		logger.warn("multiple component resources found for quiz", { 
-			quizResourceId,
-			candidates: quizCrs.map(cr => ({
-				componentResourceId: cr.sourcedId,
-				courseComponentId: cr.courseComponent.sourcedId
-			}))
+	if (componentResourceResult.error) {
+		logger.error("quiz component resource fetch failed", { 
+			error: componentResourceResult.error,
+			courseSourcedId: onerosterCourseSourcedId,
+			quizResourceId
 		})
+		throw errors.wrap(componentResourceResult.error, "quiz component resource fetch")
 	}
-	const quizComponentResource = quizCrs[0]
+	const quizComponentResource = componentResourceResult.data
 	if (!quizComponentResource) {
-		logger.error("CRITICAL: quiz component resource is undefined", { quizResourceId })
+		logger.error("CRITICAL: quiz component resource is undefined after fetch", {
+			courseSourcedId: onerosterCourseSourcedId,
+			quizResourceId
+		})
 		throw errors.new("quiz component resource undefined")
 	}
 	
-	const parentUnitId = quizComponentResource.courseComponent.sourcedId
+	// Determine the unit from the quiz's courseComponent
+	const quizCourseComponentId = quizComponentResource.courseComponent.sourcedId
+	const quizComponentResult = await errors.try(
+		getCourseComponentsBySourcedId(quizCourseComponentId)
+	)
+	if (quizComponentResult.error) {
+		logger.error("quiz course component fetch failed", {
+			error: quizComponentResult.error,
+			quizCourseComponentId
+		})
+		throw errors.wrap(quizComponentResult.error, "quiz course component fetch")
+	}
+	const quizCourseComponent = quizComponentResult.data[0]
+	const parentUnitId = quizCourseComponent?.parent?.sourcedId
 	const quizSortOrder = quizComponentResource.sortOrder
+	
+	if (!parentUnitId) {
+		logger.error("CRITICAL: quiz has no parent unit", {
+			quizCourseComponentId,
+			quizResourceId
+		})
+		throw errors.new("quiz has no parent unit")
+	}
 
 	// 2. Get all component resources for the unit to find the previous quiz boundary
-	// Filter from the already fetched component resources
-	const unitCrResult = {
-		data: allCrResult.data.filter(cr => cr.courseComponent.sourcedId === parentUnitId),
-		error: null
+	// First get all CRs for the course, then filter to unit
+	const courseCrResult = await errors.try(
+		getComponentResourcesForCourse(onerosterCourseSourcedId)
+	)
+	if (courseCrResult.error) {
+		logger.error("course component resources fetch failed", { 
+			error: courseCrResult.error, 
+			courseSourcedId: onerosterCourseSourcedId 
+		})
+		throw errors.wrap(courseCrResult.error, "course component resources fetch")
 	}
-	if (unitCrResult.error) {
-		logger.error("unit component resources fetch failed", { error: unitCrResult.error, parentUnitId })
-		throw errors.wrap(unitCrResult.error, "unit component resources fetch")
-	}
+	
+	// Filter to only unit-level CRs
+	const unitCrs = courseCrResult.data.filter(
+		cr => cr.courseComponent.sourcedId === parentUnitId
+	)
 
 	// Fetch resources metadata for quiz detection
-	const unitResourceIds = unitCrResult.data.map((cr) => cr.resource.sourcedId)
+	const unitResourceIds = unitCrs.map((cr) => cr.resource.sourcedId)
 	const unitResourcesResult = await errors.try(
 		getResourcesByIds(unitResourceIds)
 	)
@@ -696,7 +718,7 @@ export async function getBankedXpBreakdownForQuiz(
 	}
 
 	let previousQuizSortOrder = -1
-	for (const cr of unitCrResult.data) {
+	for (const cr of unitCrs) {
 		const resource = resourceMap.get(cr.resource.sourcedId)
 		const isQuizResource =
 			resource?.metadata?.khanLessonType === "quiz" || resource?.metadata?.khanActivityType === "Quiz"

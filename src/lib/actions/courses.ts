@@ -18,11 +18,6 @@ import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 // Move org id constant up so helpers below can use it safely
 const ONEROSTER_ORG_ID = "f251f08b-61de-4ffa-8ff3-3e56e1d75a60"
 
-// DEPRECATED: This action was ambiguous and could lead to destructive behavior.
-export async function saveUserCourses(_: string[]) {
-	logger.error("saveUserCourses deprecated use setUserEnrollmentsByCourseId or enrollUserInCoursesByCourseId")
-	throw errors.new("saveUserCourses deprecated use setUserEnrollmentsByCourseId or enrollUserInCoursesByCourseId")
-}
 
 type UpdateEnrollmentsResult = { success: true; changed: boolean; message?: string }
 

@@ -44,12 +44,6 @@ function normalizeResourceIdFromActivityId(activityId: string | undefined): stri
 	return activityId
 }
 
-// computeBankingMinutes has been moved to src/lib/xp/bank.ts
-// as part of the banked XP refactoring to use canonical nice_timeSpent
-
-// DEPRECATED: Event-based time spent filtering removed.
-// The banked XP system now uses canonical nice_timeSpent from assessment results.
-
 /**
  * Filters events to only include Completed events from Nice Academy
  */
@@ -60,9 +54,6 @@ function filterCompletedEventsFromNiceAcademy(
 		return event.action === "Completed" && event.object.app.name === "Nice Academy"
 	})
 }
-
-// DEPRECATED: Event-based time aggregation removed.
-// The banked XP system now uses canonical nice_timeSpent from assessment results.
 
 // --- Raw Event Fetchers ---
 
@@ -77,14 +68,6 @@ export async function getAllEventsForUser(actorId: string) {
 }
 
 // --- Specialized Filtered Fetchers ---
-
-// DEPRECATED: getTimeSpentEventsForResources removed.
-// The banked XP system now uses canonical nice_timeSpent from assessment results
-// instead of aggregating Caliper events.
-
-// DEPRECATED: getAggregatedTimeSpentByResource removed.
-// The banked XP system now uses canonical nice_timeSpent from assessment results
-// instead of aggregating Caliper events.
 
 /**
  * Gets completed events from Nice Academy for progress page calculations
@@ -108,8 +91,3 @@ export async function getCompletedEventsFromNiceAcademy(actorId: string) {
 
 	return redisCache(operation, ["caliper-getCompletedEventsFromNiceAcademy", actorId], { revalidate: 60 }) // 1 minute cache
 }
-
-// DEPRECATED: calculateBankedXpForResources removed.
-// The banked XP calculation has been completely refactored in src/lib/xp/bank.ts
-// to use canonical nice_timeSpent from assessment results instead of aggregating
-// Caliper events. This makes the system 1000x more reliable.
