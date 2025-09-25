@@ -63,16 +63,20 @@ export async function POST(request: Request) {
         return new NextResponse("Unauthorized", { status: 401 })
     }
 
-	// Fire-and-forget call to the server action
-	void finalizeArticlePartialTimeSpentService(
-		onerosterUserSourcedId,
-		onerosterArticleResourceSourcedId,
-		articleTitle,
-		courseInfo,
-		userEmail
-	).catch((error) => {
-		logger.error("partial finalize failed", { error })
-	})
+	// Make synchronous for reliability and logging
+	const serviceResult = await errors.try(
+		finalizeArticlePartialTimeSpentService(
+			onerosterUserSourcedId,
+			onerosterArticleResourceSourcedId,
+			articleTitle,
+			courseInfo,
+			userEmail
+		)
+	)
+	if (serviceResult.error) {
+		logger.error("partial finalize failed", { error: serviceResult.error })
+		return new NextResponse("Internal Server Error", { status: 500 })
+	}
 
 	return new NextResponse(null, { status: 204 })
 }

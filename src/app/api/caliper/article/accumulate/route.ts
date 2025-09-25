@@ -35,14 +35,18 @@ export async function POST(request: Request) {
 		return new NextResponse("Unauthorized", { status: 401 })
 	}
 
-	// Fire-and-forget call to the service (no auth inside)
-	void accumulateArticleReadTimeService(
-		serverSourcedId,
-		onerosterArticleResourceSourcedId,
-		sessionDeltaSeconds
-	).catch((error) => {
-		logger.error("accumulate article read time failed", { error })
-	})
+	// Make synchronous for reliability and logging
+	const serviceResult = await errors.try(
+		accumulateArticleReadTimeService(
+			serverSourcedId,
+			onerosterArticleResourceSourcedId,
+			sessionDeltaSeconds
+		)
+	)
+	if (serviceResult.error) {
+		logger.error("accumulate article read time failed", { error: serviceResult.error })
+		return new NextResponse("Internal Server Error", { status: 500 })
+	}
 
 	return new NextResponse(null, { status: 204 })
 }
