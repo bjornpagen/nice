@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import { computeBankingMinutes } from "@/lib/data/fetchers/caliper"
+import { computeBankingMinutes } from "@/lib/xp/bank"
 
 // Focused unit test: verify banking uses ceil semantics with a 20s floor.
 // This avoids networked Caliper fetches and isolates the rounding policy

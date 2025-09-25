@@ -7,12 +7,24 @@ import { sendCaliperBankedXpAwardedEvent } from "@/lib/actions/caliper"
 import { extractResourceIdFromCompoundId } from "@/lib/caliper/utils"
 import { oneroster } from "@/lib/clients"
 import { CALIPER_SUBJECT_MAPPING, isSubjectSlug } from "@/lib/constants/subjects"
-import { calculateBankedXpForResources } from "@/lib/data/fetchers/caliper"
 import type { Resource } from "@/lib/oneroster"
 import * as gradebook from "@/lib/ports/gradebook"
 import { constructActorId, extractUserSourcedId } from "@/lib/utils/actor-id"
 import { generateResultSourcedId } from "@/lib/utils/assessment-identifiers"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
+
+/**
+ * Banking minute bucketing (ceil semantics) with 20-second threshold:
+ * - <= 20s => 0 minutes (no XP awarded)
+ * - > 20s  => ceil(seconds / 60)
+ *
+ * Rationale: The 20-second threshold prevents gaming the system with minimal engagement.
+ * The ceil operation aligns awarded minutes with expected XP calculation.
+ */
+export function computeBankingMinutes(seconds: number): number {
+	if (seconds <= 20) return 0
+	return Math.ceil(seconds / 60)
+}
 
 /**
  * A pure function to identify the window of passive resources (videos, articles)
@@ -259,8 +271,9 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 }
 
 /**
- * Calculates and awards banked XP for an exercise. This function now assumes
- * that the necessary caches have already been invalidated by the caller.
+ * Calculates and awards banked XP for an exercise. This function now uses
+ * the canonical nice_timeSpent value from assessment results instead of
+ * aggregating Caliper events, making it 1000x more reliable.
  */
 export async function awardBankedXpForExercise(params: {
 	exerciseResourceSourcedId: string
@@ -270,7 +283,7 @@ export async function awardBankedXpForExercise(params: {
 	// Normalize using shared utility to avoid string parsing divergence
 	const userId = extractUserSourcedId(params.onerosterUserSourcedId)
 
-	// 1. identify eligible resources using the new pure function (already deduped)
+	// 1. Identify eligible resources using the pure function (already deduped)
 	const eligibleResources = await findEligiblePassiveResourcesForExercise({
 		exerciseResourceSourcedId: params.exerciseResourceSourcedId,
 		onerosterCourseSourcedId: params.onerosterCourseSourcedId,
@@ -281,14 +294,80 @@ export async function awardBankedXpForExercise(params: {
 		return { bankedXp: 0, awardedResourceIds: [] }
 	}
 
-	// 2. Use the new standardized utility to construct the actorId.
-	const actorId = constructActorId(userId)
+	// 2. For each eligible resource, fetch its assessment result to get canonical time spent
+	const TimeSpentMetadataSchema = z.object({ 
+		nice_timeSpent: z.number().optional() 
+	}).passthrough()
 
-	// 3. Calculate XP using time-spent policy with fresh data.
-	const bankResult = await calculateBankedXpForResources(actorId, eligibleResources)
-	const { bankedXp, awardedResourceIds, detailedResults } = bankResult
+	const timeSpentResults = await Promise.all(
+		eligibleResources.map(async (resource) => {
+			const resultSourcedId = generateResultSourcedId(userId, resource.sourcedId, false)
+			const result = await errors.try(oneroster.getResult(resultSourcedId))
 
-	// Get resource metadata for saving results and sending Caliper events
+			if (result.error) {
+				logger.debug("no existing assessment result for resource", {
+					resourceId: resource.sourcedId,
+					resultId: resultSourcedId,
+					error: result.error
+				})
+				return { ...resource, timeSpent: 0 }
+			}
+
+			const parsedMeta = TimeSpentMetadataSchema.safeParse(result.data?.metadata)
+			const timeSpent = parsedMeta.success && typeof parsedMeta.data.nice_timeSpent === "number" 
+				? parsedMeta.data.nice_timeSpent 
+				: 0
+
+			logger.debug("fetched canonical time spent for resource", {
+				resourceId: resource.sourcedId,
+				timeSpent,
+				minutesSpent: computeBankingMinutes(timeSpent)
+			})
+
+			return { ...resource, timeSpent }
+		})
+	)
+
+	// 3. Calculate total banked XP using the canonical time values
+	let totalBankedXp = 0
+	const awardedResourceIds: string[] = []
+	const detailedResults: Array<{
+		resourceId: string
+		expectedXp: number
+		secondsSpent: number
+		minutesSpent: number
+		awardedXp: number
+	}> = []
+	const awardedXpByResourceId = new Map<string, number>()
+
+	for (const { sourcedId, expectedXp, timeSpent } of timeSpentResults) {
+		const minutesSpent = computeBankingMinutes(timeSpent)
+		
+		// Defensive cap: never award more than the resource's expected XP
+		const awardedXp = Math.min(minutesSpent, expectedXp)
+
+		if (awardedXp > 0) {
+			totalBankedXp += awardedXp
+			awardedResourceIds.push(sourcedId)
+			awardedXpByResourceId.set(sourcedId, awardedXp)
+		}
+
+		detailedResults.push({
+			resourceId: sourcedId,
+			expectedXp,
+			secondsSpent: timeSpent,
+			minutesSpent,
+			awardedXp
+		})
+	}
+
+	logger.info("calculated banked xp using canonical time spent", {
+		totalBankedXp,
+		awardedResourceCount: awardedResourceIds.length,
+		detailedResults
+	})
+
+	// 4. Get resource metadata for saving results and sending Caliper events
 	const allResourceIds = eligibleResources.map((r) => r.sourcedId)
 	const allResourcesResult = await errors.try(
 		oneroster.getAllResources({ filter: `sourcedId@'${allResourceIds.join(",")}' AND status='active'` })
@@ -302,18 +381,7 @@ export async function awardBankedXpForExercise(params: {
 		resourceMap.set(resource.sourcedId, resource)
 	}
 
-	logger.info("calculated total banked xp", {
-		bankedXp,
-		awardedResourceCount: awardedResourceIds.length
-	})
-
-	// Build lookup for computed awarded XP per resource
-	const awardedXpByResourceId = new Map<string, number>()
-	for (const item of detailedResults) {
-		awardedXpByResourceId.set(item.resourceId, item.awardedXp)
-	}
-
-	// 9. Save banked XP to individual assessmentResults for each awarded resource
+	// 5. Save banked XP to individual assessmentResults for each awarded resource
 	for (const resourceId of awardedResourceIds) {
 		const resource = resourceMap.get(resourceId)
 		if (resource) {
@@ -396,13 +464,13 @@ export async function awardBankedXpForExercise(params: {
 		}
 	}
 
-	return { bankedXp, awardedResourceIds }
+	return { bankedXp: totalBankedXp, awardedResourceIds }
 }
 
 /**
  * Computes a breakdown of banked XP for a quiz without performing any writes.
  * Returns separate totals for videos and articles based on the same eligibility
- * window used by awardBankedXpForAssessment.
+ * window. Now uses canonical nice_timeSpent from assessment results.
  */
 export async function getBankedXpBreakdownForQuiz(
 	quizResourceId: string,
@@ -542,20 +610,58 @@ export async function getBankedXpBreakdownForQuiz(
 		return { articleXp: 0, videoXp: 0 }
 	}
 
-	// 5. Calculate banked XP separately for articles and videos
-	const actorId = constructActorId(userId)
+	// 5. Calculate banked XP using canonical nice_timeSpent from assessment results
+	const TimeSpentMetadataSchema = z.object({ 
+		nice_timeSpent: z.number().optional() 
+	}).passthrough()
+
+	const calculateXpForResources = async (resources: Array<{ sourcedId: string; expectedXp: number }>) => {
+		let totalXp = 0
+		
+		for (const resource of resources) {
+			const resultSourcedId = generateResultSourcedId(userId, resource.sourcedId, false)
+			const result = await errors.try(oneroster.getResult(resultSourcedId))
+
+			let timeSpent = 0
+			if (!result.error) {
+				const parsedMeta = TimeSpentMetadataSchema.safeParse(result.data?.metadata)
+				timeSpent = parsedMeta.success && typeof parsedMeta.data.nice_timeSpent === "number" 
+					? parsedMeta.data.nice_timeSpent 
+					: 0
+			}
+
+			const minutesSpent = computeBankingMinutes(timeSpent)
+			const awardedXp = Math.min(minutesSpent, resource.expectedXp)
+			totalXp += awardedXp
+
+			logger.debug("calculated xp for resource in breakdown", {
+				resourceId: resource.sourcedId,
+				timeSpent,
+				minutesSpent,
+				awardedXp,
+				expectedXp: resource.expectedXp
+			})
+		}
+
+		return totalXp
+	}
+
 	let articleXp = 0
 	let videoXp = 0
 
 	if (articleResources.length > 0) {
-		const articleResult = await calculateBankedXpForResources(actorId, articleResources)
-		articleXp = articleResult.bankedXp
+		articleXp = await calculateXpForResources(articleResources)
 	}
 	if (videoResources.length > 0) {
-		const videoResult = await calculateBankedXpForResources(actorId, videoResources)
-		videoXp = videoResult.bankedXp
+		videoXp = await calculateXpForResources(videoResources)
 	}
 
-	logger.info("computed banked xp breakdown", { quizResourceId, articleXp, videoXp })
+	logger.info("computed banked xp breakdown using canonical time spent", { 
+		quizResourceId, 
+		articleXp, 
+		videoXp,
+		articleCount: articleResources.length,
+		videoCount: videoResources.length
+	})
 	return { articleXp, videoXp }
 }

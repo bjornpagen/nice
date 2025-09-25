@@ -75,6 +75,30 @@ mock.module("@/lib/caliper/utils", () => ({
 	extractResourceIdFromCompoundId: (id: string) => id
 }))
 
+// Mock user ID extraction
+mock.module("@/lib/utils/actor-id", () => ({
+	extractUserSourcedId: (id: string) => {
+		// If ID already has prefix, strip it
+		if (id.startsWith("user:")) {
+			return id.substring(5)
+		}
+		return id
+	},
+	constructActorId: (id: string) => `actor:${id}`
+}))
+
+// Mock assessment identifiers
+mock.module("@/lib/utils/assessment-identifiers", () => ({
+	generateResultSourcedId: (userId: string, resourceId: string, isInteractive: boolean) => {
+		return `nice_${userId}_${resourceId}_ali`
+	}
+}))
+
+// Mock assessment line items
+mock.module("@/lib/utils/assessment-line-items", () => ({
+	getAssessmentLineItemId: (resourceId: string) => `${resourceId}_ali`
+}))
+
 // Mock gradebook save to avoid I/O and persist to in-memory map
 mock.module("@/lib/ports/gradebook", () => ({
 	saveResult: (args: GradebookSaveArgs) => {
@@ -83,20 +107,7 @@ mock.module("@/lib/ports/gradebook", () => ({
 	}
 }))
 
-// Mock banked XP calculator to award 1 XP per eligible passive and echo IDs
-mock.module("@/lib/data/fetchers/caliper", () => ({
-	calculateBankedXpForResources: (
-		_actorId: string,
-		passiveResources: Array<{ sourcedId: string; expectedXp: number }>
-	) => {
-		const detailedResults = passiveResources.map((r) => ({ resourceId: r.sourcedId, awardedXp: 1 }))
-		return Promise.resolve({
-			bankedXp: passiveResources.length,
-			awardedResourceIds: passiveResources.map((r) => r.sourcedId),
-			detailedResults
-		})
-	}
-}))
+// Removed - will be merged into existing @/lib/clients mock below
 
 // Avoid real analytics side-effects
 mock.module("@/lib/actions/caliper", () => ({
@@ -183,9 +194,38 @@ mock.module("@/lib/clients", () => ({
 			const rows = ids.map((id) => db[id]).filter((v): v is Resource => Boolean(v))
 			return Promise.resolve(rows)
 		},
-		// 4) Dedupe check per resource/user from in-memory map
-		getResult: (resultSourcedId: string): Promise<{ metadata: Record<string, unknown> }> =>
-			Promise.resolve(inMemoryResults.get(resultSourcedId) ?? { metadata: {} }),
+		// 4) Dedupe check per resource/user from in-memory map and simulate time spent
+		getResult: (resultSourcedId: string): Promise<{ metadata: Record<string, unknown> } | null> => {
+			// First check in-memory results (for dedupe testing)
+			const existing = inMemoryResults.get(resultSourcedId)
+			if (existing) {
+				return Promise.resolve(existing)
+			}
+			
+			// The result ID format should be: nice_userId_resourceId_ali
+			// Since we mocked generateResultSourcedId to return this format
+			const parts = resultSourcedId.split("_")
+			
+			// Find the part that looks like a resource ID (A1, TRAIL, etc)
+			let resourceId = ""
+			for (const part of parts) {
+				if (part === "A1" || part === "TRAIL") {
+					resourceId = part
+					break
+				}
+			}
+			
+			// Simulate time spent for known passive resources
+			if (resourceId === "A1" || resourceId === "TRAIL") {
+				const result = {
+					metadata: { nice_timeSpent: 60 } // 60 seconds = 1 minute = 1 XP
+				}
+				return Promise.resolve(result)
+			}
+			
+			// No result found
+			return Promise.resolve(null)
+		},
 		// 5) User fetch for caliper event
 		getAllUsers: (_args: { filter: string }) => Promise.resolve([{ sourcedId: "u1", email: "user@example.com" }])
 	}
@@ -198,14 +238,25 @@ function getAssessmentLineItemId(resourceId: string): string {
 function generateResultSourcedId(userSourcedId: string, resourceId: string): string {
 	return `nice_${userSourcedId}_${getAssessmentLineItemId(resourceId)}`
 }
+// Use the real implementation from bank.ts instead of reimplementing
 async function awardBankedXpForExercise(params: {
+	exerciseResourceSourcedId: string
+	onerosterUserSourcedId: string
+	onerosterCourseSourcedId: string
+}): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
+	const { awardBankedXpForExercise: realImplementation } = await import("@/lib/xp/bank")
+	return realImplementation(params)
+}
+
+// Original test implementation (kept for reference but not used)
+async function OLD_awardBankedXpForExercise(params: {
 	exerciseResourceSourcedId: string
 	onerosterUserSourcedId: string
 	onerosterCourseSourcedId: string
 }): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
 	const { extractResourceIdFromCompoundId } = await import("@/lib/caliper/utils")
 	const { oneroster } = await import("@/lib/clients")
-	const { calculateBankedXpForResources } = await import("@/lib/data/fetchers/caliper")
+	// calculateBankedXpForResources removed - now integrated into awardBankedXpForExercise
 
 	const exerciseResourceId = extractResourceIdFromCompoundId(params.exerciseResourceSourcedId)
 	const crRows = await oneroster.getAllComponentResources({
@@ -280,7 +331,9 @@ async function awardBankedXpForExercise(params: {
 	if (eligible.length === 0) return { bankedXp: 0, awardedResourceIds: [] }
 
 	const actorId = `actor:${userId}`
-	const bank = await calculateBankedXpForResources(actorId, eligible)
+	// const bank = await calculateBankedXpForResources(actorId, eligible)
+	// Simulate the old behavior for reference
+	const bank = { bankedXp: eligible.length, awardedResourceIds: eligible.map(r => r.sourcedId), detailedResults: [] }
 	for (const rid of bank.awardedResourceIds) {
 		const resultSourcedId = generateResultSourcedId(userId, rid)
 		await (await import("@/lib/ports/gradebook")).saveResult({
@@ -311,7 +364,7 @@ async function awardBankedXpForUnitCompletion(params: {
 	onerosterCourseSourcedId: string
 	unitData: import("@/lib/types/domain").Unit
 }): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
-	const { calculateBankedXpForResources } = await import("@/lib/data/fetchers/caliper")
+	// calculateBankedXpForResources removed - now integrated into awardBankedXpForExercise
 	const userId = params.onerosterUserSourcedId
 	const passive: Array<{ sourcedId: string; expectedXp: number }> = []
 	for (const child of params.unitData.children) {
@@ -332,7 +385,9 @@ async function awardBankedXpForUnitCompletion(params: {
 	}
 	if (eligible.length === 0) return { bankedXp: 0, awardedResourceIds: [] }
 	const actorId = `actor:${userId}`
-	const bank = await calculateBankedXpForResources(actorId, eligible)
+	// const bank = await calculateBankedXpForResources(actorId, eligible)
+	// Simulate the old behavior for reference
+	const bank = { bankedXp: eligible.length, awardedResourceIds: eligible.map(r => r.sourcedId), detailedResults: [] }
 	for (const rid of bank.awardedResourceIds) {
 		const resultSourcedId = generateResultSourcedId(userId, rid)
 		await (await import("@/lib/ports/gradebook")).saveResult({
