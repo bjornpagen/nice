@@ -509,12 +509,7 @@ export async function updateVideoProgress(
 			student: { sourcedId: onerosterUserSourcedId, type: "user" as const },
 			scoreStatus: finalStatus,
 			scoreDate: new Date().toISOString(),
-			score: finalScore,
-			metadata: {
-				nice_timeSpent: Math.floor(currentTime),
-				courseSourcedId: courseInfo.courseSlug,
-				lessonType: "video"
-			}
+			score: finalScore
 		}
 	}
 
