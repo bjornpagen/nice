@@ -6,6 +6,7 @@ import { helloWorld } from "@/inngest/functions/hello"
 import { orchestrateHardcodedHistoryItemMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-item-migration"
 import { orchestrateHardcodedHistoryOnerosterIngestion } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-oneroster-ingestion"
 import { orchestrateHardcodedHistoryQAReview } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-qa-review"
+import { orchestrateAllHardcodedOnerosterIngestion } from "@/inngest/functions/migrations/orchestrate-all-hardcoded-oneroster-ingestion"
 import { orchestrateHardcodedHistoryQtiGenerateUndifferentiated } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-qti-generate-undifferentiated"
 import { orchestrateHardcodedHistoryQtiUpload } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-qti-upload"
 import { orchestrateHardcodedHistoryStimulusMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-stimulus-migration"
@@ -100,6 +101,8 @@ export const { GET, POST, PUT } = serve({
 		orchestrateHardcodedHistoryOnerosterIngestion,
 		orchestrateHardcodedHistoryQtiGenerateUndifferentiated,
 		orchestrateHardcodedHistoryQtiUpload,
+		// All hardcoded courses orchestrator
+		orchestrateAllHardcodedOnerosterIngestion,
 		// ❌ REMOVED: Obsolete undifferentiated math qti generation
 		// orchestrateHardcodedMathQtiGenerateUndifferentiated,
 		// ✅ REMOVED: Old differentiated ingest is no longer registered.

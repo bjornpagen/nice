@@ -126,14 +126,14 @@ export const HARDCODED_SCIENCE_COURSE_IDS = [
 ] as const
 
 export const HARDCODED_HISTORY_COURSE_IDS = [
-	// "x71a94f19", // us-history
-	// "xb87a304a", // ap-us-history
-	// "x66f79d8a", // world-history
-	// "xb41992e0ff5e0f09", // ap-world-history
-	// "x231f0f4241b58f49", // us-government-and-civics
-	// "x3e2fc37246974751", // ap-college-us-government-and-politics
-	// "x7a03a96a83aa80ff" // Constitution 101
-	// "x2d2f703b37b450a3", //AP®︎/College Computer Science Principles
+	"x71a94f19", // us-history
+	"xb87a304a", // ap-us-history
+	"x66f79d8a", // world-history
+	"xb41992e0ff5e0f09", // ap-world-history
+	"x231f0f4241b58f49", // us-government-and-civics
+	"x3e2fc37246974751", // ap-college-us-government-and-politics
+	"x7a03a96a83aa80ff", // Constitution 101
+	"x2d2f703b37b450a3", //AP®︎/College Computer Science Principles
 
 	"x435b1de09a877dd7", // 8th grade reading and vocab
 	// "x7538838f96af3430", //7th grade reading and vocab

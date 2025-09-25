@@ -338,6 +338,11 @@ const events = {
 		data: z.object({})
 	},
 
+	// ✅ ADDED: Event for processing ALL hardcoded courses at once
+	"migration/all.hardcoded.oneroster.ingest": {
+		data: z.object({})
+	},
+
 	// ✅ RENAMED: Split monolithic generation into two granular, namespaced events
 	"migration/hardcoded.math.differentiated-items.generate": {
 		data: z.object({})
