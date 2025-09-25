@@ -641,26 +641,8 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 
 			const lessonContentLinks = lessonContents
 				.filter((lc) => lc.lessonId === lesson.id)
-				.sort((a, b) => {
-					// Primary sort by ordering
-					const orderDiff = a.ordering - b.ordering
-					if (orderDiff !== 0) return orderDiff
-					
-					// Secondary sort when ordering is the same: Video > Article > Exercise
-					// Videos come first (lowest), then Articles, then Exercises (highest)
-					const typeOrder: Record<string, number> = { 
-						Video: 0,    // Highest priority - comes first
-						Article: 1,  // Middle priority
-						Exercise: 2  // Lowest priority - comes last
-					}
-					const aType = typeOrder[a.contentType] ?? 999
-					const bType = typeOrder[b.contentType] ?? 999
-					return aType - bType
-				})
-			// Use index-based sortOrder to ensure uniqueness
-			for (let contentIndex = 0; contentIndex < lessonContentLinks.length; contentIndex++) {
-				const lc = lessonContentLinks[contentIndex]
-				if (!lc) continue
+				.sort((a, b) => a.ordering - b.ordering)
+			for (const lc of lessonContentLinks) {
 				const content = contentMap.get(lc.contentId)
 				if (content) {
 					const contentSourcedId = `nice_${content.id}`
@@ -831,8 +813,8 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						status: "active",
 						title: componentTitle,
 						courseComponent: { sourcedId: `nice_${lesson.id}`, type: "courseComponent" },
-						resource: { sourcedId: contentSourcedId, type: "resource" },
-						sortOrder: contentIndex  // Use index to ensure unique sortOrder
+					resource: { sourcedId: contentSourcedId, type: "resource" },
+					sortOrder: lc.ordering
 					})
 				}
 			}
