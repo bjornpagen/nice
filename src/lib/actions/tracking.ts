@@ -3,6 +3,7 @@
 import { auth, clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { z } from "zod"
 import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { updateProficiencyFromAssessment } from "@/lib/actions/proficiency"
 import type { CaliperArticleReadState } from "@/lib/article-cache"
@@ -170,6 +171,101 @@ async function buildCaliperPayloadForContent(
 	return { actor, context }
 }
 
+// Zod schema for existing OneRoster result data
+const ExistingResultSchema = z.object({
+    score: z.number().nullable().optional(),
+    scoreStatus: z.enum(["fully graded", "partially graded", "submitted", "not submitted", "exempt"]).optional(),
+    metadata: z.record(z.string(), z.any()).optional()
+}).passthrough()
+
+// Schema for parsing the time spent from metadata
+const TimeSpentMetadataSchema = z.object({
+    nice_timeSpent: z.number().optional()
+}).passthrough()
+
+// Unified writer to mirror cumulative time into OneRoster metadata
+async function upsertNiceTimeSpentToOneRoster(params: {
+    kind: "video" | "article"
+    userSourcedId: string
+    resourceSourcedId: string
+    courseSlug: string
+    finalSeconds: number
+}): Promise<void> {
+    const lineItemId = getAssessmentLineItemId(params.resourceSourcedId)
+    const resultId = `nice_${params.userSourcedId}_${lineItemId}`
+
+    // Default values
+    let preservedScore = 100
+    let preservedStatus: "fully graded" | "partially graded" = "fully graded"
+    let existingTime: number | undefined
+
+    // Fetch existing result and parse with Zod
+    const getResult = await errors.try(oneroster.getResult(resultId))
+    if (!getResult.error && getResult.data) {
+        const parsed = ExistingResultSchema.safeParse(getResult.data)
+        
+        if (parsed.success) {
+            // Extract score if it exists
+            if (typeof parsed.data.score === "number") {
+                preservedScore = Math.round(parsed.data.score)
+            }
+            
+            // Extract status if it's one we care about
+            if (parsed.data.scoreStatus === "partially graded" || parsed.data.scoreStatus === "fully graded") {
+                preservedStatus = parsed.data.scoreStatus
+            }
+            
+            // Extract existing time from metadata
+            if (parsed.data.metadata) {
+                const metadataParsed = TimeSpentMetadataSchema.safeParse(parsed.data.metadata)
+                if (metadataParsed.success && metadataParsed.data.nice_timeSpent !== undefined) {
+                    existingTime = metadataParsed.data.nice_timeSpent
+                }
+            }
+        }
+    }
+
+    // Calculate final time to write (ensure monotonic increase)
+    const newTime = Math.floor(params.finalSeconds)
+    const writeTime = existingTime !== undefined ? Math.max(existingTime, newTime) : newTime
+
+    logger.debug("upserting nice time spent to oneroster", {
+        kind: params.kind,
+        resultId,
+        existingTime,
+        newTime,
+        writeTime
+    })
+
+    const updatePayload = {
+        result: {
+            assessmentLineItem: { sourcedId: lineItemId, type: "assessmentLineItem" as const },
+            student: { sourcedId: params.userSourcedId, type: "user" as const },
+            scoreStatus: preservedStatus,
+            scoreDate: new Date().toISOString(),
+            score: preservedScore,
+            metadata: {
+                nice_timeSpent: writeTime,
+                lessonType: params.kind,
+                courseSourcedId: params.courseSlug
+            }
+        }
+    }
+
+    const putResult = await errors.try(oneroster.putResult(resultId, updatePayload))
+    if (putResult.error) {
+        logger.error("failed to write nice_timeSpent to oneroster", {
+            error: putResult.error,
+            kind: params.kind,
+            resultId,
+            userSourcedId: params.userSourcedId,
+            resourceSourcedId: params.resourceSourcedId,
+            writeTime
+        })
+        // Don't throw - this is a non-critical background operation
+    }
+}
+
 // Server-only partial finalize: send only unreported delta and persist reported total
 export async function finalizeCaliperPartialTimeSpent(
 	clientUserSourcedId: string,
@@ -256,6 +352,15 @@ export async function finalizeCaliperPartialTimeSpent(
 		user: serverSourcedId,
 		reportedWatchTimeSeconds: newState.reportedWatchTimeSeconds
 	})
+
+	// Mirror cumulative time so gradebook reflects progress between sessions
+	await upsertNiceTimeSpentToOneRoster({
+		kind: "video",
+		userSourcedId: serverSourcedId,
+		resourceSourcedId: onerosterVideoResourceSourcedId,
+		courseSlug: courseInfo.courseSlug,
+		finalSeconds: newState.cumulativeWatchTimeSeconds
+	})
 }
 
 export async function finalizeCaliperTimeSpentEvent(
@@ -325,6 +430,14 @@ export async function finalizeCaliperTimeSpentEvent(
 		finalizedAt: new Date().toISOString()
 	}
 	await setCaliperVideoWatchState(onerosterUserSourcedId, onerosterVideoResourceSourcedId, finalState)
+
+	await upsertNiceTimeSpentToOneRoster({
+		kind: "video",
+		userSourcedId: onerosterUserSourcedId,
+		resourceSourcedId: onerosterVideoResourceSourcedId,
+		courseSlug: courseInfo.courseSlug,
+		finalSeconds: finalState.cumulativeWatchTimeSeconds
+	})
 	const delResult = await errors.try(redis.del(lockKey))
 	if (delResult.error) {
 		logger.error("caliper finalize: del lock", { error: delResult.error })
@@ -1054,6 +1167,15 @@ export async function finalizeArticlePartialTimeSpent(
 		lastServerSyncAt: new Date().toISOString()
 	}
 	await setCaliperArticleReadState(serverSourcedId, onerosterArticleResourceSourcedId, newState)
+
+	// Mirror cumulative time so gradebook reflects progress between sessions
+	await upsertNiceTimeSpentToOneRoster({
+		kind: "article",
+		userSourcedId: serverSourcedId,
+		resourceSourcedId: onerosterArticleResourceSourcedId,
+		courseSlug: courseInfo.courseSlug,
+		finalSeconds: newState.cumulativeReadTimeSeconds
+	})
 }
 
 export async function finalizeArticleTimeSpentEvent(
@@ -1153,4 +1275,12 @@ export async function finalizeArticleTimeSpentEvent(
 	}
 
 	await releaseLock()
+
+	await upsertNiceTimeSpentToOneRoster({
+		kind: "article",
+		userSourcedId: onerosterUserSourcedId,
+		resourceSourcedId: onerosterArticleResourceSourcedId,
+		courseSlug: courseInfo.courseSlug,
+		finalSeconds: finalState.cumulativeReadTimeSeconds
+	})
 }
