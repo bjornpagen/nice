@@ -1,0 +1,246 @@
+ok, i just did an article, spent like a minute on it, then did the next exercise, got it wrong the first time, then re did it, got the 1xp (2xp times 50% penalty), and the xp bank did not unlock for the articles. what gives? can you explain what happened heer? can you try to find the root cause of this bug? what is going on?
+
+what gives? here's the logs to help you.
+
+2025-09-25T14:48:03.126Z [info] [cc-seventh-grade-math] /e/constant-of-proportionality-from-graphs status=200
+2025-09-25T14:48:03.322Z [info] INFO computing next attempt number from oneroster userSourcedId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 resourceSourcedId=nice_x4c336766404c3731
+2025-09-25T14:48:03.323Z [info] INFO oneroster: fetching all results filter=status='active' AND student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67' AND assessmentLineItem.sourcedId='nice_x4c336766404c3731_ali'
+2025-09-25T14:48:03.461Z [info] INFO oneroster: successfully fetched all results count=2 filter=status='active' AND student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67' AND assessmentLineItem.sourcedId='nice_x4c336766404c3731_ali'
+2025-09-25T14:48:03.462Z [info] INFO derived next attempt number lineItemId=nice_x4c336766404c3731_ali existingResults=1 nextAttempt=2
+2025-09-25T14:48:03.467Z [info] INFO getAssessmentTest called identifier=nice_x4c336766404c3731
+2025-09-25T14:48:03.469Z [info] INFO qti xml: resolving items for test testIdentifier=nice_x4c336766404c3731 uniqueItemCount=20 sectionCount=4
+2025-09-25T14:48:03.469Z [info] INFO getAssessmentItems called count=20
+2025-09-25T14:48:03.469Z [info] INFO getAssessmentItem called identifier=nice_xb8b3010feff5acae_33108
+2025-09-25T14:48:03.469Z [info] INFO getAssessmentItem called identifier=nice_x4ffa318b8b476a4d_63862
+2025-09-25T14:48:03.469Z [info] INFO getAssessmentItem called identifier=nice_xdd4e0f01b23524ed_98973
+2025-09-25T14:48:03.469Z [info] INFO getAssessmentItem called identifier=nice_xc2b8391207cd5e35_21430
+2025-09-25T14:48:03.469Z [info] INFO getAssessmentItem called identifier=nice_x4192f28983e86e43_45657
+2025-09-25T14:48:03.469Z [info] INFO getAssessmentItem called identifier=nice_x978dee2eb8ec86b5_43824
+2025-09-25T14:48:03.469Z [info] INFO getAssessmentItem called identifier=nice_x103eeb535201774b_88939
+2025-09-25T14:48:03.469Z [info] INFO getAssessmentItem called identifier=nice_x6839b7848d2781d3_71345
+2025-09-25T14:48:03.469Z [info] INFO getAssessmentItem called identifier=nice_xe80dbb57688602f5_19641
+2025-09-25T14:48:03.469Z [info] INFO getAssessmentItem called identifier=nice_xe8085d07f7afa643_84014
+2025-09-25T14:48:03.470Z [info] INFO getAssessmentItem called identifier=nice_x222c41c8951d1d75_53932
+2025-09-25T14:48:03.470Z [info] INFO getAssessmentItem called identifier=nice_xf633aec0b5b729d7_67779
+2025-09-25T14:48:03.470Z [info] INFO getAssessmentItem called identifier=nice_x601334ad02769904_46137
+2025-09-25T14:48:03.470Z [info] INFO getAssessmentItem called identifier=nice_xa211619590fadf54_74548
+2025-09-25T14:48:03.470Z [info] INFO getAssessmentItem called identifier=nice_x0900b2b0fb1e708b_75013
+2025-09-25T14:48:03.470Z [info] INFO getAssessmentItem called identifier=nice_x8cf37b9b4a054c4c_21586
+2025-09-25T14:48:03.470Z [info] INFO getAssessmentItem called identifier=nice_x2dc2938a524974b4_70432
+2025-09-25T14:48:03.470Z [info] INFO getAssessmentItem called identifier=nice_x4c44cfc145bb5a97_18282
+2025-09-25T14:48:03.470Z [info] INFO getAssessmentItem called identifier=nice_x4a534a2dd6e47591_85674
+2025-09-25T14:48:03.470Z [info] INFO getAssessmentItem called identifier=nice_xaa8ed5f8c55d2ae7_68116
+2025-09-25T14:48:03.485Z [info] INFO qti xml: resolved items for test testIdentifier=nice_x4c336766404c3731 resolvedCount=20
+2025-09-25T14:48:03.485Z [info] INFO applied qti selection and ordering rules testIdentifier=nice_x4c336766404c3731 initialCount=20 finalCount=4 selectedQuestionIds=4 sectionsProcessed=4
+2025-09-25T14:48:03.485Z [info] INFO finalizing assessment userSourcedId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 resourceSourcedId=nice_x4c336766404c3731 correlationId=a47e1b4f-7c7e-4c18-ae6b-fc6b106f338f
+2025-09-25T14:48:03.587Z [info] INFO saving assessment result [service] correlationId=a47e1b4f-7c7e-4c18-ae6b-fc6b106f338f resourceId=nice_x4c336766404c3731 userId=803b972b-38e6-4dcc-81b5-b3e9db0bde67
+2025-09-25T14:48:03.588Z [info] INFO awarding xp for assessment userSourcedId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 assessmentResourceId=nice_x4c336766404c3731 componentResourceId=nice_x8ac28be57eb1f081_x4c336766404c3731 courseSourcedId=nice_x6b17ba59 baseXp=2 correctQuestions=4 totalQuestions=4 attemptNumber=2 isExercise=true
+2025-09-25T14:48:03.689Z [info] INFO checking existing proficiency onerosterUserSourcedId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 onerosterAssessmentSourcedId=nice_x4c336766404c3731
+2025-09-25T14:48:03.689Z [info] INFO oneroster: fetching all results filter=student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67' AND assessmentLineItem.sourcedId='nice_x4c336766404c3731_ali'
+2025-09-25T14:48:03.822Z [info] INFO oneroster: successfully fetched all results count=2 filter=student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67' AND assessmentLineItem.sourcedId='nice_x4c336766404c3731_ali'
+2025-09-25T14:48:03.822Z [info] INFO proficiency check complete onerosterUserSourcedId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 onerosterAssessmentSourcedId=nice_x4c336766404c3731 currentScore=75 isProficient=false
+2025-09-25T14:48:03.823Z [info] INFO identifying eligible passive resources for exercise exerciseResourceSourcedId=nice_x4c336766404c3731
+2025-09-25T14:48:03.823Z [info] INFO oneroster: fetching ALL component resources filter=resource.sourcedId='nice_x4c336766404c3731' AND status='active'
+2025-09-25T14:48:03.982Z [info] INFO oneroster: successfully fetched all component resources count=1 filter=resource.sourcedId='nice_x4c336766404c3731' AND status='active'
+2025-09-25T14:48:03.982Z [info] INFO oneroster: fetching course components filter=sourcedId='nice_x8ac28be57eb1f081' AND status='active'
+2025-09-25T14:48:04.122Z [info] INFO oneroster: successfully fetched course components count=1 filter=sourcedId='nice_x8ac28be57eb1f081' AND status='active'
+2025-09-25T14:48:04.122Z [info] INFO oneroster: fetching course components filter=parent.sourcedId='nice_x805b3a5e' AND status='active' orderBy=asc sort=sortOrder
+2025-09-25T14:48:04.261Z [info] INFO oneroster: successfully fetched course components count=10 filter=parent.sourcedId='nice_x805b3a5e' AND status='active' orderBy=asc sort=sortOrder
+2025-09-25T14:48:04.261Z [info] INFO oneroster: fetching ALL component resources filter=courseComponent.sourcedId@'nice_x8ac28be57eb1f081,nice_x6d298616288162d0,nice_x7ebb912252465d61,nice_xda762ce8,nice_x108933d7,nice_x970ed5d55b683ed8,nice_x16a18118,nice_xf5f4a033,nice_x50f50c1b3db8a874,nice_x063d5d3d1ebd05cb' AND status='active'
+2025-09-25T14:48:04.484Z [info] INFO oneroster: successfully fetched all component resources count=48 filter=courseComponent.sourcedId@'nice_x8ac28be57eb1f081,nice_x6d298616288162d0,nice_x7ebb912252465d61,nice_xda762ce8,nice_x108933d7,nice_x970ed5d55b683ed8,nice_x16a18118,nice_xf5f4a033,nice_x50f50c1b3db8a874,nice_x063d5d3d1ebd05cb' AND status='active'
+2025-09-25T14:48:04.484Z [info] INFO oneroster: fetching ALL resources filter=sourcedId@'nice_x063d5d3d1ebd05cb,nice_x80f431be,nice_xf0607b55dc5b25fd,nice_x513f8ad8a31aacdb,nice_x919ece65,nice_x85ad97f71102abf0,nice_554082156,nice_201421177,nice_153770142,nice_211185145,nice_x648638d3,nice_xc131681e,nice_153770146,nice_x50f50c1b3db8a874,nice_x632f1595cd506367,nice_xad220e2f06e0c6bf,nice_xe6bdf10fa34e4b6c,nice_xc243b9ea15d03110,nice_x8ccefb0267cc2b7f,nice_x2e2d46900cbd4444,nice_x7ebb912252465d61,nice_xc2d59873b5726f26,nice_x382bc7bfc648d152,nice_x25cab8c41c3a0b83,nice_x15418d80a6af0b42,nice_xbec0045658d07365,nice_x08a5abf4706ddad6,nice_x10d4fd17bad36cd0,nice_x89eb74efc6587efa,nice_x36bcce972ab1db2d,nice_x7c5e5882ade6ba14,nice_x3cde70670ae56928,nice_x4c336766404c3731,nice_x970ed5d55b683ed8,nice_x5dd585ca,nice_x950881e0e1b45d92,nice_x48c1f191,nice_x41d29cee,nice_xcf658b5a,nice_x712a89dd,nice_x042dc5b1,nice_x97c4daf2,nice_xaef37673,nice_x7d23b788,nice_x20c99318,nice_xd2154ab14f7af5d0,nice_x8136e4e2,nice_xbc9814cbfad8288a' AND status='active'
+2025-09-25T14:48:04.824Z [info] INFO oneroster: finished fetching all resources total=48 filter=sourcedId@'nice_x063d5d3d1ebd05cb,nice_x80f431be,nice_xf0607b55dc5b25fd,nice_x513f8ad8a31aacdb,nice_x919ece65,nice_x85ad97f71102abf0,nice_554082156,nice_201421177,nice_153770142,nice_211185145,nice_x648638d3,nice_xc131681e,nice_153770146,nice_x50f50c1b3db8a874,nice_x632f1595cd506367,nice_xad220e2f06e0c6bf,nice_xe6bdf10fa34e4b6c,nice_xc243b9ea15d03110,nice_x8ccefb0267cc2b7f,nice_x2e2d46900cbd4444,nice_x7ebb912252465d61,nice_xc2d59873b5726f26,nice_x382bc7bfc648d152,nice_x25cab8c41c3a0b83,nice_x15418d80a6af0b42,nice_xbec0045658d07365,nice_x08a5abf4706ddad6,nice_x10d4fd17bad36cd0,nice_x89eb74efc6587efa,nice_x36bcce972ab1db2d,nice_x7c5e5882ade6ba14,nice_x3cde70670ae56928,nice_x4c336766404c3731,nice_x970ed5d55b683ed8,nice_x5dd585ca,nice_x950881e0e1b45d92,nice_x48c1f191,nice_x41d29cee,nice_xcf658b5a,nice_x712a89dd,nice_x042dc5b1,nice_x97c4daf2,nice_xaef37673,nice_x7d23b788,nice_x20c99318,nice_xd2154ab14f7af5d0,nice_x8136e4e2,nice_xbc9814cbfad8288a' AND status='active'
+2025-09-25T14:48:04.824Z [info] INFO found exercise boundaries currentExerciseSortOrder=0 currentLessonSortOrder=0 previousExerciseSortOrder=-1 previousLessonSortOrder=-1 exerciseResourceId=nice_x4c336766404c3731
+2025-09-25T14:48:04.824Z [info] INFO candidate passive resources in window candidateCount=0
+2025-09-25T14:48:04.824Z [info] INFO awarded banked xp assessmentId=nice_x8ac28be57eb1f081_x4c336766404c3731 bankedXp=0 awardedCount=0
+2025-09-25T14:48:04.930Z [info] INFO streak broken and reset userId=user_317aHtRY0WOOlrqHaMeIXSGN2z3 newCount=1
+2025-09-25T14:48:05.079Z [info] INFO streak updated successfully userId=user_317aHtRY0WOOlrqHaMeIXSGN2z3 streak={"count":1,"lastActivityDate":2025-09-25T14:48:04.929Z}
+2025-09-25T14:48:05.080Z [warning] Warning: a dynamic page path "/(user)/[subject]/[course]" was passed to "revalidatePath", but the "type" parameter is missing. This has no effect by default, see more info here https://nextjs.org/docs/app/api-reference/functions/revalidatePath
+2025-09-25T14:48:05.080Z [info] INFO xp award process complete finalXp=1 multiplier=0.625 baseXp=2 accuracy=100 penaltyApplied=false reason=Attempt 2: 100% accuracy with attempt decay bankedXp=0
+2025-09-25T14:48:05.294Z [info] INFO streak broken and reset userId=user_317aHtRY0WOOlrqHaMeIXSGN2z3 newCount=1
+2025-09-25T14:48:05.294Z [info] INFO starting granular proficiency analysis from session results onerosterUserSourcedId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 onerosterComponentResourceSourcedId=nice_x8ac28be57eb1f081_x4c336766404c3731 attemptNumber=2 sessionResultCount=4 correlationId=a47e1b4f-7c7e-4c18-ae6b-fc6b106f338f
+2025-09-25T14:48:05.294Z [info] INFO sending activity completed event via analytics port actorId=https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/803b972b-38e6-4dcc-81b5-b3e9db0bde67 activityId=https://www.nice.academy/math/cc-seventh-grade-math/cc-7th-ratio-proportion/7th-constant-of-proportionality/e/constant-of-proportionality-from-graphs performance={"totalQuestions":4,"correctQuestions":4,"masteredUnits":1} finalXp=1 correlationId=a47e1b4f-7c7e-4c18-ae6b-fc6b106f338f
+2025-09-25T14:48:05.294Z [info] INFO caliper client: sending events eventCount=1
+2025-09-25T14:48:05.297Z [info] INFO caliper client: sending events eventCount=1
+2025-09-25T14:48:05.304Z [info] INFO cache invalidated keys=[user-progress:803b972b-38e6-4dcc-81b5-b3e9db0bde67:nice_x6b17ba59:dpl_EenwRqrFw3VrKUSdiegAcBSBG6x8] deleted=1
+2025-09-25T14:48:05.422Z [info] INFO streak updated successfully userId=user_317aHtRY0WOOlrqHaMeIXSGN2z3 streak={"count":1,"lastActivityDate":2025-09-25T14:48:05.291Z}
+2025-09-25T14:48:05.540Z [info] INFO qti client: getting assessment item identifier=nice_x4192f28983e86e43_45657
+2025-09-25T14:48:05.540Z [info] INFO qti client: getting assessment item identifier=nice_xe8085d07f7afa643_84014
+2025-09-25T14:48:05.540Z [info] INFO qti client: getting assessment item identifier=nice_x222c41c8951d1d75_53932
+2025-09-25T14:48:05.541Z [info] INFO qti client: getting assessment item identifier=nice_x4c44cfc145bb5a97_18282
+2025-09-25T14:48:05.596Z [info] INFO caliper: access token acquired
+2025-09-25T14:48:05.643Z [info] INFO calculated exercise proficiency exerciseId=nice_x4c336766404c3731 score=100 performance={"exerciseId":nice_x4c336766404c3731,"correctCount":4,"totalCount":4} currentScore=undefined lessonType=exercise correlationId=a47e1b4f-7c7e-4c18-ae6b-fc6b106f338f
+2025-09-25T14:48:05.690Z [info] INFO caliper client: events sent successfully
+2025-09-25T14:48:05.750Z [info] INFO caliper client: events sent successfully
+2025-09-25T14:48:05.957Z [info] INFO granular proficiency analysis complete onerosterComponentResourceSourcedId=nice_x8ac28be57eb1f081_x4c336766404c3731 exercisesAnalyzed=1 exercisesUpdated=1 questionsMapped=4 totalQuestions=4 correlationId=a47e1b4f-7c7e-4c18-ae6b-fc6b106f338f
+2025-09-25T14:48:05.961Z [info] INFO assessment state marked as finalized userId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 assessmentId=nice_x4c336766404c3731 attemptNumber=2
+2025-09-25T14:48:06.001Z [info] INFO fetchCoursePageData called params={"subject":math,"course":cc-seventh-grade-math} options={"skip":{"questions":true}}
+2025-09-25T14:48:06.001Z [info] INFO getAllCoursesBySlug called slug=cc-seventh-grade-math
+2025-09-25T14:48:06.013Z [info] INFO fetchLessonLayoutData called params={"subject":math,"course":cc-seventh-grade-math,"unit":cc-7th-ratio-proportion,"lesson":7th-constant-of-proportionality}
+2025-09-25T14:48:06.013Z [info] INFO fetchCoursePageData called params={"subject":math,"course":cc-seventh-grade-math} options={"skip":{"questions":true}}
+2025-09-25T14:48:06.013Z [info] INFO getAllCoursesBySlug called slug=cc-seventh-grade-math
+2025-09-25T14:48:06.013Z [info] INFO fetchCoursePageData called params={"subject":math,"course":cc-seventh-grade-math} options={"skip":{"questions":true}}
+2025-09-25T14:48:06.013Z [info] INFO getAllCoursesBySlug called slug=cc-seventh-grade-math
+2025-09-25T14:48:06.013Z [info] INFO fetchExercisePageData called params={"subject":math,"course":cc-seventh-grade-math,"unit":cc-7th-ratio-proportion,"lesson":7th-constant-of-proportionality,"exercise":constant-of-proportionality-from-graphs}
+2025-09-25T14:48:06.013Z [info] INFO fetchLessonLayoutData called params={"subject":math,"course":cc-seventh-grade-math,"unit":cc-7th-ratio-proportion,"lesson":7th-constant-of-proportionality,"exercise":constant-of-proportionality-from-graphs}
+2025-09-25T14:48:06.013Z [info] INFO fetchCoursePageData called params={"subject":math,"course":cc-seventh-grade-math} options={"skip":{"questions":true}}
+2025-09-25T14:48:06.013Z [info] INFO getAllCoursesBySlug called slug=cc-seventh-grade-math
+2025-09-25T14:48:06.050Z [info] INFO getCourseComponentsByCourseId called courseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:06.050Z [info] INFO getCourseComponentsByCourseId called courseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:06.050Z [info] INFO getCourseComponentsByCourseId called courseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:06.058Z [info] INFO getCourseComponentsByCourseId called courseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:06.065Z [info] INFO getAllResources called
+2025-09-25T14:48:06.065Z [info] INFO getAllResources called
+2025-09-25T14:48:06.071Z [info] INFO getAllResources called
+2025-09-25T14:48:06.071Z [info] INFO getAllResources called
+2025-09-25T14:48:06.323Z [info] INFO getAllComponentResources called
+2025-09-25T14:48:06.445Z [info] INFO getAllComponentResources called
+2025-09-25T14:48:06.596Z [info] INFO getAllComponentResources called
+2025-09-25T14:48:06.798Z [info] INFO getAllComponentResources called
+2025-09-25T14:48:06.822Z [info] INFO filtered resources for course totalResourcesInSystem=6298 totalComponentResources=7289 relevantComponentResources=339 relevantResources=339 courseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:06.831Z [info] INFO skipping question fetching for exercises count=119
+2025-09-25T14:48:06.868Z [info] INFO fetchCoursePageData called params={"subject":math,"course":cc-seventh-grade-math} options={"skip":{"questions":true}}
+2025-09-25T14:48:06.868Z [info] INFO getAllCoursesBySlug called slug=cc-seventh-grade-math
+2025-09-25T14:48:06.911Z [info] INFO filtered resources for course totalResourcesInSystem=6298 totalComponentResources=7289 relevantComponentResources=339 relevantResources=339 courseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:06.926Z [info] INFO skipping question fetching for exercises count=119
+2025-09-25T14:48:06.963Z [info] INFO fetchCoursePageData called params={"subject":math,"course":cc-seventh-grade-math} options={"skip":{"questions":true}}
+2025-09-25T14:48:06.963Z [info] INFO getAllCoursesBySlug called slug=cc-seventh-grade-math
+2025-09-25T14:48:07.021Z [info] INFO filtered resources for course totalResourcesInSystem=6298 totalComponentResources=7289 relevantComponentResources=339 relevantResources=339 courseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:07.026Z [info] INFO skipping question fetching for exercises count=119
+2025-09-25T14:48:07.104Z [info] INFO cache miss key=user-progress:803b972b-38e6-4dcc-81b5-b3e9db0bde67:nice_x6b17ba59:dpl_EenwRqrFw3VrKUSdiegAcBSBG6x8
+2025-09-25T14:48:07.104Z [info] INFO fetching user unit progress from API userId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 onerosterCourseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:07.104Z [info] INFO oneroster: fetching all results filter=student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67'
+2025-09-25T14:48:07.104Z [info] INFO cache miss key=user-progress:803b972b-38e6-4dcc-81b5-b3e9db0bde67:nice_x6b17ba59:dpl_EenwRqrFw3VrKUSdiegAcBSBG6x8
+2025-09-25T14:48:07.104Z [info] INFO fetching user unit progress from API userId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 onerosterCourseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:07.104Z [info] INFO oneroster: fetching all results filter=student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67'
+2025-09-25T14:48:07.114Z [info] INFO filtered resources for course totalResourcesInSystem=6298 totalComponentResources=7289 relevantComponentResources=339 relevantResources=339 courseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:07.115Z [info] INFO skipping question fetching for exercises count=119
+2025-09-25T14:48:07.139Z [info] INFO getCourseComponentsByCourseId called courseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:07.139Z [info] INFO getCourseComponentsByCourseId called courseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:07.140Z [info] INFO getResourcesBySlugAndType called slug=constant-of-proportionality-from-graphs type=interactive khanActivityType=Exercise
+2025-09-25T14:48:07.188Z [info] INFO getAllResources called
+2025-09-25T14:48:07.189Z [info] INFO getAllResources called
+2025-09-25T14:48:07.189Z [info] INFO getAllComponentResources called
+2025-09-25T14:48:07.289Z [info] INFO getAllComponentResources called
+2025-09-25T14:48:07.396Z [info] INFO getAllComponentResources called
+2025-09-25T14:48:07.418Z [info] INFO getAssessmentTest called identifier=nice_x4c336766404c3731
+2025-09-25T14:48:07.463Z [info] INFO filtered resources for course totalResourcesInSystem=6298 totalComponentResources=7289 relevantComponentResources=339 relevantResources=339 courseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:07.472Z [info] INFO skipping question fetching for exercises count=119
+2025-09-25T14:48:07.565Z [warning] WARN concurrent request for same cache key detected key=user-progress:803b972b-38e6-4dcc-81b5-b3e9db0bde67:nice_x6b17ba59:dpl_EenwRqrFw3VrKUSdiegAcBSBG6x8
+2025-09-25T14:48:07.611Z [info] INFO filtered resources for course totalResourcesInSystem=6298 totalComponentResources=7289 relevantComponentResources=339 relevantResources=339 courseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:07.626Z [info] INFO skipping question fetching for exercises count=119
+2025-09-25T14:48:07.695Z [info] INFO qti xml: resolving items for test testIdentifier=nice_x4c336766404c3731 uniqueItemCount=20 sectionCount=4
+2025-09-25T14:48:07.695Z [info] INFO getAssessmentItems called count=20
+2025-09-25T14:48:07.695Z [info] INFO getAssessmentItem called identifier=nice_xb8b3010feff5acae_33108
+2025-09-25T14:48:07.695Z [info] INFO getAssessmentItem called identifier=nice_x4ffa318b8b476a4d_63862
+2025-09-25T14:48:07.695Z [info] INFO getAssessmentItem called identifier=nice_xdd4e0f01b23524ed_98973
+2025-09-25T14:48:07.695Z [info] INFO getAssessmentItem called identifier=nice_xc2b8391207cd5e35_21430
+2025-09-25T14:48:07.695Z [info] INFO getAssessmentItem called identifier=nice_x4192f28983e86e43_45657
+2025-09-25T14:48:07.695Z [info] INFO getAssessmentItem called identifier=nice_x978dee2eb8ec86b5_43824
+2025-09-25T14:48:07.695Z [info] INFO getAssessmentItem called identifier=nice_x103eeb535201774b_88939
+2025-09-25T14:48:07.695Z [info] INFO getAssessmentItem called identifier=nice_x6839b7848d2781d3_71345
+2025-09-25T14:48:07.696Z [info] INFO getAssessmentItem called identifier=nice_xe80dbb57688602f5_19641
+2025-09-25T14:48:07.696Z [info] INFO getAssessmentItem called identifier=nice_xe8085d07f7afa643_84014
+2025-09-25T14:48:07.696Z [info] INFO getAssessmentItem called identifier=nice_x222c41c8951d1d75_53932
+2025-09-25T14:48:07.696Z [info] INFO getAssessmentItem called identifier=nice_xf633aec0b5b729d7_67779
+2025-09-25T14:48:07.696Z [info] INFO getAssessmentItem called identifier=nice_x601334ad02769904_46137
+2025-09-25T14:48:07.696Z [info] INFO getAssessmentItem called identifier=nice_xa211619590fadf54_74548
+2025-09-25T14:48:07.696Z [info] INFO getAssessmentItem called identifier=nice_x0900b2b0fb1e708b_75013
+2025-09-25T14:48:07.696Z [info] INFO getAssessmentItem called identifier=nice_x8cf37b9b4a054c4c_21586
+2025-09-25T14:48:07.696Z [info] INFO getAssessmentItem called identifier=nice_x2dc2938a524974b4_70432
+2025-09-25T14:48:07.696Z [info] INFO getAssessmentItem called identifier=nice_x4c44cfc145bb5a97_18282
+2025-09-25T14:48:07.696Z [info] INFO getAssessmentItem called identifier=nice_x4a534a2dd6e47591_85674
+2025-09-25T14:48:07.696Z [info] INFO getAssessmentItem called identifier=nice_xaa8ed5f8c55d2ae7_68116
+2025-09-25T14:48:07.696Z [warning] WARN concurrent request for same cache key detected key=user-progress:803b972b-38e6-4dcc-81b5-b3e9db0bde67:nice_x6b17ba59:dpl_EenwRqrFw3VrKUSdiegAcBSBG6x8
+2025-09-25T14:48:07.711Z [info] INFO cache miss key=user-progress:803b972b-38e6-4dcc-81b5-b3e9db0bde67:nice_x6b17ba59:dpl_EenwRqrFw3VrKUSdiegAcBSBG6x8
+2025-09-25T14:48:07.711Z [info] INFO fetching user unit progress from API userId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 onerosterCourseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:07.711Z [info] INFO oneroster: fetching all results filter=student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67'
+2025-09-25T14:48:07.721Z [info] INFO cache miss key=user-progress:803b972b-38e6-4dcc-81b5-b3e9db0bde67:nice_x6b17ba59:dpl_EenwRqrFw3VrKUSdiegAcBSBG6x8
+2025-09-25T14:48:07.721Z [info] INFO fetching user unit progress from API userId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 onerosterCourseSourcedId=nice_x6b17ba59
+2025-09-25T14:48:07.721Z [info] INFO oneroster: fetching all results filter=student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67'
+2025-09-25T14:48:07.721Z [info] INFO qti xml: resolved items for test testIdentifier=nice_x4c336766404c3731 resolvedCount=20
+2025-09-25T14:48:07.729Z [info] INFO computing next attempt number from oneroster userSourcedId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 resourceSourcedId=nice_x4c336766404c3731
+2025-09-25T14:48:07.729Z [info] INFO oneroster: fetching all results filter=status='active' AND student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67' AND assessmentLineItem.sourcedId='nice_x4c336766404c3731_ali'
+2025-09-25T14:48:07.786Z [info] INFO oneroster: successfully fetched all results count=727 filter=student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67'
+2025-09-25T14:48:07.786Z [info] INFO oneroster: successfully fetched all results count=727 filter=student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67'
+2025-09-25T14:48:07.786Z [info] INFO oneroster: successfully fetched all results count=727 filter=student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67'
+2025-09-25T14:48:07.786Z [info] INFO oneroster: successfully fetched all results count=727 filter=student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67'
+2025-09-25T14:48:07.788Z [info] INFO fetched user progress userId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 onerosterCourseSourcedId=nice_x6b17ba59 completedCount=225 partialCount=3
+2025-09-25T14:48:07.789Z [info] INFO fetched user progress userId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 onerosterCourseSourcedId=nice_x6b17ba59 completedCount=225 partialCount=3
+2025-09-25T14:48:07.798Z [info] INFO fetched user progress userId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 onerosterCourseSourcedId=nice_x6b17ba59 completedCount=225 partialCount=3
+2025-09-25T14:48:07.798Z [info] INFO fetched user progress userId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 onerosterCourseSourcedId=nice_x6b17ba59 completedCount=225 partialCount=3
+2025-09-25T14:48:07.865Z [info] INFO oneroster: successfully fetched all results count=3 filter=status='active' AND student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67' AND assessmentLineItem.sourcedId='nice_x4c336766404c3731_ali'
+2025-09-25T14:48:07.865Z [info] INFO derived next attempt number lineItemId=nice_x4c336766404c3731_ali existingResults=2 nextAttempt=3
+2025-09-25T14:48:07.867Z [info] INFO applied qti selection and ordering rules testIdentifier=nice_x4c336766404c3731 initialCount=20 finalCount=4 selectedQuestionIds=4 sectionsProcessed=4
+2025-09-25T14:48:07.867Z [info] INFO identifying eligible passive resources for exercise exerciseResourceSourcedId=nice_x4c336766404c3731
+2025-09-25T14:48:07.867Z [info] INFO oneroster: fetching ALL component resources filter=resource.sourcedId='nice_x4c336766404c3731' AND status='active'
+
+Below is some of the article stuff if it helps you.
+
+2025-09-25T14:45:18.938Z [info] [caliper] / status=200
+2025-09-25T14:45:18.994Z [info] INFO article partial finalize: sending delta articleId=nice_xc2d59873b5726f26 user=803b972b-38e6-4dcc-81b5-b3e9db0bde67 delta=22
+2025-09-25T14:45:19.129Z [info] INFO sending caliper time spent event actorId=https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/803b972b-38e6-4dcc-81b5-b3e9db0bde67 activityId=https://www.nice.academy/math/cc-seventh-grade-math durationInSeconds=22
+2025-09-25T14:45:19.129Z [info] INFO caliper client: sending events eventCount=1
+
+2025-09-25T14:45:19.301Z [info] [cc-seventh-grade-math] /a/rates-proportional-relationships-faq status=200
+2025-09-25T14:45:19.548Z [info] INFO tracking article view onerosterUserSourcedId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 onerosterArticleResourceSourcedId=nice_xc2d59873b5726f26
+2025-09-25T14:45:19.831Z [info] INFO getAllCoursesBySlug called slug=cc-seventh-grade-math
+2025-09-25T14:45:19.834Z [info] INFO cache invalidated keys=[user-progress:803b972b-38e6-4dcc-81b5-b3e9db0bde67:nice_x6b17ba59:dpl_EenwRqrFw3VrKUSdiegAcBSBG6x8] deleted=1
+2025-09-25T14:45:19.834Z [info] INFO invalidated user progress cache cacheKey=user-progress:803b972b-38e6-4dcc-81b5-b3e9db0bde67:nice_x6b17ba59:dpl_EenwRqrFw3VrKUSdiegAcBSBG6x8
+2025-09-25T14:45:19.834Z [info] INFO successfully tracked article view onerosterUserSourcedId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 onerosterArticleResourceSourcedId=nice_xc2d59873b5726f26 onerosterResultSourcedId=nice_803b972b-38e6-4dcc-81b5-b3e9db0bde67_nice_xc2d59873b5726f26_ali
+
+2025-09-25T14:45:19.301Z [info] [cc-seventh-grade-math] /e/constant-of-proportionality-from-graphs?_rsc=p8o1r status=200
+2025-09-25T14:45:19.596Z [info] INFO fetchExercisePageData called params={"subject":math,"course":cc-seventh-grade-math,"unit":cc-7th-ratio-proportion,"lesson":7th-constant-of-proportionality,"exercise":constant-of-proportionality-from-graphs}
+2025-09-25T14:45:19.596Z [info] INFO fetchLessonLayoutData called params={"subject":math,"course":cc-seventh-grade-math,"unit":cc-7th-ratio-proportion,"lesson":7th-constant-of-proportionality,"exercise":constant-of-proportionality-from-graphs}
+2025-09-25T14:45:19.596Z [info] INFO fetchCoursePageData called params={"subject":math,"course":cc-seventh-grade-math} options={"skip":{"questions":true}}
+2025-09-25T14:45:19.596Z [info] INFO getAllCoursesBySlug called slug=cc-seventh-grade-math
+2025-09-25T14:45:19.680Z [info] INFO getCourseComponentsByCourseId called courseSourcedId=nice_x6b17ba59
+2025-09-25T14:45:19.685Z [info] INFO getAllResources called
+2025-09-25T14:45:19.887Z [info] INFO getAllComponentResources called
+2025-09-25T14:45:20.049Z [info] INFO filtered resources for course totalResourcesInSystem=6298 totalComponentResources=7289 relevantComponentResources=339 relevantResources=339 courseSourcedId=nice_x6b17ba59
+2025-09-25T14:45:20.083Z [info] INFO skipping question fetching for exercises count=119
+2025-09-25T14:45:20.119Z [info] INFO getResourcesBySlugAndType called slug=constant-of-proportionality-from-graphs type=interactive khanActivityType=Exercise
+2025-09-25T14:45:20.123Z [info] INFO cache miss key=oneroster-getResourcesBySlugAndType:constant-of-proportionality-from-graphs:interactive:Exercise:dpl_EenwRqrFw3VrKUSdiegAcBSBG6x8
+2025-09-25T14:45:20.123Z [info] INFO oneroster: fetching ALL resources filter=metadata.khanSlug='constant-of-proportionality-from-graphs' AND status='active'
+2025-09-25T14:45:20.422Z [info] INFO oneroster: access token acquired
+2025-09-25T14:45:20.682Z [info] INFO oneroster: finished fetching all resources total=1 filter=metadata.khanSlug='constant-of-proportionality-from-graphs' AND status='active'
+2025-09-25T14:45:20.684Z [info] INFO getAllComponentResources called
+2025-09-25T14:45:20.709Z [info] INFO getAssessmentTest called identifier=nice_x4c336766404c3731
+2025-09-25T14:45:20.712Z [info] INFO qti xml: resolving items for test testIdentifier=nice_x4c336766404c3731 uniqueItemCount=20 sectionCount=4
+2025-09-25T14:45:20.712Z [info] INFO getAssessmentItems called count=20
+2025-09-25T14:45:20.712Z [info] INFO getAssessmentItem called identifier=nice_xb8b3010feff5acae_33108
+2025-09-25T14:45:20.712Z [info] INFO getAssessmentItem called identifier=nice_x4ffa318b8b476a4d_63862
+2025-09-25T14:45:20.712Z [info] INFO getAssessmentItem called identifier=nice_xdd4e0f01b23524ed_98973
+2025-09-25T14:45:20.712Z [info] INFO getAssessmentItem called identifier=nice_xc2b8391207cd5e35_21430
+2025-09-25T14:45:20.712Z [info] INFO getAssessmentItem called identifier=nice_x4192f28983e86e43_45657
+2025-09-25T14:45:20.712Z [info] INFO getAssessmentItem called identifier=nice_x978dee2eb8ec86b5_43824
+2025-09-25T14:45:20.712Z [info] INFO getAssessmentItem called identifier=nice_x103eeb535201774b_88939
+2025-09-25T14:45:20.712Z [info] INFO getAssessmentItem called identifier=nice_x6839b7848d2781d3_71345
+2025-09-25T14:45:20.713Z [info] INFO getAssessmentItem called identifier=nice_xe80dbb57688602f5_19641
+2025-09-25T14:45:20.713Z [info] INFO getAssessmentItem called identifier=nice_xe8085d07f7afa643_84014
+2025-09-25T14:45:20.713Z [info] INFO getAssessmentItem called identifier=nice_x222c41c8951d1d75_53932
+2025-09-25T14:45:20.713Z [info] INFO getAssessmentItem called identifier=nice_xf633aec0b5b729d7_67779
+2025-09-25T14:45:20.713Z [info] INFO getAssessmentItem called identifier=nice_x601334ad02769904_46137
+2025-09-25T14:45:20.713Z [info] INFO getAssessmentItem called identifier=nice_xa211619590fadf54_74548
+2025-09-25T14:45:20.713Z [info] INFO getAssessmentItem called identifier=nice_x0900b2b0fb1e708b_75013
+2025-09-25T14:45:20.714Z [info] INFO getAssessmentItem called identifier=nice_x8cf37b9b4a054c4c_21586
+2025-09-25T14:45:20.714Z [info] INFO getAssessmentItem called identifier=nice_x2dc2938a524974b4_70432
+2025-09-25T14:45:20.714Z [info] INFO getAssessmentItem called identifier=nice_x4c44cfc145bb5a97_18282
+2025-09-25T14:45:20.714Z [info] INFO getAssessmentItem called identifier=nice_x4a534a2dd6e47591_85674
+2025-09-25T14:45:20.714Z [info] INFO getAssessmentItem called identifier=nice_xaa8ed5f8c55d2ae7_68116
+2025-09-25T14:45:20.720Z [info] INFO qti xml: resolved items for test testIdentifier=nice_x4c336766404c3731 resolvedCount=20
+2025-09-25T14:45:20.726Z [info] INFO computing next attempt number from oneroster userSourcedId=803b972b-38e6-4dcc-81b5-b3e9db0bde67 resourceSourcedId=nice_x4c336766404c3731
+2025-09-25T14:45:20.726Z [info] INFO oneroster: fetching all results filter=status='active' AND student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67' AND assessmentLineItem.sourcedId='nice_x4c336766404c3731_ali'
+2025-09-25T14:45:20.864Z [info] INFO oneroster: successfully fetched all results count=0 filter=status='active' AND student.sourcedId='803b972b-38e6-4dcc-81b5-b3e9db0bde67' AND assessmentLineItem.sourcedId='nice_x4c336766404c3731_ali'
+2025-09-25T14:45:20.864Z [info] INFO derived next attempt number lineItemId=nice_x4c336766404c3731_ali existingResults=0 nextAttempt=1
+2025-09-25T14:45:20.866Z [info] INFO applied qti selection and ordering rules testIdentifier=nice_x4c336766404c3731 initialCount=20 finalCount=4 selectedQuestionIds=4 sectionsProcessed=4
+2025-09-25T14:45:20.867Z [info] INFO identifying eligible passive resources for exercise exerciseResourceSourcedId=nice_x4c336766404c3731
+2025-09-25T14:45:20.867Z [info] INFO oneroster: fetching ALL component resources filter=resource.sourcedId='nice_x4c336766404c3731' AND status='active'
+
+2025-09-25T14:45:21.891Z [info] [caliper] / status=200
+2025-09-25T14:45:21.945Z [info] INFO caliper client: events sent successfully
+2025-09-25T14:45:21.956Z [info] INFO getAllCoursesBySlug called slug=cc-seventh-grade-math
+2025-09-25T14:45:21.958Z [info] INFO oneroster: getting assessment result sourcedId=nice_803b972b-38e6-4dcc-81b5-b3e9db0bde67_nice_xc2d59873b5726f26_ali
+2025-09-25T14:45:21.962Z [warning] WARN caliper accumulate article: delta clamped by wall-time guard sessionDeltaSeconds=5 allowed=0.0165 effectiveDelta=2.5
+
+deeply explain what's going on here. don't make any code changes. after you do your analysis, we will regroup and try to figure out the next step.

@@ -5,8 +5,16 @@ import { z } from "zod"
 import { env } from "@/env"
 import { sendCaliperBankedXpAwardedEvent } from "@/lib/actions/caliper"
 import { extractResourceIdFromCompoundId } from "@/lib/caliper/utils"
-import { oneroster } from "@/lib/clients"
 import { CALIPER_SUBJECT_MAPPING, isSubjectSlug } from "@/lib/constants/subjects"
+import {
+    getComponentResourceForResourceInCourse,
+    getComponentResourcesByLessonIds,
+    getComponentResourcesForCourse,
+    getCourseComponentsByParentId,
+    getCourseComponentsBySourcedId,
+    getResourcesByIds,
+    getResult as fetcherGetResult
+} from "@/lib/data/fetchers/oneroster"
 import type { Resource } from "@/lib/oneroster"
 import * as gradebook from "@/lib/ports/gradebook"
 import { constructActorId, extractUserSourcedId } from "@/lib/utils/actor-id"
@@ -36,27 +44,40 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 	onerosterCourseSourcedId: string
 	onerosterUserSourcedId: string
 }): Promise<Array<{ sourcedId: string; expectedXp: number }>> {
-	const { exerciseResourceSourcedId } = params
-	logger.info("identifying eligible passive resources for exercise", { exerciseResourceSourcedId })
+	const { exerciseResourceSourcedId, onerosterCourseSourcedId } = params
+	logger.info("identifying eligible passive resources for exercise", { 
+		exerciseResourceSourcedId,
+		onerosterCourseSourcedId 
+	})
 
 	const exerciseResourceId = extractResourceIdFromCompoundId(exerciseResourceSourcedId)
 
+	// Fetch the exercise component resource scoped to the current course
 	const componentResourceResult = await errors.try(
-		oneroster.getAllComponentResources({ filter: `resource.sourcedId='${exerciseResourceId}' AND status='active'` })
+		getComponentResourceForResourceInCourse(onerosterCourseSourcedId, exerciseResourceId)
 	)
 	if (componentResourceResult.error) {
-		logger.error("exercise component resource fetch failed", { error: componentResourceResult.error })
+		logger.error("exercise component resource fetch failed", { 
+			error: componentResourceResult.error,
+			courseSourcedId: onerosterCourseSourcedId,
+			resourceSourcedId: exerciseResourceId
+		})
 		throw errors.wrap(componentResourceResult.error, "exercise component resource fetch")
 	}
-	const exerciseComponentResource = componentResourceResult.data[0]
+	const exerciseComponentResource = componentResourceResult.data
 	if (!exerciseComponentResource) {
-		return []
+		logger.error("CRITICAL: exercise component resource is undefined after fetch", {
+			courseSourcedId: onerosterCourseSourcedId,
+			resourceSourcedId: exerciseResourceId
+		})
+		throw errors.new("exercise component resource undefined")
 	}
+	
 	// Determine the unit id from the exercise's courseComponent (lesson) → parent unit
 	const lessonComponentId = exerciseComponentResource.courseComponent.sourcedId
-	const lessonComponentResult = await errors.try(
-		oneroster.getCourseComponents({ filter: `sourcedId='${lessonComponentId}' AND status='active'` })
-	)
+    const lessonComponentResult = await errors.try(
+        getCourseComponentsBySourcedId(lessonComponentId)
+    )
 	if (lessonComponentResult.error) {
 		logger.error("lesson component fetch for unit resolution failed", {
 			error: lessonComponentResult.error,
@@ -69,19 +90,22 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 	const exerciseSortOrder = exerciseComponentResource.sortOrder
 
 	if (!parentUnitId) {
+		logger.warn("exercise lesson has no parent unit", {
+			lessonComponentId,
+			exerciseResourceId
+		})
 		return []
 	}
 
 	// 2. List all lessons in the unit (for recursive CR lookup)
 	const unitLessonsResult = await errors.try(
-		oneroster.getCourseComponents({
-			filter: `parent.sourcedId='${parentUnitId}' AND status='active'`,
-			orderBy: "asc",
-			sort: "sortOrder"
-		})
+		getCourseComponentsByParentId(parentUnitId)
 	)
 	if (unitLessonsResult.error) {
-		logger.error("unit lessons fetch failed", { error: unitLessonsResult.error })
+		logger.error("unit lessons fetch failed", { 
+			error: unitLessonsResult.error,
+			parentUnitId 
+		})
 		throw errors.wrap(unitLessonsResult.error, "unit lessons fetch")
 	}
 
@@ -90,18 +114,26 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 	for (const c of unitLessonsResult.data) {
 		lessonSortOrderMap.set(c.sourcedId, c.sortOrder)
 	}
+	
+	logger.info("built lesson sort order map", {
+		lessonComponentId,
+		currentLessonSortOrder: lessonSortOrderMap.get(lessonComponentId),
+		unitLessonCount: lessonIds.length,
+		parentUnitId
+	})
 
 	// 3. Fetch ALL component resources under the unit's lessons (primary path)
 	type ComponentResourceView = { resourceId: string; sortOrder: number; lessonId: string }
 	let componentResources: Array<ComponentResourceView> = []
 	if (lessonIds.length > 0) {
 		const lessonCrResult = await errors.try(
-			oneroster.getAllComponentResources({
-				filter: `courseComponent.sourcedId@'${lessonIds.join(",")}' AND status='active'`
-			})
+			getComponentResourcesByLessonIds(lessonIds)
 		)
 		if (lessonCrResult.error) {
-			logger.error("lesson component resources fetch failed", { error: lessonCrResult.error, lessonIds })
+			logger.error("lesson component resources fetch failed", { 
+				error: lessonCrResult.error, 
+				lessonIds 
+			})
 			throw errors.wrap(lessonCrResult.error, "lesson component resources fetch")
 		}
 		componentResources = lessonCrResult.data.map((cr) => ({
@@ -113,14 +145,36 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 
 	// 3b. Fallback: include unit-level component resources if no lessons or empty
 	if (componentResources.length === 0) {
-		const unitCrResult = await errors.try(
-			oneroster.getAllComponentResources({ filter: `courseComponent.sourcedId='${parentUnitId}' AND status='active'` })
+		logger.info("no component resources found in lessons, checking unit-level resources", { 
+			parentUnitId,
+			lessonCount: lessonIds.length 
+		})
+		
+		// Fetch all CRs for the course and filter to unit-level ones
+		const allCourseCrResult = await errors.try(
+			getComponentResourcesForCourse(onerosterCourseSourcedId)
 		)
-		if (unitCrResult.error) {
-			logger.error("unit-level component resources fetch failed", { error: unitCrResult.error, parentUnitId })
-			throw errors.wrap(unitCrResult.error, "unit-level component resources fetch")
+		if (allCourseCrResult.error) {
+			logger.error("course component resources fetch failed", { 
+				error: allCourseCrResult.error, 
+				courseSourcedId: onerosterCourseSourcedId 
+			})
+			throw errors.wrap(allCourseCrResult.error, "course component resources fetch")
 		}
-		componentResources = unitCrResult.data.map((cr) => ({
+		
+		// Filter to only unit-level CRs
+		const unitCrs = allCourseCrResult.data.filter(
+			cr => cr.courseComponent.sourcedId === parentUnitId
+		)
+		
+		if (unitCrs.length > 0) {
+			logger.info("found unit-level component resources", { 
+				count: unitCrs.length,
+				parentUnitId 
+			})
+		}
+		
+		componentResources = unitCrs.map((cr) => ({
 			resourceId: cr.resource.sourcedId,
 			sortOrder: cr.sortOrder,
 			lessonId: cr.courseComponent.sourcedId
@@ -130,10 +184,11 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 	// 4. Fetch resource metadata for detection and filtering
 	const allResourceIds = componentResources.map((cr) => cr.resourceId)
 	if (allResourceIds.length === 0) {
+		logger.info("no resources found in unit scope", { parentUnitId })
 		return []
 	}
 	const allResourcesResult = await errors.try(
-		oneroster.getAllResources({ filter: `sourcedId@'${allResourceIds.join(",")}' AND status='active'` })
+		getResourcesByIds(allResourceIds)
 	)
 	if (allResourcesResult.error) {
 		logger.error("unit resources fetch for exercise detection failed", {
@@ -148,11 +203,26 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 	}
 
 	// 5. Compute previous exercise boundary using tuple ordering: (lessonSortOrder, contentSortOrder)
-	const currentLessonSortOrder = lessonSortOrderMap.get(lessonComponentId) ?? 0
+	const currentLessonSortOrder = lessonSortOrderMap.get(lessonComponentId)
+	if (currentLessonSortOrder === undefined) {
+		logger.error("CRITICAL: lesson sort order not found", {
+			lessonComponentId,
+			availableLessons: Array.from(lessonSortOrderMap.keys())
+		})
+		throw errors.new("lesson sort order not found for exercise lesson")
+	}
 	let previousExerciseTuple: { lessonSortOrder: number; contentSortOrder: number } | null = null
 	for (const cr of componentResources) {
 		const resource = resourceMap.get(cr.resourceId)
-		const lessonSortOrder = lessonSortOrderMap.get(cr.lessonId) ?? 0
+		const lessonSortOrder = lessonSortOrderMap.get(cr.lessonId)
+		if (lessonSortOrder === undefined) {
+			logger.error("CRITICAL: lesson sort order not found for component resource", {
+				lessonId: cr.lessonId,
+				resourceId: cr.resourceId,
+				availableLessons: Array.from(lessonSortOrderMap.keys())
+			})
+			throw errors.new("lesson sort order not found for component resource")
+		}
 		const isExerciseResource =
 			resource?.metadata?.khanActivityType === "Exercise" || resource?.metadata?.khanLessonType === "exercise"
 		if (!resource || !isExerciseResource) continue
@@ -174,18 +244,43 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 		if (isAfterPrevious) previousExerciseTuple = { lessonSortOrder, contentSortOrder: cr.sortOrder }
 	}
 
+	// Count exercises in unit for logging
+	let exerciseCountInUnit = 0
+	for (const cr of componentResources) {
+		const resource = resourceMap.get(cr.resourceId)
+		if (!resource) continue
+		const isExerciseResource =
+			resource?.metadata?.khanActivityType === "Exercise" || resource?.metadata?.khanLessonType === "exercise"
+		if (isExerciseResource) exerciseCountInUnit++
+	}
+
 	logger.info("found exercise boundaries", {
 		currentExerciseSortOrder: exerciseSortOrder,
 		currentLessonSortOrder,
 		previousExerciseSortOrder: previousExerciseTuple?.contentSortOrder ?? -1,
 		previousLessonSortOrder: previousExerciseTuple?.lessonSortOrder ?? -1,
-		exerciseResourceId
+		previousBoundaryResourceId: previousExerciseTuple ? 
+			componentResources.find(cr => 
+				lessonSortOrderMap.get(cr.lessonId) === previousExerciseTuple.lessonSortOrder && 
+				cr.sortOrder === previousExerciseTuple.contentSortOrder
+			)?.resourceId : null,
+		exerciseResourceId,
+		exerciseCountInUnit,
+		hasPreviousBoundary: previousExerciseTuple !== null
 	})
 
 	// 6. Identify passive resources strictly between previous and current exercise using tuple ordering
 	const candidateResourceIds: string[] = []
 	for (const cr of componentResources) {
-		const lessonSortOrder = lessonSortOrderMap.get(cr.lessonId) ?? 0
+		const lessonSortOrder = lessonSortOrderMap.get(cr.lessonId)
+		if (lessonSortOrder === undefined) {
+			logger.error("CRITICAL: lesson sort order not found for candidate resource", {
+				lessonId: cr.lessonId,
+				resourceId: cr.resourceId,
+				availableLessons: Array.from(lessonSortOrderMap.keys())
+			})
+			throw errors.new("lesson sort order not found for candidate resource")
+		}
 		const isAfterPrevious = previousExerciseTuple
 			? lessonSortOrder > previousExerciseTuple.lessonSortOrder ||
 				(lessonSortOrder === previousExerciseTuple.lessonSortOrder &&
@@ -208,11 +303,36 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 		}
 	}
 
+	// Count by type for better logging
+	let articleCount = 0
+	let videoCount = 0
+	for (const resourceId of candidateResourceIds) {
+		const resource = resourceMap.get(resourceId)
+		if (!resource) continue
+		const kind = resource.metadata?.khanActivityType
+		if (kind === "Article") articleCount++
+		else if (kind === "Video") videoCount++
+	}
+
 	logger.info("candidate passive resources in window", {
-		candidateCount: candidateResourceIds.length
+		candidateCount: candidateResourceIds.length,
+		articleCount,
+		videoCount,
+		windowStart: previousExerciseTuple ? 
+			`(lesson=${previousExerciseTuple.lessonSortOrder}, content=${previousExerciseTuple.contentSortOrder})` : 
+			"beginning",
+		windowEnd: `(lesson=${currentLessonSortOrder}, content=${exerciseSortOrder})`
 	})
 
 	if (candidateResourceIds.length === 0) {
+		logger.info("no eligible resources found in window", {
+			hasPreviousBoundary: previousExerciseTuple !== null,
+			unitLessonCount: lessonIds.length,
+			windowCandidateCount: 0,
+			unitId: parentUnitId,
+			lessonId: lessonComponentId,
+			exerciseResourceId
+		})
 		return []
 	}
 
@@ -238,7 +358,7 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 	const eligibilityChecks = await Promise.all(
 		passiveResources.map(async (resource) => {
 			const resultSourcedId = generateResultSourcedId(userId, resource.sourcedId, false)
-			const existingResult = await errors.try(oneroster.getResult(resultSourcedId))
+            const existingResult = await errors.try(fetcherGetResult(resultSourcedId))
 			if (existingResult.error) {
 				logger.error("bank dedupe: failed to read existing result", {
 					userId,
@@ -281,11 +401,12 @@ export async function awardBankedXpForExercise(params: {
     onerosterCourseSourcedId: string
     userEmail: string
 }): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
+    const correlationId = randomUUID()
 	// Normalize using shared utility to avoid string parsing divergence
 	const userId = extractUserSourcedId(params.onerosterUserSourcedId)
 
 	// 1. Identify eligible resources using the pure function (already deduped)
-	const eligibleResources = await findEligiblePassiveResourcesForExercise({
+    const eligibleResources = await findEligiblePassiveResourcesForExercise({
 		exerciseResourceSourcedId: params.exerciseResourceSourcedId,
 		onerosterCourseSourcedId: params.onerosterCourseSourcedId,
 		onerosterUserSourcedId: params.onerosterUserSourcedId
@@ -303,7 +424,7 @@ export async function awardBankedXpForExercise(params: {
 	const timeSpentResults = await Promise.all(
 		eligibleResources.map(async (resource) => {
 			const resultSourcedId = generateResultSourcedId(userId, resource.sourcedId, false)
-			const result = await errors.try(oneroster.getResult(resultSourcedId))
+            const result = await errors.try(fetcherGetResult(resultSourcedId))
 
 			if (result.error) {
 				logger.debug("no existing assessment result for resource", {
@@ -319,19 +440,22 @@ export async function awardBankedXpForExercise(params: {
 				? parsedMeta.data.nice_timeSpent 
 				: 0
 
-			if (timeSpent === 0) {
-				logger.info("no time spent recorded for eligible passive resource", {
+            if (timeSpent === 0) {
+                logger.info("no time spent recorded for eligible passive resource", {
 					resourceId: resource.sourcedId,
 					resultId: resultSourcedId,
-					hasResult: !!result.data,
-					hasMetadata: !!result.data?.metadata
+                    hasResult: !!result.data,
+                    hasMetadata: !!result.data?.metadata,
+                    correlationId
 				})
 			}
 
-			logger.debug("fetched canonical time spent for resource", {
+            logger.debug("fetched canonical time spent for resource", {
 				resourceId: resource.sourcedId,
 				timeSpent,
-				minutesSpent: computeBankingMinutes(timeSpent)
+                minutesSpent: computeBankingMinutes(timeSpent),
+                expectedXp: resource.expectedXp,
+                correlationId
 			})
 
 			return { ...resource, timeSpent }
@@ -376,16 +500,17 @@ export async function awardBankedXpForExercise(params: {
 		})
 	}
 
-	logger.info("calculated banked xp using canonical time spent", {
+    logger.info("calculated banked xp using canonical time spent", {
 		totalBankedXp,
 		awardedResourceCount: awardedResourceIds.length,
-		detailedResults
+        detailedResults,
+        correlationId
 	})
 
 	// 4. Get resource metadata for saving results and sending Caliper events
 	const allResourceIds = eligibleResources.map((r) => r.sourcedId)
 	const allResourcesResult = await errors.try(
-		oneroster.getAllResources({ filter: `sourcedId@'${allResourceIds.join(",")}' AND status='active'` })
+		getResourcesByIds(allResourceIds)
 	)
 	if (allResourcesResult.error) {
 		logger.error("failed to fetch resource metadata for results", { error: allResourcesResult.error })
@@ -422,15 +547,15 @@ export async function awardBankedXpForExercise(params: {
 				nice_timeSpent: Math.max(0, timeSpentByResourceId.get(resourceId) ?? 0)
 			}
 
-			const saveResult = await errors.try(
+            const saveResult = await errors.try(
 				gradebook.saveResult({
 					resultSourcedId,
 					lineItemSourcedId: lineItemId,
 					userSourcedId: userId,
 					score: 100,
 					comment: "Banked XP awarded upon exercise completion.",
-					metadata,
-					correlationId: randomUUID()
+                    metadata,
+                    correlationId
 				})
 			)
 			if (saveResult.error) {
@@ -506,25 +631,47 @@ export async function getBankedXpBreakdownForQuiz(
 	const userId = extractUserSourcedId(userSourcedId)
 
 	// 1. Locate quiz component resource to derive unit and sort order context
-	const quizCrResult = await errors.try(
-		oneroster.getAllComponentResources({ filter: `resource.sourcedId='${quizResourceId}' AND status='active'` })
+	// Note: We don't have courseSourcedId here, so we need to fetch all CRs and filter
+	// TODO: This should be refactored to pass courseSourcedId and use getComponentResourceForResourceInCourse
+	const { getAllComponentResources } = await import("@/lib/data/fetchers/oneroster")
+	const allCrResult = await errors.try(
+		getAllComponentResources()
 	)
-	if (quizCrResult.error) {
-		logger.error("quiz component resource fetch failed", { error: quizCrResult.error, quizResourceId })
-		throw errors.wrap(quizCrResult.error, "quiz component resource fetch")
+	if (allCrResult.error) {
+		logger.error("all component resources fetch failed", { error: allCrResult.error })
+		throw errors.wrap(allCrResult.error, "all component resources fetch")
 	}
-	const quizComponentResource = quizCrResult.data[0]
-	if (!quizComponentResource) {
+	// Filter to only the quiz resource
+	const quizCrs = allCrResult.data.filter(cr => cr.resource.sourcedId === quizResourceId)
+	
+	if (quizCrs.length === 0) {
 		logger.warn("could not find component resource for quiz", { quizResourceId })
 		return { articleXp: 0, videoXp: 0 }
 	}
+	if (quizCrs.length > 1) {
+		logger.warn("multiple component resources found for quiz", { 
+			quizResourceId,
+			candidates: quizCrs.map(cr => ({
+				componentResourceId: cr.sourcedId,
+				courseComponentId: cr.courseComponent.sourcedId
+			}))
+		})
+	}
+	const quizComponentResource = quizCrs[0]
+	if (!quizComponentResource) {
+		logger.error("CRITICAL: quiz component resource is undefined", { quizResourceId })
+		throw errors.new("quiz component resource undefined")
+	}
+	
 	const parentUnitId = quizComponentResource.courseComponent.sourcedId
 	const quizSortOrder = quizComponentResource.sortOrder
 
 	// 2. Get all component resources for the unit to find the previous quiz boundary
-	const unitCrResult = await errors.try(
-		oneroster.getAllComponentResources({ filter: `courseComponent.sourcedId='${parentUnitId}' AND status='active'` })
-	)
+	// Filter from the already fetched component resources
+	const unitCrResult = {
+		data: allCrResult.data.filter(cr => cr.courseComponent.sourcedId === parentUnitId),
+		error: null
+	}
 	if (unitCrResult.error) {
 		logger.error("unit component resources fetch failed", { error: unitCrResult.error, parentUnitId })
 		throw errors.wrap(unitCrResult.error, "unit component resources fetch")
@@ -533,7 +680,7 @@ export async function getBankedXpBreakdownForQuiz(
 	// Fetch resources metadata for quiz detection
 	const unitResourceIds = unitCrResult.data.map((cr) => cr.resource.sourcedId)
 	const unitResourcesResult = await errors.try(
-		oneroster.getAllResources({ filter: `sourcedId@'${unitResourceIds.join(",")}' AND status='active'` })
+		getResourcesByIds(unitResourceIds)
 	)
 	if (unitResourcesResult.error) {
 		logger.error("unit resources fetch for quiz detection failed", {
@@ -566,11 +713,7 @@ export async function getBankedXpBreakdownForQuiz(
 
 	// 3. Identify lessons between previous quiz and current quiz by sort order
 	const unitComponentsResult = await errors.try(
-		oneroster.getCourseComponents({
-			filter: `parent.sourcedId='${parentUnitId}' AND status='active'`,
-			orderBy: "asc",
-			sort: "sortOrder"
-		})
+		getCourseComponentsByParentId(parentUnitId)
 	)
 	if (unitComponentsResult.error) {
 		logger.error("unit components fetch failed", { error: unitComponentsResult.error, parentUnitId })
@@ -588,9 +731,7 @@ export async function getBankedXpBreakdownForQuiz(
 	// 4. Gather passive resources from those lessons and separate by type
 	const lessonComponentSourcedIds = lessons.map((l) => l.sourcedId)
 	const lessonCrResult = await errors.try(
-		oneroster.getAllComponentResources({
-			filter: `courseComponent.sourcedId@'${lessonComponentSourcedIds.join(",")}' AND status='active'`
-		})
+		getComponentResourcesByLessonIds(lessonComponentSourcedIds)
 	)
 	if (lessonCrResult.error) {
 		logger.error("lesson component resources fetch failed", { error: lessonCrResult.error, lessonComponentSourcedIds })
@@ -603,7 +744,7 @@ export async function getBankedXpBreakdownForQuiz(
 	}
 
 	const resourcesResult = await errors.try(
-		oneroster.getAllResources({ filter: `sourcedId@'${resourceIds.join(",")}' AND status='active'` })
+		getResourcesByIds(resourceIds)
 	)
 	if (resourcesResult.error) {
 		logger.error("lesson resources fetch for breakdown failed", { error: resourcesResult.error, resourceIds })
@@ -645,7 +786,7 @@ export async function getBankedXpBreakdownForQuiz(
 		
 		for (const resource of resources) {
 			const resultSourcedId = generateResultSourcedId(userId, resource.sourcedId, false)
-			const result = await errors.try(oneroster.getResult(resultSourcedId))
+            const result = await errors.try(fetcherGetResult(resultSourcedId))
 
 			let timeSpent = 0
 			if (!result.error) {

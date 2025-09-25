@@ -375,3 +375,146 @@ export async function getActiveEnrollmentsForUser(userSourcedId: string) {
 	// User data is more volatile, so use a shorter cache duration
 	return redisCache(operation, ["oneroster-getActiveEnrollmentsForUser", userSourcedId], { revalidate: 10 }) // 10 seconds cache
 }
+
+// --- New Fetchers for XP Banking ---
+
+/**
+ * Fetches all ComponentResources for a specific course.
+ * This ensures all component resources are scoped to the given course.
+ */
+export async function getComponentResourcesForCourse(courseSourcedId: string) {
+	logger.info("getComponentResourcesForCourse called", { courseSourcedId })
+	const operation = async () => {
+		// First get all components in the course
+		const courseComponents = await getCourseComponentsByCourseId(courseSourcedId)
+		if (courseComponents.length === 0) {
+			return []
+		}
+		
+		// Get all component IDs
+		const componentIds = courseComponents.map(c => c.sourcedId)
+		
+		// Fetch component resources using the @ operator for IN clause
+		const componentResources = await oneroster.getAllComponentResources({
+			filter: `courseComponent.sourcedId@'${componentIds.join(",")}' AND status='active'`
+		})
+		
+		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
+		return ensureActiveStatus(componentResources)
+	}
+	return redisCache(operation, ["oneroster-getComponentResourcesForCourse", courseSourcedId], { revalidate: 3600 * 24 }) // 24-hour cache
+}
+
+/**
+ * Fetches the ComponentResource for a specific resource within a specific course.
+ * Throws if no match found or if multiple matches exist (ambiguous).
+ */
+export async function getComponentResourceForResourceInCourse(courseSourcedId: string, resourceSourcedId: string) {
+	logger.info("getComponentResourceForResourceInCourse called", { courseSourcedId, resourceSourcedId })
+	const operation = async () => {
+		// Get all component resources for the course
+		const allComponentResources = await getComponentResourcesForCourse(courseSourcedId)
+		
+		// Filter to find matches for this resource
+		const matches = allComponentResources.filter(cr => cr.resource.sourcedId === resourceSourcedId)
+		
+		if (matches.length === 0) {
+			logger.error("no component resource found for resource in course", {
+				courseSourcedId,
+				resourceSourcedId,
+				totalComponentResources: allComponentResources.length
+			})
+			throw errors.new("component resource not found for resource in course")
+		}
+		
+		if (matches.length > 1) {
+			logger.error("multiple component resources found for resource in course", {
+				courseSourcedId,
+				resourceSourcedId,
+				matchCount: matches.length,
+				candidates: matches.map(cr => ({
+					componentResourceId: cr.sourcedId,
+					courseComponentId: cr.courseComponent.sourcedId,
+					sortOrder: cr.sortOrder
+				}))
+			})
+			throw errors.new("ambiguous component resource for resource in course")
+		}
+		
+		return matches[0]
+	}
+	return redisCache(operation, ["oneroster-getComponentResourceForResourceInCourse", courseSourcedId, resourceSourcedId], { revalidate: 3600 * 24 }) // 24-hour cache
+}
+
+/**
+ * Fetches resources by their IDs.
+ * Uses the @ operator for efficient batch fetching.
+ */
+export async function getResourcesByIds(resourceIds: string[]) {
+	logger.info("getResourcesByIds called", { count: resourceIds.length })
+	if (resourceIds.length === 0) {
+		return []
+	}
+	
+	const operation = async () => {
+		const resources = await oneroster.getAllResources({
+			filter: `sourcedId@'${resourceIds.join(",")}' AND status='active'`
+		})
+		
+		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
+		return ensureActiveStatus(resources)
+	}
+	
+	// Create a stable cache key by sorting IDs
+	const sortedIds = [...resourceIds].sort()
+	return redisCache(operation, ["oneroster-getResourcesByIds", ...sortedIds], { revalidate: 3600 * 24 }) // 24-hour cache
+}
+
+/**
+ * Fetches ComponentResources for specific lesson IDs.
+ * Used to get all content within a set of lessons.
+ */
+export async function getComponentResourcesByLessonIds(lessonIds: string[]) {
+	logger.info("getComponentResourcesByLessonIds called", { count: lessonIds.length })
+	if (lessonIds.length === 0) {
+		return []
+	}
+	
+	const operation = async () => {
+		const componentResources = await oneroster.getAllComponentResources({
+			filter: `courseComponent.sourcedId@'${lessonIds.join(",")}' AND status='active'`
+		})
+		
+		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
+		return ensureActiveStatus(componentResources)
+	}
+	
+	// Create a stable cache key by sorting IDs
+	const sortedIds = [...lessonIds].sort()
+	return redisCache(operation, ["oneroster-getComponentResourcesByLessonIds", ...sortedIds], { revalidate: 3600 * 24 }) // 24-hour cache
+}
+
+/**
+ * Fetches course components by their sourcedId.
+ * This wraps the low-level call and applies active-status filtering consistently.
+ */
+export async function getCourseComponentsBySourcedId(sourcedId: string) {
+    logger.info("getCourseComponentsBySourcedId called", { sourcedId })
+    const operation = async () => {
+        const components = await oneroster.getCourseComponents({
+            filter: `sourcedId='${sourcedId}' AND status='active'`
+        })
+        return ensureActiveStatus(components)
+    }
+    return redisCache(operation, ["oneroster-getCourseComponentsBySourcedId", sourcedId], { revalidate: 3600 * 24 })
+}
+
+/**
+ * Fetches a result by its sourcedId.
+ * Intentionally not cached (results are hot on write paths); wrap for consistency/logging.
+ */
+export async function getResult(sourcedId: string) {
+    logger.info("getResult called", { sourcedId })
+    // Do not cache writes/read-after-write; return raw client result
+    return oneroster.getResult(sourcedId)
+}
