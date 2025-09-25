@@ -49,8 +49,7 @@ export async function POST(request: Request) {
 		}
 	}
 
-	// Fire-and-forget call to the server action
-    // Drill userEmail now (safe during live request)
+	// Drill userEmail now (safe during live request)
     let userEmail: string | undefined
     if (userId) {
         const userResult = await errors.try((await (await import("@clerk/nextjs/server")).clerkClient()).users.getUser(userId))
@@ -64,13 +63,14 @@ export async function POST(request: Request) {
         return new NextResponse("Unauthorized", { status: 401 })
     }
 
-    void finalizeArticlePartialTimeSpentService(
-        onerosterUserSourcedId,
-        onerosterArticleResourceSourcedId,
-        articleTitle,
-        courseInfo,
-        userEmail
-    ).catch((error) => {
+	// Fire-and-forget call to the server action
+	void finalizeArticlePartialTimeSpentService(
+		onerosterUserSourcedId,
+		onerosterArticleResourceSourcedId,
+		articleTitle,
+		courseInfo,
+		userEmail
+	).catch((error) => {
 		logger.error("partial finalize failed", { error })
 	})
 

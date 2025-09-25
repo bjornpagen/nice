@@ -35,12 +35,12 @@ export async function POST(request: Request) {
 		return new NextResponse("Unauthorized", { status: 401 })
 	}
 
-    // Fire-and-forget call to the service (no auth inside)
-    void accumulateArticleReadTimeService(
-        serverSourcedId,
-        onerosterArticleResourceSourcedId,
-        sessionDeltaSeconds
-    ).catch((error) => {
+	// Fire-and-forget call to the service (no auth inside)
+	void accumulateArticleReadTimeService(
+		serverSourcedId,
+		onerosterArticleResourceSourcedId,
+		sessionDeltaSeconds
+	).catch((error) => {
 		logger.error("accumulate article read time failed", { error })
 	})
 

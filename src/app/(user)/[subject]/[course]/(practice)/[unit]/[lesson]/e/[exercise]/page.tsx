@@ -109,16 +109,20 @@ export default async function ExercisePage({
 		}
 	}
 
-	// Fire and forget the finalization - don't wait for it
+	// Previously fire-and-forget: now awaited synchronously for determinism
 	const user = await currentUser()
 	const userEmail = user?.emailAddresses?.[0]?.emailAddress
 	if (!userEmail) {
 		logger.error("exercise page: missing user email at render")
 		throw errors.new("user email required")
 	}
-	finalizeArticlesInWindow(userEmail).catch((error) => {
-		logger.error("exercise finalization worker failed", { error })
-	})
+	{
+		const finalizeResult = await errors.try(finalizeArticlesInWindow(userEmail))
+		if (finalizeResult.error) {
+			logger.error("exercise finalization worker failed", { error: finalizeResult.error })
+			// Non-fatal: continue rendering
+		}
+	}
 
 	return (
 		<React.Suspense>
