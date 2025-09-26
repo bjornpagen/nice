@@ -38,13 +38,15 @@ export function LessonFooter({ coursePromise, progressPromise }: LessonFooterPro
 	// Get lock status from course-wide context instead of props
 	const { resourceLockStatus } = useCourseLockStatus()
 
-	// delay gating for article completion button
+	// delay gating for article completion button (20s)
 	const mountTimeRef = React.useRef<number>(Date.now())
 	const [now, setNow] = React.useState<number>(() => Date.now())
 	React.useEffect(() => {
 		const id = setInterval(() => setNow(Date.now()), 250)
 		return () => clearInterval(id)
 	}, [])
+
+
 
 	// reset dwell timer whenever navigating to a new, incomplete article
 
@@ -159,10 +161,26 @@ export function LessonFooter({ coursePromise, progressPromise }: LessonFooterPro
 	// Articles use an explicit completion button with a minimal dwell requirement.
 	const isArticle = currentResourceType === "Article"
 	const isServerCompleted = currentResourceId ? Boolean(progressMap.get(currentResourceId)?.completed) : false
-	const articleDelayActive = isArticle && !isServerCompleted && now - mountTimeRef.current < 10000
-	const countdownSeconds = articleDelayActive ? Math.ceil((10000 - (now - mountTimeRef.current)) / 1000) : 0
 
-	const showDisabled = isArticle ? articleDelayActive : !isServerCompleted
+	// Reset dwell timer when navigating to a new incomplete article
+	React.useEffect(() => {
+		if (isArticle && !isServerCompleted && currentResourceId) {
+			mountTimeRef.current = Date.now()
+		}
+	}, [currentResourceId, isArticle, isServerCompleted])
+
+	const articleDelayActive = isArticle && !isServerCompleted && now - mountTimeRef.current < 20000
+	const countdownSeconds = articleDelayActive ? Math.ceil((20000 - (now - mountTimeRef.current)) / 1000) : 0
+
+	// Determine if we're in the "finalizing" state (20s passed but server hasn't confirmed yet)
+	const isFinalizingArticle = isArticle && !isServerCompleted && countdownSeconds === 0
+
+	// For articles: disabled during countdown OR during finalizing state OR if next is locked
+	// For other content: disabled until server marks complete
+	const showDisabled = isArticle
+		? (articleDelayActive || isFinalizingArticle || nextLockedByServer)
+		: !isServerCompleted
+
 	let disabledReason = ""
 	if (!isServerCompleted && !isArticle) {
 		if (currentResourceType === "Video") {
@@ -170,21 +188,24 @@ export function LessonFooter({ coursePromise, progressPromise }: LessonFooterPro
 		} else {
 			disabledReason = "Complete this activity to continue"
 		}
-	} else if (nextLockedByServer) {
+	} else if (nextLockedByServer && !isFinalizingArticle) {
 		disabledReason = "Complete the previous activity to unlock next"
 	}
 	if (isArticle && articleDelayActive) {
-		disabledReason = "Please read for 10 seconds to continue"
+		disabledReason = "Please read for 20 seconds to continue"
+	}
+	if (isFinalizingArticle) {
+		disabledReason = "Finalizing completion..."
 	}
 
 	let primaryButtonLabel = "Continue"
 	if (isArticle) {
-		if (isServerCompleted) {
-			primaryButtonLabel = "Continue"
-		} else if (countdownSeconds > 0) {
+		if (countdownSeconds > 0) {
 			primaryButtonLabel = `Done Reading (${countdownSeconds}s)`
+		} else if (isFinalizingArticle) {
+			primaryButtonLabel = "Finalizing..."
 		} else {
-			primaryButtonLabel = "Done Reading"
+			primaryButtonLabel = "Continue"
 		}
 	}
 	const shouldNavigate = !showDisabled

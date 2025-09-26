@@ -89,33 +89,37 @@ export function Content({
 		}
 
 		if (article.id) {
-			// Track article view on mount and refresh route so server-fetched progress updates immediately
-			const trackArticleAsync = async () => {
-				beginProgressUpdate(article.id)
-				const result = await errors.try(
-					trackArticleView(article.id, {
-						subjectSlug: params.subject,
-						courseSlug: params.course
-					})
-				)
-				if (result.error) {
-					endProgressUpdate(article.id)
-					return
-				}
-				// update local overlay for immediate sidebar state (by OneRoster id)
-				setProgressForResource(article.id, { completed: true })
-				// also update by slug id for the injected sidebar row on current page
-				{
-					const currentSlug = params.article
-					if (currentSlug) {
-						setProgressForResource(currentSlug, { completed: true })
+			// Delay marking as completed until the user has dwelled for 20 seconds
+			const timerId = setTimeout(() => {
+				const trackArticleAsync = async () => {
+					beginProgressUpdate(article.id)
+					const result = await errors.try(
+						trackArticleView(article.id, {
+							subjectSlug: params.subject,
+							courseSlug: params.course
+						})
+					)
+					if (result.error) {
+						endProgressUpdate(article.id)
+						return
 					}
+					// update local overlay for immediate sidebar state (by OneRoster id)
+					setProgressForResource(article.id, { completed: true })
+					// also update by slug id for the injected sidebar row on current page
+					{
+						const currentSlug = params.article
+						if (currentSlug) {
+							setProgressForResource(currentSlug, { completed: true })
+						}
+					}
+					// Ensure server-side lock state is refreshed after recording completion
+					router.refresh()
+					endProgressUpdate(article.id)
 				}
-				// Ensure server-side lock state is refreshed after recording completion
-				router.refresh()
-				endProgressUpdate(article.id)
-			}
-			void trackArticleAsync()
+				void trackArticleAsync()
+			}, 20000) // 20-second dwell time
+
+			return () => clearTimeout(timerId)
 		}
 	}, [
 		user,
