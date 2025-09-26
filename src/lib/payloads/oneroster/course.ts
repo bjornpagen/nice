@@ -724,7 +724,8 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 							url: `${appDomain}${metadata.path}/e/${content.slug}`,
 							xp: EXERCISE_XP,
 							// REFACTOR: Attach the collected list of passive resource IDs
-							passiveResources: passiveResourcesForNextExercise
+							passiveResources: null,
+							nice_passiveResources: passiveResourcesForNextExercise
 						}
 						// REFACTOR: Reset the collector for the next group
 						passiveResourcesForNextExercise = []

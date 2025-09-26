@@ -72,7 +72,7 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 
 	// 2. Safely parse the passiveResources array of strings from metadata.
 	const PassiveResourceIdsSchema = z.array(z.string()).optional()
-	const parsed = PassiveResourceIdsSchema.safeParse(exerciseResource.metadata?.passiveResources)
+	const parsed = PassiveResourceIdsSchema.safeParse(exerciseResource.metadata?.nice_passiveResources)
 	if (!parsed.success || !parsed.data || parsed.data.length === 0) {
 		logger.info("no passiveResources metadata found for this exercise", {
 			exerciseResourceSourcedId,
