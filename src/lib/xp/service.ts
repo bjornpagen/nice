@@ -17,7 +17,9 @@ interface AwardXpOptions {
 	attemptNumber: number
 	durationInSeconds?: number
 	isExercise: boolean
-    userEmail: string
+	userEmail: string
+	subjectSlug: string
+	courseSlug: string
 }
 
 /**
@@ -78,14 +80,16 @@ export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpC
 	let bankedXp = 0
 
 	// 3. Process XP Bank for exercises if the user achieved mastery.
-    if (options.isExercise && assessmentXpResult.finalXp > 0 && accuracy >= 80) {
-        // Directly award banked XP using canonical nice_timeSpent from OneRoster
-        const xpBankResult = await errors.try(
+	if (options.isExercise && assessmentXpResult.finalXp > 0 && accuracy >= 80) {
+		// Directly award banked XP using canonical nice_timeSpent from OneRoster
+		const xpBankResult = await errors.try(
 			awardBankedXpForExercise({
 				exerciseResourceSourcedId: options.assessmentResourceId,
 				onerosterUserSourcedId: options.userSourcedId,
-                onerosterCourseSourcedId: options.courseSourcedId,
-                userEmail: options.userEmail
+				onerosterCourseSourcedId: options.courseSourcedId,
+				userEmail: options.userEmail,
+				subjectSlug: options.subjectSlug,
+				courseSlug: options.courseSlug
 			})
 		)
 
@@ -95,15 +99,17 @@ export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpC
 				assessmentId: options.componentResourceId,
 				userId: options.userSourcedId
 			})
-		} else {
-			bankedXp = xpBankResult.data.bankedXp
-			finalXp += bankedXp
-            logger.info("awarded banked xp", {
-				assessmentId: options.componentResourceId,
-				bankedXp,
-				awardedCount: xpBankResult.data.awardedResourceIds.length
-			})
+			// CRITICAL: Banking failure must halt the process per "No Fallbacks" rule
+			throw errors.wrap(xpBankResult.error, "xp banking")
 		}
+		
+		bankedXp = xpBankResult.data.bankedXp
+		finalXp += bankedXp
+		logger.info("awarded banked xp", {
+			assessmentId: options.componentResourceId,
+			bankedXp,
+			awardedCount: xpBankResult.data.awardedResourceIds.length
+		})
 	}
 
 	// 4. Update the user's weekly activity streak if they earned positive XP.

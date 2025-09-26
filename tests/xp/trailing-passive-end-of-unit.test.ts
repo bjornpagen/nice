@@ -6,6 +6,8 @@ declare module "@/lib/xp/bank" {
 		onerosterUserSourcedId: string
 		onerosterCourseSourcedId: string
 		userEmail: string
+		subjectSlug: string
+		courseSlug: string
 	}): Promise<{ bankedXp: number; awardedResourceIds: string[] }>
 	export function awardBankedXpForUnitCompletion(params: {
 		onerosterUserSourcedId: string
@@ -234,6 +236,24 @@ mock.module("@/lib/clients", () => ({
 
 // New: Mock the fetcher layer used by bank.ts
 mock.module("@/lib/data/fetchers/oneroster", () => ({
+  // Mock getCourse to return course with metadata
+  getCourse: (courseId: string) => {
+    if (courseId === "course1") {
+      return Promise.resolve({
+        sourcedId: "course1",
+        status: "active",
+        title: "Test Course",
+        metadata: {
+          khanId: "test-course",
+          khanSlug: "test-course",
+          khanSubjectSlug: "math",
+          khanTitle: "Test Course",
+          khanDescription: "Test course for unit tests"
+        }
+      })
+    }
+    return Promise.resolve(null)
+  },
   // Return the CR for a resource within the course
   getComponentResourceForResourceInCourse: (_courseId: string, resourceId: string) =>
     Promise.resolve({ resource: { sourcedId: resourceId }, courseComponent: { sourcedId: LESSON2 }, sortOrder: 1 }),
@@ -273,6 +293,25 @@ mock.module("@/lib/data/fetchers/oneroster", () => ({
       { resource: { sourcedId: TRAIL }, courseComponent: { sourcedId: LESSON2 }, sortOrder: 2 }
     ]),
 
+  // Fetch single resource (needed by findEligiblePassiveResourcesForExercise)
+  getResource: (id: string) => {
+    // Return the exercise with its passive resources metadata
+    if (id === E2) {
+      return Promise.resolve({
+        sourcedId: E2,
+        title: "Exercise 2",
+        metadata: {
+          nice_passiveResources: [A1] // E2 should bank A1
+        }
+      })
+    }
+    return Promise.resolve({
+      sourcedId: id,
+      title: id,
+      metadata: {}
+    })
+  },
+  
   // Fetch resource metadata
   getResourcesByIds: (ids: string[]) =>
     Promise.resolve(
@@ -321,6 +360,8 @@ async function awardBankedXpForExercise(params: {
 	onerosterUserSourcedId: string
 	onerosterCourseSourcedId: string
 	userEmail: string
+	subjectSlug: string
+	courseSlug: string
 }): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
 	const { awardBankedXpForExercise: realImplementation } = await import("@/lib/xp/bank")
 	return realImplementation(params)
@@ -610,7 +651,9 @@ describe("Banked XP - dedupe across exercise and unit completion", () => {
 			exerciseResourceSourcedId: E2,
 			onerosterUserSourcedId: "user:u1",
 			onerosterCourseSourcedId: "course1",
-			userEmail: "test@example.com"
+			userEmail: "test@example.com",
+			subjectSlug: "math",
+			courseSlug: "test-course"
 		})
 		expect(new Set(exerciseAward.awardedResourceIds)).toEqual(new Set([A1]))
 		expect(exerciseAward.bankedXp).toBe(1)

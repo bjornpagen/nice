@@ -18,7 +18,7 @@ export const SaveAssessmentResultCommandSchema = z.object({
 	assessmentTitle: z.string(),
 	assessmentPath: z.string(),
 	unitData: z.custom<Unit>().optional(),
-	userEmail: z.string().email().optional(),
+	userEmail: z.string().email(), // CHANGED: Made required for Caliper analytics
 	contentType: z.enum(["Exercise", "Quiz", "Test", "CourseChallenge"]),
 	score: z.number().int().min(0).max(100),
 	correctAnswers: z.number().int(),

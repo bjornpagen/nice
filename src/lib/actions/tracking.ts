@@ -17,6 +17,7 @@ import * as cacheUtils from "@/lib/cache"
 import { invalidateCache } from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
 import { VIDEO_COMPLETION_THRESHOLD_PERCENT, VIDEO_COMPLETION_THRESHOLD_RATIO } from "@/lib/constants/progress"
+import { isSubjectSlug } from "@/lib/constants/subjects"
 import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
 import { redis } from "@/lib/redis"
 import { constructActorId } from "@/lib/utils/actor-id"
@@ -683,6 +684,36 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 	// Step 3: Calculate XP first if we have the required data
 	if (unitData && assessmentPath && assessmentTitle && userEmail && expectedXp !== undefined && attemptNumber) {
 		logger.info("calculating xp for assessment", { resourceId })
+		
+		// Extract subject and course from assessment path (format: /subject/course/...)
+		const pathParts = assessmentPath.split("/").filter(Boolean)
+		if (pathParts.length < 2) {
+			logger.error("invalid assessment path format for XP calculation", {
+				assessmentPath,
+				resourceId
+			})
+			throw errors.new("invalid assessment path format")
+		}
+		
+		const subjectSlugRaw = pathParts[0]
+		if (!subjectSlugRaw || !isSubjectSlug(subjectSlugRaw)) {
+			logger.error("invalid subject slug in assessment path", {
+				subjectSlug: subjectSlugRaw,
+				assessmentPath,
+				resourceId
+			})
+			throw errors.new("invalid subject slug in assessment path")
+		}
+		const subjectSlug = subjectSlugRaw
+		
+		const courseSlug = pathParts[1]
+		if (!courseSlug) {
+			logger.error("missing course slug in assessment path", {
+				assessmentPath,
+				resourceId
+			})
+			throw errors.new("missing course slug in assessment path")
+		}
 
 		// 3a. Use the new XP Service to calculate final XP
 		const xpResult = await errors.try(
@@ -697,7 +728,9 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 				attemptNumber: attemptNumber,
 				durationInSeconds,
 				isExercise: contentType === "Exercise",
-				userEmail
+				userEmail,
+				subjectSlug,
+				courseSlug
 			})
 		)
 

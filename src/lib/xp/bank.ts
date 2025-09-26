@@ -10,12 +10,14 @@ import {
     getComponentResourceForResourceInCourse,
     getComponentResourcesByLessonIds,
     getComponentResourcesForCourse,
+    getCourse,
     getCourseComponentsByParentId,
     getCourseComponentsBySourcedId,
     getResource,
     getResourcesByIds,
     getResult as fetcherGetResult
 } from "@/lib/data/fetchers/oneroster"
+import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import type { Resource } from "@/lib/oneroster"
 import * as gradebook from "@/lib/ports/gradebook"
 import { constructActorId, extractUserSourcedId } from "@/lib/utils/actor-id"
@@ -149,12 +151,58 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 export async function awardBankedXpForExercise(params: {
 	exerciseResourceSourcedId: string
 	onerosterUserSourcedId: string
-    onerosterCourseSourcedId: string
-    userEmail: string
+	onerosterCourseSourcedId: string
+	userEmail: string
+	subjectSlug: string
+	courseSlug: string
 }): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
-    const correlationId = randomUUID()
+	const correlationId = randomUUID()
 	// Normalize using shared utility to avoid string parsing divergence
 	const userId = extractUserSourcedId(params.onerosterUserSourcedId)
+
+	// Fetch and validate course metadata to ensure correct subject slug
+	const courseResult = await errors.try(getCourse(params.onerosterCourseSourcedId))
+	if (courseResult.error) {
+		logger.error("failed to fetch course for banking context", {
+			error: courseResult.error,
+			courseSourcedId: params.onerosterCourseSourcedId,
+			correlationId
+		})
+		throw errors.wrap(courseResult.error, "course fetch for banking")
+	}
+	
+	const course = courseResult.data
+	if (!course) {
+		logger.error("CRITICAL: course not found for banking", {
+			courseSourcedId: params.onerosterCourseSourcedId,
+			correlationId
+		})
+		throw errors.new("course not found for banking")
+	}
+
+	// Validate course metadata
+	const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
+	if (!courseMetadataResult.success) {
+		logger.error("CRITICAL: invalid course metadata for banking", {
+			courseSourcedId: params.onerosterCourseSourcedId,
+			error: courseMetadataResult.error,
+			correlationId
+		})
+		throw errors.wrap(courseMetadataResult.error, "course metadata validation for banking")
+	}
+	
+	const courseMetadata = courseMetadataResult.data
+	
+	// Validate that the provided subject slug matches the course's actual subject
+	if (params.subjectSlug !== courseMetadata.khanSubjectSlug) {
+		logger.error("CRITICAL: subject slug mismatch for banking", {
+			providedSubject: params.subjectSlug,
+			actualSubject: courseMetadata.khanSubjectSlug,
+			courseSourcedId: params.onerosterCourseSourcedId,
+			correlationId
+		})
+		throw errors.new("subject slug mismatch: provided subject does not match course")
+	}
 
 	// 1. Identify eligible resources using the pure function (already deduped)
     const eligibleResources = await findEligiblePassiveResourcesForExercise({
@@ -319,22 +367,19 @@ export async function awardBankedXpForExercise(params: {
 					logger.error("CRITICAL: resource missing metadata for caliper event", { resourceId })
 					throw errors.new("resource metadata: required for caliper event")
 				}
-				if (typeof resource.metadata.khanSubjectSlug !== "string") {
-					logger.error("CRITICAL: resource missing subject slug for caliper event", { 
-						resourceId,
-						khanSubjectSlug: resource.metadata.khanSubjectSlug,
-						type: typeof resource.metadata.khanSubjectSlug
-					})
-					throw errors.new("resource metadata: subject slug required for caliper event")
-				}
-				if (!isSubjectSlug(resource.metadata.khanSubjectSlug)) {
+				
+				// Use the validated course subject slug from earlier fetch
+				const subjectSlug = courseMetadata.khanSubjectSlug
+				if (!isSubjectSlug(subjectSlug)) {
 					logger.error("CRITICAL: invalid subject slug for caliper event", { 
 						resourceId, 
-						subjectSlug: resource.metadata.khanSubjectSlug 
+						subjectSlug,
+						correlationId
 					})
-					throw errors.new("resource metadata: invalid subject slug")
+					throw errors.new("invalid subject slug for caliper event")
 				}
-				const mappedSubject = CALIPER_SUBJECT_MAPPING[resource.metadata.khanSubjectSlug]
+				
+				const mappedSubject = CALIPER_SUBJECT_MAPPING[subjectSlug]
 				const awardedXp = computedAwardedXp
 				const actor = {
 					id: constructActorId(userId),
@@ -347,19 +392,16 @@ export async function awardBankedXpForExercise(params: {
 					subject: mappedSubject,
 					app: { name: "Nice Academy" },
 					course: {
-						name: "Unknown",
+						name: courseMetadata.khanTitle, // Use course title from metadata
 						id: `${env.TIMEBACK_ONEROSTER_SERVER_URL}/ims/oneroster/rostering/v1p2/courses/${params.onerosterCourseSourcedId}`
 					},
 					activity: { name: resource.title, id: resource.sourcedId },
 					process: false
 				}
 
-				const caliperResult = await errors.try(sendCaliperBankedXpAwardedEvent(actor, context, awardedXp))
-				if (caliperResult.error) {
-					logger.error("failed to send banked xp caliper event", { error: caliperResult.error, userId, resourceId })
-				} else {
-					logger.info("sent banked xp caliper event", { userId, resourceId, awardedXp })
-				}
+				// CRITICAL: Caliper event is required for data integrity - do not wrap in errors.try
+				await sendCaliperBankedXpAwardedEvent(actor, context, awardedXp)
+				logger.info("sent banked xp caliper event", { userId, resourceId, awardedXp, correlationId })
 			}
 		}
 	}

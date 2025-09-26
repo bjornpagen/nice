@@ -30,14 +30,7 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 	logger.info("saving assessment result [service]", { correlationId, resourceId, userId })
 
 	// 1. Calculate XP (includes proficiency check and banking)
-	if (!command.userEmail) {
-		logger.error("CRITICAL: user email required for XP calculation", { 
-			correlationId, 
-			resourceId,
-			userId 
-		})
-		throw errors.new("user email: required for XP calculation")
-	}
+	// userEmail is now required by the DTO schema, no need to check
 	const xpResult = await xp.awardXpForAssessment({
 		userSourcedId: userId,
 		assessmentResourceId: resourceId,
@@ -49,7 +42,9 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 		attemptNumber: attemptNumber,
 		durationInSeconds: command.durationInSeconds,
 		isExercise: command.contentType === "Exercise",
-		userEmail: command.userEmail
+		userEmail: command.userEmail,
+		subjectSlug: command.subjectSlug,
+		courseSlug: command.courseSlug
 	})
 
 	// 2. Prepare and save the primary result to the gradebook (MUST SUCCEED)

@@ -834,6 +834,16 @@ export async function finalizeAssessment(options: {
 		// Fetch user metadata for downstream services (streak)
 		const clerk = await clerkClient()
 		const user = await clerk.users.getUser(clerkUserId)
+		
+		// Email is now required for Caliper analytics
+		const userEmail = user.emailAddresses[0]?.emailAddress
+		if (!userEmail) {
+			logger.error("user email required for assessment finalization", {
+				clerkUserId,
+				correlationId
+			})
+			throw errors.new("user email required for assessment")
+		}
 
 		const command: SaveAssessmentResultCommand = {
 			...options,
@@ -852,7 +862,7 @@ export async function finalizeAssessment(options: {
 			subjectSlug,
 			courseSlug,
 			userPublicMetadata: user.publicMetadata,
-			userEmail: user.emailAddresses[0]?.emailAddress
+			userEmail
 		}
 
 		const saveResult = await errors.try(assessment.saveResult(command))
