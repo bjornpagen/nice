@@ -33,7 +33,7 @@ import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
  * The ceil operation aligns awarded minutes with expected XP calculation.
  */
 export function computeBankingMinutes(seconds: number): number {
-	if (seconds <= 20) return 0
+	if (seconds < 20) return 0
 	return Math.ceil(seconds / 60)
 }
 
@@ -45,7 +45,7 @@ export function computeBankingMinutes(seconds: number): number {
 export async function findEligiblePassiveResourcesForExercise(params: {
 	exerciseResourceSourcedId: string
 	onerosterUserSourcedId: string
-}): Promise<Array<{ sourcedId: string; expectedXp: number }>> {
+}): Promise<Array<{ sourcedId: string; expectedXp: number; kind: "Article" | "Video" | "Other" }>> {
 	const { exerciseResourceSourcedId, onerosterUserSourcedId } = params
 	const correlationId = randomUUID()
 	logger.info("identifying eligible passive resources from exercise metadata", {
@@ -97,10 +97,21 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 	}
 
 	const candidateResources = resourcesResult.data
-		.map((resource) => ({
-			sourcedId: resource.sourcedId,
-			expectedXp: typeof resource.metadata?.xp === "number" ? resource.metadata.xp : 0
-		}))
+		.map((resource) => {
+			const metadata = resource.metadata
+			const expectedXp = typeof metadata?.xp === "number" ? metadata.xp : 0
+			let kind: "Article" | "Video" | "Other" = "Other"
+			const isInteractive = metadata?.type === "interactive"
+			const activityType = metadata && typeof metadata.khanActivityType === "string" ? metadata.khanActivityType : undefined
+			if (isInteractive && activityType === "Article") kind = "Article"
+			else if (isInteractive && activityType === "Video") kind = "Video"
+
+			return {
+				sourcedId: resource.sourcedId,
+				expectedXp,
+				kind
+			}
+		})
 		.filter((r) => r.expectedXp > 0) // Only consider resources that grant XP.
 
 	// 4. Deduplicate: Filter out resources that have already been banked for this user.
@@ -277,11 +288,11 @@ export async function awardBankedXpForExercise(params: {
 	}> = []
 	const awardedXpByResourceId = new Map<string, number>()
 
-	for (const { sourcedId, expectedXp, timeSpent } of timeSpentResults) {
+	for (const { sourcedId, expectedXp, timeSpent, kind } of timeSpentResults) {
 		const minutesSpent = computeBankingMinutes(timeSpent)
 		
-		// Defensive cap: never award more than the resource's expected XP
-		const awardedXp = Math.min(minutesSpent, expectedXp)
+		// Videos receive full expected XP; articles (and others) follow time-based cap
+		const awardedXp = kind === "Video" ? expectedXp : Math.min(minutesSpent, expectedXp)
 
 		if (awardedXp > 0) {
 			totalBankedXp += awardedXp
@@ -595,12 +606,26 @@ export async function getBankedXpBreakdownForQuiz(
 		nice_timeSpent: z.number().optional() 
 	}).passthrough()
 
-	const calculateXpForResources = async (resources: Array<{ sourcedId: string; expectedXp: number }>) => {
+	const calculateXpForResources = async (
+		resources: Array<{ sourcedId: string; expectedXp: number }>,
+		isVideo: boolean
+	) => {
 		let totalXp = 0
 		
 		for (const resource of resources) {
+			if (isVideo) {
+				// Videos: award full expected XP without time-based calculation
+				totalXp += resource.expectedXp
+				logger.debug("awarded expected xp for video in breakdown", {
+					resourceId: resource.sourcedId,
+					awardedXp: resource.expectedXp,
+					expectedXp: resource.expectedXp
+				})
+				continue
+			}
+
 			const resultSourcedId = generateResultSourcedId(userId, resource.sourcedId, false)
-            const result = await errors.try(fetcherGetResult(resultSourcedId))
+			const result = await errors.try(fetcherGetResult(resultSourcedId))
 
 			let timeSpent = 0
 			if (!result.error) {
@@ -630,10 +655,10 @@ export async function getBankedXpBreakdownForQuiz(
 	let videoXp = 0
 
 	if (articleResources.length > 0) {
-		articleXp = await calculateXpForResources(articleResources)
+		articleXp = await calculateXpForResources(articleResources, false)
 	}
 	if (videoResources.length > 0) {
-		videoXp = await calculateXpForResources(videoResources)
+		videoXp = await calculateXpForResources(videoResources, true)
 	}
 
 	logger.info("computed banked xp breakdown using canonical time spent", { 
