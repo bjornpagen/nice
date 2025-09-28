@@ -265,8 +265,8 @@ const AssessmentTestSchema = z.object({
 	qtiVersion: z.string(),
 	"qti-test-part": z.array(z.any()), // We no longer need the detailed schema since we're working with XML
 	"qti-outcome-declaration": z.array(OutcomeDeclarationSchema).optional(),
-	timeLimit: z.number().optional(),
-	maxAttempts: z.number().optional(),
+	timeLimit: z.number().nullable().optional(),
+	maxAttempts: z.number().nullable().optional(),
 	toolsEnabled: z.record(z.string(), z.boolean()).optional(),
 	metadata: z.record(z.string(), z.any()).optional(),
 	rawXml: z.string(),
