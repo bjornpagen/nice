@@ -291,8 +291,8 @@ export async function awardBankedXpForExercise(params: {
 	for (const { sourcedId, expectedXp, timeSpent, kind } of timeSpentResults) {
 		const minutesSpent = computeBankingMinutes(timeSpent)
 		
-		// Videos receive full expected XP; articles (and others) follow time-based cap
-		const awardedXp = kind === "Video" ? expectedXp : Math.min(minutesSpent, expectedXp)
+		// Videos and articles receive full expected XP; others follow time-based cap
+		const awardedXp = (kind === "Video" || kind === "Article") ? expectedXp : Math.min(minutesSpent, expectedXp)
 
 		if (awardedXp > 0) {
 			totalBankedXp += awardedXp
@@ -636,7 +636,7 @@ export async function getBankedXpBreakdownForQuiz(
 			}
 
 			const minutesSpent = computeBankingMinutes(timeSpent)
-			const awardedXp = Math.min(minutesSpent, resource.expectedXp)
+			const awardedXp = resource.expectedXp // articles: award full expected xp
 			totalXp += awardedXp
 
 			logger.debug("calculated xp for resource in breakdown", {
