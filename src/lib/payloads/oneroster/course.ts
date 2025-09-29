@@ -1018,6 +1018,10 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 	let totalXp = 0
 	const resourceById = new Map(onerosterPayload.resources.map((r) => [r.sourcedId, r]))
 	for (const cr of onerosterPayload.componentResources) {
+		// only calculate xp for active component resources
+		if (cr.status !== "active") {
+			continue
+		}
 		const resource = resourceById.get(cr.resource.sourcedId)
 		if (!resource) {
 			logger.error("metrics: component resource references missing resource", {
@@ -1025,6 +1029,10 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				resourceId: cr.resource.sourcedId
 			})
 			throw errors.new("metrics: missing referenced resource")
+		}
+		// only calculate xp for active resources
+		if (resource.status !== "active") {
+			continue
 		}
 		const md = resource.metadata
 		const activity = getString(md, "khanActivityType")
