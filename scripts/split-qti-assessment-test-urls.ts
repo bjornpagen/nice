@@ -164,7 +164,7 @@ async function writeMarkdown(
 		lines.push("")
 
 		for (const item of itemsForPerson) {
-			lines.push(`- ${BASE_URL}${item.id}/questions (${item.count} questions)`)
+			lines.push(`- [ ] ${BASE_URL}${item.id}/questions (${item.count} questions)`)
 		}
 		lines.push("")
 	}

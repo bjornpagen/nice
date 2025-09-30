@@ -20,3 +20,17 @@ export const DifferentiateQtiItemEventDataSchema = z.object({
 	questionId: z.string().min(1),
 	n: z.number().int().positive()
 })
+
+// Schema for the 'qti/test.standardize-phrasing' event.data payload.
+// Standardizes simplified fraction and scientific notation phrasing across a QTI assessment test.
+export const StandardizeQtiTestPhrasingEventDataSchema = z.object({
+	testUrl: z.string().url()
+})
+
+// Schema for the 'qti/question.standardize-phrasing' event.data payload.
+// Standardizes a single QTI question's phrasing.
+export const StandardizeQtiQuestionPhrasingEventDataSchema = z.object({
+	identifier: z.string().min(1),
+	rawXml: z.string().min(1),
+	title: z.string().min(1)
+})

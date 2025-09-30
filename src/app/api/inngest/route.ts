@@ -66,6 +66,8 @@ import { requestAllStimulusMigrationsForCourse } from "@/inngest/functions/qti/r
 import { requestItemMigrationsForExercise } from "@/inngest/functions/qti/request-item-migrations-for-exercise"
 // ✅ ADD: Import the new validation function
 // Removed dangerous validator to prevent accidental runs
+import { standardizeQtiQuestionPhrasing } from "@/inngest/functions/standardize-qti-question-phrasing"
+import { standardizeQtiTestPhrasing } from "@/inngest/functions/standardize-qti-test-phrasing"
 
 // Create and export the Inngest HTTP handler
 export const { GET, POST, PUT } = serve({
@@ -138,6 +140,9 @@ export const { GET, POST, PUT } = serve({
 		orchestrateCourseVisualQAReview,
 		orchestrateWidgetReverseEngineering,
 		extractAndProcessQtiSvgs,
-		testPerseusTextarea
+		testPerseusTextarea,
+		// QTI Standardization Functions
+		standardizeQtiTestPhrasing,
+		standardizeQtiQuestionPhrasing
 	]
 })

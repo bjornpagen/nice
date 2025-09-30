@@ -436,6 +436,19 @@ const events = {
 			courseIds: z.array(z.string().min(1)).describe("Course IDs to process for SVG extraction"),
 			limit: z.number().positive().default(100).describe("Maximum number of SVGs to process")
 		})
+	},
+	// QTI Standardization Events
+	"qti/test.standardize-phrasing": {
+		data: z.object({
+			testUrl: z.string().url()
+		})
+	},
+	"qti/question.standardize-phrasing": {
+		data: z.object({
+			identifier: z.string().min(1),
+			rawXml: z.string().min(1),
+			title: z.string().min(1)
+		})
 	}
 }
 
