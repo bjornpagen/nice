@@ -1,0 +1,319 @@
+#!/usr/bin/env bun
+import * as fs from "node:fs/promises"
+import * as path from "node:path"
+import * as p from "@clack/prompts"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
+import { and, eq, inArray, sql } from "drizzle-orm"
+
+import { db } from "@/db"
+import * as schema from "@/db/schemas"
+import {
+	HARDCODED_HISTORY_COURSE_IDS,
+	HARDCODED_MATH_COURSE_IDS,
+	HARDCODED_SCIENCE_COURSE_IDS
+} from "@/lib/constants/course-mapping"
+
+const OUTPUT_DIR = path.join(process.cwd(), "export")
+const BASE_URL = "https://qti.alpha-1edtech.com/api/assessment-tests/nice_"
+
+type Subject = "math" | "science" | "history"
+
+const AVAILABLE_PEOPLE = ["Ameer", "Bjorn", "Aiden"] as const
+type Person = (typeof AVAILABLE_PEOPLE)[number]
+
+function getCourseIdsForSubject(subject: Subject): readonly string[] {
+	if (subject === "math") return [...HARDCODED_MATH_COURSE_IDS]
+	if (subject === "history") return [...HARDCODED_HISTORY_COURSE_IDS]
+	return [...HARDCODED_SCIENCE_COURSE_IDS]
+}
+
+async function ensureOutputDir(): Promise<void> {
+	const mkdirResult = await errors.try(fs.mkdir(OUTPUT_DIR, { recursive: true }))
+	if (mkdirResult.error) {
+		logger.error("failed to create export directory", { error: mkdirResult.error, dir: OUTPUT_DIR })
+		throw errors.wrap(mkdirResult.error, "directory creation")
+	}
+}
+
+async function fetchUnitTestIdsForCourses(courseIds: readonly string[]): Promise<string[]> {
+	const unitsResult = await errors.try(
+		db
+			.select({ id: schema.niceUnits.id })
+			.from(schema.niceUnits)
+			.where(inArray(schema.niceUnits.courseId, courseIds))
+			.prepare("scripts_split_qti_get_units")
+			.execute()
+	)
+	if (unitsResult.error) {
+		logger.error("failed to fetch units for courses", { error: unitsResult.error, courseIds })
+		throw errors.wrap(unitsResult.error, "database query for units")
+	}
+
+	const unitIds = unitsResult.data.map((u) => u.id)
+	if (unitIds.length === 0) return []
+
+	const assessmentsResult = await errors.try(
+		db
+			.select({ id: schema.niceAssessments.id })
+			.from(schema.niceAssessments)
+			.where(
+				and(
+					eq(schema.niceAssessments.parentType, "Unit"),
+					inArray(schema.niceAssessments.parentId, unitIds),
+					eq(schema.niceAssessments.type, "UnitTest")
+				)
+			)
+			.prepare("scripts_split_qti_get_assessments")
+			.execute()
+	)
+	if (assessmentsResult.error) {
+		logger.error("failed to fetch unit test assessments", { error: assessmentsResult.error })
+		throw errors.wrap(assessmentsResult.error, "database query for assessments")
+	}
+
+	return assessmentsResult.data.map((a) => a.id)
+}
+
+async function fetchQuestionCountsForAssessments(
+	assessmentIds: readonly string[]
+): Promise<ReadonlyArray<{ id: string; count: number }>> {
+	if (assessmentIds.length === 0) return []
+
+	const countsResult = await errors.try(
+		db
+			.select({
+				assessmentId: schema.niceAssessmentExercises.assessmentId,
+				count: sql<number>`count(${schema.niceQuestions.id})`
+			})
+			.from(schema.niceAssessmentExercises)
+			.leftJoin(schema.niceQuestions, eq(schema.niceQuestions.exerciseId, schema.niceAssessmentExercises.exerciseId))
+			.where(inArray(schema.niceAssessmentExercises.assessmentId, assessmentIds))
+			.groupBy(schema.niceAssessmentExercises.assessmentId)
+			.prepare("scripts_split_qti_question_counts")
+			.execute()
+	)
+	if (countsResult.error) {
+		logger.error("failed to count questions for assessments", { error: countsResult.error })
+		throw errors.wrap(countsResult.error, "database query for question counts")
+	}
+
+	return countsResult.data.map((row) => ({ id: row.assessmentId, count: Number(row.count) }))
+}
+
+function balanceAssignments(
+	items: ReadonlyArray<{ id: string; count: number }>,
+	people: readonly Person[]
+): Record<string, Array<{ id: string; count: number }>> {
+	const totals: Record<string, number> = {}
+	const assignments: Record<string, Array<{ id: string; count: number }>> = {}
+
+	for (const person of people) {
+		totals[person] = 0
+		assignments[person] = []
+	}
+
+	const sorted = [...items].sort((a, b) => b.count - a.count)
+	for (const item of sorted) {
+		let target = people[0]!
+		let minTotal = totals[target]!
+
+		for (const person of people) {
+			const currentTotal = totals[person]!
+			if (currentTotal < minTotal) {
+				minTotal = currentTotal
+				target = person
+			}
+		}
+
+		assignments[target]!.push(item)
+		totals[target] = (totals[target] || 0) + item.count
+	}
+
+	logger.info("balanced assignments", { totals, peopleCount: people.length })
+
+	return assignments
+}
+
+async function writeMarkdown(
+	outputFile: string,
+	subject: Subject,
+	assignments: Record<string, Array<{ id: string; count: number }>>,
+	people: readonly Person[]
+): Promise<void> {
+	const subjectTitle = `${subject.charAt(0).toUpperCase()}${subject.slice(1)}`
+	const lines: string[] = [
+		`# ${subjectTitle} Unit Test URLs`,
+		"",
+		"The following URLs are generated by appending the unit test ID to the base endpoint:",
+		`Base: ${BASE_URL}`,
+		""
+	]
+
+	for (const person of people) {
+		lines.push(`## ${person}`)
+		lines.push("")
+		const itemsForPerson = assignments[person]
+		if (!itemsForPerson) {
+			logger.error("missing assignment bucket", { person })
+			throw errors.new("assignment bucket missing")
+		}
+
+		const totalQuestions = itemsForPerson.reduce((sum, item) => sum + item.count, 0)
+		lines.push(`**Total Questions: ${totalQuestions}**`)
+		lines.push("")
+
+		for (const item of itemsForPerson) {
+			lines.push(`- ${BASE_URL}${item.id}/questions (${item.count} questions)`)
+		}
+		lines.push("")
+	}
+
+	const content = `${lines.join("\n")}\n`
+
+	const writeResult = await errors.try(fs.writeFile(outputFile, content, "utf-8"))
+	if (writeResult.error) {
+		logger.error("failed to write markdown output", { error: writeResult.error, file: outputFile })
+		throw errors.wrap(writeResult.error, "file write")
+	}
+}
+
+async function main() {
+	p.intro("📊 Split QTI Assessment Test URLs")
+
+	const subject = await p.select({
+		message: "select subject:",
+		options: [
+			{ value: "math" as const, label: "Math" },
+			{ value: "science" as const, label: "Science" },
+			{ value: "history" as const, label: "History" }
+		]
+	}) as unknown as Subject
+
+	if (p.isCancel(subject)) {
+		p.cancel("operation cancelled")
+		process.exit(0)
+	}
+
+	const selectedPeople = await p.multiselect({
+		message: "select people to assign work to:",
+		options: AVAILABLE_PEOPLE.map((person) => ({
+			value: person,
+			label: person
+		})),
+		required: true
+	}) as unknown as Person[]
+
+	if (p.isCancel(selectedPeople)) {
+		p.cancel("operation cancelled")
+		process.exit(0)
+	}
+
+	if (selectedPeople.length === 0) {
+		p.note("at least one person must be selected", "error")
+		process.exit(1)
+	}
+
+	const defaultOutputFile = `${subject}-unit-test-urls.md`
+	const outputFileName = await p.text({
+		message: "output filename:",
+		placeholder: defaultOutputFile,
+		initialValue: defaultOutputFile,
+		validate: (value) => {
+			if (!value) {
+				return "filename is required"
+			}
+			if (!value.endsWith(".md")) {
+				return "filename must end with .md"
+			}
+		}
+	})
+
+	if (p.isCancel(outputFileName)) {
+		p.cancel("operation cancelled")
+		process.exit(0)
+	}
+
+	const setupSpinner = p.spinner()
+	setupSpinner.start("creating output directory...")
+
+	const ensureDirResult = await errors.try(ensureOutputDir())
+	if (ensureDirResult.error) {
+		setupSpinner.stop("setup failed")
+		throw errors.wrap(ensureDirResult.error, "output directory setup")
+	}
+
+	setupSpinner.stop("directory ready")
+
+	const fetchSpinner = p.spinner()
+	fetchSpinner.start("fetching unit test assessments...")
+
+	const courseIds = getCourseIdsForSubject(subject)
+	logger.debug("using hardcoded course ids", { subject, count: courseIds.length })
+
+	const unitTestIdsResult = await errors.try(fetchUnitTestIdsForCourses(courseIds))
+	if (unitTestIdsResult.error) {
+		fetchSpinner.stop("fetch failed")
+		throw errors.wrap(unitTestIdsResult.error, "fetch unit test ids")
+	}
+
+	const unitTestIds = unitTestIdsResult.data
+	fetchSpinner.stop(`found ${unitTestIds.length} unit test(s)`)
+
+	if (unitTestIds.length === 0) {
+		p.note("no unit tests found for selected subject", "no results")
+		process.exit(0)
+	}
+
+	const countSpinner = p.spinner()
+	countSpinner.start("counting questions per assessment...")
+
+	const uniqueIds = Array.from(new Set(unitTestIds)).sort()
+	const countsResult = await errors.try(fetchQuestionCountsForAssessments(uniqueIds))
+	if (countsResult.error) {
+		countSpinner.stop("count failed")
+		throw errors.wrap(countsResult.error, "fetch question counts")
+	}
+
+	const counts = countsResult.data
+	const totalQuestions = counts.reduce((sum, item) => sum + item.count, 0)
+	countSpinner.stop(`counted ${totalQuestions} total question(s)`)
+
+	const balanceSpinner = p.spinner()
+	balanceSpinner.start("balancing assignments...")
+
+	const assignments = balanceAssignments(counts, selectedPeople)
+	balanceSpinner.stop("assignments balanced")
+
+	const balanceSummary = selectedPeople
+		.map((person) => {
+			const items = assignments[person] || []
+			const total = items.reduce((sum, item) => sum + item.count, 0)
+			return `${person}: ${total} questions (${items.length} tests)`
+		})
+		.join("\n")
+
+	p.note(balanceSummary, "distribution")
+
+	const writeSpinner = p.spinner()
+	writeSpinner.start("writing output file...")
+
+	const outputFile = path.join(OUTPUT_DIR, outputFileName)
+	const writeResult = await errors.try(writeMarkdown(outputFile, subject, assignments, selectedPeople))
+	if (writeResult.error) {
+		writeSpinner.stop("write failed")
+		throw errors.wrap(writeResult.error, "write markdown file")
+	}
+
+	writeSpinner.stop("file written")
+
+	p.note(`output written to: ${outputFile}`, "success")
+
+	p.outro("✅ split complete")
+}
+
+const result = await errors.try(main())
+if (result.error) {
+	logger.error("script failed", { error: result.error })
+	process.exit(1)
+}

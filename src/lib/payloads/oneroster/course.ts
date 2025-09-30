@@ -79,7 +79,7 @@ interface OneRosterGUIDRef {
 
 interface OneRosterCourse {
 	sourcedId: string
-	status: "active"
+	status: "active" | "tobedeleted"
 	title: string
 	subjects: string[]
 	grades: GradeLevelNumber[]
@@ -91,7 +91,7 @@ interface OneRosterCourse {
 
 interface OneRosterCourseComponent {
 	sourcedId: string
-	status: "active"
+	status: "active" | "tobedeleted"
 	title: string
 	course: OneRosterGUIDRef
 	parent?: OneRosterGUIDRef
@@ -101,7 +101,7 @@ interface OneRosterCourseComponent {
 
 interface OneRosterResource {
 	sourcedId: string
-	status: "active"
+	status: "active" | "tobedeleted"
 	title: string
 	vendorResourceId: string
 	vendorId: string
@@ -113,7 +113,7 @@ interface OneRosterResource {
 
 interface OneRosterCourseComponentResource {
 	sourcedId: string
-	status: "active"
+	status: "active" | "tobedeleted"
 	title: string
 	courseComponent: OneRosterGUIDRef
 	resource: OneRosterGUIDRef
@@ -122,7 +122,7 @@ interface OneRosterCourseComponentResource {
 
 interface OneRosterClass {
 	sourcedId: string
-	status: "active"
+	status: "active" | "tobedeleted"
 	title: string
 	classType: "scheduled"
 	course: OneRosterGUIDRef
@@ -133,7 +133,7 @@ interface OneRosterClass {
 // ADDED: Interface for AssessmentLineItem
 interface OneRosterAssessmentLineItem {
 	sourcedId: string
-	status: "active"
+	status: "active" | "tobedeleted"
 	title: string
 	componentResource?: {
 		sourcedId: string
@@ -350,6 +350,15 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			? db.query.niceExercises.findMany({ where: inArray(schema.niceExercises.id, contentIds.Exercise) })
 			: Promise.resolve([])
 	])
+
+	// Pre-process: identify articles with titles matching 'Activity:%' (case insensitive)
+	const activityArticleIds = new Set<string>()
+	for (const article of articles) {
+		if (article.title.toLowerCase().startsWith("activity:")) {
+			activityArticleIds.add(article.id)
+		}
+	}
+	logger.debug("identified activity articles for deletion", { count: activityArticleIds.size })
 
 	const contentMap = new Map<
 		string,
@@ -682,8 +691,9 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 							xp: articleXp
 						}
 						
-						// REFACTOR: Collect sourcedId of passive resource if it grants XP
-						if (articleXp > 0) {
+						// REFACTOR: Collect sourcedId of passive resource if it grants XP AND is not an activity article
+						const isActivityArticle = activityArticleIds.has(content.id)
+						if (articleXp > 0 && !isActivityArticle) {
 							passiveResourcesForNextExercise.push(contentSourcedId)
 						}
 					} else if (lc.contentType === "Video") {
@@ -747,10 +757,14 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 							}
 						}
 
-						onerosterPayload.resources.push({
-							sourcedId: contentSourcedId,
-							status: "active",
-							title: content.title,
+						// Determine if this is an activity article that should be marked for deletion
+						const isActivityArticle = lc.contentType === "Article" && activityArticleIds.has(content.id)
+						const resourceStatus: "active" | "tobedeleted" = isActivityArticle ? "tobedeleted" : "active"
+
+					onerosterPayload.resources.push({
+						sourcedId: contentSourcedId,
+						status: resourceStatus,
+						title: content.title,
 							vendorResourceId: `nice-academy-${content.id}`,
 							vendorId: "superbuilders",
 							applicationId: "nice",
@@ -760,12 +774,14 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						})
 						resourceSet.add(contentSourcedId)
 
-						// --- NEW: Add flat line items for videos and articles here ---
-						if (content.type === "Video" || content.type === "Article") {
-							onerosterPayload.assessmentLineItems.push({
-								sourcedId: `${contentSourcedId}_ali`, // The ID is resource ID + _ali
-								status: "active",
-								title: `Progress for: ${content.title}`,
+					// --- NEW: Add flat line items for videos and articles here ---
+					if (content.type === "Video" || content.type === "Article") {
+						const isActivityArticle = content.type === "Article" && activityArticleIds.has(content.id)
+						const aliStatus: "active" | "tobedeleted" = isActivityArticle ? "tobedeleted" : "active"
+						onerosterPayload.assessmentLineItems.push({
+							sourcedId: `${contentSourcedId}_ali`, // The ID is resource ID + _ali
+							status: aliStatus,
+							title: `Progress for: ${content.title}`,
 								componentResource: {
 									sourcedId: `nice_${lesson.id}_${content.id}`
 								},
@@ -809,9 +825,11 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						componentTitle = formatResourceTitleForDisplay(content.title, "Exercise")
 					}
 
+					const isActivityArticle = lc.contentType === "Article" && activityArticleIds.has(content.id)
+					const componentResourceStatus: "active" | "tobedeleted" = isActivityArticle ? "tobedeleted" : "active"
 					onerosterPayload.componentResources.push({
 						sourcedId: `nice_${lesson.id}_${content.id}`,
-						status: "active",
+						status: componentResourceStatus,
 						title: componentTitle,
 						courseComponent: { sourcedId: `nice_${lesson.id}`, type: "courseComponent" },
 					resource: { sourcedId: contentSourcedId, type: "resource" },
@@ -1018,8 +1036,8 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 	let totalXp = 0
 	const resourceById = new Map(onerosterPayload.resources.map((r) => [r.sourcedId, r]))
 	for (const cr of onerosterPayload.componentResources) {
-		// only calculate xp for active component resources
-		if (cr.status !== "active") {
+		// skip tobedeleted component resources
+		if (cr.status === "tobedeleted") {
 			continue
 		}
 		const resource = resourceById.get(cr.resource.sourcedId)
@@ -1030,8 +1048,8 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			})
 			throw errors.new("metrics: missing referenced resource")
 		}
-		// only calculate xp for active resources
-		if (resource.status !== "active") {
+		// skip tobedeleted resources
+		if (resource.status === "tobedeleted") {
 			continue
 		}
 		const md = resource.metadata
@@ -1065,6 +1083,40 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 	const courseMetadata: Record<string, unknown> = onerosterPayload.course.metadata ?? {}
 	courseMetadata.metrics = { totalXp, totalLessons }
 	onerosterPayload.course.metadata = courseMetadata
+
+	// POST-PROCESSING: Mark lessons with no active component-resources as tobedeleted
+	logger.debug("post-processing: marking lessons with no active component-resources")
+	const lessonComponents = onerosterPayload.courseComponents.filter((cc) => cc.parent !== undefined)
+	for (const lessonComponent of lessonComponents) {
+		const componentResources = onerosterPayload.componentResources.filter(
+			(cr) => cr.courseComponent.sourcedId === lessonComponent.sourcedId
+		)
+		const hasActiveComponentResources = componentResources.some((cr) => cr.status === "active")
+		if (!hasActiveComponentResources) {
+			lessonComponent.status = "tobedeleted"
+			logger.debug("marking lesson as tobedeleted", {
+				lessonId: lessonComponent.sourcedId,
+				lessonTitle: lessonComponent.title
+			})
+		}
+	}
+
+	// POST-PROCESSING: Mark units with no active children as tobedeleted
+	logger.debug("post-processing: marking units with no active children")
+	const unitComponents = onerosterPayload.courseComponents.filter((cc) => cc.parent === undefined)
+	for (const unitComponent of unitComponents) {
+		const childComponents = onerosterPayload.courseComponents.filter(
+			(cc) => cc.parent?.sourcedId === unitComponent.sourcedId
+		)
+		const hasActiveChildren = childComponents.some((child) => child.status === "active")
+		if (!hasActiveChildren && childComponents.length > 0) {
+			unitComponent.status = "tobedeleted"
+			logger.debug("marking unit as tobedeleted", {
+				unitId: unitComponent.sourcedId,
+				unitTitle: unitComponent.title
+			})
+		}
+	}
 
 	logger.info("oneroster payload generation complete", { courseId })
 	return onerosterPayload

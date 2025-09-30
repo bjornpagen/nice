@@ -112,10 +112,10 @@ export const HARDCODED_MATH_COURSE_IDS = [
 ] as const
 
 export const HARDCODED_SCIENCE_COURSE_IDS = [
-	"x0c5bb03129646fd6", // ms-biology
+	// "x0c5bb03129646fd6", // ms-biology
 	"x1baed5db7c1bb50b", // ms-physics
 	"x87d03b443efbea0a", // middle-school-earth-and-space-science
-	// "x230b3ff252126bb6", // hs-bio
+	"x230b3ff252126bb6", // hs-bio
 	"xc370bc422b7f75fc", // ms-chemistry
 	"xf557a762645cccc5", // AP College Physics 1
 	"x0e2f5a2c", // AP College Physics 2
