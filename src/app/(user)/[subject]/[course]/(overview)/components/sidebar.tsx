@@ -49,7 +49,7 @@ export function Sidebar({
 								<CourseChallenge
 									key={challenge.id}
 									path={challenge.path}
-									isLocked={resourceLockStatus[challenge.id] !== false}
+									isLocked={resourceLockStatus[challenge.componentResourceSourcedId] !== false}
 								/>
 							))}
 						</div>
