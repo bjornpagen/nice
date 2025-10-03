@@ -51,9 +51,9 @@ const FinalizeAssessmentResultSchema = z.object({
 // Schemas for Lesson Plan Tree (minimal, passthrough where appropriate)
 const LessonPlanTreeComponentResourceSchema = z.object({
 	id: z.string(),
-	sortOrder: z.string().optional(),
-	metadata: z.record(z.any()).optional(),
-	courseComponentSourcedId: z.string(),
+	sortOrder: z.string().optional().nullable(),
+	metadata: z.record(z.any()).optional().nullable(),
+	courseComponentSourcedId: z.string().optional(),
 	resource: z
 		.object({})
 		.passthrough()
@@ -68,13 +68,13 @@ const LessonPlanTreeComponentSchema: z.ZodType<any> = z.lazy(() =>
 			sourcedId: z.string(),
 			status: z.string(),
 			title: z.string(),
-			sortOrder: z.string().optional(),
-			unlockDate: z.string().optional(),
-			metadata: z.record(z.any()).optional(),
-			prerequisites: z.array(z.string()).optional(),
-			prerequisiteCriteria: z.string().optional(),
-			componentResources: z.array(LessonPlanTreeComponentResourceSchema).optional(),
-			subComponents: z.array(LessonPlanTreeComponentSchema).optional()
+			sortOrder: z.string().optional().nullable(),
+			unlockDate: z.string().optional().nullable(),
+			metadata: z.record(z.any()).optional().nullable(),
+			prerequisites: z.array(z.string()).optional().nullable(),
+			prerequisiteCriteria: z.string().optional().nullable(),
+			componentResources: z.array(LessonPlanTreeComponentResourceSchema).optional().nullable(),
+			subComponents: z.array(LessonPlanTreeComponentSchema).optional().nullable()
 		})
 		.passthrough()
 )

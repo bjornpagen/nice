@@ -497,15 +497,19 @@ export class Client {
 				requestBody: requestBodySample
 			})
 
-			// Check for JWT expiration
-			let isJwtExpired = false
-			const jsonParseResult = errors.trySync(() => JSON.parse(text))
-			if (jsonParseResult.error) {
-				// If we can't parse as JSON, check the text content
-				isJwtExpired = text.includes("JWT signature verification failed") || text.includes("jwt expired")
-			} else {
-				isJwtExpired = jsonParseResult.data?.error === "JWT signature verification failed"
-			}
+		// Check for JWT expiration
+		let isJwtExpired = false
+		const jsonParseResult = errors.trySync(() => JSON.parse(text))
+		if (jsonParseResult.error) {
+			// If we can't parse as JSON, check the text content
+			isJwtExpired = text.includes("JWT signature verification failed") || text.includes("jwt expired")
+		} else {
+			const data = jsonParseResult.data
+			isJwtExpired =
+				data?.error === "JWT signature verification failed" ||
+				data?.imsx_description?.toLowerCase().includes("jwt expired") ||
+				JSON.stringify(data).toLowerCase().includes("jwt expired")
+		}
 
 			// Handle JWT expiration with retry
 			if (response.status === 401 || isJwtExpired) {

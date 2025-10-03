@@ -6,6 +6,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import * as React from "react"
 import { DialogManagerProvider } from "@/components/providers/dialog-manager-provider"
 import { UserSyncProvider } from "@/components/UserSyncProvider"
+import { CourseProgressionProvider } from "@/components/course-progression-provider"
 import { Toaster } from "@/components/ui/sonner"
 import "@/styles/globals.css"
 import "@/styles/variables.css"
@@ -37,7 +38,9 @@ export default function RootLayout({
 				<React.Suspense>
 					<ClerkProvider>
 						<UserSyncProvider>
-							<DialogManagerProvider>{children}</DialogManagerProvider>
+							<CourseProgressionProvider>
+								<DialogManagerProvider>{children}</DialogManagerProvider>
+							</CourseProgressionProvider>
 						</UserSyncProvider>
 					</ClerkProvider>
 				</React.Suspense>
