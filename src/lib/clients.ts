@@ -1,7 +1,8 @@
 import { env } from "@/env"
-import * as caliperInternal from "./caliper"
-import * as onerosterInternal from "./oneroster"
-import * as qtiInternal from "./qti"
+import * as caliperInternal from "@/lib/caliper"
+import * as onerosterInternal from "@/lib/oneroster"
+import * as powerpathInternal from "@/lib/powerpath"
+import * as qtiInternal from "@/lib/qti"
 
 /**
  * A singleton instance of the CaliperApiClient.
@@ -29,7 +30,16 @@ export const oneroster = new onerosterInternal.Client({
 	clientSecret: env.TIMEBACK_CLIENT_SECRET
 })
 
-// PowerPath client removed as part of migration
+/**
+ * A singleton instance of the PowerPath Api Client.
+ * Mirrors OneRoster configuration using the same environment variables.
+ */
+export const powerpath = new powerpathInternal.Client({
+	serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
+	tokenUrl: env.TIMEBACK_TOKEN_URL,
+	clientId: env.TIMEBACK_CLIENT_ID,
+	clientSecret: env.TIMEBACK_CLIENT_SECRET
+})
 
 /**
  * A singleton instance of the QtiApiClient.
