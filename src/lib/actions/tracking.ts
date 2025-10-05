@@ -27,6 +27,7 @@ import { assertPercentageInteger, coercePercentageInteger } from "@/lib/utils/sc
 import { getCaliperFinalizationLockKey, getCaliperVideoWatchState, setCaliperVideoWatchState } from "@/lib/video-cache"
 // ADDED: Import the new XP service.
 import { awardXpForAssessment } from "@/lib/xp/service"
+import { env } from "@/env"
 
 // duplicate import removed below
 
@@ -855,13 +856,13 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 				email: userEmail
 			}
 			const context = {
-				id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}${assessmentPath}`,
+				id: `${env.NEXT_PUBLIC_APP_DOMAIN}${assessmentPath}`,
 				type: "TimebackActivityContext" as const,
 				subject: mappedSubject,
 				app: { name: "Nice Academy" },
 				course: {
 					name: course,
-					id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/courses/${courseId}`
+					id: `${env.TIMEBACK_ONEROSTER_SERVER_URL}/ims/oneroster/rostering/v1p2/courses/${courseId}`
 				},
 				activity: { name: assessmentTitle, id: resourceId },
 				process: false

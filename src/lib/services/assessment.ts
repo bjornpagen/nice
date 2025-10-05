@@ -162,7 +162,7 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 				app: { name: "Nice Academy" },
 				course: {
 					name: command.courseSlug,
-					id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/courses/${courseId}`
+					id: `${env.TIMEBACK_ONEROSTER_SERVER_URL}/ims/oneroster/rostering/v1p2/courses/${courseId}`
 				},
 				activity: { name: command.assessmentTitle, id: resourceId },
 				process: false
