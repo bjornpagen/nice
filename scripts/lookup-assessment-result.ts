@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 import * as p from "@clack/prompts"
-import { eq, ilike, or } from "drizzle-orm"
+import { and, eq, ilike, or } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas/nice"
 import { oneroster } from "@/lib/clients"
@@ -9,7 +9,7 @@ import * as logger from "@superbuilders/slog"
 import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 
-type ContentType = "Video" | "Article" | "Exercise"
+type ContentType = "Video" | "Article" | "Exercise" | "Quiz" | "UnitTest" | "CourseChallenge"
 
 interface XpMetadataUpdate {
 	xp: number
@@ -24,6 +24,10 @@ interface ContentResult {
 	slug: string
 	path: string
 	type: ContentType
+}
+
+function isInteractiveContentType(contentType: ContentType): boolean {
+	return contentType === "Exercise" || contentType === "Quiz" || contentType === "UnitTest"
 }
 
 async function searchContent(titleQuery: string, contentType: ContentType): Promise<ContentResult[]> {
@@ -74,6 +78,21 @@ async function searchContent(titleQuery: string, contentType: ContentType): Prom
 		return results.map((r) => ({ ...r, type: "Exercise" as const }))
 	}
 
+	if (contentType === "Quiz" || contentType === "UnitTest" || contentType === "CourseChallenge") {
+		const results = await db
+			.select({
+				id: schema.niceAssessments.id,
+				title: schema.niceAssessments.title,
+				slug: schema.niceAssessments.slug,
+				path: schema.niceAssessments.path
+			})
+			.from(schema.niceAssessments)
+			.where(and(eq(schema.niceAssessments.type, contentType), ilike(schema.niceAssessments.title, pattern)))
+			.limit(20)
+
+		return results.map((r) => ({ ...r, type: contentType }))
+	}
+
 	return []
 }
 
@@ -84,7 +103,7 @@ async function fetchAssessmentResults(
 ): Promise<AssessmentResult[]> {
 	const lineItemId = `nice_${contentId}_ali`
 
-	const isInteractive = contentType === "Exercise"
+	const isInteractive = isInteractiveContentType(contentType)
 
 	if (isInteractive) {
 		const basePrefix = `nice_${userSourcedId}_${lineItemId}_attempt_`
@@ -185,70 +204,177 @@ SourcedId: ${userSourcedId}
 Given Name: ${onerosterUser.givenName || "N/A"}
 Family Name: ${onerosterUser.familyName || "N/A"}`, "user details")
 
-	const contentType = await p.select({
-		message: "select content type:",
+	const lookupMethod = await p.select({
+		message: "how do you want to find the content?",
 		options: [
-			{ value: "Video" as const, label: "Video" },
-			{ value: "Article" as const, label: "Article" },
-			{ value: "Exercise" as const, label: "Exercise" }
+			{ value: "title" as const, label: "Search by title (fuzzy search)" },
+			{ value: "resourceId" as const, label: "Lookup by OneRoster resource ID" }
 		]
-	}) as unknown as ContentType
-
-	if (p.isCancel(contentType)) {
-		p.cancel("operation cancelled")
-		process.exit(0)
-	}
-
-	const titleQuery = await p.text({
-		message: "enter title to search (partial match):",
-		placeholder: "e.g., introduction to",
-		validate: (value) => {
-			if (!value) {
-				return "title query is required"
-			}
-		}
 	})
 
-	if (p.isCancel(titleQuery)) {
+	if (p.isCancel(lookupMethod)) {
 		p.cancel("operation cancelled")
 		process.exit(0)
 	}
 
-	const searchSpinner = p.spinner()
-	searchSpinner.start("searching for content...")
+	let selectedContent: ContentResult
 
-	const searchResult = await errors.try(searchContent(titleQuery, contentType))
-	if (searchResult.error) {
-		searchSpinner.stop("search failed")
-		logger.error("content search failed", { error: searchResult.error })
-		throw errors.wrap(searchResult.error, "content search")
-	}
+	if (lookupMethod === "resourceId") {
+		const resourceId = await p.text({
+			message: "enter oneroster resource id:",
+			placeholder: "e.g., nice_x1234567890abcdef",
+			validate: (value) => {
+				if (!value) {
+					return "resource id is required"
+				}
+				if (!value.startsWith("nice_")) {
+					return "resource id should start with 'nice_'"
+				}
+			}
+		})
 
-	const results = searchResult.data
-	searchSpinner.stop(`found ${results.length} result(s)`)
+		if (p.isCancel(resourceId)) {
+			p.cancel("operation cancelled")
+			process.exit(0)
+		}
 
-	if (results.length === 0) {
-		p.note("no content found matching your query", "no results")
-		process.exit(0)
-	}
+		const resourceSpinner = p.spinner()
+		resourceSpinner.start("fetching resource from oneroster...")
 
-	const selectedContent = await p.select({
-		message: "select content:",
-		options: results.map((r) => ({
-			value: r,
-			label: `${r.title} (${r.type}) [${r.id}]`
-		}))
-	}) as unknown as ContentResult
+		const resourceResult = await errors.try(oneroster.getResource(resourceId))
+		if (resourceResult.error) {
+			resourceSpinner.stop("resource fetch failed")
+			logger.error("oneroster resource fetch failed", { error: resourceResult.error })
+			throw errors.wrap(resourceResult.error, "oneroster resource fetch")
+		}
 
-	if (p.isCancel(selectedContent)) {
-		p.cancel("operation cancelled")
-		process.exit(0)
-	}
+		const resource = resourceResult.data
+		if (!resource) {
+			resourceSpinner.stop("resource not found")
+			p.note(`no resource found with id: ${resourceId}`, "not found")
+			process.exit(0)
+		}
 
-	p.note(`ID: ${selectedContent.id}
+		resourceSpinner.stop("resource found")
+
+		// Derive content type from resource metadata, prioritizing assessment lesson types
+		const metadata = resource.metadata as Record<string, unknown> | undefined
+		const khanLessonType = typeof metadata?.khanLessonType === "string" ? String(metadata?.khanLessonType) : undefined
+		const khanActivityType = typeof metadata?.khanActivityType === "string" ? String(metadata?.khanActivityType) : undefined
+
+		let contentType: ContentType
+		if (khanLessonType === "quiz") {
+			contentType = "Quiz"
+		} else if (khanLessonType === "unittest") {
+			contentType = "UnitTest"
+		} else if (khanLessonType === "coursechallenge") {
+			contentType = "CourseChallenge"
+		} else if (khanActivityType === "Exercise") {
+			contentType = "Exercise"
+		} else if (khanActivityType === "Video") {
+			contentType = "Video"
+		} else if (khanActivityType === "Article") {
+			contentType = "Article"
+		} else {
+			p.note("unable to determine content type from resource metadata", "error")
+			process.exit(1)
+		}
+
+		// Derive raw content id (without the 'nice_' prefix or 'nice-academy-' prefix)
+		let rawContentId: string | undefined
+		if (typeof resource.vendorResourceId === "string" && resource.vendorResourceId.startsWith("nice-academy-")) {
+			rawContentId = resource.vendorResourceId.replace("nice-academy-", "")
+		}
+		if (!rawContentId && typeof resource.sourcedId === "string" && resource.sourcedId.startsWith("nice_")) {
+			rawContentId = resource.sourcedId.replace("nice_", "")
+		}
+		if (!rawContentId) {
+			p.note("unable to derive content id from resource", "error")
+			process.exit(1)
+		}
+
+		selectedContent = {
+			id: rawContentId,
+			title: resource.title,
+			slug: rawContentId,
+			path: typeof metadata?.path === "string" ? String(metadata?.path) : "unknown",
+			type: contentType
+		}
+
+		p.note(`ID: ${selectedContent.id}
+Title: ${selectedContent.title}
+Type: ${selectedContent.type}
+Resource ID: ${resourceId}
+Path: ${selectedContent.path}`, "selected content")
+	} else {
+		const contentType = await p.select({
+			message: "select content type:",
+			options: [
+				{ value: "Video" as const, label: "Video" },
+				{ value: "Article" as const, label: "Article" },
+				{ value: "Exercise" as const, label: "Exercise" },
+				{ value: "Quiz" as const, label: "Quiz" },
+				{ value: "UnitTest" as const, label: "Unit Test" },
+				{ value: "CourseChallenge" as const, label: "Course Challenge" }
+			]
+		}) as unknown as ContentType
+
+		if (p.isCancel(contentType)) {
+			p.cancel("operation cancelled")
+			process.exit(0)
+		}
+
+		const titleQuery = await p.text({
+			message: "enter title to search (partial match):",
+			placeholder: "e.g., introduction to",
+			validate: (value) => {
+				if (!value) {
+					return "title query is required"
+				}
+			}
+		})
+
+		if (p.isCancel(titleQuery)) {
+			p.cancel("operation cancelled")
+			process.exit(0)
+		}
+
+		const searchSpinner = p.spinner()
+		searchSpinner.start("searching for content...")
+
+		const searchResult = await errors.try(searchContent(titleQuery, contentType))
+		if (searchResult.error) {
+			searchSpinner.stop("search failed")
+			logger.error("content search failed", { error: searchResult.error })
+			throw errors.wrap(searchResult.error, "content search")
+		}
+
+		const results = searchResult.data
+		searchSpinner.stop(`found ${results.length} result(s)`)
+
+		if (results.length === 0) {
+			p.note("no content found matching your query", "no results")
+			process.exit(0)
+		}
+
+		selectedContent = await p.select({
+			message: "select content:",
+			options: results.map((r) => ({
+				value: r,
+				label: `${r.title} (${r.type}) [${r.id}]`
+			}))
+		}) as unknown as ContentResult
+
+		if (p.isCancel(selectedContent)) {
+			p.cancel("operation cancelled")
+			process.exit(0)
+		}
+
+		p.note(`ID: ${selectedContent.id}
 Title: ${selectedContent.title}
 Type: ${selectedContent.type}
 Path: ${selectedContent.path}`, "selected content")
+	}
 
 	const fetchSpinner = p.spinner()
 	fetchSpinner.start("fetching assessment results...")
