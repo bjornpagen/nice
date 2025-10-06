@@ -84,6 +84,7 @@ const units = schema.table(
 		index("units_title_idx").on(table.title),
 		uniqueIndex("unit_slug_per_course_idx").on(table.courseId, table.slug),
 		uniqueIndex("units_course_order_uniq").on(table.courseId, table.ordering),
+		check("units_order_nonneg", sql`${table.ordering} >= 0`),
 		foreignKey({
 			name: "units_course_fk",
 			columns: [table.courseId],
@@ -110,6 +111,7 @@ const lessons = schema.table(
 		index("lessons_title_idx").on(table.title),
 		uniqueIndex("lesson_slug_per_unit_idx").on(table.unitId, table.slug),
 		uniqueIndex("lessons_unit_order_uniq").on(table.unitId, table.ordering),
+		check("lessons_order_nonneg", sql`${table.ordering} >= 0`),
 		foreignKey({
 			name: "lessons_unit_fk",
 			columns: [table.unitId],
@@ -228,7 +230,8 @@ const assessments = schema.table(
 	(table) => [
 		index("assessments_path_idx").on(table.path),
 		index("assessments_parent_type_idx").on(table.parentId, table.type),
-		uniqueIndex("ass_parent_order_uniq").on(table.parentId, table.parentType, table.ordering)
+		uniqueIndex("ass_parent_order_uniq").on(table.parentId, table.parentType, table.ordering),
+		check("ass_order_nonneg", sql`${table.ordering} >= 0`)
 	]
 )
 export { assessments as niceAssessments }
