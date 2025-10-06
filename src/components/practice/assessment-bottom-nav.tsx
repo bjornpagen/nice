@@ -415,7 +415,18 @@ function RightSection({
 		return (
 			<div className="relative">
 				{showFeedback && (
-					<div className="absolute bottom-full mb-6 right-0 z-50">
+					<div
+						className="absolute bottom-full mb-6 right-0 z-50 cursor-pointer"
+						onClick={onCloseFeedback}
+						role="button"
+						tabIndex={0}
+						onKeyDown={(e) => {
+							if ((e.key === "Enter" || e.key === " ") && onCloseFeedback) {
+								e.preventDefault()
+								onCloseFeedback()
+							}
+						}}
+					>
 						<div className="relative bg-white rounded-lg shadow-lg border border-gray-200 p-3 min-w-[280px]">
 							<div className="absolute -bottom-2 right-6 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-white" />
 							<div className="absolute -bottom-[9px] right-6 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-gray-200" />
@@ -445,10 +456,13 @@ function RightSection({
 										</div>
 									)}
 								</div>
-								{!isCorrect && !hasExhaustedAttempts && (
+								{onCloseFeedback && (
 									<button
 										type="button"
-										onClick={onCloseFeedback}
+										onClick={(e) => {
+											e.stopPropagation()
+											onCloseFeedback()
+										}}
 										className="text-gray-400 hover:text-gray-600 transition-colors ml-3"
 										aria-label="Close feedback"
 									>
