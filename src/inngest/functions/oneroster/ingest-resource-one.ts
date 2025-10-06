@@ -12,7 +12,8 @@ export const ingestResourceOne = inngest.createFunction(
 	{
 		id: "ingest-resource-one",
 		name: "Ingest One OneRoster Resource",
-		concurrency: { limit: ONEROSTER_CONCURRENCY_LIMIT, key: ONEROSTER_CONCURRENCY_KEY }
+		concurrency: { limit: ONEROSTER_CONCURRENCY_LIMIT, key: ONEROSTER_CONCURRENCY_KEY },
+		retries: 3
 	},
 	{ event: "oneroster/resource.ingest.one" },
 	async ({ event, logger }) => {
@@ -61,24 +62,41 @@ export const ingestResourceOne = inngest.createFunction(
 			throw errors.new(`resource ${sourcedId} not found in ${filePath}`)
 		}
 
-		// Use PUT for upsert behavior, falling back to POST on a 404.
-		const result = await errors.try(oneroster.updateResource(sourcedId, resource))
-		if (result.error) {
-			if (errors.is(result.error, ErrOneRosterNotFound)) {
-				logger.info("resource not found, creating new", { sourcedId })
+		// Step 1: Check if resource already exists (skip if it does)
+		const existsResult = await errors.try(oneroster.getResource(sourcedId))
+		if (!existsResult.error && existsResult.data) {
+			logger.info("resource already exists, skipping upload", { sourcedId })
+			return { sourcedId, status: "already-exists" }
+		}
+
+		// Step 2: Try PUT for upsert behavior (backwards compatibility)
+		const updateResult = await errors.try(oneroster.updateResource(sourcedId, resource))
+		if (updateResult.error) {
+			// Check if it's a 404 (not found) or 500 (server error)
+			const is404 = errors.is(updateResult.error, ErrOneRosterNotFound)
+			const errorMessage = updateResult.error.message || ""
+			const is500 = errorMessage.includes("status 500")
+
+			if (is404 || is500) {
+				logger.info("PUT failed, attempting POST", {
+					sourcedId,
+					reason: is404 ? "not found (404)" : "server error (500)"
+				})
 				const createResult = await errors.try(oneroster.createResource(resource))
 				if (createResult.error) {
-					logger.error("failed to create resource", { sourcedId, error: createResult.error })
-					throw createResult.error // Allow Inngest to retry
+					logger.error("failed to create resource via POST", { sourcedId, error: createResult.error })
+					throw createResult.error
 				}
 				logger.info("successfully created resource", { sourcedId })
 				return { sourcedId, status: "created" }
 			}
-			logger.error("failed to upsert resource", { sourcedId, error: result.error })
-			throw result.error // Allow Inngest to retry
+
+			// Some other error - throw it
+			logger.error("failed to upsert resource", { sourcedId, error: updateResult.error })
+			throw updateResult.error
 		}
 
-		logger.info("successfully upserted resource", { sourcedId })
+		logger.info("successfully upserted resource via PUT", { sourcedId })
 		return { sourcedId, status: "upserted" }
 	}
 )
