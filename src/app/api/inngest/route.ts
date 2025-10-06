@@ -65,6 +65,8 @@ import { ingestAssessmentTestOne } from "@/inngest/functions/qti/ingest-assessme
 import { requestAllItemMigrationsForCourse } from "@/inngest/functions/qti/request-all-item-migrations-for-course"
 import { requestAllStimulusMigrationsForCourse } from "@/inngest/functions/qti/request-all-stimulus-migrations-for-course"
 import { requestItemMigrationsForExercise } from "@/inngest/functions/qti/request-item-migrations-for-exercise"
+import { orchestrateHardcodedExerciseSlugsItemMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-exercise-slugs-item-migration"
+import { orchestrateHardcodedSlugQtiGenerationAndUpload } from "@/inngest/functions/migrations/orchestrate-hardcoded-slug-qti-generation-and-upload"
 // ✅ ADD: Import the new validation function
 // Removed dangerous validator to prevent accidental runs
 import { standardizeQtiQuestionPhrasing } from "@/inngest/functions/standardize-qti-question-phrasing"
@@ -130,6 +132,8 @@ export const { GET, POST, PUT } = serve({
 		requestAllItemMigrationsForCourse,
 		requestAllStimulusMigrationsForCourse,
 		requestItemMigrationsForExercise,
+		orchestrateHardcodedExerciseSlugsItemMigration,
+		orchestrateHardcodedSlugQtiGenerationAndUpload,
 		ingestAssessmentItemOne,
 		ingestAssessmentStimulusOne,
 		ingestAssessmentTestOne,

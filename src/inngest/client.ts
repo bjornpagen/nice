@@ -348,6 +348,16 @@ const events = {
 		data: z.object({})
 	},
 
+	// ✅ ADDED: Generate and upload QTI for a hardcoded list of exercise slugs
+	"migration/hardcoded.exercise-slugs.qti.generate-and-upload": {
+		data: z.object({})
+	},
+
+	// ✅ ADDED: Orchestrator to migrate items for a hardcoded list of exercise slugs
+	"migration/hardcoded.exercise-slugs.items.perseus-to-qti": {
+		data: z.object({})
+	},
+
 	// ✅ RENAMED: Split monolithic generation into two granular, namespaced events
 	"migration/hardcoded.math.differentiated-items.generate": {
 		data: z.object({})
