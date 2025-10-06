@@ -1,4 +1,5 @@
-import { foreignKey, index, integer, jsonb, pgSchema, primaryKey, text, uniqueIndex, uuid } from "drizzle-orm/pg-core"
+import { foreignKey, index, integer, jsonb, pgSchema, primaryKey, text, uniqueIndex, uuid, check } from "drizzle-orm/pg-core"
+import { sql } from "drizzle-orm"
 
 /**
  * This file defines the entire database schema for the "nice" project,
@@ -133,6 +134,7 @@ const lessonContents = schema.table(
 		}),
 		index("lc_lesson_id_idx").on(table.lessonId),
 		uniqueIndex("lc_lesson_order_uniq").on(table.lessonId, table.ordering),
+		check("lc_order_nonneg", sql`${table.ordering} >= 0`),
 		foreignKey({
 			name: "lc_lesson_fk",
 			columns: [table.lessonId],
