@@ -82,6 +82,7 @@ const units = schema.table(
 		index("units_path_idx").on(table.path),
 		index("units_title_idx").on(table.title),
 		uniqueIndex("unit_slug_per_course_idx").on(table.courseId, table.slug),
+		uniqueIndex("units_course_order_uniq").on(table.courseId, table.ordering),
 		foreignKey({
 			name: "units_course_fk",
 			columns: [table.courseId],
