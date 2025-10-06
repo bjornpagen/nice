@@ -1,6 +1,8 @@
 #!/usr/bin/env bun
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
+import * as readline from "node:readline/promises"
+import { stdin as input, stdout as output } from "node:process"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import {
@@ -23,17 +25,17 @@ import {
 	type VideoInfo
 } from "@/lib/khan-academy-api"
 
-logger.setDefaultLogLevel(logger.INFO)
+logger.setDefaultLogLevel(logger.DEBUG)
 
 // --- CONFIGURATION ---
 
-const MAX_CONCURRENCY = 10 // Increased back for faster processing within courses
-const TARGET_REGION = "US-CA" // California region for Common Core content
+const MAX_CONCURRENCY = 1 // Reduce concurrency to simplify debugging of POST requests
+const TARGET_REGION = "US-TX" // California region for Common Core content
 
 // This cookie is required for authenticated endpoints like creating a practice task.
 // It should be kept up-to-date by copying from a logged-in browser session.
 const KHAN_ACADEMY_COOKIE =
-	'browsing_session_id=_en_bsid_32eabce3-6cd7-4c17-82bb-d5b3c6980001; LIS=www; KAAS=jrq9yFJ1WyFbUimeVG_mMw; KAAL=$FaCVSQbgqpg-ReuvYooEpkHDXw8RifEzxCPKpJakiz4.~syu253$a2FpZF8xMTg2NTk5ODQyNDYwNjE0MDE2MTAzMjc*; KAAC=$FzYq2uBMA-XdkCV0lp9UFP9BRQOyQDlsxLSATzx3w38.~syu253$a2FpZF8xMTg2NTk5ODQyNDYwNjE0MDE2MTAzMjc*$a2FpZF8xMTg2NTk5ODQyNDYwNjE0MDE2MTAzMjc\u00210\u00210$~4; browsing_session_expiry="Thu, 03 Jul 2025 17:35:27 UTC"'
+	'browsing_session_id=_en_bsid_0c453939-0dd6-4101-8de0-aa862fd00001; LIS=www; KAAS=-El10tBzYFUB9rq4r2FtyQ; KAAL=$7NoKZlKB-x01redaJ2agSVPO4HWbAqjAiGJabVZ_Jyo.~t3qbcn$a2FpZF8zMTk2NzA5OTYyNTA3ODk3NDgzMzY2MTQ*; KAAC=$g5QX7qSSabA5zL_OrY6D0f13Gc55ps0Doi_8S9CdPb8.~t3qbcn$a2FpZF8zMTk2NzA5OTYyNTA3ODk3NDgzMzY2MTQ*$a2FpZF8zMTk2NzA5OTYyNTA3ODk3NDgzMzY2MTQ!0!0$~4; browsing_session_expiry="Mon, 06 Oct 2025 21:55:40 UTC"'
 
 // --- HELPER FUNCTIONS ---
 
@@ -298,6 +300,32 @@ async function main() {
 		noVideosOrArticles,
 		filters: pathFilters.length > 0 ? pathFilters : "none"
 	})
+
+	// SAFETY GATE: Exercise-only mode can corrupt ordering if seed upserts ordering.
+	// We DO NOT allow --no-videos-or-articles unless the operator explicitly confirms
+	// they have asked Bjorn and understand the policy:
+	//   "NEVER upsert the 'ordering' field on conflicts."
+	if (noVideosOrArticles) {
+		logger.warn("--no-videos-or-articles selected", {
+			message:
+				"This mode can corrupt lesson ordering if the seeding process updates 'ordering' on conflict.",
+			policy:
+				"NEVER upsert the 'ordering' field on conflicts (units, lessons, assessments, lesson_contents).",
+			instruction:
+				"Use this flag ONLY after confirming with Bjorn and only after a full upload without this flag."
+		})
+		const rl = readline.createInterface({ input, output })
+		const answer = await rl.question(
+			"Type EXACTLY 'I_HAVE_ASKED_BJORN' to continue with --no-videos-or-articles: "
+		)
+		rl.close()
+		if (answer.trim() !== "I_HAVE_ASKED_BJORN") {
+			logger.error("confirmation missing for --no-videos-or-articles; aborting", {
+				provided: answer.trim() || "<empty>"
+			})
+			process.exit(1)
+		}
+	}
 
 	// Step 1: Define output paths. The exercise output directory is no longer needed.
 	const dataDir = path.join(process.cwd(), "data")

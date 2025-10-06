@@ -1021,6 +1021,15 @@ export class KhanAcademyClient {
 					"mutation getOrCreatePracticeTask($input: GetOrCreatePracticeTaskInput!, $ancestorIds: [String!]!) {\n  getOrCreatePracticeTask(input: $input) {\n    result {\n      error {\n        code\n        debugMessage\n        __typename\n      }\n      userTask {\n        cards {\n          ...problemCardFields\n          __typename\n        }\n        task {\n          ...practiceTaskFields\n          __typename\n        }\n        userExercises {\n          ...userExerciseFields\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment practiceTaskFields on PracticeTask {\n  id\n  key\n  bonusReservedItems\n  bonusReservedItemsCompleted\n  bonusTaskAttemptHistory {\n    ...taskAttemptHistoryFields\n    __typename\n  }\n  canRestart\n  completionCriteria {\n    name\n    __typename\n  }\n  contentKey\n  exerciseLength\n  isCompleted\n  pointBounty\n  pointsEarned\n  promotionCriteria {\n    ...promotionCriteriaFields\n    __typename\n  }\n  reservedItems\n  reservedItemsCompleted\n  slug\n  taskAttemptHistory {\n    ...taskAttemptHistoryFields\n    __typename\n  }\n  taskType\n  timeEstimate {\n    lowerBound\n    upperBound\n    __typename\n  }\n  __typename\n}\n\nfragment problemCardFields on ProblemCard {\n  cardType\n  done\n  exerciseName\n  problemType\n  __typename\n}\n\nfragment problemTypeFields on ProblemType {\n  items {\n    id\n    live\n    sha\n    __typename\n  }\n  name\n  relatedVideos\n  __typename\n}\n\nfragment promotionCriteriaFields on PromotionCriteria {\n  name\n  value\n  __typename\n}\n\nfragment taskAttemptHistoryFields on TaskProblemAttempt {\n  correct\n  timeDone\n  seenHint\n  itemId\n  __typename\n}\n\nfragment userExerciseFields on UserExercise {\n  exerciseModel: exercise {\n    id\n    assessmentItemCount: numAssessmentItems\n    displayName\n    isQuiz\n    isSkillCheck\n    name\n    nodeSlug\n    progressKey\n    translatedDisplayName\n    relatedContent {\n      id\n      contentKind\n      kind\n      thumbnailUrl\n      translatedTitle\n      urlWithinCurationNode\n      urlWithinClosestAncestor(ancestorIds: $ancestorIds)\n      topicPaths {\n        path {\n          id\n          kind\n          slug\n          __typename\n        }\n        __typename\n      }\n      ... on Article {\n        kaUrl\n        nodeSlug\n        relativeUrl\n        slug\n        __typename\n      }\n      ... on Video {\n        duration\n        imageUrl\n        kaUrl\n        nodeSlug\n        relativeUrl\n        slug\n        translatedYoutubeId\n        __typename\n      }\n      __typename\n    }\n    relatedVideos {\n      contentKind\n      duration\n      id\n      imageUrl\n      kaUrl\n      kind\n      nodeSlug\n      progressKey\n      relativeUrl\n      slug\n      thumbnailUrl\n      translatedDescription\n      translatedTitle\n      translatedYoutubeId\n      __typename\n    }\n    problemTypes {\n      ...problemTypeFields\n      __typename\n    }\n    translatedProblemTypes {\n      ...problemTypeFields\n      __typename\n    }\n    __typename\n  }\n  exercise: exerciseName\n  fpmMasteryLevel\n  lastAttemptNumber\n  lastCountHints\n  lastDone\n  lastMasteryUpdate\n  longestStreak\n  maximumExerciseProgressDt: maximumExerciseProgressDate\n  streak\n  totalCorrect\n  totalDone\n  __typename\n}"
 			}
 
+			const h1 = new Headers(this.#headers)
+			logger.debug("sending graphql request", {
+				endpoint: "getOrCreatePracticeTask",
+				method: "POST",
+				url,
+				requestHeaders: Object.fromEntries(h1.entries()),
+				requestBody: body
+			})
+
 			const fetchResult = await errors.try(
 				fetch(url, { method: "POST", headers: this.#headers, body: JSON.stringify(body) })
 			)
@@ -1036,13 +1045,27 @@ export class KhanAcademyClient {
 
 			const response = fetchResult.data
 			if (!response.ok) {
+				const bodySnippetResult = await errors.try(response.text())
+				const bodySnippet = bodySnippetResult.error ? "" : bodySnippetResult.data.slice(0, 512)
+				const respHeaders = Object.fromEntries(response.headers.entries())
 				logger.error("khan-api request failed with status for getOrCreatePracticeTask", {
 					url,
 					exerciseId,
-					status: response.status
+					status: response.status,
+					statusText: response.statusText,
+					responseHeaders: respHeaders,
+					bodySnippet
 				})
 				throw errors.new(`khan-api: request failed with status ${response.status}`)
 			}
+			// successful response diagnostics
+			logger.debug("received response", {
+				endpoint: "getOrCreatePracticeTask",
+				url,
+				status: response.status,
+				statusText: response.statusText,
+				responseHeaders: Object.fromEntries(response.headers.entries())
+			})
 
 			const jsonResult = await errors.try(response.json())
 			if (jsonResult.error) {
@@ -1054,7 +1077,7 @@ export class KhanAcademyClient {
 				throw errors.wrap(jsonResult.error, "khan-api: failed to parse json response")
 			}
 			const rawJson = jsonResult.data
-			logger.debug("received raw json from getOrCreatePracticeTask", { body: rawJson })
+			logger.debug("received raw json from getOrCreatePracticeTask", { url, body: rawJson })
 
 			const data = assertSchema(GetOrCreatePracticeTaskResponseSchema, rawJson)
 			return data
@@ -1077,13 +1100,26 @@ export class KhanAcademyClient {
 	async getAssessmentItem(input: AssessmentItemInput): Promise<GetAssessmentItemResponse> {
 		logger.info("fetching assessment item", { input })
 		const operation = async () => {
-			const url = `${API_BASE_URL}/getAssessmentItem`
+			// Match browser request shape more closely
+			const urlObj = new URL(`${API_BASE_URL}/getAssessmentItem`)
+			urlObj.searchParams.set("lang", "en")
+			urlObj.searchParams.set("app", "khanacademy")
+			const url = urlObj.toString()
 			const body = {
 				operationName: "getAssessmentItem",
 				variables: { input }, // MODIFIED: Use the flexible input object directly
 				query:
-					"query getAssessmentItem($input: AssessmentItemInput!) {\n  assessmentItem(input: $input) {\n    item {\n      id\n      sha\n      problemType\n      itemData\n      isContextInaccessible\n      __typename\n    }\n    error {\n      code\n      debugMessage\n      __typename\n    }\n    __typename\n  }\n}"
+					"query getAssessmentItem($input: AssessmentItemInput!) {\n  assessmentItem(input: $input) {\n    item {\n      id\n      sha\n      problemType\n      itemData\n      isContextInaccessible\n      requiresScreenOrMouse\n      __typename\n    }\n    error {\n      code\n      debugMessage\n      __typename\n    }\n    __typename\n  }\n}"
 			}
+
+			const h2 = new Headers(this.#headers)
+			logger.debug("sending graphql request", {
+				endpoint: "getAssessmentItem",
+				method: "POST",
+				url,
+				requestHeaders: Object.fromEntries(h2.entries()),
+				requestBody: body
+			})
 
 			const fetchResult = await errors.try(
 				fetch(url, { method: "POST", headers: this.#headers, body: JSON.stringify(body) })
@@ -1096,9 +1132,27 @@ export class KhanAcademyClient {
 
 			const response = fetchResult.data
 			if (!response.ok) {
-				logger.error("khan-api: request failed", { status: response.status, statusText: response.statusText })
+				const bodySnippetResult = await errors.try(response.text())
+				const bodySnippet = bodySnippetResult.error ? "" : bodySnippetResult.data.slice(0, 512)
+				const respHeaders = Object.fromEntries(response.headers.entries())
+				logger.error("khan-api: request failed", {
+					endpoint: "getAssessmentItem",
+					url,
+					status: response.status,
+					statusText: response.statusText,
+					responseHeaders: respHeaders,
+					bodySnippet
+				})
 				throw errors.new(`khan-api: request failed with status ${response.status}`)
 			}
+			// successful response diagnostics
+			logger.debug("received response", {
+				endpoint: "getAssessmentItem",
+				url,
+				status: response.status,
+				statusText: response.statusText,
+				responseHeaders: Object.fromEntries(response.headers.entries())
+			})
 
 			const jsonResult = await errors.try(response.json())
 			if (jsonResult.error) {
@@ -1106,7 +1160,7 @@ export class KhanAcademyClient {
 				throw errors.wrap(jsonResult.error, "khan-api: failed to parse json response")
 			}
 			const rawJson = jsonResult.data
-			logger.debug("received raw json from getAssessmentItem", { body: rawJson })
+			logger.debug("received raw json from getAssessmentItem", { url, body: rawJson })
 
 			const data = assertSchema(GetAssessmentItemResponseSchema, rawJson)
 			return data

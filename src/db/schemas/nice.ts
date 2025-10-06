@@ -130,6 +130,7 @@ const lessonContents = schema.table(
 			columns: [table.lessonId, table.contentId]
 		}),
 		index("lc_lesson_id_idx").on(table.lessonId),
+		uniqueIndex("lc_lesson_order_uniq").on(table.lessonId, table.ordering),
 		foreignKey({
 			name: "lc_lesson_fk",
 			columns: [table.lessonId],
