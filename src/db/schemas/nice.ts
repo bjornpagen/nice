@@ -225,7 +225,8 @@ const assessments = schema.table(
 	},
 	(table) => [
 		index("assessments_path_idx").on(table.path),
-		index("assessments_parent_type_idx").on(table.parentId, table.type)
+		index("assessments_parent_type_idx").on(table.parentId, table.type),
+		uniqueIndex("ass_parent_order_uniq").on(table.parentId, table.parentType, table.ordering)
 	]
 )
 export { assessments as niceAssessments }
