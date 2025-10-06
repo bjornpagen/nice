@@ -107,6 +107,7 @@ const lessons = schema.table(
 		index("lessons_path_idx").on(table.path),
 		index("lessons_title_idx").on(table.title),
 		uniqueIndex("lesson_slug_per_unit_idx").on(table.unitId, table.slug),
+		uniqueIndex("lessons_unit_order_uniq").on(table.unitId, table.ordering),
 		foreignKey({
 			name: "lessons_unit_fk",
 			columns: [table.unitId],
