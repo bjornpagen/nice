@@ -314,11 +314,73 @@ async function main(): Promise<void> {
 	spinner.stop(`found ${videosResult.data.length}/${videoSlugArray.length} videos, ${exercisesResult.data.length}/${exerciseSlugArray.length} exercises`)
 
 	if (missingVideoSlugs.length > 0) {
-		clack.log.warn(`missing ${missingVideoSlugs.length} khan academy videos (will need to import those courses first)`)
+		clack.log.warn(`missing ${missingVideoSlugs.length} khan academy videos`)
+		console.log("\nmissing video paths by course:")
+		
+		// Group missing videos by course
+		const videosByCourse = new Map<string, string[]>()
+		
+		for (const slug of missingVideoSlugs) {
+			// Extract course from khan academy url pattern in CSV
+			for (const row of rows) {
+				const videoUrls = extractMultipleVideoUrls(row["Video Link"])
+				for (const url of videoUrls) {
+					if (url.includes(`/v/${slug}`)) {
+						// Extract course slug from url like /math/{course}/...
+						const courseMatch = url.match(/\/math\/([^/]+)\//)
+						const courseSlug = courseMatch?.[1] || "unknown"
+						if (!videosByCourse.has(courseSlug)) {
+							videosByCourse.set(courseSlug, [])
+						}
+						videosByCourse.get(courseSlug)?.push(url)
+					}
+				}
+			}
+		}
+		
+		for (const [courseSlug, paths] of videosByCourse.entries()) {
+			console.log(`\ncourse: ${courseSlug}`)
+			for (const path of paths.slice(0, 5)) {
+				console.log(`  ${path}`)
+			}
+			if (paths.length > 5) {
+				console.log(`  ... and ${paths.length - 5} more`)
+			}
+		}
 	}
 
 	if (missingExerciseSlugs.length > 0) {
-		clack.log.warn(`missing ${missingExerciseSlugs.length} exercises (will need to import those courses first)`)
+		clack.log.warn(`missing ${missingExerciseSlugs.length} exercises`)
+		console.log("\nmissing exercise paths by course:")
+		
+		// Group missing exercises by course
+		const exercisesByCourse = new Map<string, string[]>()
+		
+		for (const slug of missingExerciseSlugs) {
+			// Extract course from khan academy url pattern in CSV
+			for (const row of rows) {
+				const url = row["Exercise Link"]
+				if (url && url.includes(`/e/${slug}`)) {
+					// Extract course slug from url like /math/{course}/...
+					const courseMatch = url.match(/\/math\/([^/]+)\//)
+					const courseSlug = courseMatch?.[1] || "unknown"
+					if (!exercisesByCourse.has(courseSlug)) {
+						exercisesByCourse.set(courseSlug, [])
+					}
+					exercisesByCourse.get(courseSlug)?.push(url)
+				}
+			}
+		}
+		
+		for (const [courseSlug, paths] of exercisesByCourse.entries()) {
+			console.log(`\ncourse: ${courseSlug}`)
+			for (const path of paths.slice(0, 5)) {
+				console.log(`  ${path}`)
+			}
+			if (paths.length > 5) {
+				console.log(`  ... and ${paths.length - 5} more`)
+			}
+		}
 	}
 
 	// Handle custom videos (non-khan URLs)
