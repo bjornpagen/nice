@@ -42,6 +42,7 @@ import { ingestResourceOne } from "@/inngest/functions/oneroster/ingest-resource
 import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orchestrate-course-oneroster-generation"
 // Removed: orchestrateCourseXmlGeneration (generic course QTI generation)
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
+import { orchestrateCourseUploadToOnerosterBySlug } from "@/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
 import { extractAndProcessQtiSvgs } from "@/inngest/functions/qa/extract-and-process-qti-svgs"
 import { orchestrateCourseVisualQAReview } from "@/inngest/functions/qa/orchestrate-course-visual-qa-review"
@@ -77,6 +78,7 @@ export const { GET, POST, PUT } = serve({
 		// Orchestrators
 		orchestrateCourseOnerosterGeneration,
 		orchestrateCourseUploadToOneroster,
+		orchestrateCourseUploadToOnerosterBySlug,
 		// Removed: generic ingestion orchestrators
 		// Removed: orchestrateCourseXmlGeneration
 		orchestrateCourseUploadToQti,
