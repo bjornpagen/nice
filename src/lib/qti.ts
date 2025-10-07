@@ -207,7 +207,8 @@ const AssessmentItemSchema = z.object({
 		"drawing",
 		"media",
 		"upload",
-		"gap-match" // Add the undocumented type here
+		"gap-match", // Add the undocumented type here
+		"unknown"
 	]),
 	qtiVersion: z.string(),
 	timeDependent: z.boolean(),

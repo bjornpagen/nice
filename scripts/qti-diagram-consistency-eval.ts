@@ -20,6 +20,62 @@ const OPENAI_MODEL = "gpt-5"
 const MAX_CONCURRENT_LLM_CALLS = 100
 const MAX_RETRIES = 3
 
+// --- Retry Helper ---
+
+async function retryOperation<T>(
+	operation: () => Promise<T>,
+	context: string,
+	maxRetries: number | "infinite" = "infinite"
+): Promise<T> {
+	let lastError: Error | null = null
+	let attempt = 0
+
+	while (true) {
+		attempt++
+		const result = await errors.try(operation())
+		if (!result.error) {
+			if (attempt > 1) {
+				logger.info("operation succeeded after retries", {
+					context,
+					attemptsTaken: attempt
+				})
+			}
+			return result.data
+		}
+
+		lastError = result.error
+
+		// Check if we should stop retrying
+		if (maxRetries !== "infinite" && attempt >= maxRetries) {
+			logger.error("operation failed after all retries", {
+				context,
+				maxRetries,
+				error: lastError
+			})
+			if (!lastError) {
+				logger.error("operation failed without error details", { context })
+				throw errors.new(`${context}: operation failed without error details`)
+			}
+			logger.error("operation failed after retries", { context, maxRetries, error: lastError })
+			throw errors.wrap(lastError, `${context}: failed after ${maxRetries} retries`)
+		}
+
+		// Calculate backoff with a cap
+		const baseBackoffMs = 1000
+		const maxBackoffMs = 300000 // 5 minutes max
+		const backoffMs = Math.min(baseBackoffMs * 2 ** Math.min(attempt - 1, 10), maxBackoffMs)
+
+		logger.warn("operation failed, will retry indefinitely", {
+			context,
+			attempt,
+			nextRetryInMs: backoffMs,
+			error: lastError
+		})
+
+		await new Promise((resolve) => setTimeout(resolve, backoffMs))
+	}
+}
+
 // --- Help Text ---
 const HELP_TEXT = `
 QTI Diagram vs. Explanation Consistency Evaluation Script
@@ -341,12 +397,11 @@ async function main() {
 	// 1. Resolve Course sourcedId
 	let courseSourcedId: string = arg
 	if (!isSourcedId(arg)) {
-		const coursesResult = await errors.try(getAllCoursesBySlug(arg))
-		if (coursesResult.error) {
-			logger.error("failed to fetch course by slug", { slug: arg, error: coursesResult.error })
-			throw errors.wrap(coursesResult.error, "fetch course by slug")
-		}
-		const course = coursesResult.data[0]
+		const courses = await retryOperation(
+			() => getAllCoursesBySlug(arg),
+			`oneroster:getAllCoursesBySlug:${arg}`
+		)
+		const course = courses[0]
 		if (!course) {
 			logger.error("course not found by slug", { slug: arg })
 			throw errors.new("course not found")
@@ -356,32 +411,30 @@ async function main() {
 	logger.info("resolved course", { courseSourcedId })
 
 	// 2. Discover QTI tests in the course
-	const compResourcesResult = await errors.try(getComponentResourcesForCourse(courseSourcedId))
-	if (compResourcesResult.error) {
-		logger.error("failed to fetch component resources for course", { error: compResourcesResult.error, courseSourcedId })
-		throw errors.wrap(compResourcesResult.error, "fetch component resources for course")
-	}
-	logger.debug("fetched component resources", { count: compResourcesResult.data.length, courseSourcedId })
+	const compResources = await retryOperation(
+		() => getComponentResourcesForCourse(courseSourcedId),
+		`oneroster:getComponentResourcesForCourse:${courseSourcedId}`
+	)
+	logger.debug("fetched component resources", { count: compResources.length, courseSourcedId })
 	
 	const resourceIds = Array.from(
 		new Set(
-			compResourcesResult.data
+			compResources
 				.map((cr) => cr?.resource?.sourcedId)
 				.filter((id): id is string => typeof id === "string" && id.length > 0)
 		)
 	)
 	logger.debug("extracted unique resource ids from component resources", { count: resourceIds.length, courseSourcedId })
 	
-	const resourcesResult = await errors.try(getResourcesByIds(resourceIds))
-	if (resourcesResult.error) {
-		logger.error("failed to fetch resources by ids", { error: resourcesResult.error, count: resourceIds.length })
-		throw errors.wrap(resourcesResult.error, "fetch resources by ids")
-	}
-	logger.debug("fetched resources", { count: resourcesResult.data.length, courseSourcedId })
+	const resources = await retryOperation(
+		() => getResourcesByIds(resourceIds),
+		`oneroster:getResourcesByIds:${courseSourcedId}`
+	)
+	logger.debug("fetched resources", { count: resources.length, courseSourcedId })
 	
 	// Debug: log all resource metadata types
 	const resourcesByType = new Map<string, number>()
-	for (const r of resourcesResult.data) {
+	for (const r of resources) {
 		const type = r.metadata?.type
 		const subType = r.metadata?.subType
 		const key = `${type}/${subType}`
@@ -392,15 +445,15 @@ async function main() {
 	// Extra: dump ALL resource metadata for deep diagnostics (no slicing)
 	logger.debug("resource metadata dump (full)", {
 		courseSourcedId,
-		count: resourcesResult.data.length,
-		resources: resourcesResult.data.map((r) => ({
+		count: resources.length,
+		resources: resources.map((r) => ({
 			id: typeof r.sourcedId === "string" ? r.sourcedId : "",
 			title: typeof r.title === "string" ? r.title : "",
 			metadata: r.metadata
 		}))
 	})
 	
-	const qtiTests = resourcesResult.data.filter((r) => {
+	const qtiTests = resources.filter((r) => {
 		const type = r.metadata?.type
 		const subType = r.metadata?.subType
 		return (
@@ -426,12 +479,11 @@ async function main() {
 			continue
 		}
 		logger.debug("fetching qti test", { resourceId: testId, testTitle: r.title })
-		const testResult = await errors.try(getAssessmentTest(testId))
-		if (testResult.error) {
-			logger.error("failed to fetch qti test", { resourceId: testId, error: testResult.error })
-			throw errors.wrap(testResult.error, "qti test fetch")
-		}
-		const rawXml = testResult.data?.rawXml
+		const test = await retryOperation(
+			() => getAssessmentTest(testId),
+			`qti:getAssessmentTest:${testId}`
+		)
+		const rawXml = test?.rawXml
 		if (typeof rawXml !== "string") {
 			logger.warn("skipping qti test: missing rawXml", { resourceId: testId })
 			continue
@@ -478,12 +530,10 @@ async function main() {
 		})
 		items = []
 	} else {
-		const itemsResult = await errors.try(getAssessmentItems(allItemIds))
-		if (itemsResult.error) {
-			logger.error("failed to fetch qti items", { count: allItemIds.length, error: itemsResult.error })
-			throw errors.wrap(itemsResult.error, "qti items fetch")
-		}
-		items = itemsResult.data
+		items = await retryOperation(
+			() => getAssessmentItems(allItemIds),
+			`qti:getAssessmentItems:${courseSourcedId}`
+		)
 		logger.info("fetched unique QTI items", { count: items.length, courseSourcedId })
 		logger.debug("fetched item identifiers", { itemIds: items.map(i => i.identifier) })
 	}
