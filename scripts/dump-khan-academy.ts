@@ -29,7 +29,7 @@ logger.setDefaultLogLevel(logger.DEBUG)
 
 // --- CONFIGURATION ---
 
-const MAX_CONCURRENCY = 1 // Reduce concurrency to simplify debugging of POST requests
+const MAX_CONCURRENCY = 5 // Reduce concurrency to simplify debugging of POST requests
 const TARGET_REGION = "US-TX" // California region for Common Core content
 
 // This cookie is required for authenticated endpoints like creating a practice task.
@@ -219,22 +219,37 @@ async function fetchVideoDetails(apiClient: KhanAcademyClient, video: VideoInfo)
 	logger.info("fetching details for video", {
 		videoId: video.id,
 		videoSlug: video.slug,
-		videoTitle: video.title
+		videoTitle: video.title,
+		path: video.path
 	})
 
-	const detailsResult = await errors.try(apiClient.getContentForLearnableContent(video.id, "Video"))
+	const detailsResult = await errors.try(apiClient.getContentForPath(video.path))
 	if (detailsResult.error) {
-		logger.error("failed to fetch video details", { videoId: video.id, error: detailsResult.error })
+		logger.error("failed to fetch video details", { videoId: video.id, path: video.path, error: detailsResult.error })
 		throw errors.wrap(detailsResult.error, "video details fetch failed")
+	}
+
+	const content = detailsResult.data.data.contentRoute.listedPathData?.content
+
+	if (content?.__typename !== "Video") {
+		logger.error("video path returned unexpected content type", {
+			videoId: video.id,
+			path: video.path,
+			contentType: content?.__typename,
+			hasContent: !!content
+		})
+		throw errors.new(
+			`video fetch failed for ${video.id}: expected video content but found ${content?.__typename || "null"}`
+		)
 	}
 
 	logger.info("completed fetching details for video", {
 		videoId: video.id,
-		title: detailsResult.data.data.learnableContent.translatedTitle
+		resolvedNodeId: content.id,
+		title: content.translatedTitle
 	})
 
-	// MODIFIED: Return the full learnableContent object directly.
-	return detailsResult.data.data.learnableContent
+	return content
 }
 
 // MODIFIED: Return type is now a flat data object.

@@ -293,16 +293,27 @@ const ContentForPathResponseSchema = z.object({
 type ContentForPathResponse = z.infer<typeof ContentForPathResponseSchema>
 
 // Schema for ContentForLearnableContent (for Videos) - now using the schemas defined above
+// Make envelope tolerant to GraphQL { errors, data: null } so we can log rich diagnostics.
+const GraphQLErrorSchema = z
+    .object({
+        message: z.string()
+    })
+    .passthrough()
 
 const ContentForLearnableContentResponseSchema = z.object({
-	data: z.object({
-		learnableContent: LearnableVideoSchema,
-		content: z.object({
-			metadata: z.object({
-				commitSha: z.string()
-			})
-		})
-	})
+    data: z
+        .object({
+            learnableContent: LearnableVideoSchema.nullable(),
+            content: z
+                .object({
+                    metadata: z.object({
+                        commitSha: z.string()
+                    })
+                })
+                .optional()
+        })
+        .nullable(),
+    errors: z.array(GraphQLErrorSchema).optional()
 })
 export type ContentForLearnableContentResponse = z.infer<typeof ContentForLearnableContentResponseSchema>
 
@@ -1244,6 +1255,14 @@ export class KhanAcademyClient {
 		kind: "Video" | "Article" | string
 	): Promise<ContentForLearnableContentResponse> {
 		logger.info("fetching content for learnable", { id, kind })
+		// Best-effort format signal: KA node IDs for content typically start with 'x'.
+		if (typeof id !== "string" || id.length === 0) {
+			logger.error("invalid learnable content id type", { idType: typeof id, id, kind })
+			throw errors.new("khan-api: invalid learnable content id")
+		}
+		if (!/^x[0-9a-f]+$/i.test(id)) {
+			logger.warn("learnable content id does not look like a KA node id", { id, kind })
+		}
 		const operation = async () => {
 			const variables = { id, kind }
 			const url = new URL(`${API_BASE_URL}/ContentForLearnableContent`)
@@ -1253,6 +1272,14 @@ export class KhanAcademyClient {
 			url.searchParams.set("variables", JSON.stringify(variables))
 			url.searchParams.set("lang", "en")
 			url.searchParams.set("app", "khanacademy")
+
+			logger.debug("sending graphql request", {
+				endpoint: "ContentForLearnableContent",
+				method: "GET",
+				url: url.toString(),
+				requestHeaders: Object.fromEntries(new Headers(this.#headers).entries()),
+				variables
+			})
 
 			const fetchResult = await errors.try(
 				fetch(url.toString(), {
@@ -1277,6 +1304,24 @@ export class KhanAcademyClient {
 				throw errors.new(`khan-api: request failed with status ${response.status}`)
 			}
 
+			// Successful response diagnostics
+			logger.debug("received response", {
+				endpoint: "ContentForLearnableContent",
+				url: url.toString(),
+				status: response.status,
+				statusText: response.statusText,
+				responseHeaders: Object.fromEntries(response.headers.entries())
+			})
+
+			// Capture a small snippet of the body to aid debugging when JSON is null/corrupt
+			const bodyTextResult = await errors.try(response.clone().text())
+			if (bodyTextResult.error) {
+				logger.debug("failed to read response body text for diagnostics", { error: bodyTextResult.error })
+			} else {
+				const snippet = bodyTextResult.data.slice(0, 256)
+				logger.debug("response body text snippet", { endpoint: "ContentForLearnableContent", snippet })
+			}
+
 			const jsonResult = await errors.try(response.json())
 			if (jsonResult.error) {
 				logger.error("failed to parse json response", { error: jsonResult.error })
@@ -1285,8 +1330,26 @@ export class KhanAcademyClient {
 			const rawJson = jsonResult.data
 			logger.debug("received raw json from ContentForLearnableContent", { body: rawJson })
 
-			const data = assertSchema(ContentForLearnableContentResponseSchema, rawJson)
-			return data
+			const envelope = assertSchema(ContentForLearnableContentResponseSchema, rawJson)
+			if (!envelope || !envelope.data) {
+				logger.error("graphQL response missing data for learnable content", {
+					id,
+					kind,
+					hasErrors: !!(envelope && envelope.errors),
+					errors: envelope?.errors
+				})
+				throw errors.new("khan-api: learnable content response missing data")
+			}
+			if (!envelope.data.learnableContent) {
+				logger.error("graphQL returned null learnableContent", {
+					id,
+					kind,
+					hasErrors: !!envelope.errors,
+					errors: envelope.errors
+				})
+				throw errors.new("khan-api: learnable content is null")
+			}
+			return envelope
 		}
 
 		const result = await retryWithBackoff(operation, { retries: 3, initialDelay: 1000 })
