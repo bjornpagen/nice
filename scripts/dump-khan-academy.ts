@@ -30,7 +30,7 @@ logger.setDefaultLogLevel(logger.DEBUG)
 // --- CONFIGURATION ---
 
 const MAX_CONCURRENCY = 5 // Reduce concurrency to simplify debugging of POST requests
-const TARGET_REGION = "US-TX" // California region for Common Core content
+const TARGET_REGION = "US-CA" // California region for Common Core content
 
 // This cookie is required for authenticated endpoints like creating a practice task.
 // It should be kept up-to-date by copying from a logged-in browser session.
