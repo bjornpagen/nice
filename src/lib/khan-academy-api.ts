@@ -228,65 +228,67 @@ const LearnableMasteryChallengeSchema = z.object({
 })
 
 // Schema for GetContentForPath - Corrected for flexibility and accuracy
+// Define the path data structure once, used for both listed and unlisted paths
+const PathDataSchema = z.object({
+	content: z
+		.union([
+			z
+				.object({
+					__typename: z.literal("Exercise"),
+					id: z.string(),
+					slug: z.string(),
+					translatedTitle: z.string()
+				})
+				.strict(),
+			LearnableArticleSchema, // Articles can appear here when fetching their direct path
+			LearnableVideoSchema, // ADDED: Allow full video objects to be returned for a path
+			// ADD: Include schemas for container assessments
+			PathQuizSchema,
+			PathUnitTestSchema
+		])
+		.nullable(),
+	course: z
+		.object({
+			__typename: z.literal("Course"),
+			id: z.string(),
+			parent: z.object({
+				id: z.string()
+			}),
+			slug: z.string(),
+			translatedTitle: z.string(),
+			translatedDescription: z.string().optional(),
+			// Correctly nested under `course`
+			unitChildren: z.array(z.record(z.unknown())).optional(),
+			// ADD: masterableExercises for Course Challenges
+			masterableExercises: z
+				.array(
+					z.object({
+						__typename: z.literal("Exercise"),
+						id: z.string()
+					})
+				)
+				.nullable()
+				.optional(),
+			// Challenges might be either a string (course ID) or an object
+			courseChallenge: LearnableCourseChallengeSchema.nullable().optional(),
+			masteryChallenge: LearnableMasteryChallengeSchema.nullable().optional()
+		})
+		.nullable(),
+	lesson: z
+		.object({
+			__typename: z.literal("Lesson"),
+			id: z.string(),
+			translatedTitle: z.string().optional(),
+			curatedChildren: z.array(z.record(z.unknown())).optional()
+		})
+		.nullable()
+})
+
 const ContentForPathResponseSchema = z.object({
 	data: z.object({
 		contentRoute: z.object({
-			listedPathData: z
-				.object({
-					content: z
-						.union([
-							z
-								.object({
-									__typename: z.literal("Exercise"),
-									id: z.string(),
-									slug: z.string(),
-									translatedTitle: z.string()
-								})
-								.strict(),
-							LearnableArticleSchema, // Articles can appear here when fetching their direct path
-							LearnableVideoSchema, // ADDED: Allow full video objects to be returned for a path
-							// ADD: Include schemas for container assessments
-							PathQuizSchema,
-							PathUnitTestSchema
-						])
-						.nullable(),
-					course: z
-						.object({
-							__typename: z.literal("Course"),
-							id: z.string(),
-							parent: z.object({
-								id: z.string()
-							}),
-							slug: z.string(),
-							translatedTitle: z.string(),
-							translatedDescription: z.string().optional(),
-							// Correctly nested under `course`
-							unitChildren: z.array(z.record(z.unknown())).optional(),
-							// ADD: masterableExercises for Course Challenges
-							masterableExercises: z
-								.array(
-									z.object({
-										__typename: z.literal("Exercise"),
-										id: z.string()
-									})
-								)
-								.nullable()
-								.optional(),
-							// Challenges might be either a string (course ID) or an object
-							courseChallenge: LearnableCourseChallengeSchema.nullable().optional(),
-							masteryChallenge: LearnableMasteryChallengeSchema.nullable().optional()
-						})
-						.nullable(),
-					lesson: z
-						.object({
-							__typename: z.literal("Lesson"),
-							id: z.string(),
-							translatedTitle: z.string().optional(),
-							curatedChildren: z.array(z.record(z.unknown())).optional()
-						})
-						.nullable()
-				})
-				.nullable()
+			listedPathData: PathDataSchema.nullable(),
+			unlistedPathData: PathDataSchema.nullable().optional()
 		})
 	})
 })
@@ -1242,6 +1244,273 @@ export class KhanAcademyClient {
 			throw result.error || errors.new("khan-api: unexpected null result from getContentForPath")
 		}
 		return result.data
+	}
+
+	/**
+	 * Resolves full video content from a VideoInfo stub.
+	 * Handles both standard video paths and lesson-container routes (e.g., video-extras/video-shorts).
+	 * Also handles unlisted routes where listedPathData is null.
+	 * @param video - The video stub with id, slug, and path.
+	 * @returns A promise that resolves with the full LearnableVideo data.
+	 */
+	async resolveVideoContent(video: { id: string; slug: string; path: string }): Promise<LearnableVideo> {
+		logger.info("resolving video content", { videoId: video.id, slug: video.slug, path: video.path })
+
+		// Step 1: Try ContentForPath - this works for most video routes
+		const pathResult = await errors.try(this.getContentForPath(video.path))
+		if (pathResult.error) {
+			logger.error("failed to fetch video path", { videoId: video.id, path: video.path, error: pathResult.error })
+			throw errors.wrap(pathResult.error, "video path fetch failed")
+		}
+
+		const contentRoute = pathResult.data.data.contentRoute
+		const pathData = contentRoute.listedPathData ?? contentRoute.unlistedPathData
+
+		if (!pathData) {
+			logger.error("video path returned no listedPathData or unlistedPathData", {
+				videoId: video.id,
+				path: video.path,
+				hasListed: !!contentRoute.listedPathData,
+				hasUnlisted: !!contentRoute.unlistedPathData
+			})
+			throw errors.new("video path returned no path data")
+		}
+
+		logger.debug("resolved path data", {
+			videoId: video.id,
+			usedUnlisted: !contentRoute.listedPathData && !!contentRoute.unlistedPathData,
+			hasContent: !!pathData.content,
+			contentType: pathData.content?.__typename
+		})
+
+		// Step 2: Check if content is directly a Video
+		if (pathData.content?.__typename === "Video") {
+			logger.info("resolved video via direct path content", {
+				videoId: video.id,
+				resolvedNodeId: pathData.content.id,
+				title: pathData.content.translatedTitle
+			})
+			return pathData.content
+		}
+
+		// Step 3: Fallback - content is null, check lesson.curatedChildren
+		if (!pathData.lesson?.curatedChildren) {
+			logger.error("video path has no content and no lesson children", {
+				videoId: video.id,
+				path: video.path,
+				hasLesson: !!pathData.lesson,
+				contentType: pathData.content?.__typename
+			})
+			throw errors.new("video path has no resolvable content or lesson children")
+		}
+
+		logger.info("video content null, searching lesson children for video", {
+			videoId: video.id,
+			childrenCount: pathData.lesson.curatedChildren.length
+		})
+
+		// Find the video child by slug match
+		const videoChild = pathData.lesson.curatedChildren.find((child) => {
+			const parsed = VideoStubSchema.safeParse(child)
+			return parsed.success && parsed.data.slug === video.slug
+		})
+
+		if (!videoChild) {
+			logger.error("video not found in lesson children", {
+				videoId: video.id,
+				slug: video.slug,
+				path: video.path,
+				childrenCount: pathData.lesson.curatedChildren.length
+			})
+			throw errors.new("video not found in lesson children")
+		}
+
+		const parsedChild = VideoStubSchema.safeParse(videoChild)
+		if (!parsedChild.success) {
+			logger.error("failed to parse video child", { videoId: video.id, error: parsedChild.error })
+			throw errors.wrap(parsedChild.error, "video child parse failed")
+		}
+
+		const childId = parsedChild.data.id
+		logger.info("found video in lesson children, hydrating by id", {
+			videoId: video.id,
+			childId,
+			slug: video.slug
+		})
+
+		// Step 4: Hydrate the child video by its node id
+		const learnableResult = await errors.try(this.getContentForLearnableContent(childId, "Video"))
+		if (learnableResult.error) {
+			logger.error("failed to fetch video by child id", { videoId: video.id, childId, error: learnableResult.error })
+			throw errors.wrap(learnableResult.error, "video child hydration failed")
+		}
+
+		const envelope = learnableResult.data
+		if (!envelope || !envelope.data || !envelope.data.learnableContent) {
+			logger.error("video child hydration returned null", {
+				videoId: video.id,
+				childId,
+				hasEnvelope: !!envelope,
+				hasData: !!envelope?.data,
+				hasLearnable: !!envelope?.data?.learnableContent
+			})
+			throw errors.new("video child hydration returned null learnable content")
+		}
+
+		logger.info("resolved video via lesson child", {
+			videoId: video.id,
+			childId,
+			resolvedNodeId: envelope.data.learnableContent.id,
+			title: envelope.data.learnableContent.translatedTitle
+		})
+
+		return envelope.data.learnableContent
+	}
+
+	/**
+	 * Resolves full article content from an ArticleInfo stub.
+	 * Handles both standard article paths and unlisted routes (beta articles).
+	 * Also handles reclassification when an article path returns a video.
+	 * @param article - The article stub with id, slug, and path.
+	 * @returns A promise that resolves with either Article or Video data.
+	 */
+	async resolveArticleContent(article: {
+		id: string
+		slug: string
+		path: string
+	}): Promise<{ type: "Article"; data: LearnableArticle } | { type: "Video"; data: LearnableVideo }> {
+		logger.info("resolving article content", { articleId: article.id, slug: article.slug, path: article.path })
+
+		// Step 1: Try ContentForPath - this works for most article routes
+		const pathResult = await errors.try(this.getContentForPath(article.path))
+		if (pathResult.error) {
+			logger.error("failed to fetch article path", {
+				articleId: article.id,
+				path: article.path,
+				error: pathResult.error
+			})
+			throw errors.wrap(pathResult.error, "article path fetch failed")
+		}
+
+		const contentRoute = pathResult.data.data.contentRoute
+		const pathData = contentRoute.listedPathData ?? contentRoute.unlistedPathData
+
+		if (!pathData) {
+			logger.error("article path returned no listedPathData or unlistedPathData", {
+				articleId: article.id,
+				path: article.path,
+				hasListed: !!contentRoute.listedPathData,
+				hasUnlisted: !!contentRoute.unlistedPathData
+			})
+			throw errors.new("article path returned no path data")
+		}
+
+		logger.debug("resolved path data", {
+			articleId: article.id,
+			usedUnlisted: !contentRoute.listedPathData && !!contentRoute.unlistedPathData,
+			hasContent: !!pathData.content,
+			contentType: pathData.content?.__typename
+		})
+
+		// Step 2: Check if content is directly an Article
+		if (pathData.content?.__typename === "Article") {
+			logger.info("resolved article via direct path content", {
+				articleId: article.id,
+				resolvedNodeId: pathData.content.id,
+				title: pathData.content.translatedTitle
+			})
+			return { type: "Article", data: pathData.content }
+		}
+
+		// Step 3: Handle reclassification - article path returned a video
+		if (pathData.content?.__typename === "Video") {
+			logger.warn("re-classifying content: article path returned a video", {
+				articleId: article.id,
+				path: article.path,
+				videoId: pathData.content.id
+			})
+			return { type: "Video", data: pathData.content }
+		}
+
+		// Step 4: Fallback - content is null, check lesson.curatedChildren
+		if (!pathData.lesson?.curatedChildren) {
+			logger.error("article path has no content and no lesson children", {
+				articleId: article.id,
+				path: article.path,
+				hasLesson: !!pathData.lesson,
+				contentType: pathData.content?.__typename
+			})
+			throw errors.new("article path has no resolvable content or lesson children")
+		}
+
+		logger.info("article content null, searching lesson children for article", {
+			articleId: article.id,
+			childrenCount: pathData.lesson.curatedChildren.length
+		})
+
+		// Find the article child by slug match
+		const articleChild = pathData.lesson.curatedChildren.find((child) => {
+			const parsed = ArticleStubSchema.safeParse(child)
+			return parsed.success && parsed.data.slug === article.slug
+		})
+
+		if (!articleChild) {
+			logger.error("article not found in lesson children", {
+				articleId: article.id,
+				slug: article.slug,
+				path: article.path,
+				childrenCount: pathData.lesson.curatedChildren.length
+			})
+			throw errors.new("article not found in lesson children")
+		}
+
+		const parsedChild = ArticleStubSchema.safeParse(articleChild)
+		if (!parsedChild.success) {
+			logger.error("failed to parse article child", { articleId: article.id, error: parsedChild.error })
+			throw errors.wrap(parsedChild.error, "article child parse failed")
+		}
+
+		// For articles, we can use the path directly since we have it
+		// Reconstruct the article path from the canonicalUrl or compute it
+		const childPath = parsedChild.data.canonicalUrl || `${article.path}`
+		logger.info("found article in lesson children, re-fetching by path", {
+			articleId: article.id,
+			childId: parsedChild.data.id,
+			slug: article.slug,
+			childPath
+		})
+
+		// Step 5: Re-fetch using the child's canonical path
+		const childPathResult = await errors.try(this.getContentForPath(childPath))
+		if (childPathResult.error) {
+			logger.error("failed to fetch article child by path", {
+				articleId: article.id,
+				childPath,
+				error: childPathResult.error
+			})
+			throw errors.wrap(childPathResult.error, "article child path fetch failed")
+		}
+
+		const childContentRoute = childPathResult.data.data.contentRoute
+		const childPathData = childContentRoute.listedPathData ?? childContentRoute.unlistedPathData
+
+		if (!childPathData?.content || childPathData.content.__typename !== "Article") {
+			logger.error("article child path did not return article content", {
+				articleId: article.id,
+				childPath,
+				contentType: childPathData?.content?.__typename
+			})
+			throw errors.new("article child path did not return article content")
+		}
+
+		logger.info("resolved article via lesson child", {
+			articleId: article.id,
+			childId: parsedChild.data.id,
+			resolvedNodeId: childPathData.content.id,
+			title: childPathData.content.translatedTitle
+		})
+
+		return { type: "Article", data: childPathData.content }
 	}
 
 	/**

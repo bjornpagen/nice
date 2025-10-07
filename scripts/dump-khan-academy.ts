@@ -216,40 +216,7 @@ async function fetchQuestionsForExercise(
 // REMOVED: The entire fetchQuestionsForAssessment function is deleted. It is incorrect.
 
 async function fetchVideoDetails(apiClient: KhanAcademyClient, video: VideoInfo): Promise<LearnableVideo> {
-	logger.info("fetching details for video", {
-		videoId: video.id,
-		videoSlug: video.slug,
-		videoTitle: video.title,
-		path: video.path
-	})
-
-	const detailsResult = await errors.try(apiClient.getContentForPath(video.path))
-	if (detailsResult.error) {
-		logger.error("failed to fetch video details", { videoId: video.id, path: video.path, error: detailsResult.error })
-		throw errors.wrap(detailsResult.error, "video details fetch failed")
-	}
-
-	const content = detailsResult.data.data.contentRoute.listedPathData?.content
-
-	if (content?.__typename !== "Video") {
-		logger.error("video path returned unexpected content type", {
-			videoId: video.id,
-			path: video.path,
-			contentType: content?.__typename,
-			hasContent: !!content
-		})
-		throw errors.new(
-			`video fetch failed for ${video.id}: expected video content but found ${content?.__typename || "null"}`
-		)
-	}
-
-	logger.info("completed fetching details for video", {
-		videoId: video.id,
-		resolvedNodeId: content.id,
-		title: content.translatedTitle
-	})
-
-	return content
+	return apiClient.resolveVideoContent(video)
 }
 
 // MODIFIED: Return type is now a flat data object.
@@ -259,47 +226,7 @@ async function fetchArticleOrVideoDetails(
 	apiClient: KhanAcademyClient,
 	article: ArticleInfo
 ): Promise<FetchedArticleResult> {
-	logger.info("fetching details for article", {
-		articleId: article.id,
-		articleSlug: article.slug,
-		path: article.path
-	})
-
-	const detailsResult = await errors.try(apiClient.getContentForPath(article.path))
-	if (detailsResult.error) {
-		logger.error("failed to fetch article details", { articleId: article.id, error: detailsResult.error })
-		throw errors.wrap(detailsResult.error, "article details fetch failed")
-	}
-
-	const content = detailsResult.data.data.contentRoute.listedPathData?.content
-
-	if (content?.__typename === "Article") {
-		logger.info("completed fetching details for article", {
-			articleId: article.id,
-			title: content.translatedTitle
-		})
-		return { type: "Article", data: content }
-	}
-
-	if (content?.__typename === "Video") {
-		logger.warn("re-classifying content: article path returned a video", {
-			articleId: article.id,
-			path: article.path,
-			videoId: content.id
-		})
-		return { type: "Video", data: content }
-	}
-
-	// Fail loudly on any unexpected content type or missing content
-	logger.error("article fetch failed: unexpected content type or missing content", {
-		articleId: article.id,
-		path: article.path,
-		contentType: content?.__typename,
-		hasContent: !!content
-	})
-	throw errors.new(
-		`article fetch failed for ${article.id}: expected article content but found ${content?.__typename || "null"}`
-	)
+	return apiClient.resolveArticleContent(article)
 }
 
 // --- MAIN SCRIPT LOGIC ---
