@@ -1,7 +1,10 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import * as crypto from "node:crypto"
+import { eq, inArray, sql } from "drizzle-orm"
 import { env } from "@/env"
+import { db } from "@/db"
+import * as schema from "@/db/schemas"
 import type { ParsedCoverage, ParsedUnit, ParsedLesson, ParsedContent } from "@/lib/parsers/coverage-markdown"
 import { generateSlug } from "@/lib/parsers/coverage-markdown"
 import { formatResourceTitleForDisplay } from "@/lib/utils/format-resource-title"
@@ -95,11 +98,18 @@ const ACADEMIC_SESSION_SOURCED_ID = "Academic_Year_2025-2026"
 
 // Hardcoded XP values
 const EXERCISE_XP = 2
-const VIDEO_DEFAULT_XP = 5 // Default for videos when we can't calculate duration
 
 // Helper to generate IDs
 function generateId(): string {
 	return `x${crypto.randomBytes(8).toString("hex")}`
+}
+
+// Helper to generate deterministic ID for YouTube videos
+function generateYouTubeVideoId(youtubeId: string): string {
+	// Create a deterministic hash from the YouTube ID
+	const hash = crypto.createHash("sha256").update(youtubeId).digest("hex")
+	// Take first 16 characters and prefix with 'x'
+	return `x${hash.substring(0, 16)}`
 }
 
 // Helper to add Nice Academy prefix
@@ -232,6 +242,81 @@ export async function generateSupplementaryPayload(
 	}
 	const appDomain = env.NEXT_PUBLIC_APP_DOMAIN.replace(/\/$/, "")
 	
+	// Collect all content IDs by type for DB lookups
+	const videoIds: string[] = []
+	const exerciseIds: string[] = []
+	
+	for (const unit of coverage.units) {
+		for (const lesson of unit.lessons) {
+			for (const content of lesson.contents) {
+				if (content.type === "Video" && content.id) {
+					videoIds.push(content.id)
+				} else if (content.type === "Exercise" && content.id) {
+					exerciseIds.push(content.id)
+				}
+			}
+		}
+	}
+	
+	// Fetch canonical data from DB
+	const videoMap = new Map<string, { 
+		id: string
+		slug: string
+		title: string
+		description: string | null
+		youtubeId: string | null
+		duration: number | null
+	}>()
+	
+	const exerciseMap = new Map<string, {
+		id: string
+		slug: string
+		title: string
+		description: string | null
+	}>()
+	
+	if (videoIds.length > 0) {
+		const videosResult = await errors.try(
+			db.select({
+				id: schema.niceVideos.id,
+				slug: schema.niceVideos.slug,
+				title: schema.niceVideos.title,
+				description: schema.niceVideos.description,
+				youtubeId: schema.niceVideos.youtubeId,
+				duration: schema.niceVideos.duration
+			})
+			.from(schema.niceVideos)
+			.where(inArray(schema.niceVideos.id, videoIds))
+		)
+		if (videosResult.error) {
+			logger.error("failed to fetch videos from DB", { error: videosResult.error })
+			throw errors.wrap(videosResult.error, "fetch videos")
+		}
+		for (const video of videosResult.data) {
+			videoMap.set(video.id, video)
+		}
+	}
+	
+	if (exerciseIds.length > 0) {
+		const exercisesResult = await errors.try(
+			db.select({
+				id: schema.niceExercises.id,
+				slug: schema.niceExercises.slug,
+				title: schema.niceExercises.title,
+				description: schema.niceExercises.description
+			})
+			.from(schema.niceExercises)
+			.where(inArray(schema.niceExercises.id, exerciseIds))
+		)
+		if (exercisesResult.error) {
+			logger.error("failed to fetch exercises from DB", { error: exercisesResult.error })
+			throw errors.wrap(exercisesResult.error, "fetch exercises")
+		}
+		for (const exercise of exercisesResult.data) {
+			exerciseMap.set(exercise.id, exercise)
+		}
+	}
+	
 	// Generate course ID
 	const courseId = generateId()
 	const coursePath = `/math/${courseSlug}`
@@ -338,14 +423,61 @@ export async function generateSupplementaryPayload(
 			for (let contentIndex = 0; contentIndex < lesson.contents.length; contentIndex++) {
 				const content = lesson.contents[contentIndex]!
 				
-				// Skip YT Videos (external YouTube links)
+				// Determine the resource ID based on content type
+				let contentId: string
+				let contentSlug: string
+				let contentTitle: string
+				let contentDescription: string | undefined
+				
 				if (content.type === "YT Video") {
-					logger.debug("skipping youtube video", { link: content.link })
+					// For YT Videos, generate a deterministic ID from YouTube ID
+					if (!content.id) {
+						logger.error("YT Video missing YouTube ID", { title: content.title })
+						throw errors.new("YT Video missing YouTube ID")
+					}
+					contentId = generateYouTubeVideoId(content.id)
+					contentSlug = content.slug || content.id // Use YouTube ID as slug if not provided
+					contentTitle = content.title
+					contentDescription = content.description
+				} else if (content.type === "Video") {
+					// For regular videos, use DB data if available
+					const dbVideo = videoMap.get(content.id)
+					if (dbVideo) {
+						contentId = dbVideo.id
+						contentSlug = dbVideo.slug
+						contentTitle = dbVideo.title
+						contentDescription = dbVideo.description || undefined
+					} else {
+						// Fallback to coverage data if not in DB (shouldn't happen normally)
+						logger.warn("Video not found in DB, using coverage data", { id: content.id })
+						contentId = content.id
+						contentSlug = content.slug
+						contentTitle = content.title
+						contentDescription = undefined
+					}
+				} else if (content.type === "Exercise") {
+					// For exercises, use DB data if available
+					const dbExercise = exerciseMap.get(content.id)
+					if (dbExercise) {
+						contentId = dbExercise.id
+						contentSlug = dbExercise.slug
+						contentTitle = dbExercise.title
+						contentDescription = dbExercise.description || undefined
+					} else {
+						// Fallback to coverage data if not in DB (shouldn't happen normally)
+						logger.warn("Exercise not found in DB, using coverage data", { id: content.id })
+						contentId = content.id
+						contentSlug = content.slug
+						contentTitle = content.title
+						contentDescription = undefined
+					}
+				} else {
+					// Should never happen with current types
+					logger.error("Unknown content type", { type: content.type })
 					continue
 				}
 				
-				// Use the actual Khan ID and slug from the coverage data
-				const contentSourcedId = `nice_${content.id}`
+				const contentSourcedId = `nice_${contentId}`
 				
 				// Skip if we already have this resource
 				if (!resourceSet.has(contentSourcedId)) {
@@ -353,22 +485,64 @@ export async function generateSupplementaryPayload(
 					const caseId = await fetchCaseIdForStandard(content.standard)
 					let xp = 0
 					let metadata: Record<string, unknown> = {
-						khanId: content.id,
-						khanSlug: content.slug,
-						khanTitle: content.title,
-						khanDescription: `${content.type} for ${lesson.title}`,
+						khanId: contentId,
+						khanSlug: contentSlug,
+						khanTitle: contentTitle,
+						khanDescription: contentDescription || `${content.type} for ${lesson.title}`,
 						path: lessonPath
 					}
 					
-					if (content.type === "Video") {
-						xp = VIDEO_DEFAULT_XP
+					if (content.type === "Video" || content.type === "YT Video") {
+						// Compute XP from duration
+						let duration: number | undefined
+						
+						if (content.type === "Video") {
+							const dbVideo = videoMap.get(content.id)
+							if (dbVideo?.duration) {
+								duration = dbVideo.duration
+							}
+						} else if (content.type === "YT Video") {
+							duration = content.duration
+						}
+						
+						if (typeof duration !== "number" || duration <= 0) {
+							logger.error("CRITICAL: Missing or invalid duration for video", { 
+								contentId,
+								contentSlug,
+								contentType: content.type,
+								duration
+							})
+							throw errors.new("video metadata: duration is required for interactive video resource")
+						}
+						
+						xp = Math.max(1, Math.ceil(duration / 60))
+						
+						// Get YouTube ID
+						let youtubeId: string | undefined
+						if (content.type === "Video") {
+							const dbVideo = videoMap.get(content.id)
+							youtubeId = dbVideo?.youtubeId || undefined
+						} else if (content.type === "YT Video") {
+							youtubeId = content.id // For YT Videos, the ID is the YouTube ID
+						}
+						
+						if (!youtubeId) {
+							logger.error("CRITICAL: Missing youtubeId for video", { 
+								contentId,
+								contentSlug,
+								contentType: content.type
+							})
+							throw errors.new("video metadata: youtubeId is required for interactive video resource")
+						}
+						
 						metadata = {
 							...metadata,
 							type: "interactive",
 							toolProvider: "Nice Academy",
 							khanActivityType: "Video",
-							launchUrl: `${appDomain}${lessonPath}/v/${content.slug}`,
-							url: `${appDomain}${lessonPath}/v/${content.slug}`,
+							launchUrl: `${appDomain}${lessonPath}/v/${contentSlug}`,
+							url: `${appDomain}${lessonPath}/v/${contentSlug}`,
+							khanYoutubeId: youtubeId,
 							xp
 						}
 						// Collect this video as a passive resource for the next exercise
@@ -383,8 +557,8 @@ export async function generateSupplementaryPayload(
 							type: "interactive",
 							toolProvider: "Nice Academy",
 							khanActivityType: "Exercise",
-							launchUrl: `${appDomain}${lessonPath}/e/${content.slug}`,
-							url: `${appDomain}${lessonPath}/e/${content.slug}`,
+							launchUrl: `${appDomain}${lessonPath}/e/${contentSlug}`,
+							url: `${appDomain}${lessonPath}/e/${contentSlug}`,
 							xp,
 							passiveResources: null,
 							nice_passiveResources: [...passiveResourcesForNextExercise] // Copy current passive resources
@@ -412,8 +586,8 @@ export async function generateSupplementaryPayload(
 					payload.resources.push({
 						sourcedId: contentSourcedId,
 						status: "active",
-						title: content.title,
-						vendorResourceId: `nice-academy-${content.id}`,
+						title: contentTitle,
+						vendorResourceId: `nice-academy-${contentId}`,
 						vendorId: "superbuilders",
 						applicationId: "nice",
 						roles: ["primary"],
@@ -422,14 +596,14 @@ export async function generateSupplementaryPayload(
 					})
 					resourceSet.add(contentSourcedId)
 					
-					// Add assessment line item for videos
-					if (content.type === "Video") {
+					// Add assessment line item for videos (including YT Videos)
+					if (content.type === "Video" || content.type === "YT Video") {
 						payload.assessmentLineItems.push({
 							sourcedId: `${contentSourcedId}_ali`,
 							status: "active",
-							title: `Progress for: ${content.title}`,
+							title: `Progress for: ${contentTitle}`,
 							componentResource: {
-								sourcedId: `nice_${lessonId}_${content.id}`
+								sourcedId: `nice_${lessonId}_${contentId}`
 							},
 							course: {
 								sourcedId: `nice_${courseId}`
@@ -446,9 +620,9 @@ export async function generateSupplementaryPayload(
 						payload.assessmentLineItems.push({
 							sourcedId: `${contentSourcedId}_ali`,
 							status: "active",
-							title: content.title,
+							title: contentTitle,
 							componentResource: {
-								sourcedId: `nice_${lessonId}_${content.id}`
+								sourcedId: `nice_${lessonId}_${contentId}`
 							},
 							course: {
 								sourcedId: `nice_${courseId}`
@@ -462,15 +636,15 @@ export async function generateSupplementaryPayload(
 				}
 				
 				// Add component resource link
-				let componentTitle = content.title
-				if (content.type === "Video") {
-					componentTitle = formatResourceTitleForDisplay(content.title, "Video")
+				let componentTitle = contentTitle
+				if (content.type === "Video" || content.type === "YT Video") {
+					componentTitle = formatResourceTitleForDisplay(contentTitle, "Video")
 				} else if (content.type === "Exercise") {
-					componentTitle = formatResourceTitleForDisplay(content.title, "Exercise")
+					componentTitle = formatResourceTitleForDisplay(contentTitle, "Exercise")
 				}
 				
 				payload.componentResources.push({
-					sourcedId: `nice_${lessonId}_${content.id}`,
+					sourcedId: `nice_${lessonId}_${contentId}`,
 					status: "active",
 					title: componentTitle,
 					courseComponent: { sourcedId: `nice_${lessonId}`, type: "courseComponent" },

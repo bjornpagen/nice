@@ -65,7 +65,7 @@ async function main(): Promise<void> {
 	logger.info("starting supplementary course generation", { grade: gradeNumber })
 	
 	// Check if coverage file exists
-	const markdownPath = path.join(process.cwd(), config.markdownFile)
+	const markdownPath = path.join(process.cwd(), "docs", config.markdownFile)
 	if (!fs.existsSync(markdownPath)) {
 		if (gradeNumber === "4" || gradeNumber === "5") {
 			logger.warn("coverage file not available yet", { 

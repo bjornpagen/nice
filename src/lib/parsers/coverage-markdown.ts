@@ -9,6 +9,8 @@ export interface ParsedContent {
 	title: string
 	standard: string
 	link?: string
+	description?: string
+	duration?: number // Duration in seconds for YT Videos
 }
 
 export interface ParsedLesson {
@@ -100,20 +102,55 @@ export function parseCoverageMarkdown(markdown: string, grade: string): ParsedCo
 				const contentType = contentMatch[1] as "Video" | "Exercise" | "YT Video"
 				const contentTitle = contentMatch[2]!.trim()
 				
-				// For YT Videos, just store basic info
+				// For YT Videos, parse all metadata
 				if (contentType === "YT Video") {
-					// Look for link on next line
-					const nextLine = lines[i + 1]
-					const linkMatch = nextLine?.match(/Link: (.+)$/)
-					currentLesson.contents.push({
+					const content: ParsedContent = {
 						type: contentType,
-						id: "", // YT videos don't have IDs in our system
-						slug: "", // YT videos don't have slugs
+						id: "", // Will be set from parsed metadata
+						slug: "", // Will be generated from YouTube ID
 						title: contentTitle,
-						standard: currentStandard,
-						link: linkMatch ? linkMatch[1]!.trim() : undefined
-					})
-					if (linkMatch) i++ // Skip the link line
+						standard: ""
+					}
+					
+					// Parse the metadata lines that follow
+					for (let j = i + 1; j < lines.length && j < i + 6; j++) {
+						const metaLine = lines[j]
+						if (!metaLine || !metaLine.startsWith("  ")) break
+						
+						const linkMatch = metaLine.match(/- Link: (.+)$/)
+						if (linkMatch) {
+							content.link = linkMatch[1]!.trim()
+						}
+						
+						const idMatch = metaLine.match(/- id: (.+)$/)
+						if (idMatch) {
+							content.id = idMatch[1]!.trim() // This is the YouTube ID
+							content.slug = idMatch[1]!.trim() // Use YouTube ID as slug
+						}
+						
+						const descriptionMatch = metaLine.match(/- description: (.+)$/)
+						if (descriptionMatch) {
+							content.description = descriptionMatch[1]!.trim()
+						}
+						
+						const standardMatch = metaLine.match(/- Standard: (.+)$/)
+						if (standardMatch) {
+							content.standard = standardMatch[1]!.trim()
+							currentStandard = content.standard // Store for subsequent items
+						}
+						
+						const durationMatch = metaLine.match(/- Duration: (.+)$/)
+						if (durationMatch) {
+							content.duration = Number.parseInt(durationMatch[1]!.trim(), 10)
+						}
+					}
+					
+					// Only add if we have the YouTube ID
+					if (content.id) {
+						currentLesson.contents.push(content)
+					} else {
+						logger.warn("skipping YT Video without id", { title: contentTitle })
+					}
 					continue
 				}
 				

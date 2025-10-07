@@ -158,8 +158,12 @@ Path: /math/cc-sixth-grade-math/cc-6th-equations-and-inequalities/cc-6th-super-y
   - ID: xc4f08a9ae34f2e87
   - Slug: model-with-one-step-equations-and-solve
   - Standard: 6.EE.B.6
-- [YT Video] 
+- [YT Video] Modeling Equivalent Expressions
   - Link: https://youtu.be/ZLYeAFaSocI
+  - id: ZLYeAFaSocI
+  - description: Learn to determine if two expressions are equivalent using concrete models, pictorial models, and algebraic representations.
+  - Standard: TEKS 6.7C
+  - Duration: 299
 - [Exercise] Model expressions (TX)
   - ID: xb1d3daedaa595e3b
   - Slug: model-expressions
