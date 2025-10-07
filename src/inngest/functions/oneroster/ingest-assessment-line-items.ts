@@ -79,7 +79,7 @@ export const ingestAssessmentLineItems = inngest.createFunction(
 			}
 			await step.run(stepName, async () => {
 				const promises = items.map(async (item) => {
-					const result = await errors.try(oneroster.putAssessmentLineItem(item.sourcedId, { assessmentLineItem: item }))
+					const result = await errors.try(oneroster.patchAssessmentLineItem(item.sourcedId, { assessmentLineItem: item }))
 					if (result.error) {
 						logger.error("failed to upsert assessment line item", { sourcedId: item.sourcedId, error: result.error })
 						throw result.error

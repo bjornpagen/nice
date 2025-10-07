@@ -1568,6 +1568,38 @@ export class Client {
 	}
 
 	/**
+	 * Partially updates an Assessment Line Item. The sourcedId for the record is supplied
+	 * by the requesting system, making this operation idempotent.
+	 * @param {string} sourcedId - The unique identifier for the assessment line item.
+	 * @param {object} payload - The assessment line item data.
+	 * @returns {Promise<AssessmentLineItem>} The updated assessment line item object.
+	 */
+	async patchAssessmentLineItem(
+		sourcedId: string,
+		payload: { assessmentLineItem: CreateAssessmentLineItemInput }
+	): Promise<void> {
+		logger.info("oneroster: patching assessment line item", { sourcedId })
+
+		const validation = z.object({ assessmentLineItem: CreateAssessmentLineItemInputSchema }).safeParse(payload)
+		if (!validation.success) {
+			logger.error("invalid input for patchAssessmentLineItem", { error: validation.error })
+			throw errors.wrap(validation.error, "patchAssessmentLineItem input validation")
+		}
+
+		await this.#request(
+			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+			{
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload)
+			},
+			z.unknown() // PATCH may return null/204 No Content
+		)
+
+		logger.info("oneroster: successfully patched assessment line item", { sourcedId })
+	}
+
+	/**
 	 * Retrieves a specific Assessment Line Item by its identifier.
 	 * @param {string} sourcedId - The unique identifier of the assessment line item.
 	 * @returns {Promise<AssessmentLineItem | null>} The assessment line item object, or null if not found.
