@@ -57,19 +57,12 @@ export const ingestResourceOne = inngest.createFunction(
 			}
 		}
 
-		if (!resource) {
-			logger.error("resource not found in payload file", { sourcedId, file: filePath })
-			throw errors.new(`resource ${sourcedId} not found in ${filePath}`)
-		}
+	if (!resource) {
+		logger.error("resource not found in payload file", { sourcedId, file: filePath })
+		throw errors.new(`resource ${sourcedId} not found in ${filePath}`)
+	}
 
-		// Step 1: Check if resource already exists (skip if it does)
-		const existsResult = await errors.try(oneroster.getResource(sourcedId))
-		if (!existsResult.error && existsResult.data) {
-			logger.info("resource already exists, skipping upload", { sourcedId })
-			return { sourcedId, status: "already-exists" }
-		}
-
-		// Step 2: Try PUT for upsert behavior (backwards compatibility)
+	// Try PUT for upsert behavior (backwards compatibility)
 		const updateResult = await errors.try(oneroster.updateResource(sourcedId, resource))
 		if (updateResult.error) {
 			// Check if it's a 404 (not found) or 500 (server error)

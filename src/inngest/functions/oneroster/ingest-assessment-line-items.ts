@@ -77,17 +77,17 @@ export const ingestAssessmentLineItems = inngest.createFunction(
 				logger.info("no items to process for step", { stepName })
 				return
 			}
-			await step.run(stepName, async () => {
-				const promises = items.map(async (item) => {
-					const result = await errors.try(oneroster.patchAssessmentLineItem(item.sourcedId, { assessmentLineItem: item }))
-					if (result.error) {
-						logger.error("failed to upsert assessment line item", { sourcedId: item.sourcedId, error: result.error })
-						throw result.error
-					}
-					return { sourcedId: item.sourcedId, success: true }
-				})
-				return Promise.all(promises)
+		await step.run(stepName, async () => {
+			const promises = items.map(async (item) => {
+				const result = await errors.try(oneroster.putAssessmentLineItem(item.sourcedId, { assessmentLineItem: item }))
+				if (result.error) {
+					logger.error("failed to upsert assessment line item", { sourcedId: item.sourcedId, error: result.error })
+					throw result.error
+				}
+				return { sourcedId: item.sourcedId, success: true }
 			})
+			return Promise.all(promises)
+		})
 			logger.info("successfully ingested batch", { step: stepName, count: items.length })
 		}
 
