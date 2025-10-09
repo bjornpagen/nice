@@ -325,6 +325,9 @@ const events = {
 	"migration/hardcoded.science.qti.backup": {
 		data: z.object({}).describe("Fetches the exact QTI state from the backend and saves it to the data/ directory.")
 	},
+	"migration/hardcoded.science.assessmentLineItem.upload": {
+		data: z.object({})
+	},
 
 	// ✅ ADDED: New, explicitly namespaced events for the HISTORY course pipeline
 	"migration/hardcoded.history.items.perseus-to-qti": {

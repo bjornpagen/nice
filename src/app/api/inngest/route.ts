@@ -27,6 +27,7 @@ import { orchestrateHardcodedScienceQtiBackup } from "@/inngest/functions/migrat
 import { orchestrateHardcodedScienceQtiGenerateUndifferentiated } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-qti-generate-undifferentiated"
 import { orchestrateHardcodedScienceQtiUpload } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-qti-upload"
 import { orchestrateHardcodedScienceStimulusMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-stimulus-migration"
+import { orchestrateHardcodedScienceAssessmentLineItemUpload } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-assessmentlineitem-upload"
 // Import OneRoster workers
 import { generatePayloadForCourse as generateOnerosterPayloadForCourse } from "@/inngest/functions/oneroster/generate-payload-for-course"
 import { ingestAllCourses } from "@/inngest/functions/oneroster/ingest-all-courses"
@@ -99,6 +100,7 @@ export const { GET, POST, PUT } = serve({
 		orchestrateHardcodedScienceQtiUpload,
 		orchestrateHardcodedScienceQtiBackup,
 		orchestrateHardcodedScienceQAReview,
+		orchestrateHardcodedScienceAssessmentLineItemUpload,
 		orchestrateHardcodedMathQAReview,
 		orchestrateHardcodedHistoryQAReview,
 		// History orchestrators
