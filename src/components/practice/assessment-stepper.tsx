@@ -1073,8 +1073,7 @@ export function AssessmentStepper({
 	}
 
 	const handleTryAgain = () => {
-		setSelectedResponses({})
-		setExpectedResponses([])
+		// Mirror debug/QTI behavior: preserve current responses so users only fix incorrect parts
 		setIsAnswerChecked(false)
 		setShowFeedback(false)
 		// Note: We keep attemptCount as is, since we're continuing with the same question
