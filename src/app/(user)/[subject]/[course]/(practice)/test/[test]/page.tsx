@@ -10,6 +10,7 @@ import type { Course as CourseV2 } from "@/lib/types/sidebar"
 import { normalizeParams } from "@/lib/utils"
 import { ChallengeLayout } from "./components/challenge-layout"
 import { Content } from "./components/content"
+import { getAssessmentItem } from "@/lib/data/fetchers/qti"
 
 export default async function CourseChallengePage({
 	params
@@ -25,6 +26,10 @@ export default async function CourseChallengePage({
 	)
 	const testDataPromise: Promise<CourseChallengePageData> = normalizedParamsPromise.then(
 		fetchCourseChallengePage_TestData
+	)
+
+	const expectedIdentifiersPromisesPromise: Promise<Promise<string[]>[]> = testDataPromise.then((data) =>
+		data.questions.map((q) => getAssessmentItem(q.id).then((item) => (item.responseDeclarations ?? []).map((d) => d.identifier)))
 	)
 
 	// Transform CourseChallengeLayoutData to CourseV2 format for the practice sidebar
@@ -164,7 +169,7 @@ export default async function CourseChallengePage({
 	return (
 		<ChallengeLayout coursePromise={coursePromise} progressPromise={progressPromise}>
 			<React.Suspense>
-				<Content testDataPromise={testDataPromise} />
+				<Content testDataPromise={testDataPromise} expectedIdentifiersPromisesPromise={expectedIdentifiersPromisesPromise} />
 			</React.Suspense>
 		</ChallengeLayout>
 	)

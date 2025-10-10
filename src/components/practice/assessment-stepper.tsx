@@ -201,6 +201,8 @@ interface AssessmentStepperProps {
 	layoutData?: LessonLayoutData
 	// Callback invoked when user starts a new interactive attempt (quiz/test retake)
 	onRetake?: (newAttemptNumber: number) => void
+	// Optional authoritative expected identifiers list for each question
+	expectedIdentifiersPromises?: Promise<string[]>[]
 }
 
 export function AssessmentStepper({
@@ -214,7 +216,8 @@ export function AssessmentStepper({
 	assessmentPath,
 	unitData,
 	expectedXp, // Will be used when caliper action is updated
-	onRetake
+	onRetake,
+	expectedIdentifiersPromises
 }: AssessmentStepperProps) {
 	const { user } = useUser()
 	const router = useRouter()
@@ -260,7 +263,7 @@ export function AssessmentStepper({
 		if (showSummary && !hasAnnouncedSummaryRef.current) {
 			hasAnnouncedSummaryRef.current = true
 			const audio = new Audio("/summary-sound.mp3")
-			audio.play().catch(() => {})
+			audio.play().catch(() => { })
 		}
 	}, [showSummary])
 
@@ -292,6 +295,18 @@ export function AssessmentStepper({
 		setIsAnswerChecked(false)
 		setAttemptCount(0)
 	}, [visibleQuestionIndex])
+
+	// Read authoritative expected identifiers for the current question when provided
+	const serverExpectedForCurrent =
+		expectedIdentifiersPromises && expectedIdentifiersPromises[visibleQuestionIndex]
+			? React.use(expectedIdentifiersPromises[visibleQuestionIndex]!)
+			: undefined
+
+	React.useEffect(() => {
+		if (serverExpectedForCurrent && Array.isArray(serverExpectedForCurrent) && serverExpectedForCurrent.length > 0) {
+			setExpectedResponses(serverExpectedForCurrent)
+		}
+	}, [serverExpectedForCurrent])
 
 	// Admin-only: practice header lock toggle (far right)
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
@@ -411,16 +426,16 @@ export function AssessmentStepper({
 					totalQuestions: finalSummaryData.totalQuestions,
 					xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
 						? {
-								penaltyXp:
-									typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
-										? finalSummaryData.xpPenaltyInfo.penaltyXp
-										: 0,
-								reason:
-									typeof finalSummaryData.xpPenaltyInfo.reason === "string"
-										? finalSummaryData.xpPenaltyInfo.reason
-										: "Unknown penalty reason",
-								avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
-							}
+							penaltyXp:
+								typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
+									? finalSummaryData.xpPenaltyInfo.penaltyXp
+									: 0,
+							reason:
+								typeof finalSummaryData.xpPenaltyInfo.reason === "string"
+									? finalSummaryData.xpPenaltyInfo.reason
+									: "Unknown penalty reason",
+							avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+						}
 						: undefined
 				})
 				setShowSummary(true)
@@ -810,10 +825,16 @@ export function AssessmentStepper({
 		) {
 			// Multi-input (fill-in-the-blank): expected fields are the object's keys
 			const keys = Object.keys(response)
-			setExpectedResponses(keys)
+			setExpectedResponses((prev) => {
+				const base = serverExpectedForCurrent ?? prev
+				return Array.from(new Set([...(base ?? []), ...keys]))
+			})
 		} else {
 			// Single input or multi-select: the single identifier is the expectation
-			setExpectedResponses([responseIdentifier])
+			setExpectedResponses((prev) => {
+				const base = serverExpectedForCurrent ?? prev
+				return responseIdentifier ? Array.from(new Set([...(base ?? []), responseIdentifier])) : base ?? []
+			})
 		}
 
 		// Update the current value for this specific input
@@ -992,16 +1013,16 @@ export function AssessmentStepper({
 				totalQuestions: finalSummaryData.totalQuestions,
 				xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
 					? {
-							penaltyXp:
-								typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
-									? finalSummaryData.xpPenaltyInfo.penaltyXp
-									: 0,
-							reason:
-								typeof finalSummaryData.xpPenaltyInfo.reason === "string"
-									? finalSummaryData.xpPenaltyInfo.reason
-									: "Unknown penalty reason",
-							avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
-						}
+						penaltyXp:
+							typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
+								? finalSummaryData.xpPenaltyInfo.penaltyXp
+								: 0,
+						reason:
+							typeof finalSummaryData.xpPenaltyInfo.reason === "string"
+								? finalSummaryData.xpPenaltyInfo.reason
+								: "Unknown penalty reason",
+						avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+					}
 					: undefined
 			})
 
@@ -1106,16 +1127,16 @@ export function AssessmentStepper({
 				totalQuestions: finalSummaryData.totalQuestions,
 				xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
 					? {
-							penaltyXp:
-								typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
-									? finalSummaryData.xpPenaltyInfo.penaltyXp
-									: 0,
-							reason:
-								typeof finalSummaryData.xpPenaltyInfo.reason === "string"
-									? finalSummaryData.xpPenaltyInfo.reason
-									: "Unknown penalty reason",
-							avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
-						}
+						penaltyXp:
+							typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
+								? finalSummaryData.xpPenaltyInfo.penaltyXp
+								: 0,
+						reason:
+							typeof finalSummaryData.xpPenaltyInfo.reason === "string"
+								? finalSummaryData.xpPenaltyInfo.reason
+								: "Unknown penalty reason",
+						avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+					}
 					: undefined
 			})
 			const score = finalSummaryData.score
@@ -1223,16 +1244,16 @@ export function AssessmentStepper({
 					totalQuestions: finalSummaryData.totalQuestions,
 					xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
 						? {
-								penaltyXp:
-									typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
-										? finalSummaryData.xpPenaltyInfo.penaltyXp
-										: 0,
-								reason:
-									typeof finalSummaryData.xpPenaltyInfo.reason === "string"
-										? finalSummaryData.xpPenaltyInfo.reason
-										: "Unknown penalty reason",
-								avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
-							}
+							penaltyXp:
+								typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
+									? finalSummaryData.xpPenaltyInfo.penaltyXp
+									: 0,
+							reason:
+								typeof finalSummaryData.xpPenaltyInfo.reason === "string"
+									? finalSummaryData.xpPenaltyInfo.reason
+									: "Unknown penalty reason",
+							avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+						}
 						: undefined
 				})
 				const score = finalSummaryData.score

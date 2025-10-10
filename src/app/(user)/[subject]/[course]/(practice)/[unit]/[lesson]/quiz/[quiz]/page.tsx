@@ -4,6 +4,7 @@ import { fetchQuizPageData } from "@/lib/data/assessment"
 import type { QuizPageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
 import { Content } from "./components/content"
+import { getAssessmentItem } from "@/lib/data/fetchers/qti"
 
 // --- REMOVED: The local QuizPageData type definition ---
 
@@ -16,9 +17,13 @@ export default async function QuizPage({
 	const normalizedParamsPromise = normalizeParams(params)
 	const quizPromise: Promise<QuizPageData> = normalizedParamsPromise.then(fetchQuizPageData)
 
+	const expectedIdentifiersPromisesPromise: Promise<Promise<string[]>[]> = quizPromise.then((data) =>
+		data.questions.map((q) => getAssessmentItem(q.id).then((item) => (item.responseDeclarations ?? []).map((d) => d.identifier)))
+	)
+
 	return (
 		<React.Suspense fallback={<div className="p-8">Loading quiz...</div>}>
-			<Content quizPromise={quizPromise} />
+			<Content quizPromise={quizPromise} expectedIdentifiersPromisesPromise={expectedIdentifiersPromisesPromise} />
 		</React.Suspense>
 	)
 }

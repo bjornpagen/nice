@@ -4,6 +4,7 @@ import { fetchUnitTestPageData } from "@/lib/data/assessment"
 import type { UnitTestPageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
 import { Content } from "./components/content"
+import { getAssessmentItem } from "@/lib/data/fetchers/qti"
 
 // --- REMOVED: The local UnitTestPageData type definition ---
 
@@ -16,9 +17,13 @@ export default async function UnitTestPage({
 	const normalizedParamsPromise = normalizeParams(params)
 	const testPromise: Promise<UnitTestPageData> = normalizedParamsPromise.then(fetchUnitTestPageData)
 
+	const expectedIdentifiersPromisesPromise: Promise<Promise<string[]>[]> = testPromise.then((data) =>
+		data.questions.map((q) => getAssessmentItem(q.id).then((item) => (item.responseDeclarations ?? []).map((d) => d.identifier)))
+	)
+
 	return (
 		<React.Suspense fallback={<div>Loading test...</div>}>
-			<Content testPromise={testPromise} />
+			<Content testPromise={testPromise} expectedIdentifiersPromisesPromise={expectedIdentifiersPromisesPromise} />
 		</React.Suspense>
 	)
 }

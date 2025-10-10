@@ -8,8 +8,9 @@ import { AssessmentStepper } from "@/components/practice/assessment-stepper"
 import quizIllustration from "@/components/practice/course/unit/quiz/images/quiz-illustration.png"
 import type { QuizPageData } from "@/lib/types/page"
 
-export function Content({ quizPromise }: { quizPromise: Promise<QuizPageData> }) {
+export function Content({ quizPromise, expectedIdentifiersPromisesPromise }: { quizPromise: Promise<QuizPageData>; expectedIdentifiersPromisesPromise: Promise<Promise<string[]>[]> }) {
 	const { quiz, questions, layoutData } = React.use(quizPromise)
+	const expectedIdentifiersPromises = React.use(expectedIdentifiersPromisesPromise)
 	const { resourceLockStatus } = useCourseLockStatus()
 	const isLocked = resourceLockStatus[quiz.componentResourceSourcedId] === true
 	const [hasStarted, setHasStarted] = React.useState(false)
@@ -29,6 +30,7 @@ export function Content({ quizPromise }: { quizPromise: Promise<QuizPageData> })
 				unitData={layoutData.unitData}
 				expectedXp={quiz.expectedXp}
 				layoutData={layoutData}
+				expectedIdentifiersPromises={expectedIdentifiersPromises}
 				onRetake={(_newAttemptNumber) => {
 					// Return to start screen to make retake explicit and ensure full reset
 					setHasStarted(false)

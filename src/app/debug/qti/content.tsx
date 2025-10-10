@@ -10,9 +10,10 @@ import { processQuestionResponse } from "@/lib/actions/assessment"
 
 interface ContentProps {
     questionIds: string[]
+    expectedIdentifiersPromises?: Promise<string[]>[]
 }
 
-export function Content({ questionIds }: ContentProps) {
+export function Content({ questionIds, expectedIdentifiersPromises }: ContentProps) {
     const [visibleIndex, setVisibleIndex] = React.useState(0)
     const [selectedResponses, setSelectedResponses] = React.useState<Record<string, unknown>>({})
     const [expectedResponseIdentifiers, setExpectedResponseIdentifiers] = React.useState<string[]>([])
@@ -44,6 +45,18 @@ export function Content({ questionIds }: ContentProps) {
         setLatestRendererEvent(undefined)
     }, [visibleIndex])
 
+    // If server-provided expected identifiers are available, adopt them as the authoritative list
+    const serverExpectedForCurrent =
+        expectedIdentifiersPromises && expectedIdentifiersPromises[visibleIndex]
+            ? React.use(expectedIdentifiersPromises[visibleIndex]!)
+            : undefined
+
+    React.useEffect(() => {
+        if (serverExpectedForCurrent && Array.isArray(serverExpectedForCurrent) && serverExpectedForCurrent.length > 0) {
+            setExpectedResponseIdentifiers(serverExpectedForCurrent)
+        }
+    }, [serverExpectedForCurrent])
+
     function handleResponseChange(responseIdentifier: string, response: unknown) {
         if (
             responseIdentifier === "RESPONSE" &&
@@ -52,11 +65,15 @@ export function Content({ questionIds }: ContentProps) {
             !Array.isArray(response)
         ) {
             const keys = Object.keys(response)
-            setExpectedResponseIdentifiers((previous) => Array.from(new Set([...previous, ...keys])))
+            setExpectedResponseIdentifiers((previous) => {
+                const base = serverExpectedForCurrent ?? previous
+                return Array.from(new Set([...(base ?? []), ...keys]))
+            })
         } else {
-            setExpectedResponseIdentifiers((previous) =>
-                responseIdentifier ? Array.from(new Set([...previous, responseIdentifier])) : previous
-            )
+            setExpectedResponseIdentifiers((previous) => {
+                const base = serverExpectedForCurrent ?? previous
+                return responseIdentifier ? Array.from(new Set([...(base ?? []), responseIdentifier])) : base ?? []
+            })
         }
 
         setSelectedResponses((previous) => ({

@@ -10,8 +10,9 @@ import lightBlueFriend from "@/components/practice/course/unit/lesson/exercise/i
 import spaceFriend from "@/components/practice/course/unit/lesson/exercise/images/space-friend_v3.png"
 import type { ExercisePageData } from "@/lib/types/page"
 
-export function Content({ exercisePromise }: { exercisePromise: Promise<ExercisePageData> }) {
+export function Content({ exercisePromise, expectedIdentifiersPromisesPromise }: { exercisePromise: Promise<ExercisePageData>; expectedIdentifiersPromisesPromise: Promise<Promise<string[]>[]> }) {
 	const { exercise, questions, layoutData } = React.use(exercisePromise)
+	const expectedIdentifiersPromises = React.use(expectedIdentifiersPromisesPromise)
 	const { resourceLockStatus } = useCourseLockStatus()
 	const isLocked = resourceLockStatus[exercise.componentResourceSourcedId] === true
 	const [hasStarted, setHasStarted] = React.useState(false)
@@ -31,6 +32,7 @@ export function Content({ exercisePromise }: { exercisePromise: Promise<Exercise
 				unitData={layoutData.unitData}
 				expectedXp={exercise.expectedXp}
 				layoutData={layoutData}
+				expectedIdentifiersPromises={expectedIdentifiersPromises}
 				onRetake={(_newAttemptNumber) => {
 					// Return to start screen to make retake explicit and ensure full reset
 					setHasStarted(false)

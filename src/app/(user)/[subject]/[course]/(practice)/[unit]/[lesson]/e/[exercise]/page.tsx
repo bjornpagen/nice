@@ -4,6 +4,7 @@ import { fetchExercisePageData } from "@/lib/data/content"
 import type { ExercisePageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
 import { Content } from "@/app/(user)/[subject]/[course]/(practice)/[unit]/[lesson]/e/[exercise]/components/content"
+import { getAssessmentItem } from "@/lib/data/fetchers/qti"
 
 export default async function ExercisePage({
 	params
@@ -15,9 +16,16 @@ export default async function ExercisePage({
 	const normalizedParamsPromise = normalizeParams(params)
 	const exercisePromise: Promise<ExercisePageData> = normalizedParamsPromise.then(fetchExercisePageData)
 
+	// Derive expected identifiers for each question
+	const expectedIdentifiersPromisesPromise: Promise<Promise<string[]>[]> = exercisePromise.then((data) =>
+		data.questions.map((q) =>
+			getAssessmentItem(q.id).then((item) => (item.responseDeclarations ?? []).map((d) => d.identifier))
+		)
+	)
+
 	return (
 		<React.Suspense>
-			<Content exercisePromise={exercisePromise} />
+			<Content exercisePromise={exercisePromise} expectedIdentifiersPromisesPromise={expectedIdentifiersPromisesPromise} />
 		</React.Suspense>
 	)
 }

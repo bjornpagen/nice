@@ -1,18 +1,24 @@
+import * as React from "react"
 import { Content } from "@/app/debug/qti/content"
+import { getAssessmentItem } from "@/lib/data/fetchers/qti"
 
 export default function DebugQTIPage() {
 	// Explicit list of QTI item identifiers to render in order
 	const questionIds = [
-		"nice_xc32839bc3e4470f8",
-		"nice_x0de5c6cab4dacbf6",
-		"nice_x7e7f75aa93091d74",
-		"nice_x9ab6528ba6c89792",
-		"nice_x1fd12a7ce4a4a02d"
+		"nice_x7d981f05a42aee82_22070"
 	]
+
+	// Initiate fetches to derive expected response identifiers for each item.
+	// Do not await here; pass promises to the client component and let it consume via React.use().
+	const expectedIdentifiersPromises = questionIds.map((id) =>
+		getAssessmentItem(id).then((item) => (item.responseDeclarations ?? []).map((d) => d.identifier))
+	)
 
 	return (
 		<main className="h-full w-full">
-			<Content questionIds={questionIds} />
+			<React.Suspense fallback={<div className="p-6 text-sm text-gray-500">Loading item…</div>}>
+				<Content questionIds={questionIds} expectedIdentifiersPromises={expectedIdentifiersPromises} />
+			</React.Suspense>
 		</main>
 	)
 }
