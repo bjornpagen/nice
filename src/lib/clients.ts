@@ -1,6 +1,7 @@
 import { env } from "@/env"
 import * as caliperInternal from "@/lib/caliper"
 import * as onerosterInternal from "@/lib/oneroster"
+import * as caseInternal from "@/lib/case"
 import * as powerpathInternal from "@/lib/powerpath"
 import * as qtiInternal from "@/lib/qti"
 
@@ -28,6 +29,17 @@ export const oneroster = new onerosterInternal.Client({
 	tokenUrl: env.TIMEBACK_TOKEN_URL,
 	clientId: env.TIMEBACK_CLIENT_ID,
 	clientSecret: env.TIMEBACK_CLIENT_SECRET
+})
+
+/**
+ * A singleton instance of the CASE Api Client.
+ * Configured identically to the OneRoster client using the same env variables.
+ */
+export const caseApi = new caseInternal.Client({
+    serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
+    tokenUrl: env.TIMEBACK_TOKEN_URL,
+    clientId: env.TIMEBACK_CLIENT_ID,
+    clientSecret: env.TIMEBACK_CLIENT_SECRET
 })
 
 /**
