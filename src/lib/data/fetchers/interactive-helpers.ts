@@ -105,12 +105,32 @@ export async function findComponentResourceWithContext(
 		throw errors.wrap(allComponentResourcesResult.error, "fetch component resources")
 	}
 
+	// Precompute all candidates for this resource id
+	const candidateComponentResources = allComponentResourcesResult.data.filter(
+		(cr) => cr.resource.sourcedId === resourceSourcedId
+	)
+
 	// First try direct match (for exercises where component is the lesson)
 	let componentResource = allComponentResourcesResult.data.find(
 		(cr) => cr.resource.sourcedId === resourceSourcedId && cr.courseComponent.sourcedId === parentComponentSourcedId
 	)
 
-	// If not found, it might be a quiz/unit test with new structure
+	// Minimal fallback: if exactly one candidate exists globally, accept it.
+	// This prevents 404s when slug collisions select a legacy resource but there's a single
+	// ComponentResource in the system (even if not a child of the current parent).
+	if (!componentResource && candidateComponentResources.length === 1) {
+		componentResource = candidateComponentResources[0]
+		if (componentResource) {
+			logger.warn("using single candidate componentResource as fallback", {
+				resourceSourcedId,
+				componentResourceSourcedId: componentResource.sourcedId,
+				courseComponentSourcedId: componentResource.courseComponent.sourcedId,
+				parentComponentSourcedId
+			})
+		}
+	}
+
+	// If still not found, it might be a quiz/unit test with new structure
 	// where the component is the assessment itself, not the unit
 	if (!componentResource) {
 		// Import the function to get course components by parent
@@ -125,11 +145,6 @@ export async function findComponentResourceWithContext(
 			})
 			throw errors.wrap(childComponentsResult.error, "fetch child components")
 		}
-
-		// Find component resources for this resource
-		const candidateComponentResources = allComponentResourcesResult.data.filter(
-			(cr) => cr.resource.sourcedId === resourceSourcedId
-		)
 
 		// Check if any of the candidate component resources point to a component that's a child of our parent
 		for (const cr of candidateComponentResources) {

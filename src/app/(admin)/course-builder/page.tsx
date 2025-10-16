@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { getAllResources } from "@/lib/data/fetchers/oneroster"
+import { getAllResources, getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
 import { caseApi } from "@/lib/clients"
 import { redis } from "@/lib/redis"
 import { Content } from "@/app/(admin)/course-builder/content"
@@ -43,7 +43,48 @@ async function getCaseHumanCodingScheme(id: string): Promise<string | null> {
 }
 
 export default function CourseBuilderPage() {
-    const resourcesPromise = getAllResources()
+    const resourcesPromise: Promise<ExplorerResource[]> = getAllResources().then(async (resources) => {
+        // Build allowlist of course slugs: must be active and NOT custom
+        const uniqueSlugs = new Set<string>()
+        for (const r of resources) {
+            const md = (r.metadata ?? {}) as Record<string, unknown>
+            const path = typeof md.path === "string" ? md.path : undefined
+            if (!path) continue
+            const parts = path.split("/").filter(Boolean)
+            // path: /<subjectSlug>/<courseSlug>/...
+            const slug = parts[1]
+            if (slug) uniqueSlugs.add(slug)
+        }
+
+        const allowSlugs = new Set<string>()
+        await Promise.all(
+            Array.from(uniqueSlugs).map(async (slug) => {
+                const res = await errors.try(getAllCoursesBySlug(slug))
+                if (res.error) {
+                    logger.debug("courses by slug fetch failed", { slug, error: res.error })
+                    return
+                }
+                const course = res.data?.[0]
+                if (!course) {
+                    // No active course for this slug (likely tobedeleted) → exclude
+                    return
+                }
+                const meta = (course.metadata ?? {}) as Record<string, unknown>
+                const isCustom = meta.custom === true || meta.custom === "true"
+                if (!isCustom) allowSlugs.add(slug)
+            })
+        )
+
+        return resources.filter((r) => {
+            const md = (r.metadata ?? {}) as Record<string, unknown>
+            const path = typeof md.path === "string" ? md.path : undefined
+            if (!path) return true
+            const parts = path.split("/").filter(Boolean)
+            const slug = parts[1]
+            if (!slug) return true
+            return allowSlugs.has(slug)
+        })
+    })
 
     const caseMapPromise: Promise<Record<string, string>> = resourcesPromise
         .then((resources) => {

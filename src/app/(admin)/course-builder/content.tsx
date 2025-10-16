@@ -46,8 +46,28 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from "@/components/ui/command"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
+import {
+    buildCoursePayloadAction,
+    createCourseStep,
+    createComponentsStep,
+    createResourcesStep,
+    createComponentResourcesStep,
+    createAssessmentLineItemsStep,
+    copyStimuliAction,
+    copyQtiTestsAction
+} from "./actions"
+import { MultiStepLoader } from "@/components/ui/multi-step-loader"
 
 type ActivityType = "Article" | "Video" | "Exercise"
 
@@ -68,6 +88,7 @@ type LessonResource = {
     type: ActivityType
     xp: number
     launchUrl: string | undefined
+    caseIds?: string[]
 }
 
 type Lesson = {
@@ -104,13 +125,22 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
     const [courses, setCourses] = React.useState<string[]>([])
     const [standards, setStandards] = React.useState<string[]>([])
     const [selectedResource, setSelectedResource] = React.useState<ResourceLite | null>(null)
+    const [isGenerating, setIsGenerating] = React.useState(false)
+    const [currentStep, setCurrentStep] = React.useState(0)
     const [isBuilderOpen, setIsBuilderOpen] = React.useState(false)
+    const [validationErrors, setValidationErrors] = React.useState<{
+        title?: string
+        description?: string
+        units?: Record<string, string>
+        lessons?: Record<string, string>
+    }>({})
+    const [showValidation, setShowValidation] = React.useState(false)
 
     // Course builder state
     const [courseTitle, setCourseTitle] = React.useState("")
     const [courseDescription, setCourseDescription] = React.useState("")
-    const [courseSubject, setCourseSubject] = React.useState("")
-    const [courseGrade, setCourseGrade] = React.useState("")
+    const [courseSubject, setCourseSubject] = React.useState<string>("")
+    const [courseGrades, setCourseGrades] = React.useState<string[]>([])
     const [units, setUnits] = React.useState<Unit[]>([
         {
             id: "unit-1",
@@ -602,6 +632,214 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
         })
     }, [items, query, activities, subjects, courses, standards, caseMap])
 
+    // Client-side pagination to reduce DOM size
+    const [page, setPage] = React.useState(1)
+    const [pageSize] = React.useState(100)
+    const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize))
+    const start = (page - 1) * pageSize
+    const end = start + pageSize
+    const pageItems = React.useMemo(() => filtered.slice(start, end), [filtered, start, end])
+
+    // Reset page when filters/search change
+    React.useEffect(() => {
+        setPage(1)
+    }, [query, activities, subjects, courses, standards])
+
+    const loadingSteps = [
+        { text: "Building course payload..." },
+        { text: "Creating course in Timeback..." },
+        { text: "Creating course components..." },
+        { text: "Creating new resources..." },
+        { text: "Linking resources to lessons..." },
+        { text: "Creating assessment line items..." },
+        { text: "Copying QTI tests for exercises..." },
+        { text: "Course generation complete!" }
+    ]
+
+    // Check if course has content (no empty units or lessons)
+    const courseHasContent = React.useMemo(() => {
+        if (units.length === 0) return false
+
+        for (const unit of units) {
+            // Check if unit has no lessons
+            if (unit.lessons.length === 0) return false
+
+            // Check if any lesson has no resources
+            for (const lesson of unit.lessons) {
+                if (lesson.resources.length === 0) return false
+            }
+        }
+
+        return true
+    }, [units])
+
+    // Validation helper
+    const validateCourse = (): boolean => {
+        const errors: typeof validationErrors = {}
+        let isValid = true
+
+        if (!courseTitle.trim()) {
+            errors.title = "Course title is required"
+            isValid = false
+        }
+        if (!courseDescription.trim()) {
+            errors.description = "Course description is required"
+            isValid = false
+        }
+
+        // Check for duplicate unit names
+        const unitNames = new Map<string, string[]>()
+        units.forEach(u => {
+            const name = u.title.trim().toLowerCase()
+            if (name) {
+                if (!unitNames.has(name)) unitNames.set(name, [])
+                unitNames.get(name)!.push(u.id)
+            }
+        })
+
+        const unitErrors: Record<string, string> = {}
+        unitNames.forEach((ids, name) => {
+            if (ids.length > 1) {
+                ids.forEach(id => {
+                    unitErrors[id] = "Duplicate unit name"
+                })
+            }
+        })
+        if (Object.keys(unitErrors).length > 0) {
+            errors.units = unitErrors
+            isValid = false
+        }
+
+        // Check for duplicate lesson names within each unit
+        const lessonErrors: Record<string, string> = {}
+        for (const unit of units) {
+            const lessonNames = new Map<string, string[]>()
+            unit.lessons.forEach(l => {
+                const name = l.title.trim().toLowerCase()
+                if (name) {
+                    if (!lessonNames.has(name)) lessonNames.set(name, [])
+                    lessonNames.get(name)!.push(l.id)
+                }
+            })
+
+            lessonNames.forEach((ids, name) => {
+                if (ids.length > 1) {
+                    ids.forEach(id => {
+                        lessonErrors[id] = `Duplicate lesson name in unit "${unit.title}"`
+                    })
+                }
+            })
+        }
+        if (Object.keys(lessonErrors).length > 0) {
+            errors.lessons = lessonErrors
+            isValid = false
+        }
+
+        setValidationErrors(errors)
+        setShowValidation(true)
+        return isValid
+    }
+
+    const handleGenerateCourse = async () => {
+        // Validate before generating
+        if (!validateCourse()) {
+            return
+        }
+
+        // Clear validation errors on successful validation
+        setValidationErrors({})
+        setShowValidation(false)
+
+        setIsGenerating(true)
+        setCurrentStep(0)
+
+        const input = {
+            title: courseTitle.trim(),
+            description: courseDescription.trim(),
+            subject: (courseSubject || "General") as "Math" | "Science" | "English Language Arts" | "Social Studies" | "Computing" | "General",
+            grades: courseGrades.length > 0 ? courseGrades : ["6th"],
+            units: units.map((u) => ({
+                id: u.id,
+                title: u.title || "Untitled Unit",
+                lessons: u.lessons.map((l) => ({
+                    id: l.id,
+                    title: l.title || "Untitled Lesson",
+                    resources: l.resources.map((r) => ({
+                        id: r.id,
+                        title: r.title,
+                        type: r.type,
+                        xp: r.xp,
+                        caseIds: (items.find((it) => it.id === r.id)?.caseIds) || []
+                    }))
+                }))
+            }))
+        }
+
+        try {
+            // Step 0: Building payload
+            setCurrentStep(0)
+            const payload = await buildCoursePayloadAction(input)
+
+            // Step 1: Creating course
+            setCurrentStep(1)
+            await createCourseStep(payload.course)
+
+            // Step 2: Creating components
+            setCurrentStep(2)
+            await createComponentsStep(payload.courseComponents)
+
+            // Step 3: Creating resources
+            setCurrentStep(3)
+            await createResourcesStep(payload.resources)
+
+            // Step 4: Linking resources
+            setCurrentStep(4)
+            await createComponentResourcesStep(payload.componentResources)
+
+            // Step 5: Creating assessments
+            setCurrentStep(5)
+            await createAssessmentLineItemsStep(payload.assessmentLineItems)
+
+            // Step 6: Copying QTI stimuli and tests
+            setCurrentStep(6)
+            await Promise.all([
+                copyStimuliAction(payload.stimuliCopyPlan),
+                copyQtiTestsAction(payload.qtiCopyPlan)
+            ])
+
+            // Step 7: Complete
+            setCurrentStep(7)
+            await new Promise(resolve => setTimeout(resolve, 1000))
+
+            // Reset builder state
+            setCourseTitle("")
+            setCourseDescription("")
+            setCourseSubject("")
+            setCourseGrades([])
+            setUnits([
+                {
+                    id: `unit_${Date.now()}`,
+                    title: "Unit 1: Introduction",
+                    lessons: [
+                        {
+                            id: `lesson_${Date.now()}`,
+                            title: "Lesson 1: Getting Started",
+                            resources: []
+                        }
+                    ]
+                }
+            ])
+        } catch (error) {
+            // Error already logged by server action
+        } finally {
+            // Let the final step display briefly before closing
+            setTimeout(() => {
+                setIsGenerating(false)
+                setCurrentStep(0)
+            }, 800)
+        }
+    }
+
     return (
         <div className="min-h-screen bg-white">
             <div className="border-b bg-white px-6 py-4 flex items-center justify-between">
@@ -638,10 +876,13 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                 isBuilderOpen ? "gap-0" : ""
             )}>
                 {/* Left Panel - Resources */}
-                <div className={cn(
-                    "overflow-y-auto border-r transition-all duration-300",
-                    isBuilderOpen ? "w-1/2" : "w-full"
-                )}>
+                <div
+                    className={cn(
+                        "overflow-y-auto border-r transition-all duration-300",
+                        isBuilderOpen ? "w-1/2" : "w-full"
+                    )}
+                    style={{ scrollbarGutter: "stable both-edges", overscrollBehavior: "contain" }}
+                >
                     <div className="p-6 space-y-6">
                         {/* Search and Filters */}
                         <div className="flex gap-3 items-center flex-wrap">
@@ -691,121 +932,126 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                                 </DropdownMenuContent>
                             </DropdownMenu>
 
-                            {/* Subjects Dropdown */}
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
+                            {/* Subjects Combobox (multi-select) */}
+                            <Popover>
+                                <PopoverTrigger asChild>
                                     <Button variant="outline" className="h-11 min-w-[180px] justify-between shadow-sm">
                                         <span>{subjects.length === 0 ? "All Subjects" : `${subjects.length} Subjects`}</span>
                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                     </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56 max-h-[300px] overflow-y-auto">
-                                    <DropdownMenuLabel>Subjects</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    {subjectOptions.map((s) => (
-                                        <DropdownMenuCheckboxItem
-                                            key={s}
-                                            checked={subjects.includes(s)}
-                                            onCheckedChange={(checked) => {
-                                                if (checked) {
-                                                    setSubjects([...subjects, s])
-                                                } else {
-                                                    const remainingSubjects = subjects.filter(subj => subj !== s)
-                                                    setSubjects(remainingSubjects)
+                                </PopoverTrigger>
+                                <PopoverContent className="p-0 w-64">
+                                    <Command>
+                                        <CommandInput placeholder="Search subjects..." />
+                                        <CommandList>
+                                            <CommandEmpty>No subject found.</CommandEmpty>
+                                            <CommandGroup>
+                                                {subjectOptions.map((s) => {
+                                                    const checked = subjects.includes(s)
+                                                    return (
+                                                        <CommandItem
+                                                            key={s}
+                                                            onSelect={() => {
+                                                                if (checked) {
+                                                                    const remaining = subjects.filter((x) => x !== s)
+                                                                    setSubjects(remaining)
+                                                                    if (remaining.length > 0) {
+                                                                        setCourses(courses.filter((c) => items.some((it) => it.courseSlug === c && remaining.includes(it.subjectSlug))))
+                                                                    }
+                                                                    setStandards(standards.filter((std) => items.some((it) => (remaining.length === 0 || remaining.includes(it.subjectSlug)) && it.caseIds.some((id) => caseMap[id] === std))))
+                                                                } else {
+                                                                    setSubjects([...subjects, s])
+                                                                }
+                                                            }}
+                                                        >
+                                                            {s}
+                                                            {checked && <Check className="ml-auto h-4 w-4" />}
+                                                        </CommandItem>
+                                                    )
+                                                })}
+                                            </CommandGroup>
+                                        </CommandList>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
 
-                                                    // Clear courses that don't belong to remaining subjects
-                                                    if (remainingSubjects.length > 0) {
-                                                        setCourses(courses.filter(c => {
-                                                            return items.some(item =>
-                                                                item.courseSlug === c &&
-                                                                remainingSubjects.includes(item.subjectSlug)
-                                                            )
-                                                        }))
-                                                    }
-
-                                                    // Clear standards that don't belong to remaining subjects
-                                                    setStandards(standards.filter(std => {
-                                                        return items.some(item => {
-                                                            if (remainingSubjects.length > 0 && !remainingSubjects.includes(item.subjectSlug)) return false
-                                                            return item.caseIds.some(id => caseMap[id] === std)
-                                                        })
-                                                    }))
-                                                }
-                                            }}
-                                        >
-                                            {s}
-                                        </DropdownMenuCheckboxItem>
-                                    ))}
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-
-                            {/* Courses Dropdown */}
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
+                            {/* Courses Combobox (multi-select) */}
+                            <Popover>
+                                <PopoverTrigger asChild>
                                     <Button variant="outline" className="h-11 min-w-[200px] justify-between shadow-sm">
                                         <span>{courses.length === 0 ? "All Courses" : `${courses.length} Courses`}</span>
                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                     </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56 max-h-[300px] overflow-y-auto">
-                                    <DropdownMenuLabel>Courses</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    {courseOptions.map((c) => (
-                                        <DropdownMenuCheckboxItem
-                                            key={c}
-                                            checked={courses.includes(c)}
-                                            onCheckedChange={(checked) => {
-                                                if (checked) {
-                                                    setCourses([...courses, c])
-                                                } else {
-                                                    const remainingCourses = courses.filter(course => course !== c)
-                                                    setCourses(remainingCourses)
+                                </PopoverTrigger>
+                                <PopoverContent className="p-0 w-72">
+                                    <Command>
+                                        <CommandInput placeholder="Search courses..." />
+                                        <CommandList>
+                                            <CommandEmpty>No course found.</CommandEmpty>
+                                            <CommandGroup>
+                                                {courseOptions.map((c) => {
+                                                    const checked = courses.includes(c)
+                                                    return (
+                                                        <CommandItem
+                                                            key={c}
+                                                            onSelect={() => {
+                                                                if (checked) {
+                                                                    const remaining = courses.filter((x) => x !== c)
+                                                                    setCourses(remaining)
+                                                                    setStandards(standards.filter((std) => items.some((it) => (subjects.length === 0 || subjects.includes(it.subjectSlug)) && (remaining.length === 0 || remaining.includes(it.courseSlug)) && it.caseIds.some((id) => caseMap[id] === std))))
+                                                                } else {
+                                                                    setCourses([...courses, c])
+                                                                }
+                                                            }}
+                                                        >
+                                                            {c}
+                                                            {checked && <Check className="ml-auto h-4 w-4" />}
+                                                        </CommandItem>
+                                                    )
+                                                })}
+                                            </CommandGroup>
+                                        </CommandList>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
 
-                                                    // Clear standards that don't belong to remaining courses
-                                                    setStandards(standards.filter(std => {
-                                                        return items.some(item => {
-                                                            if (subjects.length > 0 && !subjects.includes(item.subjectSlug)) return false
-                                                            if (remainingCourses.length > 0 && !remainingCourses.includes(item.courseSlug)) return false
-                                                            return item.caseIds.some(id => caseMap[id] === std)
-                                                        })
-                                                    }))
-                                                }
-                                            }}
-                                        >
-                                            {c}
-                                        </DropdownMenuCheckboxItem>
-                                    ))}
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-
-                            {/* Standards Dropdown */}
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
+                            {/* Standards Combobox (multi-select) */}
+                            <Popover>
+                                <PopoverTrigger asChild>
                                     <Button variant="outline" className="h-11 min-w-[220px] justify-between shadow-sm">
                                         <span>{standards.length === 0 ? "Select Standards" : `${standards.length} Standards`}</span>
                                         <ChevronDown className="h-4 w-4 opacity-50" />
                                     </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56 max-h-[300px] overflow-y-auto">
-                                    <DropdownMenuLabel>CASE Standards</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    {standardOptions.map((s) => (
-                                        <DropdownMenuCheckboxItem
-                                            key={s}
-                                            checked={standards.includes(s)}
-                                            onCheckedChange={(checked) => {
-                                                if (checked) {
-                                                    setStandards([...standards, s])
-                                                } else {
-                                                    setStandards(standards.filter(std => std !== s))
-                                                }
-                                            }}
-                                        >
-                                            {s}
-                                        </DropdownMenuCheckboxItem>
-                                    ))}
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                                </PopoverTrigger>
+                                <PopoverContent className="p-0 w-[320px] max-h-[320px] overflow-auto">
+                                    <Command>
+                                        <CommandInput placeholder="Search standards..." />
+                                        <CommandList>
+                                            <CommandEmpty>No standard found.</CommandEmpty>
+                                            <CommandGroup>
+                                                {standardOptions.map((s) => {
+                                                    const checked = standards.includes(s)
+                                                    return (
+                                                        <CommandItem
+                                                            key={s}
+                                                            onSelect={() => {
+                                                                if (checked) {
+                                                                    setStandards(standards.filter((x) => x !== s))
+                                                                } else {
+                                                                    setStandards([...standards, s])
+                                                                }
+                                                            }}
+                                                        >
+                                                            {s}
+                                                            {checked && <Check className="ml-auto h-4 w-4" />}
+                                                        </CommandItem>
+                                                    )
+                                                })}
+                                            </CommandGroup>
+                                        </CommandList>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
                         </div>
 
                         {/* Active Filter Tags */}
@@ -917,7 +1163,7 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {filtered.map((r, index) => {
+                                    {pageItems.map((r, index) => {
                                         const Icon = activityIcons[r.type]
                                         const isAdded = addedResourceIds.has(r.id)
                                         return (
@@ -1025,14 +1271,39 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                                     <p className="text-muted-foreground">No resources found matching your filters</p>
                                 </div>
                             )}
+                            {filtered.length > 0 && (
+                                <div className="flex items-center justify-between px-2 py-3">
+                                    <div className="text-sm text-muted-foreground">
+                                        Page {page} of {totalPages} • {filtered.length.toLocaleString()} results
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            disabled={page <= 1}
+                                            onClick={() => setPage((p) => Math.max(1, p - 1))}
+                                        >
+                                            Prev
+                                        </Button>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            disabled={page >= totalPages}
+                                            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                                        >
+                                            Next
+                                        </Button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
 
                 {/* Right Panel - Course Builder */}
                 {isBuilderOpen && (
-                    <div className="w-1/2 overflow-y-auto bg-gray-50 animate-in slide-in-from-right duration-300">
-                        <div className="p-6 space-y-6">
+                    <div className="w-1/2 bg-gray-50 animate-in slide-in-from-right duration-300 flex flex-col">
+                        <div className="flex-1 overflow-y-auto p-6 space-y-6" style={{ scrollbarGutter: "stable both-edges", overscrollBehavior: "contain" }}>
                             {/* Course Header */}
                             <div className="bg-white rounded-lg border p-6">
                                 <h2 className="text-xl font-semibold mb-4">New Course</h2>
@@ -1041,38 +1312,93 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                                         <label className="text-sm font-medium text-gray-700">Course Title</label>
                                         <Input
                                             placeholder="Enter course title..."
-                                            className="mt-1"
+                                            className={cn(
+                                                "mt-1",
+                                                showValidation && validationErrors.title && "border-red-500 focus:border-red-500"
+                                            )}
                                             value={courseTitle}
-                                            onChange={(e) => setCourseTitle(e.target.value)}
+                                            onChange={(e) => {
+                                                setCourseTitle(e.target.value)
+                                                if (showValidation && validationErrors.title) {
+                                                    setValidationErrors(prev => ({ ...prev, title: undefined }))
+                                                }
+                                            }}
                                         />
+                                        {showValidation && validationErrors.title && (
+                                            <p className="mt-1 text-xs text-red-500">{validationErrors.title}</p>
+                                        )}
                                     </div>
                                     <div>
                                         <label className="text-sm font-medium text-gray-700">Description</label>
                                         <textarea
                                             placeholder="Enter course description..."
-                                            className="mt-1 w-full min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm"
+                                            className={cn(
+                                                "mt-1 w-full min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm",
+                                                showValidation && validationErrors.description && "border-red-500 focus:border-red-500"
+                                            )}
                                             value={courseDescription}
-                                            onChange={(e) => setCourseDescription(e.target.value)}
+                                            onChange={(e) => {
+                                                setCourseDescription(e.target.value)
+                                                if (showValidation && validationErrors.description) {
+                                                    setValidationErrors(prev => ({ ...prev, description: undefined }))
+                                                }
+                                            }}
                                         />
+                                        {showValidation && validationErrors.description && (
+                                            <p className="mt-1 text-xs text-red-500">{validationErrors.description}</p>
+                                        )}
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
                                             <label className="text-sm font-medium text-gray-700">Subject</label>
-                                            <Input
-                                                placeholder="e.g., math, science"
-                                                className="mt-1"
-                                                value={courseSubject}
-                                                onChange={(e) => setCourseSubject(e.target.value)}
-                                            />
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger asChild>
+                                                    <Button variant="outline" className="mt-1 w-full justify-between">
+                                                        {courseSubject || "Select subject"}
+                                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                                    </Button>
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent className="min-w-[var(--radix-dropdown-menu-trigger-width)]">
+                                                    {[
+                                                        "Math",
+                                                        "Science",
+                                                        "English Language Arts",
+                                                        "Social Studies",
+                                                        "Computing",
+                                                        "General"
+                                                    ].map((s) => (
+                                                        <div key={s} className="px-2 py-1.5 cursor-pointer" onClick={() => setCourseSubject(s)}>
+                                                            {s}
+                                                        </div>
+                                                    ))}
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
                                         </div>
                                         <div>
                                             <label className="text-sm font-medium text-gray-700">Grade Level</label>
-                                            <Input
-                                                placeholder="e.g., 6, 7-8"
-                                                className="mt-1"
-                                                value={courseGrade}
-                                                onChange={(e) => setCourseGrade(e.target.value)}
-                                            />
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger asChild>
+                                                    <Button variant="outline" className="mt-1 w-full justify-between">
+                                                        {courseGrades.length > 0 ? `${courseGrades.join(", ")}` : "Select grades"}
+                                                        <ChevronDown className="h-4 w-4 opacity-50" />
+                                                    </Button>
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent className="min-w-[var(--radix-dropdown-menu-trigger-width)]">
+                                                    <DropdownMenuLabel>Grade Levels</DropdownMenuLabel>
+                                                    <DropdownMenuSeparator />
+                                                    {["2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th"].map((g) => (
+                                                        <DropdownMenuCheckboxItem
+                                                            key={g}
+                                                            checked={courseGrades.includes(g)}
+                                                            onCheckedChange={(checked) => {
+                                                                setCourseGrades((prev) => checked ? [...prev, g] : prev.filter((x) => x !== g))
+                                                            }}
+                                                        >
+                                                            {g}
+                                                        </DropdownMenuCheckboxItem>
+                                                    ))}
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
                                         </div>
                                     </div>
                                 </div>
@@ -1094,7 +1420,8 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                                                     key={unit.id}
                                                     className={cn(
                                                         "border rounded-lg p-4 bg-gray-50 relative",
-                                                        isBeingDragged && "opacity-50"
+                                                        isBeingDragged && "opacity-50",
+                                                        unit.lessons.length === 0 && "border-2 border-dashed border-orange-300"
                                                     )}
                                                     draggable={units.length > 1}
                                                     onDragStart={(e) => {
@@ -1155,9 +1482,29 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                                                             )}
                                                             <Input
                                                                 value={unit.title}
-                                                                onChange={(e) => updateUnitTitle(unit.id, e.target.value)}
-                                                                className="font-medium bg-transparent border-none px-0 focus:ring-0"
+                                                                onChange={(e) => {
+                                                                    updateUnitTitle(unit.id, e.target.value)
+                                                                    if (showValidation && validationErrors.units?.[unit.id]) {
+                                                                        setValidationErrors(prev => {
+                                                                            const newErrors = { ...prev }
+                                                                            if (newErrors.units) {
+                                                                                delete newErrors.units[unit.id]
+                                                                                if (Object.keys(newErrors.units).length === 0) {
+                                                                                    delete newErrors.units
+                                                                                }
+                                                                            }
+                                                                            return newErrors
+                                                                        })
+                                                                    }
+                                                                }}
+                                                                className={cn(
+                                                                    "font-medium bg-transparent border-none px-0 focus:ring-0",
+                                                                    showValidation && validationErrors.units?.[unit.id] && "text-red-500"
+                                                                )}
                                                             />
+                                                            {showValidation && validationErrors.units?.[unit.id] && (
+                                                                <p className="text-xs text-red-500 ml-2">{validationErrors.units[unit.id]}</p>
+                                                            )}
                                                         </div>
                                                         <Button
                                                             size="sm"
@@ -1170,6 +1517,11 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                                                     </div>
 
                                                     {/* Lessons */}
+                                                    {unit.lessons.length === 0 && (
+                                                        <div className="ml-4 text-sm text-orange-500 italic">
+                                                            Add at least one lesson to this unit
+                                                        </div>
+                                                    )}
                                                     <div className="ml-4 space-y-2">
                                                         {getReorderedLessons(unit.id, unit.lessons).map((lesson, lessonIndex) => {
                                                             const totalXP = lesson.resources.reduce((sum, r) => sum + r.xp, 0)
@@ -1181,7 +1533,8 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                                                                     className={cn(
                                                                         "border rounded bg-white p-3 transition-all relative",
                                                                         dragOverLesson === lesson.id && "ring-2 ring-blue-500 bg-blue-50",
-                                                                        isBeingDragged && "opacity-50"
+                                                                        isBeingDragged && "opacity-50",
+                                                                        lesson.resources.length === 0 && "border-2 border-dashed border-orange-300"
                                                                     )}
                                                                     data-lesson-drop-zone
                                                                     draggable={!draggedResource && (unit.lessons.length > 1 || units.length > 1)}
@@ -1277,9 +1630,29 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                                                                             )}
                                                                             <Input
                                                                                 value={lesson.title}
-                                                                                onChange={(e) => updateLessonTitle(unit.id, lesson.id, e.target.value)}
-                                                                                className="text-sm font-medium bg-transparent border-none px-0 focus:ring-0"
+                                                                                onChange={(e) => {
+                                                                                    updateLessonTitle(unit.id, lesson.id, e.target.value)
+                                                                                    if (showValidation && validationErrors.lessons?.[lesson.id]) {
+                                                                                        setValidationErrors(prev => {
+                                                                                            const newErrors = { ...prev }
+                                                                                            if (newErrors.lessons) {
+                                                                                                delete newErrors.lessons[lesson.id]
+                                                                                                if (Object.keys(newErrors.lessons).length === 0) {
+                                                                                                    delete newErrors.lessons
+                                                                                                }
+                                                                                            }
+                                                                                            return newErrors
+                                                                                        })
+                                                                                    }
+                                                                                }}
+                                                                                className={cn(
+                                                                                    "text-sm font-medium bg-transparent border-none px-0 focus:ring-0",
+                                                                                    showValidation && validationErrors.lessons?.[lesson.id] && "text-red-500"
+                                                                                )}
                                                                             />
+                                                                            {showValidation && validationErrors.lessons?.[lesson.id] && (
+                                                                                <p className="text-xs text-red-500 ml-2">{validationErrors.lessons[lesson.id]}</p>
+                                                                            )}
                                                                         </div>
                                                                         <Button
                                                                             size="sm"
@@ -1428,14 +1801,16 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                                             )
                                         })}
 
-                                        <Button
-                                            variant="outline"
-                                            className="w-full"
-                                            onClick={addUnit}
-                                        >
-                                            <Plus className="h-4 w-4 mr-2" />
-                                            Add Unit
-                                        </Button>
+                                        <div className="flex gap-2">
+                                            <Button
+                                                variant="outline"
+                                                className="flex-1"
+                                                onClick={addUnit}
+                                            >
+                                                <Plus className="h-4 w-4 mr-2" />
+                                                Add Unit
+                                            </Button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1522,16 +1897,30 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                                 </div>
                             </div>
 
-                            {/* Action Buttons */}
-                            <div className="flex">
-                                <Button className="w-full bg-black hover:bg-gray-800">
-                                    Generate Course
-                                </Button>
-                            </div>
+                        </div>
+
+                        {/* Action Bar - Fixed at bottom */}
+                        <div className="flex-shrink-0 bg-white border-t p-3">
+                            {!courseHasContent && (
+                                <p className="text-xs text-orange-500 text-center mb-2">
+                                    All units must have lessons, and all lessons must have resources
+                                </p>
+                            )}
+                            <Button
+                                className="w-full bg-black hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                onClick={handleGenerateCourse}
+                                disabled={isGenerating || !courseHasContent}
+                                title={!courseHasContent ? "Add resources to all lessons before generating" : undefined}
+                            >
+                                {isGenerating ? "Generating..." : "Generate Course"}
+                            </Button>
                         </div>
                     </div>
                 )}
             </div>
+
+            {/* Multi-step Loader */}
+            <MultiStepLoader loading={isGenerating} loadingStates={loadingSteps} value={currentStep} loop={false} />
 
             {/* Resource Detail Dialog */}
             <Dialog open={!!selectedResource} onOpenChange={(open) => !open && setSelectedResource(null)}>
