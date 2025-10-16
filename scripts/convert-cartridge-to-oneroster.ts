@@ -1,10 +1,13 @@
 #!/usr/bin/env bun
 import * as path from "node:path"
 import * as fs from "node:fs/promises"
+import * as crypto from "node:crypto"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
 
-// NOTE: We do not import DB or use Inngest here. This is a pure converter.
+logger.setDefaultLogLevel(logger.DEBUG)
+
 // Cartridge reader APIs are provided by the published package under /cartridge/* subpaths.
 import { openCartridgeTarZst } from "@superbuilders/qti-assessment-item-generator/cartridge/readers/tarzst"
 import {
@@ -12,6 +15,7 @@ import {
   iterUnitLessons,
   iterLessonResources,
   readArticleContent,
+  readQuestionXml,
   readIndex,
   readUnit
 } from "@superbuilders/qti-assessment-item-generator/cartridge/client"
@@ -158,6 +162,130 @@ function subjectToRouteSegment(subject: string): string {
   return subject.toLowerCase().replace(/\s+/g, "-")
 }
 
+function normalizePathSlug(p: string): string {
+  const seg = getLastPathSegment(p)
+  return seg.endsWith(".json") ? seg.slice(0, -5) : seg
+}
+
+function sha256Hex(input: string): string {
+  return crypto.createHash("sha256").update(input).digest("hex")
+}
+
+function hashId(_prefix: string, parts: string[]): string {
+  // Always emit IDs starting with "nice_". The prefix argument is intentionally ignored
+  // for the returned value, but included in the hash key for type separation.
+  const key = parts.join("|")
+  const hex = sha256Hex(key)
+  return `nice_${hex.slice(0, 32)}`
+}
+
+// QTI identifiers (hyphen-free):
+function qtiStimulusId(courseSlug: string, unitId: string, lessonId: string, articleId: string): string {
+  return hashId("ns_", ["stim", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `a=${articleId}`])
+}
+function qtiItemIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string, questionNumber: number): string {
+  return hashId("ni_", ["item", `kind=quiz`, `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`, `q=${String(questionNumber)}`])
+}
+function qtiItemIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string, questionNumber: number): string {
+  return hashId("ni_", ["item", `kind=unittest`, `c=${courseSlug}`, `u=${unitId}`, `t=${unitTestId}`, `q=${String(questionNumber)}`])
+}
+function qtiTestIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string): string {
+  return hashId("nt_", ["test", `kind=quiz`, `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`])
+}
+function qtiTestIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string): string {
+  return hashId("nt_", ["test", `kind=unittest`, `c=${courseSlug}`, `u=${unitId}`, `t=${unitTestId}`])
+}
+
+// OneRoster sourcedIds (hyphen-free):
+function orCourseId(courseSlug: string, courseId: string): string {
+  return hashId("or_c_", ["course", `slug=${courseSlug}`, `id=${courseId}`])
+}
+function orClassId(courseSlug: string, courseId: string): string {
+  return hashId("or_class_", ["class", `slug=${courseSlug}`, `id=${courseId}`])
+}
+function orCourseComponentIdForUnit(courseSlug: string, unitId: string): string {
+  return hashId("or_cc_", ["component", "kind=unit", `c=${courseSlug}`, `u=${unitId}`])
+}
+function orCourseComponentIdForLesson(courseSlug: string, unitId: string, lessonId: string): string {
+  return hashId("or_cc_", ["component", "kind=lesson", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`])
+}
+function orCourseComponentIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string): string {
+  return hashId("or_cc_", ["component", "kind=quiz", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`])
+}
+function orCourseComponentIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string): string {
+  return hashId("or_cc_", ["component", "kind=unittest", `c=${courseSlug}`, `u=${unitId}`, `t=${unitTestId}`])
+}
+function orResourceIdForArticle(courseSlug: string, unitId: string, lessonId: string, articleId: string): string {
+  return hashId("or_r_", ["resource", "kind=article", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `a=${articleId}`])
+}
+function orResourceIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string): string {
+  return hashId("or_r_", ["resource", "kind=quiz", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`])
+}
+function orResourceIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string): string {
+  return hashId("or_r_", ["resource", "kind=unittest", `c=${courseSlug}`, `u=${unitId}`, `t=${unitTestId}`])
+}
+function orComponentResourceIdForArticle(courseSlug: string, unitId: string, lessonId: string, articleId: string): string {
+  return hashId("or_cr_", ["component-resource", "kind=article", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `a=${articleId}`])
+}
+function orComponentResourceIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string): string {
+  return hashId("or_cr_", ["component-resource", "kind=quiz", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`])
+}
+function orComponentResourceIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string): string {
+  return hashId("or_cr_", ["component-resource", "kind=unittest", `c=${courseSlug}`, `u=${unitId}`, `t=${unitTestId}`])
+}
+function orAssessmentLineItemIdFromResource(resourceId: string): string {
+  // MUST match global expectation: line item ID = resourceId + "_ali"
+  return `${resourceId}_ali`
+}
+
+function sanitizeIdPart(part: string): string {
+  // Replace non-alphanumeric with underscores, collapse repeats, trim underscores
+  let v = part.replace(/[^A-Za-z0-9_]/g, "_")
+  v = v.replace(/_+/g, "_")
+  v = v.replace(/^_+|_+$/g, "")
+  // Ensure starts with letter or underscore
+  if (!/^[A-Za-z_]/.test(v)) v = `n_${v}`
+  return v || "n"
+}
+
+function buildId(...parts: string[]): string {
+  const safe = parts.map((p) => sanitizeIdPart(p))
+  return `nice_${safe.join("__")}`
+}
+
+function generateStimulusXml(stimulusId: string, title: string, htmlContent: string): string {
+  const safeTitle = escapeXmlAttribute(title)
+  const safeId = escapeXmlAttribute(stimulusId)
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-stimulus xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="${safeId}" title="${safeTitle}">
+  <qti-content-body>
+${htmlContent}
+  </qti-content-body>
+</qti-assessment-stimulus>`
+}
+
+function generateTestXml(testId: string, title: string, itemIds: string[]): string {
+  const safeTitle = escapeXmlAttribute(title)
+  const safeTestId = escapeXmlAttribute(sanitizeIdPart(testId))
+  const itemRefs = itemIds.map((qid, idx) => {
+    const safeItemId = escapeXmlAttribute(sanitizeIdPart(qid))
+    return `      <qti-assessment-item-ref identifier="${safeItemId}" href="/assessment-items/${safeItemId}" sequence="${idx + 1}"></qti-assessment-item-ref>`
+  }).join("\n")
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="${safeTestId}" title="${safeTitle}">
+  <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+    <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
+  </qti-outcome-declaration>
+  <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
+    <qti-assessment-section identifier="SECTION_ALL" title="${safeTitle}" visible="false">
+      <qti-ordering shuffle="false"/>
+${itemRefs}
+    </qti-assessment-section>
+  </qti-test-part>
+</qti-assessment-test>`
+}
+
 async function main(): Promise<void> {
   const args = process.argv.slice(2)
   const getFlag = (name: string) => {
@@ -169,6 +297,7 @@ async function main(): Promise<void> {
   const slug = getFlag("slug")
   const courseId = getFlag("course-id")
   const gradesRaw = getFlag("grades")
+  // No flags for QTI; both OneRoster and QTI are always emitted
 
   if (!input || !slug || !courseId || !gradesRaw) {
     process.stderr.write(
@@ -189,6 +318,8 @@ async function main(): Promise<void> {
     throw errors.new("configuration: NEXT_PUBLIC_APP_DOMAIN is required")
   }
   const baseDomain = appDomain.replace(/\/$/, "")
+
+  logger.info("qti generation enabled by default")
 
   logger.info("opening cartridge", { input })
   const readerResult = await errors.try(openCartridgeTarZst(input))
@@ -216,7 +347,8 @@ async function main(): Promise<void> {
     throw errors.new("index.course: missing title or subject")
   }
 
-  const courseSourcedId = `nice_${courseId}`
+  const courseSourcedId = orCourseId(slug, courseId)
+  const classSourcedId = orClassId(slug, courseId)
   const subjectList = mapSubjectToOneRosterSubjects(indexJson.course.subject)
   const subjectRoute = subjectToRouteSegment(indexJson.course.subject)
 
@@ -245,7 +377,7 @@ async function main(): Promise<void> {
       }
     },
     class: {
-      sourcedId: courseSourcedId,
+      sourcedId: classSourcedId,
       status: "active",
       title: addNiceAcademyPrefix(indexJson.course.title),
       classType: "scheduled",
@@ -263,6 +395,22 @@ async function main(): Promise<void> {
   let totalXp = 0
   let totalLessons = 0
 
+  // QTI generation tracking (always populated)
+  type QtiStimulus = { xml: string; metadata?: Record<string, unknown> }
+  type QtiItem = { xml: string; metadata?: Record<string, unknown> }
+  const qtiStimuli: QtiStimulus[] = []
+  const qtiItems: QtiItem[] = []
+  const qtiTestsXml: string[] = []
+  const exerciseToItemIds = new Map<string, string[]>() // map exercise id -> question ids for test assembly
+
+  const debugBaseDir = path.join(process.cwd(), "data", slug, "qti", "debug")
+  const ensureDir = async (dir: string) => {
+    const mkdirRes = await errors.try(fs.mkdir(dir, { recursive: true }))
+    if (mkdirRes.error) {
+      logger.error("debug dir mkdir failed", { dir, error: mkdirRes.error })
+    }
+  }
+
   for await (const unit of iterUnits(reader) as AsyncIterable<CartUnit>) {
     if (!unit.title || typeof unit.unitNumber !== "number") {
       logger.error("unit missing title or unitNumber", { unit })
@@ -270,14 +418,15 @@ async function main(): Promise<void> {
     }
     const unitEntryFromIndex = indexJson.units.find((u) => u.id === unit.id)
     const unitSlug = getLastPathSegment(unitEntryFromIndex?.path ?? unit.id)
+    const unitComponentId = orCourseComponentIdForUnit(slug, unit.id)
 
     payload.courseComponents.push({
-      sourcedId: `nice_${unit.id}`,
+      sourcedId: unitComponentId,
       status: "active",
       title: unit.title,
       course: { sourcedId: courseSourcedId, type: "course" },
       sortOrder: unit.unitNumber,
-      metadata: { khanId: unit.id, khanSlug: unitSlug, khanTitle: unit.title }
+      metadata: { khanId: unit.id, khanSlug: normalizePathSlug(unitSlug), khanTitle: unit.title }
     })
 
     // Read unit.json to access canonical lesson paths
@@ -313,20 +462,21 @@ async function main(): Promise<void> {
         throw errors.new("lesson: missing required fields")
       }
       const unitEntry = indexJson.units.find((u) => u.id === unit.id)
-      const unitSlug2 = getLastPathSegment(unitEntry?.path ?? unit.id)
+      const unitSlugNorm = normalizePathSlug(unitEntry?.path ?? unit.id)
       const lessonPath = lessonIdToPath.get(lesson.id)
       if (!lessonPath) {
         logger.error("lesson path not found in unit json", { unitId: unit.id, lessonId: lesson.id })
         throw errors.new("lesson path: not found")
       }
-      const lessonSlug = getLastPathSegment(lessonPath)
+      const lessonSlug = normalizePathSlug(lessonPath)
 
+      const lessonComponentId = orCourseComponentIdForLesson(slug, unit.id, lesson.id)
       payload.courseComponents.push({
-        sourcedId: `nice_${lesson.id}`,
+        sourcedId: lessonComponentId,
         status: "active",
         title: lesson.title,
         course: { sourcedId: courseSourcedId, type: "course" },
-        parent: { sourcedId: `nice_${unit.id}`, type: "courseComponent" },
+        parent: { sourcedId: unitComponentId, type: "courseComponent" },
         sortOrder: lesson.lessonNumber,
         metadata: { khanId: lesson.id, khanSlug: lessonSlug, khanTitle: lesson.title }
       })
@@ -342,8 +492,8 @@ async function main(): Promise<void> {
           }
           const xp = await computeArticleXpFromHtml(htmlResult.data)
           const articleSlug = getLastPathSegment(path.dirname(res.path))
-          const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlug2}/${lessonSlug}/a/${articleSlug}`
-          const resourceId = `nice_${res.id}`
+          const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlugNorm}/${lessonSlug}/a/${articleSlug}`
+          const resourceId = orResourceIdForArticle(slug, unit.id, lesson.id, res.id)
           if (resourceSeen.has(resourceId)) {
             logger.error("duplicate resource id", { id: res.id })
             throw errors.new("resource id collision")
@@ -372,41 +522,58 @@ async function main(): Promise<void> {
             }
           })
 
+          const compResId = orComponentResourceIdForArticle(slug, unit.id, lesson.id, res.id)
           payload.componentResources.push({
-            sourcedId: `nice_${lesson.id}_${res.id}`,
+            sourcedId: compResId,
             status: "active",
             title: formatResourceTitleForDisplay(lesson.title, "Article"),
-            courseComponent: { sourcedId: `nice_${lesson.id}`, type: "courseComponent" },
+            courseComponent: { sourcedId: lessonComponentId, type: "courseComponent" },
             resource: { sourcedId: resourceId, type: "resource" },
             sortOrder: resourceIndex
           })
 
           payload.assessmentLineItems.push({
-            sourcedId: `${resourceId}_ali`,
+            sourcedId: orAssessmentLineItemIdFromResource(resourceId),
             status: "active",
             title: `Progress for: ${lesson.title}`,
-            componentResource: { sourcedId: `nice_${lesson.id}_${res.id}` },
+            componentResource: { sourcedId: compResId },
             course: { sourcedId: courseSourcedId },
             metadata: { lessonType: "article", courseSourcedId }
           })
+
+          // Generate QTI stimulus for article
+          const stimId = qtiStimulusId(slug, unit.id, lesson.id, res.id)
+          const stimulusXml = generateStimulusXml(stimId, lesson.title, htmlResult.data)
+          qtiStimuli.push({
+            xml: stimulusXml,
+            metadata: {
+              khanId: res.id,
+              khanSlug: articleSlug,
+              lessonId: lesson.id,
+              unitId: unit.id,
+              khanTitle: lesson.title
+            }
+          })
+          logger.debug("generated qti stimulus for article", { articleId: res.id, lessonId: lesson.id })
 
           totalXp += xp
           totalLessons += 1
         } else if (res.type === "quiz") {
           const quizSlug = getLastPathSegment(res.path)
           // Create intermediate component for quiz
+          const quizComponentId = orCourseComponentIdForQuiz(slug, unit.id, lesson.id, res.id)
           payload.courseComponents.push({
-            sourcedId: `nice_${res.id}`,
+            sourcedId: quizComponentId,
             status: "active",
             title: lesson.title,
             course: { sourcedId: courseSourcedId, type: "course" },
-            parent: { sourcedId: `nice_${unit.id}`, type: "courseComponent" },
+            parent: { sourcedId: unitComponentId, type: "courseComponent" },
             sortOrder: lesson.lessonNumber, // position alongside lesson
             metadata: { khanId: res.id, khanSlug: quizSlug, khanTitle: lesson.title }
           })
 
-          const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlug2}/${lessonSlug}/quiz/${quizSlug}`
-          const resourceId = `nice_${res.id}`
+          const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlugNorm}/${lessonSlug}/quiz/${quizSlug}`
+          const resourceId = orResourceIdForQuiz(slug, unit.id, lesson.id, res.id)
           if (resourceSeen.has(resourceId)) {
             logger.error("duplicate resource id", { id: res.id })
             throw errors.new("resource id collision")
@@ -436,106 +603,256 @@ async function main(): Promise<void> {
             }
           })
 
+          const compResIdQ = orComponentResourceIdForQuiz(slug, unit.id, lesson.id, res.id)
           payload.componentResources.push({
-            sourcedId: `nice_${res.id}_${res.id}`,
+            sourcedId: compResIdQ,
             status: "active",
             title: lesson.title,
-            courseComponent: { sourcedId: `nice_${res.id}`, type: "courseComponent" },
+            courseComponent: { sourcedId: quizComponentId, type: "courseComponent" },
             resource: { sourcedId: resourceId, type: "resource" },
             sortOrder: 0
           })
 
           payload.assessmentLineItems.push({
-            sourcedId: `${resourceId}_ali`,
+            sourcedId: orAssessmentLineItemIdFromResource(resourceId),
             status: "active",
             title: lesson.title,
-            componentResource: { sourcedId: `nice_${res.id}_${res.id}` },
+            componentResource: { sourcedId: compResIdQ },
             course: { sourcedId: courseSourcedId },
             metadata: { lessonType: "quiz", courseSourcedId }
           })
+
+          // Generate QTI items and test for quiz
+          {
+            if (!res.questions || res.questions.length === 0) {
+              logger.error("quiz has no questions", { quizId: res.id, path: res.path })
+              throw errors.new("quiz: no questions available")
+            }
+            const questionIds: string[] = []
+            for (const q of res.questions) {
+              // Load actual XML from cartridge if q.xml is a path
+              const originalXml = q.xml?.trim() && q.xml.includes("<") ? q.xml : await readQuestionXml(reader, q.xml || "")
+              if (!originalXml || originalXml === "") {
+                logger.error("question xml empty after read", { quizId: res.id, questionNumber: q.number, xmlPath: q.xml })
+                throw errors.new("question: xml is required")
+              }
+            // Debug: write and log exact original XML from cartridge
+            const quizDebugDir = path.join(debugBaseDir, "quizzes", res.id)
+            await ensureDir(quizDebugDir)
+            const originalQuizItemPath = path.join(quizDebugDir, `question-${String(q.number).padStart(2, "0")}.original.xml`)
+            const writeOrigQuizRes = await errors.try(fs.writeFile(originalQuizItemPath, originalXml, "utf-8"))
+            if (writeOrigQuizRes.error) {
+              logger.error("debug write failed (quiz original)", { file: originalQuizItemPath, error: writeOrigQuizRes.error })
+            }
+              logger.debug("quiz question xml (original)", {
+                quizId: res.id,
+                questionNumber: q.number,
+                xml: originalXml
+              })
+              // Always rewrite identifier to our stable scheme: nice_<quizId>_<questionNumber>
+              const newItemId = qtiItemIdForQuiz(slug, unit.id, lesson.id, res.id, q.number)
+            const rewriteRes = errors.trySync(() => replaceRootAttributes(originalXml, "qti-assessment-item", newItemId, lesson.title))
+            if (rewriteRes.error) {
+              logger.error("identifier rewrite failed (quiz)", { quizId: res.id, questionNumber: q.number, error: rewriteRes.error })
+              // keep original file already written; bail out fast
+              throw rewriteRes.error
+            }
+            const rewrittenXml = rewriteRes.data
+              // Debug: log the rewritten XML
+              logger.debug("quiz question xml (rewritten)", {
+                quizId: res.id,
+                questionNumber: q.number,
+                identifier: newItemId,
+                xml: rewrittenXml
+              })
+            const rewrittenQuizItemPath = path.join(quizDebugDir, `question-${String(q.number).padStart(2, "0")}.rewritten.xml`)
+            const writeRewQuizRes = await errors.try(fs.writeFile(rewrittenQuizItemPath, rewrittenXml, "utf-8"))
+            if (writeRewQuizRes.error) {
+              logger.error("debug write failed (quiz rewritten)", { file: rewrittenQuizItemPath, error: writeRewQuizRes.error })
+            }
+              questionIds.push(newItemId)
+              qtiItems.push({
+                xml: rewrittenXml,
+                metadata: {
+                  khanId: newItemId,
+                  khanExerciseId: res.id,
+                  khanExerciseSlug: quizSlug,
+                  khanExerciseTitle: lesson.title
+                }
+              })
+            }
+            // Generate test for this quiz
+            const quizTestId = qtiTestIdForQuiz(slug, unit.id, lesson.id, res.id)
+            const quizTestXml = generateTestXml(quizTestId, lesson.title, questionIds)
+            // Debug: log the generated test XML
+            logger.debug("quiz test xml", { quizId: res.id, xml: quizTestXml })
+            const quizTestPath = path.join(path.join(debugBaseDir, "quizzes", res.id), `test.xml`)
+            const writeQuizTestRes = await errors.try(fs.writeFile(quizTestPath, quizTestXml, "utf-8"))
+            if (writeQuizTestRes.error) {
+              logger.error("debug write failed (quiz test)", { file: quizTestPath, error: writeQuizTestRes.error })
+            }
+            qtiTestsXml.push(quizTestXml)
+            exerciseToItemIds.set(res.id, questionIds)
+            logger.debug("generated qti items and test for quiz", { quizId: res.id, itemCount: questionIds.length })
+          }
 
           totalXp += QUIZ_XP
           totalLessons += 1
         }
       }
+    }
 
-      // Unit test (optional)
-      if (unit.unitTest) {
-        const lastLesson = lessons[lessons.length - 1]
-        if (!lastLesson) {
-          logger.error("assessment launch url: no lessons in unit", { unitId: unit.id })
-          throw errors.new("assessment launch url: no lessons in unit")
-        }
-        const lastLessonPath = lessonIdToPath.get(lastLesson.id)
-        if (!lastLessonPath) {
-          logger.error("last lesson path missing", { unitId: unit.id, lessonId: lastLesson.id })
-          throw errors.new("lesson path: not found")
-        }
-        const lastLessonSlug = getLastPathSegment(lastLessonPath)
-        const testSlug = getLastPathSegment(unit.unitTest.path)
+    // Unit test (optional) - process once per unit, OUTSIDE lesson loop
+    if (unit.unitTest) {
+      const unitEntry = indexJson.units.find((u) => u.id === unit.id)
+      const unitSlug = normalizePathSlug(unitEntry?.path ?? unit.id)
+      const lastLesson = lessons[lessons.length - 1]
+      if (!lastLesson) {
+        logger.error("assessment launch url: no lessons in unit", { unitId: unit.id })
+        throw errors.new("assessment launch url: no lessons in unit")
+      }
+      const lastLessonPath = lessonIdToPath.get(lastLesson.id)
+      if (!lastLessonPath) {
+        logger.error("last lesson path missing", { unitId: unit.id, lessonId: lastLesson.id })
+        throw errors.new("lesson path: not found")
+      }
+      const lastLessonSlug = normalizePathSlug(lastLessonPath)
+      const testSlug = getLastPathSegment(unit.unitTest.path)
 
-        payload.courseComponents.push({
-          sourcedId: `nice_${unit.unitTest.id}`,
-          status: "active",
-          title: unit.unitTest.id,
-          course: { sourcedId: courseSourcedId, type: "course" },
-          parent: { sourcedId: `nice_${unit.id}`, type: "courseComponent" },
-          sortOrder: lastLesson.lessonNumber + 1,
-          metadata: { khanId: unit.unitTest.id, khanSlug: testSlug, khanTitle: unit.unitTest.id }
+      const unitTestComponentId = orCourseComponentIdForUnitTest(slug, unit.id, unit.unitTest.id)
+      payload.courseComponents.push({
+        sourcedId: unitTestComponentId,
+        status: "active",
+        title: unit.unitTest.id,
+        course: { sourcedId: courseSourcedId, type: "course" },
+        parent: { sourcedId: unitComponentId, type: "courseComponent" },
+        sortOrder: lastLesson.lessonNumber + 1,
+        metadata: { khanId: unit.unitTest.id, khanSlug: testSlug, khanTitle: unit.unitTest.id }
+      })
+
+      const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlug}/${lastLessonSlug}/test/${testSlug}`
+      const resourceId = orResourceIdForUnitTest(slug, unit.id, unit.unitTest.id)
+      if (resourceSeen.has(resourceId)) {
+        logger.error("duplicate resource id", { id: unit.unitTest.id })
+        throw errors.new("resource id collision")
+      }
+      resourceSeen.add(resourceId)
+
+      payload.resources.push({
+        sourcedId: resourceId,
+        status: "active",
+        title: unit.unitTest.id,
+        vendorResourceId: `nice-academy-${unit.unitTest.id}`,
+        vendorId: "superbuilders",
+        applicationId: "nice",
+        roles: ["primary"],
+        importance: "primary",
+        metadata: {
+          type: "interactive",
+          toolProvider: "Nice Academy",
+          khanActivityType: "UnitTest",
+          khanLessonType: "unittest",
+          launchUrl: launch,
+          url: launch,
+          khanId: unit.unitTest.id,
+          khanSlug: testSlug,
+          khanTitle: unit.unitTest.id,
+          xp: UNIT_TEST_XP
+        }
+      })
+
+      const compResIdUT = orComponentResourceIdForUnitTest(slug, unit.id, unit.unitTest.id)
+      payload.componentResources.push({
+        sourcedId: compResIdUT,
+        status: "active",
+        title: unit.unitTest.id,
+        courseComponent: { sourcedId: unitTestComponentId, type: "courseComponent" },
+        resource: { sourcedId: resourceId, type: "resource" },
+        sortOrder: 0
+      })
+
+      payload.assessmentLineItems.push({
+        sourcedId: orAssessmentLineItemIdFromResource(resourceId),
+        status: "active",
+        title: unit.unitTest.id,
+        componentResource: { sourcedId: compResIdUT },
+        course: { sourcedId: courseSourcedId },
+        metadata: { lessonType: "unittest", courseSourcedId }
+      })
+
+      // Generate QTI items and test for unit test
+      const unitTest = unit.unitTest
+      if (!unitTest.questions || unitTest.questions.length === 0) {
+        logger.error("unit test has no questions", { unitTestId: unitTest.id, unitId: unit.id })
+        throw errors.new("unit test: no questions available")
+      }
+      const questionIds: string[] = []
+      for (const q of unitTest.questions) {
+        const originalXml = q.xml?.trim() && q.xml.includes("<") ? q.xml : await readQuestionXml(reader, q.xml)
+        if (!originalXml || originalXml === "") {
+          logger.error("unit test question xml empty after read", { unitTestId: unitTest.id, questionNumber: q.number, xmlPath: q.xml })
+          throw errors.new("unit test question: xml is required")
+        }
+        // Debug: write and log exact original XML from cartridge for unit test
+        const unitTestDebugDir = path.join(debugBaseDir, "unit-tests", unitTest.id)
+        await ensureDir(unitTestDebugDir)
+        const originalUnitTestItemPath = path.join(unitTestDebugDir, `question-${String(q.number).padStart(2, "0")}.original.xml`)
+        const writeOrigUtRes = await errors.try(fs.writeFile(originalUnitTestItemPath, originalXml, "utf-8"))
+        if (writeOrigUtRes.error) {
+          logger.error("debug write failed (unit test original)", { file: originalUnitTestItemPath, error: writeOrigUtRes.error })
+        }
+        logger.debug("unit test question xml (original)", {
+          unitTestId: unitTest.id,
+          questionNumber: q.number,
+          xml: originalXml
         })
-
-        const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlug2}/${lastLessonSlug}/test/${testSlug}`
-        const resourceId = `nice_${unit.unitTest.id}`
-        if (resourceSeen.has(resourceId)) {
-          logger.error("duplicate resource id", { id: unit.unitTest.id })
-          throw errors.new("resource id collision")
+        // Always rewrite identifier to our stable scheme: nice_<unitTestId>_<questionNumber>
+        const newItemId = qtiItemIdForUnitTest(slug, unit.id, unitTest.id, q.number)
+        const rewriteUtRes = errors.trySync(() => replaceRootAttributes(originalXml, "qti-assessment-item", newItemId, unitTest.id))
+        if (rewriteUtRes.error) {
+          logger.error("identifier rewrite failed (unit test)", { unitTestId: unitTest.id, questionNumber: q.number, error: rewriteUtRes.error })
+          throw rewriteUtRes.error
         }
-        resourceSeen.add(resourceId)
-
-        payload.resources.push({
-          sourcedId: resourceId,
-          status: "active",
-          title: unit.unitTest.id,
-          vendorResourceId: `nice-academy-${unit.unitTest.id}`,
-          vendorId: "superbuilders",
-          applicationId: "nice",
-          roles: ["primary"],
-          importance: "primary",
+        const rewrittenXml = rewriteUtRes.data
+        // Debug: log rewritten unit test question XML
+        logger.debug("unit test question xml (rewritten)", {
+          unitTestId: unitTest.id,
+          questionNumber: q.number,
+          identifier: newItemId,
+          xml: rewrittenXml
+        })
+        const rewrittenUnitTestItemPath = path.join(unitTestDebugDir, `question-${String(q.number).padStart(2, "0")}.rewritten.xml`)
+        const writeRewUtRes = await errors.try(fs.writeFile(rewrittenUnitTestItemPath, rewrittenXml, "utf-8"))
+        if (writeRewUtRes.error) {
+          logger.error("debug write failed (unit test rewritten)", { file: rewrittenUnitTestItemPath, error: writeRewUtRes.error })
+        }
+        questionIds.push(newItemId)
+        qtiItems.push({
+          xml: rewrittenXml,
           metadata: {
-            type: "interactive",
-            toolProvider: "Nice Academy",
-            khanActivityType: "UnitTest",
-            khanLessonType: "unittest",
-            launchUrl: launch,
-            url: launch,
-            khanId: unit.unitTest.id,
-            khanSlug: testSlug,
-            khanTitle: unit.unitTest.id,
-            xp: UNIT_TEST_XP
+            khanId: newItemId,
+            khanExerciseId: unitTest.id,
+            khanExerciseSlug: testSlug,
+            khanExerciseTitle: unitTest.id
           }
         })
-
-        payload.componentResources.push({
-          sourcedId: `nice_${unit.unitTest.id}_${unit.unitTest.id}`,
-          status: "active",
-          title: unit.unitTest.id,
-          courseComponent: { sourcedId: `nice_${unit.unitTest.id}`, type: "courseComponent" },
-          resource: { sourcedId: resourceId, type: "resource" },
-          sortOrder: 0
-        })
-
-        payload.assessmentLineItems.push({
-          sourcedId: `${resourceId}_ali`,
-          status: "active",
-          title: unit.unitTest.id,
-          componentResource: { sourcedId: `nice_${unit.unitTest.id}_${unit.unitTest.id}` },
-          course: { sourcedId: courseSourcedId },
-          metadata: { lessonType: "unittest", courseSourcedId }
-        })
-
-        totalXp += UNIT_TEST_XP
-        totalLessons += 1
       }
+      // Generate test for this unit test
+      const utId = unitTest.id
+      const unitTestAssessmentId = qtiTestIdForUnitTest(slug, unit.id, utId)
+      const unitTestXml = generateTestXml(unitTestAssessmentId, utId, questionIds)
+      // Debug: log the generated unit test XML
+      logger.debug("unit test xml", { unitTestId: utId, xml: unitTestXml })
+      const unitTestPath = path.join(path.join(debugBaseDir, "unit-tests", utId), `test.xml`)
+      const writeUtTestRes = await errors.try(fs.writeFile(unitTestPath, unitTestXml, "utf-8"))
+      if (writeUtTestRes.error) {
+        logger.error("debug write failed (unit test test)", { file: unitTestPath, error: writeUtTestRes.error })
+      }
+      qtiTestsXml.push(unitTestXml)
+      logger.debug("generated qti items and test for unit test", { unitTestId: utId, itemCount: questionIds.length })
+
+      totalXp += UNIT_TEST_XP
+      totalLessons += 1
     }
   }
 
@@ -571,7 +888,7 @@ async function main(): Promise<void> {
     logger.info("wrote output file", { file: filePath })
   }
 
-  logger.info("conversion complete", {
+  logger.info("oneroster conversion complete", {
     slug,
     outDir: courseDir,
     counts: {
@@ -579,6 +896,46 @@ async function main(): Promise<void> {
       resources: payload.resources.length,
       componentResources: payload.componentResources.length,
       assessmentLineItems: payload.assessmentLineItems.length
+    }
+  })
+
+  // Write QTI files (always emitted)
+    logger.info("writing qti payloads", {
+      stimuliCount: qtiStimuli.length,
+      itemsCount: qtiItems.length,
+      testsCount: qtiTestsXml.length
+    })
+
+    const qtiDir = path.join(process.cwd(), "data", slug, "qti")
+    const qtiMkdirResult = await errors.try(fs.mkdir(qtiDir, { recursive: true }))
+    if (qtiMkdirResult.error) {
+      logger.error("failed to create qti output directory", { dir: qtiDir, error: qtiMkdirResult.error })
+      throw errors.wrap(qtiMkdirResult.error, "mkdir qti output")
+    }
+
+    const qtiFiles: Array<{ name: string; data: unknown }> = [
+      { name: "assessmentStimuli.json", data: qtiStimuli },
+      { name: "assessmentItems.json", data: qtiItems },
+      { name: "assessmentTests.json", data: qtiTestsXml }
+    ]
+
+    for (const file of qtiFiles) {
+      const filePath = path.join(qtiDir, file.name)
+      const writeResult = await errors.try(fs.writeFile(filePath, JSON.stringify(file.data, null, 2), "utf-8"))
+      if (writeResult.error) {
+        logger.error("failed to write qti output file", { file: filePath, error: writeResult.error })
+        throw errors.wrap(writeResult.error, "write qti output file")
+      }
+      logger.info("wrote qti output file", { file: filePath })
+    }
+
+  logger.info("qti conversion complete", {
+    slug,
+    qtiDir,
+    counts: {
+      stimuli: qtiStimuli.length,
+      items: qtiItems.length,
+      tests: qtiTestsXml.length
     }
   })
 }
