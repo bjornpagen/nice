@@ -1,7 +1,8 @@
 import * as errors from "@superbuilders/errors"
 import { compile } from "@superbuilders/qti-assessment-item-generator/compiler"
-import type { AssessmentItemInput } from "@superbuilders/qti-assessment-item-generator/compiler/schemas"
+import type { AssessmentItemInput } from "@superbuilders/qti-assessment-item-generator/core/item"
 import { differentiateAssessmentItem } from "@superbuilders/qti-assessment-item-generator/structured/differentiator"
+import { widgetCollections } from "@superbuilders/qti-assessment-item-generator/widgets/collections"
 import { eq } from "drizzle-orm"
 import { NonRetriableError } from "inngest"
 import OpenAI from "openai"
@@ -26,7 +27,7 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 			throw new NonRetriableError("Invalid event payload")
 		}
 
-		const { questionId, n } = validationResult.data
+    const { questionId, n, widgetCollection } = validationResult.data
 
 		logger.info("starting differentiation flow", { questionId, variations: n })
 
@@ -73,11 +74,16 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 		}
 
 		// Step 2: Load the base structured item directly from DB.
-		const baseItem = exerciseData.structuredJson as AssessmentItemInput
+		const baseItem = exerciseData.structuredJson as AssessmentItemInput<readonly string[]>
 
 		// Step 3: Differentiate the base item using the library's differentiator.
-		const differentiatedItems = await step.run("differentiate-items", async () => {
-			const result = await errors.try(differentiateAssessmentItem(openai, logger, baseItem, n))
+        const differentiatedItems = await step.run("differentiate-items", async () => {
+            const WIDGETS = widgetCollections[widgetCollection]
+            if (!WIDGETS) {
+                logger.error("invalid widget collection", { widgetCollection })
+                throw new NonRetriableError("Invalid widget collection")
+            }
+            const result = await errors.try(differentiateAssessmentItem(openai, logger, baseItem, n, WIDGETS))
 			if (result.error) {
 				logger.error("failed to differentiate items", { error: result.error })
 				throw result.error
@@ -113,12 +119,13 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 			const qtiIdentifier = `nice_${questionId}_${randomSuffix}`
 
 			// Update the item identifier before compilation
-			const itemWithNewIdentifier: AssessmentItemInput = {
+			const itemWithNewIdentifier: AssessmentItemInput<readonly string[]> = {
 				...item,
 				identifier: qtiIdentifier
 			}
 
-			const compileResult = await errors.try(compile(itemWithNewIdentifier))
+            const WIDGETS = widgetCollections[widgetCollection]
+            const compileResult = await errors.try(compile(itemWithNewIdentifier, WIDGETS))
 			if (compileResult.error) {
 				logger.error("failed to compile differentiated item to xml, skipping", {
 					questionId,

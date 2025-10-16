@@ -16,7 +16,7 @@ describe("QTI Event Schemas", () => {
 					_openai: any,
 					_logger: any,
 					_envelope: any,
-					_collection: "math-core" | "fourth-grade-math" | "science" | "simple-visual"
+					_collection: "all" | "fourth-grade-math" | "science" | "simple-visual" | "teks-math-4" | "math-core"
 				) => {}
 				mockGenerate(null, null, null, collectionName)
 			}).not.toThrow()

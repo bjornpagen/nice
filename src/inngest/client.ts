@@ -33,7 +33,7 @@ const events = {
 	"qti/exercise.items.migrate": {
 		data: z.object({
 			exerciseId: z.string().min(1),
-			widgetCollection: z.enum(["science", "math", "simple"]) // normalized by orchestrator
+			widgetCollection: WidgetCollectionNameSchema
 		})
 	},
 	// REMOVED: "qti/item.migrate.focused" event is removed as it's merged.

@@ -4,7 +4,7 @@ import { z } from "zod"
 // It is defined here and MUST NOT be imported from the deleted widget-collections directory.
 // The developer must verify that these collections are supported by the version of the
 // @superbuilders/qti-assessment-item-generator library being installed.
-export const WidgetCollectionNameSchema = z.enum(["math-core", "fourth-grade-math", "science", "simple-visual"])
+export const WidgetCollectionNameSchema = z.enum(["all", "science", "simple-visual", "fourth-grade-math", "teks-math-4", "math-core"])
 export type WidgetCollectionName = z.infer<typeof WidgetCollectionNameSchema>
 
 // Schema for the 'qti/item.migrate' event.data payload.
@@ -18,7 +18,8 @@ export const MigrateQtiItemEventDataSchema = z.object({
 // Differentiation requires only the question identifier and a count 'n'.
 export const DifferentiateQtiItemEventDataSchema = z.object({
 	questionId: z.string().min(1),
-	n: z.number().int().positive()
+	n: z.number().int().positive(),
+	widgetCollection: WidgetCollectionNameSchema
 })
 
 // Schema for the 'qti/test.standardize-phrasing' event.data payload.

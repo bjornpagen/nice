@@ -6,6 +6,7 @@ import {
 	generateFromEnvelope
 } from "@superbuilders/qti-assessment-item-generator/structured"
 import { buildPerseusEnvelope } from "@superbuilders/qti-assessment-item-generator/structured/ai-context-builder"
+import { widgetCollections } from "@superbuilders/qti-assessment-item-generator/widgets/collections"
 import { eq } from "drizzle-orm"
 import { NonRetriableError } from "inngest"
 import OpenAI from "openai"
@@ -89,21 +90,22 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		}
 		logger.debug("db fetch successful", { questionId, exerciseTitle: questionData.exerciseTitle })
 
-		// Step 2: Build Perseus envelope using the new library function.
-		const envelopeResult = await step.run("build-perseus-envelope", async () => {
-			const result = await errors.try(buildPerseusEnvelope(questionData.parsedData))
-			if (result.error) {
-				logger.error("failed to build perseus envelope", { error: result.error })
-				throw result.error
+		// Steps 2-4 combined: build envelope, generate structured item, and compile to QTI XML in a single step.
+		const generationAndCompile = await step.run("generate-and-compile-qti-item", async (): Promise<{ structuredItem: unknown; compiledXml: string }> => {
+			// Build Perseus envelope using the library function.
+			const built = await errors.try(buildPerseusEnvelope(questionData.parsedData))
+			if (built.error) {
+				logger.error("failed to build perseus envelope", { error: built.error })
+				throw built.error
 			}
 
 			// Filter out non-image URLs (like Wikimedia Commons attribution pages)
-			const envelope = result.data
+			const envelope = built.data
 			const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"]
 
-			// Filter rasterImageUrls to only include actual image files
-			if (Array.isArray(envelope.rasterImageUrls)) {
-				const filteredRasterUrls = envelope.rasterImageUrls.filter((url: string) => {
+			// Filter multimodalImageUrls to only include actual image files
+			if (Array.isArray(envelope.multimodalImageUrls)) {
+				const filteredRasterUrls = envelope.multimodalImageUrls.filter((url: string) => {
 					// Check if URL has an image extension
 					const hasImageExtension = imageExtensions.some((ext) => url.toLowerCase().includes(ext))
 					// Exclude wiki pages and other non-image URLs
@@ -111,39 +113,21 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 					return hasImageExtension && !isWikiPage
 				})
 
-				logger.debug("filtered raster image urls", {
-					original: envelope.rasterImageUrls.length,
+				logger.debug("filtered multimodal image urls", {
+					original: envelope.multimodalImageUrls.length,
 					filtered: filteredRasterUrls.length,
-					removed: envelope.rasterImageUrls.filter((url: string) => !filteredRasterUrls.includes(url))
+					removed: envelope.multimodalImageUrls.filter((url: string) => !filteredRasterUrls.includes(url))
 				})
 
-				envelope.rasterImageUrls = filteredRasterUrls
+				envelope.multimodalImageUrls = filteredRasterUrls
 			}
 
-			// Also filter vectorImageUrls if present
-			if (Array.isArray(envelope.vectorImageUrls)) {
-				const filteredVectorUrls = envelope.vectorImageUrls.filter((url: string) => {
-					const hasImageExtension = imageExtensions.some((ext) => url.toLowerCase().includes(ext))
-					const isWikiPage = url.includes("/wiki/")
-					return hasImageExtension && !isWikiPage
-				})
-
-				if (envelope.vectorImageUrls.length !== filteredVectorUrls.length) {
-					logger.debug("filtered vector image urls", {
-						original: envelope.vectorImageUrls.length,
-						filtered: filteredVectorUrls.length
-					})
-				}
-
-				envelope.vectorImageUrls = filteredVectorUrls
+			const WIDGETS = widgetCollections[widgetCollection]
+			if (!WIDGETS) {
+				logger.error("invalid widget collection", { widgetCollection })
+				throw new NonRetriableError("Invalid widget collection")
 			}
-
-			return envelope
-		})
-
-		// Steps 3 & 4 combined: generate structured item and compile to QTI XML in a single step.
-		const generationAndCompile = await step.run("generate-and-compile-qti-item", async () => {
-			const genResult = await errors.try(generateFromEnvelope(openai, logger, envelopeResult, widgetCollection))
+			const genResult = await errors.try(generateFromEnvelope(openai, logger, envelope, WIDGETS))
 			if (genResult.error) {
 				logger.error("failed to generate structured item from envelope", { error: genResult.error, questionId })
 				if (errors.is(genResult.error, ErrUnsupportedInteraction)) {
@@ -158,7 +142,7 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 				throw genResult.error
 			}
 			const structuredItem = genResult.data
-			const compileResult = await errors.try(compile(structuredItem))
+			const compileResult = await errors.try(compile(structuredItem, WIDGETS))
 			if (compileResult.error) {
 				logger.error("failed to compile structured item to xml", { error: compileResult.error, questionId })
 				throw compileResult.error

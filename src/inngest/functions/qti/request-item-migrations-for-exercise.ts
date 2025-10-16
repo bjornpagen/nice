@@ -3,13 +3,12 @@ import { eq } from "drizzle-orm"
 import { z } from "zod"
 import { db } from "@/db"
 import { niceQuestions } from "@/db/schemas"
+import { WidgetCollectionNameSchema, type WidgetCollectionName } from "@/inngest/events/qti"
 import { inngest } from "@/inngest/client"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
 
 type SupportedCollectionInput = "science" | "math" | "simple"
-type SupportedCollection = "science" | "math-core" | "simple-visual"
-
-const collectionMap: Record<SupportedCollectionInput, SupportedCollection> = {
+const collectionMap: Record<SupportedCollectionInput, WidgetCollectionName> = {
 	science: "science",
 	math: "math-core",
 	simple: "simple-visual"
