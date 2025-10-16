@@ -6,9 +6,9 @@ import "./src/env.js"
 
 /** @type {import("next").NextConfig} */
 const config = {
+	reactCompiler: true,
 	experimental: {
 		cacheComponents: true,
-		reactCompiler: true,
 		useCache: true
 	},
 	images: {

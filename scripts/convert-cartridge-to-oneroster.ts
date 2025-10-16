@@ -233,7 +233,15 @@ async function main(): Promise<void> {
       metadata: {
         generator: indexJson.generator,
         timebackVisible: "true",
-        primaryApp: "nice_academy"
+        primaryApp: "nice_academy",
+        khanId: courseId,
+        khanSlug: slug,
+        khanSubjectSlug: subjectRoute,
+        khanTitle: indexJson.course.title,
+        khanDescription: "",
+        AlphaLearn: {
+          publishStatus: "active"
+        }
       }
     },
     class: {
@@ -418,6 +426,7 @@ async function main(): Promise<void> {
               type: "interactive",
               toolProvider: "Nice Academy",
               khanActivityType: "Quiz",
+              khanLessonType: "quiz",
               launchUrl: launch,
               url: launch,
               khanId: res.id,
@@ -496,6 +505,7 @@ async function main(): Promise<void> {
             type: "interactive",
             toolProvider: "Nice Academy",
             khanActivityType: "UnitTest",
+            khanLessonType: "unittest",
             launchUrl: launch,
             url: launch,
             khanId: unit.unitTest.id,
