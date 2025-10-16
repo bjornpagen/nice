@@ -180,6 +180,11 @@ const events = {
 			slug: z.string().min(1)
 		})
 	},
+	"qti/course.upload.by-slug": {
+		data: z.object({
+			slug: z.string().min(1)
+		})
+	},
 	// ✅ ADD: New per-entity ingestion events for the fan-out model.
 	"oneroster/resource.ingest.one": {
 		data: z.object({

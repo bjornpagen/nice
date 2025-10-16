@@ -45,6 +45,7 @@ import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orches
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
 import { orchestrateCourseUploadToOnerosterBySlug } from "@/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
+import { orchestrateCourseUploadToQtiBySlug } from "@/inngest/functions/orchestrate-course-upload-to-qti-by-slug"
 import { extractAndProcessQtiSvgs } from "@/inngest/functions/qa/extract-and-process-qti-svgs"
 import { orchestrateCourseVisualQAReview } from "@/inngest/functions/qa/orchestrate-course-visual-qa-review"
 // Import Visual QA workers
@@ -85,6 +86,7 @@ export const { GET, POST, PUT } = serve({
 		// Removed: generic ingestion orchestrators
 		// Removed: orchestrateCourseXmlGeneration
 		orchestrateCourseUploadToQti,
+		orchestrateCourseUploadToQtiBySlug,
 		// ✅ ADDED: Register all new and renamed functions
 		orchestrateHardcodedMathItemMigration,
 		orchestrateHardcodedMathStimulusMigration,
