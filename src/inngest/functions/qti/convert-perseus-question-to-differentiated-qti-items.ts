@@ -38,6 +38,15 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 		}
 		const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 
+		// Resolve widget collection and derive widget key tuple for precise typing
+		const WIDGETS = widgetCollections[widgetCollection]
+		if (!WIDGETS) {
+			logger.error("invalid widget collection", { widgetCollection })
+			throw new NonRetriableError("Invalid widget collection")
+		}
+		type WidgetKeysOf<C> = C extends { widgetTypeKeys: infer K } ? K : readonly string[]
+		type WidgetKeys = WidgetKeysOf<typeof WIDGETS>
+
 		// 2. Enforce blacklist with NonRetriableError.
 		if (isQuestionIdBlacklisted(questionId)) {
 			logger.warn("question is blacklisted, job will not retry", { questionId })
@@ -74,15 +83,10 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 		}
 
 		// Step 2: Load the base structured item directly from DB.
-		const baseItem = exerciseData.structuredJson as AssessmentItemInput<readonly string[]>
+		const baseItem = exerciseData.structuredJson as AssessmentItemInput<WidgetKeys>
 
 		// Step 3: Differentiate the base item using the library's differentiator.
         const differentiatedItems = await step.run("differentiate-items", async () => {
-            const WIDGETS = widgetCollections[widgetCollection]
-            if (!WIDGETS) {
-                logger.error("invalid widget collection", { widgetCollection })
-                throw new NonRetriableError("Invalid widget collection")
-            }
             const result = await errors.try(differentiateAssessmentItem(openai, logger, baseItem, n, WIDGETS))
 			if (result.error) {
 				logger.error("failed to differentiate items", { error: result.error })
@@ -119,13 +123,12 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 			const qtiIdentifier = `nice_${questionId}_${randomSuffix}`
 
 			// Update the item identifier before compilation
-			const itemWithNewIdentifier: AssessmentItemInput<readonly string[]> = {
+			const itemWithNewIdentifier: AssessmentItemInput<WidgetKeys> = {
 				...item,
 				identifier: qtiIdentifier
 			}
 
-            const WIDGETS = widgetCollections[widgetCollection]
-            const compileResult = await errors.try(compile(itemWithNewIdentifier, WIDGETS))
+			const compileResult = await errors.try(compile(itemWithNewIdentifier, WIDGETS))
 			if (compileResult.error) {
 				logger.error("failed to compile differentiated item to xml, skipping", {
 					questionId,

@@ -41,7 +41,7 @@
         "@salusoft89/planegcs": "^1.1.7",
         "@superbuilders/errors": "2.0.1",
         "@superbuilders/oneroster": "^0.7.0",
-        "@superbuilders/qti-assessment-item-generator": "4.2.2",
+        "@superbuilders/qti-assessment-item-generator": "4.2.4",
         "@superbuilders/slog": "4.0.0",
         "@t3-oss/env-nextjs": "^0.13.8",
         "@vercel/analytics": "^1.5.0",
@@ -651,7 +651,7 @@
 
     "@superbuilders/oneroster": ["@superbuilders/oneroster@0.7.0", "", { "peerDependencies": { "@modelcontextprotocol/sdk": ">=1.5.0 <1.10.0", "zod": ">= 3" }, "optionalPeers": ["@modelcontextprotocol/sdk"], "bin": { "mcp": "bin/mcp-server.js" } }, "sha512-AWykMovQJuN1jZ6pEpvU7+WU9LCtsVDFYVINdqq6Mopla0Te9GPYjmo2XmbhND56FNzYjGXHrOXzko9g8aRYew=="],
 
-    "@superbuilders/qti-assessment-item-generator": ["@superbuilders/qti-assessment-item-generator@4.2.2", "", { "dependencies": { "@biomejs/biome": "^2.0.0-beta.6", "@superbuilders/errors": "3.0.2", "@superbuilders/slog": "4.0.0", "@types/he": "1.2.3", "fast-xml-parser": "5.2.5", "glob": "^11.0.3", "he": "1.2.0", "tar-stream": "^3.1.7", "unbzip2-stream": "^1.4.3", "z3-solver": "4.15.3", "zod": "^4.1.12" }, "peerDependencies": { "openai": ">=5 <6", "typescript": "^5.9.3" } }, "sha512-t2xk8yLq9xM+iWVqtm2B4h/9611b971+yQ5Ltzo3EIGP3MJf4+RLtosj8qAkZmrDBkR0aOmPqQaydvc+Yi7/Gg=="],
+    "@superbuilders/qti-assessment-item-generator": ["@superbuilders/qti-assessment-item-generator@4.2.4", "", { "dependencies": { "@biomejs/biome": "^2.0.0-beta.6", "@superbuilders/errors": "3.0.2", "@superbuilders/slog": "4.0.0", "@types/he": "1.2.3", "fast-xml-parser": "5.2.5", "glob": "^11.0.3", "he": "1.2.0", "tar-stream": "^3.1.7", "unbzip2-stream": "^1.4.3", "z3-solver": "4.15.3", "zod": "^4.1.12" }, "peerDependencies": { "openai": ">=5 <6", "typescript": "^5.9.3" } }, "sha512-cgRsf7R5VdMYSnA5MrxsplCdDFF0AjSfKadN5vJnHVlVejvk3ExbHf1j2ZUKnac6TleEGUeypLGTnoagprTzcA=="],
 
     "@superbuilders/slog": ["@superbuilders/slog@4.0.0", "", { "dependencies": { "@biomejs/biome": "^2.0.0-beta.5" }, "peerDependencies": { "typescript": "^5.8.3" } }, "sha512-ZZxfp07mjEiOPI7RoB+d1St+KxrHaQ1qi2x8ltjwezNsURf1hLf+0L0Zu05r87NI1Oid9LkhHNZ6GFUGcAWM1Q=="],
 
