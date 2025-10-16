@@ -14,6 +14,8 @@ const isProtectedRoute = createRouteMatcher([
 const isDebugRoute = createRouteMatcher(["/debug(.*)"])
 // Route matcher for metrics route
 const isMetricsRoute = createRouteMatcher(["/profile/me/metrics(.*)"])
+// Route matcher for course builder admin page
+const isCourseBuilderRoute = createRouteMatcher(["/course-builder(.*)"])
 
 // Define which routes authenticated users shouldn't access
 const isAuthRoute = createRouteMatcher([
@@ -33,6 +35,44 @@ export default clerkMiddleware(async (auth, req) => {
 	// Protect routes that require authentication
 	if (isProtectedRoute(req)) {
 		await auth.protect()
+	}
+
+	// Gate course-builder to non-student roles only
+	if (isCourseBuilderRoute(req)) {
+		if (!userId) {
+			return Response.redirect(new URL("/profile/me/courses", req.url))
+		}
+
+		const clientResult = await errors.try<ClerkClient>(clerkClient())
+		if (clientResult.error) {
+			logger.error("clerk client", { error: clientResult.error })
+			return Response.redirect(new URL("/profile/me/courses", req.url))
+		}
+
+		const client = clientResult.data
+		const userResult = await errors.try<User>(client.users.getUser(userId))
+		if (userResult.error) {
+			logger.error("user lookup", { error: userResult.error })
+			return Response.redirect(new URL("/profile/me/courses", req.url))
+		}
+
+		const user = userResult.data
+		const pm: any = user.publicMetadata || {}
+		let rolesNormalized: string[] = []
+		if (Array.isArray(pm.roles)) {
+			rolesNormalized = pm.roles
+				.map((r: any) => (typeof r === "string" ? r : (r?.role ?? r?.roleType ?? "")))
+				.map((r: string) => r.toLowerCase())
+				.filter((r: string) => r.length > 0)
+		} else if (typeof pm.role === "string") {
+			rolesNormalized = [pm.role.toLowerCase()]
+		}
+		const hasNonStudentRole = rolesNormalized.some((r) => r !== "student")
+		const isOnlyStudent = rolesNormalized.length === 0 ? true : !hasNonStudentRole
+		if (isOnlyStudent) {
+			logger.warn("forbidden role for course-builder", { userId, roles: rolesNormalized })
+			return Response.redirect(new URL("/profile/me/courses", req.url))
+		}
 	}
 
 	// Enforce domain restriction for all debug routes

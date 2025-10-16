@@ -65,7 +65,28 @@ export function Sidebar() {
 	}
 	const isSuperbuilders = Boolean(primaryEmail?.endsWith("@superbuilders.school"))
 
-	// Build Development list conditionally
+
+	// Determine roles from Clerk publicMetadata
+	let rolesNormalized: string[] = []
+	if (isLoaded && user) {
+		const pm: any = user.publicMetadata || {}
+		if (Array.isArray(pm.roles)) {
+			rolesNormalized = pm.roles
+				.map((r: any) => (typeof r === "string" ? r : (r?.role ?? r?.roleType ?? "")))
+				.map((r: string) => r.toLowerCase())
+				.filter((r: string) => r.length > 0)
+		} else if (typeof pm.role === "string") {
+			rolesNormalized = [pm.role.toLowerCase()]
+		}
+	}
+	const hasNonStudentRole = rolesNormalized.some((r) => r !== "student")
+
+	// Admin section (visible only for non-student roles)
+	const admin: SidebarItem[] = hasNonStudentRole
+		? [{ name: "Course Builder", href: "course-builder", disabled: false, external: false }]
+		: []
+
+	// Build Development list conditionally (superbuilders domain only)
 	const development: SidebarItem[] = isSuperbuilders
 		? [{ name: "Metrics", href: "me/metrics", disabled: false, external: false }]
 		: []
@@ -129,6 +150,36 @@ export function Sidebar() {
 						))}
 					</ul>
 				</div>
+				{admin.length > 0 && (
+					<div>
+						<h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">ADMIN</h3>
+						<ul className="space-y-1">
+							{admin.map((item) => (
+								<li key={item.name}>
+									{item.disabled ? (
+										<Button
+											variant="ghost"
+											className={cn(highlight(pathname, item.href), "opacity-50 cursor-not-allowed")}
+											disabled
+										>
+											{item.name}
+										</Button>
+									) : (
+										<Button asChild variant="ghost" className={highlight(pathname, item.href)}>
+											{item.external ? (
+												<a href={item.href} target="_blank" rel="noopener noreferrer">
+													{item.name}
+												</a>
+											) : (
+												<Link href={`/${item.href}`}>{item.name}</Link>
+											)}
+										</Button>
+									)}
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
 				{development.length > 0 && (
 					<div>
 						<h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">DEVELOPMENT</h3>
