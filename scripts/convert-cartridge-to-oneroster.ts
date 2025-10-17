@@ -180,8 +180,9 @@ function hashId(_prefix: string, parts: string[]): string {
 }
 
 // QTI identifiers (hyphen-free):
-function qtiStimulusId(courseSlug: string, unitId: string, lessonId: string, articleId: string): string {
-  return hashId("ns_", ["stim", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `a=${articleId}`])
+function qtiStimulusIdFromResource(resourceId: string): string {
+  // For articles, stimulus identifier MUST equal the resource sourcedId
+  return resourceId
 }
 function qtiItemIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string, questionNumber: number): string {
   return hashId("ni_", ["item", `kind=quiz`, `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`, `q=${String(questionNumber)}`])
@@ -546,8 +547,8 @@ async function main(): Promise<void> {
             metadata: { lessonType: "article", courseSourcedId }
           })
 
-          // Generate QTI stimulus for article
-          const stimId = qtiStimulusId(slug, unit.id, lesson.id, res.id)
+          // Generate QTI stimulus for article: identifier MUST equal resource sourcedId
+          const stimId = qtiStimulusIdFromResource(resourceId)
           const stimulusXml = generateStimulusXml(stimId, lesson.title, htmlResult.data)
           qtiStimuli.push({
             xml: stimulusXml,
@@ -559,11 +560,6 @@ async function main(): Promise<void> {
               khanTitle: lesson.title
             }
           })
-          // Backfill the just-pushed resource's qtiStimulusIdentifier
-          const lastResource = payload.resources[payload.resources.length - 1]
-          if (lastResource && lastResource.sourcedId === resourceId) {
-            ;(lastResource.metadata as Record<string, unknown>).qtiStimulusIdentifier = stimId
-          }
           logger.debug("generated qti stimulus for article", { articleId: res.id, lessonId: lesson.id })
 
           totalXp += xp
@@ -609,7 +605,6 @@ async function main(): Promise<void> {
               khanId: res.id,
               khanSlug: quizSlug,
               khanTitle: lesson.title,
-              qtiTestIdentifier: undefined,
               xp: QUIZ_XP
             }
           })
@@ -769,7 +764,6 @@ async function main(): Promise<void> {
           khanId: unit.unitTest.id,
           khanSlug: testSlug,
           khanTitle: unit.unitTest.id,
-              qtiTestIdentifier: undefined,
           xp: UNIT_TEST_XP
         }
       })
@@ -855,11 +849,6 @@ async function main(): Promise<void> {
       // IMPORTANT: Set test identifier equal to the resource sourcedId
       const unitTestAssessmentId = resourceId
       const unitTestXml = generateTestXml(unitTestAssessmentId, utId, questionIds)
-      // Backfill qtiTestIdentifier for the unit test resource
-      const lastUTResource = payload.resources[payload.resources.length - 1]
-      if (lastUTResource && lastUTResource.sourcedId === resourceId) {
-        ;(lastUTResource.metadata as Record<string, unknown>).qtiTestIdentifier = unitTestAssessmentId
-      }
       // Debug: log the generated unit test XML
       logger.debug("unit test xml", { unitTestId: utId, xml: unitTestXml })
       const unitTestPath = path.join(path.join(debugBaseDir, "unit-tests", utId), `test.xml`)
