@@ -98,12 +98,23 @@ export async function buildCoursePayloadAction(input: GenerateCourseInput) {
     grades.push(Number.parseInt(match[1]!, 10))
   }
 
+  // Map subject to valid OneRoster subjects
+  const subjectMapping: Record<string, string[]> = {
+    "English Language Arts": ["Reading", "Vocabulary"],
+    "Math": ["Math"],
+    "Science": ["Science"],
+    "Social Studies": ["Social Studies"],
+    "Computing": ["Science"],
+    "General": ["Reading"]
+  }
+  const onerosterSubjects = subjectMapping[data.subject] || ["Reading"]
+
   // Construct course
   const course = {
     sourcedId: courseSourcedId,
     status: "active" as const,
     title: data.title.startsWith("Nice Academy - ") ? data.title : `Nice Academy - ${data.title}`,
-    subjects: [data.subject],
+    subjects: onerosterSubjects,
     grades,
     courseCode: courseSlug,
     org: { sourcedId: ORG_SOURCED_ID, type: "district" as const },
