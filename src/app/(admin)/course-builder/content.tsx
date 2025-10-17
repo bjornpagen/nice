@@ -1302,7 +1302,7 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
 
                 {/* Right Panel - Course Builder */}
                 {isBuilderOpen && (
-                    <div className="w-1/2 bg-[rgb(23,37,84)] animate-in slide-in-from-right duration-300 flex flex-col">
+                    <div className="w-1/2 bg-gray-50 animate-in slide-in-from-right duration-300 flex flex-col">
                         <div className="flex-1 overflow-y-auto p-6 space-y-6" style={{ scrollbarGutter: "stable both-edges", overscrollBehavior: "contain" }}>
                             {/* Course Header */}
                             <div className="bg-white rounded-lg border p-6">
