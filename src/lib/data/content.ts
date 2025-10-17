@@ -2,12 +2,12 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import {
-	fetchAndResolveQuestions,
-	findAndValidateResource,
-	findComponentResourceWithContext,
-	prepareUserQuestionSet
+    fetchAndResolveQuestions,
+    findAndValidateResource,
+    findComponentResourceWithContext,
+    prepareUserQuestionSet,
+    findResourceInLessonBySlugAndType
 } from "@/lib/data/fetchers/interactive-helpers"
-import { getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 // rotation mode removed; selection is now always deterministic via unified helper
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
@@ -25,20 +25,13 @@ export async function fetchArticlePageData(params: {
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.article, "fetchArticlePageData article parameter")
 	logger.info("fetchArticlePageData called", { params })
-	// CHANGE: Fetch "interactive" type and filter by activityType "Article"
-	const resourceResult = await errors.try(getResourcesBySlugAndType(params.article, "interactive", "Article"))
-	if (resourceResult.error) {
-		logger.error("failed to fetch article resource by slug", { error: resourceResult.error, slug: params.article })
-		throw errors.wrap(resourceResult.error, "failed to fetch article resource by slug")
-	}
-	const resource = resourceResult.data[0]
-
-	if (!resource) {
-		notFound()
-	}
-
-	const layoutData = await fetchLessonLayoutData(params)
-	const componentResource = await findComponentResourceWithContext(resource.sourcedId, layoutData.lessonData.id)
+    const layoutData = await fetchLessonLayoutData(params)
+    // Context-aware lookup scoped to lesson to avoid picking legacy/original resources
+    const { resource, componentResource } = await findResourceInLessonBySlugAndType({
+        lessonSourcedId: layoutData.lessonData.id,
+        slug: params.article,
+        activityType: "Article"
+    })
 
 	// Validate resource metadata with Zod. THIS IS THE CRITICAL PATTERN.
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
@@ -90,7 +83,12 @@ export async function fetchExercisePageData(params: {
 	logger.info("fetchExercisePageData called", { params })
 
 	const layoutData = await fetchLessonLayoutData(params)
-	const resource = await findAndValidateResource(params.exercise, "Exercise")
+    // Context-aware lookup scoped to lesson to avoid picking legacy/original resources
+    const { resource, componentResource } = await findResourceInLessonBySlugAndType({
+        lessonSourcedId: layoutData.lessonData.id,
+        slug: params.exercise,
+        activityType: "Exercise"
+    })
 
 	// Validate that the exercise slug from the URL matches the resource's actual khanSlug
 	const resourceMetadata = resource.metadata
@@ -103,7 +101,6 @@ export async function fetchExercisePageData(params: {
 		notFound()
 	}
 
-	const componentResource = await findComponentResourceWithContext(resource.sourcedId, layoutData.lessonData.id)
 	const { assessmentTest, resolvedQuestions } = await fetchAndResolveQuestions(resource.sourcedId)
 	const questions = await prepareUserQuestionSet({
 		resourceSourcedId: resource.sourcedId,
@@ -138,20 +135,13 @@ export async function fetchVideoPageData(params: {
 	logger.info("fetchVideoPageData called", { params })
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.video, "fetchVideoPageData video parameter")
-	// CHANGE: Fetch "interactive" type and filter by activityType "Video"
-	const resourceResult = await errors.try(getResourcesBySlugAndType(params.video, "interactive", "Video"))
-	if (resourceResult.error) {
-		logger.error("failed to fetch video resource by slug", { error: resourceResult.error, slug: params.video })
-		throw errors.wrap(resourceResult.error, "failed to fetch video resource by slug")
-	}
-	const resource = resourceResult.data[0]
-
-	if (!resource) {
-		notFound()
-	}
-
-	const layoutData = await fetchLessonLayoutData(params)
-	const componentResource = await findComponentResourceWithContext(resource.sourcedId, layoutData.lessonData.id)
+    const layoutData = await fetchLessonLayoutData(params)
+    // Context-aware lookup scoped to lesson to avoid picking legacy/original resources
+    const { resource, componentResource } = await findResourceInLessonBySlugAndType({
+        lessonSourcedId: layoutData.lessonData.id,
+        slug: params.video,
+        activityType: "Video"
+    })
 
 	// Validate resource metadata with Zod. THIS IS THE CRITICAL PATTERN.
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)

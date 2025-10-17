@@ -9,6 +9,7 @@ import {
 	getCourseComponentByCourseAndSlug,
 	getResourcesBySlugAndType
 } from "@/lib/data/fetchers/oneroster"
+import { getComponentResourcesByLessonIds, getResourcesByIds } from "@/lib/data/fetchers/oneroster"
 import { getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { prepareInteractiveAssessment } from "@/lib/interactive-assessments"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
@@ -66,6 +67,95 @@ export async function findAndValidateResource(
 
 	// Return resource with validated metadata
 	return { ...resource, metadata: metadataResult.data }
+}
+
+/**
+ * Finds the resource linked to a specific lesson by slug and activity type.
+ * This is context-aware and avoids cross-course slug collisions.
+ */
+export async function findResourceInLessonBySlugAndType(options: {
+	lessonSourcedId: string
+	slug: string
+	activityType: "Article" | "Video" | "Exercise"
+}): Promise<{
+	resource: Resource & { metadata: ResourceMetadata }
+	componentResource: ComponentResourceFromAPI
+}> {
+	const { lessonSourcedId, slug, activityType } = options
+
+	// Fetch all component resources for the lesson
+	const lessonComponentResourcesResult = await errors.try(
+		getComponentResourcesByLessonIds([lessonSourcedId])
+	)
+	if (lessonComponentResourcesResult.error) {
+ 		logger.error("failed to fetch component resources for lesson", {
+ 			error: lessonComponentResourcesResult.error,
+ 			lessonSourcedId
+ 		})
+ 		throw errors.wrap(lessonComponentResourcesResult.error, "fetch component resources for lesson")
+ 	}
+
+	const lessonComponentResources = lessonComponentResourcesResult.data
+ 	if (lessonComponentResources.length === 0) {
+ 		logger.error("no component resources found for lesson", { lessonSourcedId })
+ 		notFound()
+ 	}
+
+	// Fetch all resources referenced by those component resources
+	const resourceIds = [...new Set(lessonComponentResources.map((cr) => cr.resource.sourcedId))]
+	const resourcesResult = await errors.try(getResourcesByIds(resourceIds))
+ 	if (resourcesResult.error) {
+ 		logger.error("failed to fetch resources by ids for lesson context", {
+ 			error: resourcesResult.error,
+ 			lessonSourcedId,
+ 			count: resourceIds.length
+ 		})
+ 		throw errors.wrap(resourcesResult.error, "fetch resources by ids for lesson context")
+ 	}
+
+	// Validate metadata and filter by type and slug deterministically
+	const candidates: Array<Resource & { metadata: ResourceMetadata }> = []
+ 	for (const res of resourcesResult.data) {
+ 		const meta = ResourceMetadataSchema.safeParse(res.metadata)
+ 		if (!meta.success) continue
+ 		if (meta.data.type !== "interactive") continue
+ 		if (meta.data.khanActivityType !== activityType) continue
+ 		if (meta.data.khanSlug !== slug) continue
+ 		candidates.push({ ...res, metadata: meta.data })
+ 	}
+
+ 	if (candidates.length === 0) {
+ 		logger.error("no matching resource in lesson by slug and activity type", {
+ 			lessonSourcedId,
+ 			slug,
+ 			activityType
+ 		})
+ 		notFound()
+ 	}
+
+ 	if (candidates.length > 1) {
+ 		logger.error("ambiguous resources in lesson for slug and activity type", {
+ 			lessonSourcedId,
+ 			slug,
+ 			activityType,
+ 			count: candidates.length
+ 		})
+ 		throw errors.new("ambiguous resource in lesson context")
+ 	}
+
+	const resource = candidates[0]!
+	const componentResource = lessonComponentResources.find(
+ 		(cr) => cr.resource.sourcedId === resource.sourcedId
+ 	)
+ 	if (!componentResource) {
+ 		logger.error("componentResource missing for matched resource in lesson", {
+ 			lessonSourcedId,
+ 			resourceSourcedId: resource.sourcedId
+ 		})
+ 		notFound()
+ 	}
+
+	return { resource, componentResource: componentResource! }
 }
 
 /**
