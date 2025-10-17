@@ -8786,3 +8786,3475 @@ I'm organizing a detailed explanation into four sections covering how the assess
 Possible next steps:
 1. Pull a recent result id from logs and call `oneroster.getResult` in a REPL to confirm the stored metadata matches the Redis final summary.
 2. If you need deeper visibility into in-flight attempts, add temporary logging around `updateStateAndQuestion` to print the exact Redis keys being written.
+
+## User (checkpoint)
+
+great. given this information, can you explain exactly what the bug is in our [@convert-cartridge-to-oneroster.ts](zed:///agent/file?path=%2FUsers%2Fbjorn%2FDocuments%2FCode%2Fnice%2Fscripts%2Fconvert-cartridge-to-oneroster.ts) script? i'm able to step through an entire quiz, but upon the last question, i sumbit and it says "Could not save final result. Please retry.". can you investigate the exact root cause of this bug please? keep in mind this bug only happens with any course generated with our cartridge sccript, any of the "native" nice academy courses based on the database oneroster payload builder does not have this issue. can you investiaget the root cause of this bug, and explain why this bug occurs in our [@convert-cartridge-to-oneroster.ts](zed:///agent/file?path=%2FUsers%2Fbjorn%2FDocuments%2FCode%2Fnice%2Fscripts%2Fconvert-cartridge-to-oneroster.ts) ?
+
+## Assistant
+
+<thinking>
+
+
+**Analyzing convert-cartridge script bug**
+</thinking>
+
+**Tool Call: Read convert-cartridge-to-oneroster.ts**
+Status: Completed
+
+```ts
+async function main(): Promise<void> {
+  const args = process.argv.slice(2)
+  const getFlag = (name: string) => {
+    const idx = args.findIndex((a) => a === `--${name}`)
+    return idx >= 0 ? args[idx + 1] : undefined
+  }
+
+  const input = getFlag("input")
+  const slug = getFlag("slug")
+  const courseId = getFlag("course-id")
+  const gradesRaw = getFlag("grades")
+  // No flags for QTI; both OneRoster and QTI are always emitted
+
+  if (!input || !slug || !courseId || !gradesRaw) {
+    process.stderr.write(
+      "Usage: convert-cartridge-to-oneroster --input /abs/file.tar.zst --slug <course-slug> --course-id <id> --grades <n[,n,...]>\n"
+    )
+    process.exit(1)
+  }
+
+  const grades = gradesRaw.split(",").map((g) => Number(g.trim()))
+  if (grades.some((n) => !Number.isInteger(n) || n < 0 || n > 12)) {
+    logger.error("invalid grades", { gradesRaw })
+    throw errors.new("grades: must be integers between 0 and 12")
+  }
+
+  const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN
+  if (!appDomain || typeof appDomain !== "string") {
+    logger.error("CRITICAL: NEXT_PUBLIC_APP_DOMAIN missing or invalid", { NEXT_PUBLIC_APP_DOMAIN: appDomain })
+    throw errors.new("configuration: NEXT_PUBLIC_APP_DOMAIN is required")
+  }
+  const baseDomain = appDomain.replace(/\/$/, "")
+
+  logger.info("qti generation enabled by default")
+
+  logger.info("opening cartridge", { input })
+  const readerResult = await errors.try(openCartridgeTarZst(input))
+  if (readerResult.error) {
+    logger.error("failed to open cartridge", { input, error: readerResult.error })
+    throw errors.wrap(readerResult.error, "open cartridge")
+  }
+  const reader = readerResult.data
+
+  // Read index.json via client helper (package export)
+  const indexResult = await errors.try(readIndex(reader))
+  if (indexResult.error) {
+    logger.error("failed to read index.json", { error: indexResult.error })
+    throw errors.wrap(indexResult.error, "read index")
+  }
+  const indexJson = indexResult.data as IndexV1
+  if (!indexJson) {
+    logger.error("missing index.json in cartridge")
+    throw errors.new("cartridge: index.json missing")
+  }
+
+  // Validate presence of required course fields
+  if (!indexJson.course?.title || !indexJson.course?.subject) {
+    logger.error("index.course missing required fields", { course: indexJson.course })
+    throw errors.new("index.course: missing title or subject")
+  }
+
+  const courseSourcedId = orCourseId(slug, courseId)
+  const classSourcedId = orClassId(slug, courseId)
+  const subjectList = mapSubjectToOneRosterSubjects(indexJson.course.subject)
+  const subjectRoute = subjectToRouteSegment(indexJson.course.subject)
+
+  const payload: OneRosterPayload = {
+    course: {
+      sourcedId: courseSourcedId,
+      status: "active",
+      title: addNiceAcademyPrefix(indexJson.course.title),
+      subjects: subjectList,
+      grades,
+      courseCode: slug,
+      org: { sourcedId: ORG_SOURCED_ID, type: "district" },
+      academicSession: { sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "term" },
+      metadata: {
+        generator: indexJson.generator,
+        timebackVisible: "true",
+        primaryApp: "nice_academy",
+        khanId: courseId,
+        khanSlug: slug,
+        khanSubjectSlug: subjectRoute,
+        khanTitle: indexJson.course.title,
+        khanDescription: "",
+        AlphaLearn: {
+          publishStatus: "active"
+        }
+      }
+    },
+    class: {
+      sourcedId: classSourcedId,
+      status: "active",
+      title: addNiceAcademyPrefix(indexJson.course.title),
+      classType: "scheduled",
+      course: { sourcedId: courseSourcedId, type: "course" },
+      school: { sourcedId: ORG_SOURCED_ID, type: "org" },
+      terms: [{ sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "term" }]
+    },
+    courseComponents: [],
+    resources: [],
+    componentResources: [],
+    assessmentLineItems: []
+  }
+
+  const resourceSeen = new Set<string>()
+  let totalXp = 0
+  let totalLessons = 0
+
+  // QTI generation tracking (always populated)
+  type QtiStimulus = { xml: string; metadata?: Record<string, unknown> }
+  type QtiItem = { xml: string; metadata?: Record<string, unknown> }
+  const qtiStimuli: QtiStimulus[] = []
+  const qtiItems: QtiItem[] = []
+  const qtiTestsXml: string[] = []
+  const exerciseToItemIds = new Map<string, string[]>() // map exercise id -> question ids for test assembly
+
+  const debugBaseDir = path.join(process.cwd(), "data", slug, "qti", "debug")
+  const ensureDir = async (dir: string) => {
+    const mkdirRes = await errors.try(fs.mkdir(dir, { recursive: true }))
+    if (mkdirRes.error) {
+      logger.error("debug dir mkdir failed", { dir, error: mkdirRes.error })
+    }
+  }
+
+  for await (const unit of iterUnits(reader) as AsyncIterable<CartUnit>) {
+    if (!unit.title || typeof unit.unitNumber !== "number") {
+      logger.error("unit missing title or unitNumber", { unit })
+      throw errors.new("unit: missing required fields")
+    }
+    const unitEntryFromIndex = indexJson.units.find((u) => u.id === unit.id)
+    const unitSlug = getLastPathSegment(unitEntryFromIndex?.path ?? unit.id)
+    const unitComponentId = orCourseComponentIdForUnit(slug, unit.id)
+
+    payload.courseComponents.push({
+      sourcedId: unitComponentId,
+      status: "active",
+      title: unit.title,
+      course: { sourcedId: courseSourcedId, type: "course" },
+      sortOrder: unit.unitNumber,
+      metadata: { khanId: unit.id, khanSlug: normalizePathSlug(unitSlug), khanTitle: unit.title }
+    })
+
+    // Read unit.json to access canonical lesson paths
+    if (!unitEntryFromIndex?.path || unitEntryFromIndex.path === "") {
+      logger.error("unit path missing in index", { unitId: unit.id })
+      throw errors.new("unit path: missing in index")
+    }
+    const unitDataResult = await errors.try(readUnit(reader, unitEntryFromIndex.path))
+    if (unitDataResult.error) {
+      logger.error("failed to read unit json", { unitId: unit.id, error: unitDataResult.error })
+      throw errors.wrap(unitDataResult.error, "read unit json")
+    }
+    const unitData = unitDataResult.data
+    const lessonIdToPath = new Map<string, string>()
+    for (const l of unitData.lessons) {
+      if (!l.path || l.path === "") {
+        logger.error("lesson missing path", { lessonId: l.id, unitId: unit.id })
+        throw errors.new("lesson: missing path")
+      }
+      lessonIdToPath.set(l.id, l.path)
+    }
+
+    const lessons: CartLesson[] = []
+    for await (const lesson of iterUnitLessons(reader, unit) as AsyncIterable<CartLesson>) {
+      lessons.push(lesson)
+    }
+
+    // sort lessons by lessonNumber deterministically
+    lessons.sort((a, b) => a.lessonNumber - b.lessonNumber)
+    for (const lesson of lessons) {
+      if (!lesson.title || typeof lesson.lessonNumber !== "number") {
+        logger.error("lesson missing title or lessonNumber", { lesson })
+        throw errors.new("lesson: missing required fields")
+      }
+      const unitEntry = indexJson.units.find((u) => u.id === unit.id)
+      const unitSlugNorm = normalizePathSlug(unitEntry?.path ?? unit.id)
+      const lessonPath = lessonIdToPath.get(lesson.id)
+      if (!lessonPath) {
+        logger.error("lesson path not found in unit json", { unitId: unit.id, lessonId: lesson.id })
+        throw errors.new("lesson path: not found")
+      }
+      const lessonSlug = normalizePathSlug(lessonPath)
+
+      const lessonComponentId = orCourseComponentIdForLesson(slug, unit.id, lesson.id)
+      payload.courseComponents.push({
+        sourcedId: lessonComponentId,
+        status: "active",
+        title: lesson.title,
+        course: { sourcedId: courseSourcedId, type: "course" },
+        parent: { sourcedId: unitComponentId, type: "courseComponent" },
+        sortOrder: lesson.lessonNumber,
+        metadata: { khanId: lesson.id, khanSlug: lessonSlug, khanTitle: lesson.title }
+      })
+
+      let resourceIndex = 0
+      for await (const res of iterLessonResources(reader, lesson) as AsyncIterable<Resource>) {
+        resourceIndex++
+        if (res.type === "article") {
+          const htmlResult = await errors.try(readArticleContent(reader, res.path))
+          if (htmlResult.error) {
+            logger.error("failed to read article stimulus", { path: res.path, error: htmlResult.error })
+            throw errors.wrap(htmlResult.error, "read article")
+          }
+          const xp = await computeArticleXpFromHtml(htmlResult.data)
+          const articleSlug = getLastPathSegment(path.dirname(res.path))
+          const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlugNorm}/${lessonSlug}/a/${articleSlug}`
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Checking quiz generation section**
+</thinking>
+
+**Tool Call: Read convert-cartridge-to-oneroster.ts**
+Status: Completed
+
+```ts
+          const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlugNorm}/${lessonSlug}/a/${articleSlug}`
+          const resourceId = orResourceIdForArticle(slug, unit.id, lesson.id, res.id)
+          if (resourceSeen.has(resourceId)) {
+            logger.error("duplicate resource id", { id: res.id })
+            throw errors.new("resource id collision")
+          }
+          resourceSeen.add(resourceId)
+
+          payload.resources.push({
+            sourcedId: resourceId,
+            status: "active",
+            title: lesson.title,
+            vendorResourceId: `nice-academy-${res.id}`,
+            vendorId: "superbuilders",
+            applicationId: "nice",
+            roles: ["primary"],
+            importance: "primary",
+            metadata: {
+              type: "interactive",
+              toolProvider: "Nice Academy",
+              khanActivityType: "Article",
+              launchUrl: launch,
+              url: launch,
+              khanId: res.id,
+              khanSlug: articleSlug,
+              khanTitle: lesson.title,
+              qtiStimulusIdentifier: undefined,
+              xp
+            }
+          })
+
+          const compResId = orComponentResourceIdForArticle(slug, unit.id, lesson.id, res.id)
+          payload.componentResources.push({
+            sourcedId: compResId,
+            status: "active",
+            title: formatResourceTitleForDisplay(lesson.title, "Article"),
+            courseComponent: { sourcedId: lessonComponentId, type: "courseComponent" },
+            resource: { sourcedId: resourceId, type: "resource" },
+            sortOrder: resourceIndex
+          })
+
+          payload.assessmentLineItems.push({
+            sourcedId: orAssessmentLineItemIdFromResource(resourceId),
+            status: "active",
+            title: `Progress for: ${lesson.title}`,
+            componentResource: { sourcedId: compResId },
+            course: { sourcedId: courseSourcedId },
+            metadata: { lessonType: "article", courseSourcedId }
+          })
+
+          // Generate QTI stimulus for article: identifier MUST equal resource sourcedId
+          const stimId = qtiStimulusIdFromResource(resourceId)
+          const stimulusXml = generateStimulusXml(stimId, lesson.title, htmlResult.data)
+          qtiStimuli.push({
+            xml: stimulusXml,
+            metadata: {
+              khanId: res.id,
+              khanSlug: articleSlug,
+              lessonId: lesson.id,
+              unitId: unit.id,
+              khanTitle: lesson.title
+            }
+          })
+          logger.debug("generated qti stimulus for article", { articleId: res.id, lessonId: lesson.id })
+
+          totalXp += xp
+          totalLessons += 1
+        } else if (res.type === "quiz") {
+          const quizSlug = getLastPathSegment(res.path)
+          // Create intermediate component for quiz
+          const quizComponentId = orCourseComponentIdForQuiz(slug, unit.id, lesson.id, res.id)
+          payload.courseComponents.push({
+            sourcedId: quizComponentId,
+            status: "active",
+            title: lesson.title,
+            course: { sourcedId: courseSourcedId, type: "course" },
+            parent: { sourcedId: unitComponentId, type: "courseComponent" },
+            sortOrder: lesson.lessonNumber, // position alongside lesson
+            metadata: { khanId: res.id, khanSlug: quizSlug, khanTitle: lesson.title }
+          })
+
+          const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlugNorm}/${lessonSlug}/quiz/${quizSlug}`
+          const resourceId = orResourceIdForQuiz(slug, unit.id, lesson.id, res.id)
+          if (resourceSeen.has(resourceId)) {
+            logger.error("duplicate resource id", { id: res.id })
+            throw errors.new("resource id collision")
+          }
+          resourceSeen.add(resourceId)
+
+          payload.resources.push({
+            sourcedId: resourceId,
+            status: "active",
+            title: lesson.title,
+            vendorResourceId: `nice-academy-${res.id}`,
+            vendorId: "superbuilders",
+            applicationId: "nice",
+            roles: ["primary"],
+            importance: "primary",
+            metadata: {
+              type: "interactive",
+              toolProvider: "Nice Academy",
+              khanActivityType: "Quiz",
+              khanLessonType: "quiz",
+              launchUrl: launch,
+              url: launch,
+              khanId: res.id,
+              khanSlug: quizSlug,
+              khanTitle: lesson.title,
+              xp: QUIZ_XP
+            }
+          })
+
+          const compResIdQ = orComponentResourceIdForQuiz(slug, unit.id, lesson.id, res.id)
+          payload.componentResources.push({
+            sourcedId: compResIdQ,
+            status: "active",
+            title: lesson.title,
+            courseComponent: { sourcedId: quizComponentId, type: "courseComponent" },
+            resource: { sourcedId: resourceId, type: "resource" },
+            sortOrder: 0
+          })
+
+          payload.assessmentLineItems.push({
+            sourcedId: orAssessmentLineItemIdFromResource(resourceId),
+            status: "active",
+            title: lesson.title,
+            componentResource: { sourcedId: compResIdQ },
+            course: { sourcedId: courseSourcedId },
+            metadata: { lessonType: "quiz", courseSourcedId }
+          })
+
+          // Generate QTI items and test for quiz
+          {
+            if (!res.questions || res.questions.length === 0) {
+              logger.error("quiz has no questions", { quizId: res.id, path: res.path })
+              throw errors.new("quiz: no questions available")
+            }
+            const questionIds: string[] = []
+            for (const q of res.questions) {
+              // Load actual XML from cartridge if q.xml is a path
+              const originalXml = q.xml?.trim() && q.xml.includes("<") ? q.xml : await readQuestionXml(reader, q.xml || "")
+              if (!originalXml || originalXml === "") {
+                logger.error("question xml empty after read", { quizId: res.id, questionNumber: q.number, xmlPath: q.xml })
+                throw errors.new("question: xml is required")
+              }
+            // Debug: write and log exact original XML from cartridge
+            const quizDebugDir = path.join(debugBaseDir, "quizzes", res.id)
+            await ensureDir(quizDebugDir)
+            const originalQuizItemPath = path.join(quizDebugDir, `question-${String(q.number).padStart(2, "0")}.original.xml`)
+            const writeOrigQuizRes = await errors.try(fs.writeFile(originalQuizItemPath, originalXml, "utf-8"))
+            if (writeOrigQuizRes.error) {
+              logger.error("debug write failed (quiz original)", { file: originalQuizItemPath, error: writeOrigQuizRes.error })
+            }
+              logger.debug("quiz question xml (original)", {
+                quizId: res.id,
+                questionNumber: q.number,
+                xml: originalXml
+              })
+              // Always rewrite identifier to our stable scheme: nice_<quizId>_<questionNumber>
+              const newItemId = qtiItemIdForQuiz(slug, unit.id, lesson.id, res.id, q.number)
+            const rewriteRes = errors.trySync(() => replaceRootAttributes(originalXml, "qti-assessment-item", newItemId, lesson.title))
+            if (rewriteRes.error) {
+              logger.error("identifier rewrite failed (quiz)", { quizId: res.id, questionNumber: q.number, error: rewriteRes.error })
+              // keep original file already written; bail out fast
+              throw rewriteRes.error
+            }
+            const rewrittenXml = rewriteRes.data
+              // Debug: log the rewritten XML
+              logger.debug("quiz question xml (rewritten)", {
+                quizId: res.id,
+                questionNumber: q.number,
+                identifier: newItemId,
+                xml: rewrittenXml
+              })
+            const rewrittenQuizItemPath = path.join(quizDebugDir, `question-${String(q.number).padStart(2, "0")}.rewritten.xml`)
+            const writeRewQuizRes = await errors.try(fs.writeFile(rewrittenQuizItemPath, rewrittenXml, "utf-8"))
+            if (writeRewQuizRes.error) {
+              logger.error("debug write failed (quiz rewritten)", { file: rewrittenQuizItemPath, error: writeRewQuizRes.error })
+            }
+              questionIds.push(newItemId)
+              qtiItems.push({
+                xml: rewrittenXml,
+                metadata: {
+                  khanId: newItemId,
+                  khanExerciseId: stripNicePrefix(resourceId),
+                  khanExerciseSlug: quizSlug,
+                  khanExerciseTitle: lesson.title
+                }
+              })
+            }
+            // Generate test for this quiz
+            // IMPORTANT: Set test identifier equal to the resource sourcedId so providers can map directly
+            const quizTestId = resourceId
+            const quizTestXml = generateTestXml(quizTestId, lesson.title, questionIds)
+            // Debug: log the generated test XML
+            logger.debug("quiz test xml", { quizId: res.id, xml: quizTestXml })
+            const quizTestPath = path.join(path.join(debugBaseDir, "quizzes", res.id), `test.xml`)
+            const writeQuizTestRes = await errors.try(fs.writeFile(quizTestPath, quizTestXml, "utf-8"))
+            if (writeQuizTestRes.error) {
+              logger.error("debug write failed (quiz test)", { file: quizTestPath, error: writeQuizTestRes.error })
+            }
+            qtiTestsXml.push(quizTestXml)
+            exerciseToItemIds.set(res.id, questionIds)
+            logger.debug("generated qti items and test for quiz", { quizId: res.id, itemCount: questionIds.length })
+          }
+
+          totalXp += QUIZ_XP
+          totalLessons += 1
+        }
+      }
+    }
+
+    // Unit test (optional) - process once per unit, OUTSIDE lesson loop
+    if (unit.unitTest) {
+      const unitEntry = indexJson.units.find((u) => u.id === unit.id)
+      const unitSlug = normalizePathSlug(unitEntry?.path ?? unit.id)
+      const lastLesson = lessons[lessons.length - 1]
+      if (!lastLesson) {
+        logger.error("assessment launch url: no lessons in unit", { unitId: unit.id })
+        throw errors.new("assessment launch url: no lessons in unit")
+      }
+      const lastLessonPath = lessonIdToPath.get(lastLesson.id)
+      if (!lastLessonPath) {
+        logger.error("last lesson path missing", { unitId: unit.id, lessonId: lastLesson.id })
+        throw errors.new("lesson path: not found")
+      }
+      const lastLessonSlug = normalizePathSlug(lastLessonPath)
+      const testSlug = getLastPathSegment(unit.unitTest.path)
+
+      const unitTestComponentId = orCourseComponentIdForUnitTest(slug, unit.id, unit.unitTest.id)
+      payload.courseComponents.push({
+        sourcedId: unitTestComponentId,
+        status: "active",
+        title: unit.unitTest.id,
+        course: { sourcedId: courseSourcedId, type: "course" },
+        parent: { sourcedId: unitComponentId, type: "courseComponent" },
+        sortOrder: lastLesson.lessonNumber + 1,
+        metadata: { khanId: unit.unitTest.id, khanSlug: testSlug, khanTitle: unit.unitTest.id }
+      })
+
+      const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlug}/${lastLessonSlug}/test/${testSlug}`
+      const resourceId = orResourceIdForUnitTest(slug, unit.id, unit.unitTest.id)
+      if (resourceSeen.has(resourceId)) {
+        logger.error("duplicate resource id", { id: unit.unitTest.id })
+        throw errors.new("resource id collision")
+      }
+      resourceSeen.add(resourceId)
+
+          payload.resources.push({
+        sourcedId: resourceId,
+        status: "active",
+        title: unit.unitTest.id,
+        vendorResourceId: `nice-academy-${unit.unitTest.id}`,
+        vendorId: "superbuilders",
+        applicationId: "nice",
+        roles: ["primary"],
+        importance: "primary",
+        metadata: {
+          type: "interactive",
+          toolProvider: "Nice Academy",
+          khanActivityType: "UnitTest",
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Requesting more content**
+</thinking>
+
+**Tool Call: Read convert-cartridge-to-oneroster.ts**
+Status: Completed
+
+```ts
+          khanActivityType: "UnitTest",
+          khanLessonType: "unittest",
+          launchUrl: launch,
+          url: launch,
+          khanId: unit.unitTest.id,
+          khanSlug: testSlug,
+          khanTitle: unit.unitTest.id,
+          xp: UNIT_TEST_XP
+        }
+      })
+
+      const compResIdUT = orComponentResourceIdForUnitTest(slug, unit.id, unit.unitTest.id)
+      payload.componentResources.push({
+        sourcedId: compResIdUT,
+        status: "active",
+        title: unit.unitTest.id,
+        courseComponent: { sourcedId: unitTestComponentId, type: "courseComponent" },
+        resource: { sourcedId: resourceId, type: "resource" },
+        sortOrder: 0
+      })
+
+      payload.assessmentLineItems.push({
+        sourcedId: orAssessmentLineItemIdFromResource(resourceId),
+        status: "active",
+        title: unit.unitTest.id,
+        componentResource: { sourcedId: compResIdUT },
+        course: { sourcedId: courseSourcedId },
+        metadata: { lessonType: "unittest", courseSourcedId }
+      })
+
+      // Generate QTI items and test for unit test
+      const unitTest = unit.unitTest
+      if (!unitTest.questions || unitTest.questions.length === 0) {
+        logger.error("unit test has no questions", { unitTestId: unitTest.id, unitId: unit.id })
+        throw errors.new("unit test: no questions available")
+      }
+      const questionIds: string[] = []
+      for (const q of unitTest.questions) {
+        const originalXml = q.xml?.trim() && q.xml.includes("<") ? q.xml : await readQuestionXml(reader, q.xml)
+        if (!originalXml || originalXml === "") {
+          logger.error("unit test question xml empty after read", { unitTestId: unitTest.id, questionNumber: q.number, xmlPath: q.xml })
+          throw errors.new("unit test question: xml is required")
+        }
+        // Debug: write and log exact original XML from cartridge for unit test
+        const unitTestDebugDir = path.join(debugBaseDir, "unit-tests", unitTest.id)
+        await ensureDir(unitTestDebugDir)
+        const originalUnitTestItemPath = path.join(unitTestDebugDir, `question-${String(q.number).padStart(2, "0")}.original.xml`)
+        const writeOrigUtRes = await errors.try(fs.writeFile(originalUnitTestItemPath, originalXml, "utf-8"))
+        if (writeOrigUtRes.error) {
+          logger.error("debug write failed (unit test original)", { file: originalUnitTestItemPath, error: writeOrigUtRes.error })
+        }
+        logger.debug("unit test question xml (original)", {
+          unitTestId: unitTest.id,
+          questionNumber: q.number,
+          xml: originalXml
+        })
+        // Always rewrite identifier to our stable scheme: nice_<unitTestId>_<questionNumber>
+        const newItemId = qtiItemIdForUnitTest(slug, unit.id, unitTest.id, q.number)
+        const rewriteUtRes = errors.trySync(() => replaceRootAttributes(originalXml, "qti-assessment-item", newItemId, unitTest.id))
+        if (rewriteUtRes.error) {
+          logger.error("identifier rewrite failed (unit test)", { unitTestId: unitTest.id, questionNumber: q.number, error: rewriteUtRes.error })
+          throw rewriteUtRes.error
+        }
+        const rewrittenXml = rewriteUtRes.data
+        // Debug: log rewritten unit test question XML
+        logger.debug("unit test question xml (rewritten)", {
+          unitTestId: unitTest.id,
+          questionNumber: q.number,
+          identifier: newItemId,
+          xml: rewrittenXml
+        })
+        const rewrittenUnitTestItemPath = path.join(unitTestDebugDir, `question-${String(q.number).padStart(2, "0")}.rewritten.xml`)
+        const writeRewUtRes = await errors.try(fs.writeFile(rewrittenUnitTestItemPath, rewrittenXml, "utf-8"))
+        if (writeRewUtRes.error) {
+          logger.error("debug write failed (unit test rewritten)", { file: rewrittenUnitTestItemPath, error: writeRewUtRes.error })
+        }
+        questionIds.push(newItemId)
+        qtiItems.push({
+          xml: rewrittenXml,
+          metadata: {
+            khanId: newItemId,
+            khanExerciseId: stripNicePrefix(resourceId),
+            khanExerciseSlug: testSlug,
+            khanExerciseTitle: unitTest.id
+          }
+        })
+      }
+      // Generate test for this unit test
+      const utId = unitTest.id
+      // IMPORTANT: Set test identifier equal to the resource sourcedId
+      const unitTestAssessmentId = resourceId
+      const unitTestXml = generateTestXml(unitTestAssessmentId, utId, questionIds)
+      // Debug: log the generated unit test XML
+      logger.debug("unit test xml", { unitTestId: utId, xml: unitTestXml })
+      const unitTestPath = path.join(path.join(debugBaseDir, "unit-tests", utId), `test.xml`)
+      const writeUtTestRes = await errors.try(fs.writeFile(unitTestPath, unitTestXml, "utf-8"))
+      if (writeUtTestRes.error) {
+        logger.error("debug write failed (unit test test)", { file: unitTestPath, error: writeUtTestRes.error })
+      }
+      qtiTestsXml.push(unitTestXml)
+      logger.debug("generated qti items and test for unit test", { unitTestId: utId, itemCount: questionIds.length })
+
+      totalXp += UNIT_TEST_XP
+      totalLessons += 1
+    }
+  }
+
+  // Attach metrics
+  const md = payload.course.metadata ?? {}
+  md.metrics = { totalXp, totalLessons }
+  payload.course.metadata = md
+
+  // Write out files
+  const courseDir = path.join(process.cwd(), "data", slug, "oneroster")
+  const mkdirResult = await errors.try(fs.mkdir(courseDir, { recursive: true }))
+  if (mkdirResult.error) {
+    logger.error("failed to create output directory", { dir: courseDir, error: mkdirResult.error })
+    throw errors.wrap(mkdirResult.error, "mkdir output")
+  }
+
+  const files: Array<{ name: string; data: unknown }> = [
+    { name: "course.json", data: payload.course },
+    { name: "class.json", data: payload.class },
+    { name: "courseComponents.json", data: payload.courseComponents },
+    { name: "resources.json", data: payload.resources },
+    { name: "componentResources.json", data: payload.componentResources },
+    { name: "assessmentLineItems.json", data: payload.assessmentLineItems }
+  ]
+
+  for (const file of files) {
+    const filePath = path.join(courseDir, file.name)
+    const writeResult = await errors.try(fs.writeFile(filePath, JSON.stringify(file.data, null, 2), "utf-8"))
+    if (writeResult.error) {
+      logger.error("failed to write output file", { file: filePath, error: writeResult.error })
+      throw errors.wrap(writeResult.error, "write output file")
+    }
+    logger.info("wrote output file", { file: filePath })
+  }
+
+  logger.info("oneroster conversion complete", {
+    slug,
+    outDir: courseDir,
+    counts: {
+      courseComponents: payload.courseComponents.length,
+      resources: payload.resources.length,
+      componentResources: payload.componentResources.length,
+      assessmentLineItems: payload.assessmentLineItems.length
+    }
+  })
+
+  // Write QTI files (always emitted)
+    logger.info("writing qti payloads", {
+      stimuliCount: qtiStimuli.length,
+      itemsCount: qtiItems.length,
+      testsCount: qtiTestsXml.length
+    })
+
+    const qtiDir = path.join(process.cwd(), "data", slug, "qti")
+    const qtiMkdirResult = await errors.try(fs.mkdir(qtiDir, { recursive: true }))
+    if (qtiMkdirResult.error) {
+      logger.error("failed to create qti output directory", { dir: qtiDir, error: qtiMkdirResult.error })
+      throw errors.wrap(qtiMkdirResult.error, "mkdir qti output")
+    }
+
+    const qtiFiles: Array<{ name: string; data: unknown }> = [
+      { name: "assessmentStimuli.json", data: qtiStimuli },
+      { name: "assessmentItems.json", data: qtiItems },
+      { name: "assessmentTests.json", data: qtiTestsXml }
+    ]
+
+    for (const file of qtiFiles) {
+      const filePath = path.join(qtiDir, file.name)
+      const writeResult = await errors.try(fs.writeFile(filePath, JSON.stringify(file.data, null, 2), "utf-8"))
+      if (writeResult.error) {
+        logger.error("failed to write qti output file", { file: filePath, error: writeResult.error })
+        throw errors.wrap(writeResult.error, "write qti output file")
+      }
+      logger.info("wrote qti output file", { file: filePath })
+    }
+
+  logger.info("qti conversion complete", {
+    slug,
+    qtiDir,
+    counts: {
+      stimuli: qtiStimuli.length,
+      items: qtiItems.length,
+      tests: qtiTestsXml.length
+    }
+  })
+}
+
+const result = await errors.try(main())
+if (result.error) {
+  logger.error("fatal", { error: result.error })
+  process.exit(1)
+}
+process.exit(0)
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Inspecting ID generation helpers**
+</thinking>
+
+**Tool Call: Read convert-cartridge-to-oneroster.ts**
+Status: Completed
+
+```ts
+function orCourseComponentIdForLesson(courseSlug: string, unitId: string, lessonId: string): string {
+  return hashId("or_cc_", ["component", "kind=lesson", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`])
+}
+function orCourseComponentIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string): string {
+  return hashId("or_cc_", ["component", "kind=quiz", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`])
+}
+function orCourseComponentIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string): string {
+  return hashId("or_cc_", ["component", "kind=unittest", `c=${courseSlug}`, `u=${unitId}`, `t=${unitTestId}`])
+}
+function orResourceIdForArticle(courseSlug: string, unitId: string, lessonId: string, articleId: string): string {
+  return hashId("or_r_", ["resource", "kind=article", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `a=${articleId}`])
+}
+function orResourceIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string): string {
+  return hashId("or_r_", ["resource", "kind=quiz", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`])
+}
+function orResourceIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string): string {
+  return hashId("or_r_", ["resource", "kind=unittest", `c=${courseSlug}`, `u=${unitId}`, `t=${unitTestId}`])
+}
+function orComponentResourceIdForArticle(courseSlug: string, unitId: string, lessonId: string, articleId: string): string {
+  return hashId("or_cr_", ["component-resource", "kind=article", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `a=${articleId}`])
+}
+function orComponentResourceIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string): string {
+  return hashId("or_cr_", ["component-resource", "kind=quiz", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`])
+}
+function orComponentResourceIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string): string {
+  return hashId("or_cr_", ["component-resource", "kind=unittest", `c=${courseSlug}`, `u=${unitId}`, `t=${unitTestId}`])
+}
+function orAssessmentLineItemIdFromResource(resourceId: string): string {
+  // MUST match global expectation: line item ID = resourceId + "_ali"
+  return `${resourceId}_ali`
+}
+
+function stripNicePrefix(id: string): string {
+  return id.startsWith("nice_") ? id.slice(5) : id
+}
+
+function sanitizeIdPart(part: string): string {
+  // Replace non-alphanumeric with underscores, collapse repeats, trim underscores
+  let v = part.replace(/[^A-Za-z0-9_]/g, "_")
+  v = v.replace(/_+/g, "_")
+  v = v.replace(/^_+|_+$/g, "")
+  // Ensure starts with letter or underscore
+  if (!/^[A-Za-z_]/.test(v)) v = `n_${v}`
+  return v || "n"
+}
+
+function buildId(...parts: string[]): string {
+  const safe = parts.map((p) => sanitizeIdPart(p))
+  return `nice_${safe.join("__")}`
+}
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Checking hashId definition**
+</thinking>
+
+**Tool Call: Read convert-cartridge-to-oneroster.ts**
+Status: Completed
+
+```ts
+}
+
+function sha256Hex(input: string): string {
+  return crypto.createHash("sha256").update(input).digest("hex")
+}
+
+function hashId(_prefix: string, parts: string[]): string {
+  // Always emit IDs starting with "nice_". The prefix argument is intentionally ignored
+  // for the returned value, but included in the hash key for type separation.
+  const key = parts.join("|")
+  const hex = sha256Hex(key)
+  return `nice_${hex.slice(0, 32)}`
+}
+
+// QTI identifiers (hyphen-free):
+function qtiStimulusIdFromResource(resourceId: string): string {
+  // For articles, stimulus identifier MUST equal the resource sourcedId
+  return resourceId
+}
+function qtiItemIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string, questionNumber: number): string {
+  return hashId("ni_", ["item", `kind=quiz`, `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`, `q=${String(questionNumber)}`])
+}
+function qtiItemIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string, questionNumber: number): string {
+  return hashId("ni_", ["item", `kind=unittest`, `c=${courseSlug}`, `u=${unitId}`, `t=${unitTestId}`, `q=${String(questionNumber)}`])
+}
+function qtiTestIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string): string {
+  return hashId("nt_", ["test", `kind=quiz`, `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`])
+}
+function qtiTestIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string): string {
+  return hashId("nt_", ["test", `kind=unittest`, `c=${courseSlug}`, `u=${unitId}`, `t=${unitTestId}`])
+}
+
+// OneRoster sourcedIds (hyphen-free):
+function orCourseId(courseSlug: string, courseId: string): string {
+  return hashId("or_c_", ["course", `slug=${courseSlug}`, `id=${courseId}`])
+}
+function orClassId(courseSlug: string, courseId: string): string {
+  return hashId("or_class_", ["class", `slug=${courseSlug}`, `id=${courseId}`])
+}
+function orCourseComponentIdForUnit(courseSlug: string, unitId: string): string {
+  return hashId("or_cc_", ["component", "kind=unit", `c=${courseSlug}`, `u=${unitId}`])
+}
+function orCourseComponentIdForLesson(courseSlug: string, unitId: string, lessonId: string): string {
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Investigating finalization failure cause**
+
+I'll explore how hashed resource IDs relate to assessment line items and why finalization fails when saving results, focusing on potential mismatches or missing line items in OneRoster caused by the offline cartridge script and how course or subject slugs might affect path parsing.
+</thinking>
+
+**Tool Call: Read convert-cartridge-to-oneroster.ts**
+Status: Completed
+
+```ts
+function mapSubjectToOneRosterSubjects(subject: string): string[] {
+  const mapping: Record<string, string[]> = {
+    "English": ["Reading", "Vocabulary"],
+    "English Language Arts": ["Reading", "Vocabulary"],
+    "Math": ["Math"],
+    "Science": ["Science"],
+    "Arts and Humanities": ["Social Studies"],
+    "Economics": ["Social Studies"],
+    "Computing": ["Science"],
+    "Test Prep": ["Reading", "Math"],
+    "College, Careers, and More": ["Social Studies"]
+  }
+  const mapped = mapping[subject]
+  if (!mapped) {
+    logger.error("subject mapping missing", { subject })
+    throw errors.new("subject mapping: subject not supported")
+  }
+  return mapped
+}
+
+function addNiceAcademyPrefix(title: string): string {
+  const prefix = "Nice Academy - "
+  return title.startsWith(prefix) ? title : `${prefix}${title}`
+}
+
+function getLastPathSegment(p: string): string {
+  const segs = p.split("/").filter(Boolean)
+  return segs[segs.length - 1] || ""
+}
+
+function formatResourceTitleForDisplay(baseTitle: string, kind: "Article" | "Video" | "Exercise"): string {
+  // Match existing UI convention: "Title [Article]"
+  return `${baseTitle} [${kind}]`
+}
+
+async function computeArticleXpFromHtml(html: string): Promise<number> {
+  // Minimal readable text extraction: strip tags, script/style/math blocks
+  let cleaned = html
+    .replace(/<figure[\s\S]*?<\/figure>/gi, " ")
+    .replace(/<figcaption[\s\S]*?<\/figcaption>/gi, " ")
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<math[\s\S]*?<\/math>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+  cleaned = cleaned.replace(/\s+/g, " ").trim()
+  if (cleaned === "") {
+    logger.error("article stimulus has no readable text")
+    throw errors.new("article stimulus: no readable text")
+  }
+  const wordCount = cleaned.split(/\s+/).filter(Boolean).length
+  if (!Number.isFinite(wordCount) || wordCount <= 0) {
+    logger.error("article word count invalid", { wordCount })
+    throw errors.new("article stimulus: invalid word count")
+  }
+  return Math.max(1, Math.ceil(wordCount / READING_WORDS_PER_MINUTE))
+}
+
+function subjectToRouteSegment(subject: string): string {
+  return subject.toLowerCase().replace(/\s+/g, "-")
+}
+
+function normalizePathSlug(p: string): string {
+  const seg = getLastPathSegment(p)
+  return seg.endsWith(".json") ? seg.slice(0, -5) : seg
+}
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Analyzing quiz slug normalization issues**
+
+I'm exploring differences in how quiz slugs are generated from resource paths—particularly that quiz slugs might retain a `.json` suffix unlike other slugs that get normalized—potentially causing mismatches in route paths and metadata during assessment finalization. I'm also considering if mismatches in OneRoster component resource IDs or missing entries in the XP service metadata could be the root cause of gradebook save failures. I'll need to dig into the XP service next to see if it’s rejecting poorly matched component IDs.
+</thinking>
+
+**Tool Call: Search awardXpForAssessment in service.ts**
+Status: Completed
+
+```sh
+32:export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpCalculationResult> {
+```
+
+
+**Tool Call: Read service.ts**
+Status: Completed
+
+```ts
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
+import { checkExistingProficiency } from "@/lib/actions/assessment"
+import { updateStreak } from "@/lib/actions/streak"
+// Removed legacy Caliper caches; banking now reads canonical OneRoster results
+import { awardBankedXpForExercise, findEligiblePassiveResourcesForExercise } from "@/lib/xp/bank"
+import { calculateAssessmentXp, type XpCalculationResult } from "@/lib/xp/core"
+
+interface AwardXpOptions {
+	userSourcedId: string
+	assessmentResourceId: string
+	componentResourceId: string // The contextual ID (e.g., quiz, test)
+	courseSourcedId: string
+	baseXp: number
+	correctQuestions: number
+	totalQuestions: number
+	attemptNumber: number
+	durationInSeconds?: number
+	isExercise: boolean
+	userEmail: string
+	subjectSlug: string
+	courseSlug: string
+}
+
+/**
+ * Orchestrates the entire process of calculating and awarding XP for an assessment.
+ * This is the single entry point for all XP-related logic.
+ *
+ * @param options - The context and performance data for the assessment.
+ * @returns The final calculated XP amount.
+ */
+export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpCalculationResult> {
+	logger.info("awarding xp for assessment", {
+		userSourcedId: options.userSourcedId,
+		assessmentResourceId: options.assessmentResourceId,
+		componentResourceId: options.componentResourceId,
+		courseSourcedId: options.courseSourcedId,
+		baseXp: options.baseXp,
+		correctQuestions: options.correctQuestions,
+		totalQuestions: options.totalQuestions,
+		attemptNumber: options.attemptNumber,
+		isExercise: options.isExercise
+	})
+
+	// 1. Prevent XP farming by checking for existing proficiency.
+	const proficiencyResult = await errors.try(checkExistingProficiency(options.assessmentResourceId))
+	if (proficiencyResult.error) {
+		logger.error("proficiency check failed", { error: proficiencyResult.error })
+		throw errors.wrap(proficiencyResult.error, "proficiency check")
+	}
+	const isAlreadyProficient = proficiencyResult.data
+
+	if (isAlreadyProficient) {
+		const result: XpCalculationResult = {
+			finalXp: 0,
+			multiplier: 0,
+			baseXp: options.baseXp,
+			accuracy: (options.correctQuestions / options.totalQuestions) * 100,
+			penaltyApplied: false,
+			reason: "XP farming prevention: user already proficient"
+		}
+		logger.info("xp award blocked due to existing proficiency", {
+			userSourcedId: options.userSourcedId,
+			assessmentResourceId: options.assessmentResourceId
+		})
+		return result
+	}
+
+	// 2. Calculate the base assessment XP using the core pure function.
+	const accuracy = options.totalQuestions > 0 ? (options.correctQuestions / options.totalQuestions) * 100 : 0
+	const assessmentXpResult = calculateAssessmentXp(
+		options.baseXp,
+		accuracy,
+		options.attemptNumber,
+		options.totalQuestions,
+		options.durationInSeconds
+	)
+
+	let finalXp = assessmentXpResult.finalXp
+	let bankedXp = 0
+
+	// 3. Process XP Bank for exercises if the user achieved mastery.
+	if (options.isExercise && assessmentXpResult.finalXp > 0 && accuracy >= 80) {
+		// Directly award banked XP using canonical nice_timeSpent from OneRoster
+		const xpBankResult = await errors.try(
+			awardBankedXpForExercise({
+				exerciseResourceSourcedId: options.assessmentResourceId,
+				onerosterUserSourcedId: options.userSourcedId,
+				onerosterCourseSourcedId: options.courseSourcedId,
+				userEmail: options.userEmail,
+				subjectSlug: options.subjectSlug,
+				courseSlug: options.courseSlug
+			})
+		)
+
+		if (xpBankResult.error) {
+			logger.error("failed to process xp bank", {
+				error: xpBankResult.error,
+				assessmentId: options.componentResourceId,
+				userId: options.userSourcedId
+			})
+			// CRITICAL: Banking failure must halt the process per "No Fallbacks" rule
+			throw errors.wrap(xpBankResult.error, "xp banking")
+		}
+
+		bankedXp = xpBankResult.data.bankedXp
+		finalXp += bankedXp
+		logger.info("awarded banked xp", {
+			assessmentId: options.componentResourceId,
+			bankedXp,
+			awardedCount: xpBankResult.data.awardedResourceIds.length
+		})
+	}
+
+	// 4. Update the user's weekly activity streak if they earned positive XP.
+	if (finalXp > 0) {
+		const streakResult = await errors.try(updateStreak())
+		if (streakResult.error) {
+			logger.error("failed to update user streak after awarding xp", {
+				userId: options.userSourcedId,
+				finalXp,
+				error: streakResult.error
+			})
+			// Do not block XP award if streak update fails.
+		}
+	}
+
+	const finalResult: XpCalculationResult = {
+		...assessmentXpResult,
+		finalXp // This now includes the banked XP.
+	}
+
+	logger.info("xp award process complete", { ...finalResult, bankedXp })
+	return finalResult
+}
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Inspecting checkExistingProficiency function**
+</thinking>
+
+**Tool Call: Read assessment.ts**
+Status: Completed
+
+```ts
+   638	export async function checkExistingProficiency(onerosterAssessmentSourcedId: string): Promise<boolean> {
+   639		const { userId } = await auth()
+   640		if (!userId) {
+   641			logger.error("checkExistingProficiency failed: user not authenticated")
+   642			throw errors.new("user not authenticated")
+   643		}
+   644		const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
+   645		logger.info("checking existing proficiency", {
+   646			onerosterUserSourcedId,
+   647			onerosterAssessmentSourcedId
+   648		})
+   649
+   650		const strictLineItemId = getAssessmentLineItemId(onerosterAssessmentSourcedId)
+   651
+   652		const resultsResult = await errors.try(
+   653			oneroster.getAllResults({
+   654				filter: `student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${strictLineItemId}'`
+   655			})
+   656		)
+   657		if (resultsResult.error) {
+   658			logger.error("failed to check existing proficiency", {
+   659				onerosterUserSourcedId,
+   660				onerosterAssessmentSourcedId,
+   661				error: resultsResult.error
+   662			})
+   663			// NO FALLBACK - if we can't check, we throw
+   664			throw errors.wrap(resultsResult.error, "proficiency check")
+   665		}
+   666
+   667		// CHANGED: Use the new utility to find the latest valid attempt directly.
+   668		const latestResult = findLatestInteractiveAttempt(resultsResult.data, onerosterUserSourcedId, strictLineItemId)
+   669
+   670		if (!latestResult) {
+   671			logger.debug("no existing results found", {
+   672				onerosterUserSourcedId,
+   673				onerosterAssessmentSourcedId
+   674			})
+   675			return false
+   676		}
+   677
+   678		if (typeof latestResult.score !== "number") {
+   679			logger.error("proficiency check: invalid score type", {
+   680				onerosterUserSourcedId,
+   681				onerosterAssessmentSourcedId,
+   682				scoreType: typeof latestResult.score,
+   683				score: latestResult.score
+   684			})
+   685			throw errors.new("proficiency check: score must be a number")
+   686		}
+   687
+   688		const normalizedScore = latestResult.score <= 1.1 ? latestResult.score * 100 : latestResult.score
+   689		const isProficient = normalizedScore >= XP_PROFICIENCY_THRESHOLD
+   690
+   691		logger.info("proficiency check complete", {
+   692			onerosterUserSourcedId,
+   693			onerosterAssessmentSourcedId,
+   694			currentScore: normalizedScore,
+   695			isProficient
+   696		})
+   697
+   698		return isProficient
+   699	}
+   700
+   701	/**
+   702	 * Orchestrates the finalization of an assessment.
+   703	 *
+   704	 * This is the culminating action called when a user completes the last question. It reads the
+   705	 * **server-authoritative state from Redis** (not from client input), calculates the final score,
+   706	 * saves the official result to OneRoster via the assessment service, and awards XP.
+   707	 *
+   708	 * **CRITICAL BUSINESS LOGIC:**
+   709	 * - The Redis state is the SINGLE SOURCE OF TRUTH for assessment results
+   710	 * - Redis only stores the FIRST ATTEMPT for each question (subsequent attempts are for formative feedback only)
+   711	 * - Reported questions (where isReported=true or isCorrect=null) are EXCLUDED from scoring
+   712	 * - The final score = (correct answers / scorable questions) × 100, where scorable questions exclude reported ones
+   713	 *
+   714	 * After all permanent storage is updated, it marks the assessment state in Redis as `isFinalized: true`.
+   715	 * This makes the finalization step idempotent; if called again on an already-finalized state, it will
+   716	 * simply return the calculated summary without performing duplicate writes.
+   717	 *
+   718	 * @param options Contextual data for the assessment (no session results are passed from the client).
+   719	 * @returns A summary payload for the client's SummaryView, including score and any XP penalties.
+   720	 */
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Analyzing proficiency update errors**
+
+I'm exploring how invalid score types in results might cause early failures in finalizing assessments, especially focusing on differences with script-generated gradebook entries and XP awarding logic tied to componentResourceId and exercise types. There's a hypothesis that score fields as strings might disrupt type checks, leading to exceptions when saving results.
+</thinking>
+
+**Tool Call: Read proficiency.ts**
+Status: Completed
+
+```ts
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
+import { oneroster, qti } from "@/lib/clients"
+import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+import * as gradebook from "@/lib/ports/gradebook"
+import { calculateProficiencyScore } from "@/lib/proficiency/core"
+import { generateResultSourcedId } from "@/lib/utils/assessment-identifiers"
+import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
+import { assertPercentageInteger } from "@/lib/utils/score"
+
+interface ExercisePerformance {
+	exerciseId: string
+	correctCount: number
+	totalCount: number
+}
+
+interface QuestionResult {
+	qtiItemId: string
+	isCorrect: boolean | null
+	isReported?: boolean
+}
+
+/**
+ * Analyzes an assessment completion and updates individual exercise proficiency
+ * based on granular question-level performance. This implements Khan Academy-style
+ * mastery learning where performance on comprehensive assessments updates the
+ * proficiency of individual skills that were tested.
+ *
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId
+ * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
+ * @param attemptNumber - The specific attempt number to analyze.
+ * @param sessionResults - An array of question results from the client session.
+ * @param onerosterCourseSourcedId - The sourcedId of the course for cache invalidation.
+ * @param correlationId - Unique identifier for tracing this operation
+ */
+export async function updateFromAssessment(
+	onerosterUserSourcedId: string,
+	onerosterComponentResourceSourcedId: string,
+	attemptNumber: number,
+	sessionResults: QuestionResult[],
+	onerosterCourseSourcedId: string,
+	correlationId: string
+) {
+	logger.info("starting granular proficiency analysis from session results", {
+		onerosterUserSourcedId,
+		onerosterComponentResourceSourcedId,
+		attemptNumber,
+		sessionResultCount: sessionResults.length,
+		correlationId
+	})
+
+	// Step 1: Fetch the lessonType from the resource's metadata in OneRoster
+	const componentResourceResult = await errors.try(oneroster.getComponentResource(onerosterComponentResourceSourcedId))
+	if (componentResourceResult.error) {
+		logger.error("failed to fetch component resource for proficiency analysis", {
+			onerosterComponentResourceSourcedId,
+			error: componentResourceResult.error,
+			correlationId
+		})
+		throw errors.wrap(componentResourceResult.error, "fetch component resource")
+	}
+	if (!componentResourceResult.data) {
+		logger.error("component resource data is null", { onerosterComponentResourceSourcedId, correlationId })
+		throw errors.new("component resource data is null")
+	}
+	const resourceSourcedId = componentResourceResult.data.resource.sourcedId
+
+	const resourceResult = await errors.try(oneroster.getResource(resourceSourcedId))
+	if (resourceResult.error) {
+		logger.error("failed to fetch resource for proficiency analysis", {
+			resourceSourcedId,
+			error: resourceResult.error,
+			correlationId
+		})
+		throw errors.wrap(resourceResult.error, "fetch resource")
+	}
+	if (!resourceResult.data) {
+		logger.error("resource data is null", { resourceSourcedId, correlationId })
+		throw errors.new("resource data is null")
+	}
+
+	const metadataResult = ResourceMetadataSchema.safeParse(resourceResult.data.metadata)
+	if (!metadataResult.success) {
+		logger.error("invalid resource metadata", { resourceSourcedId, error: metadataResult.error, correlationId })
+		throw errors.wrap(metadataResult.error, "invalid resource metadata")
+	}
+	// Map khanActivityType to lesson type for proficiency tracking
+	let lessonType = "exercise"
+	if (metadataResult.data.khanActivityType === "Quiz") {
+		lessonType = "quiz"
+	} else if (metadataResult.data.khanActivityType === "UnitTest") {
+		lessonType = "unittest"
+	} else if (metadataResult.data.khanActivityType === "CourseChallenge") {
+		lessonType = "coursechallenge"
+	}
+
+	// Step 2: Map questions to exercises using QTI metadata
+	const qtiItemIdToOneRosterResourceSourcedIdMap = new Map<string, string>()
+	const questionResultsFromSession = sessionResults
+		.filter((q) => !q.isReported)
+		.map((q) => ({ id: q.qtiItemId, correct: q.isCorrect }))
+
+	const qtiMetadataPromises = questionResultsFromSession.map(async (question) => {
+		const itemResult = await errors.try(qti.getAssessmentItem(question.id))
+		if (itemResult.error) {
+			logger.warn("failed to fetch QTI item metadata for question", {
+				qtiItemId: question.id,
+				error: itemResult.error,
+				correlationId
+			})
+			return null
+		}
+
+		const khanExerciseId = itemResult.data.metadata?.khanExerciseId
+		if (!khanExerciseId) {
+			logger.warn("question missing exercise ID in QTI metadata", {
+				qtiItemId: question.id,
+				metadata: itemResult.data.metadata,
+				correlationId
+			})
+			return null
+		}
+
+		const onerosterResourceSourcedId = `nice_${khanExerciseId}`
+		logger.debug("mapped question to exercise", {
+			qtiItemId: question.id,
+			khanExerciseId,
+			onerosterResourceSourcedId,
+			correlationId
+		})
+		return { qtiItemId: question.id, onerosterResourceSourcedId }
+	})
+
+	const qtiMetadataResults = await Promise.all(qtiMetadataPromises)
+	for (const result of qtiMetadataResults) {
+		if (result) {
+			qtiItemIdToOneRosterResourceSourcedIdMap.set(result.qtiItemId, result.onerosterResourceSourcedId)
+		}
+	}
+
+	if (qtiItemIdToOneRosterResourceSourcedIdMap.size === 0) {
+		logger.info("no questions could be mapped to exercises", { onerosterComponentResourceSourcedId, correlationId })
+		return { success: true, exercisesUpdated: 0 }
+	}
+
+	// Step 3: Get current proficiency levels for mastery upgrade logic
+	const currentProficiencyMap = new Map<string, number>()
+	if (lessonType === "unittest" || lessonType === "coursechallenge") {
+		// For unit tests, we need to check current proficiency to handle mastery upgrades
+		const onerosterResourceSourcedIds = Array.from(new Set(qtiItemIdToOneRosterResourceSourcedIdMap.values()))
+
+		// Get current results for all exercises being tested
+		const currentResultsPromises = onerosterResourceSourcedIds.map(async (onerosterResourceSourcedId) => {
+			const resultsResult = await errors.try(
+				oneroster.getAllResults({
+					filter: `student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${getAssessmentLineItemId(onerosterResourceSourcedId)}'`
+				})
+			)
+
+			if (resultsResult.error) {
+				logger.warn("failed to fetch current proficiency for mastery check", {
+					onerosterResourceSourcedId,
+					error: resultsResult.error,
+					correlationId
+				})
+				return null
+			}
+
+			// Strictly consider only new attempt-based IDs for interactive assessments
+			const strictLineItemId = getAssessmentLineItemId(onerosterResourceSourcedId)
+			const baseIdPrefix = `nice_${onerosterUserSourcedId}_${strictLineItemId}_attempt_`
+			const results = resultsResult.data.filter((r) => {
+				if (typeof r.sourcedId !== "string") return false
+				if (!r.sourcedId.startsWith(baseIdPrefix)) return false
+				const suffix = r.sourcedId.slice(baseIdPrefix.length)
+				return /^\d+$/.test(suffix)
+			})
+			// Get the most recent result
+			if (results.length > 0) {
+				const latestResult = results.sort(
+					(a, b) => new Date(b.scoreDate || 0).getTime() - new Date(a.scoreDate || 0).getTime()
+				)[0]
+
+				if (latestResult && typeof latestResult.score === "number") {
+					const normalized = latestResult.score <= 1.1 ? latestResult.score * 100 : latestResult.score
+					return { onerosterResourceSourcedId, currentScore: normalized }
+				}
+			}
+
+			return null
+		})
+
+		const currentResults = await Promise.all(currentResultsPromises)
+		for (const result of currentResults) {
+			if (result) {
+				currentProficiencyMap.set(result.onerosterResourceSourcedId, result.currentScore)
+			}
+		}
+	}
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Checking resource metadata schema**
+</thinking>
+
+**Tool Call: Read oneroster.ts**
+Status: Completed
+
+```ts
+import { z } from "zod"
+
+export const CourseMetadataSchema = z.object({
+	khanId: z.string().min(1),
+	khanSlug: z.string().min(1),
+	khanSubjectSlug: z.string().min(1),
+	khanTitle: z.string().min(1),
+	khanDescription: z.string().default("")
+})
+export type CourseMetadata = z.infer<typeof CourseMetadataSchema>
+
+export const ComponentMetadataSchema = z.object({
+	khanId: z.string().min(1),
+	khanSlug: z.string().min(1),
+	khanTitle: z.string().min(1),
+	khanDescription: z.string().default("")
+})
+export type ComponentMetadata = z.infer<typeof ComponentMetadataSchema>
+
+// Base schema for common resource properties
+const BaseResourceMetadataSchema = z.object({
+	khanId: z.string().min(1),
+	khanSlug: z.string().min(1),
+	khanTitle: z.string().min(1),
+	khanDescription: z.string().default(""),
+	xp: z.number().default(0),
+	// Optional shared convenience field used by our frontend for videos
+	khanYoutubeId: z.string().optional(),
+	// REQUIRED: Nice-controlled activity type used across the app
+	khanActivityType: z.enum(["Article", "Video", "Exercise", "Quiz", "UnitTest", "CourseChallenge"])
+})
+
+// Schema for Interactive-specific metadata
+const InteractiveResourceMetadataSchema = BaseResourceMetadataSchema.extend({
+	type: z.literal("interactive"),
+	launchUrl: z.string().url(),
+	url: z.string().url().optional(),
+	toolProvider: z.string().optional()
+})
+
+// Schema for QTI-specific metadata (used for exercises and assessment tests)
+const QtiResourceMetadataSchema = BaseResourceMetadataSchema.extend({
+	type: z.literal("qti"),
+	subType: z.enum(["qti-test", "qti-stimulus", "qti-question", "qti-test-bank"]).default("qti-test"),
+	url: z.string().url(),
+	version: z.string().default("3.0"),
+	language: z.string().default("en-US"),
+	questionType: z.string().optional()
+})
+
+// The resource metadata schema supports both interactive and qti resources
+export const ResourceMetadataSchema = z.discriminatedUnion("type", [
+	InteractiveResourceMetadataSchema,
+	QtiResourceMetadataSchema
+])
+export type ResourceMetadata = z.infer<typeof ResourceMetadataSchema>
+export type KhanActivityType = z.infer<typeof BaseResourceMetadataSchema.shape.khanActivityType>
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Analyzing metadata schema and componentResource issues**
+
+I'm exploring how the interactive resource metadata schema handles extra fields and defaults, noting that missing `khanDescription` is covered by defaults. I'm also investigating possible mismatches in `componentResource` references between quiz components and units, which might cause alignment problems. Additionally, I'm checking if `componentResource` in assessment line items is missing required `type` fields per spec, comparing with native data generation to understand why finalize errors occur.
+</thinking>
+
+**Tool Call: Search lessonType in db**
+Status: Failed
+
+```json
+{"aggregated_output":"","call_id":"call_YBvTMrWBtHJ3mb4NSYN88bGy","duration":{"nanos":31460750,"secs":0},"exit_code":1,"formatted_output":"","stderr":"","stdout":""}
+```
+
+## Assistant
+
+<thinking>
+
+
+**Searching for data builder script**
+</thinking>
+
+**Tool Call: Search assessmentLineItems**
+Status: Completed
+
+```sh
+assessment-stepper-mechanics.md:153:src/inngest/client.ts:			assessmentLineItems: z.array(
+assessment-stepper-mechanics.md:156:src/lib/payloads/oneroster/supplementary-builder.ts:	assessmentLineItems: OneRosterAssessmentLineItem[]
+assessment-stepper-mechanics.md:157:src/lib/payloads/oneroster/supplementary-builder.ts:		assessmentLineItems: []
+assessment-stepper-mechanics.md:159:src/lib/payloads/oneroster/supplementary-builder.ts:						payload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:161:src/lib/payloads/oneroster/supplementary-builder.ts:						payload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:305:src/lib/payloads/oneroster/course.ts:	assessmentLineItems: OneRosterAssessmentLineItem[]
+assessment-stepper-mechanics.md:319:src/lib/payloads/oneroster/course.ts:		assessmentLineItems: []
+assessment-stepper-mechanics.md:320:src/lib/payloads/oneroster/course.ts:		onerosterPayload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:322:src/lib/payloads/oneroster/course.ts:			onerosterPayload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:324:src/lib/payloads/oneroster/course.ts:			onerosterPayload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:325:src/lib/payloads/oneroster/course.ts:					onerosterPayload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:326:src/lib/payloads/oneroster/course.ts:						onerosterPayload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:327:src/lib/payloads/oneroster/course.ts:							onerosterPayload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:574:src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:			const [courseComponents, resources, componentResources, assessmentLineItems] = await Promise.all([
+assessment-stepper-mechanics.md:575:src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:				readFile("assessmentLineItems.json")
+assessment-stepper-mechanics.md:576:src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:			return { courseComponents, resources, componentResources, assessmentLineItems }
+assessment-stepper-mechanics.md:577:src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:			assessmentLineItemCount: payload.assessmentLineItems.length
+assessment-stepper-mechanics.md:578:src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:		if (payload.assessmentLineItems.length > 0) {
+assessment-stepper-mechanics.md:580:src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:				data: { assessmentLineItems: payload.assessmentLineItems }
+assessment-stepper-mechanics.md:581:src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:				assessmentLineItems: payload.assessmentLineItems.length
+assessment-stepper-mechanics.md:717:src/inngest/functions/oneroster/ingest-assessment-line-items.ts:	assessmentLineItems: z.array(z.unknown())
+assessment-stepper-mechanics.md:720:src/inngest/functions/oneroster/ingest-assessment-line-items.ts:			throw errors.new("event data must contain assessmentLineItems array")
+assessment-stepper-mechanics.md:721:src/inngest/functions/oneroster/ingest-assessment-line-items.ts:		for (const item of eventDataResult.data.assessmentLineItems) {
+assessment-stepper-mechanics.md:741:src/inngest/functions/oneroster/generate-payload-for-course.ts:				{ name: "assessmentLineItems.json", data: payload.assessmentLineItems }
+assessment-stepper-mechanics.md:742:src/inngest/functions/oneroster/generate-payload-for-course.ts:				assessmentLineItems: path.join(outputDir, "assessmentLineItems.json")
+assessment-stepper-mechanics.md:743:src/inngest/functions/oneroster/generate-payload-for-course.ts:				assessmentLineItems: payload.assessmentLineItems.length
+assessment-stepper-mechanics.md:783:src/app/(admin)/course-builder/actions.ts:  const assessmentLineItems: Array<{
+assessment-stepper-mechanics.md:784:src/app/(admin)/course-builder/actions.ts:          assessmentLineItems.push({
+assessment-stepper-mechanics.md:785:src/app/(admin)/course-builder/actions.ts:          assessmentLineItems.push({
+assessment-stepper-mechanics.md:786:src/app/(admin)/course-builder/actions.ts:          assessmentLineItems.push({
+assessment-stepper-mechanics.md:787:src/app/(admin)/course-builder/actions.ts:    assessmentLineItems,
+assessment-stepper-mechanics.md:814:src/lib/oneroster.ts:			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+assessment-stepper-mechanics.md:824:src/lib/oneroster.ts:			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+assessment-stepper-mechanics.md:829:src/lib/oneroster.ts:			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+assessment-stepper-mechanics.md:834:src/lib/oneroster.ts:			assessmentLineItems: z.array(AssessmentLineItemSchema)
+assessment-stepper-mechanics.md:835:src/lib/oneroster.ts:			endpoint: "/ims/oneroster/gradebook/v1p2/assessmentLineItems",
+assessment-stepper-mechanics.md:836:src/lib/oneroster.ts:			responseKey: "assessmentLineItems",
+assessment-stepper-mechanics.md:840:src/lib/oneroster.ts:			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+assessment-stepper-mechanics.md:891:src/app/(admin)/course-builder/content.tsx:            await createAssessmentLineItemsStep(payload.assessmentLineItems)
+assessment-stepper-mechanics.md:1292:src/inngest/functions/migrations/orchestrate-hardcoded-science-assessmentlineitem-upload.ts:			const assessmentLineItems = await step.run(`read-assessment-line-items-${courseId}`, async () => {
+assessment-stepper-mechanics.md:1294:src/inngest/functions/migrations/orchestrate-hardcoded-science-assessmentlineitem-upload.ts:				const filePath = path.join(courseDir, "assessmentLineItems.json")
+assessment-stepper-mechanics.md:1300:src/inngest/functions/migrations/orchestrate-hardcoded-science-assessmentlineitem-upload.ts:			if (assessmentLineItems.length > 0) {
+assessment-stepper-mechanics.md:1302:src/inngest/functions/migrations/orchestrate-hardcoded-science-assessmentlineitem-upload.ts:					data: { assessmentLineItems }
+assessment-stepper-mechanics.md:1419:src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:			const [courseComponents, resources, componentResources, assessmentLineItems] = await Promise.all([
+assessment-stepper-mechanics.md:1420:src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:				readFile("assessmentLineItems.json")
+assessment-stepper-mechanics.md:1421:src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:			return { courseComponents, resources, componentResources, assessmentLineItems }
+assessment-stepper-mechanics.md:1422:src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:			assessmentLineItemCount: payload.assessmentLineItems.length
+assessment-stepper-mechanics.md:1423:src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:		if (payload.assessmentLineItems.length > 0) {
+assessment-stepper-mechanics.md:1425:src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:				data: { assessmentLineItems: payload.assessmentLineItems }
+assessment-stepper-mechanics.md:1426:src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:				assessmentLineItems: payload.assessmentLineItems.length
+assessment-stepper-mechanics.md:2832:src/lib/oneroster.ts:1552:			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+assessment-stepper-mechanics.md:2835:src/lib/oneroster.ts:1590:			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+assessment-stepper-mechanics.md:2838:src/lib/oneroster.ts:1611:			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+assessment-stepper-mechanics.md:2840:src/lib/oneroster.ts:1636:			endpoint: "/ims/oneroster/gradebook/v1p2/assessmentLineItems",
+assessment-stepper-mechanics.md:2843:src/lib/oneroster.ts:1664:			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+assessment-stepper-mechanics.md:3122:src/lib/payloads/oneroster/course.ts:536:		onerosterPayload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:3124:src/lib/payloads/oneroster/course.ts:574:			onerosterPayload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:3125:src/lib/payloads/oneroster/course.ts:593:			onerosterPayload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:3126:src/lib/payloads/oneroster/course.ts:615:					onerosterPayload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:3129:src/lib/payloads/oneroster/course.ts:781:						onerosterPayload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:3130:src/lib/payloads/oneroster/course.ts:800:							onerosterPayload.assessmentLineItems.push({
+assessment-stepper-mechanics.md:5500:			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+src/lib/oneroster.ts:1552:			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+src/lib/oneroster.ts:1590:			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+src/lib/oneroster.ts:1611:			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+src/lib/oneroster.ts:1629:			assessmentLineItems: z.array(AssessmentLineItemSchema)
+src/lib/oneroster.ts:1636:			endpoint: "/ims/oneroster/gradebook/v1p2/assessmentLineItems",
+src/lib/oneroster.ts:1637:			responseKey: "assessmentLineItems",
+src/lib/oneroster.ts:1664:			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+src/lib/payloads/oneroster/supplementary-builder.ts:92:	assessmentLineItems: OneRosterAssessmentLineItem[]
+src/lib/payloads/oneroster/supplementary-builder.ts:361:		assessmentLineItems: []
+src/lib/payloads/oneroster/supplementary-builder.ts:601:						payload.assessmentLineItems.push({
+src/lib/payloads/oneroster/supplementary-builder.ts:620:						payload.assessmentLineItems.push({
+src/lib/payloads/oneroster/course.ts:155:	assessmentLineItems: OneRosterAssessmentLineItem[]
+src/lib/payloads/oneroster/course.ts:460:		assessmentLineItems: []
+src/lib/payloads/oneroster/course.ts:536:		onerosterPayload.assessmentLineItems.push({
+src/lib/payloads/oneroster/course.ts:574:			onerosterPayload.assessmentLineItems.push({
+src/lib/payloads/oneroster/course.ts:593:			onerosterPayload.assessmentLineItems.push({
+src/lib/payloads/oneroster/course.ts:615:					onerosterPayload.assessmentLineItems.push({
+src/lib/payloads/oneroster/course.ts:781:						onerosterPayload.assessmentLineItems.push({
+src/lib/payloads/oneroster/course.ts:800:							onerosterPayload.assessmentLineItems.push({
+src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:42:			const [courseComponents, resources, componentResources, assessmentLineItems] = await Promise.all([
+src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:46:				readFile("assessmentLineItems.json")
+src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:49:			return { courseComponents, resources, componentResources, assessmentLineItems }
+src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:57:			assessmentLineItemCount: payload.assessmentLineItems.length
+src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:112:		if (payload.assessmentLineItems.length > 0) {
+src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:115:				data: { assessmentLineItems: payload.assessmentLineItems }
+src/inngest/functions/orchestrate-course-upload-to-oneroster-by-slug.ts:132:				assessmentLineItems: payload.assessmentLineItems.length
+src/inngest/functions/oneroster/ingest-assessment-line-items.ts:26:	assessmentLineItems: z.array(z.unknown())
+src/inngest/functions/oneroster/ingest-assessment-line-items.ts:41:			throw errors.new("event data must contain assessmentLineItems array")
+src/inngest/functions/oneroster/ingest-assessment-line-items.ts:48:		for (const item of eventDataResult.data.assessmentLineItems) {
+src/inngest/functions/oneroster/generate-payload-for-course.ts:73:				{ name: "assessmentLineItems.json", data: payload.assessmentLineItems }
+src/inngest/functions/oneroster/generate-payload-for-course.ts:109:				assessmentLineItems: path.join(outputDir, "assessmentLineItems.json")
+src/inngest/functions/oneroster/generate-payload-for-course.ts:115:				assessmentLineItems: payload.assessmentLineItems.length
+scripts/create-percentage-results.ts:48:	const assessmentLineItemsPath = path.join(
+scripts/create-percentage-results.ts:50:		"data/ms-biology/oneroster/assessmentLineItems.json"
+scripts/create-percentage-results.ts:53:	logger.info("reading assessment line items", { path: assessmentLineItemsPath })
+scripts/create-percentage-results.ts:55:	const fileResult = await errors.try(fs.readFile(assessmentLineItemsPath, "utf-8"))
+scripts/create-percentage-results.ts:57:		logger.error("failed to read file", { error: fileResult.error, path: assessmentLineItemsPath })
+src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:46:			const [courseComponents, resources, componentResources, assessmentLineItems] = await Promise.all([
+src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:50:				readFile("assessmentLineItems.json")
+src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:53:			return { courseComponents, resources, componentResources, assessmentLineItems }
+src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:61:			assessmentLineItemCount: payload.assessmentLineItems.length
+src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:116:		if (payload.assessmentLineItems.length > 0) {
+src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:119:				data: { assessmentLineItems: payload.assessmentLineItems }
+src/inngest/functions/orchestrate-course-upload-to-oneroster.ts:136:				assessmentLineItems: payload.assessmentLineItems.length
+src/inngest/client.ts:247:			assessmentLineItems: z.array(
+course-cartridge-master-plan.md:26:- `assessmentLineItems.json`
+course-cartridge-master-plan.md:154:   - The orchestrator reads those files and fan-outs ingestion calls (course, resources, courseComponents, componentResources, class, assessmentLineItems).
+src/inngest/functions/migrations/orchestrate-hardcoded-science-assessmentlineitem-upload.ts:37:			const assessmentLineItems = await step.run(`read-assessment-line-items-${courseId}`, async () => {
+src/inngest/functions/migrations/orchestrate-hardcoded-science-assessmentlineitem-upload.ts:40:				const filePath = path.join(courseDir, "assessmentLineItems.json")
+src/inngest/functions/migrations/orchestrate-hardcoded-science-assessmentlineitem-upload.ts:68:			if (assessmentLineItems.length > 0) {
+src/inngest/functions/migrations/orchestrate-hardcoded-science-assessmentlineitem-upload.ts:71:					data: { assessmentLineItems }
+scripts/atom-bomb-wipe.ts:12: *        classes, users, enrollments, assessmentLineItems, assessmentResults,
+scripts/atom-bomb-wipe.ts:37:	"assessmentLineItems",
+scripts/atom-bomb-wipe.ts:292:	assessmentLineItems: {
+scripts/atom-bomb-wipe.ts:293:		type: "assessmentLineItems",
+scripts/atom-bomb-wipe.ts:547:				"assessmentLineItems",
+scripts/atom-bomb-wipe.ts:634:			"assessmentLineItems",
+scripts/atom-bomb-wipe.ts:820:				"             classes, users, enrollments, assessmentLineItems, assessmentResults\n" +
+scripts/generate-supplementary-course.ts:136:		{ name: "assessmentLineItems.json", data: payload.assessmentLineItems }
+scripts/generate-supplementary-course.ts:166:		assessmentLineItemCount: payload.assessmentLineItems.length
+scripts/generate-supplementary-course.ts:176:	console.log(`   - assessmentLineItems.json (${payload.assessmentLineItems.length} items)`)
+scripts/convert-cartridge-to-oneroster.ts:101:  assessmentLineItems: OneRosterAssessmentLineItem[]
+scripts/convert-cartridge-to-oneroster.ts:396:    assessmentLineItems: []
+scripts/convert-cartridge-to-oneroster.ts:541:          payload.assessmentLineItems.push({
+scripts/convert-cartridge-to-oneroster.ts:622:          payload.assessmentLineItems.push({
+scripts/convert-cartridge-to-oneroster.ts:781:      payload.assessmentLineItems.push({
+scripts/convert-cartridge-to-oneroster.ts:886:    { name: "assessmentLineItems.json", data: payload.assessmentLineItems }
+scripts/convert-cartridge-to-oneroster.ts:906:      assessmentLineItems: payload.assessmentLineItems.length
+src/app/(admin)/course-builder/content.tsx:801:            await createAssessmentLineItemsStep(payload.assessmentLineItems)
+src/app/(admin)/course-builder/actions.ts:166:  const assessmentLineItems: Array<{
+src/app/(admin)/course-builder/actions.ts:319:          assessmentLineItems.push({
+src/app/(admin)/course-builder/actions.ts:332:          assessmentLineItems.push({
+src/app/(admin)/course-builder/actions.ts:347:          assessmentLineItems.push({
+src/app/(admin)/course-builder/actions.ts:400:    assessmentLineItems,
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Inspecting baseline file course.ts**
+</thinking>
+
+**Tool Call: Read course.ts**
+Status: Completed
+
+```ts
+	}
+
+	// Helper to process a single content type array
+	async function fetchCaseIdsForContentType(
+		contentType: "Video" | "Article" | "Exercise",
+		ids: string[]
+	): Promise<void> {
+		if (ids.length === 0) {
+			return
+		}
+		const result = await errors.try(
+			db
+				.select({
+					contentId: schema.niceLessonContentsCommonCoreStandards.contentId,
+					caseId: schema.niceCommonCoreStandards.caseId
+				})
+				.from(schema.niceLessonContentsCommonCoreStandards)
+				.innerJoin(
+					schema.niceCommonCoreStandards,
+					eq(schema.niceLessonContentsCommonCoreStandards.commonCoreStandardId, schema.niceCommonCoreStandards.id)
+				)
+				.where(
+					and(
+						inArray(schema.niceLessonContentsCommonCoreStandards.contentId, ids),
+						eq(schema.niceLessonContentsCommonCoreStandards.contentType, contentType)
+					)
+				)
+		)
+		if (result.error) {
+			logger.error("failed to fetch case ids for content", { contentType, count: ids.length, error: result.error })
+			throw errors.wrap(result.error, "database query for case ids")
+		}
+		for (const row of result.data) {
+			addLearningObjective(contentType, row.contentId, row.caseId)
+		}
+	}
+
+	// Fetch for each type sequentially (data dependent on type); each call handles empty lists
+	await fetchCaseIdsForContentType("Video", contentIds.Video)
+	await fetchCaseIdsForContentType("Article", contentIds.Article)
+	await fetchCaseIdsForContentType("Exercise", contentIds.Exercise)
+
+	const [videos, articles, exercises] = await Promise.all([
+		contentIds.Video.length
+			? db.query.niceVideos.findMany({ where: inArray(schema.niceVideos.id, contentIds.Video) })
+			: Promise.resolve([]),
+		contentIds.Article.length
+			? db.query.niceArticles.findMany({ where: inArray(schema.niceArticles.id, contentIds.Article) })
+			: Promise.resolve([]),
+		contentIds.Exercise.length
+			? db.query.niceExercises.findMany({ where: inArray(schema.niceExercises.id, contentIds.Exercise) })
+			: Promise.resolve([])
+	])
+
+	// Pre-process: identify articles with titles matching 'Activity:%' (case insensitive)
+	const activityArticleIds = new Set<string>()
+	for (const article of articles) {
+		if (article.title.toLowerCase().startsWith("activity:")) {
+			activityArticleIds.add(article.id)
+		}
+	}
+	logger.debug("identified activity articles for deletion", { count: activityArticleIds.size })
+
+	const contentMap = new Map<
+		string,
+		{ id: string; path: string; title: string; slug: string; type: string; description?: string }
+	>([
+		...videos.map((v) => [v.id, { ...v, type: "Video" }] as const),
+		...articles.map((a) => [a.id, { ...a, type: "Article" }] as const),
+		...exercises.map((e) => [e.id, { ...e, type: "Exercise" }] as const)
+	])
+
+	// Create a mapping from exercise ID to lesson ID
+	const exerciseToLessonMap = new Map<string, string>()
+	for (const lc of lessonContents) {
+		if (lc.contentType === "Exercise") {
+			exerciseToLessonMap.set(lc.contentId, lc.lessonId)
+		}
+	}
+
+	// Build helper sets to ensure every exercise gets an ALI exactly once
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Searching for component resource ID usage**
+</thinking>
+
+**Tool Call: Read course.ts**
+Status: Completed
+
+```ts
+				)
+				.where(
+					and(
+						inArray(schema.niceLessonContentsCommonCoreStandards.contentId, ids),
+						eq(schema.niceLessonContentsCommonCoreStandards.contentType, contentType)
+					)
+				)
+		)
+		if (result.error) {
+			logger.error("failed to fetch case ids for content", { contentType, count: ids.length, error: result.error })
+			throw errors.wrap(result.error, "database query for case ids")
+		}
+		for (const row of result.data) {
+			addLearningObjective(contentType, row.contentId, row.caseId)
+		}
+	}
+
+	// Fetch for each type sequentially (data dependent on type); each call handles empty lists
+	await fetchCaseIdsForContentType("Video", contentIds.Video)
+	await fetchCaseIdsForContentType("Article", contentIds.Article)
+	await fetchCaseIdsForContentType("Exercise", contentIds.Exercise)
+
+	const [videos, articles, exercises] = await Promise.all([
+		contentIds.Video.length
+			? db.query.niceVideos.findMany({ where: inArray(schema.niceVideos.id, contentIds.Video) })
+			: Promise.resolve([]),
+		contentIds.Article.length
+			? db.query.niceArticles.findMany({ where: inArray(schema.niceArticles.id, contentIds.Article) })
+			: Promise.resolve([]),
+		contentIds.Exercise.length
+			? db.query.niceExercises.findMany({ where: inArray(schema.niceExercises.id, contentIds.Exercise) })
+			: Promise.resolve([])
+	])
+
+	// Pre-process: identify articles with titles matching 'Activity:%' (case insensitive)
+	const activityArticleIds = new Set<string>()
+	for (const article of articles) {
+		if (article.title.toLowerCase().startsWith("activity:")) {
+			activityArticleIds.add(article.id)
+		}
+	}
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Searching for specific snippet**
+</thinking>
+
+**Tool Call: Search componentResource in course.ts**
+Status: Completed
+
+```sh
+138:	componentResource?: {
+153:	componentResources: OneRosterCourseComponentResource[]
+459:		componentResources: [],
+540:			componentResource: {
+578:				componentResource: {
+597:				componentResource: {
+619:						componentResource: {
+785:								componentResource: {
+804:								componentResource: {
+829:					const componentResourceStatus: "active" | "tobedeleted" = isActivityArticle ? "tobedeleted" : "active"
+830:					onerosterPayload.componentResources.push({
+832:						status: componentResourceStatus,
+924:			onerosterPayload.componentResources.push({
+1011:			onerosterPayload.componentResources.push({
+1038:	for (const cr of onerosterPayload.componentResources) {
+1046:				componentResourceId: cr.sourcedId,
+1091:		const componentResources = onerosterPayload.componentResources.filter(
+1094:		const hasActiveComponentResources = componentResources.some((cr) => cr.status === "active")
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Seeking code snippet near line 804**
+</thinking>
+
+**Tool Call: Read course.ts**
+Status: Completed
+
+```ts
+						const aliStatus: "active" | "tobedeleted" = isActivityArticle ? "tobedeleted" : "active"
+						onerosterPayload.assessmentLineItems.push({
+							sourcedId: `${contentSourcedId}_ali`, // The ID is resource ID + _ali
+							status: aliStatus,
+							title: `Progress for: ${content.title}`,
+								componentResource: {
+									sourcedId: `nice_${lesson.id}_${content.id}`
+								},
+								course: {
+									sourcedId: `nice_${course.id}`
+								},
+								metadata: {
+									lessonType: content.type.toLowerCase(),
+									courseSourcedId: `nice_${course.id}`
+								}
+							})
+						}
+
+						// --- NEW: Ensure exercises always have an ALI, even when not attached to a quiz ---
+						if (content.type === "Exercise" && !exerciseIdsAttachedToQuizzes.has(content.id)) {
+							onerosterPayload.assessmentLineItems.push({
+								sourcedId: `${contentSourcedId}_ali`,
+								status: "active",
+								title: content.title,
+								componentResource: {
+									sourcedId: `nice_${lesson.id}_${content.id}`
+								},
+								course: {
+									sourcedId: `nice_${course.id}`
+								},
+								metadata: {
+									lessonType: "exercise",
+									courseSourcedId: `nice_${course.id}`
+								}
+							})
+						}
+					}
+
+					// Apply bracketed suffix to ComponentResource titles for Video/Article/Exercise only
+					let componentTitle = content.title
+					if (lc.contentType === "Video") {
+						componentTitle = formatResourceTitleForDisplay(content.title, "Video")
+					} else if (lc.contentType === "Article") {
+						componentTitle = formatResourceTitleForDisplay(content.title, "Article")
+					} else if (lc.contentType === "Exercise") {
+						componentTitle = formatResourceTitleForDisplay(content.title, "Exercise")
+					}
+
+					const isActivityArticle = lc.contentType === "Article" && activityArticleIds.has(content.id)
+					const componentResourceStatus: "active" | "tobedeleted" = isActivityArticle ? "tobedeleted" : "active"
+					onerosterPayload.componentResources.push({
+						sourcedId: `nice_${lesson.id}_${content.id}`,
+						status: componentResourceStatus,
+						title: componentTitle,
+						courseComponent: { sourcedId: `nice_${lesson.id}`, type: "courseComponent" },
+					resource: { sourcedId: contentSourcedId, type: "resource" },
+					sortOrder: lc.ordering
+					})
+				}
+			}
+		}
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Analyzing componentResource ID mismatches**
+</thinking>
+
+**Tool Call: Read proficiency.ts**
+Status: Completed
+
+```ts
+
+	// Step 4: Aggregate performance by exercise
+	const performanceMap = new Map<string, ExercisePerformance>()
+
+	for (const question of questionResultsFromSession) {
+		const onerosterResourceSourcedId = qtiItemIdToOneRosterResourceSourcedIdMap.get(question.id)
+		if (!onerosterResourceSourcedId) {
+			logger.warn("could not map question to exercise", {
+				qtiItemId: question.id,
+				onerosterComponentResourceSourcedId,
+				correlationId
+			})
+			continue
+		}
+
+		if (!performanceMap.has(onerosterResourceSourcedId)) {
+			performanceMap.set(onerosterResourceSourcedId, {
+				exerciseId: onerosterResourceSourcedId,
+				correctCount: 0,
+				totalCount: 0
+			})
+		}
+
+		const performance = performanceMap.get(onerosterResourceSourcedId)
+		if (performance) {
+			performance.totalCount++
+			if (question.correct) {
+				performance.correctCount++
+			}
+
+			// Log each question's contribution to help debug
+			logger.debug("processing question for exercise", {
+				qtiItemId: question.id,
+				onerosterResourceSourcedId,
+				isCorrect: question.correct,
+				runningCorrect: performance.correctCount,
+				runningTotal: performance.totalCount,
+				correlationId
+			})
+		}
+	}
+
+	if (performanceMap.size === 0) {
+		logger.info("no exercises found with answered questions to update", {
+			onerosterComponentResourceSourcedId,
+			correlationId
+		})
+		return { success: true, exercisesUpdated: 0 }
+	}
+
+	// Step 5: Calculate proficiency scores with mastery upgrade logic
+	const updatePromises: Promise<unknown>[] = []
+	for (const [exerciseId, performance] of performanceMap.entries()) {
+		const percentageCorrect = performance.totalCount > 0 ? performance.correctCount / performance.totalCount : 0
+
+		// Use the centralized proficiency calculation service
+		const proficiencyScore = calculateProficiencyScore({
+			percentageCorrect,
+			lessonType,
+			currentScore: currentProficiencyMap.get(exerciseId)
+		})
+
+		logger.info("calculated exercise proficiency", {
+			exerciseId,
+			score: proficiencyScore,
+			performance,
+			currentScore: currentProficiencyMap.get(exerciseId),
+			lessonType,
+			correlationId
+		})
+
+		// Only save if there's a meaningful update
+		const shouldSaveResult =
+			proficiencyScore > 0 ||
+			(percentageCorrect === 0 &&
+				(lessonType === "unittest" || lessonType === "coursechallenge") &&
+				currentProficiencyMap.has(exerciseId)) ||
+			(proficiencyScore === 0 && currentProficiencyMap.has(exerciseId)) ||
+			(proficiencyScore === 0 &&
+				(lessonType === "quiz" || lessonType === "unittest" || lessonType === "coursechallenge"))
+
+		if (shouldSaveResult) {
+			// Use base id (no attempt) with descriptive comment/xpReason
+			const resultSourcedId = generateResultSourcedId(onerosterUserSourcedId, exerciseId, false)
+			const lineItemId = getAssessmentLineItemId(exerciseId)
+			const metadata = {
+				masteredUnits: 0,
+				totalQuestions: performance.totalCount,
+				correctQuestions: performance.correctCount,
+				accuracy: Math.round(percentageCorrect * 100),
+				xp: 0,
+				multiplier: 0,
+				penaltyApplied: false,
+				xpReason: "Proficiency update from summative assessment",
+				completedAt: new Date().toISOString(),
+				courseSourcedId: onerosterCourseSourcedId
+			}
+
+			updatePromises.push(
+				gradebook.saveResult({
+					resultSourcedId,
+					lineItemSourcedId: lineItemId,
+					userSourcedId: onerosterUserSourcedId,
+					score: assertPercentageInteger(proficiencyScore, "proficiency score"),
+					comment: `Proficiency updated from assessment ${onerosterComponentResourceSourcedId}`,
+					metadata,
+					correlationId
+				})
+			)
+		}
+	}
+
+	const results = await Promise.allSettled(updatePromises)
+	const successfulUpdates = results.filter((r) => r.status === "fulfilled").length
+
+	logger.info("granular proficiency analysis complete", {
+		onerosterComponentResourceSourcedId,
+		exercisesAnalyzed: performanceMap.size,
+		exercisesUpdated: successfulUpdates,
+		questionsMapped: qtiItemIdToOneRosterResourceSourcedIdMap.size,
+		totalQuestions: questionResultsFromSession.length,
+		correlationId
+	})
+
+	return { success: true, exercisesUpdated: successfulUpdates }
+}
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Analyzing failure cause in proficiency update**
+</thinking>
+
+**Tool Call: Search khanExerciseId in convert-cartridge-to-oneroster.ts**
+Status: Completed
+
+```sh
+684:                  khanExerciseId: stripNicePrefix(resourceId),
+841:            khanExerciseId: stripNicePrefix(resourceId),
+```
+
+
+**Tool Call: Read convert-cartridge-to-oneroster.ts**
+Status: Completed
+
+```ts
+              const originalXml = q.xml?.trim() && q.xml.includes("<") ? q.xml : await readQuestionXml(reader, q.xml || "")
+              if (!originalXml || originalXml === "") {
+                logger.error("question xml empty after read", { quizId: res.id, questionNumber: q.number, xmlPath: q.xml })
+                throw errors.new("question: xml is required")
+              }
+            // Debug: write and log exact original XML from cartridge
+            const quizDebugDir = path.join(debugBaseDir, "quizzes", res.id)
+            await ensureDir(quizDebugDir)
+            const originalQuizItemPath = path.join(quizDebugDir, `question-${String(q.number).padStart(2, "0")}.original.xml`)
+            const writeOrigQuizRes = await errors.try(fs.writeFile(originalQuizItemPath, originalXml, "utf-8"))
+            if (writeOrigQuizRes.error) {
+              logger.error("debug write failed (quiz original)", { file: originalQuizItemPath, error: writeOrigQuizRes.error })
+            }
+              logger.debug("quiz question xml (original)", {
+                quizId: res.id,
+                questionNumber: q.number,
+                xml: originalXml
+              })
+              // Always rewrite identifier to our stable scheme: nice_<quizId>_<questionNumber>
+              const newItemId = qtiItemIdForQuiz(slug, unit.id, lesson.id, res.id, q.number)
+            const rewriteRes = errors.trySync(() => replaceRootAttributes(originalXml, "qti-assessment-item", newItemId, lesson.title))
+            if (rewriteRes.error) {
+              logger.error("identifier rewrite failed (quiz)", { quizId: res.id, questionNumber: q.number, error: rewriteRes.error })
+              // keep original file already written; bail out fast
+              throw rewriteRes.error
+            }
+            const rewrittenXml = rewriteRes.data
+              // Debug: log the rewritten XML
+              logger.debug("quiz question xml (rewritten)", {
+                quizId: res.id,
+                questionNumber: q.number,
+                identifier: newItemId,
+                xml: rewrittenXml
+              })
+            const rewrittenQuizItemPath = path.join(quizDebugDir, `question-${String(q.number).padStart(2, "0")}.rewritten.xml`)
+            const writeRewQuizRes = await errors.try(fs.writeFile(rewrittenQuizItemPath, rewrittenXml, "utf-8"))
+            if (writeRewQuizRes.error) {
+              logger.error("debug write failed (quiz rewritten)", { file: rewrittenQuizItemPath, error: writeRewQuizRes.error })
+            }
+              questionIds.push(newItemId)
+              qtiItems.push({
+                xml: rewrittenXml,
+                metadata: {
+                  khanId: newItemId,
+                  khanExerciseId: stripNicePrefix(resourceId),
+                  khanExerciseSlug: quizSlug,
+                  khanExerciseTitle: lesson.title
+                }
+              })
+            }
+            // Generate test for this quiz
+            // IMPORTANT: Set test identifier equal to the resource sourcedId so providers can map directly
+            const quizTestId = resourceId
+            const quizTestXml = generateTestXml(quizTestId, lesson.title, questionIds)
+            // Debug: log the generated test XML
+            logger.debug("quiz test xml", { quizId: res.id, xml: quizTestXml })
+            const quizTestPath = path.join(path.join(debugBaseDir, "quizzes", res.id), `test.xml`)
+            const writeQuizTestRes = await errors.try(fs.writeFile(quizTestPath, quizTestXml, "utf-8"))
+            if (writeQuizTestRes.error) {
+              logger.error("debug write failed (quiz test)", { file: quizTestPath, error: writeQuizTestRes.error })
+            }
+            qtiTestsXml.push(quizTestXml)
+            exerciseToItemIds.set(res.id, questionIds)
+            logger.debug("generated qti items and test for quiz", { quizId: res.id, itemCount: questionIds.length })
+          }
+
+          totalXp += QUIZ_XP
+          totalLessons += 1
+        }
+      }
+    }
+
+    // Unit test (optional) - process once per unit, OUTSIDE lesson loop
+    if (unit.unitTest) {
+      const unitEntry = indexJson.units.find((u) => u.id === unit.id)
+      const unitSlug = normalizePathSlug(unitEntry?.path ?? unit.id)
+      const lastLesson = lessons[lessons.length - 1]
+      if (!lastLesson) {
+        logger.error("assessment launch url: no lessons in unit", { unitId: unit.id })
+        throw errors.new("assessment launch url: no lessons in unit")
+      }
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Analyzing script course finalization failure**
+
+I'm untangling a complex issue where script courses fail to save final results during finalization. The root seems to stem from mismatched metadata: `khanExerciseId` is set to a hashed quiz resource ID, not the actual exercise, causing proficiency updates to target the quiz's line item rather than the exercise's. This leads to conflicts or missing data in gradebook calls, though the quiz line item exists. I'm also examining how componentResources are structured differently in scripts—assigned under units instead of lessons—and how hashed IDs might cause unexpected clashes or missing expected metadata fields like `khanActivityType`. Despite several hypotheses and logical tracing, the exact failing step remains uncertain without concrete logs. There is a lot here, so I’m carefully following through the interactions between assessment saving, proficiency updating, and resource metadata parsing to identify where the final save breaks down.
+</thinking>
+
+**Tool Call: Read oneroster.log.txt**
+Status: Failed
+
+```txt
+tail: oneroster.log.txt: No such file or directory
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Checking file path for log**
+</thinking>
+
+**Tool Call: List /Users/bjorn/Documents/Code/nice/oneroster.log.txt**
+Status: Failed
+
+```sh
+ls: oneroster.log.txt: No such file or directory
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Verifying filename discrepancies**
+</thinking>
+
+**Tool Call: List /Users/bjorn/Documents/Code/nice, Search oneroster**
+Status: Failed
+
+```json
+{"aggregated_output":"","call_id":"call_zEuvkMGvuXVShLYc8J67hA42","duration":{"nanos":43792167,"secs":0},"exit_code":1,"formatted_output":"","stderr":"","stdout":""}
+```
+
+## Assistant
+
+<thinking>
+
+
+**Analyzing script-generated quiz finalization failure**
+
+I'm tracing why the quiz finalization fails only for script-created courses. The script uses hashed IDs and seems to create component resources and line items, but the gradebook finalization trips when saving results—likely due to missing or mismatched assessment line items or componentResource typings. I need to confirm if ingestion expects specific fields like `type` on componentResource, which the script might omit, causing gradebook saveResult to fail despite the quiz completing correctly.
+</thinking>
+
+**Tool Call: Read convert-cartridge-to-oneroster.ts**
+Status: Completed
+
+```ts
+type OneRosterGUIDRef = { sourcedId: string; type: "course" | "academicSession" | "org" | "courseComponent" | "resource" | "term" | "district" }
+
+type OneRosterCourse = {
+  sourcedId: string
+  status: "active"
+  title: string
+  subjects: string[]
+  grades: number[]
+  courseCode: string
+  org: OneRosterGUIDRef
+  academicSession: OneRosterGUIDRef
+  metadata?: Record<string, unknown>
+}
+
+type OneRosterClass = {
+  sourcedId: string
+  status: "active"
+  title: string
+  classType: "scheduled"
+  course: OneRosterGUIDRef
+  school: OneRosterGUIDRef
+  terms: OneRosterGUIDRef[]
+}
+
+type OneRosterCourseComponent = {
+  sourcedId: string
+  status: "active" | "tobedeleted"
+  title: string
+  course: OneRosterGUIDRef
+  parent?: OneRosterGUIDRef
+  sortOrder: number
+  metadata?: Record<string, unknown>
+}
+
+type OneRosterResource = {
+  sourcedId: string
+  status: "active" | "tobedeleted"
+  title: string
+  vendorResourceId: string
+  vendorId: string
+  applicationId: string
+  roles: string[]
+  importance: "primary" | "secondary"
+  metadata: Record<string, unknown>
+}
+
+type OneRosterCourseComponentResource = {
+  sourcedId: string
+  status: "active" | "tobedeleted"
+  title: string
+  courseComponent: OneRosterGUIDRef
+  resource: OneRosterGUIDRef
+  sortOrder: number
+}
+
+type OneRosterAssessmentLineItem = {
+  sourcedId: string
+  status: "active" | "tobedeleted"
+  title: string
+  componentResource?: { sourcedId: string }
+  course: { sourcedId: string }
+  metadata?: Record<string, unknown>
+}
+
+type OneRosterPayload = {
+  course: OneRosterCourse
+  class: OneRosterClass
+  courseComponents: OneRosterCourseComponent[]
+  resources: OneRosterResource[]
+  componentResources: OneRosterCourseComponentResource[]
+  assessmentLineItems: OneRosterAssessmentLineItem[]
+}
+
+function mapSubjectToOneRosterSubjects(subject: string): string[] {
+  const mapping: Record<string, string[]> = {
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Analyzing componentResource type issues**
+</thinking>
+
+**Tool Call: Run python - <<'PY'…**
+Status: Failed
+
+Terminal:
+```
+bash: cannot create temp file for here document: Operation not permitted
+
+
+
+
+
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Checking file access limitations**
+</thinking>
+
+**Tool Call: Run perl -ne 'print if /assessmentLineItems.push/..$.==0' src/lib/payloads/oneroster/course.ts**
+Status: Completed
+
+Terminal:
+```
+		onerosterPayload.assessmentLineItems.push({
+			sourcedId: `nice_${courseChallenge.id}_ali`,
+			status: "active",
+			title: courseChallenge.title,
+			componentResource: {
+				sourcedId: `nice_${course.id}_${courseChallenge.id}`
+			},
+			course: {
+				sourcedId: `nice_${course.id}`
+			},
+			metadata: {
+				lessonType: "coursechallenge",
+				courseSourcedId: `nice_${course.id}`
+			}
+		})
+	}
+
+	for (const unit of units.sort((a, b) => a.ordering - b.ordering)) {
+		// REFACTOR: Track passive resource IDs for next exercise to enable pre-calculated XP banking
+		let passiveResourcesForNextExercise: string[] = []
+
+		onerosterPayload.courseComponents.push({
+			sourcedId: `nice_${unit.id}`,
+			status: "active",
+			title: unit.title,
+			course: { sourcedId: `nice_${course.id}`, type: "course" },
+			sortOrder: unit.ordering,
+			metadata: {
+				khanId: unit.id,
+				khanSlug: unit.slug,
+				khanTitle: unit.title,
+				khanDescription: unit.description
+			}
+		})
+
+		const unitTest = assessments.find((a) => a.parentId === unit.id && a.type === "UnitTest")
+
+		if (unitTest) {
+			onerosterPayload.assessmentLineItems.push({
+				sourcedId: `nice_${unitTest.id}_ali`,
+				status: "active",
+				title: unitTest.title,
+				componentResource: {
+					sourcedId: `nice_${unitTest.id}_${unitTest.id}`
+				},
+				course: {
+					sourcedId: `nice_${course.id}`
+				},
+				metadata: {
+					lessonType: "unittest",
+					courseSourcedId: `nice_${course.id}`
+				}
+			})
+		}
+
+		const unitQuizzes = assessments.filter((a) => a.parentId === unit.id && a.type === "Quiz")
+		for (const quiz of unitQuizzes.sort((a, b) => a.ordering - b.ordering)) {
+			onerosterPayload.assessmentLineItems.push({
+				sourcedId: `nice_${quiz.id}_ali`,
+				status: "active",
+				title: quiz.title,
+				componentResource: {
+					sourcedId: `nice_${quiz.id}_${quiz.id}`
+				},
+				course: {
+					sourcedId: `nice_${course.id}`
+				},
+				metadata: {
+					lessonType: "quiz",
+					courseSourcedId: `nice_${course.id}`
+				}
+			})
+
+			// Find exercises for this quiz and create their line items
+			const quizExerciseIds = exercisesByAssessmentId.get(quiz.id) || []
+			for (const exerciseId of quizExerciseIds) {
+				const exercise = exercises.find((e) => e.id === exerciseId)
+				const lessonId = exerciseToLessonMap.get(exerciseId)
+				if (exercise && lessonId) {
+					onerosterPayload.assessmentLineItems.push({
+						sourcedId: `nice_${exercise.id}_ali`,
+						status: "active",
+						title: exercise.title,
+						componentResource: {
+							sourcedId: `nice_${lessonId}_${exercise.id}`
+						},
+						course: {
+							sourcedId: `nice_${course.id}`
+						},
+						metadata: {
+							lessonType: "exercise",
+							courseSourcedId: `nice_${course.id}`
+						}
+					})
+				}
+			}
+		}
+
+		const unitLessons = lessons.filter((l) => l.unitId === unit.id).sort((a, b) => a.ordering - b.ordering)
+		for (const lesson of unitLessons) {
+			onerosterPayload.courseComponents.push({
+				sourcedId: `nice_${lesson.id}`,
+				status: "active",
+				title: lesson.title,
+				course: { sourcedId: `nice_${course.id}`, type: "course" },
+				parent: { sourcedId: `nice_${unit.id}`, type: "courseComponent" },
+				sortOrder: lesson.ordering,
+				metadata: {
+					khanId: lesson.id,
+					khanSlug: lesson.slug,
+					khanTitle: lesson.title,
+					khanDescription: lesson.description
+				}
+			})
+
+			const lessonContentLinks = lessonContents
+				.filter((lc) => lc.lessonId === lesson.id)
+				.sort((a, b) => a.ordering - b.ordering)
+			for (const lc of lessonContentLinks) {
+				const content = contentMap.get(lc.contentId)
+				if (content) {
+					const contentSourcedId = `nice_${content.id}`
+					if (!resourceSet.has(contentSourcedId)) {
+						// No suffixing on Resource titles; suffixing is applied to ComponentResource titles below
+
+						// Construct metadata based on content type
+						let metadata: Record<string, unknown> = {
+							khanId: content.id,
+							khanSlug: content.slug,
+							khanTitle: content.title,
+							khanDescription: content.description,
+							// Construct the base path for the launchUrl
+							path: `/${subjectSlug}/${course.slug}/${unit.slug}/${lesson.slug}`
+						}
+
+					if (lc.contentType === "Article") {
+						// CHANGE: Convert Articles to interactive type
+						let articleXp: number | undefined
+						const articleXpResult = await errors.try(computeArticleXpFromStimulus(content.id))
+						if (articleXpResult.error) {
+							logger.error("qti xp: failed computing article xp from stimulus", {
+								articleId: content.id,
+								slug: content.slug,
+								error: articleXpResult.error
+							})
+							throw articleXpResult.error
+						}
+						articleXp = articleXpResult.data
+						metadata = {
+							...metadata,
+							type: "interactive",
+							toolProvider: "Nice Academy",
+							khanActivityType: "Article",
+							launchUrl: `${appDomain}${metadata.path}/a/${content.slug}`,
+							url: `${appDomain}${metadata.path}/a/${content.slug}`,
+							xp: articleXp
+						}
+
+						// REFACTOR: Collect sourcedId of passive resource if it grants XP AND is not an activity article
+						const isActivityArticle = activityArticleIds.has(content.id)
+						if (articleXp > 0 && !isActivityArticle) {
+							passiveResourcesForNextExercise.push(contentSourcedId)
+						}
+					} else if (lc.contentType === "Video") {
+						// CHANGE: Convert Videos to interactive type
+						const videoData = videos.find((v) => v.id === content.id)
+						if (!videoData?.youtubeId) {
+							logger.error("CRITICAL: Missing youtubeId for video", { contentId: content.id, slug: content.slug })
+							throw errors.new("video metadata: youtubeId is required for interactive video resource")
+						}
+						// XP calculation: round to nearest minute (>= 7:30 => 8xp), no fallbacks
+						if (typeof videoData.duration !== "number") {
+							logger.error("CRITICAL: Missing duration for video", { contentId: content.id, slug: content.slug })
+							throw errors.new("video metadata: duration is required for interactive video resource")
+						}
+						const computedVideoXp = Math.max(1, Math.ceil(videoData.duration / 60))
+						metadata = {
+							...metadata,
+							type: "interactive",
+							toolProvider: "Nice Academy",
+							khanActivityType: "Video",
+							launchUrl: `${appDomain}${metadata.path}/v/${content.slug}`,
+							url: `${appDomain}${metadata.path}/v/${content.slug}`,
+							khanYoutubeId: videoData.youtubeId,
+							xp: computedVideoXp
+						}
+
+						// REFACTOR: Collect sourcedId of passive resource if it grants XP
+						if (computedVideoXp > 0) {
+							passiveResourcesForNextExercise.push(contentSourcedId)
+						}
+					} else if (lc.contentType === "Exercise") {
+						metadata = {
+							...metadata,
+							type: "interactive",
+							toolProvider: "Nice Academy",
+							khanActivityType: "Exercise",
+							launchUrl: `${appDomain}${metadata.path}/e/${content.slug}`,
+							url: `${appDomain}${metadata.path}/e/${content.slug}`,
+							xp: EXERCISE_XP,
+							// REFACTOR: Attach the collected list of passive resource IDs
+							passiveResources: null,
+							nice_passiveResources: passiveResourcesForNextExercise
+						}
+						// REFACTOR: Reset the collector for the next group
+						passiveResourcesForNextExercise = []
+						}
+
+						// Attach CASE learning objectives to metadata when present
+						{
+							const caseIds = learningObjectivesByContentTypeId.get(`${lc.contentType}:${content.id}`)
+							if (caseIds && caseIds.length > 0) {
+								metadata = {
+									...metadata,
+									learningObjectiveSet: [
+										{
+											       source: "CASE",
+											       learningObjectiveIds: caseIds
+										}
+									]
+								}
+							}
+						}
+
+						// Determine if this is an activity article that should be marked for deletion
+						const isActivityArticle = lc.contentType === "Article" && activityArticleIds.has(content.id)
+						const resourceStatus: "active" | "tobedeleted" = isActivityArticle ? "tobedeleted" : "active"
+
+					onerosterPayload.resources.push({
+						sourcedId: contentSourcedId,
+						status: resourceStatus,
+						title: content.title,
+							vendorResourceId: `nice-academy-${content.id}`,
+							vendorId: "superbuilders",
+							applicationId: "nice",
+							roles: ["primary"],
+							importance: "primary",
+							metadata
+						})
+						resourceSet.add(contentSourcedId)
+
+					// --- NEW: Add flat line items for videos and articles here ---
+					if (content.type === "Video" || content.type === "Article") {
+						const isActivityArticle = content.type === "Article" && activityArticleIds.has(content.id)
+						const aliStatus: "active" | "tobedeleted" = isActivityArticle ? "tobedeleted" : "active"
+						onerosterPayload.assessmentLineItems.push({
+							sourcedId: `${contentSourcedId}_ali`, // The ID is resource ID + _ali
+							status: aliStatus,
+							title: `Progress for: ${content.title}`,
+								componentResource: {
+									sourcedId: `nice_${lesson.id}_${content.id}`
+								},
+								course: {
+									sourcedId: `nice_${course.id}`
+								},
+								metadata: {
+									lessonType: content.type.toLowerCase(),
+									courseSourcedId: `nice_${course.id}`
+								}
+							})
+						}
+
+						// --- NEW: Ensure exercises always have an ALI, even when not attached to a quiz ---
+						if (content.type === "Exercise" && !exerciseIdsAttachedToQuizzes.has(content.id)) {
+							onerosterPayload.assessmentLineItems.push({
+								sourcedId: `${contentSourcedId}_ali`,
+								status: "active",
+								title: content.title,
+								componentResource: {
+									sourcedId: `nice_${lesson.id}_${content.id}`
+								},
+								course: {
+									sourcedId: `nice_${course.id}`
+								},
+								metadata: {
+									lessonType: "exercise",
+									courseSourcedId: `nice_${course.id}`
+								}
+							})
+						}
+					}
+
+					// Apply bracketed suffix to ComponentResource titles for Video/Article/Exercise only
+					let componentTitle = content.title
+					if (lc.contentType === "Video") {
+						componentTitle = formatResourceTitleForDisplay(content.title, "Video")
+					} else if (lc.contentType === "Article") {
+						componentTitle = formatResourceTitleForDisplay(content.title, "Article")
+					} else if (lc.contentType === "Exercise") {
+						componentTitle = formatResourceTitleForDisplay(content.title, "Exercise")
+					}
+
+					const isActivityArticle = lc.contentType === "Article" && activityArticleIds.has(content.id)
+					const componentResourceStatus: "active" | "tobedeleted" = isActivityArticle ? "tobedeleted" : "active"
+					onerosterPayload.componentResources.push({
+						sourcedId: `nice_${lesson.id}_${content.id}`,
+						status: componentResourceStatus,
+						title: componentTitle,
+						courseComponent: { sourcedId: `nice_${lesson.id}`, type: "courseComponent" },
+					resource: { sourcedId: contentSourcedId, type: "resource" },
+					sortOrder: lc.ordering
+					})
+				}
+			}
+		}
+
+		const unitAssessments = assessments.filter((a) => a.parentId === unit.id).sort((a, b) => a.ordering - b.ordering)
+		for (const assessment of unitAssessments) {
+			const assessmentSourcedId = `nice_${assessment.id}`
+			if (!resourceSet.has(assessmentSourcedId)) {
+				let assessmentXp: number
+				if (assessment.type === "UnitTest") {
+					assessmentXp = UNIT_TEST_XP
+				} else if (assessment.type === "Quiz") {
+					assessmentXp = QUIZ_XP
+				} else {
+					// Fallback for other assessment types
+					assessmentXp = 1
+				}
+
+				// Determine lesson type for metadata tagging
+				let khanLessonType: "quiz" | "unittest" | "coursechallenge" | undefined
+				if (assessment.type === "Quiz") {
+					khanLessonType = "quiz"
+				} else if (assessment.type === "UnitTest") {
+					khanLessonType = "unittest"
+				} else if (assessment.type === "CourseChallenge") {
+					khanLessonType = "coursechallenge"
+				} else {
+					khanLessonType = undefined
+				}
+
+				// Compute canonical practice path including last lesson slug for this unit
+				const lastLessonInUnit = unitLessons[unitLessons.length - 1]
+				if (!lastLessonInUnit) {
+					logger.error("assessment launch url: no lessons in unit", { unitId: unit.id, unitSlug: unit.slug })
+					throw errors.new("assessment launch url: no lessons in unit")
+				}
+				const lastLessonSlug = lastLessonInUnit.slug
+				const assessmentPathSegment = assessment.type === "Quiz" ? "quiz" : "test"
+				const canonicalAssessmentPath = `${appDomain}/${subjectSlug}/${course.slug}/${unit.slug}/${lastLessonSlug}/${assessmentPathSegment}/${normalizeKhanSlug(assessment.slug)}`
+
+				onerosterPayload.resources.push({
+					sourcedId: assessmentSourcedId,
+					status: "active",
+					title: assessment.title,
+					vendorResourceId: `nice-academy-${assessment.id}`,
+					vendorId: "superbuilders",
+					applicationId: "nice",
+					roles: ["primary"],
+					importance: "primary",
+					metadata: {
+						type: "interactive",
+						toolProvider: "Nice Academy",
+						// Launch URL points directly to canonical path including last lesson slug
+						launchUrl: canonicalAssessmentPath,
+						url: canonicalAssessmentPath,
+						// Keep Nice-controlled hints for our app (optional)
+						khanActivityType: assessment.type,
+						khanLessonType,
+						// Khan-specific data
+						khanId: assessment.id,
+						khanSlug: normalizeKhanSlug(assessment.slug),
+						khanTitle: assessment.title,
+						khanDescription: assessment.description,
+						xp: assessmentXp
+					}
+				})
+				resourceSet.add(assessmentSourcedId)
+			}
+
+			// Create an intermediate course component for the quiz/unit test
+			onerosterPayload.courseComponents.push({
+				sourcedId: `nice_${assessment.id}`,
+				status: "active",
+				title: assessment.title,
+				course: { sourcedId: `nice_${course.id}`, type: "course" },
+				parent: { sourcedId: `nice_${unit.id}`, type: "courseComponent" },
+				sortOrder: assessment.ordering,
+				metadata: {
+					khanId: assessment.id,
+					khanSlug: assessment.slug,
+					khanTitle: assessment.title,
+					khanDescription: assessment.description
+				}
+			})
+
+			// Now link the resource to the new course component instead of directly to the unit
+			onerosterPayload.componentResources.push({
+				sourcedId: `nice_${assessment.id}_${assessment.id}`,
+				status: "active",
+				title: assessment.title,
+				courseComponent: { sourcedId: `nice_${assessment.id}`, type: "courseComponent" },
+				resource: { sourcedId: assessmentSourcedId, type: "resource" },
+				sortOrder: 0
+			})
+
+			// Note: Unit-level assessments are Quiz or UnitTest; exercises are represented as lesson content.
+		}
+	}
+
+	// ADDED: Logic to handle course-level assessments (Course Challenges)
+	if (courseAssessments.length > 0) {
+		const DUMMY_COMPONENT_TITLE = "Course Challenge"
+
+		// Find the highest unit ordering to place this component last.
+		const maxUnitOrder = units.reduce((max, u) => Math.max(max, u.ordering), -1)
+
+		onerosterPayload.courseComponents.push({
+			sourcedId: `nice_${course.id}`,
+			status: "active",
+			title: DUMMY_COMPONENT_TITLE,
+			course: { sourcedId: `nice_${course.id}`, type: "course" },
+			sortOrder: maxUnitOrder + 1, // Place it after all units
+			metadata: {
+				khanId: `${course.id}-challenges`,
+				khanSlug: "course-challenge",
+				khanTitle: DUMMY_COMPONENT_TITLE,
+				khanDescription: "A collection of course-level challenges."
+			}
+		})
+
+		// Now, create resources and link them to this dummy component
+		for (const assessment of courseAssessments.sort((a, b) => a.ordering - b.ordering)) {
+			const assessmentSourcedId = `nice_${assessment.id}`
+			if (!resourceSet.has(assessmentSourcedId)) {
+				let assessmentXp: number
+				if (assessment.type === "CourseChallenge") {
+					assessmentXp = COURSE_CHALLENGE_XP
+				} else if (assessment.type === "Quiz") {
+					assessmentXp = QUIZ_XP
+				} else {
+					// Fallback for other assessment types
+					assessmentXp = 1
+				}
+
+				let khanLessonType: "quiz" | "unittest" | "coursechallenge" | undefined
+				if (assessment.type === "Quiz") {
+					khanLessonType = "quiz"
+				} else if (assessment.type === "UnitTest") {
+					khanLessonType = "unittest"
+				} else if (assessment.type === "CourseChallenge") {
+					khanLessonType = "coursechallenge"
+				} else {
+					khanLessonType = undefined
+				}
+
+				onerosterPayload.resources.push({
+					sourcedId: assessmentSourcedId,
+					status: "active",
+					title: assessment.title,
+					vendorResourceId: `nice-academy-${assessment.id}`,
+					vendorId: "superbuilders",
+					applicationId: "nice",
+					roles: ["primary"],
+					importance: "primary",
+					metadata: {
+						type: "interactive",
+						toolProvider: "Nice Academy",
+						launchUrl: `${appDomain}/${subjectSlug}/${course.slug}/test/${normalizeKhanSlug(assessment.slug)}`,
+						url: `${appDomain}/${subjectSlug}/${course.slug}/test/${normalizeKhanSlug(assessment.slug)}`,
+						// Keep Nice-controlled hints for our app (optional)
+						khanActivityType: assessment.type,
+						khanLessonType,
+						// Khan-specific data
+						khanId: assessment.id,
+						khanSlug: normalizeKhanSlug(assessment.slug),
+						khanTitle: assessment.title,
+						khanDescription: assessment.description,
+						xp: assessmentXp
+					}
+				})
+				resourceSet.add(assessmentSourcedId)
+			}
+
+			onerosterPayload.componentResources.push({
+				sourcedId: `nice_${course.id}_${assessment.id}`,
+				status: "active",
+				title: assessment.title,
+				courseComponent: { sourcedId: `nice_${course.id}`, type: "courseComponent" },
+				resource: { sourcedId: assessmentSourcedId, type: "resource" },
+				sortOrder: assessment.ordering
+			})
+		}
+	}
+
+	// 4. Compute course metrics
+	logger.info("computing course metrics", { courseId })
+
+	function getNumber(obj: Record<string, unknown>, key: string): number | undefined {
+		const value = obj[key]
+		return typeof value === "number" ? value : undefined
+	}
+
+	function getString(obj: Record<string, unknown>, key: string): string | undefined {
+		const value = obj[key]
+		return typeof value === "string" ? value : undefined
+	}
+
+	// Match UI semantics: sum XP per component-resource placement
+	let totalXp = 0
+	const resourceById = new Map(onerosterPayload.resources.map((r) => [r.sourcedId, r]))
+	for (const cr of onerosterPayload.componentResources) {
+		// skip tobedeleted component resources
+		if (cr.status === "tobedeleted") {
+			continue
+		}
+		const resource = resourceById.get(cr.resource.sourcedId)
+		if (!resource) {
+			logger.error("metrics: component resource references missing resource", {
+				componentResourceId: cr.sourcedId,
+				resourceId: cr.resource.sourcedId
+			})
+			throw errors.new("metrics: missing referenced resource")
+		}
+		// skip tobedeleted resources
+		if (resource.status === "tobedeleted") {
+			continue
+		}
+		const md = resource.metadata
+		const activity = getString(md, "khanActivityType")
+		const isRelevant =
+			activity === "Article" ||
+			activity === "Video" ||
+			activity === "Exercise" ||
+			activity === "Quiz" ||
+			activity === "UnitTest" ||
+			activity === "CourseChallenge"
+		if (!isRelevant) {
+			continue
+		}
+		const xp = getNumber(md, "xp")
+		if (xp === undefined) {
+			logger.error("metrics: missing xp for resource", {
+				resourceId: resource.sourcedId,
+				activity,
+				title: resource.title
+			})
+			throw errors.new("metrics: xp missing on resource")
+		}
+		totalXp += xp
+	}
+
+	const unitTestCount = assessments.filter((a) => a.type === "UnitTest").length
+	const courseChallengeCount = courseAssessments.filter((a) => a.type === "CourseChallenge").length
+	const totalLessons = contentIds.Exercise.length + allQuizAssessments.length + unitTestCount + courseChallengeCount
+
+	const courseMetadata: Record<string, unknown> = onerosterPayload.course.metadata ?? {}
+	courseMetadata.metrics = { totalXp, totalLessons }
+	onerosterPayload.course.metadata = courseMetadata
+
+	// POST-PROCESSING: Mark lessons with no active component-resources as tobedeleted
+	logger.debug("post-processing: marking lessons with no active component-resources")
+	const lessonComponents = onerosterPayload.courseComponents.filter((cc) => cc.parent !== undefined)
+	for (const lessonComponent of lessonComponents) {
+		const componentResources = onerosterPayload.componentResources.filter(
+			(cr) => cr.courseComponent.sourcedId === lessonComponent.sourcedId
+		)
+		const hasActiveComponentResources = componentResources.some((cr) => cr.status === "active")
+		if (!hasActiveComponentResources) {
+			lessonComponent.status = "tobedeleted"
+			logger.debug("marking lesson as tobedeleted", {
+				lessonId: lessonComponent.sourcedId,
+				lessonTitle: lessonComponent.title
+			})
+		}
+	}
+
+	// POST-PROCESSING: Mark units with no active children as tobedeleted
+	logger.debug("post-processing: marking units with no active children")
+	const unitComponents = onerosterPayload.courseComponents.filter((cc) => cc.parent === undefined)
+	for (const unitComponent of unitComponents) {
+		const childComponents = onerosterPayload.courseComponents.filter(
+			(cc) => cc.parent?.sourcedId === unitComponent.sourcedId
+		)
+		const hasActiveChildren = childComponents.some((child) => child.status === "active")
+		if (!hasActiveChildren && childComponents.length > 0) {
+			unitComponent.status = "tobedeleted"
+			logger.debug("marking unit as tobedeleted", {
+				unitId: unitComponent.sourcedId,
+				unitTitle: unitComponent.title
+			})
+		}
+	}
+
+	logger.info("oneroster payload generation complete", { courseId })
+	return onerosterPayload
+}
+
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Analyzing script’s line item and resource ID mismatches**
+
+This is quite a puzzle! I’m unpacking how the script generates hashed IDs for component resources and assessment line items, and suspect mismatches or missing `type` fields in references might cause ingestion failures. These likely lead to missing line items, which then cause gradebook’s save attempts to error out, making finalization fail despite the script pushing line items. The core seems to be how hashed IDs and metadata like `khanExerciseId` get mapped and recognized by the ingestion and gradebook services.
+</thinking>
+
+**Tool Call: Read ingest-assessment-line-items.ts**
+Status: Completed
+
+```json
+{"aggregated_output":"","call_id":"call_SEERFrDKgEojNNZxIGj6oybx","duration":{"nanos":19251917,"secs":0},"exit_code":0,"formatted_output":"","stderr":"","stdout":""}
+```
+
+## Assistant
+
+<thinking>
+
+
+**Reading entire file**
+</thinking>
+
+**Tool Call: Read ingest-assessment-line-items.ts**
+Status: Completed
+
+```json
+{"aggregated_output":"","call_id":"call_2loIfQZr0m9ejgFEHsK0PN83","duration":{"nanos":16344584,"secs":0},"exit_code":0,"formatted_output":"","stderr":"","stdout":""}
+```
+
+## Assistant
+
+<thinking>
+
+
+**Checking file start**
+</thinking>
+
+**Tool Call: Read ingest-assessment-line-items.ts**
+Status: Completed
+
+```ts
+import * as errors from "@superbuilders/errors"
+import { z } from "zod"
+import { inngest } from "@/inngest/client"
+import { oneroster } from "@/lib/clients"
+import { ONEROSTER_CONCURRENCY_KEY, ONEROSTER_CONCURRENCY_LIMIT } from "@/lib/constants/oneroster"
+
+// Define the Zod schema for the line item payload
+const AssessmentLineItemSchema = z.object({
+	sourcedId: z.string(),
+	status: z.literal("active"),
+	title: z.string(),
+	componentResource: z
+		.object({
+			sourcedId: z.string()
+		})
+		.optional(),
+	course: z.object({
+		sourcedId: z.string()
+	}),
+	metadata: z.record(z.string(), z.any()).optional()
+})
+
+type AssessmentLineItemPayload = z.infer<typeof AssessmentLineItemSchema>
+
+const EventDataSchema = z.object({
+	assessmentLineItems: z.array(z.unknown())
+})
+
+export const ingestAssessmentLineItems = inngest.createFunction(
+	{
+		id: "ingest-assessment-line-items",
+		name: "Ingest Assessment Line Items Hierarchically",
+		concurrency: { limit: ONEROSTER_CONCURRENCY_LIMIT, key: ONEROSTER_CONCURRENCY_KEY }
+	},
+	{ event: "oneroster/assessment-line-items.ingest" },
+	async ({ event, step, logger }) => {
+		// Validate event data structure
+		const eventDataResult = EventDataSchema.safeParse(event.data)
+		if (!eventDataResult.success) {
+			logger.error("invalid event data structure", { error: eventDataResult.error })
+			throw errors.new("event data must contain assessmentLineItems array")
+		}
+
+		// Validate each item in the array
+		const validatedItems: AssessmentLineItemPayload[] = []
+		const invalidItems: unknown[] = []
+
+		for (const item of eventDataResult.data.assessmentLineItems) {
+			const itemResult = AssessmentLineItemSchema.safeParse(item)
+			if (itemResult.success) {
+				validatedItems.push(itemResult.data)
+			} else {
+				invalidItems.push(item)
+			}
+		}
+
+		logger.info("starting assessment line item ingestion", {
+			totalCount: validatedItems.length,
+			invalidCount: invalidItems.length
+		})
+
+		if (validatedItems.length === 0) {
+			return { status: "skipped", reason: "no_line_items" }
+		}
+
+		// Group items by their type based on metadata
+		const courseChallenges = validatedItems.filter((li) => li.metadata?.lessonType === "coursechallenge")
+		const unitTests = validatedItems.filter((li) => li.metadata?.lessonType === "unittest")
+		const quizzes = validatedItems.filter((li) => li.metadata?.lessonType === "quiz")
+		const exercises = validatedItems.filter((li) => li.metadata?.lessonType === "exercise")
+		const completionItems = validatedItems.filter(
+			(li) => li.metadata?.lessonType === "video" || li.metadata?.lessonType === "article"
+		)
+
+		const runUpsertBatch = async (items: AssessmentLineItemPayload[], stepName: string) => {
+			if (items.length === 0) {
+				logger.info("no items to process for step", { stepName })
+				return
+			}
+		await step.run(stepName, async () => {
+			const promises = items.map(async (item) => {
+				const result = await errors.try(oneroster.putAssessmentLineItem(item.sourcedId, { assessmentLineItem: item }))
+				if (result.error) {
+					logger.error("failed to upsert assessment line item", { sourcedId: item.sourcedId, error: result.error })
+					throw result.error
+				}
+				return { sourcedId: item.sourcedId, success: true }
+			})
+			return Promise.all(promises)
+		})
+			logger.info("successfully ingested batch", { step: stepName, count: items.length })
+		}
+
+		// Ingest hierarchically, ensuring parents are created before children
+		await runUpsertBatch(courseChallenges, "ingest-course-challenges")
+		await runUpsertBatch(unitTests, "ingest-unit-tests")
+		await runUpsertBatch(quizzes, "ingest-quizzes")
+		await runUpsertBatch(exercises, "ingest-exercises")
+
+		// Ingest non-hierarchical items in parallel
+		await runUpsertBatch(completionItems, "ingest-completion-items")
+
+		logger.info("all assessment line items ingestion steps completed")
+		return { status: "success", totalIngested: validatedItems.length }
+	}
+)
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Investigating error logging paths**
+</thinking>
+
+**Tool Call: Search Could not save final result**
+Status: Completed
+
+```sh
+src/components/practice/assessment-stepper.tsx:1004:				toast.error("Could not save final result. Please retry.")
+src/components/practice/assessment-stepper.tsx:1119:				toast.error("Could not save final result. Please retry.")
+src/components/practice/assessment-stepper.tsx:1236:					toast.error("Could not save final result. Please retry.")
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Searching for error context references**
+</thinking>
+
+**Tool Call: Read assessment-stepper.tsx**
+Status: Completed
+
+```tsx
+   980			// First, check if the assessment is complete. This prevents updating
+   981			// the visible index to an out-of-bounds value.
+   982			if (isLast) {
+   983				setIsFinalizing(true)
+   984				beginProgressUpdate(onerosterResourceSourcedId)
+   985
+   986				const result = await errors.try(
+   987					finalizeAssessment({
+   988						onerosterResourceSourcedId,
+   989						onerosterComponentResourceSourcedId,
+   990						onerosterCourseSourcedId,
+   991						expectedXp,
+   992						assessmentTitle,
+   993						assessmentPath,
+   994						unitData,
+   995						contentType
+   996					})
+   997				)
+   998
+   999				if (result.error) {
+  1000					setIsFinalizing(false)
+  1001					endProgressUpdate(onerosterResourceSourcedId)
+  1002					// FIX: Release the navigation lock on failure to allow the user to retry.
+  1003					isNavigatingRef.current = false
+  1004					toast.error("Could not save final result. Please retry.")
+  1005					return
+  1006				}
+  1007
+  1008				// (Code to set summaryData and progress remains the same)...
+  1009				const finalSummaryData = result.data
+  1010				setSummaryData({
+  1011					score: finalSummaryData.score,
+  1012					correctAnswersCount: finalSummaryData.correctAnswersCount,
+  1013					totalQuestions: finalSummaryData.totalQuestions,
+  1014					xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
+  1015						? {
+  1016							penaltyXp:
+  1017								typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
+  1018									? finalSummaryData.xpPenaltyInfo.penaltyXp
+  1019									: 0,
+  1020							reason:
+  1021								typeof finalSummaryData.xpPenaltyInfo.reason === "string"
+  1022									? finalSummaryData.xpPenaltyInfo.reason
+  1023									: "Unknown penalty reason",
+  1024							avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+  1025						}
+  1026						: undefined
+  1027				})
+  1028
+  1029				// (Code for setProgressForResource remains the same)...
+  1030				const score = finalSummaryData.score
+  1031				const calculateProficiency = () => {
+  1032					if (score >= 100) return "proficient" as const
+  1033					if (score >= 70) return "familiar" as const
+  1034					return "attempted" as const
+  1035				}
+  1036				const proficiencyLevel = calculateProficiency()
+  1037				setProgressForResource(onerosterResourceSourcedId, {
+  1038					completed: true,
+  1039					score,
+  1040					proficiency: proficiencyLevel
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Diagnosing finalization failure causes**
+
+I'm tracing how `finalize` errors may stem from `assessment.saveResult`, focusing on potential issues in XP awarding, attempt number logic, metadata integrity, and subject slugs mapping to expected front-end constants. I want to verify if metadata fields align properly and if subject slug mismatches could trigger the failure.
+</thinking>
+
+**Tool Call: Read subjects.ts**
+Status: Completed
+
+```ts
+// Centralized subject definitions for strong typing and single-source-of-truth mapping
+export type CaliperSubject = "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"
+
+export const SUBJECT_SLUGS = [
+    "science",
+    "math",
+    "reading",
+    "language",
+    "social-studies",
+    "humanities",
+    "ela"
+] as const
+
+export type SubjectSlug = (typeof SUBJECT_SLUGS)[number]
+
+// Runtime membership test without type assertions
+const SUBJECT_SLUG_SET: ReadonlySet<string> = new Set(SUBJECT_SLUGS)
+export function isSubjectSlug(value: string): value is SubjectSlug {
+	return SUBJECT_SLUG_SET.has(value)
+}
+
+export const CALIPER_SUBJECT_MAPPING: Record<SubjectSlug, CaliperSubject> = {
+	science: "Science",
+	math: "Math",
+	reading: "Reading",
+	language: "Language",
+	"social-studies": "Social Studies",
+    humanities: "Social Studies",
+    // Map ELA to Reading to align with Caliper subject taxonomy
+    ela: "Reading"
+} as const
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Analyzing subject slug mismatch causing finalization failure**
+
+I’m unpacking how the script’s simple lowercase-and-hyphen conversion for subject names (like "English Language Arts" → "english-language-arts") doesn’t match the app’s canonical `SUBJECT_SLUGS` (e.g., 'ela', 'reading'), causing `finalizeAssessment` to reject paths and throw errors. This explains why script-generated courses fail finalization due to invalid slugs, unlike native courses using recognized slugs. I’ll also reference key code lines to give a precise diagnosis.
+</thinking>
+
+**Tool Call: Read convert-cartridge-to-oneroster.ts**
+Status: Completed
+
+```ts
+   150	    logger.error("article stimulus has no readable text")
+   151	    throw errors.new("article stimulus: no readable text")
+   152	  }
+   153	  const wordCount = cleaned.split(/\s+/).filter(Boolean).length
+   154	  if (!Number.isFinite(wordCount) || wordCount <= 0) {
+   155	    logger.error("article word count invalid", { wordCount })
+   156	    throw errors.new("article stimulus: invalid word count")
+   157	  }
+   158	  return Math.max(1, Math.ceil(wordCount / READING_WORDS_PER_MINUTE))
+   159	}
+   160
+   161	function subjectToRouteSegment(subject: string): string {
+   162	  return subject.toLowerCase().replace(/\s+/g, "-")
+   163	}
+   164
+   165	function normalizePathSlug(p: string): string {
+   166	  const seg = getLastPathSegment(p)
+   167	  return seg.endsWith(".json") ? seg.slice(0, -5) : seg
+   168	}
+   169
+   170	function sha256Hex(input: string): string {
+   171	  return crypto.createHash("sha256").update(input).digest("hex")
+   172	}
+   173
+   174	function hashId(_prefix: string, parts: string[]): string {
+   175	  // Always emit IDs starting with "nice_". The prefix argument is intentionally ignored
+   176	  // for the returned value, but included in the hash key for type separation.
+   177	  const key = parts.join("|")
+   178	  const hex = sha256Hex(key)
+   179	  return `nice_${hex.slice(0, 32)}`
+   180	}
+   181
+   182	// QTI identifiers (hyphen-free):
+   183	function qtiStimulusIdFromResource(resourceId: string): string {
+   184	  // For articles, stimulus identifier MUST equal the resource sourcedId
+   185	  return resourceId
+   186	}
+   187	function qtiItemIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string, questionNumber: number): string {
+   188	  return hashId("ni_", ["item", `kind=quiz`, `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`, `q=${String(questionNumber)}`])
+   189	}
+   190	function qtiItemIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string, questionNumber: number): string {
+```
+
+
+**Tool Call: Read assessment.ts**
+Status: Completed
+
+```ts
+   810			if (!clerkUserId) {
+   811				logger.error("finalize assessment: user not authenticated", { correlationId })
+   812				throw errors.new("user not authenticated")
+   813			}
+   814
+   815			// Extract subject and course slugs from assessment path
+   816			const pathParts = options.assessmentPath.split("/")
+   817			if (pathParts.length < 3 || !pathParts[1] || !pathParts[2]) {
+   818				logger.error("invalid assessment path structure", { assessmentPath: options.assessmentPath, correlationId })
+   819				throw errors.new("assessment path invalid")
+   820			}
+   821			const subjectSlugRaw = pathParts[1]
+   822			if (!isSubjectSlug(subjectSlugRaw)) {
+   823				logger.error("invalid subject slug in assessment path", {
+   824					subjectSlug: subjectSlugRaw,
+   825					assessmentPath: options.assessmentPath,
+   826					correlationId
+   827				})
+   828				throw errors.new("subject slug invalid")
+   829			}
+   830			const subjectSlug = subjectSlugRaw
+   831			const courseSlug = pathParts[2]
+   832
+   833			// Build the command DTO for the service layer
+   834			// Fetch user metadata for downstream services (streak)
+   835			const clerk = await clerkClient()
+   836			const user = await clerk.users.getUser(clerkUserId)
+   837
+   838			// Email is now required for Caliper analytics
+   839			const userEmail = user.emailAddresses[0]?.emailAddress
+   840			if (!userEmail) {
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Explaining subject slug mismatch causing finalize failure**
+</thinking>
+
+**Tool Call: Read convert-cartridge-to-oneroster.ts**
+Status: Completed
+
+```ts
+   520	              khanActivityType: "Article",
+   521	              launchUrl: launch,
+   522	              url: launch,
+   523	              khanId: res.id,
+   524	              khanSlug: articleSlug,
+   525	              khanTitle: lesson.title,
+   526	              qtiStimulusIdentifier: undefined,
+   527	              xp
+   528	            }
+   529	          })
+   530
+   531	          const compResId = orComponentResourceIdForArticle(slug, unit.id, lesson.id, res.id)
+   532	          payload.componentResources.push({
+   533	            sourcedId: compResId,
+   534	            status: "active",
+   535	            title: formatResourceTitleForDisplay(lesson.title, "Article"),
+   536	            courseComponent: { sourcedId: lessonComponentId, type: "courseComponent" },
+   537	            resource: { sourcedId: resourceId, type: "resource" },
+   538	            sortOrder: resourceIndex
+   539	          })
+   540
+   541	          payload.assessmentLineItems.push({
+   542	            sourcedId: orAssessmentLineItemIdFromResource(resourceId),
+   543	            status: "active",
+   544	            title: `Progress for: ${lesson.title}`,
+   545	            componentResource: { sourcedId: compResId },
+   546	            course: { sourcedId: courseSourcedId },
+   547	            metadata: { lessonType: "article", courseSourcedId }
+   548	          })
+   549
+   550	          // Generate QTI stimulus for article: identifier MUST equal resource sourcedId
+   551	          const stimId = qtiStimulusIdFromResource(resourceId)
+   552	          const stimulusXml = generateStimulusXml(stimId, lesson.title, htmlResult.data)
+   553	          qtiStimuli.push({
+   554	            xml: stimulusXml,
+   555	            metadata: {
+   556	              khanId: res.id,
+   557	              khanSlug: articleSlug,
+   558	              lessonId: lesson.id,
+   559	              unitId: unit.id,
+   560	              khanTitle: lesson.title
+   561	            }
+   562	          })
+   563	          logger.debug("generated qti stimulus for article", { articleId: res.id, lessonId: lesson.id })
+   564
+   565	          totalXp += xp
+   566	          totalLessons += 1
+   567	        } else if (res.type === "quiz") {
+   568	          const quizSlug = getLastPathSegment(res.path)
+   569	          // Create intermediate component for quiz
+   570	          const quizComponentId = orCourseComponentIdForQuiz(slug, unit.id, lesson.id, res.id)
+   571	          payload.courseComponents.push({
+   572	            sourcedId: quizComponentId,
+   573	            status: "active",
+   574	            title: lesson.title,
+   575	            course: { sourcedId: courseSourcedId, type: "course" },
+   576	            parent: { sourcedId: unitComponentId, type: "courseComponent" },
+   577	            sortOrder: lesson.lessonNumber, // position alongside lesson
+   578	            metadata: { khanId: res.id, khanSlug: quizSlug, khanTitle: lesson.title }
+   579	          })
+   580
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Searching for launch commands**
+</thinking>
+
+**Tool Call: Read convert-cartridge-to-oneroster.ts**
+Status: Completed
+
+```ts
+   580
+   581	          const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlugNorm}/${lessonSlug}/quiz/${quizSlug}`
+   582	          const resourceId = orResourceIdForQuiz(slug, unit.id, lesson.id, res.id)
+   583	          if (resourceSeen.has(resourceId)) {
+   584	            logger.error("duplicate resource id", { id: res.id })
+   585	            throw errors.new("resource id collision")
+   586	          }
+   587	          resourceSeen.add(resourceId)
+   588
+   589	          payload.resources.push({
+   590	            sourcedId: resourceId,
+   591	            status: "active",
+   592	            title: lesson.title,
+   593	            vendorResourceId: `nice-academy-${res.id}`,
+   594	            vendorId: "superbuilders",
+   595	            applicationId: "nice",
+   596	            roles: ["primary"],
+   597	            importance: "primary",
+   598	            metadata: {
+   599	              type: "interactive",
+   600	              toolProvider: "Nice Academy",
+   601	              khanActivityType: "Quiz",
+   602	              khanLessonType: "quiz",
+   603	              launchUrl: launch,
+   604	              url: launch,
+   605	              khanId: res.id,
+   606	              khanSlug: quizSlug,
+   607	              khanTitle: lesson.title,
+   608	              xp: QUIZ_XP
+   609	            }
+   610	          })
+   611
+   612	          const compResIdQ = orComponentResourceIdForQuiz(slug, unit.id, lesson.id, res.id)
+   613	          payload.componentResources.push({
+   614	            sourcedId: compResIdQ,
+   615	            status: "active",
+   616	            title: lesson.title,
+   617	            courseComponent: { sourcedId: quizComponentId, type: "courseComponent" },
+   618	            resource: { sourcedId: resourceId, type: "resource" },
+   619	            sortOrder: 0
+   620	          })
+   621
+   622	          payload.assessmentLineItems.push({
+   623	            sourcedId: orAssessmentLineItemIdFromResource(resourceId),
+   624	            status: "active",
+   625	            title: lesson.title,
+   626	            componentResource: { sourcedId: compResIdQ },
+   627	            course: { sourcedId: courseSourcedId },
+   628	            metadata: { lessonType: "quiz", courseSourcedId }
+   629	          })
+   630
+   631	          // Generate QTI items and test for quiz
+   632	          {
+   633	            if (!res.questions || res.questions.length === 0) {
+   634	              logger.error("quiz has no questions", { quizId: res.id, path: res.path })
+   635	              throw errors.new("quiz: no questions available")
+   636	            }
+   637	            const questionIds: string[] = []
+   638	            for (const q of res.questions) {
+   639	              // Load actual XML from cartridge if q.xml is a path
+   640	              const originalXml = q.xml?.trim() && q.xml.includes("<") ? q.xml : await readQuestionXml(reader, q.xml || "")
+```
+
+
+## Assistant
+
+<thinking>
+
+
+**Summarizing root cause and impact**
+
+I'll explain how `assessmentPath` inherits the slug from the `launch` path, leading to a finalization failure due to slug mismatch. I'll reference key code locations like the finalization check in `src/lib/actions/assessment.ts:821` and the `SUBJECT_SLUGS` list in `src/lib/constants/subjects.ts`. The message will clarify that an invalid slug causes `finalizeAssessment` to throw an error, which the stepper surfaces, illustrating with examples like `'english-language-arts'` vs `'ela'`. I'll keep it concise and bullet-pointed for clarity.
+</thinking>
+
+**Bug Diagnosis**
+- In the cartridge converter we derive the public URL segment with `subjectToRouteSegment`, which simply lowercases and hyphenates the raw subject label (e.g. “English Language Arts” → `english-language-arts`) (`scripts/convert-cartridge-to-oneroster.ts:161` and the launch URL build at `scripts/convert-cartridge-to-oneroster.ts:581`).
+- That slug is embedded in every resource’s `launchUrl`, so the assessment path handed back to the stepper includes that value. During finalization we split the path and insist the first segment is one of the canonical subject slugs listed in `SUBJECT_SLUGS` (`src/lib/actions/assessment.ts:815-828`, `src/lib/constants/subjects.ts:1-19`).
+- Slugs like `english-language-arts`, `english`, `computing`, etc. are **not** in that allow-list (we expect `ela`, `reading`, `science`, …), so `isSubjectSlug` returns false and `finalizeAssessment` throws “subject slug invalid”. The client catches that as “Could not save final result. Please retry.”
+- Native courses don’t hit this because their builder emits the canonical subject slug (`reading`, `science`, etc.), while every payload produced by the cartridge script injects the non-canonical form, so finalize always fails there.
+
+**What to Fix**
+- Replace the naive `subjectToRouteSegment` logic with a mapping that emits the same canonical slug set we accept elsewhere (e.g., map “English Language Arts” → `ela`, “Computing” → `science`, etc.), and reuse it when composing `launchUrl`. Once the paths use an allowed slug, finalization will pass the subject check and the gradebook write will succeed.
+
+Natural next step: update the script with a subject-to-slug lookup aligned with `SUBJECT_SLUGS`, regenerate a course, and re-ingest to confirm finalization succeeds.

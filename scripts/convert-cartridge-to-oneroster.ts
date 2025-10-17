@@ -4,6 +4,7 @@ import * as fs from "node:fs/promises"
 import * as crypto from "node:crypto"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { SUBJECT_SLUGS, isSubjectSlug } from "@/lib/constants/subjects"
 import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
 
 logger.setDefaultLogLevel(logger.DEBUG)
@@ -158,10 +159,6 @@ async function computeArticleXpFromHtml(html: string): Promise<number> {
   return Math.max(1, Math.ceil(wordCount / READING_WORDS_PER_MINUTE))
 }
 
-function subjectToRouteSegment(subject: string): string {
-  return subject.toLowerCase().replace(/\s+/g, "-")
-}
-
 function normalizePathSlug(p: string): string {
   const seg = getLastPathSegment(p)
   return seg.endsWith(".json") ? seg.slice(0, -5) : seg
@@ -302,14 +299,21 @@ async function main(): Promise<void> {
   const slug = getFlag("slug")
   const courseId = getFlag("course-id")
   const gradesRaw = getFlag("grades")
+  const subjectSlugArg = getFlag("subject-slug")
   // No flags for QTI; both OneRoster and QTI are always emitted
 
-  if (!input || !slug || !courseId || !gradesRaw) {
+  if (!input || !slug || !courseId || !gradesRaw || !subjectSlugArg) {
     process.stderr.write(
-      "Usage: convert-cartridge-to-oneroster --input /abs/file.tar.zst --slug <course-slug> --course-id <id> --grades <n[,n,...]>\n"
+      "Usage: convert-cartridge-to-oneroster --input /abs/file.tar.zst --slug <course-slug> --course-id <id> --grades <n[,n,...]> --subject-slug <slug>\n"
     )
     process.exit(1)
   }
+
+  if (!isSubjectSlug(subjectSlugArg)) {
+    logger.error("invalid subject slug", { subjectSlug: subjectSlugArg, allowed: SUBJECT_SLUGS })
+    throw errors.new(`subject slug must be one of: ${SUBJECT_SLUGS.join(", ")}`)
+  }
+  const subjectSlug = subjectSlugArg
 
   const grades = gradesRaw.split(",").map((g) => Number(g.trim()))
   if (grades.some((n) => !Number.isInteger(n) || n < 0 || n > 12)) {
@@ -355,7 +359,6 @@ async function main(): Promise<void> {
   const courseSourcedId = orCourseId(slug, courseId)
   const classSourcedId = orClassId(slug, courseId)
   const subjectList = mapSubjectToOneRosterSubjects(indexJson.course.subject)
-  const subjectRoute = subjectToRouteSegment(indexJson.course.subject)
 
   const payload: OneRosterPayload = {
     course: {
@@ -373,7 +376,7 @@ async function main(): Promise<void> {
         primaryApp: "nice_academy",
         khanId: courseId,
         khanSlug: slug,
-        khanSubjectSlug: subjectRoute,
+        khanSubjectSlug: subjectSlug,
         khanTitle: indexJson.course.title,
         khanDescription: "",
         AlphaLearn: {
@@ -490,6 +493,11 @@ async function main(): Promise<void> {
       for await (const res of iterLessonResources(reader, lesson) as AsyncIterable<Resource>) {
         resourceIndex++
         if (res.type === "article") {
+          const articleTitle = res.title
+          if (!articleTitle || articleTitle.trim() === "") {
+            logger.error("article missing title", { resourceId: res.id, lessonId: lesson.id, unitId: unit.id })
+            throw errors.new("article: missing title")
+          }
           const htmlResult = await errors.try(readArticleContent(reader, res.path))
           if (htmlResult.error) {
             logger.error("failed to read article stimulus", { path: res.path, error: htmlResult.error })
@@ -497,7 +505,7 @@ async function main(): Promise<void> {
           }
           const xp = await computeArticleXpFromHtml(htmlResult.data)
           const articleSlug = getLastPathSegment(path.dirname(res.path))
-          const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlugNorm}/${lessonSlug}/a/${articleSlug}`
+          const launch = `${baseDomain}/${subjectSlug}/${slug}/${unitSlugNorm}/${lessonSlug}/a/${articleSlug}`
           const resourceId = orResourceIdForArticle(slug, unit.id, lesson.id, res.id)
           if (resourceSeen.has(resourceId)) {
             logger.error("duplicate resource id", { id: res.id })
@@ -508,7 +516,7 @@ async function main(): Promise<void> {
           payload.resources.push({
             sourcedId: resourceId,
             status: "active",
-            title: lesson.title,
+            title: articleTitle,
             vendorResourceId: `nice-academy-${res.id}`,
             vendorId: "superbuilders",
             applicationId: "nice",
@@ -522,7 +530,7 @@ async function main(): Promise<void> {
               url: launch,
               khanId: res.id,
               khanSlug: articleSlug,
-              khanTitle: lesson.title,
+              khanTitle: articleTitle,
               qtiStimulusIdentifier: undefined,
               xp
             }
@@ -532,7 +540,7 @@ async function main(): Promise<void> {
           payload.componentResources.push({
             sourcedId: compResId,
             status: "active",
-            title: formatResourceTitleForDisplay(lesson.title, "Article"),
+            title: formatResourceTitleForDisplay(articleTitle, "Article"),
             courseComponent: { sourcedId: lessonComponentId, type: "courseComponent" },
             resource: { sourcedId: resourceId, type: "resource" },
             sortOrder: resourceIndex
@@ -541,7 +549,7 @@ async function main(): Promise<void> {
           payload.assessmentLineItems.push({
             sourcedId: orAssessmentLineItemIdFromResource(resourceId),
             status: "active",
-            title: `Progress for: ${lesson.title}`,
+            title: `Progress for: ${articleTitle}`,
             componentResource: { sourcedId: compResId },
             course: { sourcedId: courseSourcedId },
             metadata: { lessonType: "article", courseSourcedId }
@@ -549,7 +557,7 @@ async function main(): Promise<void> {
 
           // Generate QTI stimulus for article: identifier MUST equal resource sourcedId
           const stimId = qtiStimulusIdFromResource(resourceId)
-          const stimulusXml = generateStimulusXml(stimId, lesson.title, htmlResult.data)
+          const stimulusXml = generateStimulusXml(stimId, articleTitle, htmlResult.data)
           qtiStimuli.push({
             xml: stimulusXml,
             metadata: {
@@ -557,7 +565,7 @@ async function main(): Promise<void> {
               khanSlug: articleSlug,
               lessonId: lesson.id,
               unitId: unit.id,
-              khanTitle: lesson.title
+              khanTitle: articleTitle
             }
           })
           logger.debug("generated qti stimulus for article", { articleId: res.id, lessonId: lesson.id })
@@ -565,20 +573,25 @@ async function main(): Promise<void> {
           totalXp += xp
           totalLessons += 1
         } else if (res.type === "quiz") {
+          const quizTitle = res.title
+          if (!quizTitle || quizTitle.trim() === "") {
+            logger.error("quiz missing title", { resourceId: res.id, lessonId: lesson.id, unitId: unit.id })
+            throw errors.new("quiz: missing title")
+          }
           const quizSlug = getLastPathSegment(res.path)
           // Create intermediate component for quiz
           const quizComponentId = orCourseComponentIdForQuiz(slug, unit.id, lesson.id, res.id)
           payload.courseComponents.push({
             sourcedId: quizComponentId,
             status: "active",
-            title: lesson.title,
+            title: quizTitle,
             course: { sourcedId: courseSourcedId, type: "course" },
             parent: { sourcedId: unitComponentId, type: "courseComponent" },
             sortOrder: lesson.lessonNumber, // position alongside lesson
-            metadata: { khanId: res.id, khanSlug: quizSlug, khanTitle: lesson.title }
+            metadata: { khanId: res.id, khanSlug: quizSlug, khanTitle: quizTitle }
           })
 
-          const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlugNorm}/${lessonSlug}/quiz/${quizSlug}`
+          const launch = `${baseDomain}/${subjectSlug}/${slug}/${unitSlugNorm}/${lessonSlug}/quiz/${quizSlug}`
           const resourceId = orResourceIdForQuiz(slug, unit.id, lesson.id, res.id)
           if (resourceSeen.has(resourceId)) {
             logger.error("duplicate resource id", { id: res.id })
@@ -589,7 +602,7 @@ async function main(): Promise<void> {
           payload.resources.push({
             sourcedId: resourceId,
             status: "active",
-            title: lesson.title,
+            title: quizTitle,
             vendorResourceId: `nice-academy-${res.id}`,
             vendorId: "superbuilders",
             applicationId: "nice",
@@ -604,7 +617,7 @@ async function main(): Promise<void> {
               url: launch,
               khanId: res.id,
               khanSlug: quizSlug,
-              khanTitle: lesson.title,
+              khanTitle: quizTitle,
               xp: QUIZ_XP
             }
           })
@@ -613,7 +626,7 @@ async function main(): Promise<void> {
           payload.componentResources.push({
             sourcedId: compResIdQ,
             status: "active",
-            title: lesson.title,
+            title: quizTitle,
             courseComponent: { sourcedId: quizComponentId, type: "courseComponent" },
             resource: { sourcedId: resourceId, type: "resource" },
             sortOrder: 0
@@ -622,7 +635,7 @@ async function main(): Promise<void> {
           payload.assessmentLineItems.push({
             sourcedId: orAssessmentLineItemIdFromResource(resourceId),
             status: "active",
-            title: lesson.title,
+            title: quizTitle,
             componentResource: { sourcedId: compResIdQ },
             course: { sourcedId: courseSourcedId },
             metadata: { lessonType: "quiz", courseSourcedId }
@@ -657,7 +670,7 @@ async function main(): Promise<void> {
               })
               // Always rewrite identifier to our stable scheme: nice_<quizId>_<questionNumber>
               const newItemId = qtiItemIdForQuiz(slug, unit.id, lesson.id, res.id, q.number)
-            const rewriteRes = errors.trySync(() => replaceRootAttributes(originalXml, "qti-assessment-item", newItemId, lesson.title))
+            const rewriteRes = errors.trySync(() => replaceRootAttributes(originalXml, "qti-assessment-item", newItemId, quizTitle))
             if (rewriteRes.error) {
               logger.error("identifier rewrite failed (quiz)", { quizId: res.id, questionNumber: q.number, error: rewriteRes.error })
               // keep original file already written; bail out fast
@@ -683,14 +696,14 @@ async function main(): Promise<void> {
                   khanId: newItemId,
                   khanExerciseId: stripNicePrefix(resourceId),
                   khanExerciseSlug: quizSlug,
-                  khanExerciseTitle: lesson.title
+                  khanExerciseTitle: quizTitle
                 }
               })
             }
             // Generate test for this quiz
             // IMPORTANT: Set test identifier equal to the resource sourcedId so providers can map directly
             const quizTestId = resourceId
-            const quizTestXml = generateTestXml(quizTestId, lesson.title, questionIds)
+            const quizTestXml = generateTestXml(quizTestId, quizTitle, questionIds)
             // Debug: log the generated test XML
             logger.debug("quiz test xml", { quizId: res.id, xml: quizTestXml })
             const quizTestPath = path.join(path.join(debugBaseDir, "quizzes", res.id), `test.xml`)
@@ -711,6 +724,12 @@ async function main(): Promise<void> {
 
     // Unit test (optional) - process once per unit, OUTSIDE lesson loop
     if (unit.unitTest) {
+      const unitTest = unit.unitTest
+      const unitTestTitle = unitTest.title
+      if (!unitTestTitle || unitTestTitle.trim() === "") {
+        logger.error("unit test missing title", { unitTestId: unitTest.id, unitId: unit.id })
+        throw errors.new("unit test: missing title")
+      }
       const unitEntry = indexJson.units.find((u) => u.id === unit.id)
       const unitSlug = normalizePathSlug(unitEntry?.path ?? unit.id)
       const lastLesson = lessons[lessons.length - 1]
@@ -724,32 +743,32 @@ async function main(): Promise<void> {
         throw errors.new("lesson path: not found")
       }
       const lastLessonSlug = normalizePathSlug(lastLessonPath)
-      const testSlug = getLastPathSegment(unit.unitTest.path)
+      const testSlug = getLastPathSegment(unitTest.path)
 
-      const unitTestComponentId = orCourseComponentIdForUnitTest(slug, unit.id, unit.unitTest.id)
+      const unitTestComponentId = orCourseComponentIdForUnitTest(slug, unit.id, unitTest.id)
       payload.courseComponents.push({
         sourcedId: unitTestComponentId,
         status: "active",
-        title: unit.unitTest.id,
+        title: unitTestTitle,
         course: { sourcedId: courseSourcedId, type: "course" },
         parent: { sourcedId: unitComponentId, type: "courseComponent" },
         sortOrder: lastLesson.lessonNumber + 1,
-        metadata: { khanId: unit.unitTest.id, khanSlug: testSlug, khanTitle: unit.unitTest.id }
+        metadata: { khanId: unitTest.id, khanSlug: testSlug, khanTitle: unitTestTitle }
       })
 
-      const launch = `${baseDomain}/${subjectRoute}/${slug}/${unitSlug}/${lastLessonSlug}/test/${testSlug}`
-      const resourceId = orResourceIdForUnitTest(slug, unit.id, unit.unitTest.id)
+      const launch = `${baseDomain}/${subjectSlug}/${slug}/${unitSlug}/${lastLessonSlug}/test/${testSlug}`
+      const resourceId = orResourceIdForUnitTest(slug, unit.id, unitTest.id)
       if (resourceSeen.has(resourceId)) {
-        logger.error("duplicate resource id", { id: unit.unitTest.id })
+        logger.error("duplicate resource id", { id: unitTest.id })
         throw errors.new("resource id collision")
       }
       resourceSeen.add(resourceId)
 
-          payload.resources.push({
+      payload.resources.push({
         sourcedId: resourceId,
         status: "active",
-        title: unit.unitTest.id,
-        vendorResourceId: `nice-academy-${unit.unitTest.id}`,
+        title: unitTestTitle,
+        vendorResourceId: `nice-academy-${unitTest.id}`,
         vendorId: "superbuilders",
         applicationId: "nice",
         roles: ["primary"],
@@ -761,18 +780,18 @@ async function main(): Promise<void> {
           khanLessonType: "unittest",
           launchUrl: launch,
           url: launch,
-          khanId: unit.unitTest.id,
+          khanId: unitTest.id,
           khanSlug: testSlug,
-          khanTitle: unit.unitTest.id,
+          khanTitle: unitTestTitle,
           xp: UNIT_TEST_XP
         }
       })
 
-      const compResIdUT = orComponentResourceIdForUnitTest(slug, unit.id, unit.unitTest.id)
+      const compResIdUT = orComponentResourceIdForUnitTest(slug, unit.id, unitTest.id)
       payload.componentResources.push({
         sourcedId: compResIdUT,
         status: "active",
-        title: unit.unitTest.id,
+        title: unitTestTitle,
         courseComponent: { sourcedId: unitTestComponentId, type: "courseComponent" },
         resource: { sourcedId: resourceId, type: "resource" },
         sortOrder: 0
@@ -781,14 +800,13 @@ async function main(): Promise<void> {
       payload.assessmentLineItems.push({
         sourcedId: orAssessmentLineItemIdFromResource(resourceId),
         status: "active",
-        title: unit.unitTest.id,
+        title: unitTestTitle,
         componentResource: { sourcedId: compResIdUT },
         course: { sourcedId: courseSourcedId },
         metadata: { lessonType: "unittest", courseSourcedId }
       })
 
       // Generate QTI items and test for unit test
-      const unitTest = unit.unitTest
       if (!unitTest.questions || unitTest.questions.length === 0) {
         logger.error("unit test has no questions", { unitTestId: unitTest.id, unitId: unit.id })
         throw errors.new("unit test: no questions available")
@@ -815,7 +833,7 @@ async function main(): Promise<void> {
         })
         // Always rewrite identifier to our stable scheme: nice_<unitTestId>_<questionNumber>
         const newItemId = qtiItemIdForUnitTest(slug, unit.id, unitTest.id, q.number)
-        const rewriteUtRes = errors.trySync(() => replaceRootAttributes(originalXml, "qti-assessment-item", newItemId, unitTest.id))
+        const rewriteUtRes = errors.trySync(() => replaceRootAttributes(originalXml, "qti-assessment-item", newItemId, unitTestTitle))
         if (rewriteUtRes.error) {
           logger.error("identifier rewrite failed (unit test)", { unitTestId: unitTest.id, questionNumber: q.number, error: rewriteUtRes.error })
           throw rewriteUtRes.error
@@ -840,7 +858,7 @@ async function main(): Promise<void> {
             khanId: newItemId,
             khanExerciseId: stripNicePrefix(resourceId),
             khanExerciseSlug: testSlug,
-            khanExerciseTitle: unitTest.id
+            khanExerciseTitle: unitTestTitle
           }
         })
       }
@@ -848,7 +866,7 @@ async function main(): Promise<void> {
       const utId = unitTest.id
       // IMPORTANT: Set test identifier equal to the resource sourcedId
       const unitTestAssessmentId = resourceId
-      const unitTestXml = generateTestXml(unitTestAssessmentId, utId, questionIds)
+      const unitTestXml = generateTestXml(unitTestAssessmentId, unitTestTitle, questionIds)
       // Debug: log the generated unit test XML
       logger.debug("unit test xml", { unitTestId: utId, xml: unitTestXml })
       const unitTestPath = path.join(path.join(debugBaseDir, "unit-tests", utId), `test.xml`)
@@ -954,5 +972,3 @@ if (result.error) {
   process.exit(1)
 }
 process.exit(0)
-
-
