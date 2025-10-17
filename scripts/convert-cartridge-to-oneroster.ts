@@ -238,6 +238,10 @@ function orAssessmentLineItemIdFromResource(resourceId: string): string {
   return `${resourceId}_ali`
 }
 
+function stripNicePrefix(id: string): string {
+  return id.startsWith("nice_") ? id.slice(5) : id
+}
+
 function sanitizeIdPart(part: string): string {
   // Replace non-alphanumeric with underscores, collapse repeats, trim underscores
   let v = part.replace(/[^A-Za-z0-9_]/g, "_")
@@ -518,6 +522,7 @@ async function main(): Promise<void> {
               khanId: res.id,
               khanSlug: articleSlug,
               khanTitle: lesson.title,
+              qtiStimulusIdentifier: undefined,
               xp
             }
           })
@@ -554,6 +559,11 @@ async function main(): Promise<void> {
               khanTitle: lesson.title
             }
           })
+          // Backfill the just-pushed resource's qtiStimulusIdentifier
+          const lastResource = payload.resources[payload.resources.length - 1]
+          if (lastResource && lastResource.sourcedId === resourceId) {
+            ;(lastResource.metadata as Record<string, unknown>).qtiStimulusIdentifier = stimId
+          }
           logger.debug("generated qti stimulus for article", { articleId: res.id, lessonId: lesson.id })
 
           totalXp += xp
@@ -599,6 +609,7 @@ async function main(): Promise<void> {
               khanId: res.id,
               khanSlug: quizSlug,
               khanTitle: lesson.title,
+              qtiTestIdentifier: undefined,
               xp: QUIZ_XP
             }
           })
@@ -675,14 +686,15 @@ async function main(): Promise<void> {
                 xml: rewrittenXml,
                 metadata: {
                   khanId: newItemId,
-                  khanExerciseId: res.id,
+                  khanExerciseId: stripNicePrefix(resourceId),
                   khanExerciseSlug: quizSlug,
                   khanExerciseTitle: lesson.title
                 }
               })
             }
             // Generate test for this quiz
-            const quizTestId = qtiTestIdForQuiz(slug, unit.id, lesson.id, res.id)
+            // IMPORTANT: Set test identifier equal to the resource sourcedId so providers can map directly
+            const quizTestId = resourceId
             const quizTestXml = generateTestXml(quizTestId, lesson.title, questionIds)
             // Debug: log the generated test XML
             logger.debug("quiz test xml", { quizId: res.id, xml: quizTestXml })
@@ -738,7 +750,7 @@ async function main(): Promise<void> {
       }
       resourceSeen.add(resourceId)
 
-      payload.resources.push({
+          payload.resources.push({
         sourcedId: resourceId,
         status: "active",
         title: unit.unitTest.id,
@@ -757,6 +769,7 @@ async function main(): Promise<void> {
           khanId: unit.unitTest.id,
           khanSlug: testSlug,
           khanTitle: unit.unitTest.id,
+              qtiTestIdentifier: undefined,
           xp: UNIT_TEST_XP
         }
       })
@@ -831,7 +844,7 @@ async function main(): Promise<void> {
           xml: rewrittenXml,
           metadata: {
             khanId: newItemId,
-            khanExerciseId: unitTest.id,
+            khanExerciseId: stripNicePrefix(resourceId),
             khanExerciseSlug: testSlug,
             khanExerciseTitle: unitTest.id
           }
@@ -839,8 +852,14 @@ async function main(): Promise<void> {
       }
       // Generate test for this unit test
       const utId = unitTest.id
-      const unitTestAssessmentId = qtiTestIdForUnitTest(slug, unit.id, utId)
+      // IMPORTANT: Set test identifier equal to the resource sourcedId
+      const unitTestAssessmentId = resourceId
       const unitTestXml = generateTestXml(unitTestAssessmentId, utId, questionIds)
+      // Backfill qtiTestIdentifier for the unit test resource
+      const lastUTResource = payload.resources[payload.resources.length - 1]
+      if (lastUTResource && lastUTResource.sourcedId === resourceId) {
+        ;(lastUTResource.metadata as Record<string, unknown>).qtiTestIdentifier = unitTestAssessmentId
+      }
       // Debug: log the generated unit test XML
       logger.debug("unit test xml", { unitTestId: utId, xml: unitTestXml })
       const unitTestPath = path.join(path.join(debugBaseDir, "unit-tests", utId), `test.xml`)
