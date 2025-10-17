@@ -845,7 +845,7 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
             <div className="border-b bg-white px-6 py-4 flex items-center justify-between">
                 <div>
                     <h1 className="text-2xl font-semibold">
-                        Course Builder • Resources
+                        Course Builder
                     </h1>
                     <p className="text-sm text-muted-foreground">
                         {items.length.toLocaleString()} resources available
@@ -853,7 +853,7 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                 </div>
                 <Button
                     size="lg"
-                    className="bg-black hover:bg-gray-800 text-white font-semibold px-6"
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6"
                     onClick={() => setIsBuilderOpen(!isBuilderOpen)}
                 >
                     {isBuilderOpen ? (
@@ -872,7 +872,7 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
 
             {/* Split Screen Layout */}
             <div className={cn(
-                "flex h-[calc(100vh-73px)]", // Subtract header height
+                "flex h-[calc(100vh-133px)]", // Subtract header (60px) and internal header (73px)
                 isBuilderOpen ? "gap-0" : ""
             )}>
                 {/* Left Panel - Resources */}
@@ -1153,13 +1153,13 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                         {/* Resources Table */}
                         <div className="rounded-lg border overflow-hidden shadow-sm">
                             <Table>
-                                <TableHeader>
-                                    <TableRow className="bg-gray-50/50">
-                                        <TableHead className="font-semibold">Title</TableHead>
-                                        <TableHead className="font-semibold w-[120px]">Type</TableHead>
-                                        <TableHead className="font-semibold w-[150px]">Course</TableHead>
-                                        <TableHead className="font-semibold">Standards</TableHead>
-                                        <TableHead className="font-semibold w-[100px] text-right">Actions</TableHead>
+                                <TableHeader className="bg-[rgb(23,37,84)]">
+                                    <TableRow className="hover:bg-[rgb(23,37,84)]">
+                                        <TableHead className="font-semibold text-white">Title</TableHead>
+                                        <TableHead className="font-semibold w-[120px] text-white">Type</TableHead>
+                                        <TableHead className="font-semibold w-[150px] text-white">Course</TableHead>
+                                        <TableHead className="font-semibold text-white">Standards</TableHead>
+                                        <TableHead className="font-semibold w-[100px] text-right text-white">Actions</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -1302,7 +1302,7 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
 
                 {/* Right Panel - Course Builder */}
                 {isBuilderOpen && (
-                    <div className="w-1/2 bg-gray-50 animate-in slide-in-from-right duration-300 flex flex-col">
+                    <div className="w-1/2 bg-[rgb(23,37,84)] animate-in slide-in-from-right duration-300 flex flex-col">
                         <div className="flex-1 overflow-y-auto p-6 space-y-6" style={{ scrollbarGutter: "stable both-edges", overscrollBehavior: "contain" }}>
                             {/* Course Header */}
                             <div className="bg-white rounded-lg border p-6">
@@ -1900,14 +1900,14 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
                         </div>
 
                         {/* Action Bar - Fixed at bottom */}
-                        <div className="flex-shrink-0 bg-white border-t p-3">
+                        <div className="flex-shrink-0 bg-white border-t p-3 pb-6">
                             {!courseHasContent && (
                                 <p className="text-xs text-orange-500 text-center mb-2">
                                     All units must have lessons, and all lessons must have resources
                                 </p>
                             )}
                             <Button
-                                className="w-full bg-black hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
                                 onClick={handleGenerateCourse}
                                 disabled={isGenerating || !courseHasContent}
                                 title={!courseHasContent ? "Add resources to all lessons before generating" : undefined}
