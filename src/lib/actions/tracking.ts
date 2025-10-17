@@ -893,8 +893,14 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 		}
 	}
 
-	// Step 4: Update proficiency for interactive assessments
-	if (isInteractiveAssessment && onerosterComponentResourceSourcedId && sessionResults && attemptNumber) {
+	// Step 4: Update proficiency for interactive assessments (exclude standalone exercises)
+	if (
+		isInteractiveAssessment &&
+		contentType !== "Exercise" &&
+		onerosterComponentResourceSourcedId &&
+		sessionResults &&
+		attemptNumber
+	) {
 		logger.info("starting proficiency analysis from server", {
 			onerosterComponentResourceSourcedId,
 			sessionResultCount: sessionResults.length

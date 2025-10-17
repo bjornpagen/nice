@@ -97,6 +97,12 @@ export async function updateProficiencyFromAssessment(
 		lessonType = "coursechallenge"
 	}
 
+	// Minimal guard: do not run proficiency updates for standalone exercises
+	if (lessonType === "exercise") {
+		logger.info("skipping proficiency for exercise", { onerosterComponentResourceSourcedId })
+		return { success: true, exercisesUpdated: 0 }
+	}
+
 	// Step 2: Map questions to exercises using QTI metadata
 	const qtiItemIdToOneRosterResourceSourcedIdMap = new Map<string, string>()
 	const questionResultsFromSession = sessionResults

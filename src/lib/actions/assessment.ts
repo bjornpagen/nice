@@ -845,6 +845,14 @@ export async function finalizeAssessment(options: {
 			throw errors.new("user email required for assessment")
 		}
 
+		// Derive interactive flag from content type to avoid exercising proficiency path for exercises
+		const isInteractiveAssessmentFlag = options.contentType !== "Exercise"
+		logger.info("derived interactive assessment flag", {
+			contentType: options.contentType,
+			isInteractiveAssessment: isInteractiveAssessmentFlag,
+			correlationId
+		})
+
 		const command: SaveAssessmentResultCommand = {
 			...options,
 			onerosterUserSourcedId,
@@ -855,7 +863,7 @@ export async function finalizeAssessment(options: {
 			correctAnswers,
 			totalQuestions,
 			durationInSeconds,
-			isInteractiveAssessment: true,
+			isInteractiveAssessment: isInteractiveAssessmentFlag,
 			clerkUserId,
 			correlationId,
 			// zod schema now validates subjectSlug against SUBJECT_SLUGS; pass through
