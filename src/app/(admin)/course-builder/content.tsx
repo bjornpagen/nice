@@ -794,7 +794,7 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
 
             // Step 4: Linking resources
             setCurrentStep(4)
-            await createComponentResourcesStep(payload.componentResources)
+            await createComponentResourcesStep(payload.componentResources, payload.course.sourcedId)
 
             // Step 5: Creating assessments
             setCurrentStep(5)
