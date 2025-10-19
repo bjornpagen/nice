@@ -260,12 +260,29 @@ export function AssessmentStepper({
 	// Guard: ensure summary sfx (sound/confetti) only plays once per attempt
 	const hasAnnouncedSummaryRef = React.useRef(false)
 	React.useEffect(() => {
-		if (showSummary && !hasAnnouncedSummaryRef.current) {
+		if (showSummary && !hasAnnouncedSummaryRef.current && summaryData) {
 			hasAnnouncedSummaryRef.current = true
-			const audio = new Audio("/summary-sound.mp3")
-			audio.play().catch(() => { })
+			
+			// Calculate percentage to determine which sound to play
+			const percentage =
+				summaryData.totalQuestions !== null && summaryData.totalQuestions > 0 && summaryData.correctAnswersCount !== null
+					? Math.round((summaryData.correctAnswersCount / summaryData.totalQuestions) * 100)
+					: 0
+			
+			// Select sound based on score
+			let soundPath: string
+			if (percentage >= 90) {
+				soundPath = "/assets/audio/mastery-trumpets-sound.mp3"
+			} else if (percentage <= 40) {
+				soundPath = "/assets/audio/fail-trumpets-sound.mp3"
+			} else {
+				soundPath = "/assets/audio/activity-complete-sound.mp3"
+			}
+			
+			const audio = new Audio(soundPath)
+			audio.play().catch(() => {})
 		}
-	}, [showSummary])
+	}, [showSummary, summaryData])
 
 	// Removed cache-busting logic; no longer needed
 
@@ -567,10 +584,7 @@ export function AssessmentStepper({
 	}
 
 	function handleWrongAnswer() {
-		// 1 in 5000 chance of playing the wrong answer sound
-		const shouldPlaySound = Math.random() < 1 / 5000
-
-		if (shouldPlaySound && wrongAudioRef.current) {
+		if (wrongAudioRef.current) {
 			wrongAudioRef.current.play().catch(() => {
 				// Ignore audio play errors (e.g., autoplay policy)
 			})
@@ -1355,10 +1369,10 @@ export function AssessmentStepper({
 
 	return (
 		<div className="flex flex-col h-full bg-white">
-			<audio ref={audioRef} src="/correct-sound.mp3" preload="auto">
+			<audio ref={audioRef} src="/assets/audio/correct-answer-sound.mp3" preload="auto">
 				<track kind="captions" />
 			</audio>
-			<audio ref={wrongAudioRef} src="/wrong-answer.mp3" preload="auto">
+			<audio ref={wrongAudioRef} src="/assets/audio/incorrect-answer-sound.mp3" preload="auto">
 				<track kind="captions" />
 			</audio>
 			{/* Assessment Header */}
