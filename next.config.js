@@ -8,7 +8,6 @@ import "./src/env.js"
 const config = {
 	experimental: {
 		reactCompiler: true,
-		cacheComponents: true,
 		useCache: true
 	},
 	images: {
