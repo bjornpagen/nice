@@ -262,13 +262,13 @@ export function AssessmentStepper({
 	React.useEffect(() => {
 		if (showSummary && !hasAnnouncedSummaryRef.current && summaryData) {
 			hasAnnouncedSummaryRef.current = true
-			
+
 			// Calculate percentage to determine which sound to play
 			const percentage =
 				summaryData.totalQuestions !== null && summaryData.totalQuestions > 0 && summaryData.correctAnswersCount !== null
 					? Math.round((summaryData.correctAnswersCount / summaryData.totalQuestions) * 100)
 					: 0
-			
+
 			// Select sound based on score
 			let soundPath: string
 			if (percentage >= 90) {
@@ -278,7 +278,7 @@ export function AssessmentStepper({
 			} else {
 				soundPath = "/assets/audio/activity-complete-sound.mp3"
 			}
-			
+
 			const audio = new Audio(soundPath)
 			audio.play().catch(() => {})
 		}
@@ -695,16 +695,18 @@ export function AssessmentStepper({
 	const currentQuestion = questions[visibleQuestionIndex]
 
 	const handleReset = async () => {
-		if (onRetake) {
-			// Use the next attempt number as a hint to parent for UX
-			onRetake(serverState.attemptNumber + 1)
-			return
-		}
+		const nextAttemptNumber = (serverState?.attemptNumber ?? 0) + 1
 
-		// MODIFIED: Clear server state before refreshing to force a new attempt.
+		// Always clear the server-side attempt state so the next load starts fresh.
 		const result = await errors.try(startNewAssessmentAttempt(onerosterResourceSourcedId))
 		if (result.error) {
 			toast.error("Could not start a new attempt. Please refresh the page manually.")
+			return
+		}
+
+		if (onRetake) {
+			// Provide the parent with the upcoming attempt number for UX affordances.
+			onRetake(nextAttemptNumber)
 			return
 		}
 
