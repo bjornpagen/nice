@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { caliper, oneroster } from "@/lib/clients"
 import type { CourseReadSchemaType } from "@/lib/oneroster"
 import { constructActorId } from "@/lib/utils/actor-id"
+import { HARDCODED_SCIENCE_COURSE_IDS } from "@/lib/constants/course-mapping"
 
 export type MetricsDateRange = { fromIso: string; toIso: string }
 
@@ -232,125 +233,57 @@ export async function getCourseMetrics(opts: { courseId: string; range: MetricsD
 }
 
 export async function getAllCourseMetrics(range: MetricsDateRange): Promise<CourseMetrics[]> {
-	logger.info("metrics: fetching nice courses and related data")
+    logger.info("metrics: fetching course metrics for limited set")
 
-	// Step 1: Fetch only nice_ courses directly
-	const niceCourses = await fetchNiceCourses()
-	logger.info("metrics: found nice courses", { count: niceCourses.length })
+    // Limit to the five science courses only
+    const allowedCourseIds = new Set(HARDCODED_SCIENCE_COURSE_IDS.map((id) => `nice_${id}`))
 
-	if (niceCourses.length === 0) {
-		return []
-	}
+    // Step 1: Fetch only nice_ courses then filter to allowed set
+    const niceCourses = (await fetchNiceCourses()).filter((c) => allowedCourseIds.has(c.sourcedId))
+    logger.info("metrics: filtered nice courses to allowed set", { count: niceCourses.length })
 
-	// Step 2: Fetch all classes and filter to our courses
-	const allClasses = await oneroster.getAllClasses({ filter: "status='active'" })
-	const courseIdSet = new Set(niceCourses.map((c) => c.sourcedId))
+    if (niceCourses.length === 0) {
+        return []
+    }
 
-	// Build mappings
-	const classToCourse = new Map<string, string>()
-	const courseToClasses = new Map<string, string[]>()
-	const allClassIds: string[] = []
+    // Step 2: Fetch all active classes and keep only those that belong to allowed courses
+    const allClasses = await oneroster.getAllClasses({ filter: "status='active'" })
+    const courseIdSet = new Set(niceCourses.map((c) => c.sourcedId))
 
-	for (const cls of allClasses) {
-		const courseId = cls.course?.sourcedId
-		if (courseId && courseIdSet.has(courseId)) {
-			classToCourse.set(cls.sourcedId, courseId)
-			allClassIds.push(cls.sourcedId)
+    const classToCourse = new Map<string, string>()
+    for (const cls of allClasses) {
+        const courseId = cls.course?.sourcedId
+        if (courseId && courseIdSet.has(courseId)) {
+            classToCourse.set(cls.sourcedId, courseId)
+        }
+    }
 
-			if (!courseToClasses.has(courseId)) {
-				courseToClasses.set(courseId, [])
-			}
-			courseToClasses.get(courseId)?.push(cls.sourcedId)
-		}
-	}
+    // Step 3: Fetch active student enrollments and build per-course counts
+    const allEnrollments = await fetchActiveStudentEnrollments()
+    const enrollIndex = new Map<string, Set<string>>()
+    for (const enrollment of allEnrollments) {
+        const courseId = classToCourse.get(enrollment.classId)
+        if (!courseId) continue
+        if (!enrollIndex.has(courseId)) enrollIndex.set(courseId, new Set())
+        enrollIndex.get(courseId)!.add(enrollment.userId)
+    }
 
-	logger.info("metrics: mapped classes to courses", {
-		totalClasses: allClassIds.length,
-		coursesWithClasses: courseToClasses.size
-	})
+    // Step 4: Build minimal metrics objects without per-user details
+    const out: CourseMetrics[] = []
+    for (const course of niceCourses) {
+        const courseId = course.sourcedId
+        const activeEnrollments = (enrollIndex.get(courseId)?.size ?? 0)
+        if (activeEnrollments === 0) continue
+        out.push({
+            courseId,
+            title: course.title,
+            activeEnrollments,
+            xpTotal: 0,
+            timeActiveSeconds: 0,
+            users: []
+        })
+    }
 
-	// Step 3: Fetch enrollments
-	const allEnrollments = await fetchActiveStudentEnrollments()
-
-	// Step 4: Build enrollment index (filter to only our classes)
-	const enrollIndex = new Map<string, Set<string>>()
-	const relevantClassIds = new Set(allClassIds)
-
-	logger.info("metrics: processing enrollments", {
-		totalEnrollments: allEnrollments.length,
-		relevantClasses: relevantClassIds.size,
-		sampleClassIds: Array.from(relevantClassIds).slice(0, 5)
-	})
-
-	for (const enrollment of allEnrollments) {
-		// Only process enrollments for classes that belong to nice_ courses
-		if (!relevantClassIds.has(enrollment.classId)) continue
-
-		const courseId = classToCourse.get(enrollment.classId)
-		if (!courseId) continue
-
-		if (!enrollIndex.has(courseId)) {
-			enrollIndex.set(courseId, new Set())
-		}
-		enrollIndex.get(courseId)?.add(enrollment.userId)
-	}
-
-	// Get all unique user IDs from relevant enrollments
-	const allUserIds = Array.from(new Set(Array.from(enrollIndex.values()).flatMap((s) => Array.from(s))))
-
-	logger.info("metrics: found enrolled users", {
-		userCount: allUserIds.length,
-		coursesWithEnrollments: enrollIndex.size
-	})
-
-	// Step 5: Fetch Caliper aggregations and emails for all users
-	const [caliperAgg, emailMap] = await Promise.all([
-		fetchCaliperAggForUsers(allUserIds, range),
-		fetchUserEmails(allUserIds)
-	])
-
-	// Step 6: Compute metrics for each course
-	const out: CourseMetrics[] = []
-	for (const course of niceCourses) {
-		const courseId = course.sourcedId
-		const title = course.title
-		const enrolledUsers = Array.from(enrollIndex.get(courseId) || new Set<string>())
-		const activeEnrollments = enrolledUsers.length
-
-		// Skip courses with no enrollments
-		if (activeEnrollments === 0) continue
-
-		let xpTotal = 0
-		let timeTotal = 0
-		const users: UserMetricsSummary[] = []
-
-		for (const userId of enrolledUsers) {
-			const cAgg = caliperAgg.get(userId) || { xp: 0, timeActiveSeconds: 0 }
-			users.push({
-				userId,
-				email: emailMap.get(userId),
-				xp: cAgg.xp,
-				timeActiveSeconds: cAgg.timeActiveSeconds,
-				lastActivityIso: cAgg.lastActivityIso
-			})
-			xpTotal += cAgg.xp
-			timeTotal += cAgg.timeActiveSeconds
-		}
-
-		out.push({
-			courseId,
-			title,
-			activeEnrollments,
-			xpTotal,
-			timeActiveSeconds: timeTotal,
-			users
-		})
-	}
-
-	logger.info("metrics: computed metrics for courses", {
-		totalCourses: niceCourses.length,
-		coursesWithMetrics: out.length
-	})
-
-	return out
+    logger.info("metrics: computed minimal metrics for limited courses", { coursesWithMetrics: out.length })
+    return out
 }

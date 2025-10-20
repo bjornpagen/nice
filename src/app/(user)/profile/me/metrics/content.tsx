@@ -2,8 +2,10 @@
 
 import * as React from "react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import type { CourseEnrollmentData } from "@/lib/actions/metrics"
+import { getCourseEnrollments } from "@/lib/actions/metrics"
 import type { CourseMetrics } from "@/lib/data/metrics"
 
 type Props = {
@@ -13,122 +15,112 @@ type Props = {
 export function Content({ metricsPromise }: Props) {
   const metrics = React.use(metricsPromise)
 
-  const [preset, setPreset] = React.useState<string>("month")
-  const [query, setQuery] = React.useState("")
-  const [sort, setSort] = React.useState<"time" | "xp" | "enrollments">("time")
+  const sorted = metrics
 
-  const filtered = metrics.filter((m) => m.title.toLowerCase().includes(query.toLowerCase()))
-  const sorted = [...filtered].sort((a, b) => {
-    if (sort === "time") return b.timeActiveSeconds - a.timeActiveSeconds
-    if (sort === "xp") return b.xpTotal - a.xpTotal
-    return b.activeEnrollments - a.activeEnrollments
-  })
+  const [open, setOpen] = React.useState(false)
+  const [selectedCourseId, setSelectedCourseId] = React.useState<string | undefined>(undefined)
+  const [loading, setLoading] = React.useState(false)
+  const [error, setError] = React.useState<string | undefined>(undefined)
+  const [data, setData] = React.useState<CourseEnrollmentData | undefined>(undefined)
+  const [showStudentsOnly, setShowStudentsOnly] = React.useState(false)
+
+  async function openModal(courseId: string) {
+    setSelectedCourseId(courseId)
+    setOpen(true)
+    setLoading(true)
+    setError(undefined)
+    setData(undefined)
+    const result = await getCourseEnrollments(courseId)
+    setData(result)
+    setLoading(false)
+  }
 
   return (
     <main className="space-y-6">
       <header className="flex items-center justify-between gap-4">
         <h1 className="text-2xl font-bold text-gray-800">Metrics</h1>
-        <div className="flex items-center gap-3">
-          <Input
-            placeholder="Search courses"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="w-56"
-          />
-          <Select value={preset} onValueChange={setPreset}>
-            <SelectTrigger className="w-32">
-              <SelectValue placeholder="Range" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="day">Day</SelectItem>
-              <SelectItem value="week">Week</SelectItem>
-              <SelectItem value="month">Month</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select
-            value={sort}
-            onValueChange={(v) => {
-              if (v === "time" || v === "xp" || v === "enrollments") {
-                setSort(v)
-              }
-            }}
-          >
-            <SelectTrigger className="w-40">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="time">Time spent</SelectItem>
-              <SelectItem value="xp">XP earned</SelectItem>
-              <SelectItem value="enrollments">Enrollments</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button variant="outline">Export CSV</Button>
-        </div>
+        <div />
       </header>
 
       <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {sorted.map((c) => (
-          <div key={c.courseId} className="rounded-lg border border-gray-200 p-5 bg-white">
+          <button
+            key={c.courseId}
+            onClick={() => openModal(c.courseId)}
+            className="text-left rounded-lg border border-gray-200 p-5 bg-white hover:border-blue-300 hover:shadow-sm transition"
+          >
             <div className="flex items-start justify-between gap-4">
               <div>
                 <h2 className="text-lg font-semibold text-gray-900">{c.title}</h2>
                 <p className="text-sm text-gray-500">{c.activeEnrollments} active enrollments</p>
               </div>
             </div>
-          </div>
+          </button>
         ))}
       </section>
 
-      <section className="rounded-lg border border-gray-200 bg-white">
-        <div className="px-5 py-3 border-b border-gray-200 flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-gray-700">Users (all courses)</h3>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm">
-            <thead className="bg-gray-50 text-gray-600">
-              <tr>
-                <Th>Email</Th>
-                <Th>Course</Th>
-                <Th>XP</Th>
-                <Th>Time</Th>
-                <Th>Last Activity</Th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {sorted.flatMap((c) =>
-                c.users.map((u) => (
-                  <tr key={`${c.courseId}:${u.userId}`} className="hover:bg-gray-50">
-                    <Td>{u.email || u.userId}</Td>
-                    <Td>{c.title}</Td>
-                    <Td>{u.xp.toLocaleString()}</Td>
-                    <Td>{formatDuration(u.timeActiveSeconds)}</Td>
-                    <Td>{u.lastActivityIso ? new Date(u.lastActivityIso).toLocaleString() : "—"}</Td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </section>
+      {/* Users table removed per requirements */}
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-5xl w-[95vw]">
+          <DialogHeader>
+            <DialogTitle>
+              {(() => {
+                const course = sorted.find((c) => c.courseId === selectedCourseId)
+                return course ? `Enrollments • ${course.title}` : "Enrollments"
+              })()}
+            </DialogTitle>
+          </DialogHeader>
+          {loading && <div className="text-sm text-gray-600">Loading…</div>}
+          {error && <div className="text-sm text-red-600">{error}</div>}
+          {data && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-6 text-sm text-gray-700">
+                <div>
+                  <span className="font-medium">Total enrolled:</span> {data.totals.totalEnrolled}
+                </div>
+                <div>
+                  <span className="font-medium">Students only:</span> {data.totals.totalStudentsOnly}
+                </div>
+                <label className="ml-auto inline-flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={showStudentsOnly}
+                    onChange={(e) => setShowStudentsOnly(e.target.checked)}
+                    className="h-4 w-4"
+                  />
+                  <span>Show students only</span>
+                </label>
+              </div>
+              <div className="max-h-[70vh] overflow-auto">
+                <Table className="table-fixed">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-64 sticky top-0 bg-white z-10">Email</TableHead>
+                      <TableHead className="w-48 sticky top-0 bg-white z-10">School</TableHead>
+                      <TableHead className="w-24 sticky top-0 bg-white z-10">Student-only</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {(showStudentsOnly ? data.users.filter((u) => u.isStudentOnly) : data.users).map((u) => (
+                      <TableRow key={u.userId}>
+                        <TableCell className="whitespace-normal break-words text-xs">{u.email || "—"}</TableCell>
+                        <TableCell className="whitespace-normal break-words text-xs">{u.schoolId || "—"}</TableCell>
+                        <TableCell className="text-xs">{u.isStudentOnly ? "Yes" : "No"}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </main>
   )
 }
 
 
-function Th({ children }: { children: React.ReactNode }) {
-  return <th className="text-left px-5 py-2 font-medium">{children}</th>
-}
-
-function Td({ children }: { children: React.ReactNode }) {
-  return <td className="px-5 py-3 text-gray-800">{children}</td>
-}
-
-
-function formatDuration(seconds: number): string {
-  const h = Math.floor(seconds / 3600)
-  const m = Math.floor((seconds % 3600) / 60)
-  if (h > 0) return `${h}h ${m}m`
-  return `${m}m`
-}
+// auxiliary components removed with users table
 
 
