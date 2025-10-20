@@ -65,6 +65,7 @@ export function Content({
 	// We keep "transcript" in the union type non-destructively so this is trivial to re-enable later.
 	const [activeTab, setActiveTab] = React.useState<"about" | "transcript">("about")
 	const playerRef = React.useRef<YouTubePlayer | null>(null)
+	const playerContainerRef = React.useRef<HTMLDivElement | null>(null)
 
 	// Refs for tracking cumulative watch time
 	const watchStartTimeRef = React.useRef<Date | null>(null)
@@ -418,6 +419,40 @@ export function Content({
 		}
 	}, [allUnlocked, arePlayerControlsEnabled])
 
+	function toggleFullscreen(): void {
+		const container = playerContainerRef.current
+		if (!container) return
+		if (!document.fullscreenElement) {
+			void (async () => {
+				const result = await errors.try(container.requestFullscreen())
+				if (result.error) {
+					logger.error("request fullscreen failed", { error: result.error })
+				}
+			})()
+		} else {
+			void (async () => {
+				const result = await errors.try(document.exitFullscreen())
+				if (result.error) {
+					logger.error("exit fullscreen failed", { error: result.error })
+				}
+			})()
+		}
+	}
+
+	function togglePlayPause(): void {
+		const player = playerRef.current
+		if (!player || typeof player.getPlayerState !== "function") return
+		const state = player.getPlayerState()
+		// 1 = playing, 2 = paused
+		if (state === 1 && typeof player.pauseVideo === "function") {
+			player.pauseVideo()
+			return
+		}
+		if (typeof player.playVideo === "function") {
+			player.playVideo()
+		}
+	}
+
 	function onPlayerReady(event: { target: YouTubePlayer }) {
 		playerRef.current = event.target
 		const d = event.target.getDuration()
@@ -522,8 +557,12 @@ export function Content({
 								</span>
 							</div>
 						</div>
+						{/* Gesture hint placed under XP note, above the video */}
+						<div className="mb-2 text-center text-xs text-gray-500">
+							Click once to play/pause • Double-click for fullscreen
+						</div>
 
-						<div className="aspect-video bg-black rounded-lg overflow-hidden relative">
+						<div ref={playerContainerRef} className="aspect-video bg-black rounded-lg overflow-hidden relative">
 							{showInitialPlayOverlay && (
 								<button
 									type="button"
@@ -550,7 +589,7 @@ export function Content({
 									playerVars: {
 										// Keep static to avoid iframe re-initialization mid-play. Gating is done via overlay and key handling.
 										controls: 1,
-										disablekb: 0,
+										disablekb: 1,
 										autoplay: 0,
 										// Always enable closed captions
 										cc_load_policy: 1,
@@ -558,11 +597,13 @@ export function Content({
 									}
 								}}
 							/>
-							{/* Interaction overlay: blocks control bar until unlocked without interrupting playback */}
+							{/* Locked overlay: handle double-click fullscreen and single-click play/pause; blocks controls in normal and fullscreen */}
 							{!allUnlocked && !arePlayerControlsEnabled && (
 								<div
-									className="absolute inset-x-0 bottom-0 h-24 z-[5] pointer-events-auto"
+									className="absolute inset-0 z-[5] pointer-events-auto"
 									aria-hidden="true"
+									onDoubleClick={toggleFullscreen}
+									onClick={togglePlayPause}
 									style={{ background: "transparent" }}
 								/>
 							)}
