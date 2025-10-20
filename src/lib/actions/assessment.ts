@@ -834,7 +834,7 @@ export async function finalizeAssessment(options: {
 		// Fetch user metadata for downstream services (streak)
 		const clerk = await clerkClient()
 		const user = await clerk.users.getUser(clerkUserId)
-		
+
 		// Email is now required for Caliper analytics
 		const userEmail = user.emailAddresses[0]?.emailAddress
 		if (!userEmail) {
@@ -844,9 +844,8 @@ export async function finalizeAssessment(options: {
 			})
 			throw errors.new("user email required for assessment")
 		}
-
-		// Derive interactive flag from content type to avoid exercising proficiency path for exercises
-		const isInteractiveAssessmentFlag = options.contentType !== "Exercise"
+		// Treat all assessment content types as interactive for attempt tracking/proficiency.
+		const isInteractiveAssessmentFlag = true
 		logger.info("derived interactive assessment flag", {
 			contentType: options.contentType,
 			isInteractiveAssessment: isInteractiveAssessmentFlag,

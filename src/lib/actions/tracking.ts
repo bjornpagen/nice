@@ -685,7 +685,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 	// Step 3: Calculate XP first if we have the required data
 	if (unitData && assessmentPath && assessmentTitle && userEmail && expectedXp !== undefined && attemptNumber) {
 		logger.info("calculating xp for assessment", { resourceId })
-		
+
 		// Extract subject and course from assessment path (format: /subject/course/...)
 		const pathParts = assessmentPath.split("/").filter(Boolean)
 		if (pathParts.length < 2) {
@@ -695,7 +695,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 			})
 			throw errors.new("invalid assessment path format")
 		}
-		
+
 		const subjectSlugRaw = pathParts[0]
 		if (!subjectSlugRaw || !isSubjectSlug(subjectSlugRaw)) {
 			logger.error("invalid subject slug in assessment path", {
@@ -706,7 +706,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 			throw errors.new("invalid subject slug in assessment path")
 		}
 		const subjectSlug = subjectSlugRaw
-		
+
 		const courseSlug = pathParts[1]
 		if (!courseSlug) {
 			logger.error("missing course slug in assessment path", {
@@ -893,14 +893,8 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 		}
 	}
 
-	// Step 4: Update proficiency for interactive assessments (exclude standalone exercises)
-	if (
-		isInteractiveAssessment &&
-		contentType !== "Exercise" &&
-		onerosterComponentResourceSourcedId &&
-		sessionResults &&
-		attemptNumber
-	) {
+	// Step 4: Update proficiency for interactive assessments
+	if (isInteractiveAssessment && onerosterComponentResourceSourcedId && sessionResults && attemptNumber) {
 		logger.info("starting proficiency analysis from server", {
 			onerosterComponentResourceSourcedId,
 			sessionResultCount: sessionResults.length
