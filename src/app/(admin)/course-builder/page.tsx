@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { currentUser } from "@clerk/nextjs/server"
+import { requireUser } from "@/lib/auth/require-user"
 import { ClerkLoaded, ClerkLoading } from "@clerk/nextjs"
 import { getAllResources, getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
 import { caseApi } from "@/lib/clients"
@@ -146,12 +146,7 @@ export default function CourseBuilderPage() {
 }
 
 async function UserHeader() {
-    const user = await currentUser()
-
-    if (!user) {
-        logger.info("user not authenticated, showing default header")
-        return <Header dark />
-    }
+    const user = await requireUser()
 
     if (!user.publicMetadata) {
         logger.info("user metadata not yet available", { userId: user.id })
@@ -171,5 +166,3 @@ async function UserHeader() {
 
     return <Header dark nickname={nickname} />
 }
-
-

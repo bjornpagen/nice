@@ -1,4 +1,4 @@
-import { clerkClient, currentUser } from "@clerk/nextjs/server"
+import { clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
@@ -10,6 +10,7 @@ import type { Lesson, ProfileCourse, Quiz, Unit, UnitTest } from "@/lib/types/do
 import type { ProfileCoursesPageData } from "@/lib/types/page"
 import { getResourceIdFromLineItem } from "@/lib/utils/assessment-line-items"
 import type { ClassReadSchemaType } from "../oneroster"
+import { requireUser } from "@/lib/auth/require-user"
 
 // NEW: Interface for unit proficiency tracking
 export interface UnitProficiency {
@@ -756,12 +757,8 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 
 export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData> {
 	// dynamic opt-in is handled at the page level
-	// Cannot use "use cache" here because currentUser() accesses dynamic headers
-	const user = await currentUser()
-	if (!user) {
-		logger.error("user not authenticated")
-		throw errors.new("user not authenticated")
-	}
+// Cannot use "use cache" here because requireUser()/currentUser accesses dynamic headers
+	const user = await requireUser()
 
 	// Normalize and validate metadata deterministically (no brittle string checks)
 	const parsedMetadata = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)

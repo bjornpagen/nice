@@ -14,6 +14,17 @@ export default function Home() {
 	const { shouldShow, openDialog } = useDialogManager()
 	const searchParams = useSearchParams()
 
+	const resolveRedirectDestination = React.useCallback(() => {
+		const requested = searchParams.get("redirect_url")
+		if (!requested) {
+			return "/profile/me/courses"
+		}
+		if (!requested.startsWith("/") || requested.startsWith("//")) {
+			return "/profile/me/courses"
+		}
+		return requested
+	}, [searchParams])
+
 	React.useEffect(() => {
 		// On component mount, check if the cookie dialog should be shown.
 		if (shouldShow(dialogKeys.COOKIE_CONSENT)) {
@@ -21,19 +32,19 @@ export default function Home() {
 		}
 	}, [shouldShow, openDialog])
 
-	const handleTimeBackSignIn = () => {
+	const handleTimeBackSignIn = React.useCallback(() => {
 		signIn?.authenticateWithRedirect({
 			strategy: "oauth_custom_timeback",
 			redirectUrl: "/sso-callback",
-			redirectUrlComplete: "/profile/me/courses"
+			redirectUrlComplete: resolveRedirectDestination()
 		})
-	}
+	}, [resolveRedirectDestination, signIn])
 
 	React.useEffect(() => {
 		if (searchParams.get("auto") === "timeback") {
 			handleTimeBackSignIn()
 		}
-	}, [searchParams, signIn])
+	}, [handleTimeBackSignIn, searchParams])
 
 	return (
 		<div className="flex flex-col min-h-screen bg-white">

@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs/server"
+import { requireUser } from "@/lib/auth/require-user"
 import * as React from "react"
 import { CourseLockStatusProvider } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { fetchCoursePageData } from "@/lib/data/course"
@@ -38,20 +38,18 @@ export default function CourseLayout({
 	const normalizedParamsPromise = normalizeParams(params)
 
 	// Fetch course data for lock status calculation
-	const courseDataPromise = normalizedParamsPromise.then((resolvedParams) =>
-		fetchCoursePageData(resolvedParams, { skip: { questions: true } })
-	)
+const courseDataPromise = normalizedParamsPromise.then((resolvedParams) =>
+	fetchCoursePageData(resolvedParams, { skip: { questions: true } })
+)
 
-	const userPromise = currentUser()
+	const userPromise = requireUser()
 
 	// Fetch progress data for lock status calculation
 	const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([courseDataPromise, userPromise]).then(
 		([courseData, user]) => {
-			if (user) {
-				const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-				if (parsed.success && parsed.data.sourceId) {
-					return getUserUnitProgress(parsed.data.sourceId, courseData.course.id)
-				}
+			const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+			if (parsed.success && parsed.data.sourceId) {
+				return getUserUnitProgress(parsed.data.sourceId, courseData.course.id)
 			}
 			return new Map<string, AssessmentProgress>()
 		}
@@ -60,11 +58,9 @@ export default function CourseLayout({
 	// Calculate the lock status for all resources in the course
 	const resourceLockStatusPromise: Promise<Record<string, boolean>> = Promise.all([
 		courseDataPromise,
-		progressPromise,
-		userPromise
-	]).then(([courseData, progressData, user]) => {
-		const lockingEnabled = Boolean(user)
-		return buildResourceLockStatus(courseData.course, progressData, lockingEnabled)
+		progressPromise
+	]).then(([courseData, progressData]) => {
+		return buildResourceLockStatus(courseData.course, progressData, true)
 	})
 
 	// Build a stable per-course storage key for persisting the unlock-all toggle in localStorage
@@ -78,13 +74,12 @@ export default function CourseLayout({
 			<CourseLockStatusWrapper
 				resourceLockStatusPromise={resourceLockStatusPromise}
 				storageKey={React.use(storageKeyPromise)}
-				canUnlockAll={React.use(
-					userPromise.then((user) => {
-						if (!user) return false
-						const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-						return parsed.success && parsed.data.roles.some((r) => r.role !== "student")
-					})
-				)}
+			canUnlockAll={React.use(
+				userPromise.then((user) => {
+					const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+					return parsed.success && parsed.data.roles.some((r) => r.role !== "student")
+				})
+			)}
 			>
 				{children}
 			</CourseLockStatusWrapper>

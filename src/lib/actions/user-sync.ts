@@ -1,6 +1,6 @@
 "use server"
 
-import { clerkClient, currentUser } from "@clerk/nextjs/server"
+import { clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
@@ -15,6 +15,7 @@ import {
 } from "@/lib/actions/user-sync-errors"
 import { oneroster } from "@/lib/clients"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
+import { requireUser } from "@/lib/auth/require-user"
 
 // Response schema for the sync action
 const SyncResponseSchema = z.object({
@@ -40,11 +41,7 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 	logger.debug("starting user sync with oneroster")
 
 	// Get the authenticated user
-	const user = await currentUser()
-	if (!user) {
-		logger.error("user not authenticated - no current user found")
-		throw ErrUserNotAuthenticated
-	}
+	const user = await requireUser()
 
 	logger.debug("authenticated user found", { clerkId: user.id })
 

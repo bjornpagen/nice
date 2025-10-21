@@ -1,4 +1,3 @@
-import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
@@ -19,6 +18,7 @@ import type { AssessmentTest, TestQuestionsResponse } from "@/lib/qti"
 import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
 import type { Question } from "@/lib/types/domain"
 import { assertNoEncodedColons } from "@/lib/utils"
+import { requireUser } from "@/lib/auth/require-user"
 
 type InteractiveAssessmentType = "Quiz" | "UnitTest" | "CourseChallenge" | "Exercise"
 
@@ -309,11 +309,7 @@ export async function prepareUserQuestionSet(options: {
 	assessmentTest: AssessmentTest
 	resolvedQuestions: TestQuestionsResponse["questions"]
 }): Promise<Question[]> {
-	const user = await currentUser()
-	if (!user) {
-		logger.error("user authentication required for interactive assessment")
-		throw errors.new("user authentication required")
-	}
+	const user = await requireUser()
 	const userMeta = parseUserPublicMetadata(user.publicMetadata)
 	if (!userMeta.sourceId) {
 		logger.error("user source id missing for interactive assessment", { userId: user.id })

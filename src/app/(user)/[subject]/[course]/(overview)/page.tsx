@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs/server"
+import { requireUser } from "@/lib/auth/require-user"
 import * as logger from "@superbuilders/slog"
 import { connection } from "next/server"
 import * as React from "react"
@@ -27,11 +27,10 @@ export default async function CoursePage({ params }: { params: Promise<{ subject
 	const courseDataPromise: Promise<CoursePageData> = normalizedParamsPromise.then(fetchCoursePageData)
 
 	// Get user promise for progress fetching
-	const userPromise = currentUser()
+const userPromise = requireUser()
 
-	const canUnlockAllPromise: Promise<boolean> = userPromise.then((user) => {
-		if (!user) return false
-		const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata ?? {})
+const canUnlockAllPromise: Promise<boolean> = userPromise.then((user) => {
+    const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata ?? {})
 		if (!parsed.success) {
 			logger.warn("invalid user public metadata for unlock check", { userId: user.id, error: parsed.error })
 			return false
@@ -40,38 +39,35 @@ export default async function CoursePage({ params }: { params: Promise<{ subject
 		return parsed.data.roles.some((r) => r.role !== "student")
 	})
 
-	const progressPromise: Promise<CourseProgressData> = Promise.all([courseDataPromise, userPromise]).then(
-		([courseData, user]) => {
-			if (user) {
-				const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-				if (!parsed.success) {
-					logger.warn("invalid user public metadata, cannot fetch progress", {
-						userId: user.id,
-						error: parsed.error
-					})
-					return { progressMap: new Map<string, AssessmentProgress>(), unitProficiencies: [] }
-				}
-				if (parsed.data.sourceId) {
-					return getUserUnitProgress(parsed.data.sourceId, courseData.course.id).then((progressMap) => {
-						// Aggregate individual progress into unit proficiencies
-						const unitProficiencies = aggregateUnitProficiencies(progressMap, courseData.course.units)
+const progressPromise: Promise<CourseProgressData> = Promise.all([courseDataPromise, userPromise]).then(
+    ([courseData, user]) => {
+        const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+        if (!parsed.success) {
+            logger.warn("invalid user public metadata, cannot fetch progress", {
+                userId: user.id,
+                error: parsed.error
+            })
+            return { progressMap: new Map<string, AssessmentProgress>(), unitProficiencies: [] }
+        }
+        if (parsed.data.sourceId) {
+            return getUserUnitProgress(parsed.data.sourceId, courseData.course.id).then((progressMap) => {
+                const unitProficiencies = aggregateUnitProficiencies(progressMap, courseData.course.units)
 
-						logger.debug("calculated unit proficiencies for course overview", {
-							courseId: courseData.course.id,
-							unitCount: courseData.course.units.length,
-							proficiencies: unitProficiencies.map((up) => ({
-								unitId: up.unitId,
-								percentage: up.proficiencyPercentage
-							}))
-						})
+                logger.debug("calculated unit proficiencies for course overview", {
+                    courseId: courseData.course.id,
+                    unitCount: courseData.course.units.length,
+                    proficiencies: unitProficiencies.map((up) => ({
+                        unitId: up.unitId,
+                        percentage: up.proficiencyPercentage
+                    }))
+                })
 
-						return { progressMap, unitProficiencies }
-					})
-				}
-			}
-			return { progressMap: new Map<string, AssessmentProgress>(), unitProficiencies: [] }
-		}
-	)
+                return { progressMap, unitProficiencies }
+            })
+        }
+        return { progressMap: new Map<string, AssessmentProgress>(), unitProficiencies: [] }
+    }
+)
 
 	return (
 		<React.Suspense>

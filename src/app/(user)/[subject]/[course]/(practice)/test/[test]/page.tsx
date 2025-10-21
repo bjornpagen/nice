@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs/server"
+import { requireUser } from "@/lib/auth/require-user"
 import * as logger from "@superbuilders/slog"
 import { connection } from "next/server"
 import * as React from "react"
@@ -20,7 +20,7 @@ export default async function CourseChallengePage({
 	// Opt into dynamic rendering to prevent prerendering issues with currentUser() and OneRoster API calls
 	await connection()
 	const normalizedParamsPromise = normalizeParams(params)
-	const userPromise = currentUser()
+const userPromise = requireUser()
 	const layoutDataPromise: Promise<CourseChallengeLayoutData> = normalizedParamsPromise.then(
 		fetchCourseChallengePage_LayoutData
 	)
@@ -33,7 +33,7 @@ export default async function CourseChallengePage({
 	)
 
 	// Transform CourseChallengeLayoutData to CourseV2 format for the practice sidebar
-	const coursePromise: Promise<CourseV2 | undefined> = layoutDataPromise.then((courseData) => {
+const coursePromise: Promise<CourseV2 | undefined> = layoutDataPromise.then((courseData) => {
 		// Convert the course data to V2 format
 		const courseV2: CourseV2 = {
 			id: courseData.course.id,
@@ -147,24 +147,22 @@ export default async function CourseChallengePage({
 	})
 
 	// Get progress data
-	const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([layoutDataPromise, userPromise]).then(
-		([courseData, user]) => {
-			if (user) {
-				const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-				if (!parsed.success) {
-					logger.warn("invalid user public metadata, cannot fetch progress", {
-						userId: user.id,
-						error: parsed.error
-					})
-					return new Map<string, AssessmentProgress>()
-				}
-				if (parsed.data.sourceId) {
-					return getUserUnitProgress(parsed.data.sourceId, courseData.course.id)
-				}
-			}
-			return new Map<string, AssessmentProgress>()
-		}
-	)
+const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([layoutDataPromise, userPromise]).then(
+    ([courseData, user]) => {
+        const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+        if (!parsed.success) {
+            logger.warn("invalid user public metadata, cannot fetch progress", {
+                userId: user.id,
+                error: parsed.error
+            })
+            return new Map<string, AssessmentProgress>()
+        }
+        if (parsed.data.sourceId) {
+            return getUserUnitProgress(parsed.data.sourceId, courseData.course.id)
+        }
+        return new Map<string, AssessmentProgress>()
+    }
+)
 
 	return (
 		<ChallengeLayout coursePromise={coursePromise} progressPromise={progressPromise}>

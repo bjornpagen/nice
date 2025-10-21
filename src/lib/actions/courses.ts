@@ -1,6 +1,5 @@
 "use server"
 
-import { auth, currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { revalidatePath } from "next/cache"
@@ -14,6 +13,7 @@ import {
 } from "@/lib/data/fetchers/oneroster"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
+import { requireUser } from "@/lib/auth/require-user"
 
 // Move org id constant up so helpers below can use it safely
 const ONEROSTER_ORG_ID = "f251f08b-61de-4ffa-8ff3-3e56e1d75a60"
@@ -22,11 +22,7 @@ const ONEROSTER_ORG_ID = "f251f08b-61de-4ffa-8ff3-3e56e1d75a60"
 type UpdateEnrollmentsResult = { success: true; changed: boolean; message?: string }
 
 async function getUserAndSourceId(): Promise<{ userId: string; sourceId: string | null }> {
-	const user = await currentUser()
-	if (!user) {
-		logger.error("user not authenticated")
-		throw errors.new("user not authenticated")
-	}
+	const user = await requireUser()
 	if (!user.publicMetadata) {
 		logger.error("CRITICAL: User public metadata missing", { userId: user.id })
 		throw errors.new("user public metadata missing")
@@ -315,17 +311,12 @@ function mapFromOneRosterSubjects(onerosterSubjects: string[]): string {
 }
 
 export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCoursesForExplore[]> {
-	const { userId } = await auth()
-	if (!userId) {
-		logger.error("getOneRosterCoursesForExplore failed: user not authenticated")
-		throw errors.new("user not authenticated")
-	}
-	logger.info("fetching explore dropdown data from oneroster api", { orgId: ONEROSTER_ORG_ID })
+	const user = await requireUser()
+	const userId = user.id
+	logger.info("fetching explore dropdown data from oneroster api", { orgId: ONEROSTER_ORG_ID, userId })
 
-	// Get user metadata to check for enrolled courses
-	const user = await currentUser()
 	let userSourceId: string | undefined
-	if (user?.publicMetadata?.sourceId && typeof user.publicMetadata.sourceId === "string") {
+	if (user.publicMetadata?.sourceId && typeof user.publicMetadata.sourceId === "string") {
 		userSourceId = user.publicMetadata.sourceId
 	}
 	const enrolledCourseIds = new Set<string>()

@@ -1,4 +1,3 @@
-import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { format } from "date-fns"
@@ -14,6 +13,7 @@ import { constructActorId } from "@/lib/utils/actor-id"
 import { getResourceIdFromLineItem } from "@/lib/utils/assessment-line-items"
 // ADDED: Import the new utility functions
 import { isInteractiveAttemptResult, isPassiveContentResult } from "@/lib/utils/assessment-results"
+import { requireUser } from "@/lib/auth/require-user"
 
 // Original types and functions for course/unit progress
 export type AssessmentProgress = {
@@ -277,11 +277,7 @@ function transformEventsToActivities(events: z.infer<typeof CaliperEventSchema>[
 
 export async function fetchProgressPageData(): Promise<ProgressPageData> {
 	// dynamic opt-in is handled at the page level
-	const user = await currentUser()
-	if (!user) {
-		logger.error("user not authenticated")
-		throw errors.new("user not authenticated")
-	}
+	const user = await requireUser()
 
 	const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
 	if (!metadataValidation.success) {

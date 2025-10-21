@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs/server"
+import { requireUser } from "@/lib/auth/require-user"
 import * as logger from "@superbuilders/slog"
 import { connection } from "next/server"
 import * as React from "react"
@@ -24,11 +24,10 @@ export default async function UnitPage({
 	const unitDataPromise: Promise<UnitPageData> = normalizedParamsPromise.then(fetchUnitPageData)
 
 	// Get user promise for progress fetching
-	const userPromise = currentUser()
+const userPromise = requireUser()
 
-	const canUnlockAllPromise: Promise<boolean> = userPromise.then((user) => {
-		if (!user) return false
-		const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata ?? {})
+const canUnlockAllPromise: Promise<boolean> = userPromise.then((user) => {
+    const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata ?? {})
 		if (!parsed.success) {
 			logger.warn("invalid user public metadata for unlock check", {
 				userId: user.id,
@@ -40,26 +39,22 @@ export default async function UnitPage({
 		return parsed.data.roles.some((r) => r.role !== "student")
 	})
 
-	const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([unitDataPromise, userPromise]).then(
-		([unitData, user]) => {
-			if (user) {
-				const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-				if (!parsed.success) {
-					logger.warn("invalid user public metadata, cannot fetch progress", {
-						userId: user.id,
-						error: parsed.error
-					})
-					return new Map<string, AssessmentProgress>()
-				}
-				if (parsed.data.sourceId) {
-					return getUserUnitProgress(parsed.data.sourceId, unitData.course.id)
-				}
-			}
-			// For unauthenticated users or users without a sourceId, an empty map is acceptable.
-			// This is not a fallback for an error state, but a valid state for the user.
-			return new Map<string, AssessmentProgress>()
-		}
-	)
+const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([unitDataPromise, userPromise]).then(
+    ([unitData, user]) => {
+        const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+        if (!parsed.success) {
+            logger.warn("invalid user public metadata, cannot fetch progress", {
+                userId: user.id,
+                error: parsed.error
+            })
+            return new Map<string, AssessmentProgress>()
+        }
+        if (parsed.data.sourceId) {
+            return getUserUnitProgress(parsed.data.sourceId, unitData.course.id)
+        }
+        return new Map<string, AssessmentProgress>()
+    }
+)
 
 	return (
 		<React.Suspense>

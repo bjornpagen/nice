@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs/server"
+import { requireUser } from "@/lib/auth/require-user"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { connection } from "next/server"
@@ -26,9 +26,10 @@ export default async function Layout({
 	const normalizedParamsPromise = normalizeParams(params)
 
 	const dataPromise: Promise<LessonLayoutData> = normalizedParamsPromise.then(async (resolvedParams) => {
-		return fetchLessonLayoutData(resolvedParams)
-	})
-	const userPromise = currentUser()
+	return fetchLessonLayoutData(resolvedParams)
+})
+
+	const userPromise = requireUser()
 
 	// Create a promise for the v2 course format using real data
 	const courseV2Promise: Promise<CourseV2 | undefined> = normalizedParamsPromise.then(async (resolvedParams) => {
@@ -257,26 +258,22 @@ export default async function Layout({
 	})
 
 	// Get progress data
-	const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([userPromise, dataPromise]).then(
-		([user, data]) => {
-			if (user) {
-				const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-				if (!parsed.success) {
-					logger.warn("invalid user public metadata, cannot fetch progress", {
-						userId: user.id,
-						error: parsed.error
-					})
-					return new Map<string, AssessmentProgress>()
-				}
-				if (parsed.data.sourceId) {
-					return getUserUnitProgress(parsed.data.sourceId, data.courseData.id)
-				}
-			}
-			// For unauthenticated users or users without a sourceId, an empty map is acceptable.
-			// This is not a fallback for an error state, but a valid state for the user.
+const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([userPromise, dataPromise]).then(
+	([user, data]) => {
+		const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+		if (!parsed.success) {
+			logger.warn("invalid user public metadata, cannot fetch progress", {
+				userId: user.id,
+				error: parsed.error
+			})
 			return new Map<string, AssessmentProgress>()
 		}
-	)
+		if (parsed.data.sourceId) {
+			return getUserUnitProgress(parsed.data.sourceId, data.courseData.id)
+		}
+		return new Map<string, AssessmentProgress>()
+	}
+)
 
 	return (
 		<LessonLayout dataPromise={dataPromise} progressPromise={progressPromise} coursePromise={courseV2Promise}>

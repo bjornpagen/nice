@@ -1,5 +1,5 @@
 import { ClerkLoaded, ClerkLoading } from "@clerk/nextjs"
-import { currentUser } from "@clerk/nextjs/server"
+import { requireUser } from "@/lib/auth/require-user"
 import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { Banner } from "@/components/banner"
@@ -16,13 +16,7 @@ function UserHeaderSkeleton() {
 }
 
 async function UserHeader() {
-	const user = await currentUser()
-
-	if (!user) {
-		logger.info("user not authenticated, showing default header")
-		// Show header without user-specific data
-		return <Header dark />
-	}
+    const user = await requireUser()
 
 	if (!user.publicMetadata) {
 		logger.info("user metadata not yet available", { userId: user.id })
