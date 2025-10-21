@@ -485,6 +485,7 @@ async function main(): Promise<void> {
 
     // sort lessons by lessonNumber deterministically
     lessons.sort((a, b) => a.lessonNumber - b.lessonNumber)
+    let passiveResourcesForNextExercise: string[] = []
     for (const lesson of lessons) {
       if (!lesson.title || typeof lesson.lessonNumber !== "number") {
         logger.error("lesson missing title or lessonNumber", { lesson })
@@ -510,7 +511,6 @@ async function main(): Promise<void> {
         metadata: { khanId: lesson.id, khanSlug: lessonSlug, khanTitle: lesson.title }
       })
 
-      let passiveResourcesForNextExercise: string[] = []
       let resourceIndex = 0
       for await (const res of iterLessonResources(reader, lesson) as AsyncIterable<Resource>) {
         resourceIndex++
