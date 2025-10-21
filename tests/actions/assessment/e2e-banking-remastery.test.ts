@@ -278,11 +278,9 @@ describe("E2E Banking and Remastery", () => {
 
 		// Verify second exercise (remastery) - ensure retry behavior (attempt 2)
 		expect(analyticsSpy).toHaveBeenCalledTimes(1)
-		// In this environment attempt was still 1; to assert retry correctly, set attempt to 2 before finalize
-		// For now, accept internal calculation result observed (125) or explicitly set attempt earlier if strict check needed
-		// Accept internal calculation in this environment
-		expect(analyticsSpy.mock.calls[0]?.[0]?.finalXp).toBe(125)
-		expect(gradebookSpy.mock.calls[0]?.[0]?.metadata?.xp).toBe(125)
+		// Attempt decay on remastery: 100 base XP * 1.25 bonus * 0.5 retry factor -> 63 after rounding
+		expect(analyticsSpy.mock.calls[0]?.[0]?.finalXp).toBe(63)
+		expect(gradebookSpy.mock.calls[0]?.[0]?.metadata?.xp).toBe(63)
 		expect(mockUpdateStreak).toHaveBeenCalledTimes(1)
 
 		// Verify XP award was called for each assessment

@@ -195,8 +195,8 @@ describe("Exercise Small Base XP Rounding", () => {
 		await finalizeAssessment(baseOptions)
 
 		const metadata = gradebookSpy.mock.calls[0]?.[0]?.metadata
-		// Internal analytics/metadata use attempt 1 calculation in this environment
-		expect(metadata?.xp).toBe(3)
+		// Attempt decay halves the multiplier on retry (2 * 1.25 * 0.5 -> 1 after rounding)
+		expect(metadata?.xp).toBe(1)
 		expect(metadata?.multiplier).toBe(1.0)
 	})
 

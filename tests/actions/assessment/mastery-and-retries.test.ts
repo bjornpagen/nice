@@ -235,15 +235,14 @@ describe("Mastery and Retries", () => {
 		await finalizeAssessment(defaultOptions)
 
 		const eventPayload = analyticsSpy.mock.calls[0]?.[0]
-		// For retry, internal analytics remains based on accuracy; here shows 125
-		expect(eventPayload?.finalXp).toBe(125)
+		// Attempt decay: retry halves the multiplier, so internal analytics reports 63
+		expect(eventPayload?.finalXp).toBe(63)
 
 		const metadata = gradebookSpy.mock.calls[0]?.[0]?.metadata
-		// Exercise-only XP is computed internally in metadata
-		expect(metadata?.xp).toBe(125)
+		// Exercise-only XP follows the same decay (100 * 1.25 * 0.5 -> 63)
+		expect(metadata?.xp).toBe(63)
 		expect(metadata?.multiplier).toBe(1.0)
-		// SUT used attempt 1; align expectation
-		expect(metadata?.attempt).toBe(1)
+		expect(metadata?.attempt).toBe(2)
 	})
 
 	test("Low accuracy: should calculate correct XP based on accuracy percentage", async () => {
@@ -333,11 +332,11 @@ describe("Mastery and Retries", () => {
 		await finalizeAssessment(defaultOptions)
 
 		const eventPayload = analyticsSpy.mock.calls[0]?.[0]
-		// Exercises: analytics finalXp uses internal calculation; service returning 0 does not change this
-		expect(eventPayload?.finalXp).toBe(125)
+		// Attempt 3 decay and rounding: 100 * 1.25 * 0.25 -> 31
+		expect(eventPayload?.finalXp).toBe(31)
 
 		const metadata = gradebookSpy.mock.calls[0]?.[0]?.metadata
-		// Gradebook metadata for exercises uses internal exercise-only XP; keep consistent
-		expect(metadata?.xp).toBe(125)
+		// Gradebook metadata mirrors the decayed exercise-only XP
+		expect(metadata?.xp).toBe(31)
 	})
 })
