@@ -625,7 +625,12 @@ export async function reportQuestion(
  * Computes the next attempt number for a user on an assessment resource using OneRoster.
  * Attempt number is defined as 1 + count of existing AssessmentResults for the line item.
  */
-export const getNextAttemptNumber = attempt.getNext
+export async function getNextAttemptNumber(
+	userSourcedId: string,
+	resourceSourcedId: string
+): Promise<number> {
+	return attempt.getNext(userSourcedId, resourceSourcedId)
+}
 
 /**
  * Checks if a user has already achieved proficiency (80%+) on an assessment.
