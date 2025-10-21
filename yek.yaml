@@ -14,14 +14,13 @@ ignore_patterns:
   - "src/components/ui/**"
   - "examples/**"
   - "src/db/**"
-  - "src/app/**"
   - "**/__snapshots__/**"
   - "docs/**"
   - "src/lib/qti-validation/**"
   - "scripts/**"
   - "src/inngest/**"
   - "prompt/**"
-  - "src/app/**"
+  - "tests/**"
 priority_rules:
   - score: 99
     pattern: "^rules/"

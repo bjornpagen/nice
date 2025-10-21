@@ -1,0 +1,165 @@
+openapi: 3.0.3
+info:
+  title: Nice Course Builder API
+  version: 1.0.0
+  description: |
+    Creates a OneRoster course, builds units/lessons/resources from CASE standards using AI,
+    links QTI assets, creates a class, and enrolls a student.
+
+    Auth: header API key `x-api-key`.
+
+    Notes:
+    - Long-running operation (up to ~10 minutes).
+    - Client 4xx errors are returned for invalid JSON, request validation, or when no resources are found
+      for provided CASE IDs.
+
+servers:
+  - url: /
+
+tags:
+  - name: Course Builder
+
+paths:
+  /api/v1/course-builder:
+    post:
+      operationId: createCourseFromCaseIds
+      tags: [Course Builder]
+      summary: Build a course from CASE learning objective IDs and enroll a student
+      description: |
+        - Validates request, gathers matching OneRoster resources, fetches CASE details and QTI assets,
+          generates an AI course plan, creates course/components/resources/links, copies QTI stimuli/tests,
+          creates a class, and enrolls the student.
+        - Client errors include:
+          - "invalid json"
+          - "invalid request"
+          - "no resources found for provided case ids"
+          - "some case ids had no resources"
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseBuilderRequest'
+            examples:
+              example:
+                value:
+                  case_ids:
+                    - "cf0f4e1c-aaaa-bbbb-cccc-1234567890ab"
+                    - "cf0f4e1c-dddd-eeee-ffff-0987654321cd"
+                  student_user_id: "a1b2c3d4-e5f6-11ee-be56-0242ac120002"
+                  subject: "Science"
+      responses:
+        '200':
+          description: Course created and student enrolled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseBuilderSuccessResponse'
+              examples:
+                example:
+                  value:
+                    status: success
+                    message: "Course created and user enrolled successfully."
+                    courseSourcedId: "course_123"
+                    classSourcedId: "course_123"
+        '400':
+          description: Bad request (invalid JSON, validation errors, or missing resources for CASE IDs)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseBuilderErrorResponse'
+              examples:
+                invalid_json:
+                  value: { status: error, message: "invalid json" }
+                invalid_request:
+                  value: { status: error, message: "invalid request" }
+                no_resources:
+                  value: { status: error, message: "no resources found for provided case ids" }
+                unmatched_case_ids:
+                  value: { status: error, message: "some case ids had no resources" }
+        '401':
+          description: Unauthorized (missing or invalid API key)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseBuilderErrorResponse'
+              examples:
+                unauthorized:
+                  value: { status: error, message: "Unauthorized" }
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseBuilderErrorResponse'
+              examples:
+                internal:
+                  value: { status: error, message: "internal error" }
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+
+  schemas:
+    Subject:
+      type: string
+      description: Course subject
+      enum:
+        - Math
+        - Science
+        - English Language Arts
+        - Social Studies
+        - Computing
+        - General
+
+    CourseBuilderRequest:
+      type: object
+      required: [case_ids, student_user_id, subject]
+      properties:
+        case_ids:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            minLength: 1
+          description: CASE learning objective IDs used to scope resources and AI planning.
+        student_user_id:
+          type: string
+          minLength: 1
+          description: OneRoster student `sourcedId` to enroll into the created class.
+        subject:
+          $ref: '#/components/schemas/Subject'
+
+    CourseBuilderSuccessResponse:
+      type: object
+      required: [status, message, courseSourcedId, classSourcedId]
+      properties:
+        status:
+          type: string
+          enum: [success]
+        message:
+          type: string
+          description: Success message
+          example: Course created and user enrolled successfully.
+        courseSourcedId:
+          type: string
+          description: OneRoster course `sourcedId` that was created.
+        classSourcedId:
+          type: string
+          description: OneRoster class `sourcedId` (same as course `sourcedId`).
+
+    CourseBuilderErrorResponse:
+      type: object
+      required: [status, message]
+      properties:
+        status:
+          type: string
+          enum: [error]
+        message:
+          type: string
+          description: Error message
