@@ -5,7 +5,9 @@ export const CourseMetadataSchema = z.object({
 	khanSlug: z.string().min(1),
 	khanSubjectSlug: z.string().min(1),
 	khanTitle: z.string().min(1),
-	khanDescription: z.string().default("")
+	khanDescription: z.string().default(""),
+	// Optional flag to hide a course from user-facing selectors and explore menus
+	custom: z.boolean().optional()
 })
 export type CourseMetadata = z.infer<typeof CourseMetadataSchema>
 

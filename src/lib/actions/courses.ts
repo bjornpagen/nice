@@ -388,6 +388,11 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 		const course = coursesMap.get(oneRosterClass.course.sourcedId)
 		if (!course || !course.subjects || course.subjects.length === 0) continue
 
+		// Hide courses that are not active (e.g., deleted or tobedeleted)
+		if (course.status !== "active") {
+			continue
+		}
+
 		// Skip if we've already processed this course (multiple classes can reference same course)
 		if (processedCourseIds.has(course.sourcedId)) continue
 		processedCourseIds.add(course.sourcedId)
@@ -402,6 +407,11 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 			continue
 		}
 		const courseMetadata = courseMetadataResult.data
+
+		// Hide courses explicitly marked as custom in metadata
+		if (courseMetadata.custom === true) {
+			continue
+		}
 
 		const constructedPath = `/${courseMetadata.khanSubjectSlug}/${courseMetadata.khanSlug}`
 

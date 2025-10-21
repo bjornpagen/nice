@@ -24,6 +24,11 @@ const isAuthRoute = createRouteMatcher([
 ])
 
 export default clerkMiddleware(async (auth, req) => {
+	// Allow X-API-Key protected course-builder API to bypass Clerk middleware
+	const pathname = req.nextUrl.pathname
+	if (pathname.startsWith("/api/v1/course-builder")) {
+		return
+	}
 	const { userId } = await auth()
 
 	// If user is authenticated and trying to access auth routes (login/signup)
