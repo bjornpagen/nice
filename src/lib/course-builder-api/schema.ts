@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod/v3"
 
 export const SUBJECT_OPTIONS = [
   "Math",
@@ -143,5 +143,3 @@ export type AiLessonResource = z.infer<typeof AiLessonResourceSchema>
 export type AiLesson = z.infer<typeof AiLessonSchema>
 export type AiUnit = z.infer<typeof AiUnitSchema>
 export type AiGenerateCourseInput = z.infer<typeof AiGenerateCourseInputSchema>
-
-

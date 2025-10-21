@@ -1,6 +1,5 @@
 import OpenAI from "openai"
 import { zodResponseFormat } from "openai/helpers/zod"
-import { z } from "zod"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { env } from "@/env"
@@ -74,7 +73,7 @@ function buildUserPrompt(params: {
   subject: Subject
   caseDetails: Array<{ id: string; humanCodingScheme: string; fullStatement: string }>
   resources: Array<{ sourcedId: string; title: string; metadata: any }>
-  enrichedContent: { 
+  enrichedContent: {
     stimuli: Array<{ id: string; title: string; rawXml: string }>
     tests: Array<{ id: string; title: string; rawXml: string }>
   }
@@ -98,7 +97,7 @@ ${params.resources.map(r => {
     ?.filter((lo: any) => lo.source === "CASE")
     ?.flatMap((lo: any) => lo.learningObjectiveIds) || []
   const xp = r.metadata?.xp || 0
-  
+
   return `
   <resource>
     <id>${r.sourcedId}</id>
@@ -162,7 +161,7 @@ Think step-by-step about how to organize this course:
  */
 export async function generateCoursePlanFromAi(params: {
   subject: Subject
-  caseDetails: Array<{ 
+  caseDetails: Array<{
     id: string
     humanCodingScheme: string
     fullStatement: string
@@ -204,7 +203,7 @@ export async function generateCoursePlanFromAi(params: {
 
   // Log prompt size for monitoring
   const promptSize = userPrompt.length
-  logger.debug("ai prompt size", { 
+  logger.debug("ai prompt size", {
     characters: promptSize,
     estimatedTokens: Math.ceil(promptSize / 4) // Rough estimate
   })
@@ -279,7 +278,7 @@ export async function generateCoursePlanFromAi(params: {
       title: validation.data.title,
       unitsCount: validation.data.units.length,
       totalLessons: validation.data.units.reduce((sum, unit) => sum + unit.lessons.length, 0),
-      totalResources: validation.data.units.reduce((sum, unit) => 
+      totalResources: validation.data.units.reduce((sum, unit) =>
         sum + unit.lessons.reduce((lSum, lesson) => lSum + lesson.resources.length, 0), 0
       ),
     })
@@ -293,7 +292,7 @@ export async function generateCoursePlanFromAi(params: {
         message: error.message,
         code: error.code,
       })
-      
+
       if (error.status === 429) {
         throw errors.wrap(error, "openai rate limit exceeded")
       }
@@ -308,37 +307,37 @@ export async function generateCoursePlanFromAi(params: {
 
 /**
  * Best Practices Applied (from context-engineering.md):
- * 
+ *
  * 1. XML Tags for Structure (Category 1, Anthropic guidelines):
  *    - Used <learning_standards>, <available_resources>, <article_content> tags
  *    - Clear separation of different context components
- * 
+ *
  * 2. Be Clear and Direct (Category 8):
  *    - Explicit pedagogical principles
  *    - Step-by-step instructions
  *    - Clear output format definition
- * 
+ *
  * 3. Context at the Top (Category 10):
  *    - Place long content (resources, standards, articles) before instructions
  *    - Query/task at the end for better performance
- * 
+ *
  * 4. Chain-of-Thought (Category 9):
  *    - Added <thinking_process> section for step-by-step reasoning
  *    - Encourages logical progression planning
- * 
+ *
  * 5. Structured Output (Category 11):
  *    - Using zodResponseFormat for guaranteed structure
  *    - Validation with comprehensive error handling
- * 
+ *
  * 6. Role Assignment (Category 1):
  *    - Clear role as educational curriculum designer
  *    - Domain expertise context provided
- * 
+ *
  * 7. Pedagogical Best Practices:
  *    - Video → Article → Exercise flow
  *    - Every lesson must end with exercise
  *    - XP values preserved from system (not AI-generated)
- * 
+ *
  * 8. Raw Content for Articles:
  *    - Including full QTI XML for articles
  *    - AI can understand content depth and structure
