@@ -30,7 +30,9 @@ export async function POST(request: Request) {
   const runResult = await errors.try(runCourseBuilderWorkflow(validation.data))
   if (runResult.error) {
     logger.error("course builder api failed", { error: runResult.error })
-    const message = String(runResult.error?.message || "internal error")
+    const message = String(
+      runResult.error?.message || (runResult.error as any)?.cause?.message || "internal error"
+    )
     const isClient = message.includes("no resources found for provided case ids") || message.includes("some case ids had no resources")
     const status = isClient ? 400 : 500
     return NextResponse.json({ status: "error", message }, { status })
