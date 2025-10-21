@@ -4,7 +4,6 @@ import { auth, clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
-import { updateProficiencyFromAssessment } from "@/lib/actions/proficiency"
 import type { CaliperArticleReadState } from "@/lib/article-cache"
 // At the top of the file, add imports for the new article cache
 import {
@@ -890,24 +889,6 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 					logger.error("failed to send caliper time spent event", { error: timeSpentResult.error, resourceId })
 				}
 			}
-		}
-	}
-
-	// Step 4: Update proficiency for interactive assessments
-	if (isInteractiveAssessment && onerosterComponentResourceSourcedId && sessionResults && attemptNumber) {
-		logger.info("starting proficiency analysis from server", {
-			onerosterComponentResourceSourcedId,
-			sessionResultCount: sessionResults.length
-		})
-		const proficiencyResult = await errors.try(
-			updateProficiencyFromAssessment(onerosterComponentResourceSourcedId, attemptNumber, sessionResults, courseId)
-		)
-		if (proficiencyResult.error) {
-			logger.error("failed to update proficiency from assessment", {
-				error: proficiencyResult.error,
-				onerosterComponentResourceSourcedId
-			})
-			// Continue execution - proficiency failure should not block assessment save
 		}
 	}
 
