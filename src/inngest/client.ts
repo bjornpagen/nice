@@ -1,6 +1,6 @@
 import * as logger from "@superbuilders/slog"
 import { EventSchemas, type GetEvents, Inngest } from "inngest"
-import { z } from "zod"
+import { z, type ZodTypeAny } from "zod"
 import { WidgetCollectionNameSchema } from "@/inngest/events/qti" // MODIFIED: Import from new location
 
 // Helper schema for the XML-based item input
@@ -415,7 +415,7 @@ const events = {
 	},
 	"qa/test.perseus.textarea": {
 		data: z.object({
-			jsonData: z.record(z.any()).optional(),
+			jsonData: z.record(z.string(), z.any()).optional(),
 			targetUrl: z.string().optional()
 		})
 	},
@@ -473,11 +473,15 @@ const events = {
 			title: z.string().min(1)
 		})
 	}
-}
+} satisfies Record<string, { data: ZodTypeAny }>
+
+const eventSchemas = Object.fromEntries(
+	Object.entries(events).map(([name, schema]) => [name, schema.data])
+) as unknown as { [K in keyof typeof events]: typeof events[K]["data"] }
 
 export const inngest = new Inngest({
 	id: "nice",
-	schemas: new EventSchemas().fromZod(events),
+	schemas: new EventSchemas().fromSchema(eventSchemas),
 	logger
 })
 

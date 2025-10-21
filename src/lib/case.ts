@@ -50,7 +50,7 @@ const CFAssociationSchema = z.object({
   CFAssociationGroupingURI: URIReferenceSchema.nullable(),
   lastChangeDateTime: z.string().datetime(),
   notes: z.string().nullable(),
-  extensions: z.record(z.unknown()).nullable(),
+  extensions: z.record(z.string(), z.unknown()).nullable(),
   CFDocumentURI: URIReferenceSchema.nullable(),
 });
 
@@ -74,7 +74,7 @@ const CFDocumentSchema = z.object({
   statusEndDate: z.string().nullable(),
   licenseURI: URIReferenceSchema.nullable(),
   notes: z.string().nullable(),
-  extensions: z.record(z.unknown()).nullable(),
+  extensions: z.record(z.string(), z.unknown()).nullable(),
   CFPackageURI: URIReferenceSchema,
 });
 
@@ -99,7 +99,7 @@ const CFItemSchema = z.object({
   statusStartDate: z.string().nullable().optional(),
   statusEndDate: z.string().nullable().optional(),
   lastChangeDateTime: z.string().datetime().optional(),
-  extensions: z.record(z.unknown()).nullable().optional(),
+  extensions: z.record(z.string(), z.unknown()).nullable().optional(),
   CFDocumentURI: URIReferenceSchema.nullable().optional(),
 }).passthrough();
 
@@ -113,8 +113,8 @@ const CFPackageSchema = z.object({
 const CFPackageWithGroupsSchema = z.object({
   sourcedId: z.string().uuid(),
   CFDocument: CFDocumentSchema,
-  structuredContent: z.record(z.array(CFItemSchema.extend({
-    childGroups: z.record(z.array(z.unknown())).optional(),
+  structuredContent: z.record(z.string(), z.array(CFItemSchema.extend({
+    childGroups: z.record(z.string(), z.array(z.unknown())).optional(),
   }))),
 });
 

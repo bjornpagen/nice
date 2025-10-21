@@ -52,7 +52,7 @@ const FinalizeAssessmentResultSchema = z.object({
 const LessonPlanTreeComponentResourceSchema = z.object({
 	id: z.string(),
 	sortOrder: z.string().optional().nullable(),
-	metadata: z.record(z.any()).optional().nullable(),
+	metadata: z.record(z.string(), z.any()).optional().nullable(),
 	courseComponentSourcedId: z.string().optional(),
 	resource: z
 		.object({})
@@ -70,7 +70,7 @@ const LessonPlanTreeComponentSchema: z.ZodType<any> = z.lazy(() =>
 			title: z.string(),
 			sortOrder: z.string().optional().nullable(),
 			unlockDate: z.string().optional().nullable(),
-			metadata: z.record(z.any()).optional().nullable(),
+			metadata: z.record(z.string(), z.any()).optional().nullable(),
 			prerequisites: z.array(z.string()).optional().nullable(),
 			prerequisiteCriteria: z.string().optional().nullable(),
 			componentResources: z.array(LessonPlanTreeComponentResourceSchema).optional().nullable(),
@@ -93,7 +93,7 @@ const AssessmentResultLiteSchema = z.object({
     sourcedId: z.string(),
     status: z.string(),
     dateLastModified: z.string(),           // ISO
-    metadata: z.record(z.any()).optional(),
+    metadata: z.record(z.string(), z.any()).optional(),
     assessmentLineItemSourcedId: z.string(),
     studentSourcedId: z.string(),
     score: z.number().nullable().optional(),
@@ -109,7 +109,7 @@ const AssessmentResultLiteSchema = z.object({
     late: z.string().nullable().optional(),
     missing: z.string().nullable().optional(),
   }).passthrough()
-  
+
 // Schemas for Course Progress (lineItems union)
 const ComponentLineItemSchema = z.object({
     type: z.literal("component"),

@@ -258,7 +258,7 @@ const PathDataSchema = z.object({
 			translatedTitle: z.string(),
 			translatedDescription: z.string().optional(),
 			// Correctly nested under `course`
-			unitChildren: z.array(z.record(z.unknown())).optional(),
+			unitChildren: z.array(z.record(z.string(), z.unknown())).optional(),
 			// ADD: masterableExercises for Course Challenges
 			masterableExercises: z
 				.array(
@@ -279,7 +279,7 @@ const PathDataSchema = z.object({
 			__typename: z.literal("Lesson"),
 			id: z.string(),
 			translatedTitle: z.string().optional(),
-			curatedChildren: z.array(z.record(z.unknown())).optional()
+			curatedChildren: z.array(z.record(z.string(), z.unknown())).optional()
 		})
 		.nullable()
 })

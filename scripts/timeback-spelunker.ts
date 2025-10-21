@@ -50,15 +50,15 @@ async function logErrorToFile(error: any, context: string) {
 			...error
 		}
 	}
-	
+
 	const logLine = JSON.stringify(errorEntry) + "\n"
-	
+
 	const writeResult = await errors.try(fs.appendFile(ERROR_LOG_FILE, logLine))
 	if (writeResult.error) {
 		console.error(`\n⚠️  Failed to write error to file: ${writeResult.error.message}`)
 		return
 	}
-	
+
 	console.log(`\n💾 Error details saved to ${ERROR_LOG_FILE}`)
 }
 
@@ -81,24 +81,24 @@ async function retryWithBackoff<T>(
 		maxDelayMs = 60000,
 		jitterMs = 500
 	} = options
-	
+
 	let lastError: Error | undefined
-	
+
 	for (let attempt = 1; attempt <= maxRetries; attempt++) {
 		const result = await errors.try(operation())
 		if (!result.error) {
 			if (attempt > 1) {
-				logger.info("operation succeeded after retry", { 
-					context, 
+				logger.info("operation succeeded after retry", {
+					context,
 					attempt,
 					previousFailures: attempt - 1
 				})
 			}
 			return result.data
 		}
-		
+
 		lastError = result.error
-		
+
 		// Calculate exponential backoff with jitter
 		const baseDelay = Math.min(
 			initialDelayMs * Math.pow(2, attempt - 1),
@@ -106,39 +106,39 @@ async function retryWithBackoff<T>(
 		)
 		const jitter = Math.random() * jitterMs - (jitterMs / 2) // +/- jitterMs/2
 		const delay = Math.max(0, baseDelay + jitter)
-		
-		logger.error("operation failed, will retry", { 
-			context, 
-			attempt, 
-			maxRetries, 
+
+		logger.error("operation failed, will retry", {
+			context,
+			attempt,
+			maxRetries,
 			error: lastError,
 			nextDelayMs: delay,
 			baseDelayMs: baseDelay,
 			jitterMs: jitter
 		})
-		
+
 		// Log error details
 		await logErrorToFile(lastError, `${context} - Attempt ${attempt}/${maxRetries}`)
-		
+
 		if (attempt < maxRetries) {
 			console.log(`\n⚠️  Attempt ${attempt}/${maxRetries} failed for: ${context}`)
 			console.log(`   Error: ${lastError.message}`)
 			console.log(`   Retrying in ${Math.round(delay)}ms (base: ${baseDelay}ms, jitter: ${Math.round(jitter)}ms)`)
-			
+
 			await new Promise<void>(resolve => setTimeout(resolve, delay))
 		}
 	}
-	
+
 	console.error(`\n❌ All ${maxRetries} attempts failed for: ${context}`)
 	console.error(`   Final error: ${lastError?.message || "Unknown error"}`)
 	console.error(`\n💾 Full error details saved to ${ERROR_LOG_FILE}`)
 	console.error(`   View with: cat ${ERROR_LOG_FILE} | tail -20 | jq .`)
 	console.error(`   Or live tail: tail -f ${ERROR_LOG_FILE} | jq .`)
-	
+
 	if (!lastError) {
 		throw errors.new(`${context}: failed after ${maxRetries} attempts with unknown error`)
 	}
-	
+
 	throw errors.wrap(lastError, `${context}: failed after ${maxRetries} attempts`)
 }
 
@@ -242,7 +242,7 @@ const FetchCommandSchema = z.discriminatedUnion("type", [
 const ListCommandSchema = z.discriminatedUnion("cmd", [
 	// Fetch operations
 	z.object({ cmd: z.literal("fetch"), subCmd: FetchCommandSchema.optional() }),
-	
+
 	// List/view operations (work on cached data)
 	z.object({ cmd: z.literal("list") }),
 	z.object({ cmd: z.literal("next") }),
@@ -252,12 +252,12 @@ const ListCommandSchema = z.discriminatedUnion("cmd", [
 	z.object({ cmd: z.literal("filter"), expr: z.string().min(1) }),
 	z.object({ cmd: z.literal("sort"), field: z.string().min(1) }),
 	z.object({ cmd: z.literal("clear") }),
-	
+
 	// Inspection operations
 	z.object({ cmd: z.literal("open"), index: z.coerce.number().int().nonnegative() }),
 	z.object({ cmd: z.literal("json"), index: z.coerce.number().int().nonnegative() }),
 	z.object({ cmd: z.literal("fields") }),
-	
+
 	// Navigation
 	z.object({ cmd: z.literal("help") }),
 	z.object({ cmd: z.literal("back") }),
@@ -476,7 +476,7 @@ function renderOneRosterResourcesList(state: OneRosterResourcesListState) {
 			const idWidth = 40
 			const spacing = 2
 			const titleWidth = Math.max(30, terminalWidth - indexWidth - idWidth - (spacing * 2))
-			
+
 			// Table header
 			console.log(`${"Index".padEnd(indexWidth)} ${"ID".padEnd(idWidth)} ${"Title"}`)
 			console.log("-".repeat(terminalWidth))
@@ -585,7 +585,7 @@ function renderQtiTestsList(state: QtiTestsListState) {
 			const idWidth = 40
 			const spacing = 2
 			const titleWidth = Math.max(30, terminalWidth - indexWidth - idWidth - (spacing * 2))
-			
+
 			// Table header
 			console.log(`${"Index".padEnd(indexWidth)} ${"ID".padEnd(idWidth)} ${"Title"}`)
 			console.log("-".repeat(terminalWidth))
@@ -642,16 +642,16 @@ function renderQtiTestInspect(state: QtiTestInspectState) {
 function renderQtiTestItemsList(state: QtiTestItemsListState) {
 	clearScreen()
 	printHeader(`Items in Test: ${state.test.title}`)
-	
+
 	// Show test identifier
 	console.log(`Test ID: ${state.test.identifier}\n`)
-	
+
 	console.log("⚠️  NOTE: The QTI API does not currently support filtering items by test.")
 	console.log("This view would show items that belong to this specific test, but the API")
 	console.log("doesn't provide this relationship data.\n")
 	console.log("Use 'back' to return to the test, or navigate to 'QTI > Assessment Items'")
 	console.log("from the main menu to browse all available items.\n")
-	
+
 	printHelp([
 		"back (b) - Go back to test",
 		"exit (q) - Exit"
@@ -707,7 +707,7 @@ function renderQtiItemsList(state: QtiItemsListState) {
 			const typeWidth = 15
 			const spacing = 3
 			const titleWidth = Math.max(25, terminalWidth - indexWidth - idWidth - typeWidth - (spacing * 2))
-			
+
 			// Table header
 			console.log(`${"Index".padEnd(indexWidth)} ${"ID".padEnd(idWidth)} ${"Title".padEnd(titleWidth)} ${"Type"}`)
 			console.log("-".repeat(terminalWidth))
@@ -899,7 +899,7 @@ function parseCommand(input: string, state: State): any {
 
 	const parseResult = schema.safeParse(commandObj)
 	if (!parseResult.success) {
-		console.log(`\nInvalid command. Error: ${parseResult.error.errors[0]?.message || "Unknown error"}`)
+		console.log(`\nInvalid command. Error: ${parseResult.error.issues[0]?.message || "Unknown error"}`)
 		return null
 	}
 
@@ -1043,10 +1043,10 @@ async function handleOneRosterResourcesList(state: OneRosterResourcesListState, 
 		case "fetch": {
 			const subCmd = cmd.subCmd || { type: "all" }
 			logger.info("fetching OneRoster resources", { fetchType: subCmd.type })
-			
+
 			let resources: OneRoster.Resource[]
 			let fetchInfo: FetchInfo
-			
+
 			switch (subCmd.type) {
 				case "fuzzy": {
 					const result = await errors.try(
@@ -1078,7 +1078,7 @@ async function handleOneRosterResourcesList(state: OneRosterResourcesListState, 
 					logger.info("fetched resources with fuzzy search", { count: resources.length, query: subCmd.query })
 					break
 				}
-				
+
 				case "filter": {
 					const result = await errors.try(
 						retryWithBackoff(
@@ -1109,7 +1109,7 @@ async function handleOneRosterResourcesList(state: OneRosterResourcesListState, 
 					logger.info("fetched resources with filter", { count: resources.length, filter: subCmd.expr })
 					break
 				}
-				
+
 				case "all":
 				default: {
 					const result = await errors.try(
@@ -1147,19 +1147,19 @@ async function handleOneRosterResourcesList(state: OneRosterResourcesListState, 
 			// Apply existing view filters to the newly fetched data
 			const filtered = applyClientFilters(resources, state.clientFilter, state.sortField, state.sortOrder)
 			const paginator = createPaginator(filtered, 1, state.paginator?.pageSize || DEFAULT_PAGE_SIZE)
-			
+
 			console.log(`\n✓ Fetched ${resources.length} resources`)
-			
+
 			return { ...state, paginator }
 		}
-		
+
 		case "list": {
 			const { data } = cache.oneRosterResources
 			if (!data) {
 				console.log("\nNo data fetched yet. Use 'fetch' first.")
 				return state
 			}
-			
+
 			// Refresh view with current filters
 			const filtered = applyClientFilters(data, state.clientFilter, state.sortField, state.sortOrder)
 			const paginator = createPaginator(filtered, 1, state.paginator?.pageSize || DEFAULT_PAGE_SIZE)
@@ -1264,13 +1264,13 @@ async function handleOneRosterResourcesList(state: OneRosterResourcesListState, 
 				console.log("\nNo data to sort. Use 'fetch' first.")
 				return state
 			}
-			
+
 			const sortKey = resourceSortableFields[cmd.field]
 			if (!sortKey) {
 				console.error(`\nInvalid sort field. Available: ${Object.keys(resourceSortableFields).join(", ")}`)
 				return state
 			}
-			
+
 			const newOrder: "asc" | "desc" = state.sortField === sortKey && state.sortOrder === "asc" ? "desc" : "asc"
 			const newState = { ...state, sortField: sortKey, sortOrder: newOrder }
 			const filtered = applyGenericFilters(
@@ -1371,11 +1371,11 @@ async function handleOneRosterResourceInspect(state: OneRosterResourceInspectSta
 	switch (cmd.cmd) {
 		case "json":
 			viewStack.push(state)
-			return { 
-				kind: "JsonDisplay", 
-				data: state.resource, 
+			return {
+				kind: "JsonDisplay",
+				data: state.resource,
 				title: `OneRoster Resource: ${state.resource.title}`,
-				prevState: state 
+				prevState: state
 			}
 
 		case "fields":
@@ -1403,10 +1403,10 @@ async function handleQtiTestsList(state: QtiTestsListState, cmd: any): Promise<S
 		case "fetch": {
 			const subCmd = cmd.subCmd || { type: "all" }
 			logger.info("fetching QTI tests", { fetchType: subCmd.type })
-			
+
 			let tests: Qti.AssessmentTest[]
 			let fetchInfo: FetchInfo
-			
+
 			switch (subCmd.type) {
 				case "all":
 				default: {
@@ -1415,9 +1415,9 @@ async function handleQtiTestsList(state: QtiTestsListState, cmd: any): Promise<S
 					let page = 1
 					const limit = 1000
 					let hasMore = true
-					
+
 					console.log("\nFetching tests...")
-					
+
 					while (hasMore) {
 						const pageResult = await errors.try(
 							retryWithBackoff(
@@ -1438,7 +1438,7 @@ async function handleQtiTestsList(state: QtiTestsListState, cmd: any): Promise<S
 							logger.error("failed to fetch tests page after retries", { error: pageResult.error, page })
 							console.error(`\n❌ Failed to fetch page ${page} after all retries`)
 							console.error(`\nPartial results: ${tests.length} tests fetched so far`)
-							
+
 							// Still return partial results rather than nothing
 							if (tests.length > 0) {
 								console.log(`\n⚠️  Returning partial results (${tests.length} tests)`)
@@ -1446,16 +1446,16 @@ async function handleQtiTestsList(state: QtiTestsListState, cmd: any): Promise<S
 							}
 							return state
 						}
-						
+
 						tests.push(...pageResult.data.items)
 						console.log(`  Fetched page ${page} (${pageResult.data.items.length} items, total: ${tests.length})`)
-						
+
 						// Check if we have more pages
 						const totalPages = Math.ceil(pageResult.data.total / limit)
 						hasMore = page < totalPages
 						page++
 					}
-					
+
 					fetchInfo = {
 						type: "all",
 						timestamp: new Date(),
@@ -1478,19 +1478,19 @@ async function handleQtiTestsList(state: QtiTestsListState, cmd: any): Promise<S
 				(item) => `${item.identifier} ${item.title}`
 			)
 			const paginator = createPaginator(filtered, 1, state.paginator?.pageSize || DEFAULT_PAGE_SIZE)
-			
+
 			console.log(`\n✓ Fetched ${tests.length} tests`)
-			
+
 			return { ...state, paginator }
 		}
-		
+
 		case "list": {
 			const { data } = cache.qtiTests
 			if (!data) {
 				console.log("\nNo data fetched yet. Use 'fetch' first.")
 				return state
 			}
-			
+
 			// Refresh view with current filters
 			const filtered = applyGenericFilters(
 				data,
@@ -1630,7 +1630,7 @@ async function handleQtiTestsList(state: QtiTestsListState, cmd: any): Promise<S
 				console.error(`\nInvalid sort field. Available: ${Object.keys(qtiTestSortableFields).join(", ")}`)
 				return state
 			}
-			
+
 			const newOrder: "asc" | "desc" = state.sortField === sortKey && state.sortOrder === "asc" ? "desc" : "asc"
 			const newState = { ...state, sortField: sortKey, sortOrder: newOrder }
 			const filtered = applyGenericFilters(
@@ -1729,17 +1729,17 @@ async function handleQtiTestInspect(state: QtiTestInspectState, cmd: any): Promi
 	switch (cmd.cmd) {
 		case "json":
 			viewStack.push(state)
-			return { 
-				kind: "JsonDisplay", 
-				data: state.test, 
+			return {
+				kind: "JsonDisplay",
+				data: state.test,
 				title: `Assessment Test: ${state.test.title}`,
-				prevState: state 
+				prevState: state
 			}
 
 		case "fields":
 			// For fields, just redraw the current state which shows fields by default
 			return state
-			
+
 		case "items":
 			viewStack.push(state)
 			return {
@@ -1791,10 +1791,10 @@ async function handleQtiItemsList(state: QtiItemsListState, cmd: any): Promise<S
 		case "fetch": {
 			const subCmd = cmd.subCmd || { type: "all" }
 			logger.info("fetching QTI items", { fetchType: subCmd.type })
-			
+
 			let items: Qti.AssessmentItem[]
 			let fetchInfo: FetchInfo
-			
+
 			switch (subCmd.type) {
 				case "all":
 				default: {
@@ -1803,9 +1803,9 @@ async function handleQtiItemsList(state: QtiItemsListState, cmd: any): Promise<S
 					let page = 1
 					const limit = 1000
 					let hasMore = true
-					
+
 					console.log("\nFetching items...")
-					
+
 					while (hasMore) {
 						const pageResult = await errors.try(
 							retryWithBackoff(
@@ -1826,7 +1826,7 @@ async function handleQtiItemsList(state: QtiItemsListState, cmd: any): Promise<S
 							logger.error("failed to fetch items page after retries", { error: pageResult.error, page })
 							console.error(`\n❌ Failed to fetch page ${page} after all retries`)
 							console.error(`\nPartial results: ${items.length} items fetched so far`)
-							
+
 							// Still return partial results rather than nothing
 							if (items.length > 0) {
 								console.log(`\n⚠️  Returning partial results (${items.length} items)`)
@@ -1834,16 +1834,16 @@ async function handleQtiItemsList(state: QtiItemsListState, cmd: any): Promise<S
 							}
 							return state
 						}
-						
+
 						items.push(...pageResult.data.items)
 						console.log(`  Fetched page ${page} (${pageResult.data.items.length} items, total: ${items.length})`)
-						
+
 						// Check if we have more pages
 						const totalPages = Math.ceil(pageResult.data.total / limit)
 						hasMore = page < totalPages
 						page++
 					}
-					
+
 					fetchInfo = {
 						type: "all",
 						timestamp: new Date(),
@@ -1866,19 +1866,19 @@ async function handleQtiItemsList(state: QtiItemsListState, cmd: any): Promise<S
 				(item) => `${item.identifier} ${item.title}`
 			)
 			const paginator = createPaginator(filtered, 1, state.paginator?.pageSize || DEFAULT_PAGE_SIZE)
-			
+
 			console.log(`\n✓ Fetched ${items.length} items`)
-			
+
 			return { ...state, paginator }
 		}
-		
+
 		case "list": {
 			const { data } = cache.qtiItems
 			if (!data) {
 				console.log("\nNo data fetched yet. Use 'fetch' first.")
 				return state
 			}
-			
+
 			// Refresh view with current filters
 			const filtered = applyGenericFilters(
 				data,
@@ -2013,13 +2013,13 @@ async function handleQtiItemsList(state: QtiItemsListState, cmd: any): Promise<S
 				console.log("\nNo data to sort. Use 'fetch' first.")
 				return state
 			}
-			
+
 			const sortKey = qtiItemSortableFields[cmd.field]
 			if (!sortKey) {
 				console.error(`\nInvalid sort field. Available: ${Object.keys(qtiItemSortableFields).join(", ")}`)
 				return state
 			}
-			
+
 			const newOrder: "asc" | "desc" = state.sortField === sortKey && state.sortOrder === "asc" ? "desc" : "asc"
 			const newState = { ...state, sortField: sortKey, sortOrder: newOrder }
 			const filtered = applyGenericFilters(
@@ -2118,11 +2118,11 @@ async function handleQtiItemInspect(state: QtiItemInspectState, cmd: any): Promi
 	switch (cmd.cmd) {
 		case "json":
 			viewStack.push(state)
-			return { 
-				kind: "JsonDisplay", 
-				data: state.item, 
+			return {
+				kind: "JsonDisplay",
+				data: state.item,
 				title: `Assessment Item: ${state.item.title}`,
-				prevState: state 
+				prevState: state
 			}
 
 		case "fields":
@@ -2207,14 +2207,14 @@ async function main() {
 		clientId: env.TIMEBACK_CLIENT_ID,
 		clientSecret: env.TIMEBACK_CLIENT_SECRET
 	})
-	
+
 	// Clear error log from previous runs
 	const unlinkResult = await errors.try(fs.unlink(ERROR_LOG_FILE))
 	if (unlinkResult.error) {
 		// File doesn't exist, that's fine
 		logger.debug("error log file doesn't exist yet", { file: ERROR_LOG_FILE })
 	}
-	
+
 	console.log(`\n📝 Errors will be logged to: ${ERROR_LOG_FILE}`)
 	console.log(`   You can tail it in another terminal: tail -f ${ERROR_LOG_FILE} | jq .`)
 	console.log(`   Or use tee to save all output: bun run ${process.argv[1]} | tee spelunker.log\n`)

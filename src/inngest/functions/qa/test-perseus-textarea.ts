@@ -5,7 +5,7 @@ import { inngest } from "@/inngest/client"
 import { sessionPool } from "@/lib/utils/browserbase-session-pool"
 
 const testPerseusTextareaInputSchema = z.object({
-	jsonData: z.record(z.any()).optional(),
+	jsonData: z.record(z.string(), z.any()).optional(),
 	targetUrl: z.string().optional()
 })
 
