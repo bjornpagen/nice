@@ -2,7 +2,7 @@ import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { zodResponseFormat } from "openai/helpers/zod"
-import { z } from "zod"
+import { z } from "zod/v3"
 import { env } from "@/env"
 import { inngest } from "@/inngest/client"
 import { qti } from "@/lib/clients"
@@ -106,9 +106,9 @@ The questions often have varying ways of telling the user to use "simplified for
         </qti-feedback-block>
     </qti-item-body>
     <qti-response-processing>
-        
+
         <qti-set-outcome-value identifier="SCORE"><qti-map-response identifier="RESPONSE"/></qti-set-outcome-value>
-        
+
         <qti-response-condition>
             <qti-response-if>
                 <qti-gt>
@@ -177,9 +177,9 @@ For example, we might have the following incorrect QTI question:
         </qti-feedback-block>
     </qti-item-body>
     <qti-response-processing>
-        
+
         <qti-set-outcome-value identifier="SCORE"><qti-map-response identifier="RESPONSE"/></qti-set-outcome-value>
-        
+
         <qti-response-condition>
             <qti-response-if>
                 <qti-gt>
@@ -366,4 +366,3 @@ For each issue you find:
 		}
 	}
 )
-

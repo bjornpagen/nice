@@ -124,7 +124,7 @@ export const orchestrateHardcodedMathDifferentiatedItemGeneration = inngest.crea
 			// ✅ MODIFIED: Build events and dispatch in batches (mirrors migration dispatch robustness)
 			const events: Events["qti/question.differentiate-and-save"][] = missingQuestionIds.map((questionId) => ({
 				name: "qti/question.differentiate-and-save",
-				data: { questionId, n: DIFFERENTIATION_COUNT, courseSlug: course.slug }
+				data: { questionId, n: DIFFERENTIATION_COUNT, courseSlug: course.slug, widgetCollection: "math-core" }
 			}))
 
 			let dispatched = 0

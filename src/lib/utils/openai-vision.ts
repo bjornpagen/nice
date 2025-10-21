@@ -2,7 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import OpenAI from "openai"
 import { zodResponseFormat } from "openai/helpers/zod"
-import { z } from "zod"
+import { z } from "zod/v3"
 import { env } from "@/env"
 
 // Zod schema for visual QA analysis response

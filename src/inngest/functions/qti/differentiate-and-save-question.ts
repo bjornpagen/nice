@@ -11,13 +11,13 @@ export const differentiateAndSaveQuestion = inngest.createFunction(
 	},
 	{ event: "qti/question.differentiate-and-save" },
 	async ({ event, step, logger }) => {
-		const { questionId, n, courseSlug } = event.data
+		const { questionId, n, courseSlug, widgetCollection } = event.data
 
 		// 1. Differentiate the single question.
 		const generatedItems = await step.invoke("differentiate-items", {
-		function: convertPerseusQuestionToDifferentiatedQtiItems,
-		data: { questionId, n }
-	}).catch((e: Error) => {
+			function: convertPerseusQuestionToDifferentiatedQtiItems,
+			data: { questionId, n, widgetCollection }
+		}).catch((e: Error) => {
 			logger.error("AI differentiation failed for question", { questionId, error: e })
 			// Throw the error to let Inngest handle the retry for this specific job.
 			throw errors.wrap(e, `AI differentiation failed for question ${questionId}`)

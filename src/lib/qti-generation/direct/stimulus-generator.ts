@@ -2,7 +2,7 @@ import * as errors from "@superbuilders/errors"
 import type * as logger from "@superbuilders/slog"
 import OpenAI from "openai"
 import { zodResponseFormat } from "openai/helpers/zod"
-import { z } from "zod"
+import { z } from "zod/v3"
 import { env } from "@/env"
 import { loadConversionExamples } from "@/lib/qti-stimulus/utils/examples-loader"
 import {

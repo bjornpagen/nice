@@ -8,7 +8,6 @@ import "./src/env.js"
 const config = {
 	experimental: {
 		reactCompiler: true,
-		useCache: true
 	},
 	images: {
 		remotePatterns: [

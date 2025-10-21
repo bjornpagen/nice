@@ -61,7 +61,8 @@ const events = {
 	"qti/item.differentiate": {
 		data: z.object({
 			questionId: z.string().min(1),
-			n: z.number().int().positive().describe("The number of differentiated questions to generate.")
+			n: z.number().int().positive().describe("The number of differentiated questions to generate."),
+			widgetCollection: WidgetCollectionNameSchema
 		})
 	},
 	// QTI Ingestion Events
@@ -375,7 +376,8 @@ const events = {
 		data: z.object({
 			questionId: z.string().min(1),
 			n: z.number().int().positive(),
-			courseSlug: z.string().min(1)
+			courseSlug: z.string().min(1),
+			widgetCollection: WidgetCollectionNameSchema
 		})
 	},
 	// ✅ ADD: New event to signal that all differentiation jobs for a set of courses have been dispatched
