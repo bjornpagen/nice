@@ -17,16 +17,20 @@ import {
   iterLessonResources,
   readArticleContent,
   readQuestionXml,
+  readVideoMetadata,
   readIndex,
   readUnit
 } from "@superbuilders/qti-assessment-item-generator/cartridge/client"
-import type { IndexV1, Unit as CartUnit, Lesson as CartLesson, Resource } from "@superbuilders/qti-assessment-item-generator/cartridge/types"
+import type {
+  IndexV1,
+  Unit as CartUnit,
+  Lesson as CartLesson,
+  Resource
+} from "@superbuilders/qti-assessment-item-generator/cartridge/types"
 
 // Constants aligned with src/lib/payloads/oneroster/course.ts
 const ORG_SOURCED_ID = "f251f08b-61de-4ffa-8ff3-3e56e1d75a60"
 const ACADEMIC_SESSION_SOURCED_ID = "Academic_Year_2025-2026"
-const QUIZ_XP = 4
-const UNIT_TEST_XP = 6
 const READING_WORDS_PER_MINUTE = 200
 
 type OneRosterGUIDRef = { sourcedId: string; type: "course" | "academicSession" | "org" | "courseComponent" | "resource" | "term" | "district" }
@@ -207,17 +211,17 @@ function orCourseComponentIdForUnit(courseSlug: string, unitId: string): string 
 function orCourseComponentIdForLesson(courseSlug: string, unitId: string, lessonId: string): string {
   return hashId("or_cc_", ["component", "kind=lesson", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`])
 }
-function orCourseComponentIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string): string {
-  return hashId("or_cc_", ["component", "kind=quiz", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`])
-}
 function orCourseComponentIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string): string {
   return hashId("or_cc_", ["component", "kind=unittest", `c=${courseSlug}`, `u=${unitId}`, `t=${unitTestId}`])
 }
 function orResourceIdForArticle(courseSlug: string, unitId: string, lessonId: string, articleId: string): string {
   return hashId("or_r_", ["resource", "kind=article", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `a=${articleId}`])
 }
+function orResourceIdForVideo(courseSlug: string, unitId: string, lessonId: string, videoId: string): string {
+  return hashId("or_r_", ["resource", "kind=video", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `v=${videoId}`])
+}
 function orResourceIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string): string {
-  return hashId("or_r_", ["resource", "kind=quiz", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`])
+  return hashId("or_r_", ["resource", "kind=exercise", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`])
 }
 function orResourceIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string): string {
   return hashId("or_r_", ["resource", "kind=unittest", `c=${courseSlug}`, `u=${unitId}`, `t=${unitTestId}`])
@@ -225,8 +229,11 @@ function orResourceIdForUnitTest(courseSlug: string, unitId: string, unitTestId:
 function orComponentResourceIdForArticle(courseSlug: string, unitId: string, lessonId: string, articleId: string): string {
   return hashId("or_cr_", ["component-resource", "kind=article", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `a=${articleId}`])
 }
+function orComponentResourceIdForVideo(courseSlug: string, unitId: string, lessonId: string, videoId: string): string {
+  return hashId("or_cr_", ["component-resource", "kind=video", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `v=${videoId}`])
+}
 function orComponentResourceIdForQuiz(courseSlug: string, unitId: string, lessonId: string, quizId: string): string {
-  return hashId("or_cr_", ["component-resource", "kind=quiz", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`])
+  return hashId("or_cr_", ["component-resource", "kind=exercise", `c=${courseSlug}`, `u=${unitId}`, `l=${lessonId}`, `x=${quizId}`])
 }
 function orComponentResourceIdForUnitTest(courseSlug: string, unitId: string, unitTestId: string): string {
   return hashId("or_cr_", ["component-resource", "kind=unittest", `c=${courseSlug}`, `u=${unitId}`, `t=${unitTestId}`])
@@ -300,11 +307,13 @@ async function main(): Promise<void> {
   const courseId = getFlag("course-id")
   const gradesRaw = getFlag("grades")
   const subjectSlugArg = getFlag("subject-slug")
+  const quizXpRaw = getFlag("quiz-xp")
+  const unitTestXpRaw = getFlag("unit-test-xp")
   // No flags for QTI; both OneRoster and QTI are always emitted
 
-  if (!input || !slug || !courseId || !gradesRaw || !subjectSlugArg) {
+  if (!input || !slug || !courseId || !gradesRaw || !subjectSlugArg || !quizXpRaw || !unitTestXpRaw) {
     process.stderr.write(
-      "Usage: convert-cartridge-to-oneroster --input /abs/file.tar.zst --slug <course-slug> --course-id <id> --grades <n[,n,...]> --subject-slug <slug>\n"
+      "Usage: convert-cartridge-to-oneroster --input /abs/file.tar.zst --slug <course-slug> --course-id <id> --grades <n[,n,...]> --subject-slug <slug> --quiz-xp <int> --unit-test-xp <int>\n"
     )
     process.exit(1)
   }
@@ -319,6 +328,18 @@ async function main(): Promise<void> {
   if (grades.some((n) => !Number.isInteger(n) || n < 0 || n > 12)) {
     logger.error("invalid grades", { gradesRaw })
     throw errors.new("grades: must be integers between 0 and 12")
+  }
+
+  const quizXp = Number(quizXpRaw)
+  if (!Number.isFinite(quizXp) || !Number.isInteger(quizXp) || quizXp <= 0) {
+    logger.error("invalid quiz xp", { quizXpRaw })
+    throw errors.new("quiz xp: must be a positive integer")
+  }
+
+  const unitTestXp = Number(unitTestXpRaw)
+  if (!Number.isFinite(unitTestXp) || !Number.isInteger(unitTestXp) || unitTestXp <= 0) {
+    logger.error("invalid unit test xp", { unitTestXpRaw })
+    throw errors.new("unit test xp: must be a positive integer")
   }
 
   const appDomain = process.env.NEXT_PUBLIC_APP_DOMAIN
@@ -489,6 +510,7 @@ async function main(): Promise<void> {
         metadata: { khanId: lesson.id, khanSlug: lessonSlug, khanTitle: lesson.title }
       })
 
+      let passiveResourcesForNextExercise: string[] = []
       let resourceIndex = 0
       for await (const res of iterLessonResources(reader, lesson) as AsyncIterable<Resource>) {
         resourceIndex++
@@ -536,6 +558,10 @@ async function main(): Promise<void> {
             }
           })
 
+          if (xp > 0) {
+            passiveResourcesForNextExercise.push(resourceId)
+          }
+
           const compResId = orComponentResourceIdForArticle(slug, unit.id, lesson.id, res.id)
           payload.componentResources.push({
             sourcedId: compResId,
@@ -572,6 +598,84 @@ async function main(): Promise<void> {
 
           totalXp += xp
           totalLessons += 1
+        } else if (res.type === "video") {
+          const videoTitle = res.title
+          if (!videoTitle || videoTitle.trim() === "") {
+            logger.error("video missing title", { resourceId: res.id, lessonId: lesson.id, unitId: unit.id })
+            throw errors.new("video: missing title")
+          }
+
+          const videoSlug = normalizePathSlug(res.path) || normalizePathSlug(res.id)
+          const launch = `${baseDomain}/${subjectSlug}/${slug}/${unitSlugNorm}/${lessonSlug}/v/${videoSlug}`
+          const resourceId = orResourceIdForVideo(slug, unit.id, lesson.id, res.id)
+          if (resourceSeen.has(resourceId)) {
+            logger.error("duplicate resource id", { id: res.id })
+            throw errors.new("resource id collision")
+          }
+          resourceSeen.add(resourceId)
+
+          const videoMetadata = await readVideoMetadata(reader, res)
+          const youtubeId = videoMetadata.youtubeId?.trim()
+          if (!youtubeId) {
+            logger.error("video metadata missing youtubeId", { resourceId: res.id, path: res.path })
+            throw errors.new("video: youtubeId is required")
+          }
+          const durationSeconds = videoMetadata.durationSeconds
+          if (!Number.isFinite(durationSeconds) || durationSeconds <= 0) {
+            logger.error("video metadata missing durationSeconds", { resourceId: res.id, path: res.path, durationSeconds })
+            throw errors.new("video: durationSeconds must be positive")
+          }
+          const videoXp = Math.max(1, Math.ceil(durationSeconds / 60))
+
+          payload.resources.push({
+            sourcedId: resourceId,
+            status: "active",
+            title: videoTitle,
+            vendorResourceId: `nice-academy-${res.id}`,
+            vendorId: "superbuilders",
+            applicationId: "nice",
+            roles: ["primary"],
+            importance: "primary",
+            metadata: {
+              type: "interactive",
+              toolProvider: "Nice Academy",
+              khanActivityType: "Video",
+              launchUrl: launch,
+              url: launch,
+              khanId: res.id,
+              khanSlug: videoSlug,
+              khanTitle: videoTitle,
+              khanYoutubeId: youtubeId,
+              khanDescription: videoMetadata.description,
+              xp: videoXp
+            }
+          })
+
+          if (videoXp > 0) {
+            passiveResourcesForNextExercise.push(resourceId)
+          }
+
+          const compResId = orComponentResourceIdForVideo(slug, unit.id, lesson.id, res.id)
+          payload.componentResources.push({
+            sourcedId: compResId,
+            status: "active",
+            title: formatResourceTitleForDisplay(videoTitle, "Video"),
+            courseComponent: { sourcedId: lessonComponentId, type: "courseComponent" },
+            resource: { sourcedId: resourceId, type: "resource" },
+            sortOrder: resourceIndex
+          })
+
+          payload.assessmentLineItems.push({
+            sourcedId: orAssessmentLineItemIdFromResource(resourceId),
+            status: "active",
+            title: `Progress for: ${videoTitle}`,
+            componentResource: { sourcedId: compResId },
+            course: { sourcedId: courseSourcedId },
+            metadata: { lessonType: "video", courseSourcedId }
+          })
+
+          totalXp += videoXp
+          totalLessons += 1
         } else if (res.type === "quiz") {
           const quizTitle = res.title
           if (!quizTitle || quizTitle.trim() === "") {
@@ -579,19 +683,7 @@ async function main(): Promise<void> {
             throw errors.new("quiz: missing title")
           }
           const quizSlug = getLastPathSegment(res.path)
-          // Create intermediate component for quiz
-          const quizComponentId = orCourseComponentIdForQuiz(slug, unit.id, lesson.id, res.id)
-          payload.courseComponents.push({
-            sourcedId: quizComponentId,
-            status: "active",
-            title: quizTitle,
-            course: { sourcedId: courseSourcedId, type: "course" },
-            parent: { sourcedId: unitComponentId, type: "courseComponent" },
-            sortOrder: lesson.lessonNumber, // position alongside lesson
-            metadata: { khanId: res.id, khanSlug: quizSlug, khanTitle: quizTitle }
-          })
-
-          const launch = `${baseDomain}/${subjectSlug}/${slug}/${unitSlugNorm}/${lessonSlug}/quiz/${quizSlug}`
+          const launch = `${baseDomain}/${subjectSlug}/${slug}/${unitSlugNorm}/${lessonSlug}/e/${quizSlug}`
           const resourceId = orResourceIdForQuiz(slug, unit.id, lesson.id, res.id)
           if (resourceSeen.has(resourceId)) {
             logger.error("duplicate resource id", { id: res.id })
@@ -599,6 +691,7 @@ async function main(): Promise<void> {
           }
           resourceSeen.add(resourceId)
 
+          const nicePassiveResources = passiveResourcesForNextExercise.slice()
           payload.resources.push({
             sourcedId: resourceId,
             status: "active",
@@ -611,14 +704,15 @@ async function main(): Promise<void> {
             metadata: {
               type: "interactive",
               toolProvider: "Nice Academy",
-              khanActivityType: "Quiz",
-              khanLessonType: "quiz",
+              khanActivityType: "Exercise",
               launchUrl: launch,
               url: launch,
               khanId: res.id,
               khanSlug: quizSlug,
               khanTitle: quizTitle,
-              xp: QUIZ_XP
+              xp: quizXp,
+              passiveResources: null,
+              nice_passiveResources: nicePassiveResources
             }
           })
 
@@ -626,10 +720,10 @@ async function main(): Promise<void> {
           payload.componentResources.push({
             sourcedId: compResIdQ,
             status: "active",
-            title: quizTitle,
-            courseComponent: { sourcedId: quizComponentId, type: "courseComponent" },
+            title: formatResourceTitleForDisplay(quizTitle, "Exercise"),
+            courseComponent: { sourcedId: lessonComponentId, type: "courseComponent" },
             resource: { sourcedId: resourceId, type: "resource" },
-            sortOrder: 0
+            sortOrder: resourceIndex
           })
 
           payload.assessmentLineItems.push({
@@ -638,8 +732,10 @@ async function main(): Promise<void> {
             title: quizTitle,
             componentResource: { sourcedId: compResIdQ },
             course: { sourcedId: courseSourcedId },
-            metadata: { lessonType: "quiz", courseSourcedId }
+            metadata: { lessonType: "exercise", courseSourcedId }
           })
+
+          passiveResourcesForNextExercise = []
 
           // Generate QTI items and test for quiz
           {
@@ -716,7 +812,7 @@ async function main(): Promise<void> {
             logger.debug("generated qti items and test for quiz", { quizId: res.id, itemCount: questionIds.length })
           }
 
-          totalXp += QUIZ_XP
+          totalXp += quizXp
           totalLessons += 1
         }
       }
@@ -783,7 +879,7 @@ async function main(): Promise<void> {
           khanId: unitTest.id,
           khanSlug: testSlug,
           khanTitle: unitTestTitle,
-          xp: UNIT_TEST_XP
+          xp: unitTestXp
         }
       })
 
@@ -877,7 +973,7 @@ async function main(): Promise<void> {
       qtiTestsXml.push(unitTestXml)
       logger.debug("generated qti items and test for unit test", { unitTestId: utId, itemCount: questionIds.length })
 
-      totalXp += UNIT_TEST_XP
+      totalXp += unitTestXp
       totalLessons += 1
     }
   }
