@@ -32,6 +32,7 @@ const LessonSchema = z.object({
 const UnitSchema = z.object({
   id: z.string(),
   title: z.string(),
+  description: z.string().optional().default(""),
   lessons: z.array(LessonSchema)
 })
 
@@ -201,7 +202,9 @@ export async function buildCoursePayloadAction(input: GenerateCourseInput) {
         khanId: unitRawId,
         khanSlug: unitSlug,
         khanTitle: unit.title,
-        khanDescription: `Unit covering ${unit.title}`
+        khanDescription: (typeof unit.description === "string" && unit.description.trim().length > 0)
+          ? unit.description.trim()
+          : `Unit covering ${unit.title}`
       }
     })
 
@@ -230,13 +233,15 @@ export async function buildCoursePayloadAction(input: GenerateCourseInput) {
       // Track passive resources (videos/articles) until the next exercise
       let passiveForNextExercise: string[] = []
 
-      // Dedupe within-lesson by original resource id to avoid duplicate componentResources
+    // Dedupe within-lesson by original resource id and by (type,title)
       const seenOriginalResourceIds = new Set<string>()
+      const seenByTitleType = new Set<string>()
       let actualResourceIndex = 0
 
       for (let ri = 0; ri < lesson.resources.length; ri++) {
         const r = lesson.resources[ri]!
-        if (seenOriginalResourceIds.has(r.id)) {
+        const titleTypeKey = `${r.type}|${r.title.trim().toLowerCase()}`
+        if (seenOriginalResourceIds.has(r.id) || seenByTitleType.has(titleTypeKey)) {
           // skip duplicate occurrence of the same original resource within this lesson
           logger.warn("skipping duplicate resource in lesson", { 
             lessonId: lesson.id, 
@@ -246,6 +251,7 @@ export async function buildCoursePayloadAction(input: GenerateCourseInput) {
           continue
         }
         seenOriginalResourceIds.add(r.id)
+        seenByTitleType.add(titleTypeKey)
         
         // Always create a new resource for each occurrence
         const rRawId = newId()
@@ -706,6 +712,14 @@ export async function createComponentResourcesStep(componentResources: any[], co
     keysToInvalidate.push(createCacheKey(["oneroster-getComponentResourcesByLessonIds", lessonId]))
   }
   
+  // Also invalidate the aggregated multi-lesson key (sorted lesson ids) to avoid sticky empty caches
+  const aggregatedLessonIds = Array.from(lessonSourcedIds).sort()
+  if (aggregatedLessonIds.length > 0) {
+    keysToInvalidate.push(
+      createCacheKey(["oneroster-getComponentResourcesByLessonIds", ...aggregatedLessonIds])
+    )
+  }
+
   // Invalidate per-lesson resource id batches used by student pages
   for (const [lessonId, ids] of resourceIdsByLesson.entries()) {
     const sortedIds = Array.from(ids).sort()

@@ -44,7 +44,9 @@ export const env = createEnv({
 		LTI_ISSUER: z.string().url(),
 		LTI_JWKS_URL: z.string().url(),
 		LTI_AUDIENCE: z.string().min(1),
-		LTI_ALLOWED_REDIRECT_HOSTS: z.string().min(1)
+		LTI_ALLOWED_REDIRECT_HOSTS: z.string().min(1),
+		// API key for external-facing endpoints
+		NICE_API_KEY: z.string().min(1)
 	},
 
 	/**
@@ -68,7 +70,7 @@ export const env = createEnv({
 	 * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
 	 * middlewares) or client-side so we need to destruct manually.
 	 */
-	runtimeEnv: {
+		runtimeEnv: {
 		DATABASE_URL: process.env.DATABASE_URL,
 		NODE_ENV: process.env.NODE_ENV,
 		RAPIDAPI_YT_API_KEY: process.env.RAPIDAPI_YT_API_KEY,
@@ -101,7 +103,8 @@ export const env = createEnv({
 		LTI_ISSUER: process.env.LTI_ISSUER,
 		LTI_JWKS_URL: process.env.LTI_JWKS_URL,
 		LTI_AUDIENCE: process.env.LTI_AUDIENCE,
-		LTI_ALLOWED_REDIRECT_HOSTS: process.env.LTI_ALLOWED_REDIRECT_HOSTS
+			LTI_ALLOWED_REDIRECT_HOSTS: process.env.LTI_ALLOWED_REDIRECT_HOSTS,
+			NICE_API_KEY: process.env.NICE_API_KEY
 	},
 	/**
 	 * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

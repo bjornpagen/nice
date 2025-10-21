@@ -761,6 +761,7 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
             units: units.map((u) => ({
                 id: u.id,
                 title: u.title || "Untitled Unit",
+                description: (u as any)?.description ?? "",
                 lessons: u.lessons.map((l) => ({
                     id: l.id,
                     title: l.title || "Untitled Lesson",
