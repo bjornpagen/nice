@@ -24,7 +24,6 @@
     "export-math-skills": "bun run scripts/export-math-skills-json.ts"
   },
   "dependencies": {
-    "@anatine/zod-mock": "^3.14.0",
     "@clack/prompts": "^0.11.0",
     "@clerk/backend": "^2.9.3",
     "@clerk/nextjs": "^6.31.3",
