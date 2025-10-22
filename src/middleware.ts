@@ -155,7 +155,10 @@ export default clerkMiddleware(async (auth, req) => {
 
 	// Protect routes that require authentication
 	if (isProtectedRoute(req)) {
-		await auth.protect({ unauthenticatedUrl: buildUnauthenticatedRedirectUrl(req) })
+		if (!userId) {
+			return Response.redirect(buildUnauthenticatedRedirectUrl(req))
+		}
+		await auth.protect()
 	}
 
 	const routeGuards: Array<{
