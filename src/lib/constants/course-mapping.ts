@@ -111,6 +111,112 @@ export const HARDCODED_MATH_COURSE_IDS = [
 	"x7c7044d7" // 8th grade math (Common Core)
 ] as const
 
+// Hardcoded supplementary exercise slugs (Math)
+export const HARDCODED_SUPPLEMENTARY_MATH_EXERCISE_SLUGS: readonly string[] = [
+  // 4th grade
+  "adding_fractions_0.5",
+  "axis_of_symmetry",
+  "classify-triangles-by-both-sides-and-angles",
+  "converting-larger-units-to-smaller-units--ounces-and-pounds-",
+  "converting_decimals_to_fractions_1",
+  "converting_fractions_to_decimals_0.5",
+  "create-division-equations-with-area-models",
+  "division-using-place-value-understanding",
+  "equivalent-fractions-with-denominators-of-10-and-100",
+  "estimating-length--inches--feet--yards--and-miles-",
+  "estimating-mass--ounces-and-pounds-",
+  "estimating-volume--cups--pints--quarts--and-gallons-",
+  "identifying-triangles-by-angles",
+  "interpreting-line-plots-with-fraction-addition-and-subtraction",
+  "measuring-and-converting-money-word-problems",
+  "measuring-time-word-problems",
+  "metric-conversions-word-problems",
+  "multi-digit-division-with-visual-models",
+  "multiply-3--and-4-digits-by-1-digit-with-distributive-property",
+  "multiplying-by-4-digit-numbers-with-visual-models",
+  "patterns-with-shapes",
+  "recognizing-triangles",
+  "telling-time-word-problems-",
+  "time-differences--over-the-hour-",
+  "write-fraction-addition-problems-with-common-denominators--denominators-of-10-and-100-",
+  // 5th grade
+  "converting-measurements-word-problems",
+  "coordinate-plane-word-problems--quadrant-1---basic-",
+  "decompose-figures-to-find-volume",
+  "decompose-figures-to-find-volume--unit-cubes-",
+  "distance-between-points-in-first-quadrant-of-coordinate-plane",
+  "understanding-decomposing-figures-to-find-volume",
+  "understanding-fractions-as-division--word-problems",
+  // 6th grade
+  "balancing-a-check-register",
+  "checking-accounts",
+  "classify-rational-numbers",
+  "credit-report-and-credit-history",
+  "identify-situations-one-step-inequalities",
+  "let-s-compare-salaries",
+  "model-expressions",
+  "paying-for-college",
+  "using-debit-or-credit",
+  // 7th grade
+  "building-a-budget-exercise",
+  "compare-discounts",
+  "comparing-distribution",
+  "emergency-fund",
+  "estimate-center-using-dot-plots",
+  "find-net-worth",
+  "sales-tax",
+  "simple-and-compound-interest",
+  // 8th grade
+  "algebraic-rules-for-transformations",
+  "cylinder-volume-formula",
+  "represent-dilations-algebraically",
+  "similar-triangles-and-slope"
+] as const
+
+// Hardcoded supplementary exercise slugs (Science)
+export const HARDCODED_SUPPLEMENTARY_SCIENCE_EXERCISE_SLUGS: readonly string[] = [
+  // Matter & changes
+  "understand-mixtures",
+  "homogeneous-and-heterogeneous-mixtures",
+  "soluble-and-insoluble-substances",
+  "methods-to-separate-the-compounds-of-a-mixture",
+  "difference-between-physical-and-chemical-changes",
+  "physical-and-chemical-changes-in-daily-life",
+  "differentiate-between-physical-and-chemical-changes",
+  // Particles & the atom
+  "understand-atomic-structure",
+  "apply-atomic-structure",
+  "atomic-and-mass-number",
+  "understand-isotopes",
+  // Materials: metals & nonmetals
+  "properties-of-metals",
+  "properties-of-metals-and-non-metals",
+  "physical-properties-of-metals",
+  "identify-the-property-of-a-metal",
+  "physical-properties-of-non-metals",
+  "properties-of-non-metal",
+  // Energy & heat
+  "understand-thermal-energy-and-equilibrium",
+  "methods-of-heat-transfer",
+  "transfer-of-heat",
+  "good-and-bad-conductors-of-heat",
+  "minimising-heat-loss",
+  // Forces
+  "force-its-effects-and-types",
+  "uses-and-disadvantages-of-friction",
+  "factors-affecting-friction",
+  "understand-newton-s-third-law",
+  "apply-newton-s-third-law",
+  "newtons-third-law",
+  // Waves & light
+  "apply-refraction-diffraction-and-interference-of-light",
+  // Life-science applications
+  "photosynthesis-food-making-process-in-plants",
+  "digestion-in-humans",
+  "digestion-in-herbivores-in",
+  // Computer networks
+  "computer-networks"
+] as const
 export const HARDCODED_SCIENCE_COURSE_IDS = [
 	"x0c5bb03129646fd6", // ms-biology
 	"x1baed5db7c1bb50b", // ms-physics
