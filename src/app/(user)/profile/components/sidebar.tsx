@@ -83,13 +83,14 @@ export function Sidebar() {
 
 	// Admin section (visible only for non-student roles)
 	const admin: SidebarItem[] = hasNonStudentRole
-		? [{ name: "Course Builder", href: "course-builder", disabled: false, external: false }]
+		? [
+			{ name: "Course Builder", href: "course-builder", disabled: false, external: false },
+			{ name: "Metrics", href: "profile/me/metrics", disabled: false, external: false }
+		]
 		: []
 
-	// Build Development list conditionally (superbuilders domain only)
-	const development: SidebarItem[] = isSuperbuilders
-		? [{ name: "Metrics", href: "me/metrics", disabled: false, external: false }]
-		: []
+	// Development section removed (no entries)
+	const development: SidebarItem[] = []
 
 	return (
 		<div className="bg-white rounded-lg border border-gray-200 p-4">

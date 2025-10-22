@@ -167,7 +167,7 @@ export default clerkMiddleware(async (auth, req) => {
 	}> = [
 		{ matcher: isCourseBuilderRoute, guard: guardCourseBuilderAccess },
 		{ matcher: isDebugRoute, guard: guardSuperbuildersDomain },
-		{ matcher: isMetricsRoute, guard: guardSuperbuildersDomain }
+		{ matcher: isMetricsRoute, guard: guardCourseBuilderAccess }
 	]
 
 	for (const { matcher, guard } of routeGuards) {
