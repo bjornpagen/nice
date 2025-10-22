@@ -1,6 +1,7 @@
 import { connection } from "next/server"
 import * as React from "react"
 import { Content } from "@/app/(user)/profile/me/metrics/content"
+import { Skeleton } from "@/components/ui/skeleton"
 import { type CourseMetrics, getAllCourseMetrics, type MetricsDateRange } from "@/lib/data/metrics"
 
 export default async function MetricsPage() {
@@ -18,7 +19,23 @@ export default async function MetricsPage() {
 	const metricsPromise: Promise<CourseMetrics[]> = getAllCourseMetrics(range)
 
 	return (
-		<React.Suspense fallback={<div className="text-gray-500">Loading metrics...</div>}>
+		<React.Suspense
+			fallback={
+				<div className="space-y-6">
+					<div className="flex items-center justify-between gap-4">
+						<Skeleton className="h-8 w-40" />
+					</div>
+					<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+						{Array.from({ length: 6 }).map((_, i) => (
+							<div key={i} className="rounded-lg border border-gray-200 p-5 bg-white">
+								<Skeleton className="h-5 w-56 mb-2" />
+								<Skeleton className="h-4 w-32" />
+							</div>
+						))}
+					</div>
+				</div>
+			}
+		>
 			<Content metricsPromise={metricsPromise} />
 		</React.Suspense>
 	)

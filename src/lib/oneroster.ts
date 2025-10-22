@@ -229,6 +229,22 @@ const GetComponentResourcesResponseSchema = z.object({
 	componentResources: z.array(ComponentResourceReadSchema)
 })
 
+// --- NEW: Schemas for Org (school/district/department) ---
+const OrgReadSchema = z.object({
+    sourcedId: z.string(),
+    status: z.string(),
+    dateLastModified: z.string().datetime().optional(),
+    metadata: z.record(z.string(), z.unknown()).optional().nullable(),
+    name: z.string(),
+    type: z.string(),
+    identifier: z.string().optional(),
+    parent: GUIDRefReadSchema.optional().nullable(),
+    children: z.array(GUIDRefReadSchema).optional()
+})
+export type Org = z.infer<typeof OrgReadSchema>
+
+const GetOrgResponseSchema = z.object({ org: OrgReadSchema.optional() })
+
 // --- NEW: Schemas for User ---
 const UserRoleSchema = z.object({
 	roleType: z.string(),
@@ -785,6 +801,16 @@ export class Client {
 		)
 		return result?.course
 	}
+
+    async getOrg(sourcedId: string): Promise<Org | null> {
+        const result = await this.#request(
+            `/ims/oneroster/rostering/v1p2/orgs/${sourcedId}`,
+            { method: "GET" },
+            GetOrgResponseSchema,
+            { swallow404: true }
+        )
+        return result?.org ?? null
+    }
 
 	async createCourse(course: z.infer<typeof CreateCourseInputSchema>) {
 		return this.#createEntity(
