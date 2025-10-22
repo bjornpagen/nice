@@ -77,6 +77,9 @@ export function Content({
 		return !isLocked && !progress?.completed
 	})?.id
 
+	const description = unit.description ?? ""
+	const trimmedDescription = description.trim()
+
 	// Lightweight detector to decide if description likely contains markdown
 	const looksLikeMarkdown = (value: string): boolean => {
 		// common patterns: links, bold/italic, inline code, headings, lists
@@ -127,37 +130,39 @@ export function Content({
 
 			<div className="border-t border-gray-400 mt-2 mb-6" />
 
-			<Section>
-				<h2 className="font-semibold text-gray-900 mb-2 text-xl">About this unit</h2>
-				{looksLikeMarkdown(unit.description) ? (
-					<div className="prose prose-sm text-gray-600 max-w-none">
-						<ReactMarkdown
-							remarkPlugins={[remarkGfm]}
-							rehypePlugins={[rehypeSanitize]}
-							components={{
-								a: ({ href, children }) => {
-									const isExternal = typeof href === "string" && /^https?:\/\//.test(href)
-									return (
-										<a
-											href={href}
-											target={isExternal ? "_blank" : undefined}
-											rel={isExternal ? "noopener noreferrer" : undefined}
-											className="text-blue-600 hover:text-blue-700 underline underline-offset-2 inline-flex items-center gap-1"
-										>
-											{children}
-											{isExternal && <ExternalLink className="h-4 w-4" />}
-										</a>
-									)
-								}
-							}}
-						>
-							{unit.description}
-						</ReactMarkdown>
-					</div>
-				) : (
-					<p className="text-gray-600 text-xs">{unit.description}</p>
-				)}
-			</Section>
+			{trimmedDescription && (
+				<Section>
+					<h2 className="font-semibold text-gray-900 mb-2 text-xl">About this unit</h2>
+					{looksLikeMarkdown(description) ? (
+						<div className="prose prose-sm text-gray-600 max-w-none">
+							<ReactMarkdown
+								remarkPlugins={[remarkGfm]}
+								rehypePlugins={[rehypeSanitize]}
+								components={{
+									a: ({ href, children }) => {
+										const isExternal = typeof href === "string" && /^https?:\/\//.test(href)
+										return (
+											<a
+												href={href}
+												target={isExternal ? "_blank" : undefined}
+												rel={isExternal ? "noopener noreferrer" : undefined}
+												className="text-blue-600 hover:text-blue-700 underline underline-offset-2 inline-flex items-center gap-1"
+											>
+												{children}
+												{isExternal && <ExternalLink className="h-4 w-4" />}
+											</a>
+										)
+									}
+								}}
+							>
+								{unit.description}
+							</ReactMarkdown>
+						</div>
+					) : (
+						<p className="text-gray-600 text-xs">{trimmedDescription}</p>
+					)}
+				</Section>
+			)}
 
 			<React.Suspense
 				fallback={
