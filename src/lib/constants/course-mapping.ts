@@ -207,6 +207,7 @@ export const HARDCODED_SUPPLEMENTARY_SCIENCE_EXERCISE_SLUGS: readonly string[] =
   "factors-affecting-friction",
   "understand-newton-s-third-law",
   "apply-newton-s-third-law",
+  "newton-s-third-law",
   "newtons-third-law",
   // Waves & light
   "apply-refraction-diffraction-and-interference-of-light",
