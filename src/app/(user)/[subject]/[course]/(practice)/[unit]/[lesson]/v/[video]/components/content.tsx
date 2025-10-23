@@ -37,13 +37,17 @@ export function Content({
 	const router = useRouter()
 	const video = React.use(videoPromise)
 	const params = React.use(paramsPromise)
-	const { user } = useUser()
+	const { user, isLoaded } = useUser()
 	const { setCurrentResourceCompleted } = useLessonProgress()
 
-	// Validate Clerk metadata early and fail fast if missing required fields
-	if (!user?.publicMetadata) {
-		throw errors.new("clerk metadata: publicMetadata required")
+	if (!isLoaded) {
+		return <div className="p-8">Loading video...</div>
 	}
+
+	if (!user) {
+		throw errors.new("clerk user required")
+	}
+
 	const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
 	if (!parsed.success) {
 		throw errors.wrap(parsed.error, "clerk metadata validation")
@@ -115,8 +119,7 @@ export function Content({
 	// Unified system: use course lock context to drive video control state
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
-	const parsedMetadata = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
-	const canToggleControls = parsedMetadata.success && parsedMetadata.data.roles.some((r) => r.role !== "student")
+	const canToggleControls = parsed.data.roles.some((r) => r.role !== "student")
 	const handleToggleLockAll = () => {
 		if (!canToggleControls) return
 		if (allUnlocked) {
@@ -194,7 +197,7 @@ export function Content({
 		}
 
 		void loadSavedProgress()
-	}, [user, video.id, setCurrentResourceCompleted])
+	}, [video.id, setCurrentResourceCompleted])
 
 	// Independent 1s UI timer for read-only progress display
 	React.useEffect(() => {
@@ -254,21 +257,11 @@ export function Content({
 		const intervalId = setInterval(() => {
 			const player = playerRef.current
 
-			// Validate user metadata if user exists (for progress tracking only)
-			let onerosterUserSourcedId: string | undefined
-			if (user?.publicMetadata) {
-				const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-				if (metadataValidation.success) {
-					onerosterUserSourcedId = metadataValidation.data.sourceId
-				}
-			}
-
 			// Ensure the player is ready, the user is identified, and the video is playing.
 			if (
 				player &&
 				typeof player.getPlayerState === "function" &&
-				player.getPlayerState() === 1 &&
-				onerosterUserSourcedId
+				player.getPlayerState() === 1
 			) {
 				const currentTime = player.getCurrentTime()
 				const duration = player.getDuration()
@@ -311,7 +304,7 @@ export function Content({
 		}, 3000) // Sync progress every 3 seconds
 
 		return () => clearInterval(intervalId)
-	}, [user, video.id, video.title, params.subject, params.course, setCurrentResourceCompleted])
+	}, [video.id, video.title, params.subject, params.course, setCurrentResourceCompleted, onerosterUserSourcedId])
 
 	// Cleanup: send cumulative event when component unmounts
 	React.useEffect(() => {
@@ -321,44 +314,33 @@ export function Content({
 
 			// If we already hit completion threshold in-session, finalize on server to avoid unload aborts
 			if (hasTriggeredCompletionSideEffectsRef.current) {
-				let onerosterUserSourcedId: string | undefined
-				if (user?.publicMetadata) {
-					const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-					if (metadataValidation.success) {
-						onerosterUserSourcedId = metadataValidation.data.sourceId
-					}
-				}
-				if (onerosterUserSourcedId) {
-					const userEmail = user?.emailAddresses?.[0]?.emailAddress
-					if (!userEmail) return
-					// Flush a last small accumulation delta if any clock is running
-					if (lastAccumulateAtRef.current) {
-						const sinceMs = Date.now() - lastAccumulateAtRef.current
-						const deltaSeconds = Math.floor(sinceMs / 1000)
-						if (deltaSeconds > 0) {
-							const player = playerRef.current
-							const currentTime = player && typeof player.getCurrentTime === "function" ? player.getCurrentTime() : 0
-							const duration = player && typeof player.getDuration === "function" ? player.getDuration() : 0
-							if (duration > 0) {
-								void accumulateCaliperWatchTime(
-									onerosterUserSourcedId,
-									video.id,
-									deltaSeconds,
-									currentTime,
-									duration,
-									video.title,
-									{ subjectSlug: params.subject, courseSlug: params.course }
-								)
-							}
+				// Flush a last small accumulation delta if any clock is running
+				if (lastAccumulateAtRef.current) {
+					const sinceMs = Date.now() - lastAccumulateAtRef.current
+					const deltaSeconds = Math.floor(sinceMs / 1000)
+					if (deltaSeconds > 0) {
+						const player = playerRef.current
+						const currentTime = player && typeof player.getCurrentTime === "function" ? player.getCurrentTime() : 0
+						const duration = player && typeof player.getDuration === "function" ? player.getDuration() : 0
+						if (duration > 0) {
+							void accumulateCaliperWatchTime(
+								onerosterUserSourcedId,
+								video.id,
+								deltaSeconds,
+								currentTime,
+								duration,
+								video.title,
+								{ subjectSlug: params.subject, courseSlug: params.course }
+							)
 						}
 					}
-					void finalizeCaliperTimeSpentEvent(onerosterUserSourcedId, video.id, video.title, {
-						subjectSlug: params.subject,
-						courseSlug: params.course
-					}, userEmail)
-					hasSentFinalEventRef.current = true
-					return
 				}
+				void finalizeCaliperTimeSpentEvent(onerosterUserSourcedId, video.id, video.title, {
+					subjectSlug: params.subject,
+					courseSlug: params.course
+				}, userEmail)
+				hasSentFinalEventRef.current = true
+				return
 			}
 
 			// Calculate final watch time
@@ -379,7 +361,7 @@ export function Content({
 			}, userEmail)
 			hasSentFinalEventRef.current = true
 		}
-	}, [user, video.title, video.id, params.subject, params.course])
+	}, [video.title, video.id, params.subject, params.course, onerosterUserSourcedId, userEmail])
 
 	// Keyboard gating while locked: prevent seek keys until unlocked or course-wide unlock
 	React.useEffect(() => {
