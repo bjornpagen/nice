@@ -13,8 +13,8 @@
 4. UX should remain identical (same question order, same pagination, same summary path).
 
 ## Proposed Design Overview
-1. **Add a Redis “active attempt” pointer per user/resource.**  
-   - Key: `assess:active:{userId}:{resourceId}` storing the current attempt number as a string (TTL matches `ASSESSMENT_STATE_TTL_SECONDS`).  
+1. **Add a Redis “active attempt” pointer per user/resource.**
+   - Key: `assess:active:{userId}:{resourceId}` storing the current attempt number as a string (TTL matches `ASSESSMENT_STATE_TTL_SECONDS`).
    - Helper API in `src/lib/assessment-cache.ts`:
      - `getActiveAttemptNumber(userId, resourceId)` → number \| null (refreshes TTL on read).
      - `setActiveAttemptNumber(userId, resourceId, attemptNumber)` (sets TTL).
@@ -91,11 +91,11 @@
 - Extend existing rotation tests to use the pointer when resuming attempts, ensuring question sets stay aligned.
 
 ## Rollout & Backwards Compatibility
-1. **Pointer bootstrapping:**  
+1. **Pointer bootstrapping:**
    - The first request after deployment will see “pointer missing.” The new recovery path (`findLatestCachedAttemptNumber`) will rehydrate the pointer from any existing `assess:state` keys, preserving in-flight attempts.
-2. **Mixed-version safety:**  
+2. **Mixed-version safety:**
    - Old pods can continue calling `getNextAttemptNumber` during rollout; the pointer is a pure additive change. Once the new version is stable we can remove the legacy calls.
-3. **Redis flush scenario:**  
+3. **Redis flush scenario:**
    - If someone flushes Redis, both the state and pointer disappear together. The system falls back to deriving a fresh attempt, identical to today.
 
 ## Open Questions / Follow-ups
@@ -106,6 +106,4 @@
 1. Implement pointer helpers and update server actions.
 2. Update `interactive-assessments` and `assessment-stepper`.
 3. Refresh tests + add new cases.
-4. Deploy behind a feature flag if desired; monitor logs for new warnings (`pointer missing`, `pointer stale`).
-5. Remove the old `getNextAttemptNumber` exports once the new approach is prove-out.
-
+4. Remove the old `getNextAttemptNumber` exports once the new approach is prove-out.
