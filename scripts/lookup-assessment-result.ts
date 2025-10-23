@@ -121,9 +121,28 @@ async function fetchAssessmentResults(
 		const allResults = allResultsResponse.data
 		const filtered = allResults.filter((r: AssessmentResult) => r.sourcedId.startsWith(basePrefix))
 
-		return filtered.sort(
-			(a: AssessmentResult, b: AssessmentResult) => new Date(b.scoreDate || 0).getTime() - new Date(a.scoreDate || 0).getTime()
-		)
+		if (filtered.length > 0) {
+			return filtered.sort(
+				(a: AssessmentResult, b: AssessmentResult) => new Date(b.scoreDate || 0).getTime() - new Date(a.scoreDate || 0).getTime()
+			)
+		}
+
+		// Fallback for older interactive records that used a single result without attempt suffix
+		const passiveResultId = `nice_${userSourcedId}_${lineItemId}`
+		logger.info("no attempt results found for interactive content; checking single result", {
+			userSourcedId,
+			lineItemId
+		})
+		const singleResultResponse = await errors.try(oneroster.getResult(passiveResultId))
+		if (singleResultResponse.error) {
+			logger.error("failed to fetch single interactive result", { error: singleResultResponse.error })
+			throw errors.wrap(singleResultResponse.error, "fetch interactive single result")
+		}
+		const single = singleResultResponse.data
+		if (!single) {
+			return []
+		}
+		return [single]
 	}
 
 	const passiveResultId = `nice_${userSourcedId}_${lineItemId}`
@@ -396,7 +415,7 @@ Path: ${selectedContent.path}`, "selected content")
 		process.exit(0)
 	}
 
-	const isInteractive = selectedContent.type === "Exercise"
+	const isInteractive = isInteractiveContentType(selectedContent.type)
 	if (isInteractive) {
 		p.note(assessmentResults.map((r, i) => formatResult(r, i)).join("\n"), "assessment attempts")
 	} else {

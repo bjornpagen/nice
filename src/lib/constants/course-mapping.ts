@@ -232,6 +232,14 @@ export const HARDCODED_SCIENCE_COURSE_IDS = [
 	// "x16acb03e699817e9" // AP College Bio
 ] as const
 
+// Hardcoded supplementary article slugs (Science) used for targeted stimulus migrations
+export const HARDCODED_SUPPLEMENTARY_SCIENCE_ARTICLE_SLUGS: readonly string[] = [
+  "atomic-number-atomic-mass-and-isotopes-article",
+  "what-is-newtons-third-law",
+  "computer-networks-overview",
+  "physical-network-connections"
+] as const
+
 export const HARDCODED_HISTORY_COURSE_IDS = [
 	"x71a94f19", // us-history
 	"xb87a304a", // ap-us-history

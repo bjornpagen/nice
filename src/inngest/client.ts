@@ -319,6 +319,10 @@ const events = {
 	"migration/hardcoded.science.stimuli.perseus-to-qti": {
 		data: z.object({})
 	},
+	// ✅ ADDED: New, explicitly namespaced event for article-slug-targeted stimulus migration
+	"migration/hardcoded.article-slugs.stimuli.perseus-to-qti": {
+		data: z.object({})
+	},
 	"migration/hardcoded.science.oneroster.ingest": {
 		data: z.object({})
 	},

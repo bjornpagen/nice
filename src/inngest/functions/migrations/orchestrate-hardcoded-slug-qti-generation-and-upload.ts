@@ -5,9 +5,12 @@ import { and, eq, inArray, isNotNull } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { HARDCODED_EXERCISE_SLUGS } from "@/inngest/functions/migrations/orchestrate-hardcoded-exercise-slugs-item-migration"
 import { buildDeterministicKBuckets } from "@/lib/utils/k-bucketing"
 import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
+import { HARDCODED_SUPPLEMENTARY_SCIENCE_EXERCISE_SLUGS, HARDCODED_SUPPLEMENTARY_SCIENCE_ARTICLE_SLUGS } from "@/lib/constants/course-mapping"
+
+// Use science supplementary slugs
+const HARDCODED_EXERCISE_SLUGS: string[] = HARDCODED_SUPPLEMENTARY_SCIENCE_EXERCISE_SLUGS as string[]
 
 type ExerciseRow = {
 	exerciseId: string
@@ -21,6 +24,13 @@ type QuestionRow = {
 	xml: string | null
 	exerciseId: string
 	problemType: string
+}
+
+type ArticleRow = {
+    id: string
+    xml: string | null
+    title: string
+    slug: string
 }
 
 export const orchestrateHardcodedSlugQtiGenerationAndUpload = inngest.createFunction(
@@ -79,6 +89,23 @@ export const orchestrateHardcodedSlugQtiGenerationAndUpload = inngest.createFunc
 			throw errors.wrap(questionsResult.error, "db query for questions")
 		}
 
+		// 2a) Fetch all target articles by hardcoded slugs with existing XML
+		const articlesResult = await errors.try<ArticleRow[]>(
+			db
+				.select({
+					id: schema.niceArticles.id,
+					xml: schema.niceArticles.xml,
+					title: schema.niceArticles.title,
+					slug: schema.niceArticles.slug
+				})
+				.from(schema.niceArticles)
+				.where(inArray(schema.niceArticles.slug, [...HARDCODED_SUPPLEMENTARY_SCIENCE_ARTICLE_SLUGS]))
+		)
+		if (articlesResult.error) {
+			logger.error("db query for articles by slug failed", { error: articlesResult.error })
+			throw errors.wrap(articlesResult.error, "db query for articles by slug")
+		}
+
 		// 3) Build item XMLs across all exercises
 		const items = questionsResult.data.map((q) => {
 			if (!q.xml) {
@@ -87,6 +114,16 @@ export const orchestrateHardcodedSlugQtiGenerationAndUpload = inngest.createFunc
 			const exerciseTitle = exerciseIdToTitle.get(q.exerciseId) ?? ""
 			const finalXml = replaceRootAttributes(q.xml, "qti-assessment-item", `nice_${q.id}`, exerciseTitle)
 			return { xml: finalXml, metadata: { khanId: q.id, khanExerciseId: q.exerciseId } }
+		})
+
+		// 3a) Build stimulus XMLs for target articles
+		const stimuli = articlesResult.data.map((a) => {
+			if (!a.xml) {
+				logger.error("article is missing xml", { articleId: a.id, slug: a.slug })
+				throw errors.new("article xml missing")
+			}
+			const finalXml = replaceRootAttributes(a.xml, "qti-assessment-stimulus", `nice_${a.id}`, a.title)
+			return { xml: finalXml, metadata: { khanId: a.id, khanSlug: a.slug, khanTitle: a.title } }
 		})
 
 		// 4) Build tests: one test per exercise (identifier nice_<exerciseId>)
@@ -123,7 +160,7 @@ export const orchestrateHardcodedSlugQtiGenerationAndUpload = inngest.createFunc
 			})
 			.filter(Boolean) as string[]
 
-		// 5) Write aggregated items and tests to a single directory
+		// 5) Write aggregated items, stimuli, and tests to a single directory
 		const OUTPUT_SLUG = "hardcoded-exercise-slugs"
 		const outDir = path.join(process.cwd(), "data", OUTPUT_SLUG, "qti")
 		const mkdirResult = await errors.try(fs.mkdir(outDir, { recursive: true }))
@@ -135,6 +172,7 @@ export const orchestrateHardcodedSlugQtiGenerationAndUpload = inngest.createFunc
 		const writeResults = await errors.try(
 			Promise.all([
 				fs.writeFile(path.join(outDir, "assessmentItems.json"), JSON.stringify(items, null, 2)),
+				fs.writeFile(path.join(outDir, "assessmentStimuli.json"), JSON.stringify(stimuli, null, 2)),
 				fs.writeFile(path.join(outDir, "assessmentTests.json"), JSON.stringify(tests, null, 2))
 			])
 		)
@@ -148,11 +186,15 @@ export const orchestrateHardcodedSlugQtiGenerationAndUpload = inngest.createFunc
 			name: "qti/assessment-item.ingest.one" as const,
 			data: { courseSlug: OUTPUT_SLUG, identifier: `nice_${q.id}` }
 		}))
+		const stimulusEvents = articlesResult.data.map((a) => ({
+			name: "qti/assessment-stimulus.ingest.one" as const,
+			data: { courseSlug: OUTPUT_SLUG, identifier: `nice_${a.id}` }
+		}))
 		const testEvents = exercises
 			.filter((ex) => (questionsByExerciseId.get(ex.exerciseId) ?? []).length > 0)
 			.map((ex) => ({ name: "qti/assessment-test.ingest.one" as const, data: { courseSlug: OUTPUT_SLUG, identifier: `nice_${ex.exerciseId}` } }))
 
-		const allEvents = [...itemEvents, ...testEvents]
+		const allEvents = [...stimulusEvents, ...itemEvents, ...testEvents]
 		if (allEvents.length > 0) {
 			const BATCH_SIZE = 500
 			for (let i = 0; i < allEvents.length; i += BATCH_SIZE) {
@@ -168,11 +210,12 @@ export const orchestrateHardcodedSlugQtiGenerationAndUpload = inngest.createFunc
 
 		logger.info("completed aggregated qti generation and upload for exercise slugs", {
 			items: items.length,
+			stimuli: stimuli.length,
 			tests: tests.length,
 			outputSlug: OUTPUT_SLUG
 		})
 
-		return { status: "completed", items: items.length, tests: tests.length, outputSlug: OUTPUT_SLUG }
+		return { status: "completed", items: items.length, stimuli: stimuli.length, tests: tests.length, outputSlug: OUTPUT_SLUG }
 	}
 )
 

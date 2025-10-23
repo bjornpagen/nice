@@ -77,7 +77,7 @@ export const orchestrateHardcodedExerciseSlugsItemMigration = inngest.createFunc
 			name: "qti/item.migrate",
 			data: {
 				questionId,
-				widgetCollection: "math-core" // Math-focused collection across listed grades
+				widgetCollection: "science" // Science-focused collection across listed grades
 			}
 		}))
 
