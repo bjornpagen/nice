@@ -6,6 +6,7 @@ export const HARDCODED_SCIENCE_COURSE_IDS = [
     "nice_xc370bc422b7f75fc", // ms-chemistry
     "nice_x1baed5db7c1bb50b", // ms-physics
     "nice_x87d03b443efbea0a", // middle-school-earth-and-space-science
+	"nice_x27ad39d4b4427987" // middle-school-science-supplementary-course-d3c9
 ] as const
 
 export const MASTERY_THRESHOLD = 95 as const
