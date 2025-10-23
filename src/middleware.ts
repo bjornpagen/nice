@@ -2,6 +2,7 @@ import type { User } from "@clerk/backend"
 import { clerkClient, clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
 const PUBLIC_SEGMENTS = new Set([
@@ -59,7 +60,7 @@ type GuardContext = {
 }
 
 function redirectToProfile(req: NextRequest): Response {
-	return Response.redirect(new URL("/profile/me/courses", req.url))
+	return NextResponse.redirect(new URL("/profile/me/courses", req.url))
 }
 
 async function loadClerkUser(userId: string): Promise<User | null> {
@@ -150,13 +151,13 @@ export default clerkMiddleware(async (auth, req) => {
 	// If user is authenticated and trying to access auth routes (login/signup)
 	if (userId && isAuthRoute(req)) {
 		// Redirect to dashboard instead
-		return Response.redirect(new URL("/profile/me/courses", req.url))
+		return NextResponse.redirect(new URL("/profile/me/courses", req.url))
 	}
 
 	// Protect routes that require authentication
 	if (isProtectedRoute(req)) {
 		if (!userId) {
-			return Response.redirect(buildUnauthenticatedRedirectUrl(req))
+			return NextResponse.redirect(buildUnauthenticatedRedirectUrl(req))
 		}
 		await auth.protect()
 	}
