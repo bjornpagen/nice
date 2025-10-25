@@ -498,18 +498,6 @@ export async function getComponentResourceForResourceInCourse(courseSourcedId: s
 	return redisCache(operation, ["oneroster-getComponentResourceForResourceInCourse", courseSourcedId, resourceSourcedId], { revalidate: 3600 * 24 }) // 24-hour cache
 }
 
-export async function getResourcesForCourseCached(courseSourcedId: string) {
-	if (!courseSourcedId) {
-		logger.error("getResourcesForCourseCached: courseSourcedId required")
-		throw errors.new("getResourcesForCourseCached: courseSourcedId required")
-	}
-	return redisCache(
-		async () => ensureActiveStatus(await oneroster.getResourcesForCourse(courseSourcedId)),
-		["oneroster-getResourcesForCourse", courseSourcedId],
-		{ revalidate: 3600 }
-	)
-}
-
 export async function getComponentResourcesByResourceId(resourceSourcedId: string) {
 	if (!resourceSourcedId) {
 		logger.error("getComponentResourcesByResourceId: resourceSourcedId required")
@@ -547,13 +535,29 @@ export async function getCourseResourceBundle(courseSourcedId: string): Promise<
 				throw errors.new("getCourseResourceBundle: component resources missing")
 			}
 
-			const resources = await getResourcesForCourseCached(courseSourcedId)
-			if (resources.length === 0) {
-				logger.error("getCourseResourceBundle: resources missing", { courseSourcedId })
+			const resourceIds = Array.from(
+				new Set(componentResources.map((componentResource) => componentResource.resource.sourcedId))
+			)
+			if (resourceIds.length === 0) {
+				logger.error("getCourseResourceBundle: no resource ids derived from component resources", {
+					courseSourcedId
+				})
 				throw errors.new("getCourseResourceBundle: resources missing")
 			}
 
-			const validated = resources.map((resource) => {
+			const resources = await getResourcesByIds(resourceIds)
+			const resourcesById = new Map(resources.map((resource) => [resource.sourcedId, resource]))
+			const missingResourceIds = resourceIds.filter((id) => !resourcesById.has(id))
+			if (missingResourceIds.length > 0) {
+				logger.error("getCourseResourceBundle: some resources missing from lookup", {
+					courseSourcedId,
+					missingResourceIds
+				})
+				throw errors.new("getCourseResourceBundle: resources missing")
+			}
+
+			const validated = resourceIds.map((resourceId) => {
+				const resource = resourcesById.get(resourceId)!
 				const parsed = ResourceMetadataSchema.safeParse(resource.metadata)
 				if (!parsed.success) {
 					logger.error("getCourseResourceBundle: invalid resource metadata", {
@@ -610,8 +614,7 @@ export async function invalidateCourseResourceBundle(courseSourcedId: string) {
 
 	await invalidateCache([
 		createCacheKey(["oneroster-course-bundle", courseSourcedId]),
-		createCacheKey(["oneroster-getComponentResourcesForCourse", courseSourcedId]),
-		createCacheKey(["oneroster-getResourcesForCourse", courseSourcedId])
+		createCacheKey(["oneroster-getComponentResourcesForCourse", courseSourcedId])
 	])
 }
 

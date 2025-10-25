@@ -64,7 +64,7 @@ We will introduce a course-scoped Redis bundle and swap the highest-traffic user
 
 #### `src/lib/data/fetchers/oneroster.ts`
 - Add `CourseResourceBundle` type and lookup helpers via a `WeakMap`.
-- Introduce bundle-focused fetch helpers (`getResourcesForCourseCached`, `getComponentResourcesByResourceId`, `getCourseResourceBundle`, `invalidateCourseResourceBundle`, `findLessonResources`, `findResourceById`).
+- Introduce bundle-focused fetch helpers (`getComponentResourcesByResourceId`, `getCourseResourceBundle`, `invalidateCourseResourceBundle`, `findLessonResources`, `findResourceById`).
 - Rename `getAllResources` / `getAllComponentResources` to course-builder-only entry points and expose them from a new wrapper.
 - Hook invalidation into existing Redis cache utility (`invalidateCache/createCacheKey`).
 
@@ -149,7 +149,7 @@ We will introduce a course-scoped Redis bundle and swap the highest-traffic user
      - Bundle payload size + fetch counts.
 3. **Rollback**
    - Redeploy previous commit.
-   - Flush `oneroster-course-bundle:*`, `oneroster-getComponentResourcesForCourse:*`, `oneroster-getResourcesForCourse:*`.
+   - Flush `oneroster-course-bundle:*`, `oneroster-getComponentResourcesForCourse:*`.
    - Notify stakeholders in #eng-app and record in post-release doc.
 4. **Comms**
    - Announce deployment in engineering channel with link to `docs/redis-bundle-rollout.md`.

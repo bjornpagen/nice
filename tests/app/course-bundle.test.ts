@@ -291,8 +291,7 @@ describe("course bundle helpers", () => {
 
 		expect(invalidatedKeys).toEqual([
 			"oneroster-course-bundle::course_bundle_test",
-			"oneroster-getComponentResourcesForCourse::course_bundle_test",
-			"oneroster-getResourcesForCourse::course_bundle_test"
+			"oneroster-getComponentResourcesForCourse::course_bundle_test"
 		])
 	})
 })
