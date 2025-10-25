@@ -2,7 +2,8 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import type { Subject } from "@/lib/course-builder-api/schema"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
-import { getAllResources, getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
+import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
+import { getAllResources } from "@/lib/data/fetchers/oneroster-course-builder"
 import { caseApi, qti } from "@/lib/clients"
 
 export async function fetchAllResourcesForCases(caseIds: string[], subject: Subject): Promise<{
@@ -52,8 +53,8 @@ export async function fetchAllResourcesForCases(caseIds: string[], subject: Subj
     })
   )
 
-  logger.info("built course slug allowlist", { 
-    totalSlugs: uniqueSlugs.size, 
+  logger.info("built course slug allowlist", {
+    totalSlugs: uniqueSlugs.size,
     allowedSlugs: allowSlugs.size,
     excludedCustomSlugs: uniqueSlugs.size - allowSlugs.size
   })
@@ -90,7 +91,7 @@ export async function fetchAllResourcesForCases(caseIds: string[], subject: Subj
         return false
       }
     }
-    
+
     // Now apply API-specific filters for AI consumption
     // Filter to interactive Articles, Videos, Exercises only
     const metaResult = ResourceMetadataSchema.safeParse(r.metadata)
@@ -242,7 +243,7 @@ export async function fetchCaseDetails(caseIds: string[]): Promise<unknown> {
         throw errors.wrap(res.error, "case getCFItem")
       }
       const item = res.data
-      return { 
+      return {
         id: id,
         humanCodingScheme: item?.humanCodingScheme || "",
         fullStatement: item?.fullStatement || "",
@@ -259,14 +260,12 @@ function subjectToSlug(subject: Subject): string {
   // These match the actual subject slugs in resource paths (e.g., /math/, /science/)
   const subjectSlugMapping: Record<Subject, string> = {
     "Math": "math",
-    "Science": "science", 
+    "Science": "science",
     "English Language Arts": "ela", // ELA resources use /ela/ path
     "Social Studies": "humanities", // Social Studies maps to humanities
     "Computing": "computing",
     "General": "" // General doesn't have a specific path filter
   }
-  
+
   return subjectSlugMapping[subject] || ""
 }
-
-

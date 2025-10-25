@@ -39,7 +39,7 @@ export default function CourseLayout({
 
 	// Fetch course data for lock status calculation
 const courseDataPromise = normalizedParamsPromise.then((resolvedParams) =>
-	fetchCoursePageData(resolvedParams, { skip: { questions: true } })
+	fetchCoursePageData(resolvedParams, { skipQuestions: true })
 )
 
 	const userPromise = requireUser()

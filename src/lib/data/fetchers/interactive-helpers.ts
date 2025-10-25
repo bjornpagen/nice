@@ -1,13 +1,8 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
-import {
-	getAllComponentResources,
-	getAllCoursesBySlug,
-	getAllResources,
-	getCourseComponentByCourseAndSlug,
-	getResourcesBySlugAndType
-} from "@/lib/data/fetchers/oneroster"
+import { getAllCoursesBySlug, getCourseComponentByCourseAndSlug, getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
+import { getAllComponentResources, getAllResources } from "@/lib/data/fetchers/oneroster-course-builder"
 import { getComponentResourcesByLessonIds, getResourcesByIds } from "@/lib/data/fetchers/oneroster"
 import { getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { prepareInteractiveAssessment } from "@/lib/interactive-assessments"

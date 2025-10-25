@@ -46,7 +46,7 @@ export default async function Layout({
 					subject: resolvedParams.subject,
 					course: resolvedParams.course
 				},
-				{ skip: { questions: true } }
+				{ skipQuestions: true }
 			)
 		)
 

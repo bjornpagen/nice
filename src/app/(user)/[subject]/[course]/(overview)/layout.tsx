@@ -26,7 +26,7 @@ export default function CourseLayout({
 	// Initiate the data fetch for the course, which is needed by the sidebar.
 	// We do not await it here; the promise is passed down.
 	const courseDataPromise: Promise<CoursePageData> = normalizedParamsPromise.then((resolvedParams) =>
-		fetchCoursePageData(resolvedParams, { skip: { questions: true } })
+		fetchCoursePageData(resolvedParams, { skipQuestions: true })
 	)
 
 	return (

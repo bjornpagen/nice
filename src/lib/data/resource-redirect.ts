@@ -1,182 +1,179 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import {
-	getAllComponentResources,
-	getAllCourses,
-	getCourseComponentsByCourseId,
+	getComponentResourcesByResourceId,
+	getCourse,
+	getCourseComponentsBySourcedId,
+	getCourseResourceBundle,
+	getCourseResourceBundleLookups,
 	getResourcesBySlugAndType
 } from "@/lib/data/fetchers/oneroster"
 import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+import type { CourseMetadata } from "@/lib/metadata/oneroster"
+import type { CourseComponentRead } from "@/lib/oneroster"
 import { assertNoEncodedColons } from "@/lib/utils"
 
 type ResourceType = "article" | "exercise" | "video"
 
-/**
- * Finds the full path for a resource given its slug and type
- * This implementation uses OneRoster data instead of database queries
- */
 export async function findResourcePath(slug: string, type: ResourceType): Promise<string | null> {
-	logger.info("finding resource path", { slug, type })
-
-	// Defensive check: middleware should have normalized URLs
+	logger.info("resource redirect: locating resource", { slug, type })
 	assertNoEncodedColons(slug, "findResourcePath slug parameter")
 
-	// Step 1: Find the resource by slug and type. Pass activityType so fetcher returns
-	// either interactive or qti forms for assessments/exercises.
-	let khanActivityType: "Article" | "Video" | "Exercise"
-	if (type === "article") khanActivityType = "Article"
-	else if (type === "video") khanActivityType = "Video"
-	else khanActivityType = "Exercise"
-	const resourcesResult = await errors.try(getResourcesBySlugAndType(slug, "interactive", khanActivityType))
-	if (resourcesResult.error) {
-		logger.error("failed to find resource by slug", { slug, type, error: resourcesResult.error })
+	const activityType = type === "article" ? "Article" : type === "video" ? "Video" : "Exercise"
+
+	const resourceResult = await errors.try(getResourcesBySlugAndType(slug, "interactive", activityType))
+	if (resourceResult.error) {
+		logger.error("resource redirect: failed to load resource by slug", {
+			slug,
+			type,
+			error: resourceResult.error
+		})
 		return null
 	}
 
-	// Filter by activityType
-	let resource = null
-	if (type === "exercise") {
-		// Filter to only exercises
-		for (const r of resourcesResult.data) {
-			const metadataResult = ResourceMetadataSchema.safeParse(r.metadata)
-			if (metadataResult.success && metadataResult.data.khanActivityType === "Exercise") {
-				resource = r
-				break
-			}
-		}
-	} else if (type === "article") {
-		// Filter to only articles
-		for (const r of resourcesResult.data) {
-			const metadataResult = ResourceMetadataSchema.safeParse(r.metadata)
-			if (metadataResult.success && metadataResult.data.khanActivityType === "Article") {
-				resource = r
-				break
-			}
-		}
-	} else {
-		// Filter to only videos
-		for (const r of resourcesResult.data) {
-			const metadataResult = ResourceMetadataSchema.safeParse(r.metadata)
-			if (metadataResult.success && metadataResult.data.khanActivityType === "Video") {
-				resource = r
-				break
-			}
-		}
-	}
+	const resource = resourceResult.data.find((candidate) => {
+		const metadata = ResourceMetadataSchema.safeParse(candidate.metadata)
+		return metadata.success && metadata.data.khanActivityType === activityType
+	})
 
 	if (!resource) {
-		logger.warn("resource not found", { slug, type })
+		logger.warn("resource redirect: resource not found for slug", { slug, type })
 		return null
 	}
 
-	// Validate resource metadata
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
-		logger.error("invalid resource metadata", {
+		logger.error("resource redirect: invalid resource metadata", {
 			resourceSourcedId: resource.sourcedId,
 			error: resourceMetadataResult.error
 		})
 		return null
 	}
+	const resourceMetadata = resourceMetadataResult.data
 
-	// Step 2: Find the ComponentResource link to get the component (lesson) that contains this resource
-	const componentResourcesResult = await errors.try(getAllComponentResources())
-	if (componentResourcesResult.error) {
-		logger.error("failed to fetch component resources", { error: componentResourcesResult.error })
+	const componentResources = await getComponentResourcesByResourceId(resource.sourcedId)
+	if (componentResources.length === 0) {
+		logger.warn("resource redirect: no component resources for resource", { resourceSourcedId: resource.sourcedId })
 		return null
 	}
 
-	const componentResource = componentResourcesResult.data.find((cr) => cr.resource.sourcedId === resource.sourcedId)
+	const bundleCache = new Map<string, Awaited<ReturnType<typeof getCourseResourceBundle>>>()
+	const componentCache = new Map<string, CourseComponentRead>()
+	const courseMetadataCache = new Map<string, CourseMetadata>()
 
-	if (!componentResource) {
-		logger.error("component resource link not found", { resourceSourcedId: resource.sourcedId })
-		return null
-	}
+	for (const componentResource of componentResources) {
+		const componentId = componentResource.courseComponent.sourcedId
+		let component = componentCache.get(componentId)
+		if (!component) {
+			const componentResult = await errors.try(getCourseComponentsBySourcedId(componentId))
+			if (componentResult.error) {
+				logger.error("resource redirect: failed to load component", {
+					componentId,
+					error: componentResult.error
+				})
+				continue
+			}
+			component = componentResult.data[0]
+			if (!component) {
+				logger.warn("resource redirect: component not found for component resource", { componentId })
+				continue
+			}
+			componentCache.set(componentId, component)
+		}
 
-	const componentSourcedId = componentResource.courseComponent.sourcedId
-
-	// Step 3: Get all courses to search through them
-	const coursesResult = await errors.try(getAllCourses())
-	if (coursesResult.error) {
-		logger.error("failed to fetch courses", { error: coursesResult.error })
-		return null
-	}
-
-	// Step 4: For each course, get its components and check if our component is in there
-	for (const course of coursesResult.data) {
-		const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
-		if (!courseMetadataResult.success) {
-			logger.debug("skipping course with invalid metadata", { courseSourcedId: course.sourcedId })
+		const courseId = component.course?.sourcedId
+		if (!courseId) {
+			logger.error("resource redirect: component missing course reference", { componentId })
 			continue
 		}
 
-		// Get all components for this course
-		const componentsResult = await errors.try(getCourseComponentsByCourseId(course.sourcedId))
-		if (componentsResult.error) {
-			logger.debug("failed to get components for course", { courseSourcedId: course.sourcedId })
-			continue
+		let bundle = bundleCache.get(courseId)
+		if (!bundle) {
+			bundle = await getCourseResourceBundle(courseId)
+			bundleCache.set(courseId, bundle)
 		}
 
-		// Check if our component is in this course
-		const lessonComponent = componentsResult.data.find((c) => c.sourcedId === componentSourcedId)
-		if (!lessonComponent) {
-			continue
-		}
-
-		// Found the lesson! Now validate its metadata
-		const lessonMetadataResult = ComponentMetadataSchema.safeParse(lessonComponent.metadata)
-		if (!lessonMetadataResult.success) {
-			logger.error("invalid lesson metadata", {
-				lessonSourcedId: lessonComponent.sourcedId,
-				error: lessonMetadataResult.error
+		const lookups = getCourseResourceBundleLookups(bundle)
+		const bundleComponent = lookups.courseComponentsById.get(componentId)
+		if (!bundleComponent) {
+			logger.warn("resource redirect: component not present in course bundle", {
+				componentId,
+				courseId: bundle.courseId
 			})
-			return null
+			continue
 		}
 
-		// Find the parent unit
-		const unitSourcedId = lessonComponent.parent?.sourcedId
-		if (!unitSourcedId) {
-			logger.error("lesson has no parent unit", { lessonSourcedId: lessonComponent.sourcedId })
-			return null
+		if (!bundleComponent.parent?.sourcedId) {
+			logger.error("resource redirect: component missing parent", {
+				componentId,
+				courseId: bundle.courseId
+			})
+			continue
 		}
 
-		const unitComponent = componentsResult.data.find((c) => c.sourcedId === unitSourcedId)
+		const unitComponent = lookups.courseComponentsById.get(bundleComponent.parent.sourcedId)
 		if (!unitComponent) {
-			logger.error("unit component not found", { unitSourcedId })
-			return null
-		}
-
-		// Validate unit metadata
-		const unitMetadataResult = ComponentMetadataSchema.safeParse(unitComponent.metadata)
-		if (!unitMetadataResult.success) {
-			logger.error("invalid unit metadata", {
-				unitSourcedId,
-				error: unitMetadataResult.error
+			logger.error("resource redirect: unit component missing in bundle", {
+				unitComponentId: bundleComponent.parent.sourcedId,
+				courseId: bundle.courseId
 			})
-			return null
+			continue
 		}
 
-		// Build the path
-		let pathSegment: string
-		switch (type) {
-			case "article":
-				pathSegment = "a"
-				break
-			case "exercise":
-				pathSegment = "e"
-				break
-			case "video":
-				pathSegment = "v"
-				break
+		const lessonMetaResult = ComponentMetadataSchema.safeParse(bundleComponent.metadata)
+		if (!lessonMetaResult.success) {
+			logger.error("resource redirect: invalid lesson metadata", {
+				componentId,
+				error: lessonMetaResult.error
+			})
+			continue
 		}
 
-		const path = `/${courseMetadataResult.data.khanSubjectSlug}/${courseMetadataResult.data.khanSlug}/${unitMetadataResult.data.khanSlug}/${lessonMetadataResult.data.khanSlug}/${pathSegment}/${resourceMetadataResult.data.khanSlug}`
+		const unitMetaResult = ComponentMetadataSchema.safeParse(unitComponent.metadata)
+		if (!unitMetaResult.success) {
+			logger.error("resource redirect: invalid unit metadata", {
+				unitComponentId: unitComponent.sourcedId,
+				error: unitMetaResult.error
+			})
+			continue
+		}
 
-		logger.info("found resource path", { slug, type, path })
+		let courseMetadata = courseMetadataCache.get(courseId)
+		if (!courseMetadata) {
+			const courseResult = await errors.try(getCourse(courseId))
+			if (courseResult.error || !courseResult.data) {
+				logger.error("resource redirect: failed to load course metadata", {
+					courseId,
+					error: courseResult.error
+				})
+				continue
+			}
+			const parsed = CourseMetadataSchema.safeParse(courseResult.data.metadata)
+			if (!parsed.success) {
+				logger.error("resource redirect: invalid course metadata", {
+					courseId,
+					error: parsed.error
+				})
+				continue
+			}
+			courseMetadata = parsed.data
+			courseMetadataCache.set(courseId, courseMetadata)
+		}
+
+		const pathSegment = type === "article" ? "a" : type === "video" ? "v" : "e"
+		const path = `/${courseMetadata.khanSubjectSlug}/${courseMetadata.khanSlug}/${unitMetaResult.data.khanSlug}/${lessonMetaResult.data.khanSlug}/${pathSegment}/${resourceMetadata.khanSlug}`
+
+		logger.info("resource redirect: resolved resource path", {
+			slug,
+			type,
+			courseId,
+			path
+		})
 		return path
 	}
 
-	// If we've gone through all courses and didn't find the component, something is wrong
-	logger.error("could not find course containing component", { componentSourcedId })
+	logger.warn("resource redirect: no matching course found for resource", {
+		resourceSourcedId: resource.sourcedId
+	})
 	return null
 }

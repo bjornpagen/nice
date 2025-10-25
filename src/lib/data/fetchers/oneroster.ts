@@ -1,9 +1,10 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { redisCache } from "@/lib/cache"
+import { createCacheKey, invalidateCache, redisCache } from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
 import { createPrefixFilter } from "@/lib/filter"
-import type { ClassReadSchemaType } from "@/lib/oneroster"
+import { ResourceMetadataSchema, type ResourceMetadata } from "@/lib/metadata/oneroster"
+import type { ClassReadSchemaType, ComponentResourceRead, CourseComponentRead, Resource } from "@/lib/oneroster"
 
 /**
  * ⚠️ CRITICAL: OneRoster API Soft Delete Behavior
@@ -39,6 +40,55 @@ import type { ClassReadSchemaType } from "@/lib/oneroster"
 const NICE_PREFIX_FILTER = createPrefixFilter("nice_")
 function hasMetaKeys(x: unknown): x is { type?: unknown; subType?: unknown; khanActivityType?: unknown; xp?: unknown } {
 	return typeof x === "object" && x !== null
+}
+
+export interface CourseResourceBundle {
+	courseId: string
+	fetchedAt: string
+	componentCount: number
+	resourceCount: number
+	courseComponents: CourseComponentRead[]
+	componentResources: ComponentResourceRead[]
+	resources: Array<Resource & { metadata: ResourceMetadata }>
+}
+
+type BundleLookups = {
+	courseComponentsById: Map<string, CourseComponentRead>
+	componentResourcesByComponentId: Map<string, ComponentResourceRead[]>
+	resourcesById: Map<string, Resource & { metadata: ResourceMetadata }>
+}
+
+const bundleLookups = new WeakMap<CourseResourceBundle, BundleLookups>()
+
+function buildBundleLookups(bundle: CourseResourceBundle): BundleLookups {
+	const courseComponentsById = new Map<string, CourseComponentRead>()
+	for (const component of bundle.courseComponents) {
+		courseComponentsById.set(component.sourcedId, component)
+	}
+
+	const componentResourcesByComponentId = new Map<string, ComponentResourceRead[]>()
+	for (const componentResource of bundle.componentResources) {
+		const componentId = componentResource.courseComponent.sourcedId
+		const list = componentResourcesByComponentId.get(componentId)
+		if (list) list.push(componentResource)
+		else componentResourcesByComponentId.set(componentId, [componentResource])
+	}
+
+	const resourcesById = new Map<string, Resource & { metadata: ResourceMetadata }>()
+	for (const resource of bundle.resources) {
+		resourcesById.set(resource.sourcedId, resource)
+	}
+
+	return { courseComponentsById, componentResourcesByComponentId, resourcesById }
+}
+
+export function getCourseResourceBundleLookups(bundle: CourseResourceBundle): BundleLookups {
+	let lookups = bundleLookups.get(bundle)
+	if (!lookups) {
+		lookups = buildBundleLookups(bundle)
+		bundleLookups.set(bundle, lookups)
+	}
+	return lookups
 }
 
 // ⚠️ IMPORTANT: OneRoster API Filtering Limitation
@@ -226,8 +276,9 @@ export async function getUnitsForCourses(courseSourcedIds: string[]) {
 	return redisCache(operation, ["oneroster-getUnitsForCourses", ...courseSourcedIds], { revalidate: 3600 * 24 }) // 24-hour cache
 }
 
-export async function getAllResources() {
-	logger.info("getAllResources called")
+/** ⚠️ Course Builder only. Do not call from user flows. */
+export async function getAllResourcesForCourseBuilder() {
+	logger.info("getAllResourcesForCourseBuilder called")
 	const operation = async () => {
 		// Use prefix filter to leverage btree indexes for faster queries
 		// Filter by status='active' client-side due to OneRoster API AND limitation
@@ -299,8 +350,9 @@ export async function getResourcesBySlugAndType(
 
 // Removed legacy getResourceByCourseAndSlug (qti-only) – not needed in the interactive-only model
 
-export async function getAllComponentResources() {
-	logger.info("getAllComponentResources called")
+/** ⚠️ Course Builder only. Do not call from user flows. */
+export async function getAllComponentResourcesForCourseBuilder() {
+	logger.info("getAllComponentResourcesForCourseBuilder called")
 	const operation = async () => {
 		// Use prefix filter to leverage btree indexes for faster queries
 		// Filter by status='active' client-side due to OneRoster API AND limitation
@@ -390,15 +442,15 @@ export async function getComponentResourcesForCourse(courseSourcedId: string) {
 		if (courseComponents.length === 0) {
 			return []
 		}
-		
+
 		// Get all component IDs
 		const componentIds = courseComponents.map(c => c.sourcedId)
-		
+
 		// Fetch component resources using the @ operator for IN clause
 		const componentResources = await oneroster.getAllComponentResources({
 			filter: `courseComponent.sourcedId@'${componentIds.join(",")}' AND status='active'`
 		})
-		
+
 		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
 		return ensureActiveStatus(componentResources)
 	}
@@ -414,10 +466,10 @@ export async function getComponentResourceForResourceInCourse(courseSourcedId: s
 	const operation = async () => {
 		// Get all component resources for the course
 		const allComponentResources = await getComponentResourcesForCourse(courseSourcedId)
-		
+
 		// Filter to find matches for this resource
 		const matches = allComponentResources.filter(cr => cr.resource.sourcedId === resourceSourcedId)
-		
+
 		if (matches.length === 0) {
 			logger.error("no component resource found for resource in course", {
 				courseSourcedId,
@@ -426,7 +478,7 @@ export async function getComponentResourceForResourceInCourse(courseSourcedId: s
 			})
 			throw errors.new("component resource not found for resource in course")
 		}
-		
+
 		if (matches.length > 1) {
 			logger.error("multiple component resources found for resource in course", {
 				courseSourcedId,
@@ -440,10 +492,127 @@ export async function getComponentResourceForResourceInCourse(courseSourcedId: s
 			})
 			throw errors.new("ambiguous component resource for resource in course")
 		}
-		
+
 		return matches[0]
 	}
 	return redisCache(operation, ["oneroster-getComponentResourceForResourceInCourse", courseSourcedId, resourceSourcedId], { revalidate: 3600 * 24 }) // 24-hour cache
+}
+
+export async function getResourcesForCourseCached(courseSourcedId: string) {
+	if (!courseSourcedId) {
+		logger.error("getResourcesForCourseCached: courseSourcedId required")
+		throw errors.new("getResourcesForCourseCached: courseSourcedId required")
+	}
+	return redisCache(
+		async () => ensureActiveStatus(await oneroster.getResourcesForCourse(courseSourcedId)),
+		["oneroster-getResourcesForCourse", courseSourcedId],
+		{ revalidate: 3600 }
+	)
+}
+
+export async function getComponentResourcesByResourceId(resourceSourcedId: string) {
+	if (!resourceSourcedId) {
+		logger.error("getComponentResourcesByResourceId: resourceSourcedId required")
+		throw errors.new("getComponentResourcesByResourceId: resourceSourcedId required")
+	}
+	return redisCache(
+		async () =>
+			ensureActiveStatus(
+				await oneroster.getAllComponentResources({
+					filter: `resource.sourcedId='${resourceSourcedId}' AND status='active'`
+				})
+			),
+		["oneroster-getComponentResourcesByResourceId", resourceSourcedId],
+		{ revalidate: 3600 }
+	)
+}
+
+export async function getCourseResourceBundle(courseSourcedId: string): Promise<CourseResourceBundle> {
+	if (!courseSourcedId) {
+		logger.error("getCourseResourceBundle: courseSourcedId required")
+		throw errors.new("getCourseResourceBundle: courseSourcedId required")
+	}
+
+	return redisCache(
+		async () => {
+			const components = await getCourseComponentsByCourseId(courseSourcedId)
+			if (components.length === 0) {
+				logger.error("getCourseResourceBundle: course has no components", { courseSourcedId })
+				throw errors.new("getCourseResourceBundle: course has no components")
+			}
+
+			const componentResources = await getComponentResourcesForCourse(courseSourcedId)
+			if (componentResources.length === 0) {
+				logger.error("getCourseResourceBundle: component resources missing", { courseSourcedId })
+				throw errors.new("getCourseResourceBundle: component resources missing")
+			}
+
+			const resources = await getResourcesForCourseCached(courseSourcedId)
+			if (resources.length === 0) {
+				logger.error("getCourseResourceBundle: resources missing", { courseSourcedId })
+				throw errors.new("getCourseResourceBundle: resources missing")
+			}
+
+			const validated = resources.map((resource) => {
+				const parsed = ResourceMetadataSchema.safeParse(resource.metadata)
+				if (!parsed.success) {
+					logger.error("getCourseResourceBundle: invalid resource metadata", {
+						courseSourcedId,
+						resourceSourcedId: resource.sourcedId,
+						error: parsed.error
+					})
+					throw errors.wrap(parsed.error, "invalid resource metadata")
+				}
+				return { ...resource, metadata: parsed.data }
+			})
+
+			const bundle: CourseResourceBundle = {
+				courseId: courseSourcedId,
+				fetchedAt: new Date().toISOString(),
+				componentCount: componentResources.length,
+				resourceCount: validated.length,
+				courseComponents: components,
+				componentResources,
+				resources: validated
+			}
+
+			bundleLookups.set(bundle, buildBundleLookups(bundle))
+			return bundle
+		},
+		["oneroster-course-bundle", courseSourcedId],
+		{ revalidate: 3600 }
+	)
+}
+
+export function findLessonResources(bundle: CourseResourceBundle, lessonId: string) {
+	const matches = bundle.componentResources.filter((cr) => cr.courseComponent.sourcedId === lessonId)
+	if (matches.length === 0) {
+		logger.error("findLessonResources: no matches", { courseId: bundle.courseId, lessonId })
+		throw errors.new("findLessonResources: no matches")
+	}
+	return matches
+}
+
+export function findResourceById(bundle: CourseResourceBundle, resourceId: string) {
+	const resource = getCourseResourceBundleLookups(bundle).resourcesById.get(resourceId)
+	if (!resource) {
+		logger.error("findResourceById: resource not found", { courseId: bundle.courseId, resourceId })
+		throw errors.new("findResourceById: resource not found")
+	}
+	return resource
+}
+
+export async function invalidateCourseResourceBundle(courseSourcedId: string) {
+	if (!courseSourcedId) {
+		logger.warn("invalidateCourseResourceBundle called without courseSourcedId")
+		return
+	}
+
+	await invalidateCache([
+		createCacheKey(["oneroster-course-bundle", courseSourcedId]),
+		createCacheKey(["oneroster-getComponentResourcesForCourse", courseSourcedId]),
+		createCacheKey(["oneroster-getResourcesForCourse", courseSourcedId])
+	])
 }
 
 /**
@@ -455,16 +624,16 @@ export async function getResourcesByIds(resourceIds: string[]) {
 	if (resourceIds.length === 0) {
 		return []
 	}
-	
+
 	const operation = async () => {
 		const resources = await oneroster.getAllResources({
 			filter: `sourcedId@'${resourceIds.join(",")}' AND status='active'`
 		})
-		
+
 		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
 		return ensureActiveStatus(resources)
 	}
-	
+
 	// Create a stable cache key by sorting IDs
 	const sortedIds = [...resourceIds].sort()
 	return redisCache(operation, ["oneroster-getResourcesByIds", ...sortedIds], { revalidate: 3600 * 24 }) // 24-hour cache
@@ -479,16 +648,16 @@ export async function getComponentResourcesByLessonIds(lessonIds: string[]) {
 	if (lessonIds.length === 0) {
 		return []
 	}
-	
+
 	const operation = async () => {
 		const componentResources = await oneroster.getAllComponentResources({
 			filter: `courseComponent.sourcedId@'${lessonIds.join(",")}' AND status='active'`
 		})
-		
+
 		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
 		return ensureActiveStatus(componentResources)
 	}
-	
+
 	// Create a stable cache key by sorting IDs
 	const sortedIds = [...lessonIds].sort()
 	return redisCache(operation, ["oneroster-getComponentResourcesByLessonIds", ...sortedIds], { revalidate: 3600 * 24 }) // 24-hour cache
@@ -517,4 +686,14 @@ export async function getResult(sourcedId: string) {
     logger.info("getResult called", { sourcedId })
     // Do not cache writes/read-after-write; return raw client result
     return oneroster.getResult(sourcedId)
+}
+
+export type CourseResourceBundleWireFormat = {
+	courseId: string
+	fetchedAt: string
+	componentCount: number
+	resourceCount: number
+	courseComponents: CourseComponentRead[]
+	componentResources: ComponentResourceRead[]
+	resources: Array<Resource & { metadata: ResourceMetadata }>
 }

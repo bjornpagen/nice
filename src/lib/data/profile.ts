@@ -3,7 +3,8 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { oneroster } from "@/lib/clients"
-import { getActiveEnrollmentsForUser, getClass, getCourse, getUnitsForCourses } from "@/lib/data/fetchers/oneroster"
+import { getActiveEnrollmentsForUser, getClass, getCourse } from "@/lib/data/fetchers/oneroster"
+import { fetchCoursePageData } from "@/lib/data/course"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import type { Lesson, ProfileCourse, Quiz, Unit, UnitTest } from "@/lib/types/domain"
@@ -19,15 +20,6 @@ export interface UnitProficiency {
 	proficientExercises: number
 	totalExercises: number
 }
-
-function removeNiceAcademyPrefix(title: string): string {
-	const prefix = "Nice Academy - "
-	if (title.startsWith(prefix)) {
-		return title.substring(prefix.length).trim()
-	}
-	return title
-}
-
 /**
  * Deprecated: Caliper-based XP aggregation. Kept temporarily for reference.
  */
@@ -162,77 +154,6 @@ async function fetchCourseEarnedXPFromResults(userSourcedId: string, courseSourc
 	logger.debug("calculated earned XP from results", { userSourcedId, courseSourcedId, totalEarnedXP })
 
 	return totalEarnedXP
-}
-
-/**
- * Calculates total possible XP for a course by fetching from our local database
- * Uses the same XP calculation logic as fetchCoursePageData
- */
-async function fetchCourseTotalXP(courseSourcedId: string): Promise<number> {
-	logger.debug("calculating total XP for course from local database", { courseSourcedId })
-
-	// Import the course data fetching function
-	const { fetchCoursePageData } = await import("@/lib/data/course")
-	const { CourseMetadataSchema } = await import("@/lib/metadata/oneroster")
-	const { getCourse } = await import("@/lib/data/fetchers/oneroster")
-
-	// First get the course metadata to extract the subject and course slugs
-	const courseResult = await errors.try(getCourse(courseSourcedId))
-	if (courseResult.error) {
-		logger.error("failed to fetch course metadata for XP calculation", {
-			courseSourcedId,
-			error: courseResult.error
-		})
-		return 0
-	}
-
-	const course = courseResult.data
-	if (!course) {
-		logger.error("course not found for XP calculation", { courseSourcedId })
-		return 0
-	}
-
-	// Validate course metadata with Zod
-	const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
-	if (!courseMetadataResult.success) {
-		logger.error("invalid course metadata for XP calculation", {
-			courseSourcedId,
-			error: courseMetadataResult.error
-		})
-		return 0
-	}
-	const courseMetadata = courseMetadataResult.data
-
-	// Use the course metadata to fetch detailed course data with XP
-	const coursePageDataResult = await errors.try(
-		fetchCoursePageData(
-			{
-				subject: courseMetadata.khanSubjectSlug,
-				course: courseMetadata.khanSlug
-			},
-			{ skip: { questions: true } }
-		)
-	)
-	if (coursePageDataResult.error) {
-		logger.error("failed to fetch course page data for XP calculation", {
-			courseSourcedId,
-			subject: courseMetadata.khanSubjectSlug,
-			courseSlug: courseMetadata.khanSlug,
-			error: coursePageDataResult.error
-		})
-		return 0
-	}
-
-	const totalXP = coursePageDataResult.data.totalXP
-
-	logger.debug("calculated total XP for course from local database", {
-		courseSourcedId,
-		totalXP,
-		subject: courseMetadata.khanSubjectSlug,
-		courseSlug: courseMetadata.khanSlug
-	})
-
-	return totalXP
 }
 
 /**
@@ -408,7 +329,6 @@ async function fetchUnitProficiencies(
 }
 
 export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<ProfileCourse[]> {
-	// Fetch active enrollments for the user
 	const enrollmentsResult = await errors.try(getActiveEnrollmentsForUser(userSourcedId))
 	if (enrollmentsResult.error) {
 		logger.error("failed to fetch user enrollments", { error: enrollmentsResult.error, userSourcedId })
@@ -419,341 +339,63 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 		return []
 	}
 
-	// Extract unique class IDs from enrollments
 	const classSourcedIds = [...new Set(enrollmentsResult.data.map((enrollment) => enrollment.class.sourcedId))]
+	const classResults = await Promise.all(
+		classSourcedIds.map(async (classSourcedId) => {
+			const classResult = await errors.try(getClass(classSourcedId))
+			if (classResult.error) {
+				logger.error("failed to fetch class details", { error: classResult.error, classSourcedId })
+				return null
+			}
+			return classResult.data
+		})
+	)
 
-	const classPromises = classSourcedIds.map(async (classSourcedId) => {
-		const classResult = await errors.try(getClass(classSourcedId))
-		if (classResult.error) {
-			logger.error("failed to fetch class details", { error: classResult.error, classSourcedId })
-			return null
-		}
-		return classResult.data
-	})
-
-	const classResults = await Promise.all(classPromises)
 	const classes = classResults.filter((c): c is ClassReadSchemaType => c !== null)
+	const courseSourcedIds = [...new Set(classes.map((cls) => cls.course.sourcedId))]
 
-	const courseSourcedIds = [...new Set(classes.map((c) => c.course.sourcedId))]
-	const unitsByCourseSourcedId = new Map<string, Unit[]>()
+	const profileCourses: ProfileCourse[] = []
 
-	if (courseSourcedIds.length > 0) {
-		// Fetch all components and resources for building unit hierarchy
-		const [allUnitsResult, allResourcesResult] = await Promise.all([
-			errors.try(getUnitsForCourses(courseSourcedIds)),
-			import("@/lib/data/fetchers/oneroster").then(({ getAllResources }) => errors.try(getAllResources()))
-		])
-
-		if (allUnitsResult.error) {
-			logger.error("failed to fetch units for enrolled courses", { error: allUnitsResult.error, courseSourcedIds })
-		} else if (allResourcesResult.error) {
-			logger.error("failed to fetch resources for enrolled courses", { error: allResourcesResult.error })
-		} else {
-			// Import required schemas and functions
-			const { ComponentMetadataSchema, ResourceMetadataSchema } = await import("@/lib/metadata/oneroster")
-			const { getAllComponentResources } = await import("@/lib/data/fetchers/oneroster")
-
-			const allComponents = allUnitsResult.data
-			const allResources = allResourcesResult.data
-
-			// Get component-resource mappings
-			const componentResourcesResult = await errors.try(getAllComponentResources())
-			if (componentResourcesResult.error) {
-				logger.error("failed to fetch component resources", { error: componentResourcesResult.error })
-				throw errors.wrap(componentResourcesResult.error, "component resources unavailable")
-			}
-			const componentResources = componentResourcesResult.data
-
-			// Process each course separately
-			for (const courseSourcedId of courseSourcedIds) {
-				const courseComponents = allComponents.filter((c) => c.course.sourcedId === courseSourcedId)
-				const courseComponentResources = componentResources.filter((cr) =>
-					courseComponents.some((c) => c.sourcedId === cr.courseComponent.sourcedId)
-				)
-
-				// Build units and lessons maps for this course
-				const units: Unit[] = []
-
-				// Temporary interfaces for building hierarchy with sortOrder
-				interface TempExercise {
-					type: "Exercise"
-					id: string
-					title: string
-					path: string
-					sortOrder: number
-				}
-
-				interface TempLesson extends Omit<Lesson, "children"> {
-					children: TempExercise[]
-					sortOrder?: number
-				}
-
-				interface TempAssessment {
-					type: "Quiz" | "UnitTest"
-					id: string
-					title: string
-					path: string
-					sortOrder: number
-				}
-
-				const lessonsByUnitSourcedId = new Map<string, TempLesson[]>()
-
-				// First pass: identify units and lessons
-				for (const component of courseComponents) {
-					const componentMetadataResult = ComponentMetadataSchema.safeParse(component.metadata)
-					if (!componentMetadataResult.success) {
-						logger.error("invalid component metadata for enrolled course", {
-							componentSourcedId: component.sourcedId,
-							error: componentMetadataResult.error
-						})
-						continue
-					}
-					const componentMetadata = componentMetadataResult.data
-
-					if (!component.parent) {
-						// This is a unit - skip course challenges
-						if (componentMetadata.khanSlug === "course-challenge") {
-							continue
-						}
-
-						units.push({
-							id: component.sourcedId,
-							title: component.title,
-							path: "", // Will be set later
-							ordering: component.sortOrder,
-							description: componentMetadata.khanDescription,
-							slug: componentMetadata.khanSlug,
-							children: [] // Will be populated
-						})
-					} else {
-						// This is a lesson
-						const parentSourcedId = component.parent.sourcedId
-						if (!lessonsByUnitSourcedId.has(parentSourcedId)) {
-							lessonsByUnitSourcedId.set(parentSourcedId, [])
-						}
-
-						lessonsByUnitSourcedId.get(parentSourcedId)?.push({
-							type: "Lesson",
-							id: component.sourcedId,
-							componentResourceSourcedId: component.sourcedId, // For lessons in profile, use component sourcedId
-							slug: componentMetadata.khanSlug,
-							title: component.title,
-							description: componentMetadata.khanDescription,
-							path: "", // Will be set later
-							children: [], // Will be populated with exercises
-							ordering: 0, // Default ordering value
-							xp: 0
-						})
-					}
-				}
-
-				// Second pass: populate lessons with exercises and unit-level assessments
-				for (const unit of units) {
-					const unitLessons = lessonsByUnitSourcedId.get(unit.id) || []
-					const unitAssessments: TempAssessment[] = []
-
-					// Find resources for this unit, its lessons, and its child components (quizzes/tests)
-					// Build a set of all child component IDs under this unit (lessons and assessment components)
-					const unitChildComponentIds = new Set<string>([
-						...unitLessons.map((l) => l.id),
-						...courseComponents.filter((c) => c.parent && c.parent.sourcedId === unit.id).map((c) => c.sourcedId)
-					])
-
-					const unitComponentResources = courseComponentResources.filter((cr) => {
-						const componentId = cr.courseComponent.sourcedId
-						return componentId === unit.id || unitChildComponentIds.has(componentId)
-					})
-
-					// Process each resource
-					for (const componentResource of unitComponentResources) {
-						const resource = allResources.find((r) => r.sourcedId === componentResource.resource.sourcedId)
-						if (!resource) continue
-
-						const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
-						if (!resourceMetadataResult.success) continue
-
-						const resourceMetadata = resourceMetadataResult.data
-
-						// Check if this is an assessable resource (exercise, quiz, or test)
-						if (resourceMetadata.khanActivityType === "UnitTest" || resourceMetadata.khanActivityType === "Quiz") {
-							// With the new structure, quizzes/tests live under their own components (children of the unit)
-							// Since unitComponentResources already scopes to the unit and its children, we can add directly
-							if (resourceMetadata.khanActivityType === "UnitTest") {
-								unitAssessments.push({
-									type: "UnitTest",
-									id: resource.sourcedId,
-									title: resource.title,
-									path: "", // Will be set later
-									sortOrder: componentResource.sortOrder
-								})
-							} else if (resourceMetadata.khanActivityType === "Quiz") {
-								unitAssessments.push({
-									type: "Quiz",
-									id: resource.sourcedId,
-									title: resource.title,
-									path: "", // Will be set later
-									sortOrder: componentResource.sortOrder
-								})
-							}
-						} else if (resourceMetadata.khanActivityType === "Exercise") {
-							// This is a lesson-level exercise
-							const lesson = unitLessons.find((l) => l.id === componentResource.courseComponent.sourcedId)
-							if (lesson) {
-								// Only exercises count as assessable within lessons
-								lesson.children.push({
-									type: "Exercise",
-									id: resource.sourcedId,
-									title: resource.title,
-									path: "", // Will be set later
-									sortOrder: componentResource.sortOrder
-								})
-							}
-						}
-					}
-
-					// Sort lesson children by sortOrder
-					for (const lesson of unitLessons) {
-						lesson.children.sort((a, b) => a.sortOrder - b.sortOrder)
-					}
-
-					// Combine lessons and assessments, sort by sortOrder
-					const allUnitChildren = [
-						...unitLessons.map((lesson) => ({ ...lesson, sortOrder: lesson.sortOrder || 0 })),
-						...unitAssessments
-					].sort((a, b) => a.sortOrder - b.sortOrder)
-
-					// Remove sortOrder and convert to proper domain types
-					unit.children = allUnitChildren.map(({ sortOrder, ...child }) => {
-						if (child.type === "Lesson") {
-							const lesson: Lesson = {
-								type: "Lesson",
-								id: child.id,
-								componentResourceSourcedId: child.id, // For profile lessons, use lesson id
-								slug: child.slug,
-								title: child.title,
-								description: child.description,
-								path: child.path,
-								ordering: 0, // Default ordering value
-								children: child.children.map(({ sortOrder: _, ...exercise }) => ({
-									type: exercise.type,
-									id: exercise.id,
-									componentResourceSourcedId: exercise.id, // For profile exercises, use exercise id
-									title: exercise.title,
-									path: exercise.path,
-									slug: "", // Not needed for proficiency calculation
-									description: "",
-									totalQuestions: 5, // Default value
-									questionsToPass: 4, // Default value
-									ordering: 0, // Default ordering value
-									xp: 0
-								})),
-								xp: child.xp
-							}
-							return lesson
-						}
-						if (child.type === "Quiz") {
-							const quiz: Quiz = {
-								type: "Quiz",
-								id: child.id,
-								componentResourceSourcedId: child.id, // For profile quizzes, use quiz id
-								title: child.title,
-								path: child.path,
-								slug: "",
-								description: "",
-								questions: [], // Not needed for proficiency calculation
-								ordering: 0, // Default ordering value
-								xp: 0
-							}
-							return quiz
-						}
-
-						// UnitTest case
-						const unitTest: UnitTest = {
-							type: "UnitTest",
-							id: child.id,
-							componentResourceSourcedId: child.id, // For profile unit tests, use test id
-							title: child.title,
-							path: child.path,
-							slug: "",
-							description: "",
-							questions: [], // Not needed for proficiency calculation
-							ordering: 0, // Default ordering value
-							xp: 0
-						}
-						return unitTest
-					})
-				}
-
-				// Sort units by ordering
-				units.sort((a, b) => a.ordering - b.ordering)
-
-				unitsByCourseSourcedId.set(courseSourcedId, units)
-			}
-		}
-	}
-
-	// Map to ProfileCourse format and attach units
-	const courses: ProfileCourse[] = []
-
-	for (const cls of classes) {
-		const courseUnits = unitsByCourseSourcedId.get(cls.course.sourcedId)
-		if (!courseUnits) {
-			logger.error("CRITICAL: No units found for course", {
-				courseSourcedId: cls.course.sourcedId,
-				classSourcedId: cls.sourcedId
-			})
-			throw errors.new("course units: required data missing")
-		}
-
-		// Fetch course metadata for the ProfileCourse
-		const courseResult = await errors.try(getCourse(cls.course.sourcedId))
+	for (const courseSourcedId of courseSourcedIds) {
+		const courseResult = await errors.try(getCourse(courseSourcedId))
 		if (courseResult.error) {
-			logger.error("failed to fetch course metadata", {
-				courseSourcedId: cls.course.sourcedId,
-				error: courseResult.error
-			})
-			continue // Skip this course
+			logger.error("failed to fetch course details", { error: courseResult.error, courseSourcedId })
+			continue
 		}
 
 		const course = courseResult.data
-		if (!course) {
-			logger.error("course data is undefined", { courseSourcedId: cls.course.sourcedId })
-			continue // Skip this course
-		}
+		if (!course) continue
 
-		// Validate course metadata with Zod
 		const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
 		if (!courseMetadataResult.success) {
-			logger.warn("skipping course with invalid metadata for enrolled user", {
-				courseSourcedId: course.sourcedId,
-				userSourcedId,
-				error: courseMetadataResult.error,
-				metadata: course.metadata
+			logger.error("invalid course metadata for profile", {
+				courseSourcedId,
+				error: courseMetadataResult.error
 			})
-			continue // Skip this course instead of throwing
+			continue
 		}
+
 		const courseMetadata = courseMetadataResult.data
+		const coursePageData = await fetchCoursePageData(
+			{ subject: courseMetadata.khanSubjectSlug, course: courseMetadata.khanSlug },
+			{ skipQuestions: true }
+		)
 
-		// Use the actual subject slug from the course metadata
-		const subject = courseMetadata.khanSubjectSlug
-
-		// Now update unit paths with the course slug
-		const unitsWithCorrectPaths = courseUnits.map((unit) => ({
-			...unit,
-			path: `/${subject}/${courseMetadata.khanSlug}/${unit.slug}`
-		}))
-
-		courses.push({
-			id: course.sourcedId,
-			title: removeNiceAcademyPrefix(course.title),
-			description: courseMetadata.khanDescription,
-			path: `/${subject}/${courseMetadata.khanSlug}`, // Construct path from slugs
-			units: unitsWithCorrectPaths
+		profileCourses.push({
+			id: coursePageData.course.id,
+			title: coursePageData.course.title,
+			description: coursePageData.course.description,
+			path: coursePageData.course.path,
+			units: coursePageData.course.units,
+			subject: courseMetadata.khanSubjectSlug,
+			courseSlug: courseMetadata.khanSlug,
+			totalXP: coursePageData.totalXP
 		})
 	}
 
-	return courses
+	return profileCourses
 }
+
 
 export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData> {
 	// dynamic opt-in is handled at the page level
@@ -849,27 +491,24 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 
 	const userCoursesWithXP = await Promise.all(
 		userCourses.map(async (course) => {
-			// Extract course slug from path (e.g., "/math/early-math" -> "early-math")
 			const courseSlug = course.path.split("/").pop()
 			if (!courseSlug) {
 				logger.error("failed to extract course slug from path", {
 					courseId: course.id,
 					coursePath: course.path
 				})
-				return { ...course, earnedXP: 0, totalXP: 0, unitProficiencies: [] }
+				return { ...course, earnedXP: 0, totalXP: course.totalXP ?? 0, unitProficiencies: [] }
 			}
 
-			// Switch to results-based XP aggregation instead of Caliper events.
-			const [earnedXP, totalXP, unitProficiencies] = await Promise.all([
+			const [earnedXP, unitProficiencies] = await Promise.all([
 				fetchCourseEarnedXPFromResults(sourceId, course.id),
-				fetchCourseTotalXP(course.id),
 				fetchUnitProficiencies(sourceId, course)
 			])
 
 			return {
 				...course,
 				earnedXP,
-				totalXP,
+				totalXP: course.totalXP ?? 0,
 				unitProficiencies
 			}
 		})

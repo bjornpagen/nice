@@ -73,7 +73,7 @@ export async function runCourseBuilderWorkflow(input: CourseBuilderApiInput) {
   const aiPlanResult = await errors.try(
     generateCoursePlanFromAi({
       subject: input.subject,
-      caseDetails: caseDetailsResult.data as Array<{ 
+      caseDetails: caseDetailsResult.data as Array<{
         id: string
         humanCodingScheme: string
         fullStatement: string
@@ -130,7 +130,7 @@ export async function runCourseBuilderWorkflow(input: CourseBuilderApiInput) {
   }
 
   // Create resources
-  const createResourcesRes = await errors.try(createResourcesStep(payload.resources))
+  const createResourcesRes = await errors.try(createResourcesStep(payload.resources, [payload.course.sourcedId]))
   if (createResourcesRes.error) {
     logger.error("create resources step failed", { error: createResourcesRes.error })
     throw errors.wrap(createResourcesRes.error, "create resources step")
@@ -162,10 +162,10 @@ export async function runCourseBuilderWorkflow(input: CourseBuilderApiInput) {
 
   // Create a class for the course
   // Add "Nice Academy - " prefix to match course.ts pattern
-  const courseTitle = planValidation.data.title.startsWith("Nice Academy - ") 
-    ? planValidation.data.title 
+  const courseTitle = planValidation.data.title.startsWith("Nice Academy - ")
+    ? planValidation.data.title
     : `Nice Academy - ${planValidation.data.title}`
-  
+
   const classSourcedId = await createClassForCourse({
     courseSourcedId: payload.course.sourcedId,
     courseTitle: courseTitle,

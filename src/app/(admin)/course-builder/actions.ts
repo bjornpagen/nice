@@ -6,9 +6,10 @@ import { z } from "zod"
 import { oneroster, qti } from "@/lib/clients"
 import * as crypto from "node:crypto"
 import { formatResourceTitleForDisplay } from "@/lib/utils/format-resource-title"
-import { getAllResources } from "@/lib/data/fetchers/oneroster"
+import { getAllResources } from "@/lib/data/fetchers/oneroster-course-builder"
 import { extractQtiStimulusBodyContent } from "@/lib/xml-utils"
 import { createCacheKey, invalidateCache } from "@/lib/cache"
+import { invalidateCourseResourceBundle } from "@/lib/data/fetchers/oneroster"
 
 // Constants aligned with existing payload builders
 const ORG_SOURCED_ID = "f251f08b-61de-4ffa-8ff3-3e56e1d75a60"
@@ -180,7 +181,7 @@ export async function buildCoursePayloadAction(input: GenerateCourseInput) {
   // Fetch all original resources to copy metadata
   const allResources = await getAllResources()
   const resourceById = new Map(allResources.map((r) => [r.sourcedId, r]))
-  
+
   // Global dedupe: track original resource ID -> new resource ID mapping
   // Remove this - we don't need global deduplication
   // const originalToNewResourceId = new Map<string, string>()
@@ -243,16 +244,16 @@ export async function buildCoursePayloadAction(input: GenerateCourseInput) {
         const titleTypeKey = `${r.type}|${r.title.trim().toLowerCase()}`
         if (seenOriginalResourceIds.has(r.id) || seenByTitleType.has(titleTypeKey)) {
           // skip duplicate occurrence of the same original resource within this lesson
-          logger.warn("skipping duplicate resource in lesson", { 
-            lessonId: lesson.id, 
-            resourceId: r.id, 
-            title: r.title 
+          logger.warn("skipping duplicate resource in lesson", {
+            lessonId: lesson.id,
+            resourceId: r.id,
+            title: r.title
           })
           continue
         }
         seenOriginalResourceIds.add(r.id)
         seenByTitleType.add(titleTypeKey)
-        
+
         // Always create a new resource for each occurrence
         const rRawId = newId()
         const rSourcedId = ensurePrefixNice(rRawId)
@@ -543,13 +544,21 @@ export async function createCourseStep(courseData: any) {
     ]
     const invalidateResult = await errors.try(invalidateCache(keysToInvalidate))
     if (invalidateResult.error) {
-      logger.warn("failed to invalidate course caches", { 
+      logger.warn("failed to invalidate course caches", {
         error: invalidateResult.error,
-        courseId: courseData.sourcedId 
+        courseId: courseData.sourcedId
       })
     } else {
       logger.info("cache invalidated", { keys: keysToInvalidate.length, step: "createCourse" })
     }
+  }
+
+  const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseData.sourcedId))
+  if (bundleInvalidateResult.error) {
+    logger.warn("failed to invalidate course bundle cache after createCourseStep", {
+      courseId: courseData.sourcedId,
+      error: bundleInvalidateResult.error
+    })
   }
 
   return { success: true }
@@ -560,26 +569,26 @@ export async function createComponentsStep(components: any[]) {
   const created: string[] = []
   const courseSourcedIds = new Set<string>()
   const unitSourcedIds = new Set<string>()
-  
+
   for (const cc of components) {
-    logger.info("creating course component", { 
-      sourcedId: cc.sourcedId, 
+    logger.info("creating course component", {
+      sourcedId: cc.sourcedId,
       title: cc.title,
       parent: cc.parent?.sourcedId || 'none'
     })
     const res = await errors.try(oneroster.createCourseComponent(cc))
     if (res.error) {
-      logger.error("create course component failed", { 
+      logger.error("create course component failed", {
         sourcedId: cc.sourcedId,
-        title: cc.title, 
+        title: cc.title,
         parent: cc.parent?.sourcedId || 'none',
-        error: res.error 
+        error: res.error
       })
       throw errors.wrap(res.error, "create course component")
     }
     created.push(cc.sourcedId)
     logger.info("created course component successfully", { sourcedId: cc.sourcedId, title: cc.title })
-    
+
     // Collect IDs for cache invalidation
     if (cc.course?.sourcedId) {
       courseSourcedIds.add(cc.course.sourcedId)
@@ -589,7 +598,7 @@ export async function createComponentsStep(components: any[]) {
       unitSourcedIds.add(cc.sourcedId)
     }
   }
-  
+
   // Invalidate caches related to course components
   const keysToInvalidate: string[] = []
   for (const courseId of courseSourcedIds) {
@@ -598,7 +607,7 @@ export async function createComponentsStep(components: any[]) {
   for (const unitId of unitSourcedIds) {
     keysToInvalidate.push(createCacheKey(["oneroster-getCourseComponentsByParentId", unitId]))
   }
-  
+
   if (keysToInvalidate.length > 0) {
     const invalidateResult = await errors.try(invalidateCache(keysToInvalidate))
     if (invalidateResult.error) {
@@ -607,27 +616,38 @@ export async function createComponentsStep(components: any[]) {
       logger.info("cache invalidated", { keys: keysToInvalidate.length, step: "createComponents" })
     }
   }
-  
+
+  for (const courseId of courseSourcedIds) {
+    const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseId))
+    if (bundleInvalidateResult.error) {
+      logger.warn("failed to invalidate course bundle cache after createComponentsStep", {
+        courseId,
+        error: bundleInvalidateResult.error
+      })
+    }
+  }
+
   return { count: components.length, created }
 }
 
 // Step 3: Create resources
-export async function createResourcesStep(resources: any[]) {
+export async function createResourcesStep(resources: any[], courseSourcedIds: string[] = []) {
   const slugTypePairs: Array<{ slug: string; type: string }> = []
   const createdResourceIds: string[] = []
-  
+  const affectedCourseIds = new Set(courseSourcedIds)
+
   for (const r of resources) {
     const res = await errors.try(oneroster.createResource(r))
     if (res.error) {
       logger.error("create resource failed", { title: r.title, error: res.error })
       throw errors.wrap(res.error, "create resource")
     }
-    
+
     // Track created resource id
     if (typeof r.sourcedId === "string" && r.sourcedId) {
       createdResourceIds.push(r.sourcedId)
     }
-    
+
     // Collect slug/type pairs for cache invalidation
     const slug = typeof r.metadata?.khanSlug === "string" ? r.metadata.khanSlug : undefined
     const type = typeof r.metadata?.khanActivityType === "string" ? r.metadata.khanActivityType : undefined
@@ -635,28 +655,38 @@ export async function createResourcesStep(resources: any[]) {
       slugTypePairs.push({ slug, type })
     }
   }
-  
+
   // Invalidate caches related to resources
   const keysToInvalidate = [createCacheKey(["oneroster-getAllResources"])]
-  
+
   // Add slug/type specific invalidations
   for (const { slug, type } of slugTypePairs) {
     keysToInvalidate.push(createCacheKey(["oneroster-getResourcesBySlugAndType", slug, "interactive", type]))
   }
-  
+
   // Invalidate batched id lookups as specified in PRD
   if (createdResourceIds.length > 0) {
     const sorted = [...createdResourceIds].sort()
     keysToInvalidate.push(createCacheKey(["oneroster-getResourcesByIds", ...sorted]))
   }
-  
+
   const invalidateResult = await errors.try(invalidateCache(keysToInvalidate))
   if (invalidateResult.error) {
     logger.warn("failed to invalidate resource caches", { error: invalidateResult.error })
   } else {
     logger.info("cache invalidated", { keys: keysToInvalidate.length, step: "createResources" })
   }
-  
+
+  for (const courseId of affectedCourseIds) {
+    const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseId))
+    if (bundleInvalidateResult.error) {
+      logger.warn("failed to invalidate course bundle cache after createResourcesStep", {
+        courseId,
+        error: bundleInvalidateResult.error
+      })
+    }
+  }
+
   return { count: resources.length }
 }
 
@@ -666,7 +696,7 @@ export async function createComponentResourcesStep(componentResources: any[], co
   const lessonSourcedIds = new Set<string>()
   const resourceIdsByLesson = new Map<string, Set<string>>()
   const allResourceIds = new Set<string>()
-  
+
   for (const cr of componentResources) {
     logger.info("creating component resource", {
       sourcedId: cr.sourcedId,
@@ -676,17 +706,17 @@ export async function createComponentResourcesStep(componentResources: any[], co
     })
     const res = await errors.try(oneroster.createComponentResource(cr))
     if (res.error) {
-      logger.error("create componentResource failed", { 
+      logger.error("create componentResource failed", {
         sourcedId: cr.sourcedId,
         title: cr.title,
         courseComponent: cr.courseComponent?.sourcedId,
         resource: cr.resource?.sourcedId,
-        error: res.error 
+        error: res.error
       })
       throw errors.wrap(res.error, "create componentResource")
     }
     created.push(cr.sourcedId)
-    
+
     // Collect lesson IDs and resource IDs for cache invalidation
     const lessonId: string | undefined = cr.courseComponent?.sourcedId
     const resourceId: string | undefined = cr.resource?.sourcedId
@@ -703,15 +733,15 @@ export async function createComponentResourcesStep(componentResources: any[], co
       allResourceIds.add(resourceId)
     }
   }
-  
+
   // Invalidate caches related to component resources
   const keysToInvalidate: string[] = [createCacheKey(["oneroster-getAllComponentResources"])]
-  
+
   // Invalidate per-lesson component resource lookups (single-lesson key shape)
   for (const lessonId of lessonSourcedIds) {
     keysToInvalidate.push(createCacheKey(["oneroster-getComponentResourcesByLessonIds", lessonId]))
   }
-  
+
   // Also invalidate the aggregated multi-lesson key (sorted lesson ids) to avoid sticky empty caches
   const aggregatedLessonIds = Array.from(lessonSourcedIds).sort()
   if (aggregatedLessonIds.length > 0) {
@@ -727,29 +757,41 @@ export async function createComponentResourcesStep(componentResources: any[], co
       keysToInvalidate.push(createCacheKey(["oneroster-getResourcesByIds", ...sortedIds]))
     }
   }
-  
+
   // Invalidate course-component listings for this course (optional but safe)
   if (typeof courseSourcedId === "string" && courseSourcedId) {
     keysToInvalidate.push(createCacheKey(["oneroster-getCourseComponentsByCourseId", courseSourcedId]))
     // Invalidate resource-to-component resolution scoped by course
     for (const resId of allResourceIds) {
+      keysToInvalidate.push(createCacheKey(["oneroster-getComponentResourcesByResourceId", resId]))
       keysToInvalidate.push(createCacheKey(["oneroster-getComponentResourceForResourceInCourse", courseSourcedId, resId]))
     }
   }
-  
+
   const invalidateResult = await errors.try(invalidateCache(keysToInvalidate))
   if (invalidateResult.error) {
     logger.warn("failed to invalidate component resource caches", { error: invalidateResult.error })
   } else {
     logger.info("cache invalidated", { keys: keysToInvalidate.length, step: "createComponentResources" })
   }
-  
+
+  if (courseSourcedId) {
+    const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseSourcedId))
+    if (bundleInvalidateResult.error) {
+      logger.warn("failed to invalidate course bundle cache after createComponentResourcesStep", {
+        courseId: courseSourcedId,
+        error: bundleInvalidateResult.error
+      })
+    }
+  }
+
   logger.info("created all component resources", { count: componentResources.length })
   return { count: componentResources.length, created }
 }
 
 // Step 5: Create assessment line items
 export async function createAssessmentLineItemsStep(lineItems: any[]) {
+  const courseIds = new Set<string>()
   for (const ali of lineItems) {
     const res = await errors.try(
       oneroster.putAssessmentLineItem(ali.sourcedId, {
@@ -767,8 +809,18 @@ export async function createAssessmentLineItemsStep(lineItems: any[]) {
       logger.error("put assessment line item failed", { id: ali.sourcedId, error: res.error })
       throw errors.wrap(res.error, "put assessment line item")
     }
+    if (typeof ali.course?.sourcedId === "string") {
+      courseIds.add(ali.course.sourcedId)
+    }
+  }
+  for (const courseId of courseIds) {
+    const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseId))
+    if (bundleInvalidateResult.error) {
+      logger.warn("failed to invalidate course bundle cache after createAssessmentLineItemsStep", {
+        courseId,
+        error: bundleInvalidateResult.error
+      })
+    }
   }
   return { count: lineItems.length }
 }
-
-

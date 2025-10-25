@@ -181,7 +181,7 @@ export function createCacheKey(baseKey: (string | number)[]): string {
  * Generates a cache key for user progress data.
  * Pattern: "user-progress:{userId}:{courseId}:{deploymentId}"
  */
-export function userProgressByCourse(userId: string, onerosterCourseSourcedId: string): string {
+export const userProgressByCourse = (userId: string, onerosterCourseSourcedId: string): string => {
 	const base = ["user-progress", userId, onerosterCourseSourcedId]
 	return createCacheKey(base)
 }

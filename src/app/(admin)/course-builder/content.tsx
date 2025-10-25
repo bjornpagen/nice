@@ -791,7 +791,7 @@ export function Content({ resourcesPromise, caseMapPromise }: { resourcesPromise
 
             // Step 3: Creating resources
             setCurrentStep(3)
-            await createResourcesStep(payload.resources)
+            await createResourcesStep(payload.resources, [payload.course.sourcedId])
 
             // Step 4: Linking resources
             setCurrentStep(4)

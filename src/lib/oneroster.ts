@@ -110,6 +110,7 @@ const CourseComponentReadSchema = z.object({
 	sortOrder: z.number(),
 	metadata: z.record(z.string(), z.unknown()).optional()
 })
+export type CourseComponentRead = z.infer<typeof CourseComponentReadSchema>
 
 const ComponentResourceReadSchema = z.object({
 	sourcedId: z.string(),
@@ -119,6 +120,7 @@ const ComponentResourceReadSchema = z.object({
 	resource: GUIDRefReadSchema,
 	sortOrder: z.number()
 })
+export type ComponentResourceRead = z.infer<typeof ComponentResourceReadSchema>
 
 // Write schemas (for POST/PUT requests)
 const CourseWriteSchema = z.object({

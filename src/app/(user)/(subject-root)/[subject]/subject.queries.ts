@@ -70,7 +70,7 @@ export async function fetchSubjectCoursesWithUnits(params: {
 		subject.courses.map(async (course) => {
 			const data = await fetchCoursePageData(
 				{ subject: params.subject, course: course.slug },
-				{ skip: { questions: true } }
+				{ skipQuestions: true }
 			)
 			return {
 				id: data.course.id,
@@ -81,6 +81,11 @@ export async function fetchSubjectCoursesWithUnits(params: {
 			}
 		})
 	)
+
+	logger.info("subject course loader used bundle", {
+		subjectSlug: params.subject,
+		courseCount: courseDataResults.length
+	})
 
 	return {
 		slug: subject.slug,
