@@ -453,8 +453,8 @@ export async function getComponentResourcesForCourseWithComponents(
 	})
 
 	if (components.length === 0) {
-		logger.error("getComponentResourcesForCourseWithComponents: no components supplied", { courseSourcedId })
-		throw errors.new("component resources lookup requires at least one component")
+		logger.info("getComponentResourcesForCourseWithComponents: no course components present", { courseSourcedId })
+		return []
 	}
 
 	const componentIds = components.map((component) => component.sourcedId)
