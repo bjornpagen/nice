@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Sidebar } from "@/app/(user)/[subject]/[course]/(overview)/components/sidebar"
 import { Footer } from "@/components/footer"
-import { fetchCoursePageData } from "@/lib/data/course"
+import { getCachedCoursePageData } from "@/lib/server-cache/course-data"
 import type { AssessmentProgress, UnitProficiency } from "@/lib/data/progress"
 import type { CoursePageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
@@ -26,7 +26,7 @@ export default function CourseLayout({
 	// Initiate the data fetch for the course, which is needed by the sidebar.
 	// We do not await it here; the promise is passed down.
 	const courseDataPromise: Promise<CoursePageData> = normalizedParamsPromise.then((resolvedParams) =>
-		fetchCoursePageData(resolvedParams, { skipQuestions: true })
+		getCachedCoursePageData(resolvedParams.subject, resolvedParams.course, true)
 	)
 
 	return (

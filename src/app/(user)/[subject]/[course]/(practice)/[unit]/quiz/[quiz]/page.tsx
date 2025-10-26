@@ -2,7 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound, redirect } from "next/navigation"
 import { connection } from "next/server"
-import { fetchQuizRedirectPath } from "@/lib/data/assessment"
+import { getCachedQuizRedirectPath } from "@/lib/server-cache/assessment-data"
 import { normalizeParamsSync } from "@/lib/utils"
 
 export default async function QuizRedirectPage({
@@ -17,7 +17,14 @@ export default async function QuizRedirectPage({
 	const normalizedParams = normalizeParamsSync(resolvedParams)
 	logger.info("quiz redirect page: fetching canonical path", { params: normalizedParams })
 
-	const redirectPathResult = await errors.try(fetchQuizRedirectPath(normalizedParams))
+	const redirectPathResult = await errors.try(
+		getCachedQuizRedirectPath(
+			normalizedParams.subject,
+			normalizedParams.course,
+			normalizedParams.unit,
+			normalizedParams.quiz
+		)
+	)
 	if (redirectPathResult.error) {
 		logger.error("failed to determine quiz redirect path", {
 			error: redirectPathResult.error,

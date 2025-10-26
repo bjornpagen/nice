@@ -2,8 +2,9 @@ import { requireUser } from "@/lib/auth/require-user"
 import * as logger from "@superbuilders/slog"
 import { connection } from "next/server"
 import * as React from "react"
-import { fetchCoursePageData } from "@/lib/data/course"
-import { type AssessmentProgress, getUserUnitProgress, type UnitProficiency } from "@/lib/data/progress"
+import { getCachedCoursePageData } from "@/lib/server-cache/course-data"
+import { type AssessmentProgress, type UnitProficiency } from "@/lib/data/progress"
+import { getCachedUserUnitProgress } from "@/lib/server-cache/progress"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { CoursePageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
@@ -24,7 +25,9 @@ export default async function CoursePage({ params }: { params: Promise<{ subject
 	const normalizedParamsPromise = normalizeParams(params)
 
 	// The courseDataPromise is now handled by the layout, but we still need it for progress data
-	const courseDataPromise: Promise<CoursePageData> = normalizedParamsPromise.then(fetchCoursePageData)
+	const courseDataPromise: Promise<CoursePageData> = normalizedParamsPromise.then((resolvedParams) =>
+		getCachedCoursePageData(resolvedParams.subject, resolvedParams.course, false)
+	)
 
 	// Get user promise for progress fetching
 const userPromise = requireUser()
@@ -50,7 +53,7 @@ const progressPromise: Promise<CourseProgressData> = Promise.all([courseDataProm
             return { progressMap: new Map<string, AssessmentProgress>(), unitProficiencies: [] }
         }
         if (parsed.data.sourceId) {
-            return getUserUnitProgress(parsed.data.sourceId, courseData.course.id).then((progressMap) => {
+            return getCachedUserUnitProgress(parsed.data.sourceId, courseData.course.id).then((progressMap) => {
                 const unitProficiencies = aggregateUnitProficiencies(progressMap, courseData.course.units)
 
                 logger.debug("calculated unit proficiencies for course overview", {

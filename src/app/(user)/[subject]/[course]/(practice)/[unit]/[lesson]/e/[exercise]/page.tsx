@@ -1,6 +1,6 @@
 import * as React from "react"
 import { connection } from "next/server"
-import { fetchExercisePageData } from "@/lib/data/content"
+import { getCachedExercisePageData } from "@/lib/server-cache/content-data"
 import type { ExercisePageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
 import { Content } from "@/app/(user)/[subject]/[course]/(practice)/[unit]/[lesson]/e/[exercise]/components/content"
@@ -14,7 +14,15 @@ export default async function ExercisePage({
 	// Ensure this route is treated as dynamic and has request context
 	await connection()
 	const normalizedParamsPromise = normalizeParams(params)
-	const exercisePromise: Promise<ExercisePageData> = normalizedParamsPromise.then(fetchExercisePageData)
+const exercisePromise: Promise<ExercisePageData> = normalizedParamsPromise.then((resolvedParams) =>
+	getCachedExercisePageData(
+		resolvedParams.subject,
+		resolvedParams.course,
+		resolvedParams.unit,
+		resolvedParams.lesson,
+		resolvedParams.exercise
+	)
+)
 
 	// Derive expected identifiers for each question
 	const expectedIdentifiersPromisesPromise: Promise<Promise<string[]>[]> = exercisePromise.then((data) =>

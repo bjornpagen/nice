@@ -4,7 +4,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { oneroster } from "@/lib/clients"
 import { getActiveEnrollmentsForUser, getClass, getCourse } from "@/lib/data/fetchers/oneroster"
-import { fetchCoursePageData } from "@/lib/data/course"
+import { getCachedCoursePageData } from "@/lib/server-cache/course-data"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import type { Lesson, ProfileCourse, Quiz, Unit, UnitTest } from "@/lib/types/domain"
@@ -376,9 +376,10 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 		}
 
 		const courseMetadata = courseMetadataResult.data
-		const coursePageData = await fetchCoursePageData(
-			{ subject: courseMetadata.khanSubjectSlug, course: courseMetadata.khanSlug },
-			{ skipQuestions: true }
+		const coursePageData = await getCachedCoursePageData(
+			courseMetadata.khanSubjectSlug,
+			courseMetadata.khanSlug,
+			true
 		)
 
 		profileCourses.push({

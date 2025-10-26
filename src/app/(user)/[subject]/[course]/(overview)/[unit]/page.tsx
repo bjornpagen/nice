@@ -3,8 +3,9 @@ import * as logger from "@superbuilders/slog"
 import { connection } from "next/server"
 import * as React from "react"
 import { Content } from "@/app/(user)/[subject]/[course]/(overview)/[unit]/components/content"
-import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
-import { fetchUnitPageData } from "@/lib/data/unit"
+import { type AssessmentProgress } from "@/lib/data/progress"
+import { getCachedUserUnitProgress } from "@/lib/server-cache/progress"
+import { getCachedUnitPageData } from "@/lib/server-cache/course-data"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { UnitPageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
@@ -21,7 +22,9 @@ export default async function UnitPage({
 	const normalizedParamsPromise = normalizeParams(params)
 
 	// The sidebar data is now handled by the layout, but we still need unit-specific data
-	const unitDataPromise: Promise<UnitPageData> = normalizedParamsPromise.then(fetchUnitPageData)
+	const unitDataPromise: Promise<UnitPageData> = normalizedParamsPromise.then((resolvedParams) =>
+		getCachedUnitPageData(resolvedParams.subject, resolvedParams.course, resolvedParams.unit)
+	)
 
 	// Get user promise for progress fetching
 const userPromise = requireUser()
@@ -50,7 +53,7 @@ const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([u
             return new Map<string, AssessmentProgress>()
         }
         if (parsed.data.sourceId) {
-            return getUserUnitProgress(parsed.data.sourceId, unitData.course.id)
+            return getCachedUserUnitProgress(parsed.data.sourceId, unitData.course.id)
         }
         return new Map<string, AssessmentProgress>()
     }

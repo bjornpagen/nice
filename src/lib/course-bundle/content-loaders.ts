@@ -3,14 +3,14 @@ import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import { fetchAndResolveQuestions, prepareUserQuestionSet } from "@/lib/data/fetchers/interactive-helpers"
 import { requireBundle } from "@/lib/course-bundle/store"
-import { fetchLessonLayoutData } from "@/lib/course-bundle/course-loaders"
+import { fetchLessonLayoutDataBase } from "@/lib/course-bundle/course-loaders"
 import { findResourceInLessonBySlugAndTypeBundle } from "@/lib/course-bundle/interactive-helpers"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 // rotation mode removed; selection is now always deterministic via unified helper
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
 import { assertNoEncodedColons } from "@/lib/utils"
 
-export async function fetchArticlePageData(params: {
+export async function fetchArticlePageDataBase(params: {
 	article: string
 	lesson: string
 	unit: string
@@ -20,8 +20,8 @@ export async function fetchArticlePageData(params: {
 	// dynamic opt-in is handled at the page level
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.article, "fetchArticlePageData article parameter")
-	logger.info("fetchArticlePageData called", { params })
-	const layoutData = await fetchLessonLayoutData(params)
+	logger.info("fetchArticlePageData raw executed", { params })
+	const layoutData = await fetchLessonLayoutDataBase(params)
 	const bundle = requireBundle(layoutData)
 	const { resource, componentResource } = findResourceInLessonBySlugAndTypeBundle({
 		bundle,
@@ -68,7 +68,7 @@ export async function fetchArticlePageData(params: {
 	}
 }
 
-export async function fetchExercisePageData(params: {
+export async function fetchExercisePageDataBase(params: {
 	subject: string
 	course: string
 	unit: string
@@ -77,9 +77,9 @@ export async function fetchExercisePageData(params: {
 }): Promise<ExercisePageData> {
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.exercise, "fetchExercisePageData exercise parameter")
-	logger.info("fetchExercisePageData called", { params })
+	logger.info("fetchExercisePageData raw executed", { params })
 
-	const layoutData = await fetchLessonLayoutData(params)
+	const layoutData = await fetchLessonLayoutDataBase(params)
 	const bundle = requireBundle(layoutData)
 	const { resource, componentResource } = findResourceInLessonBySlugAndTypeBundle({
 		bundle,
@@ -122,7 +122,7 @@ export async function fetchExercisePageData(params: {
 	}
 }
 
-export async function fetchVideoPageData(params: {
+export async function fetchVideoPageDataBase(params: {
 	video: string
 	lesson: string
 	unit: string
@@ -130,10 +130,10 @@ export async function fetchVideoPageData(params: {
 	course: string
 }): Promise<VideoPageData> {
 	// dynamic opt-in is handled at the page level
-	logger.info("fetchVideoPageData called", { params })
+	logger.info("fetchVideoPageData raw executed", { params })
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.video, "fetchVideoPageData video parameter")
-	const layoutData = await fetchLessonLayoutData(params)
+	const layoutData = await fetchLessonLayoutDataBase(params)
 	const bundle = requireBundle(layoutData)
 	const { resource, componentResource } = findResourceInLessonBySlugAndTypeBundle({
 		bundle,

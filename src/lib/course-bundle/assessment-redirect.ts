@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import * as React from "react"
 import { notFound } from "next/navigation"
 import {
 	getAllCoursesBySlug,
@@ -15,6 +16,14 @@ import type { ComponentMetadata } from "@/lib/metadata/oneroster"
 import type { CourseComponentRead } from "@/lib/oneroster"
 import { assertNoEncodedColons } from "@/lib/utils"
 
+const getCourseBundleWithLookupsCached = React.cache(async (courseSourcedId: string) => {
+	const bundle = await getCourseResourceBundle(courseSourcedId)
+	return {
+		bundle,
+		lookups: getCourseResourceBundleLookups(bundle)
+	}
+})
+
 export interface AssessmentRedirectParams {
 	subject: string
 	course: string
@@ -23,7 +32,7 @@ export interface AssessmentRedirectParams {
 	assessmentType: "quiz" | "unittest"
 }
 
-export async function findAssessmentRedirectPathBundle(params: AssessmentRedirectParams): Promise<string> {
+export async function findAssessmentRedirectPathBase(params: AssessmentRedirectParams): Promise<string> {
 	assertNoEncodedColons(params.unit, "findAssessmentRedirectPath unit parameter")
 	assertNoEncodedColons(params.assessment, "findAssessmentRedirectPath assessment parameter")
 
@@ -75,8 +84,7 @@ export async function findAssessmentRedirectPathBundle(params: AssessmentRedirec
 	}
 	const courseMetadata = courseMetadataResult.data
 
-	const bundle = await getCourseResourceBundle(courseRecord.sourcedId)
-	const lookups = getCourseResourceBundleLookups(bundle)
+	const { bundle, lookups } = await getCourseBundleWithLookupsCached(courseRecord.sourcedId)
 
 	const componentResources = await getComponentResourcesByResourceId(resource.sourcedId)
 	if (componentResources.length === 0) {

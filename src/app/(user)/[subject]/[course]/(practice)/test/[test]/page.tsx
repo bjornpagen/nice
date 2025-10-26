@@ -2,8 +2,12 @@ import { requireUser } from "@/lib/auth/require-user"
 import * as logger from "@superbuilders/slog"
 import { connection } from "next/server"
 import * as React from "react"
-import { fetchCourseChallengePage_LayoutData, fetchCourseChallengePage_TestData } from "@/lib/data/assessment"
-import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
+import {
+	getCachedCourseChallengeLayoutData,
+	getCachedCourseChallengeTestData
+} from "@/lib/server-cache/assessment-data"
+import { type AssessmentProgress } from "@/lib/data/progress"
+import { getCachedUserUnitProgress } from "@/lib/server-cache/progress"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { CourseChallengeLayoutData, CourseChallengePageData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
@@ -21,12 +25,12 @@ export default async function CourseChallengePage({
 	await connection()
 	const normalizedParamsPromise = normalizeParams(params)
 const userPromise = requireUser()
-	const layoutDataPromise: Promise<CourseChallengeLayoutData> = normalizedParamsPromise.then(
-		fetchCourseChallengePage_LayoutData
-	)
-	const testDataPromise: Promise<CourseChallengePageData> = normalizedParamsPromise.then(
-		fetchCourseChallengePage_TestData
-	)
+const layoutDataPromise: Promise<CourseChallengeLayoutData> = normalizedParamsPromise.then((resolvedParams) =>
+	getCachedCourseChallengeLayoutData(resolvedParams.subject, resolvedParams.course)
+)
+const testDataPromise: Promise<CourseChallengePageData> = normalizedParamsPromise.then((resolvedParams) =>
+	getCachedCourseChallengeTestData(resolvedParams.subject, resolvedParams.course, resolvedParams.test)
+)
 
 	const expectedIdentifiersPromisesPromise: Promise<Promise<string[]>[]> = testDataPromise.then((data) =>
 		data.questions.map((q) => getAssessmentItem(q.id).then((item) => (item.responseDeclarations ?? []).map((d) => d.identifier)))
@@ -158,7 +162,7 @@ const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([l
             return new Map<string, AssessmentProgress>()
         }
         if (parsed.data.sourceId) {
-            return getUserUnitProgress(parsed.data.sourceId, courseData.course.id)
+            return getCachedUserUnitProgress(parsed.data.sourceId, courseData.course.id)
         }
         return new Map<string, AssessmentProgress>()
     }

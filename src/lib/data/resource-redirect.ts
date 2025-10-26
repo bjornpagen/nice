@@ -4,14 +4,13 @@ import {
 	getComponentResourcesByResourceId,
 	getCourse,
 	getCourseComponentsBySourcedId,
-	getCourseResourceBundle,
-	getCourseResourceBundleLookups,
 	getResourcesBySlugAndType
 } from "@/lib/data/fetchers/oneroster"
 import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { CourseMetadata } from "@/lib/metadata/oneroster"
 import type { CourseComponentRead } from "@/lib/oneroster"
 import { assertNoEncodedColons } from "@/lib/utils"
+import { getCachedCourseResourceBundleWithLookups } from "@/lib/server-cache/bundle"
 
 type ResourceType = "article" | "exercise" | "video"
 
@@ -57,7 +56,10 @@ export async function findResourcePath(slug: string, type: ResourceType): Promis
 		return null
 	}
 
-	const bundleCache = new Map<string, Awaited<ReturnType<typeof getCourseResourceBundle>>>()
+	const bundleCache = new Map<
+		string,
+		Awaited<ReturnType<typeof getCachedCourseResourceBundleWithLookups>>
+	>()
 	const componentCache = new Map<string, CourseComponentRead>()
 	const courseMetadataCache = new Map<string, CourseMetadata>()
 
@@ -87,13 +89,13 @@ export async function findResourcePath(slug: string, type: ResourceType): Promis
 			continue
 		}
 
-		let bundle = bundleCache.get(courseId)
-		if (!bundle) {
-			bundle = await getCourseResourceBundle(courseId)
-			bundleCache.set(courseId, bundle)
+		let bundleEntry = bundleCache.get(courseId)
+		if (!bundleEntry) {
+			bundleEntry = await getCachedCourseResourceBundleWithLookups(courseId)
+			bundleCache.set(courseId, bundleEntry)
 		}
 
-		const lookups = getCourseResourceBundleLookups(bundle)
+		const { bundle, lookups } = bundleEntry
 		const bundleComponent = lookups.courseComponentsById.get(componentId)
 		if (!bundleComponent) {
 			logger.warn("resource redirect: component not present in course bundle", {

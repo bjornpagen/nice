@@ -4,9 +4,9 @@ import * as logger from "@superbuilders/slog"
 import { connection } from "next/server"
 import type * as React from "react"
 import { LessonLayout } from "@/app/(user)/[subject]/[course]/(practice)/[unit]/[lesson]/components/lesson-layout"
-import { fetchCoursePageData } from "@/lib/data/course"
-import { fetchLessonLayoutData } from "@/lib/data/lesson"
-import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
+import { getCachedCoursePageData, getCachedLessonLayoutData } from "@/lib/server-cache/course-data"
+import { type AssessmentProgress } from "@/lib/data/progress"
+import { getCachedUserUnitProgress } from "@/lib/server-cache/progress"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { LessonLayoutData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
@@ -25,9 +25,9 @@ export default async function Layout({
 	// Normalize params to handle encoded characters
 	const normalizedParamsPromise = normalizeParams(params)
 
-	const dataPromise: Promise<LessonLayoutData> = normalizedParamsPromise.then(async (resolvedParams) => {
-	return fetchLessonLayoutData(resolvedParams)
-})
+	const dataPromise: Promise<LessonLayoutData> = normalizedParamsPromise.then((resolvedParams) =>
+		getCachedLessonLayoutData(resolvedParams.subject, resolvedParams.course, resolvedParams.unit, resolvedParams.lesson)
+	)
 
 	const userPromise = requireUser()
 
@@ -41,13 +41,7 @@ export default async function Layout({
 
 		// Use fetchCoursePageData to get the actual course data
 		const courseResult = await errors.try(
-			fetchCoursePageData(
-				{
-					subject: resolvedParams.subject,
-					course: resolvedParams.course
-				},
-				{ skipQuestions: true }
-			)
+			getCachedCoursePageData(resolvedParams.subject, resolvedParams.course, true)
 		)
 
 		if (courseResult.error) {
@@ -269,7 +263,7 @@ const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([u
 			return new Map<string, AssessmentProgress>()
 		}
 		if (parsed.data.sourceId) {
-			return getUserUnitProgress(parsed.data.sourceId, data.courseData.id)
+			return getCachedUserUnitProgress(parsed.data.sourceId, data.courseData.id)
 		}
 		return new Map<string, AssessmentProgress>()
 	}

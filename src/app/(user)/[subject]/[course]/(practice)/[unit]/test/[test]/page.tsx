@@ -2,7 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound, redirect } from "next/navigation"
 import { connection } from "next/server"
-import { fetchTestRedirectPath } from "@/lib/data/assessment"
+import { getCachedTestRedirectPath } from "@/lib/server-cache/assessment-data"
 import { normalizeParamsSync } from "@/lib/utils"
 
 export default async function TestRedirectPage({
@@ -17,7 +17,14 @@ export default async function TestRedirectPage({
 	const normalizedParams = normalizeParamsSync(resolvedParams)
 	logger.info("test redirect page: fetching canonical path", { params: normalizedParams })
 
-	const redirectPathResult = await errors.try(fetchTestRedirectPath(normalizedParams))
+	const redirectPathResult = await errors.try(
+		getCachedTestRedirectPath(
+			normalizedParams.subject,
+			normalizedParams.course,
+			normalizedParams.unit,
+			normalizedParams.test
+		)
+	)
 	if (redirectPathResult.error) {
 		logger.error("failed to determine test redirect path", {
 			error: redirectPathResult.error,

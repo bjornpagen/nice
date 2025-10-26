@@ -1,6 +1,6 @@
 import { connection } from "next/server"
 import * as React from "react"
-import { fetchVideoPageData } from "@/lib/data/content"
+import { getCachedVideoPageData } from "@/lib/server-cache/content-data"
 import type { VideoPageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
 import { Content } from "@/app/(user)/[subject]/[course]/(practice)/[unit]/[lesson]/v/[video]/components/content"
@@ -16,13 +16,13 @@ export default async function VideoPage({
 	await connection()
 	const normalizedParamsPromise = normalizeParams(params)
 	const videoPromise: Promise<VideoPageData> = normalizedParamsPromise.then((normalizedParams) =>
-		fetchVideoPageData({
-			video: normalizedParams.video,
-			lesson: normalizedParams.lesson,
-			unit: normalizedParams.unit,
-			subject: normalizedParams.subject,
-			course: normalizedParams.course
-		})
+		getCachedVideoPageData(
+			normalizedParams.subject,
+			normalizedParams.course,
+			normalizedParams.unit,
+			normalizedParams.lesson,
+			normalizedParams.video
+		)
 	)
 
 	return (

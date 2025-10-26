@@ -437,24 +437,32 @@ export async function getActiveEnrollmentsForUser(userSourcedId: string) {
 export async function getComponentResourcesForCourse(courseSourcedId: string) {
 	logger.info("getComponentResourcesForCourse called", { courseSourcedId })
 	const operation = async () => {
-		// First get all components in the course
 		const courseComponents = await getCourseComponentsByCourseId(courseSourcedId)
-		if (courseComponents.length === 0) {
-			return []
-		}
-
-		// Get all component IDs
-		const componentIds = courseComponents.map(c => c.sourcedId)
-
-		// Fetch component resources using the @ operator for IN clause
-		const componentResources = await oneroster.getAllComponentResources({
-			filter: `courseComponent.sourcedId@'${componentIds.join(",")}' AND status='active'`
-		})
-
-		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
-		return ensureActiveStatus(componentResources)
+		return getComponentResourcesForCourseWithComponents(courseSourcedId, courseComponents)
 	}
 	return redisCache(operation, ["oneroster-getComponentResourcesForCourse", courseSourcedId], { revalidate: 3600 * 24 }) // 24-hour cache
+}
+
+export async function getComponentResourcesForCourseWithComponents(
+	courseSourcedId: string,
+	components: CourseComponentRead[]
+) {
+	logger.debug("getComponentResourcesForCourseWithComponents invoked", {
+		courseSourcedId,
+		componentCount: components.length
+	})
+
+	if (components.length === 0) {
+		logger.error("getComponentResourcesForCourseWithComponents: no components supplied", { courseSourcedId })
+		throw errors.new("component resources lookup requires at least one component")
+	}
+
+	const componentIds = components.map((component) => component.sourcedId)
+	const componentResources = await oneroster.getAllComponentResources({
+		filter: `courseComponent.sourcedId@'${componentIds.join(",")}' AND status='active'`
+	})
+
+	return ensureActiveStatus(componentResources)
 }
 
 /**
@@ -529,7 +537,7 @@ export async function getCourseResourceBundle(courseSourcedId: string): Promise<
 				throw errors.new("getCourseResourceBundle: course has no components")
 			}
 
-			const componentResources = await getComponentResourcesForCourse(courseSourcedId)
+			const componentResources = await getComponentResourcesForCourseWithComponents(courseSourcedId, components)
 			if (componentResources.length === 0) {
 				logger.error("getCourseResourceBundle: component resources missing", { courseSourcedId })
 				throw errors.new("getCourseResourceBundle: component resources missing")
@@ -612,9 +620,35 @@ export async function invalidateCourseResourceBundle(courseSourcedId: string) {
 		return
 	}
 
+	const bundleResult = await errors.try(getCourseResourceBundle(courseSourcedId))
+	if (bundleResult.error) {
+		logger.error("failed to load bundle for cache invalidation", {
+			courseSourcedId,
+			error: bundleResult.error
+		})
+		throw errors.wrap(bundleResult.error, "invalidate course resource bundle")
+	}
+
+	await invalidateCourseResourceBundleWithBundle(bundleResult.data)
+}
+
+export async function invalidateCourseResourceBundleWithBundle(bundle: CourseResourceBundle) {
+	const resourceIds = new Set(
+		bundle.componentResources.map((componentResource) => componentResource.resource.sourcedId)
+	)
+	if (resourceIds.size === 0) {
+		logger.error("invalidateCourseResourceBundleWithBundle: no resources tied to course", {
+			courseSourcedId: bundle.courseId
+		})
+		throw errors.new("invalidate course resource bundle: missing resources")
+	}
+
+	const sortedResourceIds = Array.from(resourceIds).sort()
+	const resourceCacheKey = createCacheKey(["oneroster-getResourcesByIds", ...sortedResourceIds])
 	await invalidateCache([
-		createCacheKey(["oneroster-course-bundle", courseSourcedId]),
-		createCacheKey(["oneroster-getComponentResourcesForCourse", courseSourcedId])
+		createCacheKey(["oneroster-course-bundle", bundle.courseId]),
+		createCacheKey(["oneroster-getComponentResourcesForCourse", bundle.courseId]),
+		resourceCacheKey
 	])
 }
 

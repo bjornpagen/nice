@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { getOneRosterCoursesForExplore } from "@/lib/actions/courses"
-import { fetchCoursePageData } from "@/lib/data/course"
+import { getCachedCoursePageData } from "@/lib/server-cache/course-data"
 import type { Unit } from "@/lib/types/domain"
 import { assertNoEncodedColons } from "@/lib/utils"
 
@@ -68,10 +68,7 @@ export async function fetchSubjectCoursesWithUnits(params: {
 	// Fetch units for each course in parallel (skip heavy question fetching)
 	const courseDataResults = await Promise.all(
 		subject.courses.map(async (course) => {
-			const data = await fetchCoursePageData(
-				{ subject: params.subject, course: course.slug },
-				{ skipQuestions: true }
-			)
+			const data = await getCachedCoursePageData(params.subject, course.slug, true)
 			return {
 				id: data.course.id,
 				slug: course.slug,

@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, mock, test } from "bun:test"
 import type { Lesson } from "@/lib/types/domain"
+import type { CourseResourceBundle } from "@/lib/data/fetchers/oneroster"
+import type { ResourceMetadata } from "@/lib/metadata/oneroster"
 
 // Prevent real Redis connections during bundle tests
 const invalidatedKeys: string[] = []
@@ -185,8 +187,8 @@ describe("course bundle helpers", () => {
 			getCourseResourceBundle: () => Promise.resolve(bundle)
 		}))
 
-		const { fetchCoursePageData } = await import("@/lib/course-bundle/course-loaders")
-		const result = await fetchCoursePageData({ subject: "math", course: "algebra-basics" }, { skipQuestions: true })
+		const { fetchCoursePageDataBase } = await import("@/lib/course-bundle/course-loaders")
+		const result = await fetchCoursePageDataBase({ subject: "math", course: "algebra-basics" }, true)
 
 		expect(result.course.title).toBe("Linear Foundations")
 		expect(result.course.units).toHaveLength(1)
@@ -210,27 +212,77 @@ describe("course bundle helpers", () => {
 	})
 
 	test("findResourceInLessonBySlugAndTypeBundle throws on ambiguous matches", async () => {
-		const bundle = {
+		const lessonMetadata: ResourceMetadata = {
+			type: "interactive",
+			khanId: "res_dup_1",
+			khanSlug: "duplicate-slug",
+			khanTitle: "Article A",
+			khanDescription: "First duplicate",
+			xp: 10,
+			khanActivityType: "Article",
+			launchUrl: "https://example.com/article/a"
+		}
+		const secondMetadata: ResourceMetadata = {
+			type: "interactive",
+			khanId: "res_dup_2",
+			khanSlug: "duplicate-slug",
+			khanTitle: "Article B",
+			khanDescription: "Second duplicate",
+			xp: 12,
+			khanActivityType: "Article",
+			launchUrl: "https://example.com/article/b"
+		}
+
+		const bundle: CourseResourceBundle = {
 			courseId: "course_abc",
 			fetchedAt: new Date().toISOString(),
-			componentCount: 1,
+			componentCount: 2,
 			resourceCount: 2,
-			courseComponents: [],
+			courseComponents: [
+				{
+					sourcedId: "unit_1",
+					status: "active",
+					title: "Unit One",
+					course: { sourcedId: "course_abc", type: "course" },
+					parent: undefined,
+					sortOrder: 0,
+					metadata: {
+						khanId: "unit_1",
+						khanSlug: "unit-one",
+						khanTitle: "Unit One",
+						khanDescription: ""
+					}
+				},
+				{
+					sourcedId: "lesson_dup",
+					status: "active",
+					title: "Lesson Dup",
+					course: { sourcedId: "course_abc", type: "course" },
+					parent: { sourcedId: "unit_1", type: "courseComponent" },
+					sortOrder: 1,
+					metadata: {
+						khanId: "lesson_dup",
+						khanSlug: "lesson-dup",
+						khanTitle: "Lesson Dup",
+						khanDescription: ""
+					}
+				}
+			],
 			componentResources: [
 				{
 					sourcedId: "cr_1",
 					status: "active",
 					title: "duplicate",
-					courseComponent: { sourcedId: "lesson_dup", type: "courseComponent" as const },
-					resource: { sourcedId: "res_dup_1", type: "resource" as const },
+					courseComponent: { sourcedId: "lesson_dup", type: "courseComponent" },
+					resource: { sourcedId: "res_dup_1", type: "resource" },
 					sortOrder: 0
 				},
 				{
 					sourcedId: "cr_2",
 					status: "active",
 					title: "duplicate",
-					courseComponent: { sourcedId: "lesson_dup", type: "courseComponent" as const },
-					resource: { sourcedId: "res_dup_2", type: "resource" as const },
+					courseComponent: { sourcedId: "lesson_dup", type: "courseComponent" },
+					resource: { sourcedId: "res_dup_2", type: "resource" },
 					sortOrder: 1
 				}
 			],
@@ -239,35 +291,21 @@ describe("course bundle helpers", () => {
 					sourcedId: "res_dup_1",
 					status: "active",
 					title: "Article A",
-					metadata: {
-						type: "interactive",
-						khanId: "res_dup_1",
-						khanSlug: "duplicate-slug",
-						khanTitle: "Article A",
-						khanDescription: "First duplicate",
-						khanActivityType: "Article",
-						launchUrl: "https://example.com/article/a",
-						url: "https://example.com/article/a",
-						toolProvider: "example",
-						xp: 10
-					}
+					format: "interactive",
+					vendorResourceId: "vendor-res-dup-1",
+					vendorId: null,
+					applicationId: null,
+					metadata: lessonMetadata
 				},
 				{
 					sourcedId: "res_dup_2",
 					status: "active",
 					title: "Article B",
-					metadata: {
-						type: "interactive",
-						khanId: "res_dup_2",
-						khanSlug: "duplicate-slug",
-						khanTitle: "Article B",
-						khanDescription: "Second duplicate",
-						khanActivityType: "Article",
-						launchUrl: "https://example.com/article/b",
-						url: "https://example.com/article/b",
-						toolProvider: "example",
-						xp: 12
-					}
+					format: "interactive",
+					vendorResourceId: "vendor-res-dup-2",
+					vendorId: null,
+					applicationId: null,
+					metadata: secondMetadata
 				}
 			]
 		}
@@ -276,7 +314,7 @@ describe("course bundle helpers", () => {
 
 		expect(() =>
 			findResourceInLessonBySlugAndTypeBundle({
-				bundle: bundle as any,
+				bundle,
 				lessonSourcedId: "lesson_dup",
 				slug: "duplicate-slug",
 				activityType: "Article"
@@ -286,12 +324,111 @@ describe("course bundle helpers", () => {
 
 	test("invalidateCourseResourceBundle clears bundle-related cache keys", async () => {
 		invalidatedKeys.length = 0
-		const { invalidateCourseResourceBundle } = await import("@/lib/data/fetchers/oneroster")
-		await invalidateCourseResourceBundle("course_bundle_test")
+		const metadataOne: ResourceMetadata = {
+			type: "interactive",
+			khanId: "resource-1",
+			khanSlug: "article-one",
+			khanTitle: "Article One",
+			khanDescription: "metadata",
+			xp: 10,
+			khanActivityType: "Article",
+			launchUrl: "https://example.com/article-one"
+		}
+		const metadataTwo: ResourceMetadata = {
+			type: "interactive",
+			khanId: "resource-2",
+			khanSlug: "article-two",
+			khanTitle: "Article Two",
+			khanDescription: "metadata",
+			xp: 12,
+			khanActivityType: "Article",
+			launchUrl: "https://example.com/article-two"
+		}
+
+		const bundle: CourseResourceBundle = {
+			courseId: "course_bundle_test",
+			fetchedAt: new Date().toISOString(),
+			componentCount: 2,
+			resourceCount: 2,
+			courseComponents: [
+				{
+					sourcedId: "component-1",
+					status: "active",
+					title: "Component 1",
+					course: { sourcedId: "course_bundle_test", type: "course" },
+					parent: undefined,
+					sortOrder: 0,
+					metadata: {
+						khanId: "component-1",
+						khanSlug: "component-1",
+						khanTitle: "Component 1",
+						khanDescription: ""
+					}
+				},
+				{
+					sourcedId: "component-2",
+					status: "active",
+					title: "Component 2",
+					course: { sourcedId: "course_bundle_test", type: "course" },
+					parent: undefined,
+					sortOrder: 1,
+					metadata: {
+						khanId: "component-2",
+						khanSlug: "component-2",
+						khanTitle: "Component 2",
+						khanDescription: ""
+					}
+				}
+			],
+			componentResources: [
+				{
+					sourcedId: "cr-1",
+					status: "active",
+					title: "CR 1",
+					courseComponent: { sourcedId: "component-1", type: "courseComponent" },
+					resource: { sourcedId: "resource-1", type: "resource" },
+					sortOrder: 0
+				},
+				{
+					sourcedId: "cr-2",
+					status: "active",
+					title: "CR 2",
+					courseComponent: { sourcedId: "component-2", type: "courseComponent" },
+					resource: { sourcedId: "resource-2", type: "resource" },
+					sortOrder: 1
+				}
+			],
+			resources: [
+				{
+					sourcedId: "resource-1",
+					status: "active",
+					title: "Resource 1",
+					format: "interactive",
+					vendorResourceId: "vendor-resource-1",
+					vendorId: null,
+					applicationId: null,
+					metadata: metadataOne
+				},
+				{
+					sourcedId: "resource-2",
+					status: "active",
+					title: "Resource 2",
+					format: "interactive",
+					vendorResourceId: "vendor-resource-2",
+					vendorId: null,
+					applicationId: null,
+					metadata: metadataTwo
+				}
+			]
+		}
+
+		const { invalidateCourseResourceBundleWithBundle } = await import("@/lib/data/fetchers/oneroster")
+		await invalidateCourseResourceBundleWithBundle(bundle)
 
 		expect(invalidatedKeys).toEqual([
 			"oneroster-course-bundle::course_bundle_test",
-			"oneroster-getComponentResourcesForCourse::course_bundle_test"
+			"oneroster-getComponentResourcesForCourse::course_bundle_test",
+			"oneroster-getResourcesByIds::resource-1::resource-2"
 		])
 	})
 })

@@ -1,6 +1,6 @@
 import { connection } from "next/server"
 import * as React from "react"
-import { fetchUnitTestPageData } from "@/lib/data/assessment"
+import { getCachedUnitTestPageData } from "@/lib/server-cache/assessment-data"
 import type { UnitTestPageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
 import { Content } from "./components/content"
@@ -15,7 +15,15 @@ export default async function UnitTestPage({
 }) {
 	await connection()
 	const normalizedParamsPromise = normalizeParams(params)
-	const testPromise: Promise<UnitTestPageData> = normalizedParamsPromise.then(fetchUnitTestPageData)
+const testPromise: Promise<UnitTestPageData> = normalizedParamsPromise.then((resolvedParams) =>
+	getCachedUnitTestPageData(
+		resolvedParams.subject,
+		resolvedParams.course,
+		resolvedParams.unit,
+		resolvedParams.lesson,
+		resolvedParams.test
+	)
+)
 
 	const expectedIdentifiersPromisesPromise: Promise<Promise<string[]>[]> = testPromise.then((data) =>
 		data.questions.map((q) => getAssessmentItem(q.id).then((item) => (item.responseDeclarations ?? []).map((d) => d.identifier)))

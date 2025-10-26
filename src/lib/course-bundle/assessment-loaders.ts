@@ -2,7 +2,7 @@ import * as logger from "@superbuilders/slog"
 // PowerPath removed; attempt number derived via server action in prepareInteractiveAssessment
 import { fetchAndResolveQuestions, prepareUserQuestionSet } from "@/lib/data/fetchers/interactive-helpers"
 import { requireBundle } from "@/lib/course-bundle/store"
-import { fetchCoursePageData, fetchLessonLayoutData } from "@/lib/course-bundle/course-loaders"
+import { fetchCoursePageDataBase, fetchLessonLayoutDataBase } from "@/lib/course-bundle/course-loaders"
 import {
 	findAndValidateResourceBundle,
 	findComponentResourceWithContextBundle,
@@ -23,19 +23,19 @@ import { findAssessmentRedirectPath } from "@/lib/utils/assessment-redirect"
 
 export const applyQtiSelectionAndOrdering = applyQtiSelectionAndOrderingCommon
 
-export async function fetchQuizPageData(params: {
+export async function fetchQuizPageDataBase(params: {
 	subject: string
 	course: string
 	unit: string
 	lesson: string
 	quiz: string
 }): Promise<QuizPageData> {
-	const layoutData = await fetchLessonLayoutData(params)
-	const bundle = requireBundle(layoutData)
-
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.quiz, "fetchQuizPageData quiz parameter")
-	logger.info("fetchQuizPageData called", { params })
+	logger.info("fetchQuizPageData raw executed", { params })
+
+	const layoutData = await fetchLessonLayoutDataBase(params)
+	const bundle = requireBundle(layoutData)
 
 	const resource = findAndValidateResourceBundle({ bundle, slug: params.quiz, activityType: "Quiz" })
 	const componentResource = findComponentResourceWithContextBundle({
@@ -69,19 +69,19 @@ export async function fetchQuizPageData(params: {
 	}
 }
 
-export async function fetchUnitTestPageData(params: {
+export async function fetchUnitTestPageDataBase(params: {
 	subject: string
 	course: string
 	unit: string
 	lesson: string
 	test: string
 }): Promise<UnitTestPageData> {
-	const layoutData = await fetchLessonLayoutData(params)
-	const bundle = requireBundle(layoutData)
-
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.test, "fetchUnitTestPageData test parameter")
-	logger.info("fetchUnitTestPageData called", { params })
+	logger.info("fetchUnitTestPageData raw executed", { params })
+
+	const layoutData = await fetchLessonLayoutDataBase(params)
+	const bundle = requireBundle(layoutData)
 
 	const resource = findAndValidateResourceBundle({ bundle, slug: params.test, activityType: "UnitTest" })
 	const componentResource = findComponentResourceWithContextBundle({
@@ -115,16 +115,16 @@ export async function fetchUnitTestPageData(params: {
 	}
 }
 
-export async function fetchCourseChallengePage_TestData(params: {
+export async function fetchCourseChallengePage_TestDataBase(params: {
 	test: string
 	course: string
 	subject: string
 }): Promise<CourseChallengePageData> {
-	logger.info("fetchCourseChallengePage_TestData called", { params })
+	logger.info("fetchCourseChallengePage_TestData raw executed", { params })
 
-	const coursePageData = await fetchCoursePageData(
+	const coursePageData = await fetchCoursePageDataBase(
 		{ subject: params.subject, course: params.course },
-		{ skipQuestions: true }
+		true
 	)
 	const bundle = requireBundle(coursePageData)
 	const { resource, componentResource } = findCourseChallengeBundle({ bundle, slug: params.test })
@@ -154,13 +154,17 @@ export async function fetchCourseChallengePage_TestData(params: {
 	}
 }
 
-export async function fetchCourseChallengePage_LayoutData(params: {
+export async function fetchCourseChallengePage_LayoutDataBase(params: {
 	course: string
 	subject: string
 }): Promise<CourseChallengeLayoutData> {
 	// dynamic opt-in is handled at the page level
+	logger.info("fetchCourseChallengePage_LayoutData raw executed", { params })
 
-	const coursePageData = await fetchCoursePageData({ subject: params.subject, course: params.course }, { skipQuestions: true })
+	const coursePageData = await fetchCoursePageDataBase(
+		{ subject: params.subject, course: params.course },
+		true
+	)
 
 	// The CourseSidebar component needs the full course object with units,
 	// the lesson count, and any challenges.

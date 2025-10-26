@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import * as React from "react"
 import { notFound } from "next/navigation"
 import { stashBundle, requireBundle } from "@/lib/course-bundle/store"
 import {
@@ -27,6 +28,14 @@ import type {
 import type { CoursePageData, LessonLayoutData, UnitPageData } from "@/lib/types/page"
 import { assertNoEncodedColons } from "@/lib/utils"
 import type { ComponentResourceRead, CourseComponentRead } from "@/lib/oneroster"
+
+const getCourseBundleWithLookupsCached = React.cache(async (courseSourcedId: string) => {
+	const bundle = await getCourseResourceBundle(courseSourcedId)
+	return {
+		bundle,
+		lookups: getCourseResourceBundleLookups(bundle)
+	}
+})
 
 function removeNiceAcademyPrefix(title: string): string {
 	const prefix = "Nice Academy - "
@@ -96,11 +105,15 @@ function ensureCourseMetadata(courseMetadataResult: ReturnType<typeof CourseMeta
 	return courseMetadataResult.data
 }
 
-export async function fetchCoursePageData(
+export async function fetchCoursePageDataBase(
 	params: { subject: string; course: string },
-	options?: { skipQuestions?: boolean }
+	skipQuestions: boolean
 ): Promise<CoursePageData> {
-	logger.info("fetchCoursePageData (bundle) called", { params, options })
+	logger.info("fetchCoursePageData raw executed", {
+		subject: params.subject,
+		course: params.course,
+		skipQuestions
+	})
 
 	assertNoEncodedColons(params.course, "fetchCoursePageData course parameter")
 	assertNoEncodedColons(params.subject, "fetchCoursePageData subject parameter")
@@ -127,9 +140,7 @@ export async function fetchCoursePageData(
 		notFound()
 	}
 
-	const bundle = await getCourseResourceBundle(courseRecord.sourcedId)
-	const lookups = getCourseResourceBundleLookups(bundle)
-	const skipQuestions = options?.skipQuestions === true
+	const { bundle, lookups } = await getCourseBundleWithLookupsCached(courseRecord.sourcedId)
 	const questionCounts = await buildExerciseQuestionMap(bundle, skipQuestions)
 
 	const componentResourcesByComponentId = lookups.componentResourcesByComponentId
@@ -489,14 +500,23 @@ function determineLastLessonSlug(
 	return metaResult.data.khanSlug
 }
 
-export async function fetchUnitPageData(params: {
+export async function fetchUnitPageDataBase(params: {
 	subject: string
 	course: string
 	unit: string
 }): Promise<UnitPageData> {
 	assertNoEncodedColons(params.unit, "fetchUnitPageData unit parameter")
 
-	const coursePageData = await fetchCoursePageData({ subject: params.subject, course: params.course }, { skipQuestions: true })
+	logger.info("fetchUnitPageData raw executed", {
+		subject: params.subject,
+		course: params.course,
+		unit: params.unit
+	})
+
+	const coursePageData = await fetchCoursePageDataBase(
+		{ subject: params.subject, course: params.course },
+		true
+	)
 	const bundle = requireBundle(coursePageData)
 	const unit = coursePageData.course.units.find((entry) => entry.slug === params.unit)
 
@@ -526,7 +546,7 @@ export async function fetchUnitPageData(params: {
 	return stashBundle(result, bundle)
 }
 
-export async function fetchLessonLayoutData(params: {
+export async function fetchLessonLayoutDataBase(params: {
 	subject: string
 	course: string
 	unit: string
@@ -534,7 +554,18 @@ export async function fetchLessonLayoutData(params: {
 }): Promise<LessonLayoutData> {
 	assertNoEncodedColons(params.lesson, "fetchLessonLayoutData lesson parameter")
 
-	const unitPageData = await fetchUnitPageData({ subject: params.subject, course: params.course, unit: params.unit })
+	logger.info("fetchLessonLayoutData raw executed", {
+		subject: params.subject,
+		course: params.course,
+		unit: params.unit,
+		lesson: params.lesson
+	})
+
+	const unitPageData = await fetchUnitPageDataBase({
+		subject: params.subject,
+		course: params.course,
+		unit: params.unit
+	})
 	const bundle = requireBundle(unitPageData)
 	const lesson = unitPageData.unit.children.find(
 		(child): child is Lesson => child.type === "Lesson" && child.slug === params.lesson

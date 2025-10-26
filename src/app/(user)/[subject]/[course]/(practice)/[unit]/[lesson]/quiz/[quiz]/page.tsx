@@ -1,6 +1,6 @@
 import { connection } from "next/server"
 import * as React from "react"
-import { fetchQuizPageData } from "@/lib/data/assessment"
+import { getCachedQuizPageData } from "@/lib/server-cache/assessment-data"
 import type { QuizPageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
 import { Content } from "./components/content"
@@ -15,7 +15,15 @@ export default async function QuizPage({
 }) {
 	await connection()
 	const normalizedParamsPromise = normalizeParams(params)
-	const quizPromise: Promise<QuizPageData> = normalizedParamsPromise.then(fetchQuizPageData)
+const quizPromise: Promise<QuizPageData> = normalizedParamsPromise.then((resolvedParams) =>
+	getCachedQuizPageData(
+		resolvedParams.subject,
+		resolvedParams.course,
+		resolvedParams.unit,
+		resolvedParams.lesson,
+		resolvedParams.quiz
+	)
+)
 
 	const expectedIdentifiersPromisesPromise: Promise<Promise<string[]>[]> = quizPromise.then((data) =>
 		data.questions.map((q) => getAssessmentItem(q.id).then((item) => (item.responseDeclarations ?? []).map((d) => d.identifier)))

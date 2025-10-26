@@ -2,142 +2,18 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { format } from "date-fns"
 import type { z } from "zod"
-import { redisCache } from "@/lib/cache"
 import type { CaliperEventSchema } from "@/lib/caliper"
-import { oneroster } from "@/lib/clients"
 // CHANGED: Import the new fetcher instead of using caliper client directly
 import { getAllEventsForUser } from "@/lib/data/fetchers/caliper"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { Activity } from "@/lib/types/domain"
 import { constructActorId } from "@/lib/utils/actor-id"
-import { getResourceIdFromLineItem } from "@/lib/utils/assessment-line-items"
-// ADDED: Import the new utility functions
-import { isInteractiveAttemptResult, isPassiveContentResult } from "@/lib/utils/assessment-results"
 import { requireUser } from "@/lib/auth/require-user"
+import { type AssessmentProgress, type UnitProficiency, getUserUnitProgressRaw } from "@/lib/data/progress/raw"
 
-// Original types and functions for course/unit progress
-export type AssessmentProgress = {
-	completed: boolean
-	score?: number
-	proficiency?: "attempted" | "familiar" | "proficient" | "mastered"
-}
+export type { AssessmentProgress, UnitProficiency } from "@/lib/data/progress/raw"
 
-// NEW: Interface for unit proficiency (matching profile.ts structure)
-export interface UnitProficiency {
-	unitId: string
-	proficiencyPercentage: number
-	proficientExercises: number
-	totalExercises: number
-}
-
-/**
- * Fetches the user's progress for resources within a specific course unit.
- * This returns a map of resourceId -> progress details including score and proficiency.
- *
- * @param userId - The user's OneRoster sourcedId
- * @param onerosterCourseSourcedId - The course sourcedId
- * @returns A map of resource IDs to their progress details
- */
-export async function getUserUnitProgress(
-	userId: string,
-	onerosterCourseSourcedId: string
-): Promise<Map<string, AssessmentProgress>> {
-	const cachedArray = await redisCache(
-		async () => {
-			logger.info("fetching user unit progress from API", { userId, onerosterCourseSourcedId })
-
-			const progressMap = new Map<string, AssessmentProgress>()
-
-			/**
-			 * Calculate proficiency level based on score
-			 * 0-70% = attempted
-			 * 70-99.999% = familiar
-			 * 100% = proficient
-			 */
-			const calculateProficiency = (score: number): "attempted" | "familiar" | "proficient" | "mastered" => {
-				if (score >= 100) return "proficient"
-				if (score >= 70) return "familiar"
-				return "attempted"
-			}
-
-			// Fetch all assessment results for the user
-			// We'll filter client-side to only include new '_ali' format line items
-			const resultsResponse = await errors.try(
-				oneroster.getAllResults({
-					filter: `student.sourcedId='${userId}'`
-				})
-			)
-
-			if (resultsResponse.error) {
-				logger.error("failed to fetch user progress", { userId, error: resultsResponse.error })
-				throw errors.wrap(resultsResponse.error, "fetch user progress")
-			}
-
-			// Process results to build the progress map by selecting the newest result per resource
-			const latestByResource = new Map<string, (typeof resultsResponse.data)[number]>()
-			for (const result of resultsResponse.data) {
-				const lineItemId = result.assessmentLineItem.sourcedId
-				if (!lineItemId.endsWith("_ali")) {
-					continue
-				}
-
-				// CHANGED: Use the new centralized utilities to validate the result ID
-				const isInteractive = isInteractiveAttemptResult(result, userId, lineItemId)
-				const isPassive = isPassiveContentResult(result, userId, lineItemId)
-
-				if (!isInteractive && !isPassive) {
-					continue
-				}
-
-				const resourceId = getResourceIdFromLineItem(lineItemId)
-				const prev = latestByResource.get(resourceId)
-				const currentTime = new Date(result.scoreDate || 0).getTime()
-				const prevTime = prev ? new Date(prev.scoreDate || 0).getTime() : Number.NEGATIVE_INFINITY
-				if (!prev || currentTime > prevTime) {
-					latestByResource.set(resourceId, result)
-				}
-			}
-
-			for (const [resourceId, latest] of latestByResource.entries()) {
-				if (latest.scoreStatus === "fully graded" && typeof latest.score === "number") {
-					const normalizedScore = Math.round(latest.score)
-					progressMap.set(resourceId, {
-						completed: true,
-						score: normalizedScore,
-						proficiency: calculateProficiency(normalizedScore)
-					})
-				} else if (latest.scoreStatus === "partially graded" && typeof latest.score === "number") {
-					const normalizedScore = Math.round(latest.score)
-					progressMap.set(resourceId, {
-						completed: false,
-						score: normalizedScore
-					})
-				} else if (latest.scoreStatus === "fully graded") {
-					progressMap.set(resourceId, {
-						completed: true
-					})
-				}
-			}
-
-			logger.info("fetched user progress", {
-				userId,
-				onerosterCourseSourcedId,
-				completedCount: Array.from(progressMap.values()).filter((p) => p.completed).length,
-				partialCount: Array.from(progressMap.values()).filter((p) => !p.completed && p.score !== undefined).length
-			})
-
-			// Convert Map to array for caching (Maps don't survive JSON serialization)
-			return Array.from(progressMap.entries())
-		},
-		["user-progress", userId, onerosterCourseSourcedId], // keyParts array
-		{
-			revalidate: 3600 // 1 hour
-		}
-	)
-
-	// Convert array back to Map
-	return new Map(cachedArray)
-}
+export { getUserUnitProgressRaw as getUserUnitProgress }
 
 // New types and functions for progress page
 export interface ProgressPageData {

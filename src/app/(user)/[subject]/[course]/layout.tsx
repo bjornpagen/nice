@@ -1,8 +1,9 @@
 import { requireUser } from "@/lib/auth/require-user"
 import * as React from "react"
 import { CourseLockStatusProvider } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
-import { fetchCoursePageData } from "@/lib/data/course"
-import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
+import { getCachedCoursePageData } from "@/lib/server-cache/course-data"
+import { type AssessmentProgress } from "@/lib/data/progress"
+import { getCachedUserUnitProgress } from "@/lib/server-cache/progress"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { buildResourceLockStatus, normalizeParams } from "@/lib/utils"
 
@@ -38,9 +39,9 @@ export default function CourseLayout({
 	const normalizedParamsPromise = normalizeParams(params)
 
 	// Fetch course data for lock status calculation
-const courseDataPromise = normalizedParamsPromise.then((resolvedParams) =>
-	fetchCoursePageData(resolvedParams, { skipQuestions: true })
-)
+	const courseDataPromise = normalizedParamsPromise.then((resolvedParams) =>
+		getCachedCoursePageData(resolvedParams.subject, resolvedParams.course, true)
+	)
 
 	const userPromise = requireUser()
 
@@ -49,7 +50,7 @@ const courseDataPromise = normalizedParamsPromise.then((resolvedParams) =>
 		([courseData, user]) => {
 			const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
 			if (parsed.success && parsed.data.sourceId) {
-				return getUserUnitProgress(parsed.data.sourceId, courseData.course.id)
+				return getCachedUserUnitProgress(parsed.data.sourceId, courseData.course.id)
 			}
 			return new Map<string, AssessmentProgress>()
 		}
