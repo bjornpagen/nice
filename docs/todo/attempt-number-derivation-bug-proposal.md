@@ -17,38 +17,52 @@
    - Key: `assess:active:{userId}:{resourceId}` storing the current attempt number as a string (TTL matches `ASSESSMENT_STATE_TTL_SECONDS`).
    - Helper API in `src/lib/assessment-cache.ts`:
      - `getActiveAttemptNumber(userId, resourceId)` → number \| null (refreshes TTL on read).
-     - `setActiveAttemptNumber(userId, resourceId, attemptNumber)` (sets TTL).
-     - `clearActiveAttemptNumber(userId, resourceId)` (used on reset).
+     - `setActiveAttemptNumber(userId, resourceId, attemptNumber)` (sets TTL via `EX`).
+     - `clearActiveAttemptNumber(userId, resourceId, expectedAttemptNumber?)` (used on reset; optional guard prevents wiping a newer attempt).
      - `findLatestCachedAttemptNumber(userId, resourceId)` → optional scan fallback when the pointer is missing but state keys still exist.
+   - TTL must remain in lockstep with the cached state: every pointer read/write refreshes expiry, and pointer creation happens in the same `multi`/pipeline as `createAssessmentState` so both keys share a lifespan.
 2. **Centralise attempt resolution in the server actions.**
    - New helper inside `src/lib/actions/assessment.ts` (e.g., `resolveAssessmentContext`) encapsulates:
      1. Read pointer.
-     2. If pointer missing or stale, call `findLatestCachedAttemptNumber` to recover any existing state and re-seed the pointer.
-     3. If no cached attempt exists, derive a fresh number from OneRoster (existing `attempt.getNext`), create/return the state, and persist the pointer.
+     2. Attempt to load the state for that pointer; if `getAssessmentState` returns `null`, treat it as pointer drift (clear pointer + continue recovery) instead of immediately failing.
+     3. If pointer missing or stale, call `findLatestCachedAttemptNumber` to recover any existing state and re-seed the pointer.
+     4. If no cached attempt exists, derive a fresh number from OneRoster (existing `attempt.getNext`), create/return the state, and persist the pointer.
+   - When recovering via `findLatestCachedAttemptNumber`, prefer the newest **non-finalized** attempt. Only fall back to a finalized attempt if that is the latest cached entry, and log that we rehydrated a completed state.
    - All mutations (`submitAnswer`, `skipQuestion`, `reportQuestion`, `finalizeAssessment`, `startNewAssessmentAttempt`) call that helper and use the returned `{ state, attemptNumber }` instead of recalculating the number themselves.
 3. **Question preparation honours the pointer.**
    - `prepareInteractiveAssessment` (`src/lib/interactive-assessments.ts:22`) should:
      - Check for an active pointer via the new helper (needs a non-auth variant that accepts `userSourceId`).
-     - Use the pointer attempt number when resuming.
+     - Use the pointer attempt number when resuming, and only call OneRoster when both pointer and cached state lookups fail.
      - Only fall back to OneRoster when no pointer/cache is available (i.e., first-ever attempt).
    - This keeps SSR question ordering aligned with the cached attempt.
 4. **Reset flow uses pointer instead of OneRoster.**
    - `startNewAssessmentAttempt` should:
      1. Read pointer (or use `findLatestCachedAttemptNumber`).
      2. Delete the cached state for that attempt via `deleteAssessmentState`.
-     3. Clear the pointer.
+     3. Clear the pointer using the optional `expectedAttemptNumber` guard so we don’t wipe a newer attempt that started mid-reset.
      4. Return `{ success: true, clearedAttempt: number }` so `AssessmentStepper` can log/telemetry if needed.
+     5. Never call OneRoster during reset — the entire flow should rely on cached data only.
 5. **Client changes (minimal).**
    - `AssessmentStepper` already stores `serverState` (which includes `attemptNumber`). No behaviour change is needed beyond tolerating the optional `clearedAttempt` response.
-   - We may add a guard to ensure `handleReset` ignores the returned hint from the server rather than computing `serverState.attemptNumber + 1`.
+   - Ensure `handleReset` trusts the server-reported attempt metadata rather than computing `serverState.attemptNumber + 1`.
 6. **Telemetry & logging.**
    - Add structured logs whenever the pointer is missing but an existing cached state is recovered (to detect drift).
    - Add warnings if the pointer references a missing state (indicates a flush or TTL expiry).
+   - Emit logs when we recover only finalized states so we can identify users stuck on stale summaries.
+
+### Failure Modes & Edge Cases
+- **Pointer drift:** If the pointer exists but `getAssessmentState` returns `null`, immediately clear the pointer, attempt recovery via `findLatestCachedAttemptNumber`, and only surface `ErrAssessmentStateNotFound` after every fallback path fails.
+- **Finalized vs in-progress selection:** When scanning cached attempts, prefer the latest non-finalized state. If only finalized entries remain, rehydrate but log the condition so we can monitor users stuck on summaries.
+- **TTL desync:** Pointer helpers must refresh TTL on every read/write. Creation and deletion flows should use a single `multi`/Lua script so pointer and state keys expire (or disappear) together.
+- **Reset race:** Guard `clearActiveAttemptNumber` with the optional `expectedAttemptNumber` (or use `WATCH`/Lua) so a reset cannot wipe a brand-new attempt created by a concurrent request.
+- **Mixed-version pods:** Legacy pods that still call `getNextAttemptNumber` should first check the pointer to avoid reintroducing the bug during rollout.
+- **Redis outages:** Continue surfacing `ErrRedisUnavailable`; do not attempt pointer fallback when Redis itself is down.
 
 ## File-by-File Changes
 
 ### `src/lib/assessment-cache.ts`
 - Introduce pointer helpers described above plus a small internal util `getActiveAttemptKey`.
+- Ensure pointer helpers refresh TTL on read/write and share the same `multi` pipeline as state creation/deletion so expirations never drift.
 - Extend `deleteAssessmentState` to also delete the pointer (after verifying the pointer matches the deleted attempt to avoid nuking concurrent attempts).
 - Optional: expose `scanAssessmentAttempts(userId, resourceId)` implemented with `redis.scanIterator` to support diagnostics/tests.
 
@@ -56,8 +70,9 @@
 - Create a private `async function getActiveState(onerosterUserSourcedId, assessmentId)` that returns `{ state, attemptNumber }` or `null`.
 - Create a private `async function ensureActiveState(onerosterUserSourcedId, assessmentId)` used by `getOrCreateAssessmentState`; it encapsulates the fallback sequence:
   1. Attempt pointer lookup.
-  2. Pointer-stale recovery via `findLatestCachedAttemptNumber`.
-  3. Fallback to OneRoster and state creation.
+  2. Load state based on that pointer; if `null`, treat it as drift (clear pointer and continue).
+  3. Pointer-stale recovery via `findLatestCachedAttemptNumber`, preferring non-finalized attempts and logging finalized-only recoveries.
+  4. Fallback to OneRoster and state creation.
 - Replace all direct `getNextAttemptNumber` calls in `submitAnswer`, `skipQuestion`, `reportQuestion`, `finalizeAssessment`, and `startNewAssessmentAttempt` with the new helpers. These functions should now:
   - Use the returned state’s `attemptNumber` when calling `updateStateAndQuestion`, `markAssessmentFinalized`, etc.
   - Throw a specific error if no active attempt can be found (after trying recovery), prompting the client to reinitialise.
@@ -87,7 +102,10 @@
   - Ensure `submitAnswer` doesn’t call `deriveNextAttemptNumber` once a pointer is in place.
   - Simulate pointer loss + cached state recovery.
   - Simulate pointer + cache missing to validate new error messaging.
+  - Simulate pointer referencing a finalized-only attempt and verify we select the latest in-progress state when available.
 - Add integration coverage for `startNewAssessmentAttempt` to verify it clears pointer and state.
+- Add race-condition coverage where `startNewAssessmentAttempt` runs concurrently with a new attempt creation to ensure the pointer guard prevents data loss.
+- Add TTL-focused tests confirming repeated reads/writes keep the pointer alive for long-running sessions.
 - Extend existing rotation tests to use the pointer when resuming attempts, ensuring question sets stay aligned.
 
 ## Rollout & Backwards Compatibility
