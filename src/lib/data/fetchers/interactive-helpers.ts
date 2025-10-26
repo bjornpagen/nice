@@ -1,10 +1,15 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
-import { getAllCoursesBySlug, getCourseComponentByCourseAndSlug, getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
-import { getAllComponentResources, getAllResources } from "@/lib/data/fetchers/oneroster-course-builder"
-import { getComponentResourcesByLessonIds, getResourcesByIds } from "@/lib/data/fetchers/oneroster"
-import { getAssessmentTest } from "@/lib/data/fetchers/qti"
+import {
+	getAllCoursesBySlug,
+	getCourseComponentByCourseAndSlug,
+	getResourcesBySlugAndType,
+	getComponentResourcesByLessonIds,
+	getResourcesByIds
+} from "@/lib/oneroster/redis/api"
+import { getAllComponentResources, getAllResources } from "@/lib/oneroster/redis/course-builder"
+import { getAssessmentTest } from "@/lib/qti/redis/api"
 import { prepareInteractiveAssessment } from "@/lib/interactive-assessments"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import { type ResourceMetadata, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
@@ -219,7 +224,7 @@ export async function findComponentResourceWithContext(
 	// where the component is the assessment itself, not the unit
 	if (!componentResource) {
 		// Import the function to get course components by parent
-		const { getCourseComponentsByParentId } = await import("@/lib/data/fetchers/oneroster")
+		const { getCourseComponentsByParentId } = await import("@/lib/oneroster/redis/api")
 
 		// Get all components that are children of the parent (unit)
 		const childComponentsResult = await errors.try(getCourseComponentsByParentId(parentComponentSourcedId))

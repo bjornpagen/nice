@@ -1,5 +1,5 @@
 import * as errors from "@superbuilders/errors"
-import type { CourseResourceBundle } from "@/lib/data/fetchers/oneroster"
+import type { CourseResourceBundle } from "@/lib/oneroster/redis/api"
 
 const bundleByOwner = new WeakMap<object, CourseResourceBundle>()
 

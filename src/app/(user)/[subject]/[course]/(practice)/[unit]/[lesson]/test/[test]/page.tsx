@@ -1,10 +1,10 @@
 import { connection } from "next/server"
 import * as React from "react"
-import { getCachedUnitTestPageData } from "@/lib/server-cache/assessment-data"
+import { getCachedUnitTestPageData } from "@/lib/oneroster/react/assessment-data"
 import type { UnitTestPageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
 import { Content } from "./components/content"
-import { getAssessmentItem } from "@/lib/data/fetchers/qti"
+import { getAssessmentItem } from "@/lib/qti/redis/api"
 
 // --- REMOVED: The local UnitTestPageData type definition ---
 

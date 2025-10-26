@@ -4,7 +4,7 @@ import * as logger from "@superbuilders/slog"
 import { and, eq } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
-import { getActiveEnrollmentsForUser, getClass } from "@/lib/data/fetchers/oneroster"
+import { getActiveEnrollmentsForUser, getClass } from "@/lib/oneroster/redis/api"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 
 /**

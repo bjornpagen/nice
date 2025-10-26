@@ -6,10 +6,10 @@ import { z } from "zod"
 import { oneroster, qti } from "@/lib/clients"
 import * as crypto from "node:crypto"
 import { formatResourceTitleForDisplay } from "@/lib/utils/format-resource-title"
-import { getAllResources } from "@/lib/data/fetchers/oneroster-course-builder"
+import { getAllResources } from "@/lib/oneroster/redis/course-builder"
 import { extractQtiStimulusBodyContent } from "@/lib/xml-utils"
 import { createCacheKey, invalidateCache } from "@/lib/cache"
-import { invalidateCourseResourceBundle } from "@/lib/data/fetchers/oneroster"
+import { invalidateCourseResourceBundle } from "@/lib/oneroster/redis/api"
 
 // Constants aligned with existing payload builders
 const ORG_SOURCED_ID = "f251f08b-61de-4ffa-8ff3-3e56e1d75a60"
@@ -553,7 +553,7 @@ export async function createCourseStep(courseData: any) {
     }
   }
 
-  const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseData.sourcedId))
+  const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseData.sourcedId, []))
   if (bundleInvalidateResult.error) {
     logger.warn("failed to invalidate course bundle cache after createCourseStep", {
       courseId: courseData.sourcedId,
@@ -618,7 +618,7 @@ export async function createComponentsStep(components: any[]) {
   }
 
   for (const courseId of courseSourcedIds) {
-    const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseId))
+    const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseId, []))
     if (bundleInvalidateResult.error) {
       logger.warn("failed to invalidate course bundle cache after createComponentsStep", {
         courseId,
@@ -678,7 +678,7 @@ export async function createResourcesStep(resources: any[], courseSourcedIds: st
   }
 
   for (const courseId of affectedCourseIds) {
-    const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseId))
+    const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseId, createdResourceIds))
     if (bundleInvalidateResult.error) {
       logger.warn("failed to invalidate course bundle cache after createResourcesStep", {
         courseId,
@@ -776,7 +776,9 @@ export async function createComponentResourcesStep(componentResources: any[], co
   }
 
   if (courseSourcedId) {
-    const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseSourcedId))
+    const bundleInvalidateResult = await errors.try(
+      invalidateCourseResourceBundle(courseSourcedId, Array.from(allResourceIds))
+    )
     if (bundleInvalidateResult.error) {
       logger.warn("failed to invalidate course bundle cache after createComponentResourcesStep", {
         courseId: courseSourcedId,
@@ -814,7 +816,7 @@ export async function createAssessmentLineItemsStep(lineItems: any[]) {
     }
   }
   for (const courseId of courseIds) {
-    const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseId))
+    const bundleInvalidateResult = await errors.try(invalidateCourseResourceBundle(courseId, []))
     if (bundleInvalidateResult.error) {
       logger.warn("failed to invalidate course bundle cache after createAssessmentLineItemsStep", {
         courseId,

@@ -62,7 +62,7 @@ mock.module("@clerk/nextjs/server", () => ({
 }))
 
 // Mock OneRoster fetchers
-mock.module("@/lib/data/fetchers/oneroster", () => ({
+mock.module("@/lib/oneroster/redis/api", () => ({
 	getAllCoursesBySlug: mock(() => Promise.resolve([])),
 	getClass: mock((_id: string) => Promise.resolve(null)),
 	getActiveEnrollmentsForUser: mock((_u: string) => Promise.resolve([])),

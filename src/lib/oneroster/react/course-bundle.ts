@@ -5,7 +5,7 @@ import {
 	getCourseResourceBundle,
 	getCourseResourceBundleLookups,
 	type CourseResourceBundle
-} from "@/lib/data/fetchers/oneroster"
+} from "@/lib/oneroster/redis/api"
 
 export const getCachedCourseResourceBundle = React.cache(async (courseSourcedId: string): Promise<CourseResourceBundle> => {
 	logger.debug("bundle cache requested", { courseId: courseSourcedId })

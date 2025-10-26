@@ -1,28 +1,20 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import * as React from "react"
 import { notFound } from "next/navigation"
 import {
 	getAllCoursesBySlug,
 	getComponentResourcesByResourceId,
 	getCourseComponentsBySourcedId,
-	getCourseResourceBundle,
-	getCourseResourceBundleLookups,
 	getResourcesBySlugAndType,
 	type CourseResourceBundle
-} from "@/lib/data/fetchers/oneroster"
+} from "@/lib/oneroster/redis/api"
 import { ComponentMetadataSchema, CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import type { ComponentMetadata } from "@/lib/metadata/oneroster"
 import type { CourseComponentRead } from "@/lib/oneroster"
 import { assertNoEncodedColons } from "@/lib/utils"
+import { getCachedCourseResourceBundleWithLookups } from "@/lib/oneroster/react/course-bundle"
 
-const getCourseBundleWithLookupsCached = React.cache(async (courseSourcedId: string) => {
-	const bundle = await getCourseResourceBundle(courseSourcedId)
-	return {
-		bundle,
-		lookups: getCourseResourceBundleLookups(bundle)
-	}
-})
+type CourseBundleLookups = Awaited<ReturnType<typeof getCachedCourseResourceBundleWithLookups>>["lookups"]
 
 export interface AssessmentRedirectParams {
 	subject: string
@@ -84,7 +76,7 @@ export async function findAssessmentRedirectPathBase(params: AssessmentRedirectP
 	}
 	const courseMetadata = courseMetadataResult.data
 
-	const { bundle, lookups } = await getCourseBundleWithLookupsCached(courseRecord.sourcedId)
+	const { bundle, lookups } = await getCachedCourseResourceBundleWithLookups(courseRecord.sourcedId)
 
 	const componentResources = await getComponentResourcesByResourceId(resource.sourcedId)
 	if (componentResources.length === 0) {
@@ -170,7 +162,7 @@ export async function findAssessmentRedirectPathBase(params: AssessmentRedirectP
 
 function resolveLessonSlugForUnit(
 	bundle: CourseResourceBundle,
-	lookups: ReturnType<typeof getCourseResourceBundleLookups>,
+	lookups: CourseBundleLookups,
 	unitComponent: CourseComponentRead,
 	unitMetadata: ComponentMetadata
 ): string {

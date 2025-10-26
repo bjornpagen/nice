@@ -204,11 +204,11 @@ mock.module("@/lib/clients", () => ({
 			if (existing) {
 				return Promise.resolve(existing)
 			}
-			
+
 			// The result ID format should be: nice_userId_resourceId_ali
 			// Since we mocked generateResultSourcedId to return this format
 			const parts = resultSourcedId.split("_")
-			
+
 			// Find the part that looks like a resource ID (A1, TRAIL, etc)
 			let resourceId = ""
 			for (const part of parts) {
@@ -217,7 +217,7 @@ mock.module("@/lib/clients", () => ({
 					break
 				}
 			}
-			
+
 			// Simulate time spent for known passive resources
 			if (resourceId === "A1" || resourceId === "TRAIL") {
 				const result = {
@@ -225,7 +225,7 @@ mock.module("@/lib/clients", () => ({
 				}
 				return Promise.resolve(result)
 			}
-			
+
 			// No result found
 			return Promise.resolve(null)
 		},
@@ -235,7 +235,7 @@ mock.module("@/lib/clients", () => ({
 }))
 
 // New: Mock the fetcher layer used by bank.ts
-mock.module("@/lib/data/fetchers/oneroster", () => ({
+mock.module("@/lib/oneroster/redis/api", () => ({
   // Mock getCourse to return course with metadata
   getCourse: (courseId: string) => {
     if (courseId === "course1") {
@@ -311,7 +311,7 @@ mock.module("@/lib/data/fetchers/oneroster", () => ({
       metadata: {}
     })
   },
-  
+
   // Fetch resource metadata
   getResourcesByIds: (ids: string[]) =>
     Promise.resolve(

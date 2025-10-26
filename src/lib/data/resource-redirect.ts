@@ -5,12 +5,12 @@ import {
 	getCourse,
 	getCourseComponentsBySourcedId,
 	getResourcesBySlugAndType
-} from "@/lib/data/fetchers/oneroster"
+} from "@/lib/oneroster/redis/api"
 import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { CourseMetadata } from "@/lib/metadata/oneroster"
 import type { CourseComponentRead } from "@/lib/oneroster"
 import { assertNoEncodedColons } from "@/lib/utils"
-import { getCachedCourseResourceBundleWithLookups } from "@/lib/server-cache/bundle"
+import { getCachedCourseResourceBundleWithLookups } from "@/lib/oneroster/react/course-bundle"
 
 type ResourceType = "article" | "exercise" | "video"
 
@@ -56,10 +56,6 @@ export async function findResourcePath(slug: string, type: ResourceType): Promis
 		return null
 	}
 
-	const bundleCache = new Map<
-		string,
-		Awaited<ReturnType<typeof getCachedCourseResourceBundleWithLookups>>
-	>()
 	const componentCache = new Map<string, CourseComponentRead>()
 	const courseMetadataCache = new Map<string, CourseMetadata>()
 
@@ -89,11 +85,7 @@ export async function findResourcePath(slug: string, type: ResourceType): Promis
 			continue
 		}
 
-		let bundleEntry = bundleCache.get(courseId)
-		if (!bundleEntry) {
-			bundleEntry = await getCachedCourseResourceBundleWithLookups(courseId)
-			bundleCache.set(courseId, bundleEntry)
-		}
+		const bundleEntry = await getCachedCourseResourceBundleWithLookups(courseId)
 
 		const { bundle, lookups } = bundleEntry
 		const bundleComponent = lookups.courseComponentsById.get(componentId)

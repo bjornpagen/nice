@@ -1,6 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { getAssessmentItems } from "@/lib/data/fetchers/qti"
+import { getAssessmentItems } from "@/lib/qti/redis/api"
 import type { AssessmentTest, TestQuestionsResponse } from "@/lib/qti"
 
 type ParsedAssessment = {

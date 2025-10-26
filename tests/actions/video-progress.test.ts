@@ -23,8 +23,8 @@ mock.module("@/lib/clients", () => ({
 }))
 
 // Use a partial mock to preserve all exports while overriding specific functions
-const actualOnerosterFetchers = await import("@/lib/data/fetchers/oneroster")
-mock.module("@/lib/data/fetchers/oneroster", () => ({
+const actualOnerosterFetchers = await import("@/lib/oneroster/redis/api")
+mock.module("@/lib/oneroster/redis/api", () => ({
 	...actualOnerosterFetchers,
 	getAllCoursesBySlug: (slug: string) => mockGetAllCoursesBySlug(slug),
 	getClass: (_id: string) => Promise.resolve(null),

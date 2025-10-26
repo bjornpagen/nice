@@ -5,7 +5,7 @@ import * as logger from "@superbuilders/slog"
 import { powerpath } from "@/lib/clients"
 import { mergeLessonPlanWithProgress, HARDCODED_SCIENCE_COURSE_IDS, MASTERY_THRESHOLD } from "@/lib/powerpath-progress"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
-import { getActiveEnrollmentsForUser } from "@/lib/data/fetchers/oneroster"
+import { getActiveEnrollmentsForUser } from "@/lib/oneroster/redis/api"
 import { enrollUserInCoursesByCourseId } from "@/lib/actions/courses"
 import { requireUser } from "@/lib/auth/require-user"
 
@@ -26,7 +26,7 @@ async function getEnrolledCourseIds(sourceId: string): Promise<Set<string>> {
 
 	const uniqueClassIds = [...new Set(enrollmentsResult.data.map((e) => e.class.sourcedId))]
 
-	const { getClass } = await import("@/lib/data/fetchers/oneroster")
+	const { getClass } = await import("@/lib/oneroster/redis/api")
 	const classResults = await Promise.all(
 		uniqueClassIds.map(async (classId) => {
 			const result = await errors.try(getClass(classId))

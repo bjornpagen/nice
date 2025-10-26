@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, mock, test } from "bun:test"
 import type { Lesson } from "@/lib/types/domain"
-import type { CourseResourceBundle } from "@/lib/data/fetchers/oneroster"
+import type { CourseResourceBundle } from "@/lib/oneroster/redis/api"
 import type { ResourceMetadata } from "@/lib/metadata/oneroster"
 
 // Prevent real Redis connections during bundle tests
@@ -88,7 +88,7 @@ describe("course bundle helpers", () => {
 			}
 		}
 
-		const bundle = {
+		const bundle: CourseResourceBundle = {
 			courseId: "course_123",
 			fetchedAt: new Date().toISOString(),
 			componentCount: 1,
@@ -120,12 +120,16 @@ describe("course bundle helpers", () => {
 					sortOrder: 2
 				}
 			],
-			resources: [
-				{
-					sourcedId: "resource_video",
-					status: "active",
-					title: "Intro Video",
-					metadata: {
+		resources: [
+			{
+				sourcedId: "resource_video",
+				status: "active",
+				title: "Intro Video",
+				format: "interactive",
+				vendorResourceId: "vendor_resource_video",
+				vendorId: null,
+				applicationId: null,
+				metadata: {
 						type: "interactive",
 						khanId: "resource_video",
 						khanSlug: "intro-video",
@@ -139,11 +143,15 @@ describe("course bundle helpers", () => {
 						khanYoutubeId: "abcd1234"
 					}
 				},
-				{
-					sourcedId: "resource_article",
-					status: "active",
-					title: "Concept Notes",
-					metadata: {
+			{
+				sourcedId: "resource_article",
+				status: "active",
+				title: "Concept Notes",
+				format: "interactive",
+				vendorResourceId: "vendor_resource_article",
+				vendorId: null,
+				applicationId: null,
+				metadata: {
 						type: "interactive",
 						khanId: "resource_article",
 						khanSlug: "concept-notes",
@@ -156,11 +164,15 @@ describe("course bundle helpers", () => {
 						xp: 30
 					}
 				},
-				{
-					sourcedId: "resource_exercise",
-					status: "active",
-					title: "Practice Problems",
-					metadata: {
+			{
+				sourcedId: "resource_exercise",
+				status: "active",
+				title: "Practice Problems",
+				format: "interactive",
+				vendorResourceId: "vendor_resource_exercise",
+				vendorId: null,
+				applicationId: null,
+				metadata: {
 						type: "qti",
 						subType: "qti-test",
 						khanId: "resource_exercise",
@@ -177,14 +189,21 @@ describe("course bundle helpers", () => {
 			]
 		}
 
-		const actualFetchers = await import("@/lib/data/fetchers/oneroster")
-		mock.module("@/lib/data/fetchers/oneroster", () => ({
+		const actualFetchers = await import("@/lib/oneroster/redis/api")
+		mock.module("@/lib/oneroster/redis/api", () => ({
 			...actualFetchers,
 			getAllCoursesBySlug: (slug: string) => {
 				expect(slug).toBe("algebra-basics")
 				return Promise.resolve([courseRecord])
 			},
 			getCourseResourceBundle: () => Promise.resolve(bundle)
+		}))
+		mock.module("@/lib/oneroster/react/course-bundle", () => ({
+			getCachedCourseResourceBundle: async () => bundle,
+			getCachedCourseResourceBundleWithLookups: async () => ({
+				bundle,
+				lookups: actualFetchers.getCourseResourceBundleLookups(bundle)
+			})
 		}))
 
 		const { fetchCoursePageDataBase } = await import("@/lib/course-bundle/course-loaders")
@@ -422,7 +441,7 @@ describe("course bundle helpers", () => {
 			]
 		}
 
-		const { invalidateCourseResourceBundleWithBundle } = await import("@/lib/data/fetchers/oneroster")
+		const { invalidateCourseResourceBundleWithBundle } = await import("@/lib/oneroster/redis/api")
 		await invalidateCourseResourceBundleWithBundle(bundle)
 
 		expect(invalidatedKeys).toEqual([

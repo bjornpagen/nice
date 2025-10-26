@@ -1,5 +1,5 @@
 import type { AssessmentRedirectParams } from "@/lib/course-bundle/assessment-redirect"
-import { getCachedQuizRedirectPath, getCachedTestRedirectPath } from "@/lib/server-cache/assessment-data"
+import { getCachedQuizRedirectPath, getCachedTestRedirectPath } from "@/lib/oneroster/react/assessment-data"
 
 export async function findAssessmentRedirectPath(params: AssessmentRedirectParams) {
 	if (params.assessmentType === "quiz") {

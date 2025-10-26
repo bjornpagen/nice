@@ -2,8 +2,8 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import type { Subject } from "@/lib/course-builder-api/schema"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
-import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
-import { getAllResources } from "@/lib/data/fetchers/oneroster-course-builder"
+import { getAllCoursesBySlug } from "@/lib/oneroster/redis/api"
+import { getAllResources } from "@/lib/oneroster/redis/course-builder"
 import { caseApi, qti } from "@/lib/clients"
 
 export async function fetchAllResourcesForCases(caseIds: string[], subject: Subject): Promise<{

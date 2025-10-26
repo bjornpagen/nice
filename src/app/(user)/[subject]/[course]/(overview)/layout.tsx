@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Sidebar } from "@/app/(user)/[subject]/[course]/(overview)/components/sidebar"
 import { Footer } from "@/components/footer"
-import { getCachedCoursePageData } from "@/lib/server-cache/course-data"
+import { getCachedCoursePageData } from "@/lib/oneroster/react/course-data"
 import type { AssessmentProgress, UnitProficiency } from "@/lib/data/progress"
 import type { CoursePageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"

@@ -2,7 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound, redirect } from "next/navigation"
 import { connection } from "next/server"
-import { getCachedTestRedirectPath } from "@/lib/server-cache/assessment-data"
+import { getCachedTestRedirectPath } from "@/lib/oneroster/react/assessment-data"
 import { normalizeParamsSync } from "@/lib/utils"
 
 export default async function TestRedirectPage({

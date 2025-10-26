@@ -10,7 +10,7 @@ import {
 	getAllCourses,
 	getClass,
 	getClassesForSchool
-} from "@/lib/data/fetchers/oneroster"
+} from "@/lib/oneroster/redis/api"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import { requireUser } from "@/lib/auth/require-user"

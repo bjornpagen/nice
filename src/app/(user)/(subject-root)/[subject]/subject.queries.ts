@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { getOneRosterCoursesForExplore } from "@/lib/actions/courses"
-import { getCachedCoursePageData } from "@/lib/server-cache/course-data"
+import { getCachedCoursePageData } from "@/lib/oneroster/react/course-data"
 import type { Unit } from "@/lib/types/domain"
 import { assertNoEncodedColons } from "@/lib/utils"
 

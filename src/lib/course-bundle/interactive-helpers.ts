@@ -5,7 +5,7 @@ import {
 	findLessonResources,
 	getCourseResourceBundleLookups,
 	type CourseResourceBundle
-} from "@/lib/data/fetchers/oneroster"
+} from "@/lib/oneroster/redis/api"
 import { ComponentMetadataSchema } from "@/lib/metadata/oneroster"
 
 type InteractiveAssessmentType = "Quiz" | "UnitTest" | "CourseChallenge"

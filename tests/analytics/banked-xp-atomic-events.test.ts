@@ -95,8 +95,8 @@ mock.module("@/lib/xp/bank", () => ({
 }))
 
 // Mock OneRoster fetchers
-const actualOnerosterFetchers = await import("@/lib/data/fetchers/oneroster")
-mock.module("@/lib/data/fetchers/oneroster", () => ({
+const actualOnerosterFetchers = await import("@/lib/oneroster/redis/api")
+mock.module("@/lib/oneroster/redis/api", () => ({
 	...actualOnerosterFetchers,
 	getClass: (_id: string) => Promise.resolve(null),
 	getActiveEnrollmentsForUser: (_u: string) => Promise.resolve([])

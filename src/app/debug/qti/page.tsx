@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Content } from "@/app/debug/qti/content"
-import { getAssessmentItem } from "@/lib/data/fetchers/qti"
+import { getAssessmentItemRaw } from "@/lib/qti/raw/api"
 
 export default function DebugQTIPage() {
 	// Explicit list of QTI item identifiers to render in order
@@ -11,7 +11,9 @@ export default function DebugQTIPage() {
 	// Initiate fetches to derive expected response identifiers for each item.
 	// Do not await here; pass promises to the client component and let it consume via React.use().
 	const expectedIdentifiersPromises = questionIds.map((id) =>
-		getAssessmentItem(id).then((item) => (item.responseDeclarations ?? []).map((d) => d.identifier))
+		getAssessmentItemRaw(id).then((item) =>
+			(item.responseDeclarations ?? []).map((declaration) => declaration.identifier)
+		)
 	)
 
 	return (

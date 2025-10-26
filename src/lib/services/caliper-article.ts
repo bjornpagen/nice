@@ -9,7 +9,7 @@ import {
     getCaliperArticleReadState,
     setCaliperArticleReadState
 } from "@/lib/article-cache"
-import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
+import { getAllCoursesBySlug } from "@/lib/oneroster/redis/api"
 // Pull writer from server actions to avoid duplication; safe because it doesn't call auth()
 import { upsertNiceTimeSpentToOneRoster as writeTimeToOneRoster } from "@/lib/caliper/writer"
 
@@ -295,5 +295,3 @@ async function resolveCourseSourcedIdLocal(courseSlug: string): Promise<string |
     }
     return courseResult.data[0].sourcedId
 }
-
-

@@ -1,9 +1,9 @@
 import { requireUser } from "@/lib/auth/require-user"
 import * as React from "react"
 import { CourseLockStatusProvider } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
-import { getCachedCoursePageData } from "@/lib/server-cache/course-data"
+import { getCachedCoursePageData } from "@/lib/oneroster/react/course-data"
 import { type AssessmentProgress } from "@/lib/data/progress"
-import { getCachedUserUnitProgress } from "@/lib/server-cache/progress"
+import { getCachedUserUnitProgress } from "@/lib/progress/react/user-progress"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { buildResourceLockStatus, normalizeParams } from "@/lib/utils"
 

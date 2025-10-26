@@ -5,16 +5,16 @@ import * as React from "react"
 import {
 	getCachedCourseChallengeLayoutData,
 	getCachedCourseChallengeTestData
-} from "@/lib/server-cache/assessment-data"
+} from "@/lib/oneroster/react/assessment-data"
 import { type AssessmentProgress } from "@/lib/data/progress"
-import { getCachedUserUnitProgress } from "@/lib/server-cache/progress"
+import { getCachedUserUnitProgress } from "@/lib/progress/react/user-progress"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { CourseChallengeLayoutData, CourseChallengePageData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
 import { normalizeParams } from "@/lib/utils"
 import { ChallengeLayout } from "./components/challenge-layout"
 import { Content } from "./components/content"
-import { getAssessmentItem } from "@/lib/data/fetchers/qti"
+import { getAssessmentItem } from "@/lib/qti/redis/api"
 
 export default async function CourseChallengePage({
 	params

@@ -7,16 +7,16 @@ import { sendCaliperBankedXpAwardedEvent } from "@/lib/actions/caliper"
 import { extractResourceIdFromCompoundId } from "@/lib/caliper/utils"
 import { CALIPER_SUBJECT_MAPPING, isSubjectSlug } from "@/lib/constants/subjects"
 import {
-    getComponentResourceForResourceInCourse,
-    getComponentResourcesByLessonIds,
-    getComponentResourcesForCourse,
-    getCourse,
-    getCourseComponentsByParentId,
-    getCourseComponentsBySourcedId,
-    getResource,
-    getResourcesByIds,
-    getResult as fetcherGetResult
-} from "@/lib/data/fetchers/oneroster"
+	getComponentResourceForResourceInCourse,
+	getComponentResourcesByLessonIds,
+	getComponentResourcesForCourse,
+	getCourse,
+	getCourseComponentsByParentId,
+	getCourseComponentsBySourcedId,
+	getResource,
+	getResourcesByIds,
+	getResult as fetcherGetResult
+} from "@/lib/oneroster/redis/api"
 import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import type { Resource } from "@/lib/oneroster"
 import * as gradebook from "@/lib/ports/gradebook"
@@ -181,7 +181,7 @@ export async function awardBankedXpForExercise(params: {
 		})
 		throw errors.wrap(courseResult.error, "course fetch for banking")
 	}
-	
+
 	const course = courseResult.data
 	if (!course) {
 		logger.error("CRITICAL: course not found for banking", {
@@ -201,9 +201,9 @@ export async function awardBankedXpForExercise(params: {
 		})
 		throw errors.wrap(courseMetadataResult.error, "course metadata validation for banking")
 	}
-	
+
 	const courseMetadata = courseMetadataResult.data
-	
+
 	// Validate that the provided subject slug matches the course's actual subject
 	if (params.subjectSlug !== courseMetadata.khanSubjectSlug) {
 		logger.error("CRITICAL: subject slug mismatch for banking", {
@@ -226,8 +226,8 @@ export async function awardBankedXpForExercise(params: {
 	}
 
 	// 2. For each eligible resource, fetch its assessment result to get canonical time spent
-	const TimeSpentMetadataSchema = z.object({ 
-		nice_timeSpent: z.number().optional() 
+	const TimeSpentMetadataSchema = z.object({
+		nice_timeSpent: z.number().optional()
 	}).passthrough()
 
 	const timeSpentResults = await Promise.all(
@@ -245,8 +245,8 @@ export async function awardBankedXpForExercise(params: {
 			}
 
 			const parsedMeta = TimeSpentMetadataSchema.safeParse(result.data?.metadata)
-			const timeSpent = parsedMeta.success && typeof parsedMeta.data.nice_timeSpent === "number" 
-				? parsedMeta.data.nice_timeSpent 
+			const timeSpent = parsedMeta.success && typeof parsedMeta.data.nice_timeSpent === "number"
+				? parsedMeta.data.nice_timeSpent
 				: 0
 
             if (timeSpent === 0) {
@@ -290,7 +290,7 @@ export async function awardBankedXpForExercise(params: {
 
 	for (const { sourcedId, expectedXp, timeSpent, kind } of timeSpentResults) {
 		const minutesSpent = computeBankingMinutes(timeSpent)
-		
+
 		// Videos and articles receive full expected XP; others follow time-based cap
 		const awardedXp = (kind === "Video" || kind === "Article") ? expectedXp : Math.min(minutesSpent, expectedXp)
 
@@ -378,18 +378,18 @@ export async function awardBankedXpForExercise(params: {
 					logger.error("CRITICAL: resource missing metadata for caliper event", { resourceId })
 					throw errors.new("resource metadata: required for caliper event")
 				}
-				
+
 				// Use the validated course subject slug from earlier fetch
 				const subjectSlug = courseMetadata.khanSubjectSlug
 				if (!isSubjectSlug(subjectSlug)) {
-					logger.error("CRITICAL: invalid subject slug for caliper event", { 
-						resourceId, 
+					logger.error("CRITICAL: invalid subject slug for caliper event", {
+						resourceId,
 						subjectSlug,
 						correlationId
 					})
 					throw errors.new("invalid subject slug for caliper event")
 				}
-				
+
 				const mappedSubject = CALIPER_SUBJECT_MAPPING[subjectSlug]
 				const awardedXp = computedAwardedXp
 				const actor = {
@@ -431,10 +431,10 @@ export async function getBankedXpBreakdownForQuiz(
 	userSourcedId: string,
 	onerosterCourseSourcedId: string
 ): Promise<{ articleXp: number; videoXp: number }> {
-	logger.info("computing banked xp breakdown for quiz", { 
-		quizResourceId, 
+	logger.info("computing banked xp breakdown for quiz", {
+		quizResourceId,
 		userSourcedId,
-		onerosterCourseSourcedId 
+		onerosterCourseSourcedId
 	})
 
 	const userId = extractUserSourcedId(userSourcedId)
@@ -444,7 +444,7 @@ export async function getBankedXpBreakdownForQuiz(
 		getComponentResourceForResourceInCourse(onerosterCourseSourcedId, quizResourceId)
 	)
 	if (componentResourceResult.error) {
-		logger.error("quiz component resource fetch failed", { 
+		logger.error("quiz component resource fetch failed", {
 			error: componentResourceResult.error,
 			courseSourcedId: onerosterCourseSourcedId,
 			quizResourceId
@@ -459,7 +459,7 @@ export async function getBankedXpBreakdownForQuiz(
 		})
 		throw errors.new("quiz component resource undefined")
 	}
-	
+
 	// Determine the unit from the quiz's courseComponent
 	const quizCourseComponentId = quizComponentResource.courseComponent.sourcedId
 	const quizComponentResult = await errors.try(
@@ -475,7 +475,7 @@ export async function getBankedXpBreakdownForQuiz(
 	const quizCourseComponent = quizComponentResult.data[0]
 	const parentUnitId = quizCourseComponent?.parent?.sourcedId
 	const quizSortOrder = quizComponentResource.sortOrder
-	
+
 	if (!parentUnitId) {
 		logger.error("CRITICAL: quiz has no parent unit", {
 			quizCourseComponentId,
@@ -490,13 +490,13 @@ export async function getBankedXpBreakdownForQuiz(
 		getComponentResourcesForCourse(onerosterCourseSourcedId)
 	)
 	if (courseCrResult.error) {
-		logger.error("course component resources fetch failed", { 
-			error: courseCrResult.error, 
-			courseSourcedId: onerosterCourseSourcedId 
+		logger.error("course component resources fetch failed", {
+			error: courseCrResult.error,
+			courseSourcedId: onerosterCourseSourcedId
 		})
 		throw errors.wrap(courseCrResult.error, "course component resources fetch")
 	}
-	
+
 	// Filter to only unit-level CRs
 	const unitCrs = courseCrResult.data.filter(
 		cr => cr.courseComponent.sourcedId === parentUnitId
@@ -602,8 +602,8 @@ export async function getBankedXpBreakdownForQuiz(
 	}
 
 	// 5. Calculate banked XP using canonical nice_timeSpent from assessment results
-	const TimeSpentMetadataSchema = z.object({ 
-		nice_timeSpent: z.number().optional() 
+	const TimeSpentMetadataSchema = z.object({
+		nice_timeSpent: z.number().optional()
 	}).passthrough()
 
 	const calculateXpForResources = async (
@@ -611,7 +611,7 @@ export async function getBankedXpBreakdownForQuiz(
 		isVideo: boolean
 	) => {
 		let totalXp = 0
-		
+
 		for (const resource of resources) {
 			if (isVideo) {
 				// Videos: award full expected XP without time-based calculation
@@ -630,8 +630,8 @@ export async function getBankedXpBreakdownForQuiz(
 			let timeSpent = 0
 			if (!result.error) {
 				const parsedMeta = TimeSpentMetadataSchema.safeParse(result.data?.metadata)
-				timeSpent = parsedMeta.success && typeof parsedMeta.data.nice_timeSpent === "number" 
-					? parsedMeta.data.nice_timeSpent 
+				timeSpent = parsedMeta.success && typeof parsedMeta.data.nice_timeSpent === "number"
+					? parsedMeta.data.nice_timeSpent
 					: 0
 			}
 
@@ -661,9 +661,9 @@ export async function getBankedXpBreakdownForQuiz(
 		videoXp = await calculateXpForResources(videoResources, true)
 	}
 
-	logger.info("computed banked xp breakdown using canonical time spent", { 
-		quizResourceId, 
-		articleXp, 
+	logger.info("computed banked xp breakdown using canonical time spent", {
+		quizResourceId,
+		articleXp,
 		videoXp,
 		articleCount: articleResources.length,
 		videoCount: videoResources.length

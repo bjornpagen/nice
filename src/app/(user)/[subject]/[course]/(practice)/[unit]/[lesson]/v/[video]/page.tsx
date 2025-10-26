@@ -1,6 +1,6 @@
 import { connection } from "next/server"
 import * as React from "react"
-import { getCachedVideoPageData } from "@/lib/server-cache/content-data"
+import { getCachedVideoPageData } from "@/lib/oneroster/react/content-data"
 import type { VideoPageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
 import { Content } from "@/app/(user)/[subject]/[course]/(practice)/[unit]/[lesson]/v/[video]/components/content"

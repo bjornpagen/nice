@@ -614,41 +614,36 @@ export function findResourceById(bundle: CourseResourceBundle, resourceId: strin
 	return resource
 }
 
-export async function invalidateCourseResourceBundle(courseSourcedId: string) {
+export async function invalidateCourseResourceBundle(courseSourcedId: string, resourceIds: readonly string[]) {
 	if (!courseSourcedId) {
 		logger.warn("invalidateCourseResourceBundle called without courseSourcedId")
 		return
 	}
 
-	const bundleResult = await errors.try(getCourseResourceBundle(courseSourcedId))
-	if (bundleResult.error) {
-		logger.error("failed to load bundle for cache invalidation", {
-			courseSourcedId,
-			error: bundleResult.error
-		})
-		throw errors.wrap(bundleResult.error, "invalidate course resource bundle")
-	}
-
-	await invalidateCourseResourceBundleWithBundle(bundleResult.data)
+	await invalidateCourseBundleKeys(courseSourcedId)
+	await invalidateCourseBundleResourceIds(courseSourcedId, resourceIds)
 }
 
 export async function invalidateCourseResourceBundleWithBundle(bundle: CourseResourceBundle) {
-	const resourceIds = new Set(
-		bundle.componentResources.map((componentResource) => componentResource.resource.sourcedId)
-	)
-	if (resourceIds.size === 0) {
-		logger.error("invalidateCourseResourceBundleWithBundle: no resources tied to course", {
-			courseSourcedId: bundle.courseId
-		})
-		throw errors.new("invalidate course resource bundle: missing resources")
+	const resourceIds = bundle.componentResources.map((componentResource) => componentResource.resource.sourcedId)
+	await invalidateCourseResourceBundle(bundle.courseId, resourceIds)
+}
+
+export async function invalidateCourseBundleResourceIds(courseSourcedId: string, resourceIds: readonly string[]) {
+	const unique = Array.from(new Set(resourceIds))
+	if (unique.length === 0) {
+		logger.info("invalidateCourseBundleResourceIds: no resource ids provided", { courseSourcedId })
+		return
 	}
 
-	const sortedResourceIds = Array.from(resourceIds).sort()
-	const resourceCacheKey = createCacheKey(["oneroster-getResourcesByIds", ...sortedResourceIds])
+	const sorted = [...unique].sort()
+	await invalidateCache([createCacheKey(["oneroster-getResourcesByIds", ...sorted])])
+}
+
+async function invalidateCourseBundleKeys(courseSourcedId: string) {
 	await invalidateCache([
-		createCacheKey(["oneroster-course-bundle", bundle.courseId]),
-		createCacheKey(["oneroster-getComponentResourcesForCourse", bundle.courseId]),
-		resourceCacheKey
+		createCacheKey(["oneroster-course-bundle", courseSourcedId]),
+		createCacheKey(["oneroster-getComponentResourcesForCourse", courseSourcedId])
 	])
 }
 

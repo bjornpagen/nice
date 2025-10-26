@@ -1,15 +1,12 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import * as React from "react"
 import { notFound } from "next/navigation"
 import { stashBundle, requireBundle } from "@/lib/course-bundle/store"
 import {
 	getAllCoursesBySlug,
-	getCourseResourceBundle,
-	getCourseResourceBundleLookups,
 	type CourseResourceBundle
-} from "@/lib/data/fetchers/oneroster"
-import { getAssessmentTest } from "@/lib/data/fetchers/qti"
+} from "@/lib/oneroster/redis/api"
+import { getAssessmentTest } from "@/lib/qti/redis/api"
 import { ComponentMetadataSchema, CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import type { ComponentMetadata } from "@/lib/metadata/oneroster"
 import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
@@ -28,14 +25,7 @@ import type {
 import type { CoursePageData, LessonLayoutData, UnitPageData } from "@/lib/types/page"
 import { assertNoEncodedColons } from "@/lib/utils"
 import type { ComponentResourceRead, CourseComponentRead } from "@/lib/oneroster"
-
-const getCourseBundleWithLookupsCached = React.cache(async (courseSourcedId: string) => {
-	const bundle = await getCourseResourceBundle(courseSourcedId)
-	return {
-		bundle,
-		lookups: getCourseResourceBundleLookups(bundle)
-	}
-})
+import { getCachedCourseResourceBundleWithLookups } from "@/lib/oneroster/react/course-bundle"
 
 function removeNiceAcademyPrefix(title: string): string {
 	const prefix = "Nice Academy - "
@@ -140,7 +130,7 @@ export async function fetchCoursePageDataBase(
 		notFound()
 	}
 
-	const { bundle, lookups } = await getCourseBundleWithLookupsCached(courseRecord.sourcedId)
+	const { bundle, lookups } = await getCachedCourseResourceBundleWithLookups(courseRecord.sourcedId)
 	const questionCounts = await buildExerciseQuestionMap(bundle, skipQuestions)
 
 	const componentResourcesByComponentId = lookups.componentResourcesByComponentId
@@ -197,7 +187,9 @@ export async function fetchCoursePageDataBase(
 			continue
 		}
 
-		const unitChildComponents = bundle.courseComponents.filter((child) => child.parent?.sourcedId === component.sourcedId)
+	const unitChildComponents = bundle.courseComponents.filter(
+		(child) => child.parent?.sourcedId === component.sourcedId
+	)
 
 		const unit: Unit = {
 			id: component.sourcedId,
@@ -221,19 +213,21 @@ export async function fetchCoursePageDataBase(
 	for (const childComponent of unitChildComponents) {
 		const childMetaResult = ComponentMetadataSchema.safeParse(childComponent.metadata)
 		if (!childMetaResult.success) {
-				logger.error("invalid child component metadata", {
-					componentId: childComponent.sourcedId,
-					error: childMetaResult.error
-				})
-				throw errors.wrap(childMetaResult.error, "invalid child component metadata")
-			}
+			logger.error("invalid child component metadata", {
+				componentId: childComponent.sourcedId,
+				error: childMetaResult.error
+			})
+			throw errors.wrap(childMetaResult.error, "invalid child component metadata")
+		}
 
 			const resources = componentResourcesByComponentId.get(childComponent.sourcedId)
 			let assessmentResource: (typeof bundle.resources)[number] | undefined
 			let assessmentComponentResource: ComponentResourceRead | undefined
 			if (resources) {
 				const resourceMatches = resources
-					.map((cr) => lookups.resourcesById.get(cr.resource.sourcedId))
+					.map((cr): (typeof bundle.resources)[number] | undefined =>
+						lookups.resourcesById.get(cr.resource.sourcedId)
+					)
 					.filter((value): value is (typeof bundle.resources)[number] => Boolean(value))
 				assessmentResource = resourceMatches.find((resource) => {
 					return resource.metadata.khanActivityType === "Quiz" || resource.metadata.khanActivityType === "UnitTest"
@@ -258,8 +252,8 @@ export async function fetchCoursePageDataBase(
 					})
 					continue
 				}
-			pendingAssessments.push({ component: childComponent, resource, componentResource })
-			continue
+				pendingAssessments.push({ component: childComponent, resource, componentResource })
+				continue
 		}
 
 		lessonComponents.push(childComponent)

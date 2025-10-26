@@ -1,10 +1,10 @@
 import * as React from "react"
 import { connection } from "next/server"
-import { getCachedExercisePageData } from "@/lib/server-cache/content-data"
+import { getCachedExercisePageData } from "@/lib/oneroster/react/content-data"
 import type { ExercisePageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
 import { Content } from "@/app/(user)/[subject]/[course]/(practice)/[unit]/[lesson]/e/[exercise]/components/content"
-import { getAssessmentItem } from "@/lib/data/fetchers/qti"
+import { getAssessmentItem } from "@/lib/qti/redis/api"
 
 export default async function ExercisePage({
 	params

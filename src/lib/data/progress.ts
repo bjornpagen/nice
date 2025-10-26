@@ -9,9 +9,9 @@ import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { Activity } from "@/lib/types/domain"
 import { constructActorId } from "@/lib/utils/actor-id"
 import { requireUser } from "@/lib/auth/require-user"
-import { type AssessmentProgress, type UnitProficiency, getUserUnitProgressRaw } from "@/lib/data/progress/raw"
+import { type AssessmentProgress, type UnitProficiency, getUserUnitProgressRaw } from "@/lib/progress/raw/user-progress"
 
-export type { AssessmentProgress, UnitProficiency } from "@/lib/data/progress/raw"
+export type { AssessmentProgress, UnitProficiency } from "@/lib/progress/raw/user-progress"
 
 export { getUserUnitProgressRaw as getUserUnitProgress }
 
