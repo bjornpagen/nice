@@ -614,37 +614,84 @@ export function findResourceById(bundle: CourseResourceBundle, resourceId: strin
 	return resource
 }
 
-export async function invalidateCourseResourceBundle(courseSourcedId: string, resourceIds: readonly string[]) {
-	if (!courseSourcedId) {
-		logger.warn("invalidateCourseResourceBundle called without courseSourcedId")
-		return
-	}
-
-	await invalidateCourseBundleKeys(courseSourcedId)
-	await invalidateCourseBundleResourceIds(courseSourcedId, resourceIds)
-}
-
-export async function invalidateCourseResourceBundleWithBundle(bundle: CourseResourceBundle) {
-	const resourceIds = bundle.componentResources.map((componentResource) => componentResource.resource.sourcedId)
-	await invalidateCourseResourceBundle(bundle.courseId, resourceIds)
-}
-
-export async function invalidateCourseBundleResourceIds(courseSourcedId: string, resourceIds: readonly string[]) {
-	const unique = Array.from(new Set(resourceIds))
-	if (unique.length === 0) {
-		logger.info("invalidateCourseBundleResourceIds: no resource ids provided", { courseSourcedId })
-		return
-	}
-
-	const sorted = [...unique].sort()
-	await invalidateCache([createCacheKey(["oneroster-getResourcesByIds", ...sorted])])
-}
-
 async function invalidateCourseBundleKeys(courseSourcedId: string) {
 	await invalidateCache([
 		createCacheKey(["oneroster-course-bundle", courseSourcedId]),
 		createCacheKey(["oneroster-getComponentResourcesForCourse", courseSourcedId])
 	])
+}
+
+function combineResourceIds(
+	explicitIds: readonly string[],
+	enumeratedIds: Iterable<string>
+): Set<string> {
+	const ids = new Set(explicitIds)
+	for (const id of enumeratedIds) {
+		ids.add(id)
+	}
+	return ids
+}
+
+async function enumerateCourseResourceIds(courseSourcedId: string): Promise<Set<string>> {
+	logger.debug("enumerating course resource ids for invalidation", { courseSourcedId })
+	const components = await getCourseComponentsByCourseId(courseSourcedId)
+	if (components.length === 0) {
+		logger.info("course has no components during invalidation", { courseSourcedId })
+		return new Set()
+	}
+
+	const componentResources = await getComponentResourcesForCourseWithComponents(courseSourcedId, components)
+	if (componentResources.length === 0) {
+		logger.info("course has no component resources during invalidation", {
+			courseSourcedId,
+			componentCount: components.length
+		})
+		return new Set()
+	}
+
+	const ids = new Set<string>()
+	for (const componentResource of componentResources) {
+		ids.add(componentResource.resource.sourcedId)
+	}
+	return ids
+}
+
+async function invalidateCourseBundleCaches(courseSourcedId: string, resourceIds: Set<string>) {
+	await invalidateCourseBundleKeys(courseSourcedId)
+
+	if (resourceIds.size === 0) {
+		logger.debug("course invalidation: no resource caches to drop", { courseSourcedId })
+		return
+	}
+
+	const sorted = [...resourceIds].sort()
+	await invalidateCache([createCacheKey(["oneroster-getResourcesByIds", ...sorted])])
+}
+
+export async function invalidateCourseResourceBundle(courseSourcedId: string, resourceIds: readonly string[]) {
+	if (!courseSourcedId) {
+		logger.error("invalidateCourseResourceBundle: courseSourcedId required", { resourceIdsCount: resourceIds.length })
+		throw errors.new("invalidateCourseResourceBundle: courseSourcedId required")
+	}
+
+	logger.info("invalidate course bundle requested", {
+		courseSourcedId,
+		explicitResourceIds: resourceIds.length
+	})
+
+	const enumeratedIds = await enumerateCourseResourceIds(courseSourcedId)
+	const combinedIds = combineResourceIds(resourceIds, enumeratedIds)
+
+	await invalidateCourseBundleCaches(courseSourcedId, combinedIds)
+}
+
+export async function invalidateCourseResourceBundleWithBundle(bundle: CourseResourceBundle) {
+	const collectedIds = new Set<string>()
+	for (const componentResource of bundle.componentResources) {
+		collectedIds.add(componentResource.resource.sourcedId)
+	}
+
+	await invalidateCourseBundleCaches(bundle.courseId, collectedIds)
 }
 
 /**
