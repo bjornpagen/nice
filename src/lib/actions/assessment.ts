@@ -492,8 +492,18 @@ export async function skipQuestion(
 		})
 		throw ErrAssessmentStateNotFound
 	}
-	if (state.currentQuestionIndex !== questionIndex) {
-		logger.error("out-of-order skip", { currentIndex: state.currentQuestionIndex, submittedIndex: questionIndex })
+	// Allow idempotent replays after the server has already advanced past this index.
+	if (state.currentQuestionIndex > questionIndex) {
+		logger.info("skip already processed", {
+			currentIndex: state.currentQuestionIndex,
+			submittedIndex: questionIndex,
+			questionId
+		})
+		return { state }
+	}
+
+	if (state.currentQuestionIndex < questionIndex) {
+		logger.error("future skip received", { currentIndex: state.currentQuestionIndex, submittedIndex: questionIndex })
 		throw errors.new("out-of-order skip")
 	}
 

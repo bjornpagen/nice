@@ -1098,15 +1098,22 @@ export function AssessmentStepper({
 	const handleSkip = async () => {
 		if (!currentQuestion) return
 
+		if (isNavigatingRef.current || isFinalizing) {
+			return
+		}
+
 		// Only allow skip when server and UI indices are in sync and before first check
 		if (!serverState || serverState.currentQuestionIndex !== visibleQuestionIndex || attemptCount > 0) {
 			toast.error("Skip is unavailable after checking or when the question has already advanced.")
 			return
 		}
 
+		isNavigatingRef.current = true
+
 		const result = await errors.try(skipQuestion(onerosterResourceSourcedId, currentQuestion.id, visibleQuestionIndex))
 		if (result.error) {
 			toast.error("Failed to skip question. Please try again.")
+			isNavigatingRef.current = false
 			// Force a re-sync with the server on failure
 			if (initStateRef.current) void initStateRef.current()
 			return
@@ -1133,6 +1140,7 @@ export function AssessmentStepper({
 				setIsFinalizing(false)
 				endProgressUpdate(onerosterResourceSourcedId)
 				toast.error("Could not save final result. Please retry.")
+				isNavigatingRef.current = false
 				return
 			}
 			const finalSummaryData = resultFinalize.data
@@ -1170,11 +1178,13 @@ export function AssessmentStepper({
 			setIsFinalizationComplete(true)
 			setIsFinalizing(false)
 			setShowSummary(true)
+			isNavigatingRef.current = false
 			return
 		}
 		setVisibleQuestionIndex(nextIndex)
 
 		// Per-question state reset is handled by the useEffect watching visibleQuestionIndex
+		isNavigatingRef.current = false
 	}
 
 	// OPEN REPORT POPOVER
