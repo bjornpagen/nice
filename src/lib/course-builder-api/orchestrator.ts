@@ -48,11 +48,10 @@ export async function runCourseBuilderWorkflow(input: CourseBuilderApiInput) {
     throw errors.new("no resources found for provided case ids")
   }
   if (Array.isArray(resourcesPayload.unmatchedCaseIds) && resourcesPayload.unmatchedCaseIds.length > 0) {
-    logger.error("some case ids had no resources", {
+    logger.warn("some case ids had no resources, proceeding with matched case ids", {
       matched: resourcesPayload.matchedCaseIds,
       unmatched: resourcesPayload.unmatchedCaseIds
     })
-    throw errors.new("some case ids had no resources")
   }
 
   // Fetch enriched stimuli and assessments

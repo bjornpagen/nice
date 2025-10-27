@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     const message = String(
       runResult.error?.message || (runResult.error as any)?.cause?.message || "internal error"
     )
-    const isClient = message.includes("no resources found for provided case ids") || message.includes("some case ids had no resources")
+    const isClient = message.includes("no resources found for provided case ids")
     const status = isClient ? 400 : 500
     return NextResponse.json({ status: "error", message }, { status })
   }
