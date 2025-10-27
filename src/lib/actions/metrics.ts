@@ -561,15 +561,33 @@ export async function getStrugglingStudents(metricsCoursesIds?: string[]): Promi
         const metadata = resource.metadata as Record<string, unknown> | undefined
         const path = typeof metadata?.path === "string" ? metadata.path : ""
         
-        // Extract CASE ID from vendorId if available
+        // Extract CASE ID from learningObjectiveSet (schema-validated to satisfy types)
         let caseId: string | undefined
-        if (resource.vendorId && typeof resource.vendorId === "string") {
-          // vendorId might contain the CASE ID
-          caseId = resource.vendorId
-        } else if (metadata?.caseId && typeof metadata.caseId === "string") {
-          caseId = metadata.caseId
-        } else if (metadata?.learningObjectiveId && typeof metadata.learningObjectiveId === "string") {
+
+        const LearningObjectiveSchema = z.object({ sourcedId: z.string().min(1) })
+        const LearningObjectiveSetSchema = z.array(LearningObjectiveSchema).nonempty().optional()
+        // Some SDKs may not type learningObjectiveSet; validate at runtime
+        const losResult = LearningObjectiveSetSchema.safeParse((resource as unknown as { learningObjectiveSet?: unknown }).learningObjectiveSet)
+        if (losResult.success && Array.isArray(losResult.data) && losResult.data.length > 0) {
+          const firstObjective = losResult.data[0]
+          if (firstObjective && typeof firstObjective.sourcedId === "string" && firstObjective.sourcedId.length > 0) {
+            caseId = firstObjective.sourcedId
+          }
+        }
+        
+        // Fallback: check metadata if not found in learningObjectiveSet
+        if (!caseId && metadata?.learningObjectiveId && typeof metadata.learningObjectiveId === "string") {
           caseId = metadata.learningObjectiveId
+        }
+        
+        // Log for debugging if we find a resource without CASE ID
+        if (!caseId) {
+          logger.debug("metrics struggling: no CASE ID found for exercise", { 
+            exerciseId, 
+            vendorId: resource.vendorId,
+            learningObjectiveSetPresent: losResult.success,
+            metadataKeys: metadata ? Object.keys(metadata) : []
+          })
         }
         
         exerciseTitles.set(exerciseId, { title: resource.title, path, caseId })
@@ -739,7 +757,7 @@ export async function getStrugglingStudents(metricsCoursesIds?: string[]): Promi
       lastUpdated: now.toISOString(),
       nextUpdate: nextUpdate.toISOString()
     }
-  }, ["metrics-struggling-students-v5", metricsCoursesIds?.join(",") || ""], { revalidate: 60 * 60 * cacheHours})
+  }, ["metrics-struggling-students-v7", metricsCoursesIds?.join(",") || ""], { revalidate: 60 * 60 * cacheHours})
   
   return cachedData
 }
