@@ -3,6 +3,7 @@ import * as React from "react"
 import { Content } from "@/app/(user)/profile/me/metrics/content"
 import { Skeleton } from "@/components/ui/skeleton"
 import { type CourseMetrics, getAllCourseMetrics, type MetricsDateRange } from "@/lib/data/metrics"
+import { getStrugglingStudents, type StrugglingStudentsData } from "@/lib/actions/metrics"
 
 export default async function MetricsPage() {
 	// Await connection to ensure dynamic rendering
@@ -17,6 +18,10 @@ export default async function MetricsPage() {
 	}
 
 	const metricsPromise: Promise<CourseMetrics[]> = getAllCourseMetrics(range)
+	const strugglingPromise: Promise<StrugglingStudentsData> = metricsPromise.then((metrics) => {
+		const courseIds = metrics.map(m => m.courseId)
+		return getStrugglingStudents(courseIds)
+	})
 
 	return (
 		<React.Suspense
@@ -36,7 +41,7 @@ export default async function MetricsPage() {
 				</div>
 			}
 		>
-			<Content metricsPromise={metricsPromise} />
+			<Content metricsPromise={metricsPromise} strugglingPromise={strugglingPromise} />
 		</React.Suspense>
 	)
 }
