@@ -17,7 +17,6 @@ import {
   iterLessonResources,
   readArticleContent,
   readQuestionXml,
-  readVideoMetadata,
   readIndex,
   readUnit
 } from "@superbuilders/qti-assessment-item-generator/cartridge/client"
@@ -598,84 +597,18 @@ async function main(): Promise<void> {
 
           totalXp += xp
           totalLessons += 1
-        } else if (res.type === "video") {
-          const videoTitle = res.title
-          if (!videoTitle || videoTitle.trim() === "") {
-            logger.error("video missing title", { resourceId: res.id, lessonId: lesson.id, unitId: unit.id })
-            throw errors.new("video: missing title")
-          }
-
-          const videoSlug = normalizePathSlug(res.path) || normalizePathSlug(res.id)
-          const launch = `${baseDomain}/${subjectSlug}/${slug}/${unitSlugNorm}/${lessonSlug}/v/${videoSlug}`
-          const resourceId = orResourceIdForVideo(slug, unit.id, lesson.id, res.id)
-          if (resourceSeen.has(resourceId)) {
-            logger.error("duplicate resource id", { id: res.id })
-            throw errors.new("resource id collision")
-          }
-          resourceSeen.add(resourceId)
-
-          const videoMetadata = await readVideoMetadata(reader, res)
-          const youtubeId = videoMetadata.youtubeId?.trim()
-          if (!youtubeId) {
-            logger.error("video metadata missing youtubeId", { resourceId: res.id, path: res.path })
-            throw errors.new("video: youtubeId is required")
-          }
-          const durationSeconds = videoMetadata.durationSeconds
-          if (!Number.isFinite(durationSeconds) || durationSeconds <= 0) {
-            logger.error("video metadata missing durationSeconds", { resourceId: res.id, path: res.path, durationSeconds })
-            throw errors.new("video: durationSeconds must be positive")
-          }
-          const videoXp = Math.max(1, Math.ceil(durationSeconds / 60))
-
-          payload.resources.push({
-            sourcedId: resourceId,
-            status: "active",
-            title: videoTitle,
-            vendorResourceId: `nice-academy-${res.id}`,
-            vendorId: "superbuilders",
-            applicationId: "nice",
-            roles: ["primary"],
-            importance: "primary",
-            metadata: {
-              type: "interactive",
-              toolProvider: "Nice Academy",
-              khanActivityType: "Video",
-              launchUrl: launch,
-              url: launch,
-              khanId: res.id,
-              khanSlug: videoSlug,
-              khanTitle: videoTitle,
-              khanYoutubeId: youtubeId,
-              khanDescription: videoMetadata.description,
-              xp: videoXp
-            }
-          })
-
-          if (videoXp > 0) {
-            passiveResourcesForNextExercise.push(resourceId)
-          }
-
-          const compResId = orComponentResourceIdForVideo(slug, unit.id, lesson.id, res.id)
-          payload.componentResources.push({
-            sourcedId: compResId,
-            status: "active",
-            title: formatResourceTitleForDisplay(videoTitle, "Video"),
-            courseComponent: { sourcedId: lessonComponentId, type: "courseComponent" },
-            resource: { sourcedId: resourceId, type: "resource" },
-            sortOrder: resourceIndex
-          })
-
-          payload.assessmentLineItems.push({
-            sourcedId: orAssessmentLineItemIdFromResource(resourceId),
-            status: "active",
-            title: `Progress for: ${videoTitle}`,
-            componentResource: { sourcedId: compResId },
-            course: { sourcedId: courseSourcedId },
-            metadata: { lessonType: "video", courseSourcedId }
-          })
-
-          totalXp += videoXp
-          totalLessons += 1
+        // } else if (res.type === "video") {
+        //   // Video handling temporarily disabled - readVideoMetadata not available in current package version
+        //   const videoTitle = res.title
+        //   if (!videoTitle || videoTitle.trim() === "") {
+        //     logger.error("video missing title", { resourceId: res.id, lessonId: lesson.id, unitId: unit.id })
+        //     throw errors.new("video: missing title")
+        //   }
+        //   logger.warn("skipping video resource - video handling not implemented", { 
+        //     videoId: res.id, 
+        //     lessonId: lesson.id, 
+        //     unitId: unit.id 
+        //   })
         } else if (res.type === "quiz") {
           const quizTitle = res.title
           if (!quizTitle || quizTitle.trim() === "") {

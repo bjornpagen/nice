@@ -267,11 +267,36 @@ export async function getUnitsForCourses(courseSourcedIds: string[]) {
 	logger.info("getUnitsForCourses called", { courseSourcedIds })
 	const operation = async () => {
 		if (courseSourcedIds.length === 0) return []
-		// Encapsulates the `@` filter logic for OneRoster IN operator
-		const filter = `course.sourcedId@'${courseSourcedIds.join(",")}' AND status='active'`
-		const components = await oneroster.getCourseComponents({ filter })
-		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
-		return ensureActiveStatus(components)
+		
+		// Batch requests to avoid 414 Request-URI Too Large errors
+		// Max 50 IDs per request to keep URLs under typical limits
+		const BATCH_SIZE = 50
+		const batches: string[][] = []
+		
+		for (let i = 0; i < courseSourcedIds.length; i += BATCH_SIZE) {
+			batches.push(courseSourcedIds.slice(i, i + BATCH_SIZE))
+		}
+
+		logger.debug("batching units for courses requests", { 
+			totalIds: courseSourcedIds.length, 
+			batchCount: batches.length,
+			batchSize: BATCH_SIZE
+		})
+
+		// Fetch all batches in parallel
+		const batchResults = await Promise.all(
+			batches.map(async (batch) => {
+				const filter = `course.sourcedId@'${batch.join(",")}' AND status='active'`
+				const components = await oneroster.getCourseComponents({ filter })
+				return ensureActiveStatus(components)
+			})
+		)
+
+		// Combine all results
+		const allComponents = batchResults.flat()
+		logger.debug("completed batched units for courses fetch", { resultCount: allComponents.length })
+		
+		return allComponents
 	}
 	return redisCache(operation, ["oneroster-getUnitsForCourses", ...courseSourcedIds], { revalidate: 3600 * 24 }) // 24-hour cache
 }
@@ -458,11 +483,38 @@ export async function getComponentResourcesForCourseWithComponents(
 	}
 
 	const componentIds = components.map((component) => component.sourcedId)
-	const componentResources = await oneroster.getAllComponentResources({
-		filter: `courseComponent.sourcedId@'${componentIds.join(",")}' AND status='active'`
+	
+	// Batch requests to avoid 414 Request-URI Too Large errors
+	// Max 50 IDs per request to keep URLs under typical limits
+	const BATCH_SIZE = 50
+	const batches: string[][] = []
+	
+	for (let i = 0; i < componentIds.length; i += BATCH_SIZE) {
+		batches.push(componentIds.slice(i, i + BATCH_SIZE))
+	}
+
+	logger.debug("batching component resources for course requests", { 
+		courseSourcedId,
+		totalIds: componentIds.length, 
+		batchCount: batches.length,
+		batchSize: BATCH_SIZE
 	})
 
-	return ensureActiveStatus(componentResources)
+	// Fetch all batches in parallel
+	const batchResults = await Promise.all(
+		batches.map(async (batch) => {
+			const componentResources = await oneroster.getAllComponentResources({
+				filter: `courseComponent.sourcedId@'${batch.join(",")}' AND status='active'`
+			})
+			return ensureActiveStatus(componentResources)
+		})
+	)
+
+	// Combine all results
+	const allComponentResources = batchResults.flat()
+	logger.debug("completed batched component resources for course fetch", { resultCount: allComponentResources.length })
+	
+	return allComponentResources
 }
 
 /**
@@ -697,6 +749,7 @@ export async function invalidateCourseResourceBundleWithBundle(bundle: CourseRes
 /**
  * Fetches resources by their IDs.
  * Uses the @ operator for efficient batch fetching.
+ * Automatically batches requests to avoid 414 Request-URI Too Large errors.
  */
 export async function getResourcesByIds(resourceIds: string[]) {
 	logger.info("getResourcesByIds called", { count: resourceIds.length })
@@ -705,12 +758,36 @@ export async function getResourcesByIds(resourceIds: string[]) {
 	}
 
 	const operation = async () => {
-		const resources = await oneroster.getAllResources({
-			filter: `sourcedId@'${resourceIds.join(",")}' AND status='active'`
+		// Batch requests to avoid 414 Request-URI Too Large errors
+		// Max 50 IDs per request to keep URLs under typical limits
+		const BATCH_SIZE = 50
+		const batches: string[][] = []
+		
+		for (let i = 0; i < resourceIds.length; i += BATCH_SIZE) {
+			batches.push(resourceIds.slice(i, i + BATCH_SIZE))
+		}
+
+		logger.debug("batching resource requests", { 
+			totalIds: resourceIds.length, 
+			batchCount: batches.length,
+			batchSize: BATCH_SIZE
 		})
 
-		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
-		return ensureActiveStatus(resources)
+		// Fetch all batches in parallel
+		const batchResults = await Promise.all(
+			batches.map(async (batch) => {
+				const resources = await oneroster.getAllResources({
+					filter: `sourcedId@'${batch.join(",")}' AND status='active'`
+				})
+				return ensureActiveStatus(resources)
+			})
+		)
+
+		// Combine all results
+		const allResources = batchResults.flat()
+		logger.debug("completed batched resource fetch", { resultCount: allResources.length })
+		
+		return allResources
 	}
 
 	// Create a stable cache key by sorting IDs
@@ -721,6 +798,7 @@ export async function getResourcesByIds(resourceIds: string[]) {
 /**
  * Fetches ComponentResources for specific lesson IDs.
  * Used to get all content within a set of lessons.
+ * Automatically batches requests to avoid 414 Request-URI Too Large errors.
  */
 export async function getComponentResourcesByLessonIds(lessonIds: string[]) {
 	logger.info("getComponentResourcesByLessonIds called", { count: lessonIds.length })
@@ -729,12 +807,36 @@ export async function getComponentResourcesByLessonIds(lessonIds: string[]) {
 	}
 
 	const operation = async () => {
-		const componentResources = await oneroster.getAllComponentResources({
-			filter: `courseComponent.sourcedId@'${lessonIds.join(",")}' AND status='active'`
+		// Batch requests to avoid 414 Request-URI Too Large errors
+		// Max 50 IDs per request to keep URLs under typical limits
+		const BATCH_SIZE = 50
+		const batches: string[][] = []
+		
+		for (let i = 0; i < lessonIds.length; i += BATCH_SIZE) {
+			batches.push(lessonIds.slice(i, i + BATCH_SIZE))
+		}
+
+		logger.debug("batching component resource requests", { 
+			totalIds: lessonIds.length, 
+			batchCount: batches.length,
+			batchSize: BATCH_SIZE
 		})
 
-		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
-		return ensureActiveStatus(componentResources)
+		// Fetch all batches in parallel
+		const batchResults = await Promise.all(
+			batches.map(async (batch) => {
+				const componentResources = await oneroster.getAllComponentResources({
+					filter: `courseComponent.sourcedId@'${batch.join(",")}' AND status='active'`
+				})
+				return ensureActiveStatus(componentResources)
+			})
+		)
+
+		// Combine all results
+		const allComponentResources = batchResults.flat()
+		logger.debug("completed batched component resource fetch", { resultCount: allComponentResources.length })
+		
+		return allComponentResources
 	}
 
 	// Create a stable cache key by sorting IDs
