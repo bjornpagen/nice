@@ -26,6 +26,22 @@ interface ContentResult {
 	type: ContentType
 }
 
+function getAttemptNumber(result: AssessmentResult): number | undefined {
+	const meta = result.metadata as Record<string, unknown> | undefined
+	const metaAttempt = typeof meta?.attempt === "number" ? meta.attempt : undefined
+	if (typeof metaAttempt === "number" && Number.isInteger(metaAttempt) && metaAttempt > 0) {
+		return metaAttempt
+	}
+	const match = result.sourcedId.match(/_attempt_(\d+)$/)
+	if (match) {
+		const parsed = Number.parseInt(match[1]!, 10)
+		if (Number.isFinite(parsed) && parsed > 0) {
+			return parsed
+		}
+	}
+	return undefined
+}
+
 function isInteractiveContentType(contentType: ContentType): boolean {
 	return contentType === "Exercise" || contentType === "Quiz" || contentType === "UnitTest"
 }
@@ -122,9 +138,18 @@ async function fetchAssessmentResults(
 		const filtered = allResults.filter((r: AssessmentResult) => r.sourcedId.startsWith(basePrefix))
 
 		if (filtered.length > 0) {
-			return filtered.sort(
-				(a: AssessmentResult, b: AssessmentResult) => new Date(b.scoreDate || 0).getTime() - new Date(a.scoreDate || 0).getTime()
-			)
+			const allHaveAttemptNumbers = filtered.every((r) => typeof getAttemptNumber(r) === "number")
+			if (allHaveAttemptNumbers) {
+				return filtered.sort((a, b) => (getAttemptNumber(a)! - getAttemptNumber(b)!))
+			}
+			const allHaveDates = filtered.every((r) => typeof r.scoreDate === "string" && r.scoreDate.length > 0)
+			if (allHaveDates) {
+				return filtered.sort(
+					(a, b) => new Date(a.scoreDate!).getTime() - new Date(b.scoreDate!).getTime()
+				)
+			}
+			logger.error("cannot determine attempt ordering", { hasAttemptNumbers: allHaveAttemptNumbers, hasScoreDates: allHaveDates })
+			throw errors.new("attempt ordering unavailable")
 		}
 
 		// Fallback for older interactive records that used a single result without attempt suffix
@@ -160,13 +185,13 @@ async function fetchAssessmentResults(
 	return [result]
 }
 
-function formatResult(result: AssessmentResult, index?: number): string {
+function formatResult(result: AssessmentResult, attemptNumber?: number): string {
 	const score = result.score !== null && result.score !== undefined ? result.score : "N/A"
 	const normalizedScore = typeof score === "number" && score <= 1.1 ? `${(score * 100).toFixed(1)}%` : `${score}%`
 	const scoreDate = result.scoreDate ? new Date(result.scoreDate).toLocaleString() : "N/A"
 	const metadata = result.metadata ? JSON.stringify(result.metadata, null, 2) : "none"
 
-	const header = index !== undefined ? `\n=== Attempt ${index + 1} ===` : "\n=== Result ==="
+	const header = attemptNumber !== undefined ? `\n=== Attempt ${attemptNumber} ===` : "\n=== Result ==="
 
 	return `${header}
 ID: ${result.sourcedId}
@@ -417,7 +442,7 @@ Path: ${selectedContent.path}`, "selected content")
 
 	const isInteractive = isInteractiveContentType(selectedContent.type)
 	if (isInteractive) {
-		p.note(assessmentResults.map((r, i) => formatResult(r, i)).join("\n"), "assessment attempts")
+		p.note(assessmentResults.map((r) => formatResult(r, getAttemptNumber(r))).join("\n"), "assessment attempts")
 	} else {
 		const firstResult = assessmentResults[0]
 		if (!firstResult) {
@@ -442,10 +467,15 @@ Path: ${selectedContent.path}`, "selected content")
 		if (isInteractive && assessmentResults.length > 1) {
 			const attemptChoice = await p.select({
 				message: "which attempt do you want to update?",
-				options: assessmentResults.map((r, i) => ({
-					value: r,
-					label: `Attempt ${i + 1} - Score: ${r.score} - ${new Date(r.scoreDate || "").toLocaleString()}`
-				}))
+				options: assessmentResults.map((r) => {
+					const attempt = getAttemptNumber(r)
+					const scoreLabel = typeof r.score === "number" ? (r.score <= 1.1 ? `${(r.score * 100).toFixed(0)}%` : `${r.score}%`) : "N/A"
+					const dateLabel = typeof r.scoreDate === "string" && r.scoreDate.length > 0 ? new Date(r.scoreDate).toLocaleString() : "unknown date"
+					return {
+						value: r,
+						label: attempt !== undefined ? `Attempt ${attempt} - Score: ${scoreLabel} - ${dateLabel}` : `Score: ${scoreLabel} - ${dateLabel}`
+					}
+				})
 			}) as unknown as AssessmentResult
 
 			if (p.isCancel(attemptChoice)) {
