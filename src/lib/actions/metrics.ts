@@ -314,7 +314,7 @@ export type StrugglingExercise = {
   masteryAccuracy: number
   firstAttemptAt?: string
   masteredAt?: string
-  caseId?: string // CASE learning objective ID if available
+  caseIds?: string[] // CASE learning objective IDs if available
 }
 
 export type StudentCourseProgress = {
@@ -516,7 +516,7 @@ export async function getStrugglingStudents(metricsCoursesIds?: string[]): Promi
             masteryAccuracy: Math.round(mastery.accuracy),
             firstAttemptAt: firstDateMs > 0 ? new Date(firstDateMs).toISOString() : undefined,
             masteredAt: masteredDateMs > 0 ? new Date(masteredDateMs).toISOString() : undefined,
-            caseId: undefined // Will be resolved later
+            caseIds: undefined // Will be resolved later
           })
           exerciseIdsToResolve.add(exerciseId)
         }
@@ -537,7 +537,7 @@ export async function getStrugglingStudents(metricsCoursesIds?: string[]): Promi
     logger.debug("metrics struggling: students with struggling exercises", { count: strugglingStudents.length })
     
     // Resolve exercise titles and CASE IDs from OneRoster
-    const exerciseTitles = new Map<string, { title: string; path: string; caseId?: string }>()
+    const exerciseTitles = new Map<string, { title: string; path: string; caseIds?: string[] }>()
     const exerciseIds = Array.from(exerciseIdsToResolve)
     let exerciseIdx = 0
     const EXERCISE_CONCURRENCY = Math.min(16, Math.max(2, exerciseIds.length))
@@ -561,36 +561,26 @@ export async function getStrugglingStudents(metricsCoursesIds?: string[]): Promi
         const metadata = resource.metadata as Record<string, unknown> | undefined
         const path = typeof metadata?.path === "string" ? metadata.path : ""
         
-        // Extract CASE ID from learningObjectiveSet (schema-validated to satisfy types)
-        let caseId: string | undefined
+        // Extract CASE IDs from metadata.learningObjectiveSet (source === "CASE")
+        let caseIds: string[] | undefined
+        const los = (metadata?.learningObjectiveSet ?? undefined) as
+          | Array<{ source?: unknown; learningObjectiveIds?: unknown }>
+          | undefined
+        if (Array.isArray(los)) {
+          caseIds = los
+            .filter((lo) => lo && lo.source === "CASE" && Array.isArray(lo.learningObjectiveIds))
+            .flatMap((lo) => (lo.learningObjectiveIds as unknown[]))
+            .filter((id): id is string => typeof id === "string" && id.length > 0)
+        }
 
-        const LearningObjectiveSchema = z.object({ sourcedId: z.string().min(1) })
-        const LearningObjectiveSetSchema = z.array(LearningObjectiveSchema).nonempty().optional()
-        // Some SDKs may not type learningObjectiveSet; validate at runtime
-        const losResult = LearningObjectiveSetSchema.safeParse((resource as unknown as { learningObjectiveSet?: unknown }).learningObjectiveSet)
-        if (losResult.success && Array.isArray(losResult.data) && losResult.data.length > 0) {
-          const firstObjective = losResult.data[0]
-          if (firstObjective && typeof firstObjective.sourcedId === "string" && firstObjective.sourcedId.length > 0) {
-            caseId = firstObjective.sourcedId
-          }
-        }
-        
-        // Fallback: check metadata if not found in learningObjectiveSet
-        if (!caseId && metadata?.learningObjectiveId && typeof metadata.learningObjectiveId === "string") {
-          caseId = metadata.learningObjectiveId
-        }
-        
-        // Log for debugging if we find a resource without CASE ID
-        if (!caseId) {
-          logger.debug("metrics struggling: no CASE ID found for exercise", { 
-            exerciseId, 
-            vendorId: resource.vendorId,
-            learningObjectiveSetPresent: losResult.success,
+        if (!caseIds || caseIds.length === 0) {
+          logger.debug("metrics struggling: no CASE IDs found in metadata.learningObjectiveSet", {
+            exerciseId,
             metadataKeys: metadata ? Object.keys(metadata) : []
           })
         }
-        
-        exerciseTitles.set(exerciseId, { title: resource.title, path, caseId })
+
+        exerciseTitles.set(exerciseId, { title: resource.title, path, caseIds })
       }
     }
     await Promise.all(Array.from({ length: Math.min(EXERCISE_CONCURRENCY, exerciseIds.length) }, () => exerciseWorker()))
@@ -602,7 +592,7 @@ export async function getStrugglingStudents(metricsCoursesIds?: string[]): Promi
         if (meta) {
           exercise.exerciseTitle = meta.title
           exercise.exercisePath = meta.path
-          exercise.caseId = meta.caseId
+          exercise.caseIds = meta.caseIds
         }
       }
     }

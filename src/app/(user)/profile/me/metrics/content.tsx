@@ -80,7 +80,7 @@ export function Content({ metricsPromise, strugglingPromise }: Props) {
 
     // Extract unique CASE IDs from struggling exercises
     const caseIds = selectedStudent.strugglingExercises
-      .map(e => e.caseId)
+      .flatMap(e => Array.isArray(e.caseIds) ? e.caseIds : [])
       .filter((id): id is string => typeof id === "string" && id.length > 0)
 
     // Remove duplicates
