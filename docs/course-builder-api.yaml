@@ -1,17 +1,17 @@
 openapi: 3.0.3
 info:
   title: Nice Course Builder API
-  version: 1.0.0
+  version: 2.0.0
   description: |
-    Creates a OneRoster course, builds units/lessons/resources from CASE standards using AI,
-    links QTI assets, creates a class, and enrolls a student.
+    Asynchronous API to build a OneRoster course from CASE standards using AI, link QTI assets,
+    create a class, and enroll a student.
 
     Auth: header API key `x-api-key`.
 
-    Notes:
-    - Long-running operation (up to ~10 minutes).
-    - Client 4xx errors are returned for invalid JSON, request validation, or when no resources are found
-      for provided CASE IDs.
+    Flow:
+    - POST `/api/v1/course-builder` enqueues a background job and returns `202 Accepted` with a `jobId`.
+    - Poll GET `/api/v1/course-builder/jobs/{jobId}` until `status` is `completed` (returns `courseSourcedId`, `classSourcedId`),
+      or `failed` (returns error).
 
 servers:
   - url: /
@@ -22,18 +22,12 @@ tags:
 paths:
   /api/v1/course-builder:
     post:
-      operationId: createCourseFromCaseIds
+      operationId: enqueueCourseBuilderJob
       tags: [Course Builder]
-      summary: Build a course from CASE learning objective IDs and enroll a student
+      summary: Enqueue a course build from CASE learning objective IDs
       description: |
-        - Validates request, gathers matching OneRoster resources, fetches CASE details and QTI assets,
-          generates an AI course plan, creates course/components/resources/links, copies QTI stimuli/tests,
-          creates a class, and enrolls the student.
-        - Client errors include:
-          - "invalid json"
-          - "invalid request"
-          - "no resources found for provided case ids"
-          - "some case ids had no resources"
+        Validates request and enqueues the course-build workflow. The response contains a `jobId`
+        which can be polled to determine job status and retrieve results when completed.
       security:
         - ApiKeyAuth: []
       requestBody:
@@ -51,21 +45,23 @@ paths:
                   student_user_id: "a1b2c3d4-e5f6-11ee-be56-0242ac120002"
                   subject: "Science"
       responses:
-        '200':
-          description: Course created and student enrolled
+        '202':
+          description: Job accepted for processing
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CourseBuilderSuccessResponse'
+                $ref: '#/components/schemas/CourseBuilderEnqueueResponse'
               examples:
                 example:
                   value:
-                    status: success
-                    message: "Course created and user enrolled successfully."
-                    courseSourcedId: "course_123"
-                    classSourcedId: "course_123"
+                    status: queued
+                    jobId: "01HXYZABCD1234EFG5678"
+                    inputSummary:
+                      studentUserId: "a1b2c3d4-e5f6-11ee-be56-0242ac120002"
+                      subject: "Science"
+                      caseCount: 20
         '400':
-          description: Bad request (invalid JSON, validation errors, or missing resources for CASE IDs)
+          description: Bad request (invalid JSON or validation errors)
           content:
             application/json:
               schema:
@@ -75,10 +71,6 @@ paths:
                   value: { status: error, message: "invalid json" }
                 invalid_request:
                   value: { status: error, message: "invalid request" }
-                no_resources:
-                  value: { status: error, message: "no resources found for provided case ids" }
-                unmatched_case_ids:
-                  value: { status: error, message: "some case ids had no resources" }
         '401':
           description: Unauthorized (missing or invalid API key)
           content:
@@ -94,9 +86,68 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CourseBuilderErrorResponse'
+
+  /api/v1/course-builder/jobs/{jobId}:
+    get:
+      operationId: getCourseBuilderJobStatus
+      tags: [Course Builder]
+      summary: Get job status for a course-build request
+      description: |
+        Poll this endpoint to retrieve current job status. When `status` is `completed`, the response includes
+        `courseSourcedId` and `classSourcedId`.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema:
+            type: string
+          description: The job identifier returned by the enqueue endpoint.
+      responses:
+        '200':
+          description: Current job status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseBuilderJobStatusResponse'
               examples:
-                internal:
-                  value: { status: error, message: "internal error" }
+                queued:
+                  value: { status: queued, jobId: "01HXYZABCD1234EFG5678" }
+                running:
+                  value:
+                    status: running
+                    jobId: "01HXYZABCD1234EFG5678"
+                    step: "create_resources"
+                    updatedAt: "2025-10-28T22:11:49.256Z"
+                completed:
+                  value:
+                    status: completed
+                    jobId: "01HXYZABCD1234EFG5678"
+                    result: { courseSourcedId: "nice_x123", classSourcedId: "nice_x123" }
+                failed:
+                  value:
+                    status: failed
+                    jobId: "01HXYZABCD1234EFG5678"
+                    error: { message: "ai plan references unknown resources" }
+        '401':
+          description: Unauthorized (missing or invalid API key)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseBuilderErrorResponse'
+        '404':
+          description: Job not found or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseBuilderErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseBuilderErrorResponse'
 
 components:
   securitySchemes:
@@ -135,23 +186,26 @@ components:
         subject:
           $ref: '#/components/schemas/Subject'
 
-    CourseBuilderSuccessResponse:
+    CourseBuilderEnqueueResponse:
       type: object
-      required: [status, message, courseSourcedId, classSourcedId]
+      required: [status, jobId, inputSummary]
       properties:
         status:
           type: string
-          enum: [success]
-        message:
+          enum: [queued]
+        jobId:
           type: string
-          description: Success message
-          example: Course created and user enrolled successfully.
-        courseSourcedId:
-          type: string
-          description: OneRoster course `sourcedId` that was created.
-        classSourcedId:
-          type: string
-          description: OneRoster class `sourcedId` (same as course `sourcedId`).
+        inputSummary:
+          type: object
+          required: [studentUserId, subject, caseCount]
+          properties:
+            studentUserId:
+              type: string
+            subject:
+              $ref: '#/components/schemas/Subject'
+            caseCount:
+              type: integer
+              minimum: 1
 
     CourseBuilderErrorResponse:
       type: object
@@ -163,3 +217,71 @@ components:
         message:
           type: string
           description: Error message
+
+    JobStatusQueued:
+      type: object
+      required: [status, jobId]
+      properties:
+        status:
+          type: string
+          enum: [queued]
+        jobId:
+          type: string
+
+    JobStatusRunning:
+      type: object
+      required: [status, jobId, updatedAt]
+      properties:
+        status:
+          type: string
+          enum: [running]
+        jobId:
+          type: string
+        step:
+          type: string
+          nullable: true
+          description: Current step name (e.g., fetch_resources, create_course)
+        updatedAt:
+          type: string
+          format: date-time
+
+    JobStatusCompleted:
+      type: object
+      required: [status, jobId, result]
+      properties:
+        status:
+          type: string
+          enum: [completed]
+        jobId:
+          type: string
+        result:
+          type: object
+          nullable: true
+          properties:
+            courseSourcedId:
+              type: string
+            classSourcedId:
+              type: string
+
+    JobStatusFailed:
+      type: object
+      required: [status, jobId, error]
+      properties:
+        status:
+          type: string
+          enum: [failed]
+        jobId:
+          type: string
+        error:
+          type: object
+          nullable: true
+          properties:
+            message:
+              type: string
+
+    CourseBuilderJobStatusResponse:
+      oneOf:
+        - $ref: '#/components/schemas/JobStatusQueued'
+        - $ref: '#/components/schemas/JobStatusRunning'
+        - $ref: '#/components/schemas/JobStatusCompleted'
+        - $ref: '#/components/schemas/JobStatusFailed'
