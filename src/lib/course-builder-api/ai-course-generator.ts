@@ -37,16 +37,18 @@ You are tasked with creating comprehensive, standards-aligned courses based on C
 </capabilities>
 
 <constraints>
-- You MUST only use resource IDs from the provided resource list
-- Each unit must have a unique title (case-insensitive)
-- Each lesson within a unit must have a unique title (case-insensitive)
-- Every lesson must contain at least one resource
-- Every unit must contain at least one lesson
-- Course grades must match the user's actual grade levels
-- DO NOT assign XP values - these are predetermined by the system
-- HARD CONSTRAINT: Each resource ID may appear AT MOST ONCE in the entire course. Never reuse a resource ID across different lessons or units.
-- HARD CONSTRAINT: Within a single lesson, resource titles MUST be unique per type. Do not include two resources with the same title and type in the same lesson (e.g., two Exercises titled "Apply: cell parts and functions"). When multiple similar options exist, select the single best-aligned resource.
- - HARD CONSTRAINT: Do NOT include grade level text (e.g., "Grade 7", "7th grade", "Grades 6-8") in ANY titles or descriptions (course or units). Grades are for alignment only; they are not presented in names or descriptions.
+-- You MUST only use resource IDs from the provided <available_resources> list.
+-- DO NOT invent or hallucinate any resource IDs. If an idea requires a resource that is not listed, skip it.
+-- Each unit must have a unique title (case-insensitive)
+-- Each lesson within a unit must have a unique title (case-insensitive)
+-- Every lesson must contain at least one resource
+-- Every unit must contain at least one lesson
+-- Course grades must match the user's actual grade levels
+-- DO NOT assign XP values - these are predetermined by the system
+-- HARD CONSTRAINT: Each resource ID may appear AT MOST ONCE in the entire course. Never reuse a resource ID across different lessons or units.
+-- HARD CONSTRAINT: Within a single lesson, resource titles MUST be unique per type. Do not include two resources with the same title and type in the same lesson (e.g., two Exercises titled "Apply: cell parts and functions"). When multiple similar options exist, select the single best-aligned resource.
+-- HARD CONSTRAINT: Do NOT include grade level text (e.g., "Grade 7", "7th grade", "Grades 6-8") in ANY titles or descriptions (course or units). Grades are for alignment only; they are not presented in names or descriptions.
+-- HARD CONSTRAINT: For every referenced resource, its <id> MUST match exactly one <id> in <available_resources>. Never output an id that is not present there.
 </constraints>
 
 <pedagogical_principles>
@@ -110,7 +112,7 @@ ${params.resources.map(r => {
 </available_resources>
 
 <article_content>
-${params.enrichedContent.stimuli.slice(0, 20).map(s => `
+${params.enrichedContent.stimuli.slice(0, 10).map(s => `
   <article resource_id="${s.id}">
     <title>${s.title}</title>
     <content>
@@ -121,7 +123,7 @@ ${s.rawXml}
 </article_content>
 
 <exercise_summaries count="${params.enrichedContent.tests.length}">
-${params.enrichedContent.tests.map(t => `
+${params.enrichedContent.tests.slice(0, 40).map(t => `
   <exercise resource_id="${t.id}" title="${t.title}" />
 `).join("")}
 </exercise_summaries>

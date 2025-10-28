@@ -18,7 +18,7 @@ export const CourseBuilderApiInputSchema = z.object({
 export type CourseBuilderApiInput = z.infer<typeof CourseBuilderApiInputSchema>
 export type Subject = (typeof SUBJECT_OPTIONS)[number]
 
-// API response schemas
+// API response schemas (legacy synchronous)
 export const CourseBuilderApiSuccessSchema = z.object({
   status: z.literal("success"),
   message: z.string().min(1),
@@ -39,6 +39,58 @@ export const CourseBuilderApiResponseSchema = z.union([
 export type CourseBuilderApiSuccess = z.infer<typeof CourseBuilderApiSuccessSchema>
 export type CourseBuilderApiError = z.infer<typeof CourseBuilderApiErrorSchema>
 export type CourseBuilderApiResponse = z.infer<typeof CourseBuilderApiResponseSchema>
+
+// Async enqueue response (202)
+export const CourseBuilderEnqueueResponseSchema = z.object({
+  status: z.literal("queued"),
+  jobId: z.string(),
+  inputSummary: z.object({
+    studentUserId: z.string(),
+    subject: z.enum(SUBJECT_OPTIONS),
+    caseCount: z.number()
+  })
+})
+
+// Job status response for GET /jobs/[jobId]
+const JobStatusQueuedSchema = z.object({
+  status: z.literal("queued"),
+  jobId: z.string()
+})
+
+const JobStatusRunningSchema = z.object({
+  status: z.literal("running"),
+  jobId: z.string(),
+  step: z.string().nullable(),
+  updatedAt: z.string().datetime()
+})
+
+const JobStatusCompletedSchema = z.object({
+  status: z.literal("completed"),
+  jobId: z.string(),
+  result: z
+    .object({
+      courseSourcedId: z.string(),
+      classSourcedId: z.string()
+    })
+    .nullable()
+})
+
+const JobStatusFailedSchema = z.object({
+  status: z.literal("failed"),
+  jobId: z.string(),
+  error: z
+    .object({
+      message: z.string()
+    })
+    .nullable()
+})
+
+export const CourseBuilderJobStatusResponseSchema = z.union([
+  JobStatusQueuedSchema,
+  JobStatusRunningSchema,
+  JobStatusCompletedSchema,
+  JobStatusFailedSchema
+])
 
 // AI structured output (expected input to buildCoursePayloadAction)
 export const ActivityTypeSchema = z.enum(["Article", "Video", "Exercise"])

@@ -74,6 +74,7 @@ import { orchestrateHardcodedSlugQtiGenerationAndUpload } from "@/inngest/functi
 // Removed dangerous validator to prevent accidental runs
 import { standardizeQtiQuestionPhrasing } from "@/inngest/functions/standardize-qti-question-phrasing"
 import { standardizeQtiTestPhrasing } from "@/inngest/functions/standardize-qti-test-phrasing"
+import { courseBuilderWorkflow } from "@/inngest/functions/course-builder-workflow"
 
 // Create and export the Inngest HTTP handler
 export const { GET, POST, PUT } = serve({
@@ -156,5 +157,8 @@ export const { GET, POST, PUT } = serve({
 		// QTI Standardization Functions
 		standardizeQtiTestPhrasing,
 		standardizeQtiQuestionPhrasing
+	,
+		// Course Builder Async Workflow
+		courseBuilderWorkflow
 	]
 })

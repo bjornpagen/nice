@@ -2,6 +2,7 @@ import * as logger from "@superbuilders/slog"
 import { EventSchemas, type GetEvents, Inngest } from "inngest"
 import { z, type ZodTypeAny } from "zod"
 import { WidgetCollectionNameSchema } from "@/inngest/events/qti" // MODIFIED: Import from new location
+import { CourseBuilderApiInputSchema } from "@/lib/course-builder-api/schema"
 
 // Helper schema for the XML-based item input
 const CreateItemInputSchema = z.object({
@@ -21,6 +22,13 @@ const events = {
 			email: z.string().email()
 		})
 	},
+  // Course Builder Async API
+  "app/course_builder.requested": {
+    data: z.object({
+      jobId: z.string().min(1),
+      input: CourseBuilderApiInputSchema
+    })
+  },
 	// QTI Migration Events
 	"qti/item.migrate": {
 		data: z.object({
