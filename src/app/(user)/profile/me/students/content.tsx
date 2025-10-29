@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import type { StudentRow } from "@/app/(user)/profile/me/students/page"
+import type { StudentRow } from "@/app/(user)/profile/me/students/types"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -13,6 +13,7 @@ import {
     TableHeader,
     TableRow
 } from "@/components/ui/table"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export function Content({ studentsPromise }: { studentsPromise: Promise<StudentRow[]> }) {
     const students = React.use(studentsPromise)
@@ -64,7 +65,24 @@ export function Content({ studentsPromise }: { studentsPromise: Promise<StudentR
                     <TableBody>
                         {items.map((s, idx) => (
                             <TableRow key={s.id} className={idx % 2 === 0 ? "bg-gray-50" : undefined}>
-                                <TableCell className="font-semibold">{s.name}</TableCell>
+                                <TableCell className="font-semibold">
+                                    <div className="flex items-center gap-2">
+                                        <Avatar className="h-8 w-8">
+                                            {typeof s.imageUrl === "string" && s.imageUrl !== "" && (
+                                                <AvatarImage src={s.imageUrl} alt={s.name} />
+                                            )}
+                                            <AvatarFallback>
+                                                {(() => {
+                                                    const trimmed = s.name.trim()
+                                                    if (trimmed.length === 0) return "?"
+                                                    const first = trimmed[0]
+                                                    return typeof first === "string" ? first.toUpperCase() : "?"
+                                                })()}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <span>{s.name}</span>
+                                    </div>
+                                </TableCell>
                                 <TableCell>
                                     <span className="inline-flex items-center rounded-full bg-blue-50 text-blue-700 px-2 py-0.5 text-xs font-medium">
                                         {s.email}
