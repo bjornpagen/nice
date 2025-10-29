@@ -1,6 +1,6 @@
 "use client"
 
-import { useSignIn } from "@clerk/nextjs"
+import { SignIn, useSignIn } from "@clerk/nextjs"
 import Image from "next/image"
 import { useSearchParams } from "next/navigation"
 import * as React from "react"
@@ -13,6 +13,8 @@ export default function Home() {
 	const { signIn } = useSignIn()
 	const { shouldShow, openDialog } = useDialogManager()
 	const searchParams = useSearchParams()
+
+	const hasClerkTicket = React.useMemo(() => searchParams.has("__clerk_ticket"), [searchParams])
 
 	const resolveRedirectDestination = React.useCallback(() => {
 		const requested = searchParams.get("redirect_url")
@@ -45,6 +47,15 @@ export default function Home() {
 			handleTimeBackSignIn()
 		}
 	}, [handleTimeBackSignIn, searchParams])
+
+	if (hasClerkTicket) {
+		// When arriving with a Clerk sign-in/actor ticket, render the SignIn component so Clerk can consume it
+		return (
+			<div className="flex min-h-screen items-center justify-center py-16">
+				<SignIn afterSignInUrl={resolveRedirectDestination()} />
+			</div>
+		)
+	}
 
 	return (
 		<div className="flex flex-col min-h-screen bg-white">
