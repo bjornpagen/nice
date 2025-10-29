@@ -8,7 +8,6 @@ import { DialogManagerProvider } from "@/components/providers/dialog-manager-pro
 import { UserSyncProvider } from "@/components/UserSyncProvider"
 import { CourseProgressionProvider } from "@/components/course-progression-provider"
 import { Toaster } from "@/components/ui/sonner"
-import { ImpersonationBanner } from "@/components/impersonation-banner"
 import "@/styles/globals.css"
 import "@/styles/variables.css"
 
@@ -38,7 +37,6 @@ export default function RootLayout({
 			<body suppressHydrationWarning>
 				<React.Suspense>
 					<ClerkProvider>
-						<ImpersonationBanner />
 						<UserSyncProvider>
 							<CourseProgressionProvider>
 								<DialogManagerProvider>{children}</DialogManagerProvider>
