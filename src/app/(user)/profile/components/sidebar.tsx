@@ -85,7 +85,8 @@ export function Sidebar() {
 	const admin: SidebarItem[] = hasNonStudentRole
 		? [
 			{ name: "Course Builder", href: "course-builder", disabled: false, external: false },
-			{ name: "Metrics", href: "profile/me/metrics", disabled: false, external: false }
+			{ name: "Metrics", href: "profile/me/metrics", disabled: false, external: false },
+			{ name: "Students", href: "profile/me/students", disabled: false, external: false }
 		]
 		: []
 

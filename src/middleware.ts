@@ -131,6 +131,8 @@ const isProtectedRoute = createRouteMatcher((req) => shouldProtectPath(req.nextU
 const isDebugRoute = createRouteMatcher(["/debug(.*)"])
 // Route matcher for metrics route
 const isMetricsRoute = createRouteMatcher(["/profile/me/metrics(.*)"])
+// Route matcher for students route
+const isStudentsRoute = createRouteMatcher(["/profile/me/students(.*)"])
 // Route matcher for course builder admin page
 const isCourseBuilderRoute = createRouteMatcher(["/course-builder(.*)"])
 
@@ -168,7 +170,8 @@ export default clerkMiddleware(async (auth, req) => {
 	}> = [
 		{ matcher: isCourseBuilderRoute, guard: guardCourseBuilderAccess },
 		{ matcher: isDebugRoute, guard: guardSuperbuildersDomain },
-		{ matcher: isMetricsRoute, guard: guardCourseBuilderAccess }
+		{ matcher: isMetricsRoute, guard: guardCourseBuilderAccess },
+		{ matcher: isStudentsRoute, guard: guardCourseBuilderAccess }
 	]
 
 	for (const { matcher, guard } of routeGuards) {
