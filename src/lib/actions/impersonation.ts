@@ -129,19 +129,14 @@ export async function impersonateUser(targetUserId: string): Promise<{ redirectU
             tokenId: data.id
         })
 
-        // Build the sign-in URL with the actor token
-        // Actor tokens work as sign-in tickets that automatically sign you in
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
-        const signInUrl = new URL("/login", baseUrl)
-        
-        // The actor token acts as a ticket parameter for automatic sign-in
-        signInUrl.searchParams.set("__clerk_ticket", actorToken)
-        
-        // Redirect to students page after successful impersonation (must be a plain path)
-        signInUrl.searchParams.set("redirect_url", "/profile/me/students")
+        // Build a relative sign-in path so current origin is used in all envs
+        const params = new URLSearchParams()
+        params.set("__clerk_ticket", actorToken)
+        params.set("redirect_url", "/profile/me/students")
+        const signInPath = `/login?${params.toString()}`
 
         return {
-            redirectUrl: signInUrl.toString(),
+            redirectUrl: signInPath,
             actorToken
         }
     } catch (error) {
