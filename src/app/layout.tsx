@@ -5,6 +5,7 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import * as React from "react"
 import { DialogManagerProvider } from "@/components/providers/dialog-manager-provider"
+import { AuthRedirector } from "@/components/auth-redirector"
 import { UserSyncProvider } from "@/components/UserSyncProvider"
 import { CourseProgressionProvider } from "@/components/course-progression-provider"
 import { Toaster } from "@/components/ui/sonner"
@@ -37,6 +38,7 @@ export default function RootLayout({
 			<body suppressHydrationWarning>
 				<React.Suspense>
 					<ClerkProvider>
+						<AuthRedirector />
 						<UserSyncProvider>
 							<CourseProgressionProvider>
 								<DialogManagerProvider>{children}</DialogManagerProvider>

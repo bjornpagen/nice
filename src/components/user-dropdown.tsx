@@ -23,9 +23,7 @@ export function UserDropdown({ displayName, displayInitial, dark }: UserDropdown
 	const { signOut } = useClerk()
 
 	const handleLogout = async () => {
-		// Sign out from Clerk and redirect to login
-		await signOut()
-		router.push("/login")
+		await signOut({ redirectUrl: "/login" })
 	}
 
 	return (

@@ -14,11 +14,22 @@ import {
     TableRow
 } from "@/components/ui/table"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { impersonateUser } from "@/lib/actions/impersonation"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
+import * as logger from "@superbuilders/slog"
+import * as errors from "@superbuilders/errors"
+import { useClerk, useSignIn, useAuth } from "@clerk/nextjs"
 
 export function Content({ studentsPromise }: { studentsPromise: Promise<StudentRow[]> }) {
     const students = React.use(studentsPromise)
+    const router = useRouter()
+    const { signIn } = useSignIn()
+    const { setActive, signOut } = useClerk()
+    const { userId, actor } = useAuth()
     const [query, setQuery] = React.useState("")
     const [page, setPage] = React.useState(1)
+    const [impersonatingId, setImpersonatingId] = React.useState<string | null>(null)
     const pageSize = 10
 
     const filtered = React.useMemo(() => {
@@ -37,6 +48,34 @@ export function Content({ studentsPromise }: { studentsPromise: Promise<StudentR
     const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize))
     const start = (page - 1) * pageSize
     const items = filtered.slice(start, start + pageSize)
+
+    const handleImpersonate = React.useCallback(async (studentId: string, studentName: string) => {
+        setImpersonatingId(studentId)
+
+        const actionResult = await errors.try(impersonateUser(studentId))
+        if (actionResult.error) {
+            logger.error("impersonation server action failed", { error: actionResult.error, studentId })
+            toast.error("Failed to start impersonation")
+            setImpersonatingId(null)
+            return
+        }
+
+        const { actorToken, redirectUrl } = actionResult.data
+        toast.success(`Impersonating ${studentName}...`)
+
+        // Smoothest path: sign out and let Clerk consume the ticket via a single redirect
+        if (actorToken) {
+            const signOutResult = await errors.try(signOut({ redirectUrl }))
+            if (signOutResult.error) {
+                logger.error("sign out with redirect failed", { error: signOutResult.error })
+                window.location.href = redirectUrl
+            }
+            return
+        }
+
+        // Fallback: redirect to login URL with ticket for Clerk to consume
+        window.location.href = redirectUrl
+    }, [signIn, setActive, router])
 
     return (
         <div className="space-y-6">
@@ -80,7 +119,14 @@ export function Content({ studentsPromise }: { studentsPromise: Promise<StudentR
                                                 })()}
                                             </AvatarFallback>
                                         </Avatar>
-                                        <span>{s.name}</span>
+                                        <span className="flex items-center gap-2">
+                                            <span>{s.name}</span>
+                                            {s.id === userId && (
+                                                <Badge variant={actor ? "destructive" : "secondary"}>
+                                                    {actor ? "Impersonating" : "You"}
+                                                </Badge>
+                                            )}
+                                        </span>
                                     </div>
                                 </TableCell>
                                 <TableCell>
@@ -98,15 +144,20 @@ export function Content({ studentsPromise }: { studentsPromise: Promise<StudentR
                                     )}
                                 </TableCell>
                                 <TableCell className="text-right space-x-2">
-                                    <Button asChild variant="outline" size="sm">
-                                        <a
-                                            href={`https://dashboard.clerk.com/~/users/${s.id}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
+                                    {s.id === userId ? (
+                                        <Button variant={actor ? "destructive" : "default"} size="sm" disabled className="opacity-100 cursor-default">
+                                            {actor ? "Active (Impersonated)" : "Active"}
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => handleImpersonate(s.id, s.name)}
+                                            disabled={impersonatingId === s.id}
                                         >
-                                            Open in Clerk
-                                        </a>
-                                    </Button>
+                                            {impersonatingId === s.id ? "Impersonating..." : "Impersonate"}
+                                        </Button>
+                                    )}
                                 </TableCell>
                             </TableRow>
                         ))}
