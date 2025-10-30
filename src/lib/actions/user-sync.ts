@@ -119,20 +119,35 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 				onerosterSourceId: onerosterUserResult.data.sourcedId,
 				newRoleCount: onerosterUserResult.data.roles.length
 			})
-			// Update metadata with latest roles from OneRoster
+			
+			// Compact roles to a single representative role to avoid Clerk's 8KB limit
+			// Prefer first non-student role, otherwise use first role
+			const allRoles = onerosterUserResult.data.roles
+			const nonStudentRole = allRoles.find((role) => role.role !== "student")
+			const selectedRole = nonStudentRole || allRoles[0]
+			
+			logger.info("compacting roles for clerk metadata", {
+				clerkId,
+				originalRoleCount: allRoles.length,
+				selectedRoleType: selectedRole?.roleType,
+				selectedRole: selectedRole?.role,
+				hasNonStudentRole: !!nonStudentRole
+			})
+			
+			// Update metadata with single compacted role from OneRoster
 			const updatedMetadata = {
 				...metadataValidation.data,
-				roles: onerosterUserResult.data.roles.map((role) => ({
-					roleType: role.roleType,
-					role: role.role,
+				roles: selectedRole ? [{
+					roleType: selectedRole.roleType,
+					role: selectedRole.role,
 					org: {
-						sourcedId: role.org.sourcedId,
-						type: role.org.type
+						sourcedId: selectedRole.org.sourcedId,
+						type: selectedRole.org.type
 					},
-					userProfile: role.userProfile,
-					beginDate: role.beginDate,
-					endDate: role.endDate
-				}))
+					userProfile: selectedRole.userProfile,
+					beginDate: selectedRole.beginDate,
+					endDate: selectedRole.endDate
+				}] : []
 			}
 
 			// Update Clerk metadata with latest roles
@@ -162,7 +177,8 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 			logger.info("successfully updated roles for existing user", {
 				clerkId,
 				sourceId: metadataValidation.data.sourceId,
-				roleCount: updatedMetadata.roles.length
+				originalRoleCount: allRoles.length,
+				storedRoleCount: updatedMetadata.roles.length
 			})
 
 			return {
@@ -244,30 +260,46 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 	})
 
 	publicMetadataPayload.sourceId = onerosterUserResult.data.sourcedId
-	publicMetadataPayload.roles = onerosterUserResult.data.roles.map((role) => ({
-		roleType: role.roleType,
-		role: role.role,
+	
+	// Compact roles to a single representative role to avoid Clerk's 8KB limit
+	// Prefer first non-student role, otherwise use first role
+	const allRoles = onerosterUserResult.data.roles
+	const nonStudentRole = allRoles.find((role) => role.role !== "student")
+	const selectedRole = nonStudentRole || allRoles[0]
+	
+	logger.info("compacting roles for fresh sync", {
+		clerkId,
+		originalRoleCount: allRoles.length,
+		selectedRoleType: selectedRole?.roleType,
+		selectedRole: selectedRole?.role,
+		hasNonStudentRole: !!nonStudentRole
+	})
+	
+	publicMetadataPayload.roles = selectedRole ? [{
+		roleType: selectedRole.roleType,
+		role: selectedRole.role,
 		org: {
-			sourcedId: role.org.sourcedId,
-			type: role.org.type
+			sourcedId: selectedRole.org.sourcedId,
+			type: selectedRole.org.type
 		},
-		userProfile: role.userProfile,
-		beginDate: role.beginDate,
-		endDate: role.endDate
-	}))
+		userProfile: selectedRole.userProfile,
+		beginDate: selectedRole.beginDate,
+		endDate: selectedRole.endDate
+	}] : []
 
-	logger.info("successfully fetched sourceid and roles from oneroster", {
+	logger.info("successfully fetched sourceid and compacted roles from oneroster", {
 		userId: clerkId,
 		email,
 		sourceId: onerosterUserResult.data.sourcedId,
-		roleCount: publicMetadataPayload.roles.length
+		originalRoleCount: allRoles.length,
+		storedRoleCount: publicMetadataPayload.roles.length
 	})
 
 	// Update Clerk metadata
 	logger.debug("updating clerk with fresh user metadata", {
 		clerkId,
 		sourceId: publicMetadataPayload.sourceId,
-		finalRoleCount: publicMetadataPayload.roles.length
+		storedRoleCount: publicMetadataPayload.roles.length
 	})
 	const clerk = await clerkClient()
 	const updateResult = await errors.try(
@@ -286,7 +318,7 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 		clerkId,
 		nickname,
 		sourceId: publicMetadataPayload.sourceId,
-		finalRoleCount: publicMetadataPayload.roles.length
+		storedRoleCount: publicMetadataPayload.roles.length
 	})
 
 	return {
