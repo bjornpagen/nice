@@ -192,23 +192,40 @@ async function fetchUnitProficiencies(
 		}))
 	}
 
-	// Create a map of resourceId -> assessment result for quick lookup
-	// Only process results with new '_ali' format line items
-	const resultsMap = new Map<string, { score: number; isFullyGraded: boolean }>()
+	// Build latest fully graded result per resource by scoreDate, supporting both legacy and _ali line items
+	type ResultShape = (typeof resultsResponse.data)[number]
+	const latestByLineItem = new Map<string, ResultShape>()
 	for (const result of resultsResponse.data) {
-		// Skip results from old assessment line items (without '_ali' suffix)
-		if (!result.assessmentLineItem.sourcedId.endsWith("_ali")) {
-			continue
-		}
+		const lineItemId = result.assessmentLineItem?.sourcedId
+		if (typeof lineItemId !== "string") continue
+		if (result.scoreStatus !== "fully graded") continue
+		if (typeof result.score !== "number") continue
 
-		if (result.scoreStatus === "fully graded" && typeof result.score === "number") {
-			const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)
-			const normalizedScore = result.score <= 1.1 ? result.score * 100 : result.score
-			resultsMap.set(resourceId, {
-				score: normalizedScore,
-				isFullyGraded: true
-			})
+		const currentTime = new Date(result.scoreDate || 0).getTime()
+		const prev = latestByLineItem.get(lineItemId)
+		const prevTime = prev ? new Date(prev.scoreDate || 0).getTime() : Number.NEGATIVE_INFINITY
+		if (!prev || currentTime > prevTime) {
+			latestByLineItem.set(lineItemId, result)
 		}
+	}
+
+	const latestByResource = new Map<string, ResultShape>()
+	for (const [lineItemId, latest] of latestByLineItem.entries()) {
+		const resourceId = getResourceIdFromLineItem(lineItemId)
+		const currentTime = new Date(latest.scoreDate || 0).getTime()
+		const prev = latestByResource.get(resourceId)
+		const prevTime = prev ? new Date(prev.scoreDate || 0).getTime() : Number.NEGATIVE_INFINITY
+		if (!prev || currentTime > prevTime) {
+			latestByResource.set(resourceId, latest)
+		}
+	}
+
+	const resultsMap = new Map<string, { score: number; isFullyGraded: boolean }>()
+	for (const [resourceId, latest] of latestByResource.entries()) {
+		if (typeof latest.score !== "number") continue
+		const normalizedScore = latest.score <= 1.1 ? latest.score * 100 : latest.score
+		const normalizedScoreRounded = Math.round(normalizedScore)
+		resultsMap.set(resourceId, { score: normalizedScoreRounded, isFullyGraded: true })
 	}
 
 	logger.debug("processed assessment results", {
