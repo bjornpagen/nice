@@ -15,10 +15,11 @@ export function aggregateUnitProficiencies(
 		children: Array<{ type: string; id: string; children?: Array<{ type: string; id: string }> }>
 	}>
 ): UnitProficiency[] {
-	return units.map((unit) => {
+    return units.map((unit) => {
 		const assessableContentIds: string[] = []
 
-		// Collect all assessable content IDs from this unit (same logic as profile.ts)
+        // Collect all assessable content IDs from this unit
+        // IMPORTANT: "skills" are Exercises ONLY. Quizzes/UnitTests are excluded.
 		for (const child of unit.children) {
 			if (child.type === "Lesson" && child.children) {
 				// Add exercises from within lessons
@@ -27,9 +28,6 @@ export function aggregateUnitProficiencies(
 						assessableContentIds.push(content.id)
 					}
 				}
-			} else if (child.type === "Quiz" || child.type === "UnitTest") {
-				// Add unit-level quizzes and tests
-				assessableContentIds.push(child.id)
 			}
 		}
 

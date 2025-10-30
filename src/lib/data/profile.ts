@@ -158,7 +158,8 @@ async function fetchCourseEarnedXPFromResults(userSourcedId: string, courseSourc
 
 /**
  * Fetches unit proficiency data for a user across all units in a course.
- * Only exercises, quizzes, and unit tests with 100% scores count as "proficient".
+ * IMPORTANT: "skills" here refers to Exercises ONLY. Quizzes/UnitTests are excluded.
+ * A skill is considered proficient when fully graded with a score of 100.
  *
  * @param userSourcedId - The user's OneRoster sourcedId
  * @param courseData - The complete course data with units and their content
@@ -229,7 +230,7 @@ async function fetchUnitProficiencies(
 			childrenTypes: unit.children.map((c) => c.type)
 		})
 
-		// Collect all assessable content IDs from this unit
+        // Collect all assessable content IDs from this unit
 		for (const child of unit.children) {
 			if (child.type === "Lesson") {
 				logger.debug("Processing lesson", {
@@ -249,14 +250,6 @@ async function fetchUnitProficiencies(
 						})
 					}
 				}
-			} else if (child.type === "Quiz" || child.type === "UnitTest") {
-				// Add unit-level quizzes and tests
-				assessableContentIds.push(child.id)
-				logger.debug("Found unit-level assessment", {
-					assessmentId: child.id,
-					assessmentTitle: child.title,
-					assessmentType: child.type
-				})
 			}
 		}
 
