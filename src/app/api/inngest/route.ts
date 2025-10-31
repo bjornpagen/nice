@@ -75,6 +75,11 @@ import { orchestrateHardcodedSlugQtiGenerationAndUpload } from "@/inngest/functi
 import { standardizeQtiQuestionPhrasing } from "@/inngest/functions/standardize-qti-question-phrasing"
 import { standardizeQtiTestPhrasing } from "@/inngest/functions/standardize-qti-test-phrasing"
 import { courseBuilderWorkflow } from "@/inngest/functions/course-builder-workflow"
+import { fetchCourseBuilderInputs } from "@/inngest/functions/course-builder/fetch-inputs"
+import { generateCourseBuilderPlan } from "@/inngest/functions/course-builder/generate-plan"
+import { buildCourseBuilderPayload } from "@/inngest/functions/course-builder/build-payload"
+import { generatePlanAndBuildPayload } from "@/inngest/functions/course-builder/generate-and-build"
+import { uploadCourseAndEnroll } from "@/inngest/functions/course-builder/upload-and-enroll"
 
 // Create and export the Inngest HTTP handler
 export const { GET, POST, PUT } = serve({
@@ -158,7 +163,12 @@ export const { GET, POST, PUT } = serve({
 		standardizeQtiTestPhrasing,
 		standardizeQtiQuestionPhrasing
 	,
-		// Course Builder Async Workflow
+		// Course Builder: step workers and orchestrator
+		fetchCourseBuilderInputs,
+		generateCourseBuilderPlan,
+		buildCourseBuilderPayload,
+		generatePlanAndBuildPayload,
+		uploadCourseAndEnroll,
 		courseBuilderWorkflow
 	]
 })

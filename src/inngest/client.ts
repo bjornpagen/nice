@@ -2,7 +2,7 @@ import * as logger from "@superbuilders/slog"
 import { EventSchemas, type GetEvents, Inngest } from "inngest"
 import { z, type ZodTypeAny } from "zod"
 import { WidgetCollectionNameSchema } from "@/inngest/events/qti" // MODIFIED: Import from new location
-import { CourseBuilderApiInputSchema } from "@/lib/course-builder-api/schema"
+import { CourseBuilderApiInputSchema, AiGenerateCourseInputSchema } from "@/lib/course-builder-api/schema"
 
 // Helper schema for the XML-based item input
 const CreateItemInputSchema = z.object({
@@ -27,6 +27,82 @@ const events = {
     data: z.object({
       jobId: z.string().min(1),
       input: CourseBuilderApiInputSchema
+    })
+  },
+  // Course Builder Step Events (invoked via step.invoke by the orchestrator)
+  "app/course_builder.fetch_inputs": {
+    data: z.object({
+      jobId: z.string().min(1),
+      input: CourseBuilderApiInputSchema
+    })
+  },
+  "app/course_builder.generate_plan": {
+    data: z.object({
+      jobId: z.string().min(1),
+      subject: z.string().min(1),
+      caseDetails: z.array(
+        z.object({
+          id: z.string().min(1),
+          humanCodingScheme: z.string().min(1),
+          fullStatement: z.string().min(1),
+          abbreviatedStatement: z.string().min(0)
+        })
+      ),
+      resources: z.array(
+        z.object({
+          sourcedId: z.string().min(1),
+          title: z.string().min(1),
+          metadata: z.record(z.string(), z.any()).optional()
+        })
+      ),
+      stimuli: z.array(
+        z.object({ id: z.string().min(1), title: z.string().min(1), rawXml: z.string().min(1) })
+      ),
+      tests: z.array(
+        z.object({ id: z.string().min(1), title: z.string().min(1), rawXml: z.string().min(1) })
+      ),
+      userGrades: z.array(z.string().min(1))
+    })
+  },
+  "app/course_builder.build_payload": {
+    data: z.object({
+      jobId: z.string().min(1),
+      plan: AiGenerateCourseInputSchema
+    })
+  },
+  "app/course_builder.generate_and_build": {
+    data: z.object({
+      jobId: z.string().min(1),
+      subject: z.string().min(1),
+      caseDetails: z.array(
+        z.object({
+          id: z.string().min(1),
+          humanCodingScheme: z.string().min(1),
+          fullStatement: z.string().min(1),
+          abbreviatedStatement: z.string().min(0)
+        })
+      ),
+      resources: z.array(
+        z.object({
+          sourcedId: z.string().min(1),
+          title: z.string().min(1),
+          metadata: z.record(z.string(), z.any()).optional()
+        })
+      ),
+      stimuli: z.array(
+        z.object({ id: z.string().min(1), title: z.string().min(1), rawXml: z.string().min(1) })
+      ),
+      tests: z.array(
+        z.object({ id: z.string().min(1), title: z.string().min(1), rawXml: z.string().min(1) })
+      ),
+      userGrades: z.array(z.string().min(1))
+    })
+  },
+  "app/course_builder.upload_and_enroll": {
+    data: z.object({
+      jobId: z.string().min(1),
+      studentUserId: z.string().min(1),
+      payload: z.object({}).passthrough()
     })
   },
 	// QTI Migration Events

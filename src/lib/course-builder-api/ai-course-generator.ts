@@ -39,6 +39,8 @@ You are tasked with creating comprehensive, standards-aligned courses based on C
 <constraints>
 -- You MUST only use resource IDs from the provided <available_resources> list.
 -- DO NOT invent or hallucinate any resource IDs. If an idea requires a resource that is not listed, skip it.
+-- ABSOLUTE: Resource IDs MUST match EXACTLY the 'sourcedId' values shown in <available_resources>. Do not alter, prefix, suffix, or derive new IDs.
+-- ABSOLUTE: Never output IDs starting with 'nice_' or randomly generated strings. These are invalid. Use only the IDs from <available_resources>.
 -- Each unit must have a unique title (case-insensitive)
 -- Each lesson within a unit must have a unique title (case-insensitive)
 -- Every lesson must contain at least one resource
@@ -49,6 +51,7 @@ You are tasked with creating comprehensive, standards-aligned courses based on C
 -- HARD CONSTRAINT: Within a single lesson, resource titles MUST be unique per type. Do not include two resources with the same title and type in the same lesson (e.g., two Exercises titled "Apply: cell parts and functions"). When multiple similar options exist, select the single best-aligned resource.
 -- HARD CONSTRAINT: Do NOT include grade level text (e.g., "Grade 7", "7th grade", "Grades 6-8") in ANY titles or descriptions (course or units). Grades are for alignment only; they are not presented in names or descriptions.
 -- HARD CONSTRAINT: For every referenced resource, its <id> MUST match exactly one <id> in <available_resources>. Never output an id that is not present there.
+-- HARD CONSTRAINT: If there are not enough resources to fulfill a lesson objective, reduce the number of resources; never invent or change IDs.
 </constraints>
 
 <pedagogical_principles>
@@ -141,6 +144,7 @@ ${params.enrichedContent.tests.slice(0, 40).map(t => `
 6. Each resource should appear only once in the course
    - HARD CONSTRAINT: Do not duplicate resource IDs anywhere in the course. If a resource could fit multiple places, choose the single best placement and do not reuse it.
    - Within a lesson, never include two resources with the same (type, title). Pick the best one.
+   - Use resource IDs exactly as given. Examples of INVALID IDs you must NEVER output: 'nice_xabc123', 'xdeadbeef', any ID not listed in <available_resources>.
 7. Use descriptive, engaging titles for units and lessons
 8. Preserve the XP values from resources exactly as provided
 9. Create exactly the number of units needed to cover all standards comprehensively
