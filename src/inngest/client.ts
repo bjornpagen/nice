@@ -36,40 +36,6 @@ const events = {
       input: CourseBuilderApiInputSchema
     })
   },
-  "app/course_builder.generate_plan": {
-    data: z.object({
-      jobId: z.string().min(1),
-      subject: z.string().min(1),
-      caseDetails: z.array(
-        z.object({
-          id: z.string().min(1),
-          humanCodingScheme: z.string().min(1),
-          fullStatement: z.string().min(1),
-          abbreviatedStatement: z.string().min(0)
-        })
-      ),
-      resources: z.array(
-        z.object({
-          sourcedId: z.string().min(1),
-          title: z.string().min(1),
-          metadata: z.record(z.string(), z.any()).optional()
-        })
-      ),
-      stimuli: z.array(
-        z.object({ id: z.string().min(1), title: z.string().min(1), rawXml: z.string().min(1) })
-      ),
-      tests: z.array(
-        z.object({ id: z.string().min(1), title: z.string().min(1), rawXml: z.string().min(1) })
-      ),
-      userGrades: z.array(z.string().min(1))
-    })
-  },
-  "app/course_builder.build_payload": {
-    data: z.object({
-      jobId: z.string().min(1),
-      plan: AiGenerateCourseInputSchema
-    })
-  },
   "app/course_builder.generate_and_build": {
     data: z.object({
       jobId: z.string().min(1),
