@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import type { AssessmentResult } from "@/lib/oneroster"
 import { oneroster } from "@/lib/clients"
 import { getResourceIdFromLineItem } from "@/lib/utils/assessment-line-items"
 import { isInteractiveAttemptResult, isPassiveContentResult } from "@/lib/utils/assessment-results"
@@ -42,7 +43,14 @@ export async function getUserUnitProgressRaw(
 		throw errors.wrap(resultsResponse.error, "fetch user progress")
 	}
 
-	const latestByResource = new Map<string, (typeof resultsResponse.data)[number]>()
+	// Track latest interactive attempts and latest passive content results separately.
+	const latestInteractiveByResource = new Map<string, AssessmentResult>()
+	const latestPassiveByResource = new Map<string, AssessmentResult>()
+
+	function getTime(r: AssessmentResult | undefined): number {
+		return r ? new Date(r.scoreDate || 0).getTime() : Number.NEGATIVE_INFINITY
+	}
+
 	for (const result of resultsResponse.data) {
 		const lineItemId = result.assessmentLineItem.sourcedId
 		if (!lineItemId.endsWith("_ali")) {
@@ -57,15 +65,30 @@ export async function getUserUnitProgressRaw(
 		}
 
 		const resourceId = getResourceIdFromLineItem(lineItemId)
-		const prev = latestByResource.get(resourceId)
-		const currentTime = new Date(result.scoreDate || 0).getTime()
-		const prevTime = prev ? new Date(prev.scoreDate || 0).getTime() : Number.NEGATIVE_INFINITY
-		if (!prev || currentTime > prevTime) {
-			latestByResource.set(resourceId, result)
+
+		if (isInteractive) {
+			const prevInteractive = latestInteractiveByResource.get(resourceId)
+			if (!prevInteractive || getTime(result) > getTime(prevInteractive)) {
+				latestInteractiveByResource.set(resourceId, result)
+			}
+		} else if (isPassive) {
+			const prevPassive = latestPassiveByResource.get(resourceId)
+			if (!prevPassive || getTime(result) > getTime(prevPassive)) {
+				latestPassiveByResource.set(resourceId, result)
+			}
 		}
 	}
 
-	for (const [resourceId, latest] of latestByResource.entries()) {
+	// Prefer latest interactive attempts when available; otherwise fall back to passive.
+	for (const resourceId of new Set<string>([
+		...latestPassiveByResource.keys(),
+		...latestInteractiveByResource.keys()
+	])) {
+		const interactive = latestInteractiveByResource.get(resourceId)
+		const passive = latestPassiveByResource.get(resourceId)
+		const latest = interactive ?? passive
+		if (!latest) continue
+
 		if (latest.scoreStatus === "fully graded" && typeof latest.score === "number") {
 			const normalizedScore = Math.round(latest.score)
 			progressMap.set(resourceId, {
