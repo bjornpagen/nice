@@ -4,6 +4,8 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
+import { extractSubjectAndCourse, checkEnrollmentFromEdge } from "@/lib/course-access-guard"
 
 const PUBLIC_SEGMENTS = new Set([
 	"",
@@ -124,6 +126,50 @@ async function guardSuperbuildersDomain({ req, userId }: GuardContext): Promise<
 	}
 }
 
+// Route matcher for course routes shaped like /:subject/:course(.*)
+const isCourseRoute = createRouteMatcher((req) => {
+	const lowerPath = req.nextUrl.pathname.toLowerCase()
+
+	// Never match API or static/internal prefixes
+	for (const prefix of PUBLIC_PREFIXES) {
+		if (lowerPath.startsWith(prefix)) return false
+	}
+
+	const info = extractSubjectAndCourse(lowerPath)
+	return info !== null
+})
+
+async function guardCourseAccess({ req, userId }: GuardContext): Promise<Response | void> {
+	// Authentication is enforced earlier for protected routes, but fail-closed here too
+	if (!userId) {
+		return redirectToProfile(req)
+	}
+
+	const user = await loadClerkUser(userId)
+	if (!user) {
+		return redirectToProfile(req)
+	}
+
+	// Parse roles from Clerk metadata
+	const metadata = parseUserPublicMetadata(user.publicMetadata)
+	const hasNonStudentRole = metadata.roles.some((r) => (r.role ?? "").toLowerCase() !== "student")
+	if (hasNonStudentRole) {
+		// Admins/teachers bypass course enrollment checks
+		return
+	}
+
+	const info = extractSubjectAndCourse(req.nextUrl.pathname)
+	if (!info) {
+		return redirectToProfile(req)
+	}
+
+	const allowed = await checkEnrollmentFromEdge(req, info.subject, info.course)
+	if (!allowed) {
+		return redirectToProfile(req)
+	}
+	return
+}
+
 // Define which routes should be protected (require authentication)
 const isProtectedRoute = createRouteMatcher((req) => shouldProtectPath(req.nextUrl.pathname))
 
@@ -168,6 +214,7 @@ export default clerkMiddleware(async (auth, req) => {
 		matcher: ReturnType<typeof createRouteMatcher>
 		guard: (context: GuardContext) => Promise<Response | void>
 	}> = [
+		{ matcher: isCourseRoute, guard: guardCourseAccess },
 		{ matcher: isCourseBuilderRoute, guard: guardCourseBuilderAccess },
 		{ matcher: isDebugRoute, guard: guardSuperbuildersDomain },
 		{ matcher: isMetricsRoute, guard: guardCourseBuilderAccess },
