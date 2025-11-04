@@ -6,7 +6,6 @@ import type { SaveAssessmentResultCommand } from "@/lib/dtos/assessment"
 import * as analytics from "@/lib/ports/analytics"
 import * as gradebook from "@/lib/ports/gradebook"
 import * as cache from "@/lib/services/cache"
-import * as proficiency from "@/lib/services/proficiency"
 import * as streak from "@/lib/services/streak"
 import { constructActorId } from "@/lib/utils/actor-id"
 import { generateResultSourcedId } from "@/lib/utils/assessment-identifiers"
@@ -120,24 +119,6 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 		sideEffectPromises.push(streak.update(command.clerkUserId, command.userPublicMetadata))
 	}
 
-	// Proficiency update for interactive assessments
-	if (
-		isInteractiveAssessment &&
-		command.onerosterComponentResourceSourcedId &&
-		command.sessionResults &&
-		attemptNumber
-	) {
-		sideEffectPromises.push(
-			proficiency.updateFromAssessment(
-				userId,
-				command.onerosterComponentResourceSourcedId,
-				attemptNumber,
-				command.sessionResults,
-				courseId,
-				correlationId
-			)
-		)
-	}
 
 	// Analytics event if we have required data
 	if (command.unitData && command.assessmentPath && command.assessmentTitle && command.userEmail) {
