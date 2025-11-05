@@ -16,6 +16,18 @@ import {
 import { oneroster } from "@/lib/clients"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { requireUser } from "@/lib/auth/require-user"
+import { redis } from "@/lib/redis"
+import { getActiveEnrollmentsForUser, getClass } from "@/lib/oneroster/redis/api"
+import {
+    ENROLLMENT_CACHE_TTL_SECONDS,
+    SYNC_LOCK_TTL_SECONDS,
+    ON_DEMAND_SYNC_RATE_LIMIT_SECONDS,
+    EnrollmentCacheSchema,
+    type EnrollmentCache,
+    getEnrollmentCacheKey,
+    getSyncLockKey,
+    getOnDemandRateLimitKey
+} from "@/lib/cache/enrollment-cache"
 
 // Response schema for the sync action
 const SyncResponseSchema = z.object({
@@ -327,4 +339,133 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 		nickname: nickname,
 		alreadySynced: false
 	}
+}
+
+// ---------------- Enrollment Cache Sync (PRD: Cache-on-Login) ----------------
+
+export async function syncAndCacheUserEnrollments(): Promise<void> {
+    const user = await requireUser()
+
+    const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+    if (!metadataValidation.success) {
+        logger.warn("cannot sync enrollments, invalid user metadata", { userId: user.id, error: metadataValidation.error })
+        return
+    }
+    const metadata = metadataValidation.data
+
+    if (!metadata?.sourceId) {
+        logger.warn("cannot sync enrollments, user has no sourceId", { userId: user.id })
+        return
+    }
+
+    const lockKey = getSyncLockKey(user.id)
+    const lockAcquired = await errors.try(redis.set(lockKey, "1", { NX: true, EX: SYNC_LOCK_TTL_SECONDS }))
+    if (lockAcquired.error) {
+        logger.error("enrollment sync: failed to acquire lock", { userId: user.id, error: lockAcquired.error })
+        return
+    }
+    if (lockAcquired.data === null) {
+        logger.debug("enrollment sync already in progress, skipping", { userId: user.id })
+        return
+    }
+
+    const cacheKey = getEnrollmentCacheKey(user.id)
+    try {
+        // Load existing cache (for failure path preservation)
+        const existingCacheResult = await errors.try(redis.get(cacheKey))
+        if (existingCacheResult.error) {
+            logger.error("enrollment sync: failed to read existing cache", { userId: user.id, error: existingCacheResult.error })
+        }
+
+        let existingCache: EnrollmentCache | null = null
+        if (existingCacheResult.data) {
+            const parsedJsonResult = errors.trySync(() => JSON.parse(existingCacheResult.data as string))
+            if (parsedJsonResult.error) {
+                logger.error("enrollment sync: failed to parse existing cache json", { userId: user.id, error: parsedJsonResult.error })
+            } else {
+                const parsed = EnrollmentCacheSchema.safeParse(parsedJsonResult.data)
+                if (!parsed.success) {
+                    logger.error("enrollment sync: existing cache schema invalid", { userId: user.id, error: parsed.error })
+                } else {
+                    existingCache = parsed.data
+                }
+            }
+        }
+
+        // Fetch fresh enrollments from OneRoster-backed API
+        const enrollmentsResult = await errors.try(getActiveEnrollmentsForUser(metadata.sourceId))
+        if (enrollmentsResult.error) {
+            logger.error("enrollment sync: failed to fetch active enrollments", { userId: user.id, error: enrollmentsResult.error })
+
+            const updatedCache: EnrollmentCache = {
+                enrolledCourseIds: existingCache ? existingCache.enrolledCourseIds : [],
+                lastSyncAt: new Date().toISOString(),
+                lastSuccessAt: existingCache ? existingCache.lastSuccessAt : null,
+                failureCount: existingCache ? existingCache.failureCount + 1 : 1
+            }
+            const setResult = await errors.try(redis.set(cacheKey, JSON.stringify(updatedCache), { EX: ENROLLMENT_CACHE_TTL_SECONDS }))
+            if (setResult.error) {
+                logger.error("enrollment sync: failed to write failure cache", { userId: user.id, error: setResult.error })
+            }
+            return
+        }
+
+        const enrollments = enrollmentsResult.data
+        const uniqueClassIds = [...new Set(enrollments.map((e) => e.class.sourcedId))]
+        const classResults = await Promise.all(
+            uniqueClassIds.map(async (classId) => {
+                const clsResult = await errors.try(getClass(classId))
+                if (clsResult.error) {
+                    logger.error("enrollment sync: failed to resolve class", { userId: user.id, classId, error: clsResult.error })
+                    return null
+                }
+                return clsResult.data
+            })
+        )
+        const enrolledCourseIds: string[] = []
+        for (const cls of classResults) {
+            if (cls && cls.course && typeof cls.course.sourcedId === "string") {
+                enrolledCourseIds.push(cls.course.sourcedId)
+            }
+        }
+
+        const newCache: EnrollmentCache = {
+            enrolledCourseIds,
+            lastSyncAt: new Date().toISOString(),
+            lastSuccessAt: new Date().toISOString(),
+            failureCount: 0
+        }
+
+        const setOk = await errors.try(redis.set(cacheKey, JSON.stringify(newCache), { EX: ENROLLMENT_CACHE_TTL_SECONDS }))
+        if (setOk.error) {
+            logger.error("enrollment sync: failed to write success cache", { userId: user.id, error: setOk.error })
+            return
+        }
+        logger.info("enrollment sync: cache updated", { userId: user.id, count: enrolledCourseIds.length })
+    } finally {
+        const delResult = await errors.try(redis.del(lockKey))
+        if (delResult.error) {
+            logger.error("enrollment sync: failed to release lock", { userId: user.id, error: delResult.error })
+        }
+    }
+}
+
+export async function triggerUserEnrollmentSync(): Promise<void> {
+    const user = await requireUser()
+    const rateLimitKey = getOnDemandRateLimitKey(user.id)
+
+    const rateResult = await errors.try(redis.set(rateLimitKey, "1", { NX: true, EX: ON_DEMAND_SYNC_RATE_LIMIT_SECONDS }))
+    if (rateResult.error) {
+        logger.error("enrollment sync: rate limit check failed", { userId: user.id, error: rateResult.error })
+        return
+    }
+    if (rateResult.data === null) {
+        logger.debug("enrollment sync: on-demand rate limited", { userId: user.id })
+        return
+    }
+
+    // Fire-and-forget
+    void syncAndCacheUserEnrollments().catch((err) => {
+        logger.error("on-demand enrollment sync failed", { userId: user.id, error: err })
+    })
 }

@@ -4,7 +4,10 @@ import * as logger from "@superbuilders/slog"
 import { NextResponse } from "next/server"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
-import { getActiveEnrollmentsForUser, getAllCoursesBySlug, getClass } from "@/lib/oneroster/redis/api"
+import { getAllCoursesBySlug } from "@/lib/oneroster/redis/api"
+import { redis } from "@/lib/redis"
+import { triggerUserEnrollmentSync } from "@/lib/actions/user-sync"
+import { EnrollmentCacheSchema, getEnrollmentCacheKey } from "@/lib/cache/enrollment-cache"
 
 export const runtime = "nodejs"
 
@@ -56,29 +59,36 @@ export async function GET(req: Request): Promise<Response> {
     }
     const targetCourseId = courseRecord.sourcedId
 
-    const enrollmentsResult = await errors.try(getActiveEnrollmentsForUser(userSourcedId))
-    if (enrollmentsResult.error) {
-        logger.error("course access api: fetch active enrollments", { userSourcedId, error: enrollmentsResult.error })
-        return NextResponse.json({ allowed: false }, { status: 500 })
+    // --- Redis-backed enrollment cache (PRD) ---
+    const cacheKey = getEnrollmentCacheKey(userId)
+    const cachedResult = await errors.try(redis.get(cacheKey))
+    if (cachedResult.error) {
+        logger.error("course access api: redis read", { userId, error: cachedResult.error })
+        return NextResponse.json({ allowed: false }, { status: 503 })
     }
-    const enrollments = enrollmentsResult.data
-    if (enrollments.length === 0) {
+
+    if (cachedResult.data === null) {
+        logger.warn("course access api: enrollment cache miss", { userId })
+        void triggerUserEnrollmentSync()
         return NextResponse.json({ allowed: false })
     }
 
-    const uniqueClassIds = [...new Set(enrollments.map((e) => e.class.sourcedId))]
-    const classPromises = uniqueClassIds.map(async (classId) => {
-        const clsResult = await errors.try(getClass(classId))
-        if (clsResult.error) {
-            logger.error("course access api: get class for enrollment", { classId, error: clsResult.error })
-            return null
-        }
-        return clsResult.data
-    })
-    const classes = (await Promise.all(classPromises)).filter((c): c is NonNullable<typeof c> => c !== null)
-    const isEnrolled = classes.some((c) => c?.course?.sourcedId === targetCourseId)
+    const parsedJsonResult = errors.trySync(() => JSON.parse(cachedResult.data as string))
+    if (parsedJsonResult.error) {
+        logger.error("course access api: parse cache json", { userId, error: parsedJsonResult.error })
+        return NextResponse.json({ allowed: false }, { status: 500 })
+    }
 
-    return NextResponse.json({ allowed: isEnrolled })
+    const parsedCache = EnrollmentCacheSchema.safeParse(parsedJsonResult.data)
+    if (!parsedCache.success) {
+        logger.error("course access api: invalid cache schema", { userId, error: parsedCache.error })
+        return NextResponse.json({ allowed: false }, { status: 500 })
+    }
+
+    const cacheAgeMs = Date.now() - new Date(parsedCache.data.lastSyncAt).getTime()
+    const isEnrolled = parsedCache.data.enrolledCourseIds.includes(targetCourseId)
+
+    return NextResponse.json({ allowed: isEnrolled, cacheHit: true, cacheAgeMs, failureCount: parsedCache.data.failureCount })
 }
 
 

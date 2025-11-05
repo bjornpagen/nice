@@ -53,7 +53,7 @@ export function Card({ course, units, headerMinHeight, onHeaderResize }: CardPro
 				<CardHeader className="p-0 pb-4">
 					<CardTitle className="flex items-start justify-between mb-0 gap-3">
 						<h2 className="text-lg font-bold text-gray-800 flex-1 min-w-0">{course.title}</h2>
-						<Link href={coursePath} className="text-blue-600 hover:text-blue-700 text-sm font-medium flex-shrink-0">
+                        <Link href={coursePath} prefetch={false} className="text-blue-600 hover:text-blue-700 text-sm font-medium flex-shrink-0">
 							See all ({units.length})
 						</Link>
 					</CardTitle>
@@ -163,11 +163,11 @@ export function Card({ course, units, headerMinHeight, onHeaderResize }: CardPro
 					<div className="text-sm text-gray-500">Course content can be viewed by starting.</div>
 				)}
 			</CardContent>
-			<CardFooter className="p-0 pt-4 flex justify-end">
-				<Button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4" asChild>
-					<Link href={coursePath}>Start</Link>
-				</Button>
-			</CardFooter>
+            <CardFooter className="p-0 pt-4 flex justify-end">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4" asChild>
+                    <Link href={coursePath} prefetch={false}>Start</Link>
+                </Button>
+            </CardFooter>
 		</UICard>
 	)
 }

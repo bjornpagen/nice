@@ -1,14 +1,18 @@
 "use client"
 
 import { useClerk, useUser } from "@clerk/nextjs"
+import * as logger from "@superbuilders/slog"
 import * as errors from "@superbuilders/errors"
 import { useRouter } from "next/navigation"
 import * as React from "react"
 import { toast } from "sonner"
-import { syncUserWithOneRoster } from "@/lib/actions/user-sync"
+import { syncUserWithOneRoster, syncAndCacheUserEnrollments } from "@/lib/actions/user-sync"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
+import { useEnrollmentPoller } from "@/hooks/use-enrollment-poller"
 
 export function UserSyncProvider({ children }: { children: React.ReactNode }) {
+    // Activate background enrollment poller
+    useEnrollmentPoller()
 	const { user, isLoaded } = useUser()
 	const { signOut } = useClerk()
 	const router = useRouter()
@@ -53,6 +57,17 @@ export function UserSyncProvider({ children }: { children: React.ReactNode }) {
 
 		void performSync()
 	}, [isLoaded, user, signOut, router])
+
+    // Trigger an immediate enrollment sync when critical metadata changes
+    React.useEffect(() => {
+        if (!isLoaded || !user) {
+            return
+        }
+        void syncAndCacheUserEnrollments().catch((err) => {
+            logger.error("metadata-change enrollment sync failed", { userId: user.id, error: err })
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLoaded, user, user?.publicMetadata?.sourceId, JSON.stringify(user?.publicMetadata?.roles)])
 
 	return <>{children}</>
 }
