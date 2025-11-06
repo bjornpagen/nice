@@ -10,6 +10,7 @@ export const HARDCODED_SCIENCE_COURSE_IDS = [
 ] as const
 
 export const MASTERY_THRESHOLD = 95 as const
+export const PER_ITEM_MASTERY_THRESHOLD = 80 as const
 
 // --- TYPES ---
 export type ProgressStatus = "not_started" | "in_progress" | "completed"
@@ -70,7 +71,9 @@ function calculateProgressFromResults(results: Array<Record<string, unknown>>): 
 
 	const latestResult = results[results.length - 1]
 	if (latestResult && typeof latestResult.score === "number") {
-		return latestResult.score
+		// Mastery policy: any score >= PER_ITEM_MASTERY_THRESHOLD is treated as 100
+		const score = latestResult.score
+		return score >= PER_ITEM_MASTERY_THRESHOLD ? 100 : score
 	}
 
 	return results.length > 0 ? 100 : 0
@@ -82,10 +85,12 @@ function determineStatusFromResults(results: Array<Record<string, unknown>>): Pr
 
 	const latestResult = results[results.length - 1]
 	if (latestResult && typeof latestResult.score === "number") {
-		return "completed"
+		// Completed only when score meets mastery threshold
+		return latestResult.score >= PER_ITEM_MASTERY_THRESHOLD ? "completed" : "in_progress"
 	}
 
-	return "in_progress"
+	// If we have results but no numeric score, consider it completed
+	return "completed"
 }
 
 // --- PROGRESS MAPS ---
@@ -133,12 +138,16 @@ function aggregateResourceProgress(
 	}
 
 	const avgProgress = progresses.reduce((sum, p) => sum + p.progress, 0) / progresses.length
-	const allCompleted = progresses.every((p) => p.status === "completed")
-	const anyInProgress = progresses.some((p) => p.status === "in_progress")
+	const anyStarted = progresses.some((p) => p.status !== "not_started")
+
+	// If the aggregated resources meet mastery, normalize to 100 for parent averaging
+	const status: ProgressStatus =
+		avgProgress >= PER_ITEM_MASTERY_THRESHOLD ? "completed" : anyStarted ? "in_progress" : "not_started"
+	const normalizedProgress = status === "completed" ? 100 : avgProgress
 
 	return {
-		progress: avgProgress,
-		status: allCompleted ? "completed" : anyInProgress ? "in_progress" : "not_started",
+		progress: normalizedProgress,
+		status,
 		results: progresses.flatMap((p) => p.results)
 	}
 }
@@ -151,12 +160,16 @@ function aggregateChildProgress(
 	}
 
 	const avgProgress = children.reduce((sum, c) => sum + c.componentProgress.progress, 0) / children.length
-	const allCompleted = children.every((c) => c.componentProgress.status === "completed")
-	const anyInProgress = children.some((c) => c.componentProgress.status === "in_progress")
+	const anyStarted = children.some((c) => c.componentProgress.status !== "not_started")
+
+	// If children averaged progress meets mastery, normalize to 100 for parent averaging
+	const status: ProgressStatus =
+		avgProgress >= PER_ITEM_MASTERY_THRESHOLD ? "completed" : anyStarted ? "in_progress" : "not_started"
+	const normalizedProgress = status === "completed" ? 100 : avgProgress
 
 	return {
-		progress: avgProgress,
-		status: allCompleted ? "completed" : anyInProgress ? "in_progress" : "not_started",
+		progress: normalizedProgress,
+		status,
 		results: children.flatMap((c) => c.componentProgress.results)
 	}
 }

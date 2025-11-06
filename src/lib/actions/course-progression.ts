@@ -3,7 +3,12 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { powerpath } from "@/lib/clients"
-import { mergeLessonPlanWithProgress, HARDCODED_SCIENCE_COURSE_IDS, MASTERY_THRESHOLD } from "@/lib/powerpath-progress"
+import {
+	mergeLessonPlanWithProgress,
+	HARDCODED_SCIENCE_COURSE_IDS,
+	MASTERY_THRESHOLD,
+	PER_ITEM_MASTERY_THRESHOLD
+} from "@/lib/powerpath-progress"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { getActiveEnrollmentsForUser } from "@/lib/oneroster/redis/api"
 import { enrollUserInCoursesByCourseId } from "@/lib/actions/courses"
@@ -77,7 +82,9 @@ async function getCourseOverallProgress(courseId: string, userId: string): Promi
 	const avgProgress =
 		merged.components.reduce((sum, c) => sum + c.componentProgress.progress, 0) / merged.components.length
 
-	return avgProgress
+	// Mastery normalization at top-level: if the averaged course progress meets per-item mastery,
+	// treat course as effectively completed (100) for progression decisions.
+	return avgProgress >= PER_ITEM_MASTERY_THRESHOLD ? 100 : avgProgress
 }
 
 export async function checkAndProgressCourses(): Promise<CourseProgressionStatus[]> {
