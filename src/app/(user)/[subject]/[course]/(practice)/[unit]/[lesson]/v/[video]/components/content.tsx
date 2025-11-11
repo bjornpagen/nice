@@ -39,31 +39,27 @@ export function Content({
 	const params = React.use(paramsPromise)
 	const { user, isLoaded } = useUser()
 	const { setCurrentResourceCompleted } = useLessonProgress()
-
-	if (!isLoaded) {
-		return <div className="p-8">Loading video...</div>
-	}
-
-	if (!user) {
-		throw errors.new("clerk user required")
-	}
-
-	const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-	if (!parsed.success) {
-		throw errors.wrap(parsed.error, "clerk metadata validation")
-	}
-	const parsedSourceId = parsed.data.sourceId
-	if (typeof parsedSourceId !== "string" || parsedSourceId.length === 0) {
-		throw errors.new("clerk metadata: sourceId required")
-	}
-	const onerosterUserSourcedId: string = parsedSourceId
-	const userEmail: string = (() => {
+	const isClerkReady = isLoaded && !!user
+	let onerosterUserSourcedId: string | undefined = undefined
+	let userEmail: string | undefined = undefined
+	let canToggleControls: boolean = false
+	if (isClerkReady) {
+		const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+		if (!parsed.success) {
+			throw errors.wrap(parsed.error, "clerk metadata validation")
+		}
+		const parsedSourceId = parsed.data.sourceId
+		if (typeof parsedSourceId !== "string" || parsedSourceId.length === 0) {
+			throw errors.new("clerk metadata: sourceId required")
+		}
+		onerosterUserSourcedId = parsedSourceId
 		const email = user.emailAddresses?.[0]?.emailAddress
 		if (!email) {
 			throw errors.new("user email required")
 		}
-		return email
-	})()
+		userEmail = email
+		canToggleControls = parsed.data.roles.some((r) => r.role !== "student")
+	}
 
 	// Transcript tab is intentionally hidden for now because transcript data is not hydrated.
 	// We keep "transcript" in the union type non-destructively so this is trivial to re-enable later.
@@ -119,7 +115,6 @@ export function Content({
 	// Unified system: use course lock context to drive video control state
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
-	const canToggleControls = parsed.data.roles.some((r) => r.role !== "student")
 	const handleToggleLockAll = () => {
 		if (!canToggleControls) return
 		if (allUnlocked) {
@@ -162,10 +157,12 @@ export function Content({
 		if (finalWatchTime < 1) return
 
 		// Server-built partial finalize to report only delta
-		void finalizeCaliperPartialTimeSpent(onerosterUserSourcedId, video.id, video.title, {
-			subjectSlug: params.subject,
-			courseSlug: params.course
-		}, userEmail)
+		if (onerosterUserSourcedId && userEmail) {
+			void finalizeCaliperPartialTimeSpent(onerosterUserSourcedId, video.id, video.title, {
+				subjectSlug: params.subject,
+				courseSlug: params.course
+			}, userEmail)
+		}
 		// Mark video as completed locally to enable Continue
 		setCurrentResourceCompleted(true)
 		hasSentFinalEventRef.current = true
@@ -287,15 +284,17 @@ export function Content({
 						const sinceMs = Date.now() - lastAccumulateAtRef.current
 						const deltaSeconds = Math.floor(sinceMs / 1000)
 						if (deltaSeconds > 0) {
-							void accumulateCaliperWatchTime(
-								onerosterUserSourcedId,
-								video.id,
-								deltaSeconds,
-								currentTime,
-								duration,
-								video.title,
-								{ subjectSlug: params.subject, courseSlug: params.course }
-							)
+							if (onerosterUserSourcedId) {
+								void accumulateCaliperWatchTime(
+									onerosterUserSourcedId,
+									video.id,
+									deltaSeconds,
+									currentTime,
+									duration,
+									video.title,
+									{ subjectSlug: params.subject, courseSlug: params.course }
+								)
+							}
 							lastAccumulateAtRef.current = Date.now()
 						}
 					}
@@ -323,22 +322,26 @@ export function Content({
 						const currentTime = player && typeof player.getCurrentTime === "function" ? player.getCurrentTime() : 0
 						const duration = player && typeof player.getDuration === "function" ? player.getDuration() : 0
 						if (duration > 0) {
-							void accumulateCaliperWatchTime(
-								onerosterUserSourcedId,
-								video.id,
-								deltaSeconds,
-								currentTime,
-								duration,
-								video.title,
-								{ subjectSlug: params.subject, courseSlug: params.course }
-							)
+							if (onerosterUserSourcedId) {
+								void accumulateCaliperWatchTime(
+									onerosterUserSourcedId,
+									video.id,
+									deltaSeconds,
+									currentTime,
+									duration,
+									video.title,
+									{ subjectSlug: params.subject, courseSlug: params.course }
+								)
+							}
 						}
 					}
 				}
-				void finalizeCaliperTimeSpentEvent(onerosterUserSourcedId, video.id, video.title, {
-					subjectSlug: params.subject,
-					courseSlug: params.course
-				}, userEmail)
+				if (onerosterUserSourcedId && userEmail) {
+					void finalizeCaliperTimeSpentEvent(onerosterUserSourcedId, video.id, video.title, {
+						subjectSlug: params.subject,
+						courseSlug: params.course
+					}, userEmail)
+				}
 				hasSentFinalEventRef.current = true
 				return
 			}
@@ -355,10 +358,12 @@ export function Content({
 			if (finalWatchTime < 1) return
 
 			// Use validated values
-			void finalizeCaliperPartialTimeSpent(onerosterUserSourcedId, video.id, video.title, {
-				subjectSlug: params.subject,
-				courseSlug: params.course
-			}, userEmail)
+			if (onerosterUserSourcedId && userEmail) {
+				void finalizeCaliperPartialTimeSpent(onerosterUserSourcedId, video.id, video.title, {
+					subjectSlug: params.subject,
+					courseSlug: params.course
+				}, userEmail)
+			}
 			hasSentFinalEventRef.current = true
 		}
 	}, [video.title, video.id, params.subject, params.course, onerosterUserSourcedId, userEmail])
@@ -494,6 +499,9 @@ export function Content({
 				sendCumulativeTimeEvent()
 			}
 		}
+	}
+	if (!isClerkReady || !onerosterUserSourcedId || !userEmail) {
+		return <div className="p-8">Loading video...</div>
 	}
 	return (
 		<div className="flex flex-col bg-white h-full">

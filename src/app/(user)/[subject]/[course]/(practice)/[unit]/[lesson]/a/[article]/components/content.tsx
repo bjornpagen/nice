@@ -25,23 +25,27 @@ export function Content({
 	const router = useRouter()
 	const article = React.use(articlePromise)
 	const params = React.use(paramsPromise)
-	const { user } = useUser()
+	const { user, isLoaded } = useUser()
 	const lastSyncTimestampRef = React.useRef<number | null>(null)
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const { setProgressForResource, beginProgressUpdate, endProgressUpdate } = useLessonProgress()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
 	const isLocked = resourceLockStatus[article.componentResourceSourcedId] === true
-	const parsed = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
-	if (!parsed.success) {
-		logger.error("clerk user metadata validation failed", { error: parsed.error })
-		throw parsed.error
+	const isClerkReady = isLoaded && !!user
+	let onerosterUserSourcedId: string | undefined = undefined
+	let canUnlockAll: boolean = false
+	if (isClerkReady) {
+		const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+		if (!parsed.success) {
+			throw errors.wrap(parsed.error, "clerk metadata validation")
+		}
+		const parsedSourceId = parsed.data.sourceId
+		if (typeof parsedSourceId !== "string" || parsedSourceId.length === 0) {
+			throw errors.new("clerk metadata: sourceId required")
+		}
+		onerosterUserSourcedId = parsedSourceId
+		canUnlockAll = parsed.data.roles.some((r) => r.role !== "student")
 	}
-	const onerosterUserSourcedId = parsed.data.sourceId
-	if (!onerosterUserSourcedId) {
-		logger.error("CRITICAL: missing OneRoster sourcedId in clerk metadata")
-		throw errors.new("clerk metadata: sourceId required")
-	}
-	const canUnlockAll = parsed.data.roles.some((r) => r.role !== "student")
 
 	const handleToggleLockAll = () => {
 		if (!canUnlockAll) return
@@ -61,6 +65,9 @@ export function Content({
 
 	// Helper function to send partial finalization using sendBeacon
 	const sendBestEffortPartialFinalize = React.useCallback(() => {
+		if (!onerosterUserSourcedId) {
+			return
+		}
 		const url = "/api/caliper/article/partial-finalize"
 		const payload: PartialFinalizeRequest = {
 			onerosterUserSourcedId,
@@ -136,7 +143,7 @@ export function Content({
 
 	// Effect for heartbeat accumulation
 	React.useEffect(() => {
-		if (isLocked || !user) {
+		if (isLocked || !user || !onerosterUserSourcedId) {
 			return
 		}
 
@@ -169,11 +176,11 @@ export function Content({
 		lastSyncTimestampRef.current = Date.now()
 		const intervalId = setInterval(heartbeat, HEARTBEAT_INTERVAL_MS)
 		return () => clearInterval(intervalId)
-	}, [user, article.id, params.subject, params.course, isLocked])
+	}, [user, article.id, params.subject, params.course, isLocked, onerosterUserSourcedId])
 
 	// Effect for page visibility changes and closure
 	React.useEffect(() => {
-		if (isLocked || !user) {
+		if (isLocked || !user || !onerosterUserSourcedId) {
 			return
 		}
 
@@ -198,9 +205,12 @@ export function Content({
 			// Send partial finalize on unmount to handle SPA navigation
 			sendBestEffortPartialFinalize()
 		}
-	}, [user, isLocked, sendBestEffortPartialFinalize])
+	}, [user, isLocked, sendBestEffortPartialFinalize, onerosterUserSourcedId])
 
 	// isLocked computed above
+	if (!isClerkReady || !onerosterUserSourcedId) {
+		return <div className="p-8">Loading article...</div>
+	}
 
 	return (
 		<div className="bg-white h-full flex flex-col">
