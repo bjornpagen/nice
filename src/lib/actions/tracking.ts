@@ -1,5 +1,6 @@
 "use server"
 
+import { randomUUID } from "node:crypto"
 import { auth, clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
@@ -849,13 +850,16 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 		const mappedSubject = subject ? subjectMapping[subject] : undefined
 
 		if (mappedSubject && course) {
+			// Generate a unique event ID for this XP award to ensure Caliper events are unique per completion
+			const caliperEventId = `urn:uuid:${randomUUID()}`
+
 			const actor = {
 				id: constructActorId(onerosterUserSourcedId),
 				type: "TimebackUser" as const,
 				email: userEmail
 			}
 			const context = {
-				id: `${env.NEXT_PUBLIC_APP_DOMAIN}${assessmentPath}`,
+				id: caliperEventId,
 				type: "TimebackActivityContext" as const,
 				subject: mappedSubject,
 				app: { name: "Nice Academy" },
@@ -864,7 +868,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 					id: `${env.TIMEBACK_ONEROSTER_SERVER_URL}/ims/oneroster/rostering/v1p2/courses/${courseId}`
 				},
 				activity: { name: assessmentTitle, id: resourceId },
-				process: false
+				process: true
 			}
 			const performance = {
 				totalQuestions: assessmentTotalQuestions,
