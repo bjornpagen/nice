@@ -868,7 +868,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 					id: `${env.TIMEBACK_ONEROSTER_SERVER_URL}/ims/oneroster/rostering/v1p2/courses/${courseId}`
 				},
 				activity: { name: assessmentTitle, id: resourceId },
-				process: true
+				process: false
 			}
 			const performance = {
 				totalQuestions: assessmentTotalQuestions,

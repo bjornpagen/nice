@@ -150,7 +150,7 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 					id: `${env.TIMEBACK_ONEROSTER_SERVER_URL}/ims/oneroster/rostering/v1p2/courses/${courseId}`
 				},
 				activity: { name: command.assessmentTitle, id: resourceId },
-				process: true
+				process: false
 			}
 
 			// Send analytics events (activity completed + optional time spent)
