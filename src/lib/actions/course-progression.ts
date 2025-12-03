@@ -2,17 +2,13 @@
 
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { powerpath } from "@/lib/clients"
-import {
-	mergeLessonPlanWithProgress,
-	HARDCODED_SCIENCE_COURSE_IDS,
-	MASTERY_THRESHOLD,
-	PER_ITEM_MASTERY_THRESHOLD
-} from "@/lib/powerpath-progress"
+import { oneroster } from "@/lib/clients"
+import { SCIENCE_COURSE_SEQUENCE } from "@/lib/powerpath-progress"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
-import { getActiveEnrollmentsForUser } from "@/lib/oneroster/redis/api"
+import { getActiveEnrollmentsForUser, getClass } from "@/lib/oneroster/redis/api"
 import { enrollUserInCoursesByCourseId } from "@/lib/actions/courses"
 import { requireUser } from "@/lib/auth/require-user"
+import { checkExistingProficiency } from "@/lib/actions/assessment"
 
 export type CourseProgressionStatus = {
 	currentCourseId: string
@@ -20,71 +16,57 @@ export type CourseProgressionStatus = {
 	shouldEnrollNext: boolean
 	nextCourseId?: string
 	alreadyEnrolledInNext: boolean
+	unenrolledCurrent?: boolean
+	currentCourseTitle?: string
+	nextCourseTitle?: string
 }
 
-async function getEnrolledCourseIds(sourceId: string): Promise<Set<string>> {
+type EnrollmentData = {
+	enrollments: Awaited<ReturnType<typeof getActiveEnrollmentsForUser>>
+	classToCourseMap: Map<string, string>
+	enrolledCourseIds: Set<string>
+}
+
+/**
+ * Fetches all active enrollments and maps them to courses.
+ * CRITICAL: Throws if ANY data is missing to prevent partial-state operations.
+ * This is a safety measure - we must have complete information before modifying enrollments.
+ */
+async function getUserEnrollmentData(sourceId: string): Promise<EnrollmentData> {
 	const enrollmentsResult = await errors.try(getActiveEnrollmentsForUser(sourceId))
 	if (enrollmentsResult.error) {
-		logger.error("failed to fetch enrollments", { error: enrollmentsResult.error, sourceId })
+		logger.error("enrollments fetch failed", { error: enrollmentsResult.error, sourceId })
 		throw errors.wrap(enrollmentsResult.error, "enrollments fetch")
 	}
 
-	const uniqueClassIds = [...new Set(enrollmentsResult.data.map((e) => e.class.sourcedId))]
+	const enrollments = enrollmentsResult.data
+	const uniqueClassIds = [...new Set(enrollments.map((e) => e.class.sourcedId))]
 
-	const { getClass } = await import("@/lib/oneroster/redis/api")
+	// Parallel fetch of class details - Fail Fast on ANY error
 	const classResults = await Promise.all(
 		uniqueClassIds.map(async (classId) => {
 			const result = await errors.try(getClass(classId))
 			if (result.error) {
-				logger.error("failed to get class", { error: result.error, classId })
-				return undefined
+				// CRITICAL: If we can't resolve a class, we can't safely unenroll students.
+				// We must abort the entire operation rather than act on partial info.
+				logger.error("class resolution failed", { classId, error: result.error })
+				throw errors.wrap(result.error, `class resolution: ${classId}`)
 			}
-			return result.data
+			return { classId, data: result.data }
 		})
 	)
 
-	return new Set(
-		classResults
-			.filter((cls): cls is NonNullable<typeof cls> => cls !== undefined)
-			.map((cls) => cls.course.sourcedId)
-	)
-}
-
-function hasRelevantEnrollments(enrolledCourseIds: Set<string>, courseSequence: readonly string[]): boolean {
-	return courseSequence.some((courseId) => enrolledCourseIds.has(courseId))
-}
-
-async function getCourseOverallProgress(courseId: string, userId: string): Promise<number> {
-	const lessonPlanResult = await errors.try(powerpath.getLessonPlanTreeForStudent(courseId, userId))
-	if (lessonPlanResult.error) {
-		logger.error("failed to fetch lesson plan for progression check", {
-			error: lessonPlanResult.error,
-			courseId,
-			userId
-		})
-		throw errors.wrap(lessonPlanResult.error, "lesson plan fetch")
+	// Create mapping: classId -> courseId
+	const classToCourseMap = new Map<string, string>()
+	for (const item of classResults) {
+		if (item.data?.course?.sourcedId) {
+			classToCourseMap.set(item.classId, item.data.course.sourcedId)
+		}
 	}
 
-	const progressResult = await errors.try(powerpath.getCourseProgress(courseId, userId))
-	if (progressResult.error) {
-		logger.error("failed to fetch course progress for progression check", {
-			error: progressResult.error,
-			courseId,
-			userId
-		})
-		throw errors.wrap(progressResult.error, "course progress fetch")
-	}
+	const enrolledCourseIds = new Set<string>(classToCourseMap.values())
 
-	const merged = mergeLessonPlanWithProgress(lessonPlanResult.data, progressResult.data)
-
-	if (merged.components.length === 0) return 0
-
-	const avgProgress =
-		merged.components.reduce((sum, c) => sum + c.componentProgress.progress, 0) / merged.components.length
-
-	// Mastery normalization at top-level: if the averaged course progress meets per-item mastery,
-	// treat course as effectively completed (100) for progression decisions.
-	return avgProgress >= PER_ITEM_MASTERY_THRESHOLD ? 100 : avgProgress
+	return { enrollments, classToCourseMap, enrolledCourseIds }
 }
 
 export async function checkAndProgressCourses(): Promise<CourseProgressionStatus[]> {
@@ -92,10 +74,7 @@ export async function checkAndProgressCourses(): Promise<CourseProgressionStatus
 
 	const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
 	if (!metadataValidation.success) {
-		logger.error("invalid user metadata for course progression", {
-			userId: user.id,
-			error: metadataValidation.error
-		})
+		logger.error("invalid user metadata for course progression", { userId: user.id, error: metadataValidation.error })
 		throw errors.wrap(metadataValidation.error, "user metadata validation")
 	}
 
@@ -105,104 +84,162 @@ export async function checkAndProgressCourses(): Promise<CourseProgressionStatus
 		return []
 	}
 
-	const enrolledCourseIdsResult = await errors.try(getEnrolledCourseIds(sourceId))
-	if (enrolledCourseIdsResult.error) {
-		logger.error("failed to get enrolled courses for progression", {
-			error: enrolledCourseIdsResult.error,
-			userId: user.id,
-			sourceId
-		})
-		throw errors.wrap(enrolledCourseIdsResult.error, "enrolled courses fetch")
+	// Optimized: Single fetch for both checking and unenrollment data
+	// Any failure here will throw and stop the poller for this cycle (safe)
+	const enrollmentDataResult = await errors.try(getUserEnrollmentData(sourceId))
+	if (enrollmentDataResult.error) {
+		logger.error("progression check failed", { error: enrollmentDataResult.error, userId: user.id })
+		throw enrollmentDataResult.error
 	}
-
-	const enrolledCourseIds = enrolledCourseIdsResult.data
-
-	if (!hasRelevantEnrollments(enrolledCourseIds, HARDCODED_SCIENCE_COURSE_IDS)) {
-		logger.debug("user not enrolled in any science sequence courses, skipping progression", {
-			userId: user.id,
-			sourceId,
-			enrolledCourseCount: enrolledCourseIds.size
-		})
-		return []
-	}
+	const { enrollments, classToCourseMap, enrolledCourseIds } = enrollmentDataResult.data
 
 	logger.info("checking course progression", {
 		userId: user.id,
 		sourceId,
 		enrolledCourseCount: enrolledCourseIds.size,
-		scienceCourseCount: HARDCODED_SCIENCE_COURSE_IDS.length
+		scienceCourseCount: SCIENCE_COURSE_SEQUENCE.length
 	})
 
 	const statuses: CourseProgressionStatus[] = []
 
-	for (let i = 0; i < HARDCODED_SCIENCE_COURSE_IDS.length; i++) {
-		const courseId = HARDCODED_SCIENCE_COURSE_IDS[i]
-		if (!courseId) continue
+	for (let i = 0; i < SCIENCE_COURSE_SEQUENCE.length; i++) {
+		const currentConfig = SCIENCE_COURSE_SEQUENCE[i]
+		if (!currentConfig) continue
 
-		const nextCourseId = HARDCODED_SCIENCE_COURSE_IDS[i + 1]
+		const nextConfig = SCIENCE_COURSE_SEQUENCE[i + 1]
 
-		if (!enrolledCourseIds.has(courseId)) {
-			logger.debug("user not enrolled in course, skipping", { courseId, sourceId })
+		// Skip if user is not enrolled in this specific course
+		if (!enrolledCourseIds.has(currentConfig.courseId)) {
+			logger.debug("user not enrolled in course, skipping", { courseId: currentConfig.courseId, sourceId })
 			continue
 		}
 
-		const progressResult = await errors.try(getCourseOverallProgress(courseId, sourceId))
-		if (progressResult.error) {
-			logger.error("failed to get course progress", { error: progressResult.error, courseId, sourceId })
+		// Skip courses without a challengeId (terminal courses with no progression trigger)
+		if (!currentConfig.challengeId) {
+			logger.debug("course has no challengeId, skipping progression check", { courseId: currentConfig.courseId })
 			continue
 		}
 
-		const progress = progressResult.data
-		const meetsThreshold = progress >= MASTERY_THRESHOLD
-		const hasNextCourse = nextCourseId !== undefined
-		const alreadyEnrolledInNext = nextCourseId ? enrolledCourseIds.has(nextCourseId) : false
+		// Check Proficiency (Score >= 80%) on the HARDCODED Challenge ID
+		const isMasteredResult = await errors.try(checkExistingProficiency(currentConfig.challengeId))
+		if (isMasteredResult.error) {
+			logger.error("proficiency check failed", { error: isMasteredResult.error, challengeId: currentConfig.challengeId })
+			continue
+		}
+		const isMastered = isMasteredResult.data
+
+		// Progress is binary for strict mastery: 100 if mastered, 0 otherwise
+		const progress = isMastered ? 100 : 0
+
+		const hasNextCourse = !!nextConfig
+		const alreadyEnrolledInNext = nextConfig ? enrolledCourseIds.has(nextConfig.courseId) : false
+
+		// Enrollment Condition: mastered current + has next + not already enrolled
+		const shouldEnrollNext = isMastered && hasNextCourse && !alreadyEnrolledInNext
+
+		// Unenrollment Condition: mastered AND (no next course OR next is secured)
+		// Safe guard: We never unenroll unless we are sure the next step is secure
+		const shouldUnenrollCurrent = isMastered && (!hasNextCourse || alreadyEnrolledInNext || shouldEnrollNext)
+
+		// Use config titles directly (zero API calls)
+		const currentCourseTitle = currentConfig.title
+		const nextCourseTitle = nextConfig?.title
 
 		const status: CourseProgressionStatus = {
-			currentCourseId: courseId,
+			currentCourseId: currentConfig.courseId,
 			currentCourseProgress: progress,
-			shouldEnrollNext: meetsThreshold && hasNextCourse && !alreadyEnrolledInNext,
-			nextCourseId,
-			alreadyEnrolledInNext
+			shouldEnrollNext,
+			nextCourseId: nextConfig?.courseId,
+			alreadyEnrolledInNext,
+			unenrolledCurrent: false,
+			currentCourseTitle,
+			nextCourseTitle
 		}
 
-		statuses.push(status)
-
 		logger.info("course progression status", {
-			courseId,
+			courseId: currentConfig.courseId,
 			progress,
-			meetsThreshold,
-			nextCourseId,
+			isMastered,
+			nextCourseId: nextConfig?.courseId,
 			alreadyEnrolledInNext,
-			willEnroll: status.shouldEnrollNext
+			willEnroll: shouldEnrollNext,
+			willUnenroll: shouldUnenrollCurrent
 		})
 
-		if (status.shouldEnrollNext && nextCourseId) {
-			logger.info("enrolling user in next course", {
+		// EXECUTE: Enroll in Next Course
+		if (status.shouldEnrollNext && nextConfig) {
+			logger.info("progression: enrolling in next course", {
 				userId: user.id,
-				sourceId,
-				currentCourseId: courseId,
-				nextCourseId,
-				currentProgress: progress
+				current: currentConfig.title,
+				next: nextConfig.title
 			})
 
-			const enrollResult = await errors.try(enrollUserInCoursesByCourseId([nextCourseId]))
+			const enrollResult = await errors.try(enrollUserInCoursesByCourseId([nextConfig.courseId]))
 			if (enrollResult.error) {
-				logger.error("failed to auto-enroll in next course", {
-					error: enrollResult.error,
-					userId: user.id,
-					nextCourseId
-				})
+				logger.error("progression: enrollment failed", { error: enrollResult.error, nextCourseId: nextConfig.courseId })
+				// CRITICAL SAFETY: If enrollment fails, abort unenrollment to prevent "zero course" state
+				statuses.push(status)
 				continue
 			}
 
 			logger.info("successfully enrolled user in next course", {
 				userId: user.id,
-				nextCourseId,
+				nextCourseId: nextConfig.courseId,
 				changed: enrollResult.data.changed
 			})
 
-			enrolledCourseIds.add(nextCourseId)
+			enrolledCourseIds.add(nextConfig.courseId)
 		}
+
+		// EXECUTE: Unenroll from Current Course
+		if (shouldUnenrollCurrent) {
+			// Double check safety: ensure next course is in the enrolled set before unenrolling current
+			if (nextConfig && !enrolledCourseIds.has(nextConfig.courseId)) {
+				logger.error("progression safety check failed: attempting to unenroll without next course confirmed", {
+					userId: user.id,
+					currentCourseId: currentConfig.courseId,
+					nextCourseId: nextConfig.courseId
+				})
+			} else {
+				// Identify enrollments to remove using the pre-fetched map
+				const enrollmentsToRemove = enrollments.filter((e) => {
+					const courseId = classToCourseMap.get(e.class.sourcedId)
+					return courseId === currentConfig.courseId
+				})
+
+				if (enrollmentsToRemove.length > 0) {
+					logger.info("unenrolling user from current course", {
+						userId: user.id,
+						courseId: currentConfig.courseId,
+						enrollmentCount: enrollmentsToRemove.length
+					})
+
+					const deleteResults = await Promise.allSettled(
+						enrollmentsToRemove.map((e) => oneroster.deleteEnrollment(e.sourcedId))
+					)
+
+					const failed = deleteResults.filter((r) => r.status === "rejected")
+					if (failed.length === 0) {
+						status.unenrolledCurrent = true
+						// Update local set to reflect reality for subsequent loop iterations
+						enrolledCourseIds.delete(currentConfig.courseId)
+						logger.info("successfully unenrolled user from course", {
+							userId: user.id,
+							courseId: currentConfig.courseId
+						})
+					} else {
+						logger.error("failed to delete some enrollments", {
+							userId: user.id,
+							courseId: currentConfig.courseId,
+							failedCount: failed.length,
+							totalCount: enrollmentsToRemove.length
+						})
+					}
+				}
+			}
+		}
+
+		statuses.push(status)
 	}
 
 	return statuses
