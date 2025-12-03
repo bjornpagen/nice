@@ -246,26 +246,67 @@ export async function getAllCourseMetrics(range: MetricsDateRange): Promise<Cour
         return []
     }
 
-    // Step 2: Fetch all active classes and keep only those that belong to allowed courses
-    const allClasses = await oneroster.getAllClasses({ filter: "status='active'" })
-    const courseIdSet = new Set(niceCourses.map((c) => c.sourcedId))
+	// Step 2: Fetch classes per course using API filter; filter status client-side
+	const classToCourse = new Map<string, string>()
+	const courseIds = niceCourses.map((c) => c.sourcedId)
+	const CLASS_CONCURRENCY = Math.min(10, Math.max(2, courseIds.length))
+	let clsIdx = 0
+	async function classWorker() {
+		while (true) {
+			const i = clsIdx++
+			if (i >= courseIds.length) return
+			const courseId = courseIds[i]
+			if (!courseId) continue
+			const res = await errors.try(
+				oneroster.getAllClasses({ filter: `course.sourcedId='${courseId}'` })
+			)
+			if (res.error) {
+				logger.warn("metrics: failed to fetch classes for course", { courseId, error: res.error })
+				continue
+			}
+			for (const cls of res.data) {
+				// Status filter applied on client side
+				if (cls.status !== "active") continue
+				classToCourse.set(cls.sourcedId, courseId)
+			}
+		}
+	}
+	await Promise.all(Array.from({ length: CLASS_CONCURRENCY }, () => classWorker()))
 
-    const classToCourse = new Map<string, string>()
-    for (const cls of allClasses) {
-        const courseId = cls.course?.sourcedId
-        if (courseId && courseIdSet.has(courseId)) {
-            classToCourse.set(cls.sourcedId, courseId)
-        }
-    }
-
-    // Step 3: Fetch active student enrollments and build per-course counts
-    const allEnrollments = await fetchActiveStudentEnrollments()
+    // Step 3: Fetch active student enrollments PER RELEVANT CLASS to avoid scanning the entire system
+    const relevantClassIds = Array.from(classToCourse.keys())
     const enrollIndex = new Map<string, Set<string>>()
-    for (const enrollment of allEnrollments) {
-        const courseId = classToCourse.get(enrollment.classId)
-        if (!courseId) continue
-        if (!enrollIndex.has(courseId)) enrollIndex.set(courseId, new Set())
-        enrollIndex.get(courseId)!.add(enrollment.userId)
+    if (relevantClassIds.length > 0) {
+        const CONCURRENCY = Math.min(24, Math.max(4, relevantClassIds.length))
+        let idx = 0
+        async function worker() {
+            while (true) {
+                const i = idx++
+                if (i >= relevantClassIds.length) return
+                const classId = relevantClassIds[i]
+                if (!classId) continue
+                // Filter at API level by class id and active status
+                const result = await errors.try(
+                    oneroster.getAllEnrollments({ filter: `class.sourcedId='${classId}' AND status='active'` })
+                )
+                if (result.error) {
+                    logger.warn("metrics: failed to fetch enrollments for class", { classId, error: result.error })
+                    continue
+                }
+                for (const e of result.data) {
+                    if (e.role !== "student") continue
+                    const courseId = classToCourse.get(classId)
+                    if (!courseId) continue
+                    let set = enrollIndex.get(courseId)
+                    if (!set) {
+                        set = new Set<string>()
+                        enrollIndex.set(courseId, set)
+                    }
+                    set.add(e.user.sourcedId)
+                }
+            }
+        }
+        await Promise.all(Array.from({ length: CONCURRENCY }, () => worker()))
     }
 
     // Step 4: Build minimal metrics objects without per-user details

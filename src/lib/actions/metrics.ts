@@ -33,14 +33,17 @@ export async function getCourseEnrollments(courseId: string): Promise<CourseEnro
   }
   return redisCache(async () => {
   const classesResult = await errors.try(
-    oneroster.getAllClasses({ filter: "status='active'" })
+    oneroster.getAllClasses({ filter: `course.sourcedId='${courseId}'` })
   )
   if (classesResult.error) {
     logger.error("metrics enrollments: failed to fetch classes", { error: classesResult.error })
     throw errors.wrap(classesResult.error, "classes fetch")
   }
-  logger.debug("metrics enrollments: fetched active classes", { allClasses: classesResult.data.length, courseId })
-  const relevantClasses = classesResult.data.filter((c) => c.course?.sourcedId === courseId)
+  logger.debug("metrics enrollments: fetched classes for course", { courseId, count: classesResult.data.length })
+  // Filter status client-side
+  const relevantClasses = classesResult.data
+    .filter((c) => c.course?.sourcedId === courseId)
+    .filter((c) => c.status === "active")
   const relevantClassIds = new Set(relevantClasses.map((c) => c.sourcedId))
   logger.debug("metrics enrollments: filtered relevant classes", { relevantClasses: relevantClasses.length })
   const classIdToSchoolId = new Map<string, string | undefined>()
@@ -53,28 +56,44 @@ export async function getCourseEnrollments(courseId: string): Promise<CourseEnro
     return { users: [], totals: { totalEnrolled: 0, totalStudentsOnly: 0 } }
   }
 
-  const enrollmentsResult = await errors.try(
-    oneroster.getAllEnrollments({ filter: "status='active'" })
-  )
-  if (enrollmentsResult.error) {
-    logger.error("metrics enrollments: failed to fetch enrollments", { error: enrollmentsResult.error })
-    throw errors.wrap(enrollmentsResult.error, "enrollments fetch")
+  // Fetch enrollments per class (more targeted than scanning all enrollments)
+  const CLASS_CONCURRENCY = Math.min(24, Math.max(4, relevantClassIds.size))
+  const relevantClassIdList = Array.from(relevantClassIds)
+  const classEnrollments = new Map<string, Array<Awaited<ReturnType<typeof oneroster.getAllEnrollments>>[number]>>()
+  let classIdx = 0
+  async function classWorker() {
+    while (true) {
+      const i = classIdx++
+      if (i >= relevantClassIdList.length) return
+      const classId = relevantClassIdList[i]
+      if (!classId) continue
+      const res = await errors.try(
+        oneroster.getAllEnrollments({ filter: `class.sourcedId='${classId}' AND status='active'` })
+      )
+      if (res.error) {
+        logger.warn("metrics enrollments: failed to fetch enrollments for class", { classId, error: res.error })
+        continue
+      }
+      classEnrollments.set(classId, res.data)
+    }
   }
-  logger.debug("metrics enrollments: fetched active enrollments", { allEnrollments: enrollmentsResult.data.length })
+  await Promise.all(Array.from({ length: CLASS_CONCURRENCY }, () => classWorker()))
 
   const userIdToEnrollmentRoles = new Map<string, Set<string>>()
   const userIdToSchoolIdsFromClasses = new Map<string, Set<string>>()
-  for (const e of enrollmentsResult.data) {
-    if (!relevantClassIds.has(e.class.sourcedId)) continue
-    const set = userIdToEnrollmentRoles.get(e.user.sourcedId) || new Set<string>()
-    set.add(e.role)
-    userIdToEnrollmentRoles.set(e.user.sourcedId, set)
+  for (const [clsId, list] of classEnrollments) {
+    for (const e of list) {
+      if (!relevantClassIds.has(clsId)) continue
+      const set = userIdToEnrollmentRoles.get(e.user.sourcedId) || new Set<string>()
+      set.add(e.role)
+      userIdToEnrollmentRoles.set(e.user.sourcedId, set)
 
-    // Track school ids for the user's relevant enrollments
-    const sset = userIdToSchoolIdsFromClasses.get(e.user.sourcedId) || new Set<string>()
-    const schoolId = classIdToSchoolId.get(e.class.sourcedId)
-    if (schoolId) sset.add(schoolId)
-    userIdToSchoolIdsFromClasses.set(e.user.sourcedId, sset)
+      // Track school ids for the user's relevant enrollments
+      const sset = userIdToSchoolIdsFromClasses.get(e.user.sourcedId) || new Set<string>()
+      const schoolId = classIdToSchoolId.get(clsId)
+      if (schoolId) sset.add(schoolId)
+      userIdToSchoolIdsFromClasses.set(e.user.sourcedId, sset)
+    }
   }
 
   const uniqueUserIds = Array.from(userIdToEnrollmentRoles.keys())
@@ -347,17 +366,68 @@ export async function getStrugglingStudents(metricsCoursesIds?: string[]): Promi
     const nextUpdate = new Date(now.getTime() + cacheHours * 60 * 60 * 1000)
     logger.info("metrics: fetching struggling students data", { metricsCoursesIds })
     
-    // Get student-only users (same logic as getCourseEnrollments)
-    const enrollmentsResult = await errors.try(
-      oneroster.getAllEnrollments({ filter: "status='active'" })
-    )
-    if (enrollmentsResult.error) {
-      logger.error("metrics struggling: failed to fetch enrollments", { error: enrollmentsResult.error })
-      throw errors.wrap(enrollmentsResult.error, "enrollments fetch")
+    // PERF FIX: Only fetch enrollments for the relevant courses, not ALL enrollments!
+    // First, get classes for the relevant courses
+    const relevantCourseIds = metricsCoursesIds || []
+    if (relevantCourseIds.length === 0) {
+      logger.warn("metrics struggling: no course IDs provided, returning empty")
+      return { students: [], lastUpdated: now.toISOString(), nextUpdate: nextUpdate.toISOString() }
     }
     
+    // Fetch classes for relevant courses in parallel
+    const classIdToCourse = new Map<string, string>()
+    await Promise.all(relevantCourseIds.map(async (courseId) => {
+      const classesResult = await errors.try(
+        oneroster.getAllClasses({ filter: `course.sourcedId='${courseId}'` })
+      )
+      if (classesResult.error) {
+        logger.warn("metrics struggling: failed to fetch classes for course", { courseId, error: classesResult.error })
+        return
+      }
+      for (const cls of classesResult.data) {
+        if (cls.status === "active") {
+          classIdToCourse.set(cls.sourcedId, courseId)
+        }
+      }
+    }))
+    
+    const relevantClassIds = Array.from(classIdToCourse.keys())
+    logger.debug("metrics struggling: found relevant classes", { count: relevantClassIds.length, courses: relevantCourseIds.length })
+    
+    if (relevantClassIds.length === 0) {
+      logger.warn("metrics struggling: no classes found for courses")
+      return { students: [], lastUpdated: now.toISOString(), nextUpdate: nextUpdate.toISOString() }
+    }
+    
+    // Fetch enrollments only for relevant classes (not ALL enrollments!)
+    const allEnrollments: Array<{ userId: string; classId: string; role: string }> = []
+    const ENROLL_CONCURRENCY = Math.min(24, relevantClassIds.length)
+    let enrollIdx = 0
+    async function enrollWorker() {
+      while (true) {
+        const i = enrollIdx++
+        if (i >= relevantClassIds.length) return
+        const classId = relevantClassIds[i]
+        if (!classId) continue
+        const result = await errors.try(
+          oneroster.getAllEnrollments({ filter: `class.sourcedId='${classId}' AND status='active'` })
+        )
+        if (result.error) {
+          logger.warn("metrics struggling: failed to fetch enrollments for class", { classId, error: result.error })
+          continue
+        }
+        for (const e of result.data) {
+          allEnrollments.push({ userId: e.user.sourcedId, classId, role: e.role })
+        }
+      }
+    }
+    await Promise.all(Array.from({ length: ENROLL_CONCURRENCY }, () => enrollWorker()))
+    
+    logger.debug("metrics struggling: fetched enrollments for relevant classes", { enrollments: allEnrollments.length })
+    
+    // Extract unique student user IDs from relevant enrollments only
     const uniqueUserIds = Array.from(
-      new Set(enrollmentsResult.data.map((e) => e.user?.sourcedId).filter((v): v is string => typeof v === "string" && v.length > 0))
+      new Set(allEnrollments.filter(e => e.role === "student").map(e => e.userId))
     )
     
     // Fetch user details to filter for students
@@ -612,123 +682,123 @@ export async function getStrugglingStudents(metricsCoursesIds?: string[]): Promi
       }
     }
     
-    // Get enrollments to find which courses each student is in
+    // Build enrollment mapping from already-fetched enrollments
     const userCourseEnrollments = new Map<string, Set<string>>()
-    for (const enrollment of enrollmentsResult.data) {
-      if (!enrollment.user?.sourcedId || !enrollment.class?.sourcedId) continue
-      // Only track student enrollments
+    for (const enrollment of allEnrollments) {
       if (enrollment.role !== "student") continue
-      const userSet = userCourseEnrollments.get(enrollment.user.sourcedId) || new Set<string>()
-      userSet.add(enrollment.class.sourcedId)
-      userCourseEnrollments.set(enrollment.user.sourcedId, userSet)
+      const userSet = userCourseEnrollments.get(enrollment.userId) || new Set<string>()
+      userSet.add(enrollment.classId)
+      userCourseEnrollments.set(enrollment.userId, userSet)
     }
     
     logger.debug("metrics struggling: enrollment mapping", {
-      totalEnrollments: enrollmentsResult.data.length,
+      totalEnrollments: allEnrollments.length,
       studentEnrollments: userCourseEnrollments.size,
       sampleUsers: Array.from(userCourseEnrollments.keys()).slice(0, 5)
     })
     
-    // Get classes to map to courses
-    const classesResult = await errors.try(oneroster.getAllClasses({ filter: "status='active'" }))
-    const classToCourse = new Map<string, string>()
-    if (!classesResult.error) {
-      for (const cls of classesResult.data) {
-        if (cls.course?.sourcedId) {
-          classToCourse.set(cls.sourcedId, cls.course.sourcedId)
-        }
-      }
-    }
+    // Reuse classIdToCourse from earlier (already maps classId -> courseId)
+    const classToCourse = classIdToCourse
     
-    // Fetch course XP totals for metrics courses only
+    // Fetch course XP totals for metrics courses in parallel
     const courseTotalXpMap = new Map<string, number>()
-    const relevantCourseIds = metricsCoursesIds || []
     
-    for (const courseId of relevantCourseIds) {
+    await Promise.all(relevantCourseIds.map(async (courseId) => {
       const courseResult = await errors.try(oneroster.getCourse(courseId))
       if (!courseResult.error && courseResult.data?.metadata) {
         const meta = courseResult.data.metadata
         if (typeof meta === "object" && meta && "metrics" in meta) {
-          const metrics = meta.metrics as any
+          const metrics = meta.metrics as Record<string, unknown>
           if (metrics && typeof metrics.totalXp === "number") {
             courseTotalXpMap.set(courseId, metrics.totalXp)
           }
         }
       }
-    }
+    }))
     
-    // Process each struggling student
-    for (const student of strugglingStudents) {
-      const courseProgress: StudentCourseProgress[] = []
-      const userClasses = userCourseEnrollments.get(student.userId) || new Set<string>()
-      const userCourses = new Set<string>()
-      
-      // Map classes to courses
-      for (const classId of userClasses) {
-        const courseId = classToCourse.get(classId)
-        if (courseId && relevantCourseIds.includes(courseId)) {
-          userCourses.add(courseId)
-        }
-      }
-      
-      // Fetch results once for this student
-      const resultsResponse = await errors.try(
-        oneroster.getAllResults({ filter: `student.sourcedId='${student.userId}'` })
-      )
-      
-      // Calculate progress for each metrics course the student is enrolled in
-      for (const courseId of userCourses) {
-        const courseTitle = courseMap.get(courseId) || "Unknown Course"
-        const totalCourseXP = courseTotalXpMap.get(courseId) || 0
+    // Process all struggling students IN PARALLEL (not sequentially!)
+    const PROGRESS_CONCURRENCY = Math.min(16, Math.max(4, strugglingStudents.length))
+    let progressIdx = 0
+    
+    async function progressWorker() {
+      while (true) {
+        const i = progressIdx++
+        if (i >= strugglingStudents.length) return
+        const student = strugglingStudents[i]
+        if (!student) continue
         
-        let earnedXP = 0
-        if (!resultsResponse.error) {
-          const latestByLineItem = new Map<string, { scoreDateMs: number; xp: number }>()
-          for (const result of resultsResponse.data) {
-            const lineItemId = result.assessmentLineItem?.sourcedId
-            if (typeof lineItemId !== "string" || !lineItemId.endsWith("_ali")) continue
-            if (result.scoreStatus !== "fully graded") continue
-            
-            const meta = result.metadata as Record<string, unknown> | undefined
-            const metaCourseId = typeof meta?.courseSourcedId === "string" ? meta.courseSourcedId : ""
-            if (metaCourseId !== courseId) continue
-            
-            let xpValue = 0
-            if (meta && typeof meta.xp === "number") {
-              xpValue = meta.xp
-            } else if (meta && typeof meta.xp === "string") {
-              xpValue = Number(meta.xp) || 0
-            }
-            if (xpValue <= 0) continue
-            
-            const scoreDateMs = new Date(result.scoreDate || 0).getTime()
-            const existing = latestByLineItem.get(lineItemId)
-            if (!existing || scoreDateMs > existing.scoreDateMs) {
-              latestByLineItem.set(lineItemId, { scoreDateMs, xp: xpValue })
-            }
+        const courseProgress: StudentCourseProgress[] = []
+        const userClasses = userCourseEnrollments.get(student.userId) || new Set<string>()
+        const userCourses = new Set<string>()
+        
+        // Map classes to courses
+        for (const classId of userClasses) {
+          const courseId = classToCourse.get(classId)
+          if (courseId && relevantCourseIds.includes(courseId)) {
+            userCourses.add(courseId)
           }
-          earnedXP = Array.from(latestByLineItem.values()).reduce((sum, v) => sum + v.xp, 0)
         }
         
-        const percentComplete = totalCourseXP > 0 ? Math.min(100, Math.round((earnedXP / totalCourseXP) * 100)) : 0
+        // Fetch results once for this student
+        const resultsResponse = await errors.try(
+          oneroster.getAllResults({ filter: `student.sourcedId='${student.userId}'` })
+        )
         
-        courseProgress.push({
-          courseId,
-          courseTitle,
-          percentComplete,
-          earnedXP
+        // Calculate progress for each metrics course the student is enrolled in
+        for (const courseId of userCourses) {
+          const courseTitle = courseMap.get(courseId) || "Unknown Course"
+          const totalCourseXP = courseTotalXpMap.get(courseId) || 0
+          
+          let earnedXP = 0
+          if (!resultsResponse.error) {
+            const latestByLineItem = new Map<string, { scoreDateMs: number; xp: number }>()
+            for (const result of resultsResponse.data) {
+              const lineItemId = result.assessmentLineItem?.sourcedId
+              if (typeof lineItemId !== "string" || !lineItemId.endsWith("_ali")) continue
+              if (result.scoreStatus !== "fully graded") continue
+              
+              const meta = result.metadata as Record<string, unknown> | undefined
+              const metaCourseId = typeof meta?.courseSourcedId === "string" ? meta.courseSourcedId : ""
+              if (metaCourseId !== courseId) continue
+              
+              let xpValue = 0
+              if (meta && typeof meta.xp === "number") {
+                xpValue = meta.xp
+              } else if (meta && typeof meta.xp === "string") {
+                xpValue = Number(meta.xp) || 0
+              }
+              if (xpValue <= 0) continue
+              
+              const scoreDateMs = new Date(result.scoreDate || 0).getTime()
+              const existing = latestByLineItem.get(lineItemId)
+              if (!existing || scoreDateMs > existing.scoreDateMs) {
+                latestByLineItem.set(lineItemId, { scoreDateMs, xp: xpValue })
+              }
+            }
+            earnedXP = Array.from(latestByLineItem.values()).reduce((sum, v) => sum + v.xp, 0)
+          }
+          
+          const percentComplete = totalCourseXP > 0 ? Math.min(100, Math.round((earnedXP / totalCourseXP) * 100)) : 0
+          
+          courseProgress.push({
+            courseId,
+            courseTitle,
+            percentComplete,
+            earnedXP
+          })
+        }
+        
+        student.courseProgress = courseProgress
+        
+        logger.debug("metrics struggling: student course progress final", {
+          userId: student.userId,
+          email: student.email,
+          coursesCount: courseProgress.length,
+          courses: courseProgress.map(c => `${c.courseTitle} (${c.percentComplete}%)`)
         })
       }
-      
-      student.courseProgress = courseProgress
-      
-      logger.debug("metrics struggling: student course progress final", {
-        userId: student.userId,
-        email: student.email,
-        coursesCount: courseProgress.length,
-        courses: courseProgress.map(c => `${c.courseTitle} (${c.percentComplete}%)`)
-      })
     }
+    await Promise.all(Array.from({ length: PROGRESS_CONCURRENCY }, () => progressWorker()))
     
     // Sort students by number of struggling exercises (desc)
     strugglingStudents.sort((a, b) => b.strugglingExercises.length - a.strugglingExercises.length)
@@ -736,8 +806,8 @@ export async function getStrugglingStudents(metricsCoursesIds?: string[]): Promi
     logger.info("metrics struggling: data fetched", { 
       totalStudents: strugglingStudents.length,
       totalExercises: exerciseIdsToResolve.size,
-      totalEnrollments: enrollmentsResult.data.length,
-      totalClasses: classesResult.error ? 0 : classesResult.data.length,
+      totalEnrollments: allEnrollments.length,
+      totalClasses: relevantClassIds.length,
       totalCourses: courseMap.size
     })
     
@@ -747,7 +817,7 @@ export async function getStrugglingStudents(metricsCoursesIds?: string[]): Promi
       lastUpdated: now.toISOString(),
       nextUpdate: nextUpdate.toISOString()
     }
-  }, ["metrics-struggling-students-v7", metricsCoursesIds?.join(",") || ""], { revalidate: 60 * 60 * cacheHours})
+  }, ["metrics-struggling-students-v9", metricsCoursesIds?.join(",") || ""], { revalidate: 60 * 60 * cacheHours})
   
   return cachedData
 }

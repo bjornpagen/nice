@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
-import type { CourseEnrollmentData, StrugglingStudent, StrugglingExercise, StudentCourseProgress, StrugglingStudentsData } from "@/lib/actions/metrics"
+import type { CourseEnrollmentData, StrugglingStudent, StrugglingStudentsData } from "@/lib/actions/metrics"
 import { getCourseEnrollments } from "@/lib/actions/metrics"
 import type { CourseMetrics } from "@/lib/data/metrics"
 import { generateSupplementaryCourse } from "@/lib/actions/course-builder"
@@ -38,25 +38,6 @@ export function Content({ metricsPromise, strugglingPromise }: Props) {
   const [generatingCourse, setGeneratingCourse] = React.useState(false)
   const [courseGenResult, setCourseGenResult] = React.useState<{ success: boolean; message: string } | undefined>(undefined)
   const studentsPerPage = 12
-
-  const [studentsOnlyCounts, setStudentsOnlyCounts] = React.useState<Record<string, number>>({})
-
-  React.useEffect(() => {
-    let cancelled = false
-    async function run() {
-      const entries = await Promise.all(
-        sorted.map(async (c) => {
-          const res = await getCourseEnrollments(c.courseId)
-          return [c.courseId, res.totals.totalStudentsOnly] as const
-        })
-      )
-      if (!cancelled) setStudentsOnlyCounts(Object.fromEntries(entries))
-    }
-    run()
-    return () => {
-      cancelled = true
-    }
-  }, [sorted])
 
   async function openModal(courseId: string) {
     setSelectedCourseId(courseId)
@@ -147,11 +128,7 @@ export function Content({ metricsPromise, strugglingPromise }: Props) {
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">{c.title}</h3>
                   <div className="text-sm text-gray-500">
-                    {studentsOnlyCounts[c.courseId] === undefined ? (
-                      <Skeleton className="h-4 w-24 inline-block align-middle" />
-                    ) : (
-                      <span>{studentsOnlyCounts[c.courseId]} students</span>
-                    )}
+                    <span>{c.activeEnrollments} students</span>
                   </div>
                 </div>
               </div>
