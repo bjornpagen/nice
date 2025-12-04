@@ -98,7 +98,7 @@ export function CourseProgressionProvider({ children }: { children: React.ReactN
 	const [celebrationData, setCelebrationData] = React.useState<CelebrationData | undefined>(undefined)
 
 	useCoursePolling({
-		interval: 5 * 60 * 1000, // 5 minutes
+		interval: 2 * 60 * 1000, // 2 minutes
 		enabled: true,
 		pollFn: async () => {
 			return await checkAndProgressCourses()

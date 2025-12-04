@@ -232,6 +232,46 @@ export const HARDCODED_SCIENCE_COURSE_IDS = [
 	// "x16acb03e699817e9" // AP College Bio
 ] as const
 
+/**
+ * Science course sequence with hardcoded Course Challenge resource IDs.
+ * The challengeId is the specific interactive resource that must be mastered (≥80%)
+ * to trigger progression to the next course.
+ *
+ * CRITICAL: These IDs are static configuration to avoid expensive API lookups.
+ * Run `bun run scripts/verify-science-progression-config.ts` to validate.
+ */
+export const SCIENCE_COURSE_SEQUENCE: ReadonlyArray<{
+	readonly title: string
+	readonly courseId: string
+	readonly challengeId: string | null // null = terminal course with no progression trigger
+}> = [
+	{
+		title: "Middle School Biology",
+		courseId: "nice_x0c5bb03129646fd6",
+		challengeId: "nice_x0c5bb03129646fd6"
+	},
+	{
+		title: "Middle School Chemistry",
+		courseId: "nice_xc370bc422b7f75fc",
+		challengeId: "nice_xc370bc422b7f75fc"
+	},
+	{
+		title: "Middle School Physics",
+		courseId: "nice_x1baed5db7c1bb50b",
+		challengeId: "nice_x1baed5db7c1bb50b"
+	},
+	{
+		title: "Middle School Earth & Space Science",
+		courseId: "nice_x87d03b443efbea0a",
+		challengeId: "nice_x87d03b443efbea0a"
+	},
+	{
+		title: "MS Science Supplementary",
+		courseId: "nice_x27ad39d4b4427987",
+		challengeId: null // No Course Challenge - terminal course
+	}
+]
+
 // Hardcoded supplementary article slugs (Science) used for targeted stimulus migrations
 export const HARDCODED_SUPPLEMENTARY_SCIENCE_ARTICLE_SLUGS: readonly string[] = [
   "atomic-number-atomic-mass-and-isotopes-article",

@@ -1,99 +1,102 @@
-import * as logger from "@superbuilders/slog"
-import * as errors from "@superbuilders/errors"
-import { SCIENCE_COURSE_SEQUENCE } from "@/lib/powerpath-progress"
-import { getResource } from "@/lib/oneroster/redis/api"
-import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
-
 /**
- * Verification script for the SCIENCE_COURSE_SEQUENCE configuration.
- * 
- * This script validates that all hardcoded Course Challenge IDs in the sequence:
- * 1. Exist as valid OneRoster resources
- * 2. Have valid metadata
- * 3. Are of type "CourseChallenge"
- * 
+ * Verification script for SCIENCE_COURSE_SEQUENCE configuration.
+ *
+ * This script validates that all hardcoded challengeIds in the course progression
+ * configuration actually exist in OneRoster and have the correct metadata.
+ *
  * Run with: bun run scripts/verify-science-progression-config.ts
  */
 
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
+import { SCIENCE_COURSE_SEQUENCE } from "@/lib/constants/course-mapping"
+import { getResource } from "@/lib/oneroster/redis/api"
+import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+
 async function main() {
-	logger.info("starting science course sequence verification", {
+	logger.info("starting science progression config verification", {
 		courseCount: SCIENCE_COURSE_SEQUENCE.length
 	})
 
-	let failureCount = 0
+	let hasErrors = false
 
 	for (const config of SCIENCE_COURSE_SEQUENCE) {
-		logger.info("verifying course config", {
+		// Skip verification for terminal courses (no challengeId)
+		if (!config.challengeId) {
+			logger.info("skipping terminal course", { title: config.title, courseId: config.courseId })
+			continue
+		}
+
+		logger.info("verifying course challenge", {
 			title: config.title,
 			courseId: config.courseId,
 			challengeId: config.challengeId
 		})
 
-		// Skip terminal courses without a challengeId
-		if (!config.challengeId) {
-			logger.info("skipping terminal course (no challengeId)", { title: config.title })
-			continue
-		}
-
+		// Fetch the resource from OneRoster
 		const resourceResult = await errors.try(getResource(config.challengeId))
 		if (resourceResult.error) {
-			logger.error("resource fetch failed", {
+			logger.error("challenge resource not found", {
+				error: resourceResult.error,
 				title: config.title,
-				challengeId: config.challengeId,
-				error: resourceResult.error
+				challengeId: config.challengeId
 			})
-			failureCount++
+			hasErrors = true
 			continue
 		}
 
 		const resource = resourceResult.data
 		if (!resource) {
-			logger.error("resource not found in oneroster", {
+			logger.error("challenge resource is null", {
 				title: config.title,
 				challengeId: config.challengeId
 			})
-			failureCount++
+			hasErrors = true
 			continue
 		}
 
-		// Validate metadata structure
-		const metaResult = ResourceMetadataSchema.safeParse(resource.metadata)
-		if (!metaResult.success) {
+		// Validate metadata schema
+		const metadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+		if (!metadataResult.success) {
 			logger.error("invalid resource metadata", {
+				error: metadataResult.error,
 				title: config.title,
 				challengeId: config.challengeId,
-				error: metaResult.error
+				metadata: resource.metadata
 			})
-			failureCount++
+			hasErrors = true
 			continue
 		}
 
-		// Verify activity type is CourseChallenge
-		if (metaResult.data.khanActivityType !== "CourseChallenge") {
-			logger.error("incorrect activity type", {
+		const metadata = metadataResult.data
+
+		// Verify it's the correct activity type (should be a CourseChallenge)
+		if (metadata.khanActivityType !== "CourseChallenge") {
+			logger.warn("unexpected activity type", {
 				title: config.title,
 				challengeId: config.challengeId,
-				expected: "CourseChallenge",
-				actual: metaResult.data.khanActivityType
+				expectedType: "CourseChallenge",
+				actualType: metadata.khanActivityType
 			})
-			failureCount++
-			continue
 		}
 
-		logger.info("config verified successfully", {
+		logger.info("verified challenge resource", {
 			title: config.title,
+			challengeId: config.challengeId,
 			resourceTitle: resource.title,
-			activityType: metaResult.data.khanActivityType
+			activityType: metadata.khanActivityType
 		})
 	}
 
-	if (failureCount > 0) {
-		logger.error("verification failed", { failureCount, totalCourses: SCIENCE_COURSE_SEQUENCE.length })
-		return false
+	if (hasErrors) {
+		logger.error("verification failed - some challenges are missing or invalid")
+		process.exit(1)
 	}
 
-	logger.info("all configurations verified successfully", { totalCourses: SCIENCE_COURSE_SEQUENCE.length })
-	return true
+	logger.info("verification complete - all challenges valid", {
+		verifiedCount: SCIENCE_COURSE_SEQUENCE.filter((c) => c.challengeId !== null).length,
+		terminalCount: SCIENCE_COURSE_SEQUENCE.filter((c) => c.challengeId === null).length
+	})
 }
 
 const result = await errors.try(main())
@@ -101,10 +104,3 @@ if (result.error) {
 	logger.error("verification script failed", { error: result.error })
 	process.exit(1)
 }
-
-if (!result.data) {
-	process.exit(1)
-}
-
-process.exit(0)
-

@@ -3,13 +3,14 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { oneroster } from "@/lib/clients"
-import { SCIENCE_COURSE_SEQUENCE } from "@/lib/powerpath-progress"
+import { SCIENCE_COURSE_SEQUENCE } from "@/lib/constants/course-mapping"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { getActiveEnrollmentsForUser, getClass } from "@/lib/oneroster/redis/api"
 import { enrollUserInCoursesByCourseId } from "@/lib/actions/courses"
 import { requireUser } from "@/lib/auth/require-user"
 import { checkExistingProficiency } from "@/lib/actions/assessment"
 
+// NOTE: Types can be exported from "use server" files (they're erased at runtime)
 export type CourseProgressionStatus = {
 	currentCourseId: string
 	currentCourseProgress: number
