@@ -280,7 +280,7 @@ export function AssessmentStepper({
 			}
 
 			const audio = new Audio(soundPath)
-			audio.play().catch(() => {})
+			audio.play().catch(() => { })
 		}
 	}, [showSummary, summaryData])
 
@@ -612,61 +612,75 @@ export function AssessmentStepper({
 
 	React.useEffect(() => {
 		// When the summary screen is shown, determine the next piece of content.
-		if (showSummary && unitData) {
-			// Create a flattened, ordered list of all navigable content items in the unit.
-			// This includes items within lessons (articles, videos, exercises) and
-			// unit-level items like quizzes and unit tests.
-			const allUnitItems: Array<{ id: string; path: string; type: string; title: string }> = []
-			for (const unitChild of unitData.children) {
-				if (unitChild.type === "Lesson") {
-					// Add all children of the lesson to the list
-					for (const lessonChild of unitChild.children) {
-						allUnitItems.push({
-							id: lessonChild.id,
-							path: lessonChild.path,
-							type: lessonChild.type,
-							title: lessonChild.title
-						})
-					}
-				} else if (unitChild.type === "Quiz" || unitChild.type === "UnitTest") {
-					// Add the quiz or unit test itself to the list
+		if (!showSummary) return
+
+		// Handle Course Challenges (no unitData) - navigate back to course page
+		// Course Challenge paths look like: /science/ms-chemistry/test/xc370bc422b7f75fc:course-challenge
+		// We need to navigate back to: /science/ms-chemistry
+		if (!unitData) {
+			const pathParts = assessmentPath.split("/").filter(Boolean) // filter removes empty strings
+			// Course challenge pattern: [subject, course, "test", testId]
+			// Navigate to: /subject/course
+			if (pathParts.length >= 4 && pathParts[pathParts.length - 2] === "test") {
+				const coursePath = "/" + pathParts.slice(0, -2).join("/")
+				setNextItem({ text: "Back to course", path: coursePath })
+			}
+			return
+		}
+
+		// Create a flattened, ordered list of all navigable content items in the unit.
+		// This includes items within lessons (articles, videos, exercises) and
+		// unit-level items like quizzes and unit tests.
+		const allUnitItems: Array<{ id: string; path: string; type: string; title: string }> = []
+		for (const unitChild of unitData.children) {
+			if (unitChild.type === "Lesson") {
+				// Add all children of the lesson to the list
+				for (const lessonChild of unitChild.children) {
 					allUnitItems.push({
-						id: unitChild.id,
-						path: unitChild.path,
-						type: unitChild.type,
-						title: unitChild.title
+						id: lessonChild.id,
+						path: lessonChild.path,
+						type: lessonChild.type,
+						title: lessonChild.title
 					})
 				}
+			} else if (unitChild.type === "Quiz" || unitChild.type === "UnitTest") {
+				// Add the quiz or unit test itself to the list
+				allUnitItems.push({
+					id: unitChild.id,
+					path: unitChild.path,
+					type: unitChild.type,
+					title: unitChild.title
+				})
 			}
+		}
 
-			// Find the index of the current assessment within this flattened list.
-			const currentIndex = allUnitItems.findIndex((item) => item.id === onerosterResourceSourcedId)
+		// Find the index of the current assessment within this flattened list.
+		const currentIndex = allUnitItems.findIndex((item) => item.id === onerosterResourceSourcedId)
 
-			let foundNext: { id?: string; text: string; path: string; type?: string } | null = null
+		let foundNext: { id?: string; text: string; path: string; type?: string } | null = null
 
-			// If the current item is found and is not the last item in the entire unit...
-			if (currentIndex !== -1 && currentIndex < allUnitItems.length - 1) {
-				// ...the next item is the one at the next index.
-				const nextContent = allUnitItems[currentIndex + 1]
-				if (nextContent) {
-					foundNext = {
-						id: nextContent.id,
-						text: `Up next: ${nextContent.type}`,
-						path: nextContent.path,
-						type: nextContent.type
-					}
+		// If the current item is found and is not the last item in the entire unit...
+		if (currentIndex !== -1 && currentIndex < allUnitItems.length - 1) {
+			// ...the next item is the one at the next index.
+			const nextContent = allUnitItems[currentIndex + 1]
+			if (nextContent) {
+				foundNext = {
+					id: nextContent.id,
+					text: `Up next: ${nextContent.type}`,
+					path: nextContent.path,
+					type: nextContent.type
 				}
 			}
-
-			// If no next item is found (meaning it's the last item in the unit),
-			// then the action is to go back to the unit overview page.
-			if (!foundNext) {
-				foundNext = { text: `Back to ${unitData.title}`, path: unitData.path }
-			}
-
-			setNextItem(foundNext)
 		}
-	}, [showSummary, onerosterResourceSourcedId, unitData])
+
+		// If no next item is found (meaning it's the last item in the unit),
+		// then the action is to go back to the unit overview page.
+		if (!foundNext) {
+			foundNext = { text: `Back to ${unitData.title}`, path: unitData.path }
+		}
+
+		setNextItem(foundNext)
+	}, [showSummary, onerosterResourceSourcedId, unitData, assessmentPath])
 
 	// Gate rendering on loading state to prevent UI flash
 	if (isLoading || !serverState) {
