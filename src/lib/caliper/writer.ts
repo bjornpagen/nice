@@ -8,6 +8,7 @@ import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 const ExistingResultSchema = z.object({
     score: z.number().optional(),
     scoreStatus: z.enum(["fully graded", "partially graded", "submitted", "not submitted", "exempt"]).optional(),
+    scoreDate: z.string().optional(),
     metadata: z.record(z.string(), z.any()).optional()
 }).passthrough()
 
@@ -29,6 +30,7 @@ export async function upsertNiceTimeSpentToOneRoster(params: {
     // Default values
     let preservedScore = 100
     let preservedStatus: "fully graded" | "partially graded" = "fully graded"
+    let preservedScoreDate: string | undefined
     let existingTime: number | undefined
 
     // Fetch existing result and parse with Zod
@@ -41,6 +43,10 @@ export async function upsertNiceTimeSpentToOneRoster(params: {
             }
             if (parsed.data.scoreStatus === "partially graded" || parsed.data.scoreStatus === "fully graded") {
                 preservedStatus = parsed.data.scoreStatus
+            }
+            // Only preserve scoreDate if already completed (don't update on re-watch)
+            if (parsed.data.scoreDate && parsed.data.scoreStatus === "fully graded") {
+                preservedScoreDate = parsed.data.scoreDate
             }
             if (parsed.data.metadata) {
                 const metadataParsed = TimeSpentMetadataSchema.safeParse(parsed.data.metadata)
@@ -68,7 +74,7 @@ export async function upsertNiceTimeSpentToOneRoster(params: {
             assessmentLineItem: { sourcedId: lineItemId, type: "assessmentLineItem" as const },
             student: { sourcedId: params.userSourcedId, type: "user" as const },
             scoreStatus: preservedStatus,
-            scoreDate: new Date().toISOString(),
+            scoreDate: preservedScoreDate ?? new Date().toISOString(),
             score: preservedScore,
             metadata: {
                 nice_timeSpent: writeTime,
