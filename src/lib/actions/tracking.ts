@@ -404,12 +404,19 @@ export async function trackArticleView(
 	// The result sourcedId follows our pattern
 	const onerosterResultSourcedId = `nice_${onerosterUserSourcedId}_${onerosterLineItemSourcedId}`
 
+	// Preserve scoreDate if article was already completed
+	const existingResult = await errors.try(oneroster.getResult(onerosterResultSourcedId))
+	let scoreDate = new Date().toISOString()
+	if (!existingResult.error && existingResult.data?.scoreStatus === "fully graded" && existingResult.data?.scoreDate) {
+		scoreDate = existingResult.data.scoreDate
+	}
+
 	const resultPayload = {
 		result: {
 			assessmentLineItem: { sourcedId: onerosterLineItemSourcedId, type: "assessmentLineItem" as const },
 			student: { sourcedId: onerosterUserSourcedId, type: "user" as const },
 			scoreStatus: "fully graded" as const,
-			scoreDate: new Date().toISOString(),
+			scoreDate,
 			score: 100 // Use 100 to represent "completed"
 		}
 	}
@@ -516,6 +523,7 @@ export async function updateVideoProgress(
 	// Preserve monotonic progress: never decrease an existing higher result
 	let finalScore = newScore
 	let finalStatus: "fully graded" | "partially graded" = isCompleted ? "fully graded" : "partially graded"
+	let finalScoreDate = new Date().toISOString()
 
 	const existingResult = await errors.try(oneroster.getResult(onerosterResultSourcedId))
 	if (existingResult.error) {
@@ -541,6 +549,10 @@ export async function updateVideoProgress(
 		if (existingIsCompleted) {
 			finalStatus = "fully graded"
 		}
+		// Preserve scoreDate if already completed (don't update on re-watch)
+		if (existingIsCompleted && existingResult.data?.scoreDate) {
+			finalScoreDate = existingResult.data.scoreDate
+		}
 	}
 
 	const resultPayload = {
@@ -548,7 +560,7 @@ export async function updateVideoProgress(
 			assessmentLineItem: { sourcedId: onerosterLineItemSourcedId, type: "assessmentLineItem" as const },
 			student: { sourcedId: onerosterUserSourcedId, type: "user" as const },
 			scoreStatus: finalStatus,
-			scoreDate: new Date().toISOString(),
+			scoreDate: finalScoreDate,
 			score: finalScore
 		}
 	}

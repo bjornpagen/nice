@@ -44,7 +44,8 @@ export async function upsertNiceTimeSpentToOneRoster(params: {
             if (parsed.data.scoreStatus === "partially graded" || parsed.data.scoreStatus === "fully graded") {
                 preservedStatus = parsed.data.scoreStatus
             }
-            if (parsed.data.scoreDate) {
+            // Only preserve scoreDate if already completed (don't update on re-watch)
+            if (parsed.data.scoreDate && parsed.data.scoreStatus === "fully graded") {
                 preservedScoreDate = parsed.data.scoreDate
             }
             if (parsed.data.metadata) {
