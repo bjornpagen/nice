@@ -28,6 +28,18 @@ export function useCoursePolling<T = void>(options: UseCoursePolllingOptions<T> 
 				return
 			}
 
+			// Skip polling for non-students (teachers, admins, etc.)
+			// Course progression is only relevant for students
+			const roles = metadataValidation.data.roles
+			const rolesNormalized = roles
+				.map((r) => (r.role ?? r.roleType ?? "").toLowerCase())
+				.filter((r) => r.length > 0)
+			const hasNonStudentRole = rolesNormalized.some((r) => r !== "student")
+			if (hasNonStudentRole) {
+				logger.debug("skipping course poll: non-student user", { userId: user.id, roles: rolesNormalized })
+				return
+			}
+
 		// reload user metadata from clerk first
 		const reloadResult = await errors.try(user.reload())
 		if (reloadResult.error) {
